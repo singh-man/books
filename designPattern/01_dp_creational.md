@@ -8,6 +8,8 @@ language: en-US
 Design Patterns Tutorials
 =========================
 
+	D:\mani\dev\opt\pandoc-2.1.3\pandoc.exe --toc --toc-depth 6 -s 01_dp_creational.md 02_dp_structural.md 03_dp_behavioral.md 04_dp_inJava.md 05_dp_j2ee.md 06_dp_desktopGUI_arch.md -o designPattern.epub
+	
 Design patterns are a popular topic in software development. A design pattern is a common, well-described solution to a common software problem. Sensible use of design patterns results in increased code maintainability, since in addition to being a good solution to a common problem, design patterns can be recognized by other developers, thus reducing the learning curve when dealing with a particular piece of code. Types of design patterns include creational, structural, and behavioral design patterns.
 
 ![](media/designPatternHierarchy.jpg)
