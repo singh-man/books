@@ -989,3 +989,4 @@ The console output is shown here.
 	Grrrrr.
 
 In this example, we just used the Animal reference to refer to the objects. Using this approach, we could only access the shared operations of the Animal interface (ie, the describe() method). Instead of referencing this interface, we could have referenced the concrete decorator class. This would have exposed the unique functionality of the concrete decorator.
+

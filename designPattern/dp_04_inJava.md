@@ -2,6 +2,27 @@
 Design Patterns in Java
 =======================
 
+### Important design patterns
+  - Singleton
+  - Builder ( While Writing Unit Tests )
+  - Prototype ( Cloning )
+  - Adapter ( asList , toString )
+  - Chain Of Responsibility ( Logging )
+  - Factory ( Action Mapping )
+  - Proxy
+  - MVC ( Web frameworks )
+  - Filter ( Criteria )
+  - MVC and its variations is definitely one of the top design patterns.
+  - Observer - ( Event Listener ) - If you've ever used an event. You've used Observer.
+  - Decorator - Add functionality to an object at runtime through composition. My personal favorite.
+  - Facade - Think of any REST interface like Twitter or the SO APIs. It's hiding a bunch of back end stuff that, at least in twitters case, can be horribly complex. 
+  - Strategy Pattern - If you've ever used dependency injection, you've used the strategy pattern.
+  - Command
+  - Abstract factory pattern
+  - Bridge pattern
+    
+
+
 Creational patterns
 -------------------
 
@@ -124,3 +145,6 @@ Behavioral patterns
    - javax.lang.model.element.AnnotationValue and AnnotationValueVisitor
    - javax.lang.model.element.Element and ElementVisitor
    - javax.lang.model.type.TypeMirror and TypeVisitor
+
+
+

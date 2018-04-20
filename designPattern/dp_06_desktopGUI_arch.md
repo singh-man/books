@@ -543,3 +543,4 @@ The final example, which uses two delegate views, is shown in Figure 5. The seco
 
 MVC is one of the staples of any GUI programmer's toolkit. This article has shown how to implement a variation of the MVC design using Java SE and the Swing libraries. In addition, it has demonstrated some common issues that programmers may face when using MVC, as well as listed common Swing component events that any Java platform programmer can use when creating a view.
 
+

@@ -10,6 +10,8 @@ Design Patterns Tutorials
 
 Design patterns are a popular topic in software development. A design pattern is a common, well-described solution to a common software problem. Sensible use of design patterns results in increased code maintainability, since in addition to being a good solution to a common problem, design patterns can be recognized by other developers, thus reducing the learning curve when dealing with a particular piece of code. Types of design patterns include creational, structural, and behavioral design patterns.
 
+![](media/designPatternHierarchy.jpg)
+
 ### Creational Design Patterns
 
 - Singleton Pattern 
