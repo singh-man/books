@@ -247,6 +247,8 @@ HahsTable    +inkedHashMap    HashMap    TreeMap
  1. **Fibonacci**: Fn = F(n-1) + F(n-2) {n > 1}
  					  = 0 {n = 0}
  					  = 1 {n = 1}
+	
+   > Fibonacci by recursive can be mad efaster by using **Memonization!** i.e. by memorizing the return of the function calls already done!
 ~~~
  	 			 F(n)
                 /    \
