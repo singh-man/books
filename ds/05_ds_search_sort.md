@@ -12,6 +12,8 @@ Given a list L of n elements with values or records L0 ... Ln−1, and target va
 
 #### Binary Search
 
+**Works only for indexed array.**
+
 Here is the recursive binary search algorithm :
 (Precondition: s = {S0 , s 1 , . . ., Sn-1 } is a sorted sequence of n ordinal values of the same type as x.)
 (Postcondition: either the index i is returned where Si = x, or –1 is returned.)
