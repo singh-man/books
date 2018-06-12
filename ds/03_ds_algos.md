@@ -63,7 +63,7 @@ We measure these independently from one another because while an algorithm may p
 
 To give you an idea of how many operations we're talking about. Let's look at what these would equal given the (N) number of items.
 
-|            | N = 5     | 10        | 20             | 30                                          |
+|  Order     | N = 5     | 10        | 20             | 30                                          |
 | ---------- | --------- | --------- | -------------- | ------------------------------------------- |
 | O(1)       | 1         | 1         | 1              | 1                                           |
 | O(log N)   | 2.3219... | 3.3219... | 4.3219...      | 4.9068...                                   |
@@ -95,10 +95,9 @@ Even further, some actions will have a different "average" performance and a "wo
 
 Let's imagine a chunk of memory like this:
 
-| ----       | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----    |
-| Values:    | 1001 | 0110 | 1000 | 0100 | 0101 | 1010 | 0010 | 0001 | 1101 | 1011... |
-| Addresses: | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9...    |
-
+| Values: | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9...    |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| Addresses: | 1001 | 0110 | 1000 | 0100 | 0101 | 1010 | 0010 | 0001 | 1101 | 1011... |
 
 Every program running on your machine is stored within this same *physical* data structure. Without layers of abstraction over it, it would be extremely difficult to use.
 
@@ -154,6 +153,10 @@ Data Strucutre that don't uses memory directly
 
 ### STACKS
 
+  Often implemented as an array or a linked list. 
+  
+  Array is efficient because the most recently inserted item is placed at the end of the array. If the stack will contain a lot of data and the amount can’t be predicted accurately in advance (as when recursion is implemented as a stack), a linked list is a better choice.
+
   - Functions
     - push(value)
     - pop()
@@ -161,6 +164,8 @@ Data Strucutre that don't uses memory directly
 
 
 ### QUEUES
+
+  Queues can be implemented as arrays or linked lists
 
   - Functions
     - enqueue(value)
@@ -242,7 +247,7 @@ Visualizing them as a JSON-like structure looks like this:
       AA Tree, AVL Tree, Binary Search Tree, Binary Tree, Cartesian Tree,
       left child/right sibling tree, order statistic tree, Pagoda, ...
 
-  - B Trees:
+  - B Trees: are multiway trees, commonly used in external storage, in which nodes correspond to blocks on the disk. 
 
       B Tree, B+ Tree, B* Tree, B Sharp Tree, Dancing Tree, 2-3 Tree, ...
 
@@ -325,6 +330,9 @@ A tree is said to be full if all of its internal nodes have the same degree and 
   - Post order Traversal
 
 #### Heap
+
+  Priority queues can be implemented as an ordered array or as a heap. Insertion into an ordered array is slow, but deletion is fast. With the heap implementation, both insertion and deletion take O(logN) time.
+
 
  - Max Heap
  - Min Heap

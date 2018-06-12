@@ -139,7 +139,7 @@ This above table is only an approximate summary; for each data structure, there 
 			Collection <I> -> add(x), addAll(x), contains(x), containsAll(x), remove(x), clear(), isEmpty(), size()
 				Set <I> -> add(x), contains(x), remove(x), size(), clear(), isEmpty()
 					SortedSet <I> -> uses natural order or external Comparator
-						TreeSet
+						TreeSet -> Tree ds so no hashcode/equals; Comparable/Comparator instead
 					NavigableSet <I>
 						ConcurrentSkipListSet
 					HashSet
@@ -180,7 +180,7 @@ This above table is only an approximate summary; for each data structure, there 
 		HashMap -> not synchronized, one null key
 		EnumMap
 		SortedMap <I>
-			TreeMap
+			TreeMap -> Tree ds so no hashcode/equals; Comparable/Comparator instead
 			NavigableMap <I>
 				ConcurrentNavigableMap <T>
 					ConcurrentSkipListMap
@@ -190,7 +190,7 @@ This above table is only an approximate summary; for each data structure, there 
 			ConcurrentHashMap
 
  > - HashTable is legacy avoid use.
- > - TreeMap -> only uses equals()
+ > - TreeMap -> Tree ds so no hashcode/equals; Comparable/Comparator instead
  > - HashMap -> uses hashCode() and then equals() -> java 1.8  collision rsolution is changed to BST after a threshold from LinkedList as used in prior versions.
  > - ConcurrentHashMap API states that its iterators do not throw ConcurrentModificationException. This is because its iterators reflect the state of the hash table at point of the creation of the iterator. This is as if its iterators work with a hash table snapshot:
 
