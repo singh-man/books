@@ -1,1 +1,1 @@
-**Books in Markdown with images created by me!!**
+**Notes from books and other interesting things that I've read. Enjoy!**
