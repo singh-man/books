@@ -89,7 +89,7 @@ This above table is only an approximate summary; for each data structure, there 
 | Graph          | Models real-world                    | Some algorithms are slow and complex. |
 |                | situations.                          |                                       |
 
-** Array Sorting Algorithm**
+**Array Sorting Algorithm**
 
 | Algorithm      | Time Complexity |                |                 | Space Complexity |
 | ----           | ----            | ----           | ----            | ----             |
@@ -107,8 +107,6 @@ This above table is only an approximate summary; for each data structure, there 
 | Radix Sort     | **Ω(nk)**       | **Θ(nk)**      | **O(nk)**       | O(n+k)           |
 | Counting Sort  | **Ω(n+k)**      | **Θ(n+k)**     | **O(n+k)**      | O(k)             |
 | Cubesort       | Ω(n)            | Θ(n log(n))    | O(n log(n))     | O(n)             |
-
-
 
 
 **Common Data Structure Operations**
@@ -135,59 +133,61 @@ This above table is only an approximate summary; for each data structure, there 
 
 ### Java Collection hierarchy
 
-	Iterable	
-			Collection <I> -> add(x), addAll(x), contains(x), containsAll(x), remove(x), clear(), isEmpty(), size()
-				Set <I> -> add(x), contains(x), remove(x), size(), clear(), isEmpty()
-					SortedSet <I> -> uses natural order or external Comparator
-						TreeSet -> Tree ds so no hashcode/equals; Comparable/Comparator instead
-					NavigableSet <I>
-						ConcurrentSkipListSet
-					HashSet
-					LinkedHashSet
-					EnumSet
-					CopyOnWriteArraySet
-				List<I> -> add(i, x), get(ith)
-					ArrayList -> Singly Linked List/Dyanmic Array
-					CopyOnWriteArrayList
-					Vector
-						Stack
-					LinkedList -> DoublyLinkedList
-				Queue <I> -> add(x)/offer(x), remove()/poll(), element()/peek()
-					Deque <I>
-						LinkedList
-						BlockingDeque <I>
-							LinkedBlockingDeque
-						ConcurrentLinkedDeque
-					PriorityQueue
-					BlockingQueue <I>
-						LinkedBlockingQueue -> used for prod/cons model
-						BlockingDeque <I>
-							LinkedBlockingDeque
-						DelayQueue
-						TransferQueue <I>
-							LinkedTransferQueue
-						PriorityBlockingQueue
-					ConcurrentLinkedQueue -> based on CAS hence non blocking
+```
+Iterable	
+	Collection <I> -> add(x), addAll(x), contains(x), containsAll(x), remove(x), clear(), isEmpty(), size()
+		Set <I> -> add(x), contains(x), remove(x), size(), clear(), isEmpty()
+			SortedSet <I> -> uses natural order or external Comparator
+				TreeSet -> Tree ds so no hashcode/equals; Comparable/Comparator instead
+			NavigableSet <I>
+				ConcurrentSkipListSet
+			HashSet
+			LinkedHashSet
+			EnumSet
+			CopyOnWriteArraySet
+		List<I> -> add(i, x), get(ith)
+			ArrayList -> Singly Linked List/Dyanmic Array
+			CopyOnWriteArrayList
+			Vector
+				Stack
+			LinkedList -> DoublyLinkedList
+		Queue <I> -> add(x)/offer(x), remove()/poll(), element()/peek()
+			Deque <I>
+				LinkedList
+				BlockingDeque <I>
+					LinkedBlockingDeque
+				ConcurrentLinkedDeque
+			PriorityQueue
+			BlockingQueue <I>
+				LinkedBlockingQueue -> used for prod/cons model
+				BlockingDeque <I>
+					LinkedBlockingDeque
+				DelayQueue
+				TransferQueue <I>
+					LinkedTransferQueue
+				PriorityBlockingQueue
+			ConcurrentLinkedQueue -> based on CAS hence non blocking
 
-	 Deque = Double Ended Queue -> use this instead of Stack
-	 LinkedList -> Deque implementation
-	 Vector and Stack are legacy avoid use
-	 PriorityQueue -> based on priority heap
+	Deque = Double Ended Queue -> use this instead of Stack
+	LinkedList -> Deque implementation
+	Vector and Stack are legacy avoid use
+	PriorityQueue -> based on priority heap
 
-	Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
-		HashTable -> sunchronized, no null key, 
-		LinkedHashMap
-		HashMap -> not synchronized, one null key
-		EnumMap
-		SortedMap <I>
-			TreeMap -> Tree ds so no hashcode/equals; Comparable/Comparator instead
-			NavigableMap <I>
-				ConcurrentNavigableMap <T>
-					ConcurrentSkipListMap
-		ConcurrentMap <I>
-			ConcurrentNavigableMap <I>
+Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
+	HashTable -> sunchronized, no null key, 
+	LinkedHashMap
+	HashMap -> not synchronized, one null key
+	EnumMap
+	SortedMap <I>
+		TreeMap -> Tree ds so no hashcode/equals; Comparable/Comparator instead
+		NavigableMap <I>
+			ConcurrentNavigableMap <T>
 				ConcurrentSkipListMap
-			ConcurrentHashMap
+	ConcurrentMap <I>
+		ConcurrentNavigableMap <I>
+			ConcurrentSkipListMap
+		ConcurrentHashMap
+```
 
  > - HashTable is legacy avoid use.
  > - TreeMap -> Tree ds so no hashcode/equals; Comparable/Comparator instead
@@ -307,7 +307,7 @@ O(2^n)
 ```
 
  1. **Euclid's** GCD(x, 0) = x and GCD(x, y) = GCD(y, x % y)
-```
+```java
 	public int GCD(int x, int y) {
 	  if (y == 0) {
 	      return x;
@@ -318,7 +318,7 @@ O(2^n)
 ```
 
 1. **Euclidean Algorithm** calling either gcd(m,n-m) or gcd(m-n,n) :
-```
+```java
 public static int gcd(int m, int n) {
 	if (m==n) {
 		return n; // basis
@@ -331,7 +331,7 @@ public static int gcd(int m, int n) {
 ```
 
 1. **LOG**: log(2, 4) -> 2; log(10, 1000) -> 3
-```
+```java
 int log(int b, int n ) {
     if (n <= b) {
         return 1;
@@ -342,7 +342,7 @@ int log(int b, int n ) {
 ```
 
 1. **Multiply** -> multiply(2,3 ) -> 6
-```
+```java
 public int multiply(int x, int y) {
   if (x == 0) {
     return x;
@@ -353,7 +353,7 @@ public int multiply(int x, int y) {
 ```
 
 1. **Cumulative Sum**: sum of values fropm 1 to k. sumtok(5) -> 15
-```
+```java
 public int sumtok(int k) {
   if (k <= 0) {
     return 0;
@@ -364,7 +364,7 @@ public int sumtok(int k) {
 ```
 
 1. **Add Odd Values**: 
-```
+```java
 public int addOdd(int n) {
   if (n <= 0) {
     return 0;
@@ -378,14 +378,14 @@ public int addOdd(int n) {
 ```
 
 1. **Sum of the Digits** -> sumOfDigits(1234) -> 10
-```
+```java
 int getsum(int n) {
    return n == 0 ? 0 : n % 10 + getsum(n/10);
 }
 ```
 
 1. **Count Characters** in string "ctcowAt" find no. of A in string
-```
+```java
 public int countChr(String str) {
   if (str.length() == 0) {
     return 0;

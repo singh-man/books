@@ -91,10 +91,11 @@ Immediately after the hibernate-mapping tag, you encounter the class tag. The cl
 
 The id element describes the primary key for the persistent class as well as how the key value is generated. Each persistent class must have an id element declaring the primary key for the relational table. Let's look at the id element:
 
-	<id name='id'column='uid'type='long'unsaved-value='null'>
-		<generator class='native'/>
-	</id>
-
+```xml
+<id name='id'column='uid'type='long'unsaved-value='null'>
+	<generator class='native'/>
+</id>
+```
 The name attribute defines the property in your persistent class that will be used to store the primary key value. The id element implies that the Event class has a property also named id:
 
 	public Long getId(){
@@ -103,7 +104,6 @@ The name attribute defines the property in your persistent class that will be us
 	public void setId(Long id){
 		this.id =id;
 	}
-
 
 If the column for the primary key has a different name than your object property, the column attribute is used. For our example's purposes, this column name is uid . The values of the type and unsaved-value attributes depend on the generator used.
 
@@ -130,11 +130,11 @@ The different types of Id generators supported by hibernate are:
 The unsaved-value attribute describes the value of the id property for transient instances of this class. The unsaved-value attribute affects how objects are stored. We'll discuss the impact of this attribute later in the article.
 
 Properties Property elements for the Event object are similar to the id element:
-
-	<property name='name'type='string'length='100'/>
-	<property name='startDate'column='start_date'type='date'/>
-	<property name='duration'type='integer'/>
-
+```xml
+<property name='name'type='string'length='100'/>
+<property name='startDate'column='start_date'type='date'/>
+<property name='duration'type='integer'/>
+```
 Each property element corresponds to a property in the Event object. The name attribute contains the property name, whereas the type attribute specifies the property object type. The column used to store the property value defaults to the property name. The column attribute overrides this default behavior, as shown in the startDate property.
 
 If the type attribute is omitted, Hibernate determines the type using runtime reflection. In certain cases, you must provide the property type, since reflection may not be able to determine the desired type (such as differentiating between the Hibernate DATE and TIMESTAMP types). Valid property types include the Hibernate basic types, such as integer, string, and timestamp, as well as the corresponding Java objects and primitives. However, you aren't limited to basic data types.
@@ -319,12 +319,14 @@ The Session interface supports a simple instance cache for each object that is l
 
 A common problem new developers run into is associating two instances of the same object with the same Session instance, resulting in a NonUniqueObjectException. The following code generates this exception:
 
-	Session session =factory.openSession();
-	Event firstEvent =(Event)session.load(Event.class,myEventId);
-	//...perform some operation on firstEvent
-	Event secondEvent =new Event();
-	secondEvent.setId(myEventId);
-	session.save(secondEvent);
+```java
+Session session =factory.openSession();
+Event firstEvent =(Event)session.load(Event.class,myEventId);
+//...perform some operation on firstEvent
+Event secondEvent =new Event();
+secondEvent.setId(myEventId);
+session.save(secondEvent);
+```
 
 This code opens the Session instance, loads an Event instance with a given ID, creates a second Event instance with the same ID, and then attempts to save the second Event instance, resulting in the Non-UniqueObjectException.
 
