@@ -57,7 +57,7 @@ In this code snippet, a new transaction is created, after which a brand new, una
 Now, I don't actually like the saveOrUpdate method. I mean, I love using it, but I don't really like the name, because I think the name is a little bit misleading as it implies that an instance that is passed to the method will be saved, or updated, immediately. You see, that's only partly true. Sure, when the saveOrUpdate method is invoked, the instance will eventually have its state persisted to the database, but more happens that just that. The instance in not only queued up for a database save, but the Hibernate Session keeps track of that instance, and if any further changes happen to the instance before the transaction is committed, then those changes to the instance's state will be persisted as well. I'd almost prefer it if the saveOrUpdate method was renamed to something more descriptive likesaveOrUpdateAndAssociateInstanceWithSession, but then again, I guess there is an upper limit on how long good method names should be.
 
 Take a look at the following code snippet:
-
+```java
 	Session session=HibernateUtil.beginTransaction();
 	User user = new User();
 	user.setPassword('abc123');
@@ -72,7 +72,7 @@ Take a look at the following code snippet:
 	user.setVerified(Boolean.FALSE);
 
     HibernateUtil.commitTransaction();
-
+```
 Notice that in this code snippet, an instance of the user class is created, the password is set to abc123, and then the save method of the Hibernate Session is passed the instance. The call to the save method triggers the following SQL statement to be executed against the database:
 
 	insert into examscam.user (emailAddress, lastAccessTime, login_name, password, registrationDate, verified) values (?, ?, ?, ?, ?, ?)
@@ -88,7 +88,7 @@ You see, that's the great thing about Hibernate: as soon as an instance is assoc
 I often see developers that are new to Hibernate constantly calling the saveOrUpdate method whenever a set of changes have been made to a POJO. This isn't necessary. You only have to associate an instance with the Hibernate Session once within the scope of a transaction. From that point on, you can do whatever you want to your JavaBean instances. Hibernate will persist the final state of your instance when the current transaction is finally committed.
 
 The following piece of code needlessly calls the saveOrUpdate method after instance variables have been updated. This is totally unnecessary, as the User instance was already associated with the Hibernate Session through the original call to saveOrUpdate.
-
+```java
 	hibernateSession.getTransaction();
 	User user = new User();
 	hibernateSession.saveOrUpdate(user);
@@ -96,16 +96,16 @@ The following piece of code needlessly calls the saveOrUpdate method after insta
 	user.setPassword('abc123');
 	hibernateSession.saveOrUpdate(user); /*BAD!*/
 	hibernateSession.getTransaction().commit();
-
+```
 With the first call to saveOrUpdate, the instance named u becomes associated with the Hibernate session. From that point on, you can mess around with the user instance as much as you want, and Hibernate will take care of the persistence. You can initialize, update, change, and modify any instance variable of the user instance that you want, and Hibernate will save the final state of the instance once the transaction has been committed..
-
+```java
 	hibernateSession.getTransaction();
 	User user = new User();
 	hibernateSession.saveOrUpdate(user);
 	user.setLoginName('mj');
 	user.setPassword('abc123');
 	hibernateSession.getTransaction().commit();
-
+```
 ##### Loading Instances and the Hibernate Session
 
 Of course, the saveOrUpdate method, along with the save method, is great for associating brand new instances with the Hibernate Session, but more often than not, you'll want to pull a previously persisted instance from the database into your Java program, perhaps so you can update the instance and subsequently persist that new information to the database. For pulling existing instances out of the database, while at the same time, ensuring they are associated with the Hibernate Session for persistence management, we use either the load or the getmethod of the Hibernate Session.
@@ -113,14 +113,14 @@ Of course, the saveOrUpdate method, along with the save method, is great for ass
 Note that the load method is intended to be used when you know an instance actually exists in the database. This method actually returns proxy objects that alleviate database hits until transaction commit time, making it a little more efficient. The get method is better used when you don't know for sure if the instance you are loading, or getting, actually exists in the database.
 
 Calling the load or get method on the Hibernate Session in order to obtain a persistent object from the database not only provides you access to the instance of interest, but it also associates that instance with the Hibernate Session. Take a look at the following code, which pulls an instance of a User out of the Hibernate Session.
-
+```java
 	Session hibernateSession = this.getCurrentSession();
 	hibernateSession.beginTransaction();
 	User u = (User)hibernateSession.get(User.class, 2);
 	u.setLoginName('Joey');
 	u.setPassword('Shabidew');
 	hibernateSession.getTransaction().commit();
-
+```
 Notice that after updating the properties of the instance, namely the loginName and password, that we simply ask the Hibernate Session to commit the transaction, which will in turn, update the database. There is no need to call the saveOrUpdate method after changing the attributes of the instance, because the instance is already associated with the Hibernate Session, and as a result, any changes to the state of the persistent instance will be updated in the database.
 
 **Rushing the Update with a flush()**
@@ -163,7 +163,7 @@ A persistent instance is one that not only exists in your application code, but 
 ##### Detached Instances
 
 Okay, so we have a great appreciation for the fact that as soon as an instance has been associated with a Hibernate Session, Hibernate will take responsibility for the persistent state of that object until the current transaction is committed. But what happens after the transaction is committed? For example, take a look at the following code:
-
+```java
 	Session session=HibernateUtil.beginTransaction();
 	User user = new User();
 	user.setLoginName('mj');
@@ -174,7 +174,7 @@ Okay, so we have a great appreciation for the fact that as soon as an instance h
 		
 	HibernateUtil.commitTransaction();
 	user.setPassword('cccccc')
-
+```
 So, if you peaked into the database after running this code snippet, what would the value of the password be for the associated database record? Would it be aaaaaa, bbbbbb or cccccc? The answer is bbbbbb, since the instance is first persisted to the database with the value aaaaaa, then, as the transaction is committed, the password is updated to bbbbbb. But when the final Java based update to the password field is done, there is no open transaction, and Hibernate has no context with which it can update the user's password to cccccc.
 
 After the transaction has been committed, the User instance is said to be a detached instance, because the instance is no longer associated with a Hibernate Session, and no mechanism exists to tie the state of the instance to the database.
@@ -182,7 +182,7 @@ After the transaction has been committed, the User instance is said to be a deta
 ##### Programmatically Detaching Instances
 
 Sometimes you may have an instance whose persistent state is being managed by the Hibernate Session, but then, for some reason, you want to shake that instance free of Hibernate's grasp. If you can't wait for a transaction to commit and have the instance naturally become detached, you can explicitly detach an instance from the Hibernate Session by simply calling the evict method of the Session, just as I do in this following snippet of code:
-
+```java
 	Session session=HibernateUtil.beginTransaction();
 		
 	User user = new User();
@@ -192,7 +192,7 @@ Sometimes you may have an instance whose persistent state is being managed by th
 	session.evict(user);
 	user.setPassword('bbbbbb');
 	HibernateUtil.commitTransaction();
-
+```
 So, after the transaction is committed in this snippet of code, what value would the password column for the user's corresponding database record be? Would it be null, aaaaaa or bbbbbb? Well, the correct answer is aaaaaa.
 
 You see, the instance has its password initialized to aaaaaa, after which it is passed to the save method of the Hibernate Session, and the Hibernate Session does just that - it saves the state of the instance. However, we programmatically evict the instance from the Session, at which point, Hibernate wipes its hands clean of any further changes to the User instance. The instance indeed has a representation in the database, but the evict method has detached the instance from its underlying representation, so further changes to the state of the User instance, such as the changing of the password to bbbbbb, are no longer the concern of the Hibernate Session, and such changes are not persisted to the database.
@@ -202,7 +202,7 @@ You see, the instance has its password initialized to aaaaaa, after which it is 
 Once you start mixing and matching persistent and detached objects within your code, which pretty much any J2EE application will do at some point in time, you will find some not-so-funny, and potentially non-intuitive, problems that come up when you start doing comparisons of instances that you would think would be the same.
 
 For example, take a look at the following code that creates two instances, user1 and user2, based on the same, identical, database record. What do you think the output of the code snippet would be?
-
+```java
 	Session session=HibernateUtil.beginTransaction();
 		
 	User user1 = new User();  
@@ -214,7 +214,7 @@ For example, take a look at the following code that creates two instances, user1
 	System.out.print('The instances are the same: ');
 	System.out.println( user1.equals(user2));
 	HibernateUtil.commitTransaction();
-
+```
 Since both instances of the User class are based on the same database record, they will have all of their properties set to the same values, which means the two objects are essentially the same, but the comparison of the two objects returns false. It's somewhat non-intuitive, but if you know what's going on under the covers of the Java Virtual Machine, it actually makes sense.
 
 By default, when you compare two instances using .equals(), the compiler simply compares the memory locations of the two instances, as opposed to comparing their actual property values. Since we have two separate instances, we end up having two separate memory locations, and a .equals() comparison returns false. To overcome such situations, a Hibernate best practice is to have all of your JPA annotated classes properly override the inherited .hashcode() and .equals() methods, providing an implementation that makes sense for the class. That way, when two instances with exactly the same state are compared, the actual properties the object contains will be compared, and the compiler will not simply look at the memory locations of objects when performing an equality comparison.
@@ -222,7 +222,7 @@ By default, when you compare two instances using .equals(), the compiler simply 
 ##### The org.hibernate.NonUniqueObjectException
 
 So, as we have seen, the following code snippet creates two instances, user1 and user2, both of which share the same set of properties, but with the main difference being the fact that user1 becomes a detached object after the evict(user1); method is called, whereas the instance user2 is a persistent object right up until the point that the transaction gets committed. Here's the code:
-
+```java
 	Session session=HibernateUtil.beginTransaction();
 	User user1 = new User();
 	user1.setPassword('aaaaaa');
@@ -230,9 +230,9 @@ So, as we have seen, the following code snippet creates two instances, user1 and
 	session.evict(user1);
 	User user2 = (User)session.get(User.class, id);
 	HibernateUtil.commitTransaction();
-
+```
 Now, what do you think would happen if you changed some values in the detached instance, user1, and then tried to use the Hibernate Session to update that instance, considering the fact that user2, an instance that shares its id with user1, is already associated with the Hibernate Session? What would happen if you tried to run the following code:
-
+```java
 	Session session=HibernateUtil.beginTransaction();
 	User user1 = new User();
 	user1.setPassword('aaaaaa');
@@ -242,7 +242,7 @@ Now, what do you think would happen if you changed some values in the detached i
 	user1.setVerified(true);
 	session.saveOrUpdate(user1);
 	HibernateUtil.commitTransaction();
-
+```
 Well, here's another rule that Hibernate strictly enforces: only one instance of a class with a given unique primary key can be associated with the Session at a time. In this case, if we try to re-associate the evicted user1 with the Hibernate Session, Hibernate will kick out to us aNonUniqueObjectException, indicating that it is already managing an instance that represents that particular database record. So, Hibernate will gladly manage your unique instances, but fundamentally, it is that primary key that makes an object unique, and the developer must be careful not to add a second, non-unique instance of a class to an active Hibernate Session.
 
 ##### A Little Bit About Transactions
@@ -254,7 +254,7 @@ However, sometimes, when you are committing a transaction, something can go wron
 Any time we commit a transaction, the possibility of an exception being thrown looms large. As a result, if an exception does occur during the committing of a transaction, it is a best practice to catch the exception, explicitly rollback the transaction, and finally, close the session. Furthermore, since all of the POJO instances have become detached from the database, and are no longer under the Hibernate Session's spell, those instances should be allowed to simply go out of scope and be garbage collected, as they are no longer in sync with the database.
 
 Finally, you can either re-throw the HibernateException, or potentially, throw a custom application exception that will be appropriately handled by an upper application layer, providing an appropriately formatted error message to the end user.
-
+```java
 	try {
 		Session hibernateSession = this.getCurrentSession();
 		hibernateSession.beginTransaction();
@@ -269,7 +269,7 @@ Finally, you can either re-throw the HibernateException, or potentially, throw a
 		hibernateSession.close();
 		throw e;
 	}
-
+```
 ##### In Summary
 
 So, when we create instances in our Java code, the instance is considered to be a transient instance, which means there is no mechanism in place to manage the persistent state of that instance. However, once we pass a transient instance to the save, update, or saveOrUpdate method of the Hibernate Session, we consider the transient instance to have transitioned into a persistent instance, as Hibernate will begin to manage the persistent state of that instance. Any instance associated with the Hibernate Session is said to be a persistent instance.
@@ -329,7 +329,7 @@ It isn't important who throw exception: hibernate or database, but it is better 
 You are strongly encouraged to use a surrogate primary key on your tables, i.e. a column called id which is not derived from the business data. However there is most likely a combination of fields which form a sensible business key for a table. These fields should be non-null and immutable. This is what would be marked as the natural key and would also be used in the equals and hashCode implementations for that class.
 
 If Hibernate were to generate your database schema from your mapped domain classes this natural key would be used to generate a unique index for the table.
-
+```xml
 	<properties name='uniqueCombination' unique='false'>
 		<property name='serviceCollectionName' type='string' not-null='true' column='service_collection_name' />
 		<property name='serviceName' type='string' not-null='true' column='service_name' />
@@ -346,20 +346,20 @@ If Hibernate were to generate your database schema from your mapped domain class
 	    <many-to-one name='activitySummary' column='bps_acs_id' class='xyz.ActivitySummary' unique-key='lrt_bps_bpr_acs_uk'/>
 	    <many-to-one name='bestPractice' column='bps_bpr_id' class='xyz.BestPractice' unique-key='lrt_bps_bpr_acs_uk'/>
 	</properties>
-
+```
 ##### One or two things about hibearate Criterion
 
 Criteria query for one-to-many or many-to-one works successculy if using the parent or childs primary key for any other value u need full fledged object.
+```java
+DetachedCriteria dc = DetachedCriteria.forClass(ServiceDTO.class); 
+dc.add(Restrictions.eq('name', serviceName)). 
 
-	DetachedCriteria dc = DetachedCriteria.forClass(ServiceDTO.class); 
-	dc.add(Restrictions.eq('name', serviceName)). 
+add(Restrictions.eq('serviceCollection.name', serCollName)); // This will not work as its not the F.K in the ServiceDto class need a full fledged Service Collection Object ; use Hql to make this work.
 
-	add(Restrictions.eq('serviceCollection.name', serCollName)); // This will not work as its not the F.K in the ServiceDto class need a full fledged Service Collection Object ; use Hql to make this work.
-
-	add(Restrictions.eq('serviceCollection.collectionId', id)); // This being the F.K will work 
+add(Restrictions.eq('serviceCollection.collectionId', id)); // This being the F.K will work 
 
 List serviceDTOs = hibernateTemplate.findByCriteria(dc); use HQL in this case
-
+```
 
 #### Design of app in hibernate
 

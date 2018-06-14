@@ -151,16 +151,16 @@ To create a basic filter, you need to:
    - disable the invoker servlet
 
 General skeleton program 
+```java
+import javax.servlet.*;
+import javax.servlet.http.*;
 
-	import javax.servlet.*;
-	import javax.servlet.http.*;
+public class MyFilter implements Filter {
 
-	public class MyFilter implements Filter {
-
-	public void doFilter(ServletRequest request, ServletResponse resonse, FilterChain chain) throws ServletException, IOException {
-	            //work on request and response
-	            chain.doFilter(request, response);
-	}
+    public void doFilter(ServletRequest request, ServletResponse resonse, FilterChain chain) throws ServletException, IOException {
+                //work on request and response
+                chain.doFilter(request, response);
+    }
 
     public void init(FilterConfig config) throws ServletException {
         //work on config
@@ -171,44 +171,44 @@ General skeleton program
     }
 
 }	
-
+```
 Register and filter mapping 
 
 //in web.xml file
+```xml
+<web-app>
 
-	<web-app>
+...
 
-	...
+Before the servlet description
 
-	Before the servlet description
+    <filter>
+        <filter-name>MyFilter</filter-name>
+            <display-name>MyCoolFilter</display-name>
+            <description>This is my cool filter</description>
+        <filter-class>somePackage.MyFilter</filter-class>
+        <init-param>
+            <param-name>yyy</param-name>
+            <param-value>/xxx/zzz</param-value>
+        </init-param>
+    </filter>
 
-	    <filter>
-		   	<filter-name>MyFilter</filter-name>
-		        <display-name>MyCoolFilter</display-name>
-		        <description>This is my cool filter</description>
-		  	<filter-class>somePackage.MyFilter</filter-class>
-	        <init-param>
-	            <param-name>yyy</param-name>
-	            <param-value>/xxx/zzz</param-value>
-	        </init-param>
-	    </filter>
-
-	    <filter-mapping>
-		  	<filter-name>MyFilter</filter-name>
-		  	<url-pattern>/xxx.jsp</url-pattern>
-	    </filter-mapping>
-
+    <filter-mapping>
+        <filter-name>MyFilter</filter-name>
+        <url-pattern>/xxx.jsp</url-pattern>
+    </filter-mapping>
+```
 
 
 <!-- also apply to another servlet -->
-
-       <filter-mapping>
-   	 	<filter-name>MyFilter</filter-name>
-   	  	<servlet-name>xxx</servlet-name>
-       </filter-mapping>
-      ...
-      </web-app>
-
+```xml
+    <filter-mapping>
+    <filter-name>MyFilter</filter-name>
+    <servlet-name>xxx</servlet-name>
+    </filter-mapping>
+    ...
+    </web-app>
+```
 You may use filter mapping and servlet mapping in web.xml file to diable the invoker servlet to apply the filter. 
 
   

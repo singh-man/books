@@ -13,7 +13,7 @@ In the second form, an "object adapter" utilizes composition. The object adapter
 Now lets look at simple examples of a class adapter and an object adapter. First, we have an adaptee class named CelciusReporter. It stores a temperature value in Celcius.
 
 [CelciusReporter.java](http://www.avajava.com/tutorials/design-patterns/adapter-pattern/CelciusReporter.java)
-
+```java
 	package com.cakes;
 
 	public class CelciusReporter {
@@ -29,11 +29,11 @@ Now lets look at simple examples of a class adapter and an object adapter. First
 			this.temperatureInC = temperatureInC;
 		}
 	}
-
+```
 Here is our target interface that will be implemented by our adapter. It defines actions that our adapter will perform.
 
 [TemperatureInfo.java](http://www.avajava.com/tutorials/design-patterns/adapter-pattern/TemperatureInfo.java)
-
+```java
 	package com.cakes;
 
 	public interface TemperatureInfo {
@@ -46,11 +46,11 @@ Here is our target interface that will be implemented by our adapter. It defines
 
 		public void setTemperatureInC(double temperatureInC);
 	}
-
+```
 TemperatureClassReporter is a class adapter. It extends CelciusReporter (the adaptee) and implements TemperatureInfo (the target interface). If a temperature is in Celcius, TemperatureClassReporter utilizes the temperatureInC value from CelciusReporter. Fahrenheit requests are internally handled in Celcius.
 
 [TemperatureClassReporter.java](http://www.avajava.com/tutorials/design-patterns/adapter-pattern/TemperatureClassReporter.java)
-
+```java
 	package com.cakes;
 
 	// example of a class adapter
@@ -85,11 +85,11 @@ TemperatureClassReporter is a class adapter. It extends CelciusReporter (the ada
 			return ((c * 9 / 5) + 32);
 		}
 	}
-
+```
 TemperatureObjectReporter is an object adapter. It is similar in functionality to TemperatureClassReporter, except that it utilizes composition for the CelciusReporter rather than inheritance.
 
 [TemperatureObjectReporter.java](http://www.avajava.com/tutorials/design-patterns/adapter-pattern/TemperatureObjectReporter.java)
-
+```java
 	package com.cakes;
 
 	// example of an object adapter
@@ -130,11 +130,11 @@ TemperatureObjectReporter is an object adapter. It is similar in functionality t
 			return ((c * 9 / 5) + 32);
 		}
 	}
-
+```
 The AdapterDemo class is a client class that demonstrates the adapter pattern. First, it creates a TemperatureClassReporter object and references it via a TemperatureInfo reference. It demonstrates calls to the class adapter via the TemperatureInfo interface. After this, it creates a TemperatureObjectReporter object and references it via the same TemperatureInfo reference. It then demonstrates calls to the object adapter.
 
 [AdapterDemo.java](http://www.avajava.com/tutorials/design-patterns/adapter-pattern/AdapterDemo.java)
-
+```java
 	package com.cakes;
 
 	public class AdapterDemo {
@@ -162,7 +162,7 @@ The AdapterDemo class is a client class that demonstrates the adapter pattern. F
 			System.out.println("temp in F:" + tempInfo.getTemperatureInF());
 		}
 	}
-
+```
 The console output of the execution of AdapterDemo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/adapter-pattern/console.txt)
@@ -201,7 +201,7 @@ Now We'll look at an example of the composite pattern. First, We'll declare a Co
 The Leaf class has a name field and implements the sayHello() and sayGoodbye() methods of the Component interface by outputting messages to standard output.
 
 [Leaf.java](http://www.avajava.com/tutorials/design-patterns/composite-pattern/Leaf.java)
-
+```java
 	package com.cakes;
 
 	public class Leaf implements Component {
@@ -221,11 +221,11 @@ The Leaf class has a name field and implements the sayHello() and sayGoodbye() m
 			System.out.println(name + " leaf says goodbye");
 		}
 	}
-
+```
 The Composite class implements the Component interface. It implements the sayHello() and sayGoodbye() methods by calling these same methods on all of its children, which are Components (since they can be both Leaf objects and Composite objects, which both implement the Component interface).
 
 [Composite.java](http://www.avajava.com/tutorials/design-patterns/composite-pattern/Composite.java)
-
+```java
 	package com.cakes;
 	import java.util.ArrayList;
 	import java.util.List;
@@ -263,11 +263,11 @@ The Composite class implements the Component interface. It implements the sayHel
 			return components.get(index);
 		}
 	}
-
+```
 The CompositeDemo class demonstrates the composite pattern. It creates 5 Leaf objects. It adds two of these two a Composite object and two of these to another Composite object. It adds these two Composite objects and the last Leaf object to another Composite object. It calls sayHello() on leaf1, then sayHello() on composite1, then sayHello() on composite2, and then sayGoodbye() on composite3.
 
 [CompositeDemo.java](http://www.avajava.com/tutorials/design-patterns/composite-pattern/CompositeDemo.java)
-
+```java
 	package com.cakes;
 
 	public class CompositeDemo {
@@ -297,7 +297,7 @@ The CompositeDemo class demonstrates the composite pattern. It creates 5 Leaf ob
 			composite3.sayGoodbye();
 		}
 	}
-
+```
 The console output of executing CompositeDemo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/composite-pattern/console.txt)
@@ -329,7 +329,7 @@ The proxy pattern is a structural design pattern. In the proxy pattern, a proxy 
 Now, we'll look at an example of the proxy pattern. First, We'll create an abstract class called Thing with a basic sayHello() message that includes the date/time that the message is displayed.
 
 [Thing.java](http://www.avajava.com/tutorials/design-patterns/proxy-pattern/Thing.java)
-
+```java
 	package com.cakes;
 	import java.util.Date;
 
@@ -339,7 +339,7 @@ Now, we'll look at an example of the proxy pattern. First, We'll create an abstr
 			System.out.println(this.getClass().getSimpleName() + " says howdy at > " + new Date());
 		}
 	}
-
+```
 FastThing subclasses Thing.
 
 [FastThing.java](http://www.avajava.com/tutorials/design-patterns/proxy-pattern/FastThing.java)
@@ -369,7 +369,7 @@ SlowThing also subclasses Thing. However, its constructor takes 5 seconds to exe
 The Proxy class is a proxy to a SlowThing object. Since a SlowThing object takes 5 seconds to create, We'll use a proxy to a SlowThing so that a SlowThing object is only created on demand. This occurs when the proxy's sayHello() method is executed. It instantiates a SlowThing object if it doesn't already exist and then calls sayHello() on the SlowThing object.
 
 [Proxy.java](http://www.avajava.com/tutorials/design-patterns/proxy-pattern/Proxy.java)
-
+```java
 	package com.cakes;
 	import java.util.Date;
 
@@ -387,7 +387,7 @@ The Proxy class is a proxy to a SlowThing object. Since a SlowThing object takes
 			slowThing.sayHello();
 		}
 	}
-
+```
 The ProxyDemo class demonstrates the use of our proxy. It creates a Proxy object and then creates a FastThing object and calls sayHello() on the FastThing object. Next, it calls sayHello() on the Proxy object.
 
 [ProxyDemo.java](http://www.avajava.com/tutorials/design-patterns/proxy-pattern/ProxyDemo.java)
@@ -429,7 +429,7 @@ Now, lets look at an example of the flyweight design pattern. We'll create a Fly
 The FlyweightAdder class is a concrete flyweight class. It contains an "operation" field that is used to store the name of an operation that is common to adder flyweights. Notice the call to Thread.sleep(3000). This simulates a construction process that is expensive in terms of time. Each FlyweightAdder object that is created takes 3 seconds to create, so we definitely want to minimize the number of flyweight objects that are created. The doMath() method is implemented. It displays the common "operation" field and displays the addition of a and b, which are external state values that are passed in and used by the FlyweightAdder when doMath() is executed.
 
 [FlyweightAdder.java](http://www.avajava.com/tutorials/design-patterns/flyweight-pattern/FlyweightAdder.java)
-
+```java
 	package com.cakes;
 
 	public class FlyweightAdder implements Flyweight {
@@ -451,11 +451,11 @@ The FlyweightAdder class is a concrete flyweight class. It contains an "operatio
 			System.out.println(operation + ' ' + a + ' and ' + b + ': ' + (a + b));
 		}
 	}
-
+```
 The FlyweightMultiplier class is similar to the FlyweightAdder class, except that it performs multiplication rather than addition.
 
 [FlyweightMultiplier.java](http://www.avajava.com/tutorials/design-patterns/flyweight-pattern/FlyweightMultiplier.java)
-
+```java
 	package com.cakes;
 
 	public class FlyweightMultiplier implements Flyweight {
@@ -476,11 +476,11 @@ The FlyweightMultiplier class is similar to the FlyweightAdder class, except tha
 			System.out.println(operation + ' ' + a + ' and ' + b + ': ' + (a * b));
 		}
 	}
-
+```
 The FlyweightFactory class is our flyweight factory. It utilizes the singleton pattern so that we only have once instance of the factory, which we obtain via its static getInstance() method. The FlyweightFactory creates a hashmap pool of flyweights. If a request is made for a flyweight object and that object doesn't exist, it is created and placed in the flyweight pool. The flyweight pool of the FlyweightFactory stores all the instances of the different types of flyweights (ie, FlyweightAdder object, FlyweightMultiplier object, etc). Thus, only one instance of each type is created, and this occurs on-demand.
 
 [FlyweightFactory.java](http://www.avajava.com/tutorials/design-patterns/flyweight-pattern/FlyweightFactory.java)
-
+```java
 	package com.cakes;
 	import java.util.HashMap;
 	import java.util.Map;
@@ -519,11 +519,11 @@ The FlyweightFactory class is our flyweight factory. It utilizes the singleton p
 			}
 		}
 	}
-
+```
 The FlyweightDemo class demonstrates our flyweight pattern. It obtains a FlyweightFactory object via FlyweightFactory.getInstance(). After this, in a loop, it obtains a FlyweightAdder from the FlyweightFactory and calls its doMath() operation with the current loop index as the two parameter values. Next, it does the same thing with a FlyweightMultiplier.
 
 [FlyweightDemo.java](http://www.avajava.com/tutorials/design-patterns/flyweight-pattern/FlyweightDemo.java)
-
+```java
 	package com.cakes;
 
 	public class FlyweightDemo {
@@ -542,7 +542,7 @@ The FlyweightDemo class demonstrates our flyweight pattern. It obtains a Flyweig
 			}
 		}
 	}
-
+```
 The console output of executing FlyweightDemo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/flyweight-pattern/console.txt)
@@ -569,7 +569,7 @@ As an example, supposed we have three horribly written classes. For based on the
 Class1's doSomethingComplicated() method takes an integer and returns its cube.
 
 [Class1.java](http://www.avajava.com/tutorials/design-patterns/facade-pattern/Class1.java)
-
+```java
 	package com.cakes;
 
 	public class Class1 {
@@ -577,11 +577,11 @@ Class1's doSomethingComplicated() method takes an integer and returns its cube.
 			return x * x * x;
 		}
 	}
-
+```
 Class2's doAnotherThing() method doubles the cube of an integer and returns it.
 
 [Class2.java](http://www.avajava.com/tutorials/design-patterns/facade-pattern/Class2.java)
-
+```java
 	package com.cakes;
 
 	public class Class2 {
@@ -589,12 +589,12 @@ Class2's doAnotherThing() method doubles the cube of an integer and returns it.
 			return 2 * class1.doSomethingComplicated(x);
 		}
 	}
-
+```
 Class3's doMoreStuff() takes a Class1 object, a Class2 object, and an
 integer and returns twice the sixth power of the integer.
 
 [Class3.java](http://www.avajava.com/tutorials/design-patterns/facade-pattern/Class3.java)
-
+```java
 	package com.cakes;
 
 	public class Class3 {
@@ -602,13 +602,13 @@ integer and returns twice the sixth power of the integer.
 			return class1.doSomethingComplicated(x) * class2.doAnotherThing(class1, x);
 		}
 	}
-
+```
 For a client unfamiliar with Class1, Class2, and Class3, it would be very difficult to figure out how to interact with these classes. The classes interact and perform tasks in unclear ways. As a result, we need to be able to simplify interaction with this system of classes so that clients can interact with these classes in a simple, standardized manner.
 
 We do this with the Facade class. The Facade class has three methods: cubeX(), cubeXTimes2(), and xToSixthPowerTimes2(). The names of these methods clearly indicate what they do, and these methods hide the interactions of Class1, Class2, and Class3 from client code.
 
 [Facade.java](http://www.avajava.com/tutorials/design-patterns/facade-pattern/Facade.java)
-
+```java
 	package com.cakes;
 
 	public class Facade {
@@ -631,11 +631,11 @@ We do this with the Facade class. The Facade class has three methods: cubeX(), c
 			return class3.doMoreStuff(class1, class2, x);
 		}
 	}
-
+```
 The FacadeDemo class contains our client code. It creates a Facade object and then calls its three methods with a parameter value of 3. It displays the returned results.
 
 [FacadeDemo.java](http://www.avajava.com/tutorials/design-patterns/facade-pattern/FacadeDemo.java)
-
+```java
 	package com.cakes;
 
 	public class FacadeDemo {
@@ -650,7 +650,7 @@ The FacadeDemo class contains our client code. It creates a Facade object and th
 			facade.xToSixthPowerTimes2(3));
 		}
 	}
-
+```
 The console output of the execution of FacadeDemo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/facade-pattern/console.txt)
@@ -668,7 +668,7 @@ The bridge pattern is a structural design pattern. In the bridge pattern, we sep
 The bridge pattern can be demonstrated with an example. Suppose we have a Vehicle class. We can extract out the implementation of the engine into an Engine class. We can reference this Engine implementor in our Vehicle via an Engine field. We'll declare Vehicle to be an abstract class. Subclasses of Vehicle need to implement the drive() method. Notice that the Engine reference can be changed via the setEngine() method.
 
 [Vehicle.java](http://www.avajava.com/tutorials/design-patterns/bridge-pattern/Vehicle.java)
-
+```java
 	package com.cakes;
 
 	public abstract class Vehicle {Engine engine;
@@ -696,11 +696,11 @@ The bridge pattern can be demonstrated with an example. Suppose we have a Vehicl
 			}
 		}
 	}
-
+```
 BigBus is a subclass of Vehicle. It has a weight of 3000 kg. Its drive() method displays a message, calls the engine's go() method, and then calls reportOnSpeed() with the horsepower of the engine to report on how fast the vehicle is moving.
 
 [BigBus.java](http://www.avajava.com/tutorials/design-patterns/bridge-pattern/BigBus.java)
-
+```java
 	package com.cakes;
 
 	public class BigBus extends Vehicle {
@@ -717,11 +717,11 @@ BigBus is a subclass of Vehicle. It has a weight of 3000 kg. Its drive() method 
 			reportOnSpeed(horsepower);
 		}
 	}
-
+```
 SmallCar is similar to BigBus but is much lighter.
 
 [SmallCar.java](http://www.avajava.com/tutorials/design-patterns/bridge-pattern/SmallCar.java)
-
+```java
 	package com.cakes;
 
 	public class SmallCar extends Vehicle {
@@ -737,7 +737,7 @@ SmallCar is similar to BigBus but is much lighter.
 			reportOnSpeed(horsepower);
 		}
 	}
-
+```
 Our implementor interface is the Engine interface, which declares the go() method.
 
 [Engine.java](http://www.avajava.com/tutorials/design-patterns/bridge-pattern/Engine.java)
@@ -752,7 +752,7 @@ A BigEngine implements Engine. BigEngine has 350 horsepower. It's go()
 method reports that it is running and returns the horsepower.
 
 [BigEngine.java](http://www.avajava.com/tutorials/design-patterns/bridge-pattern/BigEngine.java)
-
+```java
 	package com.cakes;
 
 	public class BigEngine implements Engine {
@@ -769,11 +769,11 @@ method reports that it is running and returns the horsepower.
 			return horsepower;
 		}
 	}
-
+```
 SmallEngine is similar to BigEngine. It has only 100 horsepower.
 
 [SmallEngine.java](http://www.avajava.com/tutorials/design-patterns/bridge-pattern/SmallEngine.java)
-
+```java
 	package com.cakes;
 
 	public class SmallEngine implements Engine {int horsepower;
@@ -788,11 +788,11 @@ SmallEngine is similar to BigEngine. It has only 100 horsepower.
 			return horsepower;
 		}
 	}
-
+```
 The BridgeDemo class demonstrates our bridge pattern. We create a BigBus vehicle with a SmallEngine implementor. We call the vehicle's drive() method. Next, we change the implementor to a BigEngine and once again call drive(). After this, we create a SmallCar vehicle with a SmallEngine implementor. We call drive(). Next, we change the engine to a BigEngine and once again call drive().
 
 [BridgeDemo.java](http://www.avajava.com/tutorials/design-patterns/bridge-pattern/BridgeDemo.java)
-
+```java
 	package com.cakes;
 
 	public class BridgeDemo {
@@ -807,7 +807,7 @@ The BridgeDemo class demonstrates our bridge pattern. We create a BigBus vehicle
 			vehicle.drive();
 		}
 	}
-
+```
 The console output from the execution of BridgeDemo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/bridge-pattern/console.txt)
@@ -850,7 +850,7 @@ LivingAnimal implements Animal and is our concrete component. Its
 describe() method displays a message indicating that it is an animal.
 
 [LivingAnimal.java](http://www.avajava.com/tutorials/design-patterns/decorator-pattern/LivingAnimal.java)
-
+```java
 	package com.cakes;
 
 	public class LivingAnimal implements Animal {
@@ -860,11 +860,11 @@ describe() method displays a message indicating that it is an animal.
 			System.out.println("\nI am an animal.");
 		}
 	}
-
+```
 AnimalDecorator is our decorator abstract class. It implements Animal but since it is an abstract class, it does not have to implement describe(). Its constructor sets its Animal reference field.
 
 [AnimalDecorator.java](http://www.avajava.com/tutorials/design-patterns/decorator-pattern/AnimalDecorator.java)
-
+```java
 	package com.cakes;
 
 	public abstract class AnimalDecorator implements Animal {
@@ -874,11 +874,11 @@ AnimalDecorator is our decorator abstract class. It implements Animal but since 
 			this.animal = animal;
 		}
 	}
-
+```
 LegDecorator is a concrete decorator. Its constructor passes an Animal reference to AnimalDecorator's constructor. Its describe() method call's the Animal reference's describe() method and then outputs an additional message. It then calls its dance() method, showing that additional functionality can be added by the concrete decorator.
 
 [LegDecorator.java](http://www.avajava.com/tutorials/design-patterns/decorator-pattern/LegDecorator.java)
-
+```java
 	package com.cakes;
 
 	public class LegDecorator extends AnimalDecorator {
@@ -897,11 +897,11 @@ LegDecorator is a concrete decorator. Its constructor passes an Animal reference
 			System.out.println("I can dance.");
 		}
 	}
-
+```
 WingDecorator is a concrete decorator very similar to LegDecorator.
 
 [WingDecorator.java](http://www.avajava.com/tutorials/design-patterns/decorator-pattern/WingDecorator.java)
-
+```java
 	package com.cakes;
 
 	public class WingDecorator extends AnimalDecorator {
@@ -921,11 +921,11 @@ WingDecorator is a concrete decorator very similar to LegDecorator.
 			System.out.println("I can fly.");
 		}
 	}
-
+```
 GrowlDecorator is another concrete decorator.
 
 [GrowlDecorator.java](http://www.avajava.com/tutorials/design-patterns/decorator-pattern/GrowlDecorator.java)
-
+```java
 	package com.cakes;
 
 	public class GrowlDecorator extends AnimalDecorator {
@@ -943,11 +943,11 @@ GrowlDecorator is another concrete decorator.
 			System.out.println("Grrrrr.");
 		}
 	}
-
+```
 The DecoratorDemo class demonstrates the decorator design pattern. First, a LivingAnimal object is created and is referenced via the Animal reference. The describe() method is called. After this, we wrap the LivingAnimal in a LegDecorator object and once again call describe. We can see that legs have been added. After that, we wrap the LegDecorator in a WingDecorator, which adds wings to our animal. Later, we wrap the animal in two GrowlDecorators. From the describe() output, we can see that two growl messages are displayed since we wrapped the animal twice.
 
 [DecoratorDemo.java](http://www.avajava.com/tutorials/design-patterns/decorator-pattern/DecoratorDemo.java)
-
+```java
 	package com.cakes;
 
 	public class DecoratorDemo {
@@ -963,7 +963,7 @@ The DecoratorDemo class demonstrates the decorator design pattern. First, a Livi
 			animal.describe();
 		}
 	}
-
+```
 The console output is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/decorator-pattern/console.txt)

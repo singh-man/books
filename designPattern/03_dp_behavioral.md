@@ -9,7 +9,7 @@ The template method pattern is a behavioral class pattern. A behavioral class pa
 Here is an example of the template method pattern. Meal is an abstract class with a template method called doMeal() that defines the steps involved in a meal. We declare the method as final so that it can not be overridden. The algorithm defined by doMeal() consists of four steps: prepareIngredients(), cook(), eat(), and cleanUp(). The eat() method is implemented although subclasses can override the implementation. The prepareIngredients(), cook(), and cleanUp() methods are are declared abstract so that subclasses need to implement them.
 
 [Meal.java](http://www.avajava.com/tutorials/design-patterns/template-method-pattern/Meal.java)
-
+```java
 	package com.cakes;
 
 	public abstract class Meal {// template method
@@ -31,11 +31,11 @@ Here is an example of the template method pattern. Meal is an abstract class wit
 
 		public abstract void cleanUp();
 	}
-
+```
 The HamburgerMeal class extends Meal and implements Meal's three abstract methods.
 
 [HamburgerMeal.java](http://www.avajava.com/tutorials/design-patterns/template-method-pattern/HamburgerMeal.java)
-
+```java
 	package com.cakes;
 
 	public class HamburgerMeal extends Meal {
@@ -55,12 +55,12 @@ The HamburgerMeal class extends Meal and implements Meal's three abstract method
 			System.out.println("Throwing away paper plates");
 		}
 	}
-
+```
 The TacoMeal class implements Meal's three abstract methods and also
 overrides the eat() method.
 
 [TacoMeal.java](http://www.avajava.com/tutorials/design-patterns/template-method-pattern/TacoMeal.java)
-
+```java
 	package com.cakes;
 
 	public class TacoMeal extends Meal {
@@ -85,11 +85,11 @@ overrides the eat() method.
 			System.out.println("Doing the dishes");
 		}
 	}
-
+```
 The Demo class creates a HamburgerMeal object and calls its doMeal() method. It creates a TacoMeal object and calls doMeal() on the TacoMeal object.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/template-method-pattern/Demo.java)
-
+```java
 	package com.cakes;
 
 	public class Demo {
@@ -102,7 +102,7 @@ The Demo class creates a HamburgerMeal object and calls its doMeal() method. It 
 			meal2.doMeal();
 		}
 	}
-
+```
 The console output of the execution of Demo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/template-method-pattern/console.txt)
@@ -130,7 +130,7 @@ Now, lets look at an example of this pattern. We'll create a Mediator class (wit
 The Mediator has references to the two buyers, the seller, and the converter. It has methods so that objects of these types can be registered. It also has a placeBid() method. This method takes a bid amount and a unit of currency as parameters. It converts this amount to a dollar amount via communication with the dollarConverter. It then asks the seller if the bid has been accepted, and it returns the answer.
 
 [Mediator.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/Mediator.java)
-
+```java
 	package com.cakes;
 
 	public class Mediator {
@@ -165,11 +165,11 @@ The Mediator has references to the two buyers, the seller, and the converter. It
 			return americanSeller.isBidAccepted(dollarAmount);
 		}
 	}
-
+```
 Here is the Buyer class. The SwedishBuyer and FrenchBuyer classes are subclasses of Buyer. The buyer has a unit of currency as a field, and it also has a reference to the mediator. The Buyer class has a attemptToPurchase() method. This method submits a bid to the mediator's placeBid() method. It returns the mediator's response.
 
 [Buyer.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/Buyer.java)
-
+```java
 	package com.cakes;
 
 	public class Buyer {
@@ -187,11 +187,11 @@ Here is the Buyer class. The SwedishBuyer and FrenchBuyer classes are subclasses
 			return mediator.placeBid(bid, unitOfCurrency);
 		}
 	}
-
+```
 The SwedishBuyer class is a subclass of Buyer. In the constructor, we set the unitOfCurrency to be "krona". We also register the SwedishBuyer with the mediator so that the mediator knows about the SwedishBuyer object.
 
 [SwedishBuyer.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/SwedishBuyer.java)
-
+```java
 	package com.cakes;
 
 	public class SwedishBuyer extends Buyer {
@@ -200,11 +200,11 @@ The SwedishBuyer class is a subclass of Buyer. In the constructor, we set the un
 			this.mediator.registerSwedishBuyer(this);
 		}
 	}
-
+```
 The FrenchBuyer class is similar to the SwedishBuyer class, except the unitOfCurrency is "euro", and it registers with the mediator as the FrenchBuyer.
 
 [FrenchBuyer.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/FrenchBuyer.java)
-
+```java
 	package com.cakes;
 
 	public class FrenchBuyer extends Buyer {
@@ -213,11 +213,11 @@ The FrenchBuyer class is similar to the SwedishBuyer class, except the unitOfCur
 			this.mediator.registerFrenchBuyer(this);
 		}
 	}
-
+```
 In the constructor of the AmericanSeller class, the class gets a reference to the mediator and the priceInDollars gets set. This is the price of some good being sold. The seller registers with the mediator as the AmericanSeller. The seller's isBidAccepted() method takes a bid (in dollars). If the bid is over the price (in dollars), the bid is accepted and true is returned. Otherwise, false is returned.
 
 [AmericanSeller.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/AmericanSeller.java)
-
+```java
 	package com.cakes;
 
 	public class AmericanSeller {
@@ -241,11 +241,11 @@ In the constructor of the AmericanSeller class, the class gets a reference to th
 			}
 		}
 	}
-
+```
 The DollarConverter class is another colleague class. When created, it gets a reference to the mediator and registers itself with the mediator as the DollarConverter. This class has methods to convert amounts in euros and kronor to dollars.
 
 [DollarConverter.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/DollarConverter.java)
-
+```java
 	package com.cakes;
 
 	public class DollarConverter {
@@ -283,11 +283,11 @@ The DollarConverter class is another colleague class. When created, it gets a re
 			}
 		}
 	}
-
+```
 The Demo class demonstrates our mediator pattern. It creates a SwedishBuyer object and a FrenchBuyer object. It creates an AmericanSeller object with a selling price set to 10 dollars. It then creates a DollarConverter. All of these objects register themselves with the mediator in their constructors. The Swedish buyer starts with a bid of 55 kronor and keeps bidding up in increments of 15 kronor until the bid is accepted. The French buyer starts bidding at 3 euros and keeps bidding in increments of 1.50 euros until the bid is accepted.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/Demo.java)
-
+```java
 	package com.cakes;
 
 	public class Demo {
@@ -311,7 +311,7 @@ The Demo class demonstrates our mediator pattern. It creates a SwedishBuyer obje
 			}
 		}
 	}
-
+```
 The console output of the execution of Demo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/console.txt)
@@ -355,7 +355,7 @@ In this pattern, a Handler is an interface for handling a request and accessing 
 Now, lets look at an example of the chain of responsibility pattern. Rather than an interface, I\'ll use an abstract base class as the handler so that subclasses can utilize the implemented setSuccessor() method. This abstract class is called PlanetHandler. Concrete handlers that subclass PlanetHandler need to implement the handleRequest() method.
 
 [PlanetHandler.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/PlanetHandler.java)
-
+```java
 	package com.cakes;
 
 	public abstract class PlanetHandler {
@@ -367,7 +367,7 @@ Now, lets look at an example of the chain of responsibility pattern. Rather than
 
 		public abstract void handleRequest(PlanetEnum request);
 	}
-
+```
 This example will utilize an enum of the planets called PlanetEnum.
 
 [PlanetEnum.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/PlanetEnum.java)
@@ -384,7 +384,7 @@ handle the request. Otherwise, the request is passed on to this
 handler's successor if the successor exists.
 
 [MercuryHandler.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/MercuryHandler.java)
-
+```java
 	package com.cakes;
 
 	public class MercuryHandler extends PlanetHandler {
@@ -400,11 +400,11 @@ handler's successor if the successor exists.
 			}
 		}
 	}
-
+```
 VenusHandler is similar to MercuryHandler, except it handles PlanetEnum.VENUS requests.
 
 [VenusHandler.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/VenusHandler.java)
-
+```java
 	package com.cakes;
 
 	public class VenusHandler extends PlanetHandler {
@@ -420,11 +420,11 @@ VenusHandler is similar to MercuryHandler, except it handles PlanetEnum.VENUS re
 			}
 		}
 	}
-
+```
 EarthHandler similarly handles PlanetEnum.EARTH requests.
 
 [EarthHandler.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/EarthHandler.java)
-
+```java
 	package com.cakes;
 
 	public class EarthHandler extends PlanetHandler {
@@ -441,11 +441,11 @@ EarthHandler similarly handles PlanetEnum.EARTH requests.
 			}
 		}
 	}
-
+```
 The Demo class is the client class. It creates the chain of handlers, starting with MercuryHandler, then VenusHandler, and then EarthHandler. The setUpChain() method returns the chain to main() via a PlanetHandler reference. Four requests are made of the chain, where the requests are VENUS, MERCURY, EARTH, and JUPITER.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/Demo.java)
-
+```java
 	package com.cakes;
 
 	public class Demo {
@@ -466,7 +466,7 @@ The Demo class is the client class. It creates the chain of handlers, starting w
 			return mercuryHandler;
 		}
 	}
-
+```
 The console output of the execution of Demo is shown here. Notice that if a handler can not handle the request, it passes the request on to the next handler.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/console.txt)
@@ -552,7 +552,7 @@ The EventBus system and code use the following terms to discuss event distributi
 the EventBus.
 
 [WeatherSubject.java](http://www.avajava.com/tutorials/design-patterns/observer-pattern/WeatherSubject.java)
-
+```java
 	package com.cakes;
 
 	public interface WeatherSubject {
@@ -562,7 +562,7 @@ the EventBus.
 
 		public void doNotify();
 	}
-
+```
 We'll also create an interface for the observers called
 WeatherObserver. It features one method, a doUpdate() method.
 
@@ -577,7 +577,7 @@ WeatherObserver. It features one method, a doUpdate() method.
 The WeatherStation class implements WeatherSubject. It is our subject class. It maintains a set of WeatherObservers which are added via addObserver() and removed via removeObserver(). When WeatherSubject's state changes via setTemperature(), the doNotify() method is called, which contacts all the WeatherObservers with the temperature via their doUpdate() methods.
 
 [WeatherStation.java](http://www.avajava.com/tutorials/design-patterns/observer-pattern/WeatherStation.java)
-
+```java
 	package com.cakes;
 	import java.util.HashSet;
 	import java.util.Iterator;
@@ -619,11 +619,11 @@ The WeatherStation class implements WeatherSubject. It is our subject class. It 
 			doNotify();
 		}
 	}
-
+```
 WeatherCustomer1 is an observer that implements WeatherObserver. Its doUpdate() method gets the current temperature from the WeatherStation and displays it.
 
 [WeatherCustomer1.java](http://www.avajava.com/tutorials/design-patterns/observer-pattern/WeatherCustomer1.java)
-
+```java
 	package com.cakes;
 
 	public class WeatherCustomer1 implements WeatherObserver {
@@ -633,11 +633,11 @@ WeatherCustomer1 is an observer that implements WeatherObserver. Its doUpdate() 
 			System.out.println("Weather customer 1 just found out the temperature is:" + temperature);
 		}
 	}
-
+```
 WeatherCustomer2 performs similar functionality as WeatherCustomer1.
 
 [WeatherCustomer2.java](http://www.avajava.com/tutorials/design-patterns/observer-pattern/WeatherCustomer2.java)
-
+```java
 	package com.cakes;
 
 	public class WeatherCustomer2 implements WeatherObserver {
@@ -646,11 +646,11 @@ WeatherCustomer2 performs similar functionality as WeatherCustomer1.
 			System.out.println("Weather customer 2 just found out the temperature is:" + temperature);
 		}
 	}
-
+```
 The Demo class demonstrates the observer pattern. It creates a WeatherStation and then a WeatherCustomer1 and a WeatherCustomer2. The two customers are added as observers to the weather station. Then the setTemperature() method of the weather station is called. This changes the state of the weather station and the customers are notified of this temperature update. Next, the WeatherCustomer1 object is removed from the station's collection of observers. Then, the setTemperature() method is called again. This results in the notification of the WeatherCustomer2 object.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/observer-pattern/Demo.java)
-
+```java
 	package com.cakes;
 
 	public class Demo {
@@ -665,7 +665,7 @@ The Demo class demonstrates the observer pattern. It creates a WeatherStation an
 			weatherStation.setTemperature(35);
 		}
 	}
-
+```
 The console output of executing Demo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/observer-pattern/console.txt)
@@ -699,7 +699,7 @@ Here is an example of the strategy pattern. First, We'll define a Strategy inter
 The HikeStrategy class is a concrete strategy class that implements the Strategy interface. The checkTemperature method is implemented so that if the temperature is between 50 and 90, it returns true. Otherwise it returns false.
 
 [HikeStrategy.java](http://www.avajava.com/tutorials/design-patterns/strategy-pattern/HikeStrategy.java)(behaviour)
-
+```java
 	package com.cakes;
 
 	public class HikeStrategy implements Strategy {
@@ -712,11 +712,11 @@ The HikeStrategy class is a concrete strategy class that implements the Strategy
 			}
 		}
 	}
-
+```
 The SkiStrategy implements the Strategy interface. If the temperature is 32 or less, the checkTemperature method returns true. Otherwise it returns false.
 
 [SkiStrategy.java](http://www.avajava.com/tutorials/design-patterns/strategy-pattern/SkiStrategy.java)(behaviour)
-
+```java
 	package com.cakes;
 
 	public class SkiStrategy implements Strategy {
@@ -729,11 +729,11 @@ The SkiStrategy implements the Strategy interface. If the temperature is 32 or l
 			}
 		}
 	}
-
+```
 The Context class contains a temperature and a reference to a Strategy. The Strategy can be changed, resulting in different behavior that operates on the same data in the Context. The result of this can be obtained from the Context via the getResult() method.
 
 [Context.java](http://www.avajava.com/tutorials/design-patterns/strategy-pattern/Context.java)(integrates the data i.e temp(can be a java class) and behavior i.e Strategy)
-
+```java
 	package com.cakes;
 
 	public class Context {
@@ -758,33 +758,33 @@ The Context class contains a temperature and a reference to a Strategy. The Stra
 			return strategy.checkTemperature(temperatureInF);
 		}
 	}
-
+```
 The Demo class creates a Context object with a temperature of 60 and with a SkiStrategy. It displays the temperature from the context and whether that temperature is OK for skiing. After that, it sets the Strategy in the Context to HikeStrategy. It then displays the temperature from the context and whether that temperature is OK for hiking.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/strategy-pattern/Demo.java)
+```java
+package com.cakes;
 
-	package com.cakes;
+public class Demo {
+	public static void main(String[] args) {
+		int temperatureInF = 60;
 
-	public class Demo {
-		public static void main(String[] args) {
-			int temperatureInF = 60;
+		Strategy skiStrategy = new SkiStrategy();
 
-			Strategy skiStrategy = new SkiStrategy();
+		Context context = new Context(temperatureInF, skiStrategy);
 
-			Context context = new Context(temperatureInF, skiStrategy);
+		System.out.println("Is the temperature (" + context.getTemperatureInF() + "F) good for skiing? " +
+		context.getResult());
 
-			System.out.println("Is the temperature (" + context.getTemperatureInF() + "F) good for skiing? " +
-			context.getResult());
+		Strategy hikeStrategy = new HikeStrategy();
 
-			Strategy hikeStrategy = new HikeStrategy();
+		context.setStrategy(hikeStrategy);
 
-			context.setStrategy(hikeStrategy);
-
-			System.out.println("Is the temperature (" + context.getTemperatureInF() + "F) good for hiking? " +
-			context.getResult());
-		}
+		System.out.println("Is the temperature (" + context.getTemperatureInF() + "F) good for hiking? " +
+		context.getResult());
 	}
-
+}
+```
 The console output of executing Demo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/strategy-pattern/console.txt)
@@ -832,17 +832,17 @@ The command pattern can be used to perform \'undo\' functionality. In this case,
 Here is an example of the command pattern. We have a Command interface with an execute() method.
 
 [Command.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/Command.java)
-
+```java
 	package com.cakes;
 
 	public interface Command {
 		public void execute();//encapsulates the action of Receiver
 	}
-
+```
 LunchCommand implements Command. It contains a reference to Lunch, a receiver. Its execute() method invokes the appropriate action on the receiver.
 
 [LunchCommand.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/LunchCommand.java)
-
+```java
 	package com.cakes;
 
 	public class LunchCommand implements Command {
@@ -857,11 +857,11 @@ LunchCommand implements Command. It contains a reference to Lunch, a receiver. I
 			lunch.makeLunch();//receiver action is encapsulated
 		}
 	}
-
+```
 The DinnerCommand is similar to LunchCommand. It contains a reference to Dinner, a receiver. Its execute() method invokes the makeDinner() action of the Dinner object.
 
 [DinnerCommand.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/DinnerCommand.java)
-
+```java
 	package com.cakes;
 
 	public class DinnerCommand implements Command {
@@ -876,11 +876,11 @@ The DinnerCommand is similar to LunchCommand. It contains a reference to Dinner,
 			dinner.makeDinner();
 		}
 	}
-
+```
 Lunch is a receiver.
 
 [Lunch.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/Lunch.java)(Receiver)
-
+```java
 	package com.cakes;
 
 	public class Lunch {
@@ -888,11 +888,11 @@ Lunch is a receiver.
 			System.out.println("Lunch is being made");
 		}
 	}
-
+```
 Dinner is also a receiver.
 
 [Dinner.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/Dinner.java)
-
+```java
 	package com.cakes;
 
 	public class Dinner {
@@ -900,11 +900,11 @@ Dinner is also a receiver.
 			System.out.println("Dinner is being made");
 		}
 	}
-
+```
 MealInvoker is the invoker class. It contains a reference to the Command to invoke. Its invoke() method calls the execute() method of the Command.
 
 [MealInvoker.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/MealInvoker.java)(Invoker will call the execute of Command)
-
+```java
 	package com.cakes;
 
 	public class MealInvoker {
@@ -922,26 +922,26 @@ MealInvoker is the invoker class. It contains a reference to the Command to invo
 			command.execute();
 		}
 	}
-
+```
 The Demo class demonstrates the command pattern. It instantiates a Lunch (receiver) object and creates a LunchCommand (concrete command) with the Lunch. The LunchCommand is referenced by a Command interface reference. Next, we perform the same procedure on the Dinner and DinnerCommand objects. After this, we create a MealInvoker object with lunchCommand, and we call the invoke() method of mealInvoker. After this, we set mealInvoker's command to dinnerCommand, and once again call invoke() on mealInvoker.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/Demo.java)
+```java
+package com.cakes;
 
-	package com.cakes;
-
-	public class Demo {
-		public static void main(String[] args) {
-			Lunch lunch = new Lunch(); // receiver
-			Command lunchCommand = new LunchCommand(lunch); // concrete command
-			Dinner dinner = new Dinner(); // receiver
-			Command dinnerCommand = new DinnerCommand(dinner); // concrete command
-			MealInvoker mealInvoker = new MealInvoker(lunchCommand); // invoker
-			mealInvoker.invoke();
-			mealInvoker.setCommand(dinnerCommand);
-			mealInvoker.invoke();
-		}
+public class Demo {
+	public static void main(String[] args) {
+		Lunch lunch = new Lunch(); // receiver
+		Command lunchCommand = new LunchCommand(lunch); // concrete command
+		Dinner dinner = new Dinner(); // receiver
+		Command dinnerCommand = new DinnerCommand(dinner); // concrete command
+		MealInvoker mealInvoker = new MealInvoker(lunchCommand); // invoker
+		mealInvoker.invoke();
+		mealInvoker.setCommand(dinnerCommand);
+		mealInvoker.invoke();
 	}
-
+}
+```
 The console output of the execution of Demo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/command-pattern/console.txt)
@@ -971,92 +971,92 @@ Lets look at an example of the state pattern. First off, We'll define the Emotio
 The HappyState class is a Concrete State that implements sayHello() and sayGoodbye() of EmotionalState. These messages are cheerful (representing a happy state).
 
 [HappyState.java](http://www.avajava.com/tutorials/design-patterns/state-pattern/HappyState.java)
+```java
+package com.cakes;
 
-	package com.cakes;
+// Concrete State
 
-	// Concrete State
-
-	public class HappyState implements EmotionalState {
-		
-		@Override
-		public String sayGoodbye() {
-			return "Bye, friend!";
-		}
-
-		@Override
-		public String sayHello() {
-			return "Hello, friend!";
-		}
+public class HappyState implements EmotionalState {
+	
+	@Override
+	public String sayGoodbye() {
+		return "Bye, friend!";
 	}
 
+	@Override
+	public String sayHello() {
+		return "Hello, friend!";
+	}
+}
+```
 The SadState class also implements the EmotionalState interface. The messages are sad (representing a sad state).
 
 [SadState.java](http://www.avajava.com/tutorials/design-patterns/state-pattern/SadState.java)
+```java
+package com.cakes;
 
-	package com.cakes;
+//Concrete State
 
-	//Concrete State
-
-	public class SadState implements EmotionalState {
-		
-		@Override
-		public String sayGoodbye() {
-			return "Bye. Sniff, sniff.";
-		}
-
-		@Override
-		public String sayHello() {
-			return "Hello. Sniff, sniff.";
-		}
+public class SadState implements EmotionalState {
+	
+	@Override
+	public String sayGoodbye() {
+		return "Bye. Sniff, sniff.";
 	}
 
+	@Override
+	public String sayHello() {
+		return "Hello. Sniff, sniff.";
+	}
+}
+```
 The Person class is the Context class. It contains an EmotionalState reference to a concrete state. In this example, we have Person implement the EmotionalState reference, and we pass the calls to Person's sayHello() and sayGoodbye() methods on to the corresponding methods on the emotionalState reference. As a result of this, a Person object behaves differently depending on the state of Person (ie, the current EmotionalState reference).
 
 [Person.java](http://www.avajava.com/tutorials/design-patterns/state-pattern/Person.java)
+```java
+package com.cakes;
 
-	package com.cakes;
+// Context
+public class Person implements EmotionalState {
+	
+	EmotionalState emotionalState;
 
-	// Context
-	public class Person implements EmotionalState {
-		
-		EmotionalState emotionalState;
-
-		public Person(EmotionalState emotionalState) {
-			this.emotionalState = emotionalState;
-		}
-
-		public void setEmotionalState(EmotionalState emotionalState) {
-			this.emotionalState = emotionalState;
-		}
-
-		@Override
-		public String sayGoodbye() {
-			return emotionalState.sayGoodbye();
-		}
-
-		@Override
-		public String sayHello() {
-			return emotionalState.sayHello();
-		}
+	public Person(EmotionalState emotionalState) {
+		this.emotionalState = emotionalState;
 	}
 
+	public void setEmotionalState(EmotionalState emotionalState) {
+		this.emotionalState = emotionalState;
+	}
+
+	@Override
+	public String sayGoodbye() {
+		return emotionalState.sayGoodbye();
+	}
+
+	@Override
+	public String sayHello() {
+		return emotionalState.sayHello();
+	}
+}
+```
 The Demo class demonstrates the state pattern. First, it creates a Person object with a HappyState object. We display the results of sayHello() and sayGoodbyte() when the person object is in the happy state. Next, we change the person object's state with a SadState object. We display the results of sayHello() and sayGoodbyte(), and we see that in the sad state, the person object's behavior is different.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/state-pattern/Demo.java)
+```java
+package com.cakes;
 
-	package com.cakes;
-
-	public class Demo {
-		public static void main(String[] args) {
-			Person person = new Person(new HappyState());
-			System.out.println("Hello in happy state: " + person.sayHello());
-			System.out.println("Goodbye in happy state: " + person.sayGoodbye());
-			person.setEmotionalState(new SadState());
-			System.out.println("Hello in sad state: " + person.sayHello());
-			System.out.println("Goodbye in sad state: " + person.sayGoodbye());
-		}
+public class Demo {
+	public static void main(String[] args) {
+		Person person = new Person(new HappyState());
+		System.out.println("Hello in happy state: " + person.sayHello());
+		System.out.println("Goodbye in happy state: " + person.sayGoodbye());
+		person.setEmotionalState(new SadState());
+		System.out.println("Hello in sad state: " + person.sayHello());
+		System.out.println("Goodbye in sad state: " + person.sayGoodbye());
 	}
-
+}
+```
 The console output of executing Demo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/state-pattern/console.txt)
@@ -1081,7 +1081,7 @@ The elements to visit all implement the accept() method that takes a visitor as 
 Lets illustrate the visitor pattern with an example. First, We'll define a NumberVisitor interface. This interface declares three visit methods which take different types as arguments. Note that if we only wrote one visit method, we'd have to use the instanceof operator or a similar technique to handle the different element types. However, since we have separate visit methods, we don\'t need the instanceof operator, since each visit method handles a different type.
 
 [NumberVisitor.java](http://www.avajava.com/tutorials/design-patterns/visitor-pattern/NumberVisitor.java)
-
+```java
 	package com.cakes;
 	import java.util.List;
 
@@ -1092,7 +1092,7 @@ Lets illustrate the visitor pattern with an example. First, We'll define a Numbe
 
 		public void visit(List<NumberElement> elementList);
 	}
-
+```
 All of the elements classes to be visited will implement the NumberElement interface. This interface has a single method that takes a NumberVisitor as an argument.
 
 [NumberElement.java](http://www.avajava.com/tutorials/design-patterns/visitor-pattern/NumberElement.java)
@@ -1106,7 +1106,7 @@ All of the elements classes to be visited will implement the NumberElement inter
 Lets create a TwoElement class that implements NumberElement. It has two int fields. Its accept() method calls the visitor's visit() method with 'this'. The operator to be performed on TwoElement is performed by the visitor.
 
 [TwoElement.java](http://www.avajava.com/tutorials/design-patterns/visitor-pattern/TwoElement.java)
-
+```java
 	package com.cakes;
 
 	public class TwoElement implements NumberElement {
@@ -1123,123 +1123,123 @@ Lets create a TwoElement class that implements NumberElement. It has two int fie
 			visitor.visit(this);
 		}
 	}
-
+```
 The ThreeElement class is similar to TwoElement, except that it has three int fields.
 
 [ThreeElement.java](http://www.avajava.com/tutorials/design-patterns/visitor-pattern/ThreeElement.java)
+```java
+package com.cakes;
 
-	package com.cakes;
+public class ThreeElement implements NumberElement {
+	int a;
+	int b;
+	int c;
 
-	public class ThreeElement implements NumberElement {
-		int a;
-		int b;
-		int c;
-
-		public ThreeElement(int a, int b, int c) {
-			this.a = a;
-			this.b = b;
-			this.c = c;
-		}
-
-		@Override
-		public void accept(NumberVisitor visitor) {visitor.visit(this);
-		}
+	public ThreeElement(int a, int b, int c) {
+		this.a = a;
+		this.b = b;
+		this.c = c;
 	}
 
+	@Override
+	public void accept(NumberVisitor visitor) {visitor.visit(this);
+	}
+}
+```
 Now, lets create a visitor called SumVisitor that implements the NumberVisitor interface. For TwoElement and ThreeElement objects, this visitor will sum up the int fields. For a List of NumElements (ie, TwoElement and ThreeElement objects), this visitor will iterate over the elements and call their accept() methods. As a result of this, the visitor will perform visit operations on all the TwoElement and ThreeElement objects that make up the list, since the call to accept() in turn calls the visitor's visit methods for the TwoElement and ThreeElement objects.
 
 [SumVisitor.java](http://www.avajava.com/tutorials/design-patterns/visitor-pattern/SumVisitor.java)
+```java
+package com.cakes;
+import java.util.List;
 
-	package com.cakes;
-	import java.util.List;
-
-	public class SumVisitor implements NumberVisitor {
-		
-		@Override
-		public void visit(TwoElement twoElement) {
-			int sum = twoElement.a + twoElement.b;
-			System.out.println(twoElement.a + "+" + twoElement.b + "=" + sum);
-		}
-
-		@Override
-		public void visit(ThreeElement threeElement) {
-			int sum = threeElement.a + threeElement.b + threeElement.c;
-			System.out.println(threeElement.a + "+" + threeElement.b + "+" +
-			threeElement.c + "=" + sum);
-		}
-
-		@Override
-		public void visit(List<NumberElement> elementList) {
-			for (NumberElement ne : elementList) {
-				ne.accept(this);
-			}
-		}
+public class SumVisitor implements NumberVisitor {
+	
+	@Override
+	public void visit(TwoElement twoElement) {
+		int sum = twoElement.a + twoElement.b;
+		System.out.println(twoElement.a + "+" + twoElement.b + "=" + sum);
 	}
 
+	@Override
+	public void visit(ThreeElement threeElement) {
+		int sum = threeElement.a + threeElement.b + threeElement.c;
+		System.out.println(threeElement.a + "+" + threeElement.b + "+" +
+		threeElement.c + "=" + sum);
+	}
+
+	@Override
+	public void visit(List<NumberElement> elementList) {
+		for (NumberElement ne : elementList) {
+			ne.accept(this);
+		}
+	}
+}
+```
 Here is another visitor, TotalSumVisitor. In addition to summing up the int fields and displaying the sum, this visitor will keep track of the total sums of all the elements that are visited.
 
 [TotalSumVisitor.java](http://www.avajava.com/tutorials/design-patterns/visitor-pattern/TotalSumVisitor.java)
+```java
+package com.cakes;
+import java.util.List;
 
-	package com.cakes;
-	import java.util.List;
+public class TotalSumVisitor implements NumberVisitor {
+	int totalSum = 0;
 
-	public class TotalSumVisitor implements NumberVisitor {
-		int totalSum = 0;
+	@Override
+	public void visit(TwoElement twoElement) {
+		int sum = twoElement.a + twoElement.b;
+		System.out.println("Adding " + twoElement.a + "+" + twoElement.b + "=" + sum + " to total");
+		totalSum += sum;
+	}
 
-		@Override
-		public void visit(TwoElement twoElement) {
-			int sum = twoElement.a + twoElement.b;
-			System.out.println("Adding " + twoElement.a + "+" + twoElement.b + "=" + sum + " to total");
-			totalSum += sum;
-		}
+	@Override
+	public void visit(ThreeElement threeElement) {
+		int sum = threeElement.a + threeElement.b + threeElement.c;
+		System.out.println("Adding " + threeElement.a + "+" + threeElement.b + "+" + threeElement.c + "=" + sum + " to total");
+		totalSum += sum;
+	}
 
-		@Override
-		public void visit(ThreeElement threeElement) {
-			int sum = threeElement.a + threeElement.b + threeElement.c;
-			System.out.println("Adding " + threeElement.a + "+" + threeElement.b + "+" + threeElement.c + "=" + sum + " to total");
-			totalSum += sum;
-		}
-
-		@Override
-		public void visit(List<NumberElement> elementList) {
-			for (NumberElement ne : elementList) {
-				ne.accept(this);
-			}
-		}
-
-		public int getTotalSum() {
-			return totalSum;
+	@Override
+	public void visit(List<NumberElement> elementList) {
+		for (NumberElement ne : elementList) {
+			ne.accept(this);
 		}
 	}
 
+	public int getTotalSum() {
+		return totalSum;
+	}
+}
+```
 Lets see the visitor pattern in action. The Demo class creates two TwoElement objects and one ThreeElement object. It creates a list of NumberElements and adds the TwoElement object and the ThreeElement object to the list. Next, we create a SumVisitor and we visit the list with the SumVisitor. After this, we create a TotalSumVisitor and visit the list with the TotalSumVisitor. We display the total sum via the call to TotalSumVisitor's getTotalSum() method.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/visitor-pattern/Demo.java)
+```java
+package com.cakes;
+import java.util.ArrayList;
+import java.util.List;
 
-	package com.cakes;
-	import java.util.ArrayList;
-	import java.util.List;
-
-	public class Demo {
-		
-		public static void main(String[] args) {
-			TwoElement two1 = new TwoElement(3, 3);
-			TwoElement two2 = new TwoElement(2, 7);
-			ThreeElement three1 = new ThreeElement(3, 4, 5);
-			List<NumberElement> numberElements = new ArrayList<NumberElement>();
-			numberElements.add(two1);
-			numberElements.add(two2);
-			numberElements.add(three1);
-			System.out.println("Visiting element list with SumVisitor");
-			NumberVisitor sumVisitor = new SumVisitor();
-			sumVisitor.visit(numberElements);
-			System.out.println("\nVisiting element list with TotalSumVisitor");
-			TotalSumVisitor totalSumVisitor = new TotalSumVisitor();
-			totalSumVisitor.visit(numberElements);
-			System.out.println("Total sum:" + totalSumVisitor.getTotalSum());
-		}
+public class Demo {
+	
+	public static void main(String[] args) {
+		TwoElement two1 = new TwoElement(3, 3);
+		TwoElement two2 = new TwoElement(2, 7);
+		ThreeElement three1 = new ThreeElement(3, 4, 5);
+		List<NumberElement> numberElements = new ArrayList<NumberElement>();
+		numberElements.add(two1);
+		numberElements.add(two2);
+		numberElements.add(three1);
+		System.out.println("Visiting element list with SumVisitor");
+		NumberVisitor sumVisitor = new SumVisitor();
+		sumVisitor.visit(numberElements);
+		System.out.println("\nVisiting element list with TotalSumVisitor");
+		TotalSumVisitor totalSumVisitor = new TotalSumVisitor();
+		totalSumVisitor.visit(numberElements);
+		System.out.println("Total sum:" + totalSumVisitor.getTotalSum());
 	}
-
+}
+```
 The console output of executing Demo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/visitor-pattern/console.txt)
@@ -1287,7 +1287,7 @@ Lets look at an example of this. We have an Item class, which represents an item
 Here is the Menu class. It has a list of menu items of type Item. Items can be added via the addItem() method. The iterator() method returns an iterator of menu items. The MenuIterator class is an inner class of Menu that implements the Iterator interface for Item objects. It contains basic implementations of the hasNext(), next(), and remove() methods.
 
 [Menu.java](http://www.avajava.com/tutorials/design-patterns/iterator-pattern/Menu.java)
-
+```java
 	package com.cakes;
 	import java.util.ArrayList;
 	import java.util.Iterator;
@@ -1330,11 +1330,11 @@ Here is the Menu class. It has a list of menu items of type Item. Items can be a
 			}
 		}
 	}
-
+```
 The Demo class demonstrates the iterator pattern. It creates three items and adds them to the menu object. Next, it gets an Item iterator from the menu object and iterates over the items in the menu. After this, it calls remove() to remove the last item obtained by the iterator. Following this, it gets a new iterator object from the menu and once again iterates over the menu items.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/iterator-pattern/Demo.java)
-
+```java
 	package com.cakes;
 	import java.util.Iterator;
 
@@ -1367,7 +1367,7 @@ The Demo class demonstrates the iterator pattern. It creates three items and add
 			}
 		}
 	}
-
+```
 The console output is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/iterator-pattern/console.txt)
@@ -1402,7 +1402,7 @@ Notice the save() method of DietInfo. This creates and returns a Memento object.
 The restore() method of DietInfo is used to restore the state of the DietInfo. The caretaker passes in the Memento (as an Object). The memento is cast to a Memento object and then the DietInfo object's state is restored by copying over the values from the memento.
 
 [DietInfo.java](http://www.avajava.com/tutorials/design-patterns/memento-pattern/DietInfo.java)
-
+```java
 	package com.cakes;
 
 	// originator - object whose state we want to save
@@ -1455,11 +1455,11 @@ The restore() method of DietInfo is used to restore the state of the DietInfo. T
 			}
 		}
 	}
-
+```
 DietInfoCaretaker is the caretaker class that is used to store the state (ie, the memento) of a DietInfo object (ie, the originator). The memento is stored as an object since DietInfo.Memento is not visible to the caretaker. This protects the integrity of the data stored in the Memento object. The caretaker's saveState() method saves the state of the DietInfo object. The caretaker's restoreState() method restores the state of the DietInfo object.
 
 [DietInfoCaretaker.java](http://www.avajava.com/tutorials/design-patterns/memento-pattern/DietInfoCaretaker.java)
-
+```java
 	package com.cakes;
 
 	// caretaker - saves and restores a DietInfo object's state via a memento
@@ -1477,11 +1477,11 @@ DietInfoCaretaker is the caretaker class that is used to store the state (ie, th
 			dietInfo.restore(objMemento);
 		}
 	}
-
+```
 The MementoDemo class demonstrates the memento pattern. It creates a caretaker and then a DietInfo object. The DietInfo object's state is changed and displayed. At one point, the caretaker saves the state of the DietInfo object. After this, the DietInfo object's state is further changed and displayed. After this, the caretaker restores the state of the DietInfo object. We verify this restoration by displaying the DietInfo object's state.
 
 [MementoDemo.java](http://www.avajava.com/tutorials/design-patterns/memento-pattern/MementoDemo.java)
-
+```java
 	package com.cakes;
 
 	public class MementoDemo {
@@ -1506,7 +1506,7 @@ The MementoDemo class demonstrates the memento pattern. It creates a caretaker a
 			System.out.println(dietInfo);
 		}
 	}
-
+```
 The console output of the execution of MementoDemo is shown here. Notice how the state changes, and how we are able to save and restore the state of the originator via the caretaker's reference to the memento.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/memento-pattern/console.txt)

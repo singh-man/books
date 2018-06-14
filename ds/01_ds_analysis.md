@@ -133,26 +133,27 @@ This above table is only an approximate summary; for each data structure, there 
 
 ### Java Collection hierarchy
 
-```
+```java
 Iterable	
 	Collection <I> -> add(x), addAll(x), contains(x), containsAll(x), remove(x), clear(), isEmpty(), size()
 		Set <I> -> add(x), contains(x), remove(x), size(), clear(), isEmpty()
 			SortedSet <I> -> uses natural order or external Comparator
-				TreeSet -> Tree ds so no hashcode/equals; Comparable/Comparator instead
-			NavigableSet <I>
-				ConcurrentSkipListSet
-			HashSet
-			LinkedHashSet
+				NavigableSet <I> navigation methods available
+					TreeSet -> Tree ds (sorted) so no hashcode/equals; Comparable/Comparator instead
+					ConcurrentSkipListSet
+			HashSet -> backed by HashMap
+			LinkedHashSet -> Ordered
 			EnumSet
 			CopyOnWriteArraySet
 		List<I> -> add(i, x), get(ith)
 			ArrayList -> Singly Linked List/Dyanmic Array
-			CopyOnWriteArrayList
+			CopyOnWriteArrayList ->  get an immutable snapshot of the data in the list at the time iterator() was called. remove() not supported
 			Vector
 				Stack
 			LinkedList -> DoublyLinkedList
 		Queue <I> -> add(x)/offer(x), remove()/poll(), element()/peek()
-			Deque <I>
+			Deque <I> Double Ended Queue insert and remove elements from both ends of the queue
+				ArrayDeque
 				LinkedList
 				BlockingDeque <I>
 					LinkedBlockingDeque
@@ -175,12 +176,15 @@ Iterable
 
 Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
 	HashTable -> sunchronized, no null key, 
-	LinkedHashMap
+		Properties
 	HashMap -> not synchronized, one null key
+	LinkedHashMap
 	EnumMap
+	IdentityHashMap -> uses == 
+	WeakHashMap
 	SortedMap <I>
-		TreeMap -> Tree ds so no hashcode/equals; Comparable/Comparator instead
-		NavigableMap <I>
+		NavigableMap <I> navigation methods **available**
+			TreeMap -> Tree ds so no hashcode/equals; Comparable/Comparator instead
 			ConcurrentNavigableMap <T>
 				ConcurrentSkipListMap
 	ConcurrentMap <I>

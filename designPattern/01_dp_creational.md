@@ -52,7 +52,7 @@ A singleton is a class that is instantiated only once. This is typically accompl
 The SingletonExample class is an example of a typical singleton class. It contains a private static SingletonExample field. It has a private constructor so that the class can not be instantiated by outside classes. It has a public static getInstance() method that returns the one and only SingletonExample instance. If this instance doesn't already exist, the getInstance() method creates it. The SingletonExample class has a public sayHello() method that can be used to test the singleton.
 
 [SingletonExample.java](http://www.avajava.com/tutorials/design-patterns/singleton-pattern/SingletonExample.java)
-
+```java
 	package com.cakes;
 
 	public class SingletonExample {
@@ -73,11 +73,11 @@ The SingletonExample class is an example of a typical singleton class. It contai
 			System.out.println("Hello");
 		}
 	}
-
+```
 The Demo class obtains a SingletonExample singleton class via the call to the static SingletonExample.getInstance(). We call the sayHello() method on the singleton class. Executing the Demo class outputs "Hello" to standard output.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/singleton-pattern/Demo.java)
-
+```java
 	package com.cakes;
 
 	public class Demo {
@@ -88,11 +88,11 @@ The Demo class obtains a SingletonExample singleton class via the call to the st
 		}
 		
 	}
-
+```
 Singleton classes are a useful way of concentrating access to particular resources into a single class instance.
 
 **“Double Checked Locking”**
-
+```java
 	class Singleton
 	{
 		private volatile static Singleton obj;
@@ -115,7 +115,7 @@ Singleton classes are a useful way of concentrating access to particular resourc
 			return obj;
 		}
 	}
-
+```
 **Block reflection** -> Enums
 
 Cloning -> override Cloneable and throw exception
@@ -130,7 +130,7 @@ Cloning -> override Cloneable and throw exception
 
 	class Singleton implements Serializable 
 	{
-		    // public instance initialized when loading the class
+		// public instance initialized when loading the class
 		public static Singleton instance = new Singleton();
 
 		private Singleton() 
@@ -209,7 +209,7 @@ Now, let's implement our factory. We will call our factory's object creation met
 The Demo class demonstrates the use of our factory. It creates an AnimalFactory factory. The factory creates an Animal object and then another Animal object. The first object is a Cat and the second object is a Dog. The output of each object's makeSound() method is displayed.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/factory-pattern/Demo.java)
-
+```java
 	package com.cakes;
 	
 	public class Demo {
@@ -222,7 +222,7 @@ The Demo class demonstrates the use of our factory. It creates an AnimalFactory 
 			System.out.println("a2 sound: " + a2.makeSound());
 		}
 	}
-
+```
 The console output is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/factory-pattern/console.txt)
@@ -239,9 +239,9 @@ A factory may also be used in conjunction with the singleton pattern. It is comm
 	AnimalFactory animalFactory = new AnimalFactory();
 
 with
-
-	AnimalFactory animalFactory = AnimalFactory.getAnimalFactoryInstance();
-
+```java
+AnimalFactory animalFactory = AnimalFactory.getAnimalFactoryInstance();
+```
 In this example, AnimalFactory.getAnimalFactoryInstance() would be implemented to return a static AnimalFactory object. This results in a single factory being instantiated and used rather than requiring a new factory to be instantiated each time the factory needs to be used.
 
 ### Abstract Factory Pattern
@@ -257,20 +257,20 @@ Now, we will look at the code for another simple example of the abstract factory
 Our AbstractFactory will return either a MammalFactory or a ReptileFactory via the SpeciesFactory return type. MammalFactory and ReptileFactory are subclasses of SpeciesFactory.
 
 [AbstractFactory.java](http://www.avajava.com/tutorials/design-patterns/abstract-factory-pattern/AbstractFactory.java)
+```java
+package com.cakes;
 
-	package com.cakes;
+public class AbstractFactory {	
 	
-	public class AbstractFactory {	
-		
-		public SpeciesFactory getSpeciesFactory(String type) {
-			if ("mammal".equals(type)) {
-				return new MammalFactory();
-			} else {
-				return new ReptileFactory();
-			}
+	public SpeciesFactory getSpeciesFactory(String type) {
+		if ("mammal".equals(type)) {
+			return new MammalFactory();
+		} else {
+			return new ReptileFactory();
 		}
 	}
-
+}
+```
 SpeciesFactory is an abstract class with the getAnimal() abstract method. This method returns an Animal object. The polymorphism of AbstractFactory is achieved because its getSpeciesFactory() method returns a SpeciesFactory, regardless of the actual underlying class. This polymorphism could also be achieved via an interface rather than an abstract class.
 
 [SpeciesFactory.java](http://www.avajava.com/tutorials/design-patterns/abstract-factory-pattern/SpeciesFactory.java)
@@ -393,29 +393,29 @@ The Tyrannosaurus class is shown here.
 The Demo class contains our main() method. It creates an AbstractFactory object. From the AbstractFactory, we obtain a SpeciesFactory (a ReptileFactory) and get two Animal objects (Tyrannosaurus and Snake) from the SpeciesFactory. After this, we obtain another SpeciesFactory (a MammalFactory) and then obtain two more Animal objects (Dog and Cat).
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/abstract-factory-pattern/Demo.java)
+```java
+package com.cakes;
+import com.cakes.animals.Animal;
 
-	package com.cakes;
-	import com.cakes.animals.Animal;
+public class Demo {
 
-	public class Demo {
-
-		public static void main(String[] args) {
-			AbstractFactory abstractFactory = new AbstractFactory();
-			SpeciesFactory speciesFactory1 =
-			abstractFactory.getSpeciesFactory("reptile");
-			Animal a1 = speciesFactory1.getAnimal("tyrannosaurus");
-			System.out.println("a1 sound: " + a1.makeSound());
-			Animal a2 = speciesFactory1.getAnimal("snake");
-			System.out.println("a2 sound: " + a2.makeSound());
-			SpeciesFactory speciesFactory2 =
-			abstractFactory.getSpeciesFactory("mammal");
-			Animal a3 = speciesFactory2.getAnimal("dog");
-			System.out.println("a3 sound: " + a3.makeSound());
-			Animal a4 = speciesFactory2.getAnimal("cat");
-			System.out.println("a4 sound: " + a4.makeSound());
-		}
+	public static void main(String[] args) {
+		AbstractFactory abstractFactory = new AbstractFactory();
+		SpeciesFactory speciesFactory1 =
+		abstractFactory.getSpeciesFactory("reptile");
+		Animal a1 = speciesFactory1.getAnimal("tyrannosaurus");
+		System.out.println("a1 sound: " + a1.makeSound());
+		Animal a2 = speciesFactory1.getAnimal("snake");
+		System.out.println("a2 sound: " + a2.makeSound());
+		SpeciesFactory speciesFactory2 =
+		abstractFactory.getSpeciesFactory("mammal");
+		Animal a3 = speciesFactory2.getAnimal("dog");
+		System.out.println("a3 sound: " + a3.makeSound());
+		Animal a4 = speciesFactory2.getAnimal("cat");
+		System.out.println("a4 sound: " + a4.makeSound());
 	}
-
+}
+```
 Executing the Demo class displays the sounds made by the four Animal
 objects. The console output is shown here.
 
@@ -445,46 +445,46 @@ Now, lets look at an example of the builder pattern. Our example will build diff
 First off, our Product will be a Meal class, which represents food items in a meal. It represents a drink, main course, and side item.
 
 [Meal.java](http://www.avajava.com/tutorials/design-patterns/builder-pattern/Meal.java)
+```java
+package com.cakes;
 
-	package com.cakes;
+public class Meal {
+	
+	private String drink;
 
-	public class Meal {
-		
-		private String drink;
+	private String mainCourse;
 
-		private String mainCourse;
+	private String side;
 
-		private String side;
+	public String getDrink() {
+		return drink;
+	}
 
-		public String getDrink() {
-			return drink;
-		}
+	public void setDrink(String drink) {
+		this.drink = drink;
+	}
 
-		public void setDrink(String drink) {
-			this.drink = drink;
-		}
+	public String getMainCourse() {
+		return mainCourse;
+	}
 
-		public String getMainCourse() {
-			return mainCourse;
-		}
+	public void setMainCourse(String mainCourse) {
+		this.mainCourse = mainCourse;
+	}
 
-		public void setMainCourse(String mainCourse) {
-			this.mainCourse = mainCourse;
-		}
+	public String getSide() {
+		return side;
+	}
 
-		public String getSide() {
-			return side;
-		}
+	public void setSide(String side) {
+		this.side = side;
+	}
 
-		public void setSide(String side) {
-			this.side = side;
-		}
-
-		public String toString() {
-			return 'drink:' + drink + ', main course:' + mainCourse + ', side:' + side;
+	public String toString() {
+		return 'drink:' + drink + ', main course:' + mainCourse + ', side:' + side;
 	}
 }
-
+```
 Our Builder interface is MealBuilder. It features methods used to build a meal and a method to retrieve the meal.
 
 [MealBuilder.java](http://www.avajava.com/tutorials/design-patterns/builder-pattern/MealBuilder.java)
@@ -505,71 +505,71 @@ Our Builder interface is MealBuilder. It features methods used to build a meal a
 Our first Concrete Builder is ItalianMealBuilder. Its constructor creates a meal. Its methods are implemented to build the various parts of the meal. It returns the meal via getMeal().
 
 [ItalianMealBuilder.java](http://www.avajava.com/tutorials/design-patterns/builder-pattern/ItalianMealBuilder.java)
+```java
+package com.cakes;
 
-	package com.cakes;
+public class ItalianMealBuilder implements MealBuilder {		
+	private Meal meal;
 
-	public class ItalianMealBuilder implements MealBuilder {		
-		private Meal meal;
-
-		public ItalianMealBuilder() {
-			meal = new Meal();
-		}
-
-		@Override 
-		public void buildDrink() {
-			meal.setDrink("red wine");
-		}
-
-		@Override 
-		public void buildMainCourse() {
-			meal.setMainCourse("pizza");
-		}
-
-		@Override 
-		public void buildSide() {
-			meal.setSide("bread");
-		}
-
-		@Override 
-		public Meal getMeal() {
-			return meal;
-		}
+	public ItalianMealBuilder() {
+		meal = new Meal();
 	}
 
+	@Override 
+	public void buildDrink() {
+		meal.setDrink("red wine");
+	}
+
+	@Override 
+	public void buildMainCourse() {
+		meal.setMainCourse("pizza");
+	}
+
+	@Override 
+	public void buildSide() {
+		meal.setSide("bread");
+	}
+
+	@Override 
+	public Meal getMeal() {
+		return meal;
+	}
+}
+```
 Our second Concrete Builder is JapaneseMealBuilder. Its constructor creates a meal. Its methods are implemented to build the various parts of a Japanese meal. It returns the meal via getMeal().
 
 [JapaneseMealBuilder.java](http://www.avajava.com/tutorials/design-patterns/builder-pattern/JapaneseMealBuilder.java)
+```java
+package com.cakes;
 
-	package com.cakes;
+public class JapaneseMealBuilder implements MealBuilder {
+	private Meal meal;
 
-	public class JapaneseMealBuilder implements MealBuilder {
-		private Meal meal;
-
-		public JapaneseMealBuilder() {
-			meal = new Meal();
-		}
-
-		@Override
-		public void buildDrink() {
-			meal.setDrink("sake");
-		}
-
-		@Override
-		public void buildMainCourse() {
-			meal.setMainCourse("chicken teriyaki");
-		}
-
-		@Override
-		public void buildSide() {
-			meal.setSide("miso soup");
-		}
-
-		@Override
-		public Meal getMeal() {
-			return meal;
-		}
+	public JapaneseMealBuilder() {
+		meal = new Meal();
 	}
 
+	@Override
+	public void buildDrink() {
+		meal.setDrink("sake");
+	}
+
+	@Override
+	public void buildMainCourse() {
+		meal.setMainCourse("chicken teriyaki");
+	}
+
+	@Override
+	public void buildSide() {
+		meal.setSide("miso soup");
+	}
+
+	@Override
+	public Meal getMeal() {
+		return meal;
+	}
+}
+```
 Our Director class is MealDirector. It takes a MealBuilder as a parameter in its constructor. Thus, a different type of meal will be assembled by the MealDirector depending on the Concrete Builder passed in to the constructor. The assembly of the meal (Product) takes place in the constructMeal() method of the Director. This method spells out the parts of the meal that will be assembled.
 
 [MealDirector.java](http://www.avajava.com/tutorials/design-patterns/builder-pattern/MealDirector.java)
@@ -597,24 +597,24 @@ Our Director class is MealDirector. It takes a MealBuilder as a parameter in its
 The Demo class lets us demonstrate our builder pattern. First, our director builds an Italian meal. An ItalianMealBuilder is passed to the MealDirector's constructor. The meal is constructed via mealDirector.constructMeal(). The meal is obtained from mealDirector via mealDirector.getMeal(). The Italian meal is displayed. After this, we perform the same process to build and display a Japanese meal.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/builder-pattern/Demo.java)
+```java
+package com.cakes;
 
-	package com.cakes;
-
-	public class Demo {
-		public static void main(String[] args) {
-			MealBuilder mealBuilder = new ItalianMealBuilder();
-			MealDirector mealDirector = new MealDirector(mealBuilder);
-			mealDirector.constructMeal();
-			Meal meal = mealDirector.getMeal();
-			System.out.println("meal is: " + meal);
-			mealBuilder = new JapaneseMealBuilder();
-			mealDirector = new MealDirector(mealBuilder);
-			mealDirector.constructMeal();
-			meal = mealDirector.getMeal();
-			System.out.println("meal is: " + meal);
-		}
+public class Demo {
+	public static void main(String[] args) {
+		MealBuilder mealBuilder = new ItalianMealBuilder();
+		MealDirector mealDirector = new MealDirector(mealBuilder);
+		mealDirector.constructMeal();
+		Meal meal = mealDirector.getMeal();
+		System.out.println("meal is: " + meal);
+		mealBuilder = new JapaneseMealBuilder();
+		mealDirector = new MealDirector(mealBuilder);
+		mealDirector.constructMeal();
+		meal = mealDirector.getMeal();
+		System.out.println("meal is: " + meal);
 	}
-
+}
+```
 The console output of executing Demo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/builder-pattern/console.txt)
@@ -691,23 +691,23 @@ The Dog class also implements the doClone() method. This method creates a new Do
 The Demo class creates a Person object and then clones it to a second Person object. It then creates a Dog object and clones it to a second Dog object.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/prototype-pattern/Demo.java)
+```java
+package com.cakes;
 
-	package com.cakes;
-
-	public class Demo {
-		
-		public static void main(String[] args) {
-			Person person1 = new Person("Fred");
-			System.out.println("person 1:" + person1);
-			Person person2 = (Person) person1.doClone();
-			System.out.println("person 2:" + person2);
-			Dog dog1 = new Dog("Wooof!");
-			System.out.println("dog 1:" + dog1);
-			Dog dog2 = (Dog) dog1.doClone();
-			System.out.println("dog 2:" + dog2);
-		}
+public class Demo {
+	
+	public static void main(String[] args) {
+		Person person1 = new Person("Fred");
+		System.out.println("person 1:" + person1);
+		Person person2 = (Person) person1.doClone();
+		System.out.println("person 2:" + person2);
+		Dog dog1 = new Dog("Wooof!");
+		System.out.println("dog 1:" + dog1);
+		Dog dog2 = (Dog) dog1.doClone();
+		System.out.println("dog 2:" + dog2);
 	}
-
+}
+```
 The console output of executing Demo is shown here.
 
 [Console Output](http://www.avajava.com/tutorials/design-patterns/prototype-pattern/console.txt)
