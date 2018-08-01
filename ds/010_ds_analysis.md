@@ -8,7 +8,7 @@ language: en-US
 DS Introduction / Cheat Sheet
 =============================
 
-	D:\mani\dev\opt\pandoc-2.1.3\pandoc.exe --toc --toc-depth 6 -s 01_ds_analysis.md 02_ds_bigO_cheatSheet.md 03_ds_algos.md 04_ds_alogs_TSiege.md 05_ds_search_sort.md -o ds.epub
+	D:\mani\dev\opt\pandoc-2.1.3\pandoc.exe --toc --toc-depth 6 -s 010_ds_analysis.md 020_ds_javaDS.md 030_ds_bigO_cheatSheet.md 040_ds_algos.md 050_ds_alogs_TSiege.md 060_ds_search_sort.md -o ds_new.epub
 
 Knowing your data structures can help you:
 
