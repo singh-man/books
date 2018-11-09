@@ -1,4 +1,8 @@
-# Ignore everything...
-#*
+# ignore all hidden files and .* files
+.*
+!.gitignore
+
+#ignore files
+*.epub
 
 # ... except preferences

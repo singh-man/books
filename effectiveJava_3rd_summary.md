@@ -578,7 +578,7 @@ Users of the api will be able to implements this interface in order to "extend" 
 
 ### Item 39 : Annotations instead of naming patterns
 
-Prior to JUnit 4, you needed to name you tests by starting with the word "test". This is a bad practice since the compiler will never complain if, by mistake, you've names a few of them "tset*".
+Prior to JUnit 4, you needed to name you tests by starting with the word "test". This is a bad practice since the compiler will never complain if, by mistake, you've names a few of them "tset\*".
 Annotations are a good way to avoid this kind of naming patterns and gives us more security.
 
 Example : 
@@ -639,13 +639,13 @@ When a lambda is too long, you can refactor it to a method (which will give a na
 
 They are five kinds of method references : 
 
-|Method ref type|Example|Lambda equivalent|
-|--|--|--|
-|Static|Integer::parseInt|str -> Integer.parseInt(str)|
-|Bound|Instant.now()::isAfter|Instant then = Instant.now(); t->then.isAfter(t)|
-|Unbound|String::toLowerCase|str -> str.toLowerCase()|
-|Class Constructor|TreeMap<K,V>::new|() -> new TreeMap<K,V>|
-|Array Constructor|int[]::new|len -> new int[len]|
+| Method ref type   | Example                | Lambda equivalent                                |
+| --                | --                     | --                                               |
+| Static            | Integer::parseInt      | str -> Integer.parseInt(str)                     |
+| Bound             | Instant.now()::isAfter | Instant then = Instant.now(); t->then.isAfter(t) |
+| Unbound           | String::toLowerCase    | str -> str.toLowerCase()                         |
+| Class Constructor | TreeMap<K,V>::new      | () -> new TreeMap<K,V>                           |
+| Array Constructor | int[]::new             | len -> new int[len]                              |
 
 ### Item 44 : Standard functional interfaces
 
