@@ -12,11 +12,15 @@ sdk version
 sdk install gradle 4.8.1
 ```
 
-### Install Java 10
+### Install Java 10 or 11
 ```sh
 sudo add-apt-repository ppa:linuxuprising/java
 sudo apt update
 sudo apt install oracle-java10-installer
+
+OR
+
+sudo apt install openjdk-11-jdk-headless
 ```
 
 ### Install **pandoc, poppler-utils, elinks, git**
