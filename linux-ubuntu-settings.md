@@ -7,12 +7,40 @@
 sudo apt-get update && sudo apt-get upgrade
 ```
 
+### WSL (only) -> change the mount from /mnt/c/ to /c
+
+> This step is mandatory if using WSL to execute docker commands installed on windows otherwise skip to next section.
+
+In a WSL terminal
+```sh
+sudo nano /etc/wsl.conf
+
+# Now make it look like this and save the file when you're done:
+[automount]
+root = /
+options = "metadata"
+```
+We need to set root = / because this will make your drives mounted at /c or /e instead of /mnt/c or /mnt/e.
+
+The options = "metadata" line is not necessary but it will fix folder and file permissions on WSL mounts so everything isn’t 777 all the time within the WSL mounts. I highly recommend you do this!
+
+Once you make those changes, sign out and sign back in to Windows to ensure the changes take effect. Win + L isn’t enough. You’ll need to do a full blown sign out / sign in.
+
+**If you get an error the next time you start your WSL terminal don’t freak out.**
+
+It’s a bug with 18.03 and you can easily fix it. Hit CTRL + Shift + ECS to open the task manager, goto the “Services” tab, find the “LxssManager” service and restart it.
+
 ### Install **dev tools below**
 ```sh
 sudo apt install git nginx openssh-client openssh-server
 sudo apt install python3-pip
 pip3 install pytest
 # Google for docker-ce, awscli
+```
+
+##### If Using WSL to execute commands on docker installed on windows. Do remember to enable TCP daemon from docker settings. |https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly
+```sh
+echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc && source ~/.bashrc
 ```
 
 #### Install Java 10 or 11
@@ -42,7 +70,7 @@ echo "LEIN_HOME=$HOME/dev/opt/lein/" >> ~/.bashrc
 echo "export LEIN_HOME" >> ~/.bashrc
 ```
 
-### .bashrc --> User specific aliases and functions
+#### .bashrc --> User specific aliases and functions
 ```sh
 #The alias command can be useful if you want to create a 'shortcut' to a command.
 alias lein='$LEIN_HOME/lein.sh'
@@ -64,10 +92,7 @@ echo "export M2=$M2_HOME/bin" >> ~/.bashrc
 echo "export PATH=$M2:$PATH" >> ~/.bashrc
 ```
 
-#### If Using WSL to execute commands on docker installed on windows. Do remember to enable TCP daemon from docker settings.
-```sh
-echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc && source ~/.bashrc
-```
+
 
 ### Install **Misc tools**
 ```sh
