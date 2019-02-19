@@ -61,8 +61,8 @@ echo "export JAVA_HOME" >> ~./bashrc
 #### Install leiningen
 ```sh
 cd ~
-mkdir dev && mkdir dev/opt && mkdir dev/opt/lein
-wget -O dev/opt/lein/lein.sh https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+mkdir -p dev/opt/lein
+curl -o dev/opt/lein/lein.sh https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 chmod 755 dev/opt/lein/lein.sh
 
 # udpate .bashrc
@@ -79,7 +79,7 @@ alias lein='$LEIN_HOME/lein.sh'
 #### Install Maven
 ```sh
 cd ~
-mkdir dev && mkdir dev/opt
+mkdir -p dev/opt
 wget http://ftp.heanet.ie/mirrors/www.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
 tar -C ./dev/opt -xvf apache-maven-3.6.0-bin.tar.gz 
 rm apache-maven-3.6.0-bin.tar.gz
@@ -90,9 +90,11 @@ echo "M2_HOME=/home/manish/dev/opt/apache-maven-3.6.0" >> ~/.bashrc
 echo "export M2_HOME" >> ~/.bashrc
 echo "export M2=$M2_HOME/bin" >> ~/.bashrc
 echo "export PATH=$M2:$PATH" >> ~/.bashrc
+echo "alias mvn_ci='mvn clean install'" >> ~/.bashrc
+echo "alias mvn_cist='mvn clean install -Dmaven.test.skip'" >> ~/.bashrc
+echo "alias mvn_i='mvn install'" >> ~/.bashrc
+echo "alias mvn_ist='mvn install -Dmaven.test.skip'" >> ~/.bashrc
 ```
-
-
 
 ### Install **Misc tools**
 ```sh
