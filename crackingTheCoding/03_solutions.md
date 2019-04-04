@@ -12261,73 +12261,42 @@ The nice thing about this implementation is that now we can apply the flipCoin p
 
 ## 14 	Solutions to Databases
 
-
-
-
 Questions 1  through 3 refer to the following database schema:
 
+![](media/14_01_1.JPG)
 
-AptID	int
-UnitNumber	varchar(10)
-BuildingID	int
-
-
-
-Complexes                                               ApJ;}"�Qp!lt###                                                  Ien,mts
-ComplexID    I   int                    TenantID            int                    TenantID 
-ComplexName I  varchar(100)
- 
-
-AptID
- 
-
-int
- 
-
- TenantName     varchar(100) 	 
 Note that each apartment can have multiple tenants, and each tenant can have multiple apartments. Each apartment belongs to one building, and each building belongs to one complex.
 
 
-14.1 	Multiple Apartments: Write a SQL query to get a list of tenants who are renting more than  one apartment.
-
-pg  172
+**14.1 	Multiple Apartments:** Write a SQL query to get a list of tenants who are renting more than  one apartment.							pg  172
 
 SOLUTION
 
+---
+
 To implement this, we can use the HAVING and GROUP   BY clauses and then perform an INNER  JOIN with
 Tenants.
+```sql
 1     SELECT  TenantName
 2     FROM   Tenants
 3     INNER  JOIN
 4           (SELECT  TenantID  FROM  AptTenants  GROUP   BY  TenantID  HAVING  count(*)   >   1)  C
 5     ON   Tenants.TenantID = C.TenantID
+```
 
-Whenever  you write a GROUP BY clause in an interview  (or in real life), make sure that  anything in the
-SELECT clause is either an aggregate function or contained within the GROUP BY clause.
-
-
+Whenever  you write a GROUP BY clause in an interview  (or in real life), make sure that  anything in the SELECT clause is either an aggregate function or contained within the GROUP BY clause.
 
 
-
-
-
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition       441 
-Solutions to Chapter 14   I      Databases
-
-
-14.2    Open  Requests: Write a SQL query to get a list of all buildings and the number of open requests
+**14.2    Open  Requests:** Write a SQL query to get a list of all buildings and the number of open requests
 (Requests in which status equals'Open'). 
 
 
-
 SOLUTION
- 
-pg 773 
 
+---
+ 
 This problem uses a straightforward join of Requests and Apartments to get a list of building IDs and the number of open requests. Once we have this list, we join it again with the Buildings table.
+```sql
 1     SELECT  BuildingName,   ISNULL(Count,  0)  as  'Count'
 2     FROM  Buildings
 3       LEFT  JOIN
@@ -12337,94 +12306,78 @@ This problem uses a straightforward join of Requests and Apartments to get a lis
 7            WHERE  Requests.Status  =   'Open'
 8            GROUP  BY  Apartments.BuildingID)  ReqCounts
 9     ON  ReqCounts.BuildingID =  Buildings.BuildingID
+```
 Queries like this that utilize sub-queries should be thoroughly tested, even when coding by hand. It may be useful to test the inner part of the query first, and then test the outer part.
 
 
-14.3 	Close All Requests: Building #11 is undergoing a major renovation. Implement a query to close all requests from apartments in this building. 
+**14.3 	Close All Requests:** Building #11 is undergoing a major renovation. Implement a query to close all requests from apartments in this building. 
 
 
 SOLUTION
- 
-pg 173 
 
+---
+ 
 UPDATE queries, like SELECT queries, can have WHERE clauses. To implement this query, we get a list of all apartment IDs within building #11 and the list of update requests from those apartments.
+```sql
 1     UPDATE  Requests
 2     SET  Status =   'Closed'
 3     WHERE  AptID  IN (SELECT  AptID  FROM   Apartments   WHERE  BuildingID =  11)
+```
 
 
-14.4 	Joins: What are the different types of joins? Please explain how they differ and why certain types are better in certain situations. 
-
+**14.4 	Joins:** What are the different types of joins? Please explain how they differ and why certain types are better in certain situations. 
 
 SOLUTION
- 
-pg 173 
 
+---
+ 
 JOIN is used to combine the results of two tables. To perform a JOIN, each of the tables must have at least one field that will be used to find matching records from the other table. The join type defines which records will go into the result set.
 
 Let's take for example two tables: one table lists the "regular" beverages, and another lists the calorie-free beverages. Each table has two fields: the beverage name and its product code. The "code"field will be used to perform the record matching.
 
 Regular Beverages:
 
- 
-Budweiser
-Coca-Cola
+| Name      | Code      |
+| --        | --        |
+| Budweiser | BUDWEISER |
+| Coca-Cola | COCACOLA  |
 
 
-
-442          Cracking the Coding Interview, 6th Edition
- 
-BUDWEISER COCACOLA 
-                                                                             Solutions to Chapter 14  I    Databases
-
-
-
-
-
+| Name  | Code  |
+| --    | --    |
+| Pepsi | PEPSI |
 
 Calorie-Free Beverages:
 
-
-
-Diet  Co
-Fresca	
-
-ca-Cola	
-		COCACOLA
-		FRESCA
-Diet  Pepsi	PEPSI
-Pepsi  Light	PEPSI
-Purified Water	Water
+| Name           | Code     |
+| --             | --       |
+| Diet Coca-Cola | COCACOLA |
+| Fresca         | FRESCA   |
+| Diet Pepsi     | PEPSI    |
+| Pepsi Light    | PEPSI    |
+| Purified Water | Water    |
 
 If we wanted to join Beverage with Calorie-Free Beverages, we would have many options. These are discussed below.
 
-INNER JOIN:The result set would contain only the data where the criteria match. In our example, we would get three records: one with a COCACOLA code and two with PEPSI codes.
-•     OUTER   JOIN: An OUTER  JOIN will always contain the results of INNER JOIN, but it may also contain some records that have no matching record in the other table. OUTER     JOINs are divided into the following subtypes:
-»     LEFT OUTER   JOIN, or simply LEFT JOIN:The result will contain all records from the left table.
-If no matching records were found in the right table, then its fields will contain theNULL values. In our example, we would get four records. In addition to INNER JOIN results, BUDWEISER would be listed, because it was in the left table.
-»    RIGHT OUTER   JOIN, or simply RIGHT JOIN:This type of join is the opposite ofLEFT  JOIN. It will contain every record from the right table; the missing fields from the left table will be NULL. Note that if we have two tables, A and B, then we can say that the statement A  LEFT JOIN  B is equivalent to the statement B  RIGHT JOIN  A. In our example above, we will get five records. In addition to INNER JOIN results, FRESCA and WATER records will be listed.
-»    FULL OUTER   JOIN:This type of join combines the results of the LEFT and RIGHT  JOINS. All records from both tables will be included in the result set, regardless of whether or not a matching record exists in the other table. If no matching record was found, then the corresponding result fields will have a NULL value. In our example, we will get six records.
+- INNER JOIN:The result set would contain only the data where the criteria match. In our example, we would get three records: one with a COCACOLA code and two with PEPSI codes.
+- OUTER JOIN: An OUTER  JOIN will always contain the results of INNER JOIN, but it may also contain some records that have no matching record in the other table. OUTER     JOINs are divided into the following subtypes:
+	- LEFT OUTER   JOIN, or simply LEFT JOIN:The result will contain all records from the left table.
+	If no matching records were found in the right table, then its fields will contain theNULL values. In our example, we would get four records. In addition to INNER JOIN results, BUDWEISER would be listed, because it was in the left table.
+	- RIGHT OUTER   JOIN, or simply RIGHT JOIN:This type of join is the opposite ofLEFT  JOIN. It will contain every record from the right table; the missing fields from the left table will be NULL. Note that if we have two tables, A and B, then we can say that the statement A  LEFT JOIN  B is equivalent to the statement B  RIGHT JOIN  A. In our example above, we will get five records. In addition to INNER JOIN results, FRESCA and WATER records will be listed.
+	- FULL OUTER   JOIN:This type of join combines the results of the LEFT and RIGHT  JOINS. All records from both tables will be included in the result set, regardless of whether or not a matching record exists in the other table. If no matching record was found, then the corresponding result fields will have a NULL value. In our example, we will get six records.
 
 
-14.5     Denormalization: What is denormalization? Explain the pros and cons.
+**14.5     Denormalization:** What is denormalization? Explain the pros and cons.
  
-
-
 SOLUTION
  
-pg 773 
+--- 
 
 Denormalization is a database  optimization technique  in which we add redundant  data to one or more tables. This can help us avoid costlyjoins in a relational database.
 
 By contrast, in a traditional normalized database, we store data in separate logical tables and attempt  to minimize redundant data. We may strive to have only one copy of each piece of data in the database.
 
 For example, in a normalized database, we might have a Courses table and a Teachers table. Each entry in Courses would store the teacherID for a Course but not the teacherName. When we need to retrieve a list of all Courses with the Teacher name, we would do a join between  these two tables.
-
-
-
-CrackingTheCodinglnterview.com \ 6th Edition      443 
-Solutions to Chapter 14  I      Databases
-
 
 In some ways, this  is great; if a teacher changes his or her name, we only have to update the  name in one place.
 
@@ -12434,28 +12387,24 @@ Denormalization, then, strikes  a different compromise. Under denormalization, w
 tages of fewer joins.
 
 
-
-Updates and inserts are more expensive.
-
-Denormalization can make update and  insert code harder to write.	Retrieving data is faster  since  we do fewer joins.
-
-Queries to  retrieve can  be  simpler (and  therefore less likely to have bugs),  since  we need to look at fewer  tables.
-Data  may  be  inconsistent. Which  is the  "correct" value for a piece of data?	
-Data redundancy necessitates  more storage.	
+|Cons of Denomaralization|Pros of Denomaralization|
+|--|--|
+|Updates and inserts are more expensive.|Retrieving data is faster  since  we do fewer joins.|
+|Denormalization can make update and  insert code harder to write.|Queries to  retrieve can  be  simpler (and  therefore less likely to have bugs),  since  we need to look at fewer  tables.|
+|Data  may  be  inconsistent. Which  is the  "correct" value for a piece of data?||
+|Data redundancy necessitates  more storage.||
 
 In a system that demands scalability,  like that of any major tech companies, we almost always use elements of both normalized and denormalized databases.
 
 
-14.6 		Entity-Relationship Diagram: Draw an entity-relationship diagram for a database with companies, people, and  professionals (people who work for companies). 
+**14.6 		Entity-Relationship Diagram:** Draw an entity-relationship diagram for a database with companies, people, and  professionals (people who work for companies). 
 
 
 SOLUTION
  
+---
 
-pg 173 
-
-People who  work for Companies are  Professionals. So, there is an ISA  ("is a") relationship between
-People and  Professionals (or we could say that a Professional is derived from People).
+People who  work for Companies are  Professionals. So, there is an ISA  ("is a") relationship between People and  Professionals (or we could say that a Professional is derived from People).
 
 Each Professional has additional information such  as degree and  work experiences in addition to the properties derived from People.
 
@@ -12463,132 +12412,67 @@ A Professional works for one company at a time  (probably-you might want to vali
 
 A Person can have multiple phone numbers, which is why Phone is a multi-valued attribute.
 
+![](media/14_07_1.JPG)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-444       Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 14  I      Databases
-
-
-
-
-
-
-
-
-
-
- 
-
-
-ISA
- 
-Date of
-Joining 
-
-
- 
-Professional ,__     ���
- 
-Works
- 
-For
- 
-      1 	
-   Companies 	 
-
- 
-Degree
- 
-
-Experience
- 
-
-
-
-Salary
- 
-Address 
-
-
-
-14.7    Design  Grade  Database: Imagine a  simple database  storing information for  students' grades.
-Design what this database might look like and  provide a SQL query to return a list of the  honor roll students (top  10%), sorted by their  grade point average.
-pg 173
+**14.7    Design  Grade  Database:** Imagine a  simple database  storing information for  students' grades. Design what this database might look like and  provide a SQL query to return a list of the  honor roll students (top  10%), sorted by their  grade point average.  pg 173
 
 SOLUTION
+
+---
 
 In a simplistic database, we'll have at least  three objects: Students, Courses, and  CourseEnrollment. Students will have  at  least  a student name and   ID and  will likely have other personal information. Courses will contain the course name and  ID and  will likely contain the course description, professor, and other information. CourseEnrollment will pair Students and Courses and  will also contain a field for
 CourseGrade.
 
-
-StudentID	int
-StudentName	varchar(100)
-Address	varchar(S00)
+| Students    |              |
+| --          | --           |
+| StudentID   | int          |
+| StudentName | varchar(100) |
+| Address     | varchar(S00) |
  
-Courses
-CourseID CourseName Profes sorID
+| Courses     |              |
+| --          | --           |
+| CourseID    | int          |
+| CourseName  | varchar(100) |
+| ProfessorID | int          |
  
+| CourseEnrollment |       |
+| --               | --    |
+| CourseID         | int   |
+| StudentID        | int   |
+| Grade            | float |
+| Term             | int   |
 
-int varchar(100) int
+This database could get arbitrarily more complicated if we wanted to add in professor information, billing information, and other data.
 
-
-
-
-
-
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition        445 
-Solutions to Chapter 14   I      Databases
-
-
-
-
-CourseID
-StudentID	int
-int
-Grade	float
-Term	int
-
-This database  could get arbitrarily more complicated if we wanted to add in professor information, billing information, and other data.
-
-Using the Microsoft SQL Server TOP  •  •  •     PERCENT function, we might (incorrectly) first try a query like this:
+Using the Microsoft SQL Server TOP ..... PERCENT function, we might (incorrectly) first try a query like this:
+```sql
 1     SELECT   TOP  10 PERCENT  AVG(CourseEnrollment.Grade) AS  GPA,
-2                                                                                                               CourseEnrollment.StudentID
+2                       CourseEnrollment.StudentID
 3     FROM  CourseEnrollment
 4     GROUP   BY  CourseEnrollment.StudentID
 5     ORDER   BY  AVG(CourseEnrollment.Grade)
+```
 The problem with the above code is that it will return literally the top 10% of rows, when sorted by GPA. Imagine a scenario in which there are 100 students, and the top 15 students all have 4.0 GPAs. The above function will only return 1O of those students, which is not really what we want. In case of a tie, we want to include the students who tied for the top 10% -- even if this means that our honor roll includes more than
 1 0% of the class.
 
 To correct this issue, we can build something similar to this query, but instead first get the GPA cut off.
+```sql
 1     DECLARE  @GPACutOff  float;
 2     SET @GPACutOff  = (SELECT  min(GPA) as  'GPAMin' FROM  (
 3                   SELECT   TOP  10 PERCENT  AVG(CourseEnrollment.Grade) AS  GPA
 4               FROM  CourseEnrollment
 5               GROUP   BY  CourseEnrollment.StudentID
 6               ORDER  BY  GPA   desc)  Grades);
+```
 Then, once we have @GPACutOff defined, selecting the students  with at least this GPA is reasonably straightforward.
+```sql
 1     SELECT  StudentName,  GPA
 2     FROM (SELECT   AVG(CourseEnrollment.Grade) AS  GPA,   CourseEnrollment.StudentID
 3                 FROM  CourseEnrollment
 4                 GROUP   BY  CourseEnrollment.StudentID
 5                 HAVING  AVG(CourseEnrollment.Grade)  >= @GPACutOff)   Honors
 6     INNER  JOIN Students  ON   Honors.StudentID  =  Student.StudentID
+```
 Be very careful about what implicit assumptions you make. If you look at the above database description, what potentially incorrect assumption  do you see? One is that each course can only be taught  by one professor. At some schools, courses may be taught by multiple professors.
 
 However, you will need to make some assumptions, or you'd drive yourself crazy. Which assumptions you make is less important than just recognizing that you made assumptions. Incorrect assumptions, both in the real world and in an interview, can be dealt with as long as they are acknowledged.
@@ -12598,23 +12482,16 @@ Remember, additionally, that there's a trade-off between flexibility and complex
 Make your design reasonably flexible, and state any other assumptions or constraints. This goes for not just database design, but object-oriented design and programming in general.
 
 
-446       Cracking the Coding Interview, 6th Edition 
-            15 	
-
-Solutions to Threads and  Locks
+## 15 	Solutions to Threads and  Locks
 
 
- 
-15.1     Thread vs. Process: What's the difference between a thread and a process?
-
+**15.1     Thread vs. Process:** What's the difference between a thread and a process?
 
 
 SOLUTION
+
+---
  
-
-
-pg 179 
-
 Processes and threads are related to each other but are fundamentally different.
 
 A process can be thought of as an instance of a program in execution. A process is an independent entity to which system resources (e.g., CPU time and memory) are allocated. Each process is executed in a separate address space, and one process cannot access the variables and data structures of another  process. If a process wishes to access another process' resources, inter-process communications have to be used. These include pipes, files, sockets, and other forms.
@@ -12624,14 +12501,11 @@ A thread  exists within a process and shares the process' resources (including i
 A thread is a particular execution path of a process. When one thread  modifies a process resource, the change is immediately visible to sibling threads.
 
  
-15.2     Context Switch: How would you measure the time spent in a context switch?
+**15.2     Context Switch:** How would you measure the time spent in a context switch?
 
 
 SOLUTION
  
-
-
-pg 179 
 
 This is a tricky question, but let's start with a possible solution.
 
@@ -12639,103 +12513,59 @@ A context switch is the time spent switching between  two processes (i.e., bring
 
 In order to solve this problem, we would like to record the timestamps of the last and first instruction of the swapping processes. The context switch time is the difference in the timestamps  between  the two processes.
 
-Let's take an easy example: Assume there are only two processes, P1 and P2•
+Let's take an easy example: Assume there are only two processes, P1 and P2.
 
+P1 is executing and P2 is waiting for execution. At some point, the operating system must swap P1 and P2- let's assume it happens  at the Nth instruction of P1   If t x,k indicates the timestamp in microseconds of the kth instruction of process x, then the context switch would take t2,1  -  t1,n microseconds.
 
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition       447 
-Solutions to Chapter 15  I    Threads and  Locks
-
-
-p1 is executing and P2 is waiting for execution. At some point, the operating system must swap P1 and P2- 
-let's assume it happens  at the Nth instruction of P1   If t
- 
-indicates the timestamp in microseconds of the 
-.         x,k
-kth instruction of process x, then the context switch would take t2,1    -  t1,n microseconds.
-The tricky part is this: how do we know when this swapping occurs? We cannot, of course, record the time­
-stamp of every instruction in the process.
+The tricky part is this: how do we know when this swapping occurs? We cannot, of course, record the time­ stamp of every instruction in the process.
 
 Another issue is that  swapping  is governed  by the scheduling algorithm of the operating  system and there may be many kernel level threads which are also doing context switches. Other processes could be contending  for the CPU or the kernel handling interrupts. The user does not have any control over these
 extraneous context switches. For instance, if at time t1,n the kernel decides to handle an interrupt, then the context switch time would be overstated. 
 
-In order to overcome these obstacles, we must first construct an environment such that after P
- 
+In order to overcome these obstacles, we must first construct an environment such that after P1 executes, the task scheduler immediately selects P2 to run. This may be accomplished by constructing a data channel, such as a pipe, between  P1 and P2 and having the two processes play a game of ping-pong  with a data token.
 
-executes, 
-the task scheduler immediately selects P2 to run. This may be accomplished by constructing a data channel, such as a pipe, between  P1 and P2 and having the two processes play a game of ping-pong  with a data token.
-
-That is, let's allow P1 to be the initial sender and P2 to be the receiver. Initially, P2 is blocked (sleeping) as it awaits the data token. When P1 executes, it delivers the token over the data channel to P2 and immediately attempts to read a response token. However, since P2 has not yet had a chance to run, no such token is avail­ 
-able for P
- 
-and the process is blocked. This relinquishes the CPU. 
+That is, let's allow P1 to be the initial sender and P2 to be the receiver. Initially, P2 is blocked (sleeping) as it awaits the data token. When P1 executes, it delivers the token over the data channel to P2 and immediately attempts to read a response token. However, since P2 has not yet had a chance to run, no such token is avail­able for P1 and the process is blocked. This relinquishes the CPU. 
 
 A context switch results and the task scheduler must select another process to run. Since P2 is now in a ready-to-run state, it is a desirable candidate to be selected by the task scheduler for execution. When P2 runs, the roles of P1 and P2 are swapped. P2 is now acting as the sender and P1 as the blocked receiver. The game ends when P2 returns the token to P1
 
 To summarize, an iteration of the game is played with the following steps:
 
 1. P2 blocks awaiting data from P1• 
-2.  P
-1
-3.  P
- 
-marks the start time.
+2. P1 marks the start time.marks the start time.
+3. P1 sends token to P2 
+4. P1 attempts to read a response token from P2• This induces a context switch.
+5. P2 is scheduled and receives the token.
+6. P2 sends a response token to P1
+7. P2 attempts read a response token from P1• This induces a context switch.
+8. P1 is scheduled and receives the token.
+9. P1 marks the end time.
 
-sends token to P • 
+The key is that the delivery of a data token induces a context switch. Let Td and Tr be the time it takes to deliver and receive a data token, respectively, and let Tc be the amount of time spent in a context switch. At step 2, P1 records the timestamp of the delivery of the token, and at step 9, it records the timestamp of the response. The amount of time elapsed, T, between these events may be expressed by:
 
-4.  P1 attempts to read a response token from P2• This induces a context switch.
-5.  P2 is scheduled and receives the token.
-6.  P2 sends a response token to P1
-7.  P2 attempts read a response token from P1• This induces a context switch.
-8.  P1 is scheduled and receives the token.
-9.  P1 marks the end time.
-The key is that the delivery of a data token induces a context switch. Let Td and Tr be the time it takes to deliver and receive a data token, respectively, and let Tc be the amount of time spent in a context switch. At 
-step 2, P
-1
- 
-records the timestamp of the delivery of the token, and at step 9, it records the timestamp of the 
-response. The amount of time elapsed, T, between these events may be expressed by:
-T =  2  *  (Td   + Tc   + Tr )
-This formula arises because of the following events: P1 sends a token (3), the CPU context switches (4), P2
-receives it (5).  P2 then sends the response token (6), the CPU context switches (7), and finally P 1 receives it
+	T =  2  *  (Td   + Tc   + Tr )
 
+This formula arises because of the following events: P1 sends a token (3), the CPU context switches (4), P2 receives it (5).  P2 then sends the response token (6), the CPU context switches (7), and finally P1 receives it (8). 
 
+P1 will be able to easily compute T, since this is just the time between events 3 and 8. So, to solve for Tc' we must first determine the value of Td + Tr.
 
-
-
-
-448       Cracking the  Coding  Interview,  6th  Edition 
-Solutions to Chapter  15  I    Threads and Locks
-
-
-P1 will be able to easily compute T, since this is just the time between events 3 and 8. So, to solve for Tc' we must first determine the value of Td    +  Tr· 
-
-How can we do this? We can do this by measuring the length of time it takes P
- 
-
-to send and receive a token 
-to itself. This will not induce a context switch since P  is running on the CPU at the time it sent the token and
+How can we do this? We can do this by measuring the length of time it takes P1 to send and receive a token to itself. This will not induce a context switch since P1 is running on the CPU at the time it sent the token and
 will not block to receive it.
 
-The game is played a number of iterations to average out any variability in the elapsed time between steps
-2 and 9 that may result from unexpected kernel interrupts and additional kernel threadscontendingfor the
-CPU. We select the smallest observed context switch time as our final answer.
+The game is played a number of iterations to average out any variability in the elapsed time between steps 2 and 9 that may result from unexpected kernel interrupts and additional kernel threads contending for the CPU. We select the smallest observed context switch time as our final answer.
 
-However, all we can ultimately say that this is an approximation which depends on the underlying system. For example, we make the assumption  that P2  is selected to run once a data token becomes available. However, this is dependent on the implementation  of the task scheduler and we cannot make any guar­
-antees.
+However, all we can ultimately say that this is an approximation which depends on the underlying system. For example, we make the assumption  that P2  is selected to run once a data token becomes available. However, this is dependent on the implementation  of the task scheduler and we cannot make any guar­antees.
 
 That's okay; it's important in an interview to recognize when your solution might not be perfect.
 
 
-15.3 		Dining  Philosophers: In the famous dining philosophers problem, a bunch of philosophers are sitting around a circular table with one chopstick between each of them. A philosopher needs both chopsticks to eat, and always picks up the left chopstick before the right one. A deadlock could potentially occur if all the philosophers reached for the left chopstick at the same time. Using threads and locks, implement a simulation of the dining philosophers problem that prevents deadlocks.
-
-pg  780
+**15.3 		Dining  Philosophers:** In the famous dining philosophers problem, a bunch of philosophers are sitting around a circular table with one chopstick between each of them. A philosopher needs both chopsticks to eat, and always picks up the left chopstick before the right one. A deadlock could potentially occur if all the philosophers reached for the left chopstick at the same time. Using threads and locks, implement a simulation of the dining philosophers problem that prevents deadlocks.
 
 SOLUTION
 
+---
+
 First, let's implement a simple simulation of the dining philosophers problem in which we don't concern ourselves with deadlocks. We can implement this solution by having Philosopher extend Thread, and Chopstick call lock. lock() when it is picked up and lock. unlock() when it is put down.
+```java
 1     class  Chopstick {
 2          private Lock lock;
 3
@@ -12751,8 +12581,8 @@ First, let's implement a simple simulation of the dining philosophers problem in
 13             lock.unlock();
 14        }
 15   }
-
-17   class  Philosopher extends Thread  {
+16
+17 	 class  Philosopher extends Thread  {
 18        private int bites =  10;
 19        private  Chopstick left, right;
 20
@@ -12760,64 +12590,40 @@ First, let's implement a simple simulation of the dining philosophers problem in
 22              this.left =  left;
 23              this.right= right;
 24        }
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition      449 
-Solutions to Chapter 15  I    Threads and  Locks
-
- 
 25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
+26		public void  eat() {
+27			pickup();
+28			chew();
+29			putDown();
+30		}
+31		
+32		public void  pickUp()  { 
+33			left.pickup(); 
+34			right.pickUp();
+35		}
+36		
+37		public void  chew()  {}
+38		
+39		public void  putDown() { 
+40			right.putDown(); 
+41			left.putDown();
+42		}
+43		
+44		public void  run() {
+45			for  (int i= 0;  i <   bites; i++)  {
+46				eat();
+47			}
+48		} 
 49   }
- 
+```
 
-public void  eat() {
-pickup();
-chew();
-putDown();
-}
 
-public void  pickUp()  { left.pickup(); right.pickUp();
-}
-
-public void  chew()  {}
-
-public void  putDown() { right.putDown(); left.putDown();
-}
-
-public void  run() {
-for  (int i= 0;  i <   bites; i++)  {
-eat();
-}
-} 
 Running the above code may lead to a deadlock if all the philosophers have a left chopstick and are waiting for the right one.
 
-Solution #1: All or Nothing
+**Solution #1: All or Nothing**
 
 To prevent deadlocks, we can implement a strategy where a philosopher will put down his left chopstick if he is unable to obtain the right one.
+```java
 1     public class Chopstick  {
 2         /*  same as  before   */
 3
@@ -12842,26 +12648,23 @@ To prevent deadlocks, we can implement a strategy where a philosopher will put d
 22                 return false;
 23           }
 24           if  (!right.pickup()) {
-
-
-450            Cracking the Coding Interview, 6th  Edition 
-Solutions to Chapter 15 I    Threads and Locks
-
-
 25                     left.putDown();
 26                    return false;
 27                }
 28               return true;
 29       }
 30   }
+```
+
 In the above code,  we need to be sure to release the  left chopstick if we can't  pick up the right one-and to not  call putDown () on the  chopsticks if we never had them in the  first place.
 
 One issue  with  this is that if all the  philosophers were  perfectly synchronized, they  could simultaneously pick up their left chopstick, be unable to pick up the  right one, and then put back down the  left one-only to have the process repeated again.
 
-Solution #2: Prioritized Chopsticks
+**Solution #2: Prioritized Chopsticks**
 
 Alternatively, we can label  the  chopsticks with a number from  0 to N    -  1. Each philosopher attempts to pick up the  lower numbered chopstick first.This essentially means that each philosopher goes for the  left chopstick before right one  (assuming that's the  way you labeled it), except for the  last philosopher who does this in reverse. This will break the cycle.
-1      public  class  Philosopher  extends Thread {
+```java
+1      public class  Philosopher  extends Thread {
 2           private int bites =  10;
 3           private  Chopstick lower, higher;
 4           private int index;
@@ -12877,7 +12680,7 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N    -  1.
 14         }
 15
 16         public void eat()  {
-pickup();
+17		   pickup();
 18               chew();
 19               putDown();
 20          }
@@ -12897,13 +12700,6 @@ pickup();
 34         public void run()  {
 35               for (int i= 0;   i <   bites;  i++) {
 36                     eat();
-
-
-
-CrackingTheCodinglnterview.com \ 6th Edition         451 
-Solutions to Chapter 1 S I    Threads and Locks
-
-
 37             }
 38        }
 39   }
@@ -12922,63 +12718,58 @@ Solutions to Chapter 1 S I    Threads and Locks
 52         }
 53
 54        public  void  putDown()  {
-lock.unlock();
+55        lock.unlock();
 56        }
 57
 58        public int  getNumber()   {
 59             return number;
 60         }
 61   }
+```
+
 With this solution, a philosopher can never hold the larger chopstick without holding the smaller one.This prevents the ability to have a cycle, since a cycle means that a higher chopstick would"point"to a lower one.
 
 
-15.4      Deadlock-Free Class: Design a class which provides a lock only if there are no possible deadlocks.
-
-pg  180
+**15.4      Deadlock-Free Class:** Design a class which provides a lock only if there are no possible deadlocks.
 
 SOLUTION
+
+---
 
 There are several common ways to prevent deadlocks. One of the popular ways is to require a process to declare upfront what locks it will need. We can then verify if a deadlock would be created by issuing these locks, and we can fail if so.
 
 With these constraints in mind, let's investigate how we can detect deadlocks. Suppose this was the order of locks requested:
-A=   {1,  2,   3,  4}
-B  = {1,  3,  5}
+```
+A = {1,  2,   3,  4}
+B = {1,  3,  5}
 C = {7,   5,  9,   2}
-This may create a deadlock because we could have the following scenario: A locks 2,  waits on  3
-Blocks 3,  waits on  5
-C  locks   5,  waits on  2
-We can think about this as a graph, where 2 is connected  to 3, 3 is connected  to 5, and 5 is connected to
-
-2. A deadlock is represented  by a cycle. An edge  (w,    v) exists in the graph if a process declares that it will request lock v immediately after lock w. For the earlier example, the following edges would exist in the
-graph: (1, 2),  (2, 3),  (3, 4),  (1, 3),  (3, 5),  (7, 5),  (5, 9),  (9,  2).The"owner" of the edge does not matter.
-
-
-
-
-452       Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 1 S I    Threads  and Locks
-
+```
+This may create a deadlock because we could have the following scenario: 
+```
+A locks 2,  waits on  3
+B locks 3,  waits on  5
+C locks 5,  waits on  2
+```
+We can think about this as a graph, where 2 is connected  to 3, 3 is connected  to 5, and 5 is connected to 2. A deadlock is represented  by a cycle. An edge  (w,    v) exists in the graph if a process declares that it will request lock v immediately after lock w. For the earlier example, the following edges would exist in the graph: (1, 2),  (2, 3),  (3, 4),  (1, 3),  (3, 5),  (7, 5),  (5, 9),  (9,  2).The"owner" of the edge does not matter.
 
 This class will need a declare method, which threads and processes will use to declare what order they will request resources in. This declare method  will iterate through the declare order, adding each contig­ uous pair of elements (v, w) to the graph. Afterwards, it will check to see if any cycles have been created. If any cycles have been created, it will backtrack, removing these edges from the graph, and then exit.
 
 We have one final component to discuss: how do we detect  a cycle? We can detect a cycle by doing a depth-first search through each c onnected component  (i.e., each connected  part of the graph). Complex algorithms exist to find all the connected  components  of a graph, but our work in this problem does not require this degree of complexity.
 
-We know that if a cycle was created, one of our new edges must be to blame. Thus, as long as our depth­
-first search touches all of these edges at some point, then we know that we have fully searched for a cycle.
+We know that if a cycle was created, one of our new edges must be to blame. Thus, as long as our depth­ first search touches all of these edges at some point, then we know that we have fully searched for a cycle.
 
 The pseudocode for this special case cycle detection looks like this:
+```java
 1     boolean checkForCycle(locks[] locks)  {
 2          touchedNodes  = hash  table(lock  ->  boolean)
 3         initialize  touchedNodes  to false for each  lock   in locks
 4          for each  (lock x in  process.locks)  {
 5               if (touchedNodes[x]  == false) {
 6                    if (hasCycle(x,   touchedNodes)) { 
-7
+7						return true; 
 8                      }
 9                  }
 10        }
- 
-return true; 
 11        return false;
 12   }
 13
@@ -12990,9 +12781,11 @@ return true;
 19             ... (see full code  below)
 20          }
 21   }
+```
 In the above code, note that we may do several depth-first searches, but touchedNodes is only initialized once. We iterate until all the values in touchedNodes are false.
 
 The code below provides further details. For simplicity, we assume that all locks and processes (owners) are ordered sequentially.
+```java
 1       class LockFactory   {
 2          private static  LockFactory   instance;
 3
@@ -13008,13 +12801,6 @@ The code below provides further details. For simplicity, we assume that all lock
 13
 14        public static  synchronized  LockFactory   initialize(int count)   {
 15             if (instance == null)  instance = new LockFactory(count);
-
-
-
-CrackingTheCodinglnterview.com / 6th Edition      453 
-Solutions to Chapter 15  I    Threads and Locks
-
-
 16            return instance;
 17       }
 18
@@ -13025,19 +12811,13 @@ Solutions to Chapter 15  I    Threads and Locks
 23                 if (touchedNodes.get(resource) ==  false) {
 24                      LockNode  n =  locks[resource];
 25                      if (n.hasCycle(touchedNodes)) { 
-26
-27
-28
+26							return true;
+27						}
+28					}
 29            }
- 
-return true;
-}
-} 
-
+30          return false; 
 31       }
 32
- 
-return false; 
 33       /*To prevent  deadlocks,   force  the  processes to  declare  upfront what order  they
 34       *will  need the  locks  in.   Verify  that this order  does  not  create a  deadlock  (a
 35       *cycle  in  a  directed graph)*/
@@ -13059,10 +12839,8 @@ prev.joinTo(curr);
 51                 for  (int j =  1;  j <  resourcesinOrder.length;  j++)  {
 52                      LockNode  p =  locks[resourcesinOrder[j  - 1]];
 53                      LockNode  c  =  locks[resourcesinOrder[j]]; 
-54
+54                      p.remove(c); 
 55                 }
- 
-p.remove(c); 
 56                 return false;
 57            }
 58
@@ -13079,13 +12857,6 @@ p.remove(c);
 69                return true;
 70         }
 71
-
-
-
-454       Cracking  the Coding  Interview, 6th  Edition 
-Solutions to Chapter 15  I    Threads and Locks
-
-
 72       /*  Get the  lock,   verifying first that the  process   is really calling the  locks  in
 73         * the  order  it said   it would.  */
 74       public  Lock getLock(int ownerid,   int  resourceID) {
@@ -13100,7 +12871,7 @@ Solutions to Chapter 15  I    Threads and Locks
 83            return null;
 84        }
 85    }
-
+86
 87  public   class LockNode   {
 88       public   enum  VisitState {  FRESH,  VISITING,    VISITED};
 89
@@ -13142,12 +12913,6 @@ Solutions to Chapter 15  I    Threads and Locks
 125                   }
 126               }
 127               visited[lockid]     VisitState.VISITED;
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition        4SS 
-Solutions to Chapter 15  I     Threads and Locks
-
 128		}
 129		return false;
 130	}	
@@ -13159,26 +12924,31 @@ Solutions to Chapter 15  I     Threads and Locks
 136
 137      public int  getld()  {  return lockld;  }
 138  }
+```
+
 As always, when you see code this complicated  and lengthy, you wouldn't be expected to write all of it. More likely, you would be asked to sketch out pseudocode and possibly implement one of these methods.
 
 
 15.5    Call In Order: Suppose we have the following code:
+```java
 public  class  Foo {
-public  Foo() {   ... }
-public  void first() {  ... }
-public  void second() {   ... }
-public  void third() {   ... }
+	public  Foo() {   ... }
+	public  void first() {  ... }
+	public  void second() {   ... }
+	public  void third() {   ... }
 }
+```
 The same instance of Foo will be passed to three different threads. ThreadA will call first threadB
 will call second, and thread( will call third. Design a mechanism to ensure that first is called before second and second is called before third.
 
-pg  180
-
 SOLUTION
+
+---
 
 The general logic is to check if first() has completed before executing second(), and if second() has completed before calling third(). Because  we need to be very careful about  thread safety, simple boolean flags won't do the job.
 
 What about using a lock to do something like the below code?
+```java
 1     public  class  FooBad   {
 2          public  int  pauseTime =  1000;
 3          public  Reentrantlock lockl,  lock2;
@@ -13199,53 +12969,32 @@ What about using a lock to do something like the below code?
 18                 lockl.unlock();  //  mark finished  with first()
 19              }  catch ( ...) {   . . . }
 20        }
-
-
-456        Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter  15  I     Threads and Locks
-
- 
 21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-
-34
-35
-36
-37
-38
+22			public   void  second()  {
+23				try {
+24			lockl.lock();  // wait  until finished with  first()
+25			lockl.unlock();
+26			
+27			
+28			lock2.unlock();  // mark finished with  second()
+29			}  catch  (...)  {  ... }
+30			}
+31			
+32			public void  third() {
+33				try {
+34			lock2.lock();  // wait  until finished with  third()
+35			lock2.unlock();
+36			
+37			}  catch  (...)  {  ... }
+38			} 
 39    }
- 
-
-public   void  second()  {
-try {
-lockl.lock();  // wait  until finished with  first()
-lockl.unlock();
+``` 
 
 
-lock2.unlock();  // mark finished with  second()
-}  catch  (...)  {  ... }
-}
-
-public void  third() {
-try {
-lock2.lock();  // wait  until finished with  third()
-lock2.unlock();
-
-}  catch  (...)  {  ... }
-} 
 This code won't actually quite work due to the concept of lock ownership. One thread is actually performing the lock (in the FooBad constructor), but different threads attempt to unlock the locks. This is not allowed, and your code will raise an exception. A lock in Java is owned by the same threadwhich locked it.
 
 Instead, we can replicate this behavior with semaphores. The logic is identical.
+```java
 1    public class Foo {
 2         public Semaphore seml,  sem2;
 3
@@ -13278,22 +13027,19 @@ Instead, we can replicate this behavior with semaphores. The logic is identical.
 30       public void  third() {
 31            try {
 32                 sem2.acquire();
-
-
-CrackingTheCodinglnterview.com I  6th Edition          457 
-Solutions to Chapter 15  I   Threads and Locks
-
-
 33                 sem2.release();
 34	
 35			}   catch  (.•.) {  .••   }
 36		}	
 37	}		
+```
 
-15.6 	Synchronized Methods: You are given a class with synchronized method A    and a normal method B. If you have two threads in one instance of a program, can they both execute A at the same time? Can they execute A and B at the same time?
+**15.6 	Synchronized Methods:** You are given a class with synchronized method A    and a normal method B. If you have two threads in one instance of a program, can they both execute A at the same time? Can they execute A and B at the same time?
 pg 180
 
 SOLUTION
+
+---
 
 By applying the word synchronized to a method, we ensure that two threads cannot execute synchro­
 nized methods on the same object instance at the same time.
@@ -13306,75 +13052,47 @@ In the second part, we're asked if  threadl can execute synchronized method  A w
 Ultimately, the key concept to remember is that only one synchronized method can be in execution per instance of that object. Other threads can execute non-synchronized methods on that instance, or they can execute any method on a different instance of the object.
 
 
-15.7 	FizzBuzz:  In the classic problem FizzBuzz, you are told to print the numbers from 1  to n. However, when the number is divisible by 3, print "Fizz''. When it is divisible by 5, print "Buzz''. When it is divisible by 3 and 5, print"FizzBuzz''. In this problem, you are asked to do this in a multithreaded way. Implement a multithreaded version  of FizzBuzz with four threads. One thread checks for divisibility of 3 and prints"Fizz''. Another thread is responsible for divisibility of 5 and prints"Buzz''. A third thread is responsible for divisibility of 3 and 5 and prints"FizzBuzz''.  A fourth thread does the numbers.
-pg 180
+**15.7 	FizzBuzz:**  In the classic problem FizzBuzz, you are told to print the numbers from 1  to n. However, when the number is divisible by 3, print "Fizz''. When it is divisible by 5, print "Buzz''. When it is divisible by 3 and 5, print"FizzBuzz''. In this problem, you are asked to do this in a multithreaded way. Implement a multithreaded version  of FizzBuzz with four threads. One thread checks for divisibility of 3 and prints"Fizz''. Another thread is responsible for divisibility of 5 and prints"Buzz''. A third thread is responsible for divisibility of 3 and 5 and prints"FizzBuzz''.  A fourth thread does the numbers.
+
 
 SOLUTION
 
+---
+
 Let's start off with implementing a single threaded version of FizzBuzz.
 
-Single Threaded
+**Single Threaded**
 
 Although this problem (in the single threaded version) shouldn't be hard, a lot of candidates overcompli­ cate it. They look for something"beautiful"that reuses the fact that the divisible by 3 and 5 case ("FizzBuzz") seems to resemble the individual cases ("Fizz" and"Buzz").
 
 In actuality, the best way to do it, considering readability and efficiency, is just the straightforward way.
+```java
 1    void  fizzbuzz(int n)  {
-
-
-
-458         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 15  \  Threads and Locks
-
- 
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
+2	for (inti=  1;   i <=  n;  i++)  {
+3		if (i %   3  ==    0  &&   i %   5  ==  0) {
+4			System.out.println("FizzBuzz");
+5		}  else if  (i %   3  ==  0)  {
+6			System.out.println("Fizz");
+7		}  else if(i  %   5  ==  0) { 
+8			System.out.println("Buzz");
+9		}  else { 
+10			System.out.println(i);
+11		}
+12	} 
 13    }
- 
-for (inti=  1;   i <=  n;  i++)  {
-if (i %   3  ==    0  &&   i %   5  ==  0) {
-System.out.println("FizzBuzz");
-}  else if  (i %   3  ==  0)  {
-System.out.println("Fizz");
-}  else if(i  %   5  ==  0) { System.out.println("Buzz");
-}  else { System.out.println(i);
-}
-} 
+```
+
 The primary thing to be careful of here is the  order of the  statements. If you put the check for divisibility by
 3 before the check for divisibility by 3 and 5, it won't print the  right thing.
 
-Multithreaded
+**Multithreaded**
 
 To do this multithreaded, we want a structure that looks something like this:
  
-FiizBuzz  Thread
-if i div by   3  &&   5 print FizzBuzz increment i
-repeat until i >  n
-
-
-
-if i div by   only  5 print Buzz increment i
-repeat until i >  n
- 
-
-
-if i div by   only   3 print Fizz increment i
-repeat until i >  n
-
-
-
-if i not div by   3  or 5 print i
-increment i repeat   until i >  n 
+![](media/15_07_01.JPG)
 
 The code for this will look something like:
+```java
 1      while (true)  {
 2           if(current>  max)   {
 3                 return;
@@ -13384,36 +13102,23 @@ The code for this will look something like:
 7                 current++;
 8           }
 9       }
+```
 We'll need to  add some synchronization in the  loop.  Otherwise, the  value  of current could change between lines 2 - 4 and lines 5 - 8, and we can inadvertently exceed the  intended bounds of the  loop. Addi­ tionally, incrementing is not  thread-safe.
 
 To actually implement this concept, there are  many possibilities. One  possibility is to  have four  entirely separate thread classes that share a reference to the  current variable (which can be wrapped in an object).
 
 The  loop  for each thread is substantially similar. They just have different target values for the  divisibility checks,  and  different print values.
 
+|                  | FizzBuzz | Fizz  | Buzz  | Number  |
+| --               | --       | --    | --    | --      |
+| current % 3 == 0 | true     | true  | false | false   |
+| current % 5 == 0 | true     | false | true  | false   |
+| to print         | FizzBuzz | Fizz  | Buzz  | current |
 
-
-
-
-
-CrackingTheCodinglnterview.com j 6th Edition        459 
-Solutions to Chapter 1 S  I    Threads and Locks
-
-
-
-
-current % 3 == 0       true	true                  false                 false
-current% 5 == 0       true
-
-to print                     FizzBuzz	false
-
-Fizz	true
-
-Buzz	false
-
-current
 For the most part, this can be handled by taking in "target"parameters and the value to print. The output for the Number thread needs to be overwritten, though, asit's not a simple, fixed string.
 
 We can implement a FizzBuzzThread class which handles most of this. A NumberThread  class can extend FizzBuzzThread and override the print method.
+```java
 1    Thread[]  threads =  {new FizzBuzzThread(true, true,  n,  "FizzBuzz"),
 2                                           new FizzBuzzThread(true,  false, n,  "Fizz"),
 3                                           new FizzBuzzThread(false, true,  n,  "Buzz"),
@@ -13444,39 +13149,20 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 28            while  (true) {
 29                 synchronized (lock)  {
 30                      if  (current >  max) { 
-31
+31							return; 
 32                      }
 33
- 
-return; 
-34
-35
-36
-37
-38
-39
+34				if ((current %   3  ==  0) == div3  &&
+35					(current %  5   ==  0) == divs) {
+36					print();
+37					current++;
+38				}
+39				}
 40            }
 41       }
 42    }
 43
- 
-if ((current %   3         0)
-(current %  5       0)
-print();
-current++;
-}
-}
- 
-div3  &&
-divs) { 
 44  public class NumberThread  extends  FizzBuzzThread  {
-
-
-
-460           Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 15  I    Threads and Locks
-
-
 45       public   NumberThread(boolean div3,   boolean  div5,   int max) {
 46            super(div3, divs,  max, null);
 47        }
@@ -13485,40 +13171,20 @@ Solutions to Chapter 15  I    Threads and Locks
 S0            System.out.println(current);
 51           }
 52   }
+```
+
 Observe that we need to put the comparison of current and max before the if statement, to ensure the value will only get printed when current is less than or equal to max.
 
 Alternatively, if we're working in a language which supports this (Java 8 and many other languages do), we can pass in a validate method and a print method as parameters. 
+```java
 1       int   n =  100;
 2       Thread[]  threads =   {
-3             new FBThread(i
- 
-
-
-i %   3==  0 &&   i %   5
- 
-
-
-0,  i -> "FizzBuzz",   n), 
-4         new FBThread(i  ->
- 
-i %   3          0 &&   i %   5  != 0,
- 
-i -> "Fizz",  n), 
-5            new FBThread(i  ->
- 
-i %  3   != 0 &&   i %   5
- 
-0, i ->  11 Buzz",  n), 
-6             new FBThread(i  ->
-7       for  (Thread  thread
+3         new FBThread(i -> i %  3 == 0 && i % 5 == 0, i -> "FizzBuzz",   n), 
+4         new FBThread(i -> i %  3 == 0 && i % 5 != 0, i -> "Fizz",  n), 
+5         new FBThread(i -> i %  3 != 0 && i % 5 == 0, i -> "Buzz",  n), 
+6         new FBThread(i  -> i %  3   != 0 &&   i %  5   != 0, i -> Integer.toString(i), n)}; 
+7       for  (Thread  thread : threads) {
 8             thread.start();
- 
-i %  3   != 0 &&   i %  5   != 0,
-threads) {
- 
-i -> Integer.toString(i),
- 
-n)}; 
 9       }
 10
 11  public   class FBThread  extends  Thread {
@@ -13530,7 +13196,7 @@ n)};
 17       int X=  1;
 18
 19       public   FBThread(Predicate<Integer> validate,
-20                                     Function<Integer,  String>   printer, int max) {
+20                         Function<Integer,  String>   printer, int max) {
 21            this.validate=  validate;
 22            this.printer= printer;
 23            this.max  =   max;
@@ -13550,96 +13216,89 @@ n)};
 37            }
 38        }
 39  }
+```
+
 There are ofcourse many other ways of implementing this as well.
 
 
+## 16 Solutions to Moderate
 
+**16.1      Number Swapper:** Write a function to swap a number in place (that is, without temporary variables).
 
-
-CrackingTheCodinglnterview.com I 6th Edition         461 
-16
-
-Solutions to Moderate
-
-
-
-
-16.1      Number Swapper: Write a function to swap a number in place (that is, without temporary variables).
-
-pg 787
 
 SOLUTION
-----·--·····-···------·-  .... ,,·---·-····-··--·----······--···-- ··   ----••••••"--                          ··•••-.,.--             ,  , ·,v                                                     ••<<•··--
+
+---
 
 This is a classic interview problem,  and it's a reasonably straightforward one. We'll walk through this using a0 to indicate the original value of a and b0 to indicate the original value of b. We'll also use diff to indicate
 the value of a0   -   b0•
 
 Let's picture these on a number line for the case where a >   b.
 
-
-diff
-0
+![](media/16_01_1.JPG)
 
 
 First, we briefly set a to diff, which is the right side of the above  number line. Then, when we add b and diff (and store that value in b), we get a0•  We now have b   =   a0 and a =  diff. All that's left to do is to
 set a equal to a0   -  diff, which is just b   -   a.
 
 The code below implements this.
-1 	//Example  for a  = 9,   b  = 4 a  -  b;//a   9  -  4=5
+```
+1 	 //Example  for a  = 9,   b  = 4 
+2     a = a  -  b;//a =  9  -  4=5
 3     b = a +  b;//b  = 5  + 4 = 9
 4     a  = b  -  a;//a = 9  -  5
-
+```
 We can implement a similar solution  with bit manipulation. The benefit of this solution  is that  it works for more data types than just integers.
-1       //Example  for a  = 101  (in  binary) and  b  = 110
-2     a      aA b;//a      101A110      011
-3     b = aA b;//b = 011A110  = 101
-4     a = aA b;     //a = 011A101  = 110
+```
+1     //Example  for a  = 101  (in  binary) and  b  = 110
+2     a = a^b;//a = 101^110  = 011
+3     b = a^b;//b = 011^110  = 101
+4     a = a^b;//a = 011^101  = 110
+```
 This code works by using XORs. The easiest  way to see how this works is by focusing on a specific bit. If we can correctly swap two bits, then we know the entire operation works correctly.
 
 Let's take two bits, x and y, and walk through this line by line.
 
-1.  x  =  x  A   y
+1.  x  =  x  ^   y
 
 This line essentially checks if x and y have different values. It will result in 1  if and only if x   ! =  y.
 
-2.   y  =  X    A   y
+2.   y  =  X  ^  y
 
-
-
-
-462         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
-Or:y  =  {0  if originally same,    1  if different}  A   {original y}
-Observe that XORing a bit with 1  always flips the bit,whereas XORing with O will  never change it. Therefore, if we doy =  1  A   { original y} whenx   ! = y, theny will be flipped and therefore have
+Or:y  =  {0  if originally same,    1  if different}  ^   {original y}
+Observe that XORing a bit with 1  always flips the bit, whereas XORing with O will  never change it. Therefore, if we do y =  1  ^   { original y} when x != y, theny will be flipped and therefore have
 x's original value.
 
-Otherwise,ifx  == y,then we doy =  0  A   {original y}and the value ofy   does notchange. Either way,y will be equal to the original value ofx.
-3.   X  =   X  A   Y
+Otherwise, if x == y, then we do y =  0  ^ {original y} and the value of y does notchange. 
 
-Or:x       {0  if originally same,    1  if different}"  {original x}
+Either way,y will be equal to the original value ofx.
 
-At this point,y is equal to the original value ofx. This line is essentially equivalent to the line above it, but for different variables.
+3.   X  =   X  ^   Y
 
-If we dox       1  A   { original x}when the values are different,x will be flipped.
+Or:x = {0  if originally same, 1  if different} ^ {original x}
 
-If we dox  =  0 " { original x}when the values are the same, x will not be changed. This operation happens for each bit. Since it correctly swaps each bit, it will correctly swap the entire number.
+At this point, y is equal to the original value of x. This line is essentially equivalent to the line above it, but for different variables.
 
-16.2 	Word Frequencies: Design a method to find the frequency of occurrences of any given word in a book. What if we were running this algorithm multiple times? 
+If we do x = 1 ^ {original x} when the values are different, x will be flipped.
+
+If we do x = 0 ^ {original x} when the values are the same, x will not be changed. 
+
+This operation happens for each bit. Since it correctly swaps each bit, it will correctly swap the entire number.
+
+**16.2 	Word Frequencies:** Design a method to find the frequency of occurrences of any given word in a book. What if we were running this algorithm multiple times? 
 
 
 SOLUTION
 
+---
+
 Let's start with the simple case.
  
 
-pg  181 
-
-
-Solution: Single Query
+**Solution: Single Query**
 
 In this case, we simply go through the book, word by word,and count the number of times that a word appears. This will take O ( n) time. We know we can't do better than that since we must look at every word in the book.
+```java
 1     int  getFrequency(String[] book,  String word)  {
 2          word=  word.trim().tolowerCase();
 3         int count=  0;
@@ -13650,19 +13309,15 @@ In this case, we simply go through the book, word by word,and count the number o
 8          }
 9          return  count;
 10   }
+```
 We have also converted the string to lowercase and trimmed it. You can discuss with your interviewer if this is necessary (or even desired).
 
-Solution: Repetitive Queries
+**Solution: Repetitive Queries**
 
 If we're doing the operation repeatedly, then we can probably afford to take some time and extra memory to do pre-processing on the book. We can create a hash table which maps from a word to its frequency. The frequency of any word can be easily looked up in O ( 1) time. The code for this is below.
+```java
 1     HashMap<String,   Integer> setupDictionary(String[]   book)  {
 2         HashMap<String,  Integer> table  =
-
-
-CrackingTheCodinglnterview.com I  6th Edition      463 
-Solutions to Chapter 16  I     Moderate
-
-
 3               new HashMap<String,   Integer>();
 4          for (String word  :   book)  {
 5               word=   word.toLowerCase();
@@ -13684,41 +13339,43 @@ Solutions to Chapter 16  I     Moderate
 21        }
 22        return 0;
 23   }
+```
 Note that a problem like this is actually relatively easy. Thus, the interviewer is going to be looking heavily at how careful you are. Did you check for error conditions?
 
 
-16.3 	Intersection: Given two straight line segments  (represented  as a start point and an end point), compute the point of intersection, if any.
-
-pg 181
+**16.3 	Intersection:** Given two straight line segments  (represented  as a start point and an end point), compute the point of intersection, if any.
 
 SOLUTION
+
+---
 
 We first need to think about what it means for two line segments to intersect.
 
 For two infinite lines to intersect, they only have to have different slopes. If they have the same slope, then they must be the exact same line (same y-intercept). That is:
-slope 1 !=      slope 2
+```
+slope 1 != slope 2
 OR
-slope 1       slope 2 AND   intersect 1  == intersect  2
+slope 1  ==   slope 2 AND   intersect 1  == intersect  2
+```
 For two straight lines to intersect, the condition above must be true, plus the point of intersection must be within the ranges of each line segment.
+```
 extended infinite segments  intersect
 AND
-intersection is  within line  segment  1  (x  and  y  coordinates) AND 
-intersection is within line segment  2
- 
-and  y  coordinates) 
+intersection is  within line  segment  1  (x  and  y  coordinates) 
+AND 
+intersection is within line segment  2 and  y  coordinates) 
+```
 What if the two segments represent the same infinite line? In this case, we have to ensure that some portion of their segments  overlap. If we order the line segments by their x locations (start is before end, point 1  is before point 2), then an intersection occurs only if:
-Assume:
-start1.x <   start2.x &&   start1.x < end1.x   &&   start2.x < end2.x
-Then intersection  occurs if:
-start2 is between  startl and  endl
+
+```
+	Assume:
+		start1.x <   start2.x &&   start1.x < end1.x   &&   start2.x < end2.x
+	Then intersection  occurs if:
+		start2 is between  startl and  endl
+```
 We can now go ahead and implement this algorithm.
 
-
-
-464       Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I      Moderate
-
-
+```java
 1    Point  intersection(Point startl, Point  endl,   Point  start2, Point  end2)  {
 2         /*  Rearranging  these so  that, in  order  of  x values: start  is before   end and
 3           * point   1  is before   point   2.  This  will make some of  the  later  logic simpler. */
@@ -13773,34 +13430,24 @@ Solutions to Chapter 16  I      Moderate
 52
 ;3   /*  Swap coordinates of  point   one and two.  */
 54  void  swap(Point  one,  Point  two)  {
-55	double  x     one.x; S5	double  y =  one.y;
-
-
-
-CrackingTheCodinglnterview.com I 6th Edition         465 
-Solutions to Chapter 16  I     Moderate
-
- 
-57
-58
+55	double  x =    one.x; 
+56	double  y =  one.y;
+57	one.setlocation(two.x,   two.y);
+58	two.setlocation(x,  y); 
 59    }
 60
- 
-one.setlocation(two.x,   two.y);
-two.setlocation(x,  y); 
 61	public class  Line  {	
 62	public  double   slope,  yintercept;	
 63		
 64	public  Line(Point start,  Point end)  {	
 65	double   deltaY  = end.y   -  start.y;	
-66	double   deltaX   =  end.x   -  start.x;
-slope =  deltaY   I deltaX; II Will  be  Infinity  (not exception) when deltaX	
-0
+66	double   deltaX  = end.x   -  start.x;
+67  slope =  deltaY / deltaX; // Will be Infinity (not exception) when deltaX	
 68	yintercept = end.y   -  slope * end.x;	
 69	}	
 70		
 71   public class  Point {
-public double   x,  y;
+72   public double   x,  y;
 73        public  Point(double x,  double   y)  {
 74             this.x    x;
 75             this.y =  y;
@@ -13811,18 +13458,15 @@ public double   x,  y;
 80             this.y =  y;
 81         }
 82   }
+```
 For simplicity and compactness (it really makes the code easier to read), we've chosen to make the variables within Point and Line public. You can discuss with your interviewer the advantages and disadvantages of this choice.
 
  
-16.4    Tic Tac Win: Design an algorithm to figure out if someone has won a game of tic-tac-toe.
-
-
+**16.4    Tic Tac Win:** Design an algorithm to figure out if someone has won a game of tic-tac-toe.
 
 SOLUTION
  
-
-
-pg 181 
+---
 
 At first glance, this problem seems really straightforward. We're just checking a tic-tac-toe board; how hard could it be? It turns out that the problem is a bit more complex, and there is no single"perfect"answer. The optimal solution depends on your preferences.
 
@@ -13830,36 +13474,21 @@ There are a few major design decisions to consider:
 
 1. Will hasWon be called just once or many times (for instance, as part of a tic-tac-toe website)? If the latter is the case, we may want to add pre-processing time to optimize the runtime of hasWon.
 2.  Do we know the last move that was made?
-
 3.  Tic-tac-toe is usually on a 3x3 board. Do we want to design for just that, or do we want to implement it as an NxN solution?
 4.  In general, how much do we prioritize compactness  of code versus speed of execution vs. clarity of code? Remember: The most efficient code may not always be the best. Your ability to understand and maintain the code matters, too.
 
 
-
-
-
-
-466          Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
-Solution #1: If haswon is called many times
+**Solution #1: If haswon is called many times**
 
 There are only 39   or about 20,000, tic-tac-toe boards (assuming a 3x3 board). Therefore, we can represent our tic-tac-toe board as an int, with each digit representing a piece (0 means Empty, 1  means Red, 2 means Blue). We set up a hash table or array in advance with all possible boards as keys and the value indicating who has won. Our function then is simply this:
+```java
 1     Piece   hasWon(int   board) {
 2         return  winnerHashtable[board];
 3      }
+```
 To convert a board (represented by a char array) to an int, we can use what is essentially a "base 3" repre­ 
-sentation. Each board is represented as 3°v
- 
-+ 31v
- 
-+ Yv2
- 
-+ . . .  + 38v , where v
- 
-is a 0 if the space is 
-empty, a 1 if it's a "blue spot" and a 2 if it's a "red spot:'
+sentation. Each board is represented as 3°v + 31v1 + 32v2 + . . .  + 38v8 , where v1 is a 0 if the space is empty, a 1 if it's a "blue spot" and a 2 if it's a "red spot:'
+```java
 1     enum Piece   {  Empty,  Red,  Blue};
 2
 3     int  convertBoardToint(Piece[][] board) {
@@ -13869,21 +13498,21 @@ empty, a 1 if it's a "blue spot" and a 2 if it's a "red spot:'
 7                    /*   Each  value   in enum has  an  integer  associated with  it. We
 8                      *  can  just use  that.  */
 9                    int value       board[i][j].ordinal(); 
-10
+10					 sum = sum *  3 + value; 
 11             }
 12      }
- 
-sum = sum *  3 + value; 
 13       return sum;
 14    }
+```
 Now looking up the winner of a board is just a matter of looking it up in a hash table.
 
 Of course, if we need to convert a board into this format every time we want to check for a winner, we haven't saved ourselves any time compared with the other solutions. But, if we can store the board this way from the very beginning, then the lookup process will be very efficient.
 
 
-Solution #2:  If we know the  last move
+**Solution #2:  If we know the  last move**
 
 If we know the very last move that was made (and we've been checking for a winner up until now), then we only need to check the row, column, and diagonal that overlaps with this position.
+```java
 1     Piece   hasWon(Piece[][] board, int  row,  int column)  {
 2         if  (board.length != board[0].length) return Piece.Empty;
 3
@@ -13902,12 +13531,6 @@ If we know the very last move that was made (and we've been checking for a winne
 16       if (row  == (board.length  -  column  -  1)  &&   hasWonDiagonal(board, -1))   {
 17             return piece;
 18        }
-
-
-CrackingTheCodinglnterview.com J  6th Edition          467 
-Solutions to Chapter 16  I    Moderate
-
-
 19
 20       return  Piece.Empty;
 21   }
@@ -13943,14 +13566,17 @@ Solutions to Chapter 16  I    Moderate
 51          }
 52       return true;
 53   }
+```
+
 There is actually a way toclean up thiscode to remove some of the duplicatedcode. We'll see this approach in a later functi on.
 
 
-Solution #3: Designing for just  a 3x3 board
+**Solution #3: Designing for just  a 3x3 board**
 
 If we really only want to implement a solution for a 3x3 board, the code is relatively short and simple. The only complex part is trying to be clean and organized, without writing too much duplicated code.
 
 The code below checks each row, column, and diagonal to see if there is a winner.
+```java
 1      Piece  hasWon(Piece[][]  board)  {
 2         for  (int i= 0;  i <   board.length;  i++)  {
 3              /*  Check Rows  */
@@ -13958,28 +13584,10 @@ The code below checks each row, column, and diagonal to see if there is a winner
 5                   return board[i][0]; 
 6
 7
-8
-9
-10
-11
-
-
-
-468
- 
-}
-
-/*  Check Columns */
-if (hasWinner(board[0][i],  board[l][i],  board[2][i])) {
-return board[0][i];
-}
-
-
-
-Cracking the Coding  Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
+8				/*  Check Columns */
+9				if (hasWinner(board[0][i], board[l][i], board[2][i])) {
+10					return board[0][i];
+11				}
 12         }
 13
 14       /*  Check Diagonal  */
@@ -14000,18 +13608,20 @@ Solutions to Chapter 16  I     Moderate
 29        }
 30       return pl==   p2 &&   p2==  p3;
 31   }
+```
 This is an okay solution in that it's relatively easy to understand what is going on. The problem is that the values are hard coded. It's easy to accidentally type the wrong indices.
 
 Additionally, it won't be easy to scale this to an NxN board.
 
 
-Solution #4: Designing for an NxN board
+**Solution #4: Designing for an NxN board**
 
 There are a number of ways to implement this on an NxN board.
 
-Nested For-Loops
+*Nested For-Loops*
 
 The most obvious way is through a series of nested for-loops.
+```java
 1    Piece   hasWon(Piece[][] board)  {
 2         int size =  board.length;
 3         if (board[0].length !=         size)  return  Piece.Empty;
@@ -14036,25 +13646,13 @@ The most obvious way is through a series of nested for-loops.
 22            if (first== Piece.Empty)  continue;
 23            for  (int j=    1;  j <   size;  j++)  {
 24                 if (board[j][i] != first) {
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition            469 
-Solutions to Chapter 16 I     Moderate
-
- 
-25
-26
-27
-28
+25					break;
+26					}  else if (j  == size   -  1)  {//Last  element
+27						return first;
+28					} 
 29            }
-}
+30			}
 31
- 
-break;
-}  else if (j  == size   -  1)  {//Last  element
-return first;
-} 
 32       /*  Check diagonals. */
 33          first=    board[0][0];
 34       if (first != Piece.Empty)  {
@@ -14066,38 +13664,28 @@ return first;
 40                 }
 41            }
 42       }
- 
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
+43
+44			first=    board[0][size -  1];
+45			if (first != Piece.Empty)  {
+46				for  (int i= 1;  i <   size; i++)  {
+47					if (board[i][size -  i -  1]  != first) {
+48						break;
+49			}  else if (i==    size -  1)  {//Last element
+50				return first;
+51			}
+52			}
+53			}
 54
-55
+55		return Piece.Empty; 
 56   }
- 
-first=    board[0][size -  1];
-if (first != Piece.Empty)  {
-for  (int i= 1;  i <   size; i++)  {
-if (board[i][size -  i -  1]  != first) {
-break;
-}  else if (i==    size -  1)  {//Last element
-return first;
-}
-}
-}
+```
 
-return Piece.Empty; 
 This is, to the say the least, pretty ugly. We're doing nearly the same work each time. We should look for a way of reusing the code.
 
-Increment and Decrement Function
+*Increment and Decrement Function*
 
 One way that we can reuse the code better is to just pass in the values to another function that increments/ decrements the rows and columns. The hasWon function now just needs the starting position and the amount to increment the row and column by.
+```java
 1    class Check {
 2         public int row,  column;
 3         private int rowincrement,   columnincrement;
@@ -14114,13 +13702,7 @@ One way that we can reuse the code better is to just pass in the values to anoth
 14      }
 15
 16       public boolean  inBounds(int size)  {
-
-
-470          Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I      Moderate
-
-
-17            return row>=  0 &&  column>=  0 &&  row<  size &&   column<  size;
+17          return row>=  0 &&  column>=  0 &&  row<  size &&   column<  size;
 18        }
 19    }
 20
@@ -14157,11 +13739,13 @@ Solutions to Chapter 16  I      Moderate
 51        }
 52       return first;
 53   }
+```
 The Cheek function is essentially  operating as an iterator.
 
-Iterator
+*Iterator*
 
 Another way of doing it is, of course,  to actually build an iterator.
+```java
 1      Piece  hasWon(Piece[][] board)  {
 2         if (board.length != board[0].length)  return  Piece.Empty;
 3         int size =  board.length;
@@ -14176,13 +13760,6 @@ Another way of doing it is, of course,  to actually build an iterator.
 12
 13       for  (Positionlterator iterator  :   instructions) {
 14            Piece  winner= hasWon(board,  iterator);
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition      471 
-Solutions to Chapter 16  I     Moderate
-
-
 15            if (winner   != Piece.Empty)  {
 16                 return winner;
 17            }
@@ -14207,25 +13784,23 @@ Solutions to Chapter 16  I     Moderate
 36       private Position current;
 37
 38       public   Positioniterator(Position p,  int rowincrement,
-39                                                    int co1Increment,   int size) {
-40            this.rowincrement      rowincrement;
-
- 
-w!ncrement,
- 
-p.column  -  co1Increment); 
-
-
+39                           int co1Increment,   int size) {
+40            this.rowincrement  =   rowincrement;
+41 			  this.colIncrement = colIncrement;
+42			  this.size = size;
+43 			  current = new Position(p.row - rowIncrement, p.column  -  co1Increment); 
+44   }
+45
 46       @Override
 47       public   boolean  hasNext()   {
 48            return current.row +  rowincrement  <   size &&
-49                         current.column +  co1Increment  <   size;
-}
+49                current.column +  co1Increment  <   size;
+50			}
 51
 52       @Override
 53       public   Position next() {
 54            current =  new Position(current.row + rowincrement,
-current.column +  co1Increment);
+55				current.column +  co1Increment);
 56            return current;
 57       }
 58   }
@@ -14237,30 +13812,28 @@ current.column +  co1Increment);
 64            this.column =  column;
 65       }
 66   }
+```
 All of this is potentially  overkill, but it's worth discussing the options with your interviewer. The point of this problem is to assess your understanding of how to code in a clean and maintainable way.
 
 
-
-
-472          Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
-16.5     Factorial zeros: Write an algorithm which computes the number of trailing zeros in n factorial.
-
-pg 787
+**16.5     Factorial zeros:** Write an algorithm which computes the number of trailing zeros in n factorial.
 
 SOLUTION
 
+---
+
 A simple approach  is to compute  the factorial, and then count the number of trailing zeros by continu­ ously dividing by ten. The problem with this though is that the bounds of an int would be exceeded very quickly. To avoid this issue, we can look at this problem mathematically.
 
-Consider a factorial like 19 ! :
+Consider a factorial like 19! :
+```
 19!  =  1*2*3*4*5*6*7*8*9*10*11*12*13*14*15*16*17*18*19
-A trailing zero is created with multiples of 10, and multiples of 10 are created with pairs of 5-multiples and
-2-multiples.
+```
+A trailing zero is created with multiples of 10, and multiples of 10 are created with pairs of 5-multiples and 2-multiples.
 
 For example, in 19!, the following terms create the trailing zeros:
+```
 19! =   2  * ... *  5 * ... * 10  * ... * 15 *  16  * ...
+```
 Therefore, to count the number of zeros, we only need to count the pairs of multiples of 5 and 2. There will always be more multiples of 2 than 5, though, so simply counting the number of multiples of 5 is sufficient.
 
 One "gotcha" here is 15 contributes a multiple of 5 (and therefore one trailing zero), while 25 contributes two (because 25  =  5  *  5).
@@ -14268,6 +13841,7 @@ One "gotcha" here is 15 contributes a multiple of 5 (and therefore one trailing 
 There are two different ways to write this code.
 
 The first way is to iterate through all the numbers from 2 through n, counting the number of times that 5 goes into each number.
+```java
 1     /*  If the   number is a  5 of  five,  return which  power of  5. For  example:  5  ->  1,
 2       * 25->  2,   etc.  */
 3     int factors0f5(int i)  {
@@ -14286,43 +13860,43 @@ The first way is to iterate through all the numbers from 2 through n, counting t
 16        }
 17        return  count;
 18   }
+```
 This isn't bad, but we can make it a little more efficient by directly counting the factors of 5. Using this approach,  we would first count the number of multiples of 5 between  1 and n (which is Ys ), then the number of multiples of 25 (/'is), then 125, and so on .
 
 To count how many multiples of mare in n, we can just divide n by m.
+```java
 1      int  countFactZeros(int num) {
 2          lnt count=    0;
 3          if (num <   0)  {
 4               return  -1;
 5          }
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition      473 
-Solutions to Chapter 16     Moderate
-
-
 6          for  (int i= 5;  num  / i >  0;  i *= 5)  {
 7                    count+= num  / i;
 8          }
 9             return  count;
 10   }
+```
 This problem is a bit of a brainteaser, but it can be approached  logically (as shown above). By thinking through what exactly will contribute a zero, you can come up with a solution. You should be very clear in your rules upfront so that you can implement it correctly.
 
 
-16.6 	Smallest Difference: Given two arrays of integers, compute the pair of values (one value in each array) with the smallest (non-negative) difference. Return the difference.
-
+**16.6 	Smallest Difference:** Given two arrays of integers, compute the pair of values (one value in each array) with the smallest (non-negative) difference. Return the difference.
+```
 EXAMPLE
-Input: {l, 3, 15, 11, 2}, {23, 127,  235, 19, 8} Output: 3. That is, the pair (11, 8).
-pg 181
+Input: {l, 3, 15, 11, 2}, {23, 127,  235, 19, 8} 
+Output: 3. That is, the pair (11, 8).
+```
 
 SOLUTION
+
+---
 
 Let's start first with a brute force solution.
 
 
-Brute Force
+**Brute Force**
 
 The simple brute force way is to just iterate through all pairs, compute the difference, and compare it to the current minimum difference.
+```java
 1     int  findSmallestDifference(int[] arrayl,  int[]  array2) {
 2          if  (arrayl.length == 0  I   I      array2.length ==  0)  return  -1;
 3
@@ -14336,6 +13910,7 @@ The simple brute force way is to just iterate through all pairs, compute the dif
 11         }
 12        return min;
 13    }
+```
 One minor optimization we could perform from here is to return immediately if we find a difference of zero, since this is the smallest difference possible. However, depending  on the input, this might actually be slower.
 
 This will only be faster if there's a pair with difference zero early in the list of pairs. But to add this optimiza­ tion, we need to execute an additional line of code each time. There's a tradeoff here; it's faster for some inputs and slower for others. Given that it adds complexity in reading the code, it may be best to leave it out.
@@ -14343,26 +13918,25 @@ This will only be faster if there's a pair with difference zero early in the lis
 With or without this "optimization;' the algorithm will take O(AB) time.
 
 
-Optimal
+**Optimal**
 
-A more optimal approach is to sort the arrays. Once the arrays are sorted, we can find the minimum differ­
-ence by iterating through the array.
+A more optimal approach is to sort the arrays. Once the arrays are sorted, we can find the minimum differ­ ence by iterating through the array.
 
-
-
-474       Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I    Moderate
-
-
-Consider the following two arrays: A:  {l,   2,  11,  15}
+Consider the following two arrays: 
+```
+:  {l,   2,  11,  15}
 B: {4,  12,  19,  23,  127,  235}
+```
 Try the following approach:
 
 1.  Suppose a pointer a points to the beginning of A and a pointer b points to the beginning of B. The current difference between a and b is 3. Store this as the min.
 2.  How can we (potentially) make this difference smaller? Well, the value at b is bigger than the value at a, so moving b will only make the difference larger. Therefore, we want to move a.
 3.  Now a points to 2 and b (still) points to 4. This difference  is 2, so we should update min. Move a, since it is smaller.
 4.  Now a points to 11 and b points to 4. Move b.
-5.  Now a points to 11 and b points to 12. Update min to 1. Move b. And so on.
+5.  Now a points to 11 and b points to 12. Update min to 1. Move b. 
+
+And so on.
+```java
 1    int  findSmallestDifference(int[] arrayl,  int[]  array2) {
 2         Arrays.sort(arrayl);
 3           Arrays.sort(array2);
@@ -14383,33 +13957,25 @@ Try the following approach:
 18       }
 19       return difference;
 20    }
+```
 This algorithm  takes O(A log   A  +  B   log   B) time to sort and O(A +  B) time to find the minimum difference. Therefore, the overall runtime is O(A log  A  +  B  log   B).
 
 
-16.7 		Number Max: Write a method that finds the maximum of two numbers. You should  not use if-else or any other comparison operator. 
+**16.7 		Number Max:** Write a method that finds the maximum of two numbers. You should  not use if-else or any other comparison operator. 
 
 
 SOLUTION
  
-
-pg 787 
+---
 
 A common  way of implementing a max function is to look at the sign of a -  b. In this case, we can't use a comparison operator on this sign, but we can use multiplication. 
 
 Let k equal the sign of a -  b such that if a -  b  >= 0, then k is 1. Else, k
 
 We can then implement the code as follows:
+```java
 1      /*  Flips   a  1  to  a  0  and a  0  to  a  1  */
 2     int flip(int bit) {
- 
-
-0. Let q be the inverse of k. 
-
-
-CrackingTheCodinglnterview.com I  6th Edition         47S 
-Solutions to Chapter 16  I     Moderate
-
-
 3         return lAbit;
 4      }
 5
@@ -14423,6 +13989,7 @@ Solutions to Chapter 16  I     Moderate
 13        int q  =  flip(k);
 14       return a *  k + b  *  q;
 15   }
+```
 This code almost works. It fails, unfortunately, when a    -    b overflows. Suppose, for example, that a is INT_MAX   -  2 and b is -15. In this case, a   -   b will be greater than INT_MAX and will overflow, resulting in a negative value.
 
 We can implement a solution to this problem by using the same approach. Our goal is to maintain the condition where k is1 when a   >  b. We will need to use more complex logic to accomplish this.
@@ -14430,82 +13997,66 @@ We can implement a solution to this problem by using the same approach. Our goal
 When does a   -   b overflow? It will overflow only when a is positive and b is negative, or the other way around. It may be difficult to specially detect the overflow condition, but we can detect when a and b have different signs. Note that if a and b have different signs, then we want k to equal sign (a).
 
 The logic looks like:
+```java
 1      if a  and  b have  different signs:
-2            II  if a>   0,  then   b<  0,   and  k      1.
-3            II  if a  <   0,  then  b>   0,   and  k     0. 
-4          II  so
-5          let k
+2            // if a>   0,  then   b<  0,   and  k      1.
+3            // if a  <   0,  then  b>   0,   and  k     0. 
+4            //  so either way,  k  = sign(a)
+5          let k = sign(a) 
 6      else
- 
-either way,  k      sign(a)
-sign(a) 
 7          let k      sign(a  -  b)  // overflow is  impossible
+```
 The code below implements this, using multiplication instead of if-statements.
+```java
 1     int  getMax(int a,   int b)  {
 2          int c  =  a  -  b;
 3 
 4          int sa      sign(a);
 5            int sb      sign(b);
  
-II  if a>=
-II  if b>=
+// if a>=
+// if b>=
  
 0,  then  1  else 0
 0,   then   1  else 0 
 6          int SC       sign(c);  II  depends  on  whether   or  not   a  -  b  overflows
 7 
-8
-9
-10
-11
-12
-13
-14
-
-16
-17
-18
-19
-20
+8		/* Goal: define a  value   k  which  is 1  if a>   b  and  0 if a< b.
+9		* (if a =  b,  it doesn't  matter what  value   k is) */
+10		
+11		// If a and b have different  signs, then   k      sign(a)
+12		int use_sign_of_a  =  sa  A   sb;
+13		
+14		// If a  and  b  have  the   same sign,  then   k      sign(a -  b)
+15		int  use_sign_of_c =   flip(sa A   sb);
+16		
+17		int k = use_sign_of_a *  sa  + use_sign_of_c  *  sc;
+18		int q = flip(k); /I opposite of  k
+19		
+20		return a  *  k + b  *  q; 
 21   }
- 
-Goal:   define a  value   k  which  is 1  if a>   b  and  0 if a< b.
-* (if a  =  b,  it doesn't  matter what  value   k is) *I
-
-II  If a  and b have  different  signs, then   k      sign(a)
-int use_sign_of_a  =  sa  A   sb;
-
-II  If a  and  b  have  the   same sign,  then   k      sign(a -  b)
-int  use_sign_of_c =   flip(sa A   sb);
-
-int k     use_sign_of_a *  sa  + use_sign_of_c  *  sc;
-int q     flip(k); /I opposite of  k
-
-return a  *  k + b  *  q; 
-
-
-
-
-476       Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16 I    Moderate
+```
 
 
 Note that for clarity, we split up the code into many different methods and variables. This is certainly not the most compact or efficient way to write it, but it does make what we're doing much cleaner.
 
 
-16.8    English   Int:  Given any integer, print an English phrase that  describes the integer (e.g., "One
+**16.8    English   Int:**  Given any integer, print an English phrase that  describes the integer (e.g., "One
 Thousand, Two Hundred Thirty Four").
 
-pg  182
-
 SOLUTION
+
+---
 
 This is not an especially challenging problem, but it is a somewhat tedious one. The key is to be organized in how you approach the problem-and to make sure you have good test cases.
 
 We can think about converting a number like 19,323,984 as converting each of three 3-digit segments of the number, and inserting "thousands" and "millions" in between as appropriate. That is,
+```
 convert(19,323,984)  = convert(19)  + "  million  " +  convert(323)  + "  thousand  " +  
 convert(984)
+```
 The code below implements this algorithm.
+```java
 1      String[] smalls  ={"Zero", "One",  "Two", "Three", "Four",   "Five",  "Six",  "Seven",
 2         "Eight", "Nine",  "Ten",  "Eleven", "Twelve",  "Thirteen", "Fourteen", "Fifteen",
 3           "Sixteen",  "Seventeen", "Eighteen",  "Nineteen"};
@@ -14522,11 +14073,9 @@ The code below implements this algorithm.
 14            return negative + " " +  convert( -1 *  num);
 15       }
 16 
-17       Linkedlist<String> parts
+17       Linkedlist<String> parts = new  Linkedlist<String>(); 
 18       int chunkCount = 0;
 19
- 
-new  Linkedlist<String>(); 
 20       while  (num >  0) {
 21            if (num %   1000 != 0) {
 22                 String chunk=  convertChunk(num %   1000)  + " " + bigs[chunkCount];
@@ -14545,13 +14094,6 @@ new  Linkedlist<String>();
 35       /*  Convert  hundreds  place  */
 36       if (number>= 100)  {
 37            parts.addlast(smalls[number / 100]);
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition         477 
-Solutions to Chapter 16  I     Moderate
-
-
 38            parts.addLast(hundred);
 39            number%= 100;
 40       }
@@ -14564,7 +14106,7 @@ Solutions to Chapter 16  I     Moderate
 47            number%= 10;
 48         }
 49
-/*  Convert  ones  place  */
+50		/*  Convert  ones  place  */
 51       if (number >= 1 &&   number <=  9)  {
 52            parts.addlast(smalls[number]);
 53        }
@@ -14574,47 +14116,40 @@ Solutions to Chapter 16  I     Moderate
 57  /*  Convert  a linked  list of  strings to a  string,  dividing it up with  spaces.  */
 58   String listToString(LinkedList<String>    parts) {
 59       StringBuilder  sb=  new StringBuilder();
-60       while  (parts.size() >                                                                                                                                                                                        1)  {
-61
+60       while  (parts.size() >  1)  {
+61            sb.append(parts.pop());
 62            sb.append(" ");
 63          }
-
+64       sb.append(parts.pop());
 65       return sb.toString();
 66    }
+```
 The key in a problem like this is to make sure you consider all the special cases. There are a lot of them.
 
 
-16.9     Operations: Write methods to implement the multiply, subtract, and divide operations for integers.
+**16.9     Operations:** Write methods to implement the multiply, subtract, and divide operations for integers.
 The results of all of these are integers. Use only the add operator.
 
-pg 182
-
 SOLUTION
+
+---
 
 The only operation we have to work with is the add operator. In each of these problems, it's useful to think in depth about what these operations really do or how to phrase them in terms of other operations (either add or operations we've already completed).
 
 
-Subtraction
+**Subtraction**
 
-How can we phrase subtraction in terms of addition? This one is pretty straightforward. The operation a
--   b is the same thing as a  +  ( -1)    *  b. However, because we are not allowed to use the * (multiply)
+How can we phrase subtraction in terms of addition? This one is pretty straightforward. The operation a -   b is the same thing as a  +  ( -1)    *  b. However, because we are not allowed to use the * (multiply)
 operator, we must implement a negate function.
+```java
 1      /*  Flip  a positive  sign  to negative  or  negative sign  to pos.  */
 2    int negate(int  a)  {
 3         int neg=  0;
 4         int newSign = a < 0? 1     -1;
 5           while  (a!= 0)  {
 6              neg+=  newSign; 
-7               a  =+  
+7               a  =+  newSign; 
 8         }
- 
-newSign; 
-
-
-478           Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
 9         return neg;
 10   }
 11
@@ -14622,13 +14157,18 @@ Solutions to Chapter 16  I     Moderate
 13   int  minus(int a,  int b)  {
 14       return a+   negate(b);
 15   }
-The negation of the value k is implemented by adding -1 k times. Observe that this will takeO(k)time.
+```
+The negation of the value k is implemented by adding -1 k times. Observe that this will take O(k)time.
 
 If optimizing is something  we value here, we can try to get a to zero faster. (For this explanation, we'll assume that a is positive.) To do this, we can first reduce a by 1, then 2, then 4, then 8, and so on. We'll call this value de1ta. We want a to reach exactly zero. When reducinga by the next de1 ta would change the sign of a, we reset delta back to 1 and repeat the process.
 
 For example:
-a:           29     28     26     22     14     13     11       7       6       4       0 delta:     -1      -2     -4      -8      -1     -2     -4      -1     -2      -4
+```
+a:  29     28     26     22     14     13     11       7       6       4       0 
+delta:     -1      -2     -4      -8      -1     -2     -4      -1     -2      -4
+```
 The code below implements this algorithm.
+```java
 1     int negate(int a)  {
 2         int neg=0;
 3         int newSign=a<  0? 1      -1;
@@ -14644,49 +14184,48 @@ The code below implements this algorithm.
 13        }
 14        return neg;
 15   }
+```
 Figuring out the runtime here takes a bit of calculation.
 
-Observe that reducinga by half takesO(log a)work. Why? For each round of"reduce a by half'; the abso­
-lute values of a and delta always add up to the same number.The values of delta anda will converge at
-Yi. Since de1ta is being doubled each time, it will takeO(log a)steps to reach half of a.
-We do O(log a) rounds.
-1.   Reducinga to Yi takes 0(log a)time.
-2.  Reducing Yi to % takesO(log Yi) time.
-3.  Reducing % to X takes 0(log  % ) time.
-... As so on ,forO(log a)rounds.
+Observe that reducinga by half takesO(log a)work. Why? For each round of"reduce a by half'; the abso­lute values of a and delta always add up to the same number.The values of delta anda will converge at a/2. Since de1ta is being doubled each time, it will takeO(log a)steps to reach half of a.
 
-The runtime therefore isO(log a+ log(Yi) +log(%)+ ... ),withO(log a)terms in the expression.
+We do O(log a) rounds.
+
+1.   Reducinga to a/2 takes 0(log a)time.
+2.  Reducing a/2 to a/4 takes O(log a/2) time.
+3.  Reducing a/4 to a/8 takes 0(log  a/4 ) time.
+
+... As so on ,for O(log a)rounds.
+
+The runtime therefore is O(log a+ log(a/2) +log(a/4)+ ... ),withO(log a)terms in the expression.
 
 Recall two rules of logs:
 
-,    log(xy) =  log x + log  y
-
-•     log( 7Y)  = log  x   -  log y.
-
-
-
-CrackingTheCodinglnterview.com I 6th Edition        479 
-Solutions to Chapter 16  I     Moderate
+- log(xy) =  log x + log  y
+- log( x/y)  = log  x   -  log y.
 
 
 If we apply this to the above expression, we get:
-l.  O(log  a  +log( Yi)  +  log( X) + •..)
-2. O(log  a+  (log a  -  log   2)  +(log  a  -  log  4)   +(log  a  -  log   8) +...
-3. o((log  a)*(log   a) -  (log 2  +log  4  +  log  8  +  ... +log  a)) //O(log  a) terms
-4.  O((log a)*(log  a)  -  (1   +2  +3  +  ... +log  a)) //computing the values of logs
-5. 0((log  a)*(log  a) -   {loga)(l + log a/; ) //apply equation for sum of 1  through k
-6.  O((log a) 2)  //drop second term from step 5
-Therefore, the runtime is O((log  a)2).
+
+l. O(log  a + log(a/2)  +  log(a/4) + ...)
+2. O(log  a + (log a - log 2) + (log a - log 4) + (log a - log 8) +...
+3. O((log a) * (log a) - (log 2 + log 4 + log 8 + ... + log a))//O(log  a) terms
+4. O((log a) * (log a) - (1 + 2 + 3 + ... + log a)) //computing the values of logs
+5. O((log a) * (log  a) - ((log a)(l + log a/))/2 //apply equation for sum of 1 through k
+6. O((log a)²)  //drop second term from step 5
+
+Therefore, the runtime is O((log a)²).
 
 This math is considerably more complicated than most people would be able to do (or expected to do) in an interview. You could make a simplification: You do O(log  a) rounds and the longest round takes O(log a) work. Therefore, as an upper bound, negate takes 0((log  a)2 ) time. In this case, the upper bound happens to be the true time.
 
 There are some faster solutions too. For example, rather than resetting delta to 1  at each round, we could change delta to its previous value. This would have the effect of delta"counting up" by multiples of two, and then "counting down" by multiples of two. The runtime of this approach would be O(log  a). However, this implementation would require a stack, division, or bit shifting-any of which might violate the spirit of the problem. You could certainly discuss those implementations  with your interviewer though.
 
 
-Multiplication
+**Multiplication**
 
 The connection between addition and multiplication is equally straightforward. To multiply a by b, we just add a to itself b times.
-1    I* Multiply a by b by adding  a to  itself b times *I
+```java
+1    /* Multiply a by b by adding  a to  itself b times */
 2    int  multiply(int  a,  int  b)  {
 3            if (a< b)  {
 4             return multiply(b,  a);  II algorithm is faster if b<  a
@@ -14709,21 +14248,20 @@ The connection between addition and multiplication is equally straightforward. T
 21            return  a;
 22       }
 23  }
+```
 The one thing we need to be careful of in the above code is to properly handle multiplication of negative numbers. If b is negative, we need to flip the value of sum. So, what this code really does is:
-multiply(a,  b)<--  abs(b)*a*(-1  if b<  0).
 
-
-480          Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  /   Moderate
+	multiply(a, b) <-- abs(b) * a * (-1 if b < 0).
 
 
 We also implemented a simple abs  function  to help.
 
 
-Division
-Of the three operations, division is certainly the hardest."The good  thing is that we can use the multiply,
-subtract, and negate methods now to implement divide.
-We are trying to compute x where  X = % . Or, to put this another way, find x where a =  bx. We've now changed the problem into one that can be stated with something we know how to do: multiplication.
+**Division**
+
+Of the three operations, division is certainly the hardest."The good  thing is that we can use the multiply, subtract, and negate methods now to implement divide.
+
+We are trying to compute x where  X = a/b. Or, to put this another way, find x where a = bx. We've now changed the problem into one that can be stated with something we know how to do: *multiplication*.
 
 We could implement this by multiplying b by progressively  higher values, until we reach a. That would be fairly inefficient, particularly given that our implementation of multiply involves a lot of adding.
 
@@ -14732,16 +14270,14 @@ Alternatively, we can look at the  equation a   =   xb  to see that  we can comp
 Of course, a might  not be evenly divisible by b, and that's okay. Integer division, which is what we've been asked to implement, is supposed to truncate the result.
 
 The code below implements this algorithm.
+```java
 1     int divide(int a, int b) throws java.lang.ArithmeticException {
 2          if (b == 0)   {
 3                throw   new java.lang.ArithmeticException("ERROR");
 4           } 
-5          int absa
-6          int absb
+5          int absa = abs(a);
+6          int absb = abs(b); 
 7
- 
-abs(a);
-abs(b); 
 8          int  product = 0;
 9          int X    =   0;
 10        while (product  +  absb   <= absa) {/*don't  go  past a  */
@@ -14755,36 +14291,27 @@ abs(b);
 18              return negate(x);
 19         }
 20   }
+```
 
 In tackling this problem,  you should be aware of the following:
 
-A logical  approach of going  back  to  what  exactly  multiplication and  division do  comes  in handy. Remember that. All (good) interview problems can be approached in a logical, methodical way!
-The interviewer is looking for this sort of logical work-your-way-through-it approach.
-
-This is a great problem to demonstrate your ability to write clean code-specifically, to show your ability to reuse code. For example, if you were writing this solution  and didn't put negate in its own method, you should move it into its own method once you see that you'll use it multiple times.
-Be careful about making assumptions while coding.  Don't assume that  the numbers are all positive or that a is bigger than b.
+- A logical  approach of going  back  to  what  exactly  multiplication and  division do  comes  in handy. Remember that. All (good) interview problems can be approached in a logical, methodical way!
+- The interviewer is looking for this sort of logical work-your-way-through-it approach. - This is a great problem to demonstrate your ability to write clean code-specifically, to show your ability to reuse code. For example, if you were writing this solution  and didn't put negate in its own method, you should move it into its own method once you see that you'll use it multiple times.
+- Be careful about making assumptions while coding.  Don't assume that  the numbers are all positive or that a is bigger than b.
 
 
-
-
-
-
-
-CrackingTheCodinglnterview.com I  6th  Edition            481 
-Solutions to Chapter 16  I     Moderate
-
-
-16.10  Living  People: Given  a list of people with  their  birth  and  death years,  implement a method to compute the year with the most number of peoplealive. You may assume that all people were born between 1900 and  2000 (inclusive). If a person was alive during any portion of that year, they should
-be included in that year's  count. For example, Person (birth= 1908, death= 1909) is included in the
+**16.10  Living  People:** Given  a list of people with  their  birth  and  death years,  implement a method to compute the year with the most number of peoplealive. You may assume that all people were born between 1900 and  2000 (inclusive). If a person was alive during any portion of that year, they should be included in that year's  count. For example, Person (birth= 1908, death= 1909) is included in the
 counts for both 1908 and  1909.
 
-pg 782
 
 SOLUTION
+
+---
 
 The first thing we should do is outline what this solution will look like. The interview question hasn't speci­ fied the  exact form  of input. In a real interview, we could  ask the  interviewer how  the  input is structured. Alternatively, you can explicitly state your (reasonable) assumptions.
 
 Here, we'll need to make our  own  assumptions. We will assume that we have an array  of simple Person objects:
+```java
 1      public  class  Person {
 2           public int  birth;
 3           public int  death;
@@ -14793,15 +14320,17 @@ Here, we'll need to make our  own  assumptions. We will assume that we have an a
 6                 death=   deathYear;
 7            }
 8     }
+```
 We could  have also  given  Person a getBirthVear() and  getDeathYear() objects. Some  would argue that's better style, but for compactness and  clarity, we'll just keep the  variables public.
 
 The important thing here is to actually use  a Person object. This shows better style  than, say, having an integer array for birth years and  an integer array for death years (with an implicit association of bir ths [ i] and  deaths[ i] being associated with  the  same person). You don't get  a lot of chances to demonstrate great coding style, so it's valuable to take the  ones you get.
 
 With that in mind, let's start with a bruteforce algorithm.
 
-Brute Force
+**Brute Force**
 
 The brute force algorithm falls directly out  from the  wording of the problem. We need to find the year with the most number of people alive.Therefore, we go through each year and  check how many people are alive in that year.
+```java
 1      int maxAliveYear(Person[] people,  int min,   int max)   {
 2           int maxAlive = 0;
 3           int maxAliveYear=  min;
@@ -14809,35 +14338,27 @@ The brute force algorithm falls directly out  from the  wording of the problem. 
 s           for (int year=  min;   year<= max;   year++)  {
 6                 int alive=  0;
 7                 for  (Person person :   people)  {
-8                       if  (person.birth<= year &&   year <= person.death)  { 
-9
-10
+8                       if (person.birth<= year &&   year <= person.death) { 
+9					alive++;
+10					}
 11               }
- 
-alive++;
-} 
 12               if (alive >   maxAlive)  {
 13                     maxAlive  =  alive;
 14                    maxAliveYear=  year;
 15            }
 16         }
-
-
-
-482          Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I      Moderate
-
-
 17
 18       return maxAliveYear;
 19    }
+```
 Note that we havepassed in the values for the min year(l 900) and max year (2000). We shouldn't hard code these values.
 
 The runtime of this is O (RP), whereRis the range of years (100 in this case) and P is the number of people.
 
-Slightly Better Brute Force
+#### Slightly Better Brute Force
 
 A slightly  better way of doing this is to create an array where we track the number of people born in each year. Then, we iterate through the list of people and increment the array for each year they are alive.
+```java
 1     int maxAliveYear(Person[] people,  int  min,  int max) {
 2          int[]  years =  createYearMap(people,  min,  max);
 3          int best = getMaxlndex(years);
@@ -14870,49 +14391,49 @@ A slightly  better way of doing this is to create an array where we track the nu
 30        }
 31       return max;
 32   }
+```
 Be careful on the size of the array in line 9. If the range of years is 1900 to 2000 inclusive, then that's 101 years, not 100. That is why the array has size max  -  min  +  1.
 
 Let's think about the runtime by breaking this into parts.
 
-We create an R-sized array, whereRis the min and max years.
+- We create an R-sized array, whereRis the min and max years.
+- Then, for P people, we iterate through the years (Y) that the person is alive. 
+- Then, we iterate through theR-sized array again.
 
-Then, for P people, we iterate through the years (Y) that the person is alive. Then, we iterate through theR-sized array again.
 The total runtime is O(PY  +  R). In the worst case, Y is Rand we have done no better than we did in the first algorithm.
 
-
-CrackingTheCodinglnterview.com I 6th  Edition            483 
-Solutions to Chapter 16  I    Moderate
-
-
-More Optimal
+**More Optimal**
 
 Let's create an example. (In fact, an example is really helpful in almost all problems. Ideally, you've already done this.) Each column below is matched, so that the items correspond to the same person. For compact­ ness, we'll just write the last two digits of the year.
-birth: 12    20   10    01   10    23   13    90   83   75 death:  15    90   98   72    98   82    98   98   99   94
+```
+birth: 12    20   10    01   10    23   13    90   83   75 
+death:  15    90   98   72    98   82    98   98   99   94
+```
 It's worth noting that it doesn't really matter whether these years are matched up. Every birth adds a person and every death removes a person.
 
 Since we don't actually need to match up the births and deaths, let's sort both. A sorted version of the years might help us solve the problem.
-birth:  01   10   10   12   13    20   23   75    83    90 death:  15    72    82   90   94    98   98   98   98   99
+```
+birth:  01   10   10   12   13    20   23   75    83    90 
+death:  15    72    82   90   94    98   98   98   98   99
+```
 We can try walking through the years.
 
-At year 0, no one is alive.
-
-At year 1, we see one birth.
-
-At years 2 through 9, nothing happens.
-
-Let's skip ahead until year 10, when we have two births. We now have three people alive. At year 15, one person dies. We are now down to two people alive.
+- At year 0, no one is alive.
+- At year 1, we see one birth.
+- At years 2 through 9, nothing happens.
+- Let's skip ahead until year 10, when we have two births. We now have three people alive. 
+- At year 15, one person dies. We are now down to two people alive.
 And so on.
 
 If we walk through the two arrays like this, we can track the number of people alive at each point.
+```java
 1      int  maxAliveYear(Person[] people,  int  min,  int max) {
 2          int[] births   getSortedYears(people,  true);
 3          int[]  deaths = getSortedYears(people,  false);
 4
 5          int birthindex = 0;
 6          int  deathindex = 
-7          int
- 
-currentlyAlive     0·, 
+7          int  currentlyAlive =    0·, 
 8          int maxAlive  = 0;
 9          int maxAliveYear  =  min;
 10
@@ -14935,21 +14456,16 @@ currentlyAlive     0·,
 27   }
 28
 29   /* Copy birth  years or  death years   (depending on the  value of  copyBirthVear  into
-
-
-484       Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  l   Moderate
-
-
 30     *  integer  array,  then   sort array. */
 31   int[] getSortedYears(Person[1  people,  boolean copyBirthYear) {
 32        int[] years  = new int[people.length];
 33       for   (inti=  0;  i <   people.length;  i++)  {
-34            years[i] = copyBirthYear?  people[i].birth     people[i].death;
+34           years[i] = copyBirthYear?  people[i].birth     people[i].death;
 35         }
 36       Arrays.sort(years);
 37        return years;
 38    }
+```
 There are some very easy things to mess up here.
 
 On line 13, we need to think carefully about whether this should be a less than(<) or a less than or equals (<=). The scenario we need to worry about is that you see a birth and death in the same year.(It doesn't matter whether the birth and death is from the same person.)
@@ -14960,19 +14476,23 @@ We also need to be careful about where we put the updating of maxAlive and maxAl
 
 This algorithm will take O ( P  log P) time, where P is the number of people.
 
-More Optimal (Maybe)
+**More Optimal (Maybe)**
 
 Can we optimize this further? To optimize this, we'd need to get rid of the sorting step. We're back to dealing with unsorted values:
-birth:  12    20   10    01   10    23   13    90    83   75 death:  15    90   98   72    98   82   98   98   99   94
+```
+birth:  12    20   10    01   10    23   13    90    83   75 
+death:  15    90   98   72    98   82   98   98   99   94
+```
 Earlier, we had logic that said that a birth is just adding a person and a death is just subtracting a person. Therefore, let's represent the data using the logic:
-01:  +1	10:  +1	10:  +1	12:  +1	13:   +1
-15:   -1	20:  +1	23:  +1	72:    -1	+1
-82:	83:  +1	90:  +1	90:   -1	-1
-98:  -1           98:  -1            98:  -1           98:   -1           99:  -1
+```
+01: +1	 10: +1	  10: +1	12: +1	  13: +1
+15: -1	 20: +1	  23: +1	72: -1	  75: +1
+82:	-1   83: +1	  90: +1	90: -1	  94: -1
+98: -1   98: -1   98: -1    98: -1    99: -1
+```
 We can create an array of the years, where the value at array[year] indicates how the population changed in that year. To create this array, we walk through the list of people and increment when they're born and decrement when they die.
 
-Once we have this array, we can walk through each of the years, tracking the current population as we go
-(adding the value at array[year] each time).
+Once we have this array, we can walk through each of the years, tracking the current population as we go (adding the value at array[year] each time).
 
 This logic is reasonably good, but we should think about it more. Does it really work?
 
@@ -14981,14 +14501,8 @@ One edge case we should consider is when a person dies the same year that they'r
 In fact, the"bug" in our algorithm is broader than that. This same issue applies to all people. People who die in 1908 shouldn't be removed from the population count until 1909.
 
 There's a simple fix:  instead  of decrementing  array[deathYear], we should decrement array[deathYear +  1].
+```java
 1     int  maxAliveYear(Person[] people,  int  min,  int max) {
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition      485 
-Solutions to Chapter 16  I     Moderate
-
-
 2          /* Build  population delta array. */
 3          int[]   populationDeltas =  getPopulationDeltas(people,  min,  max);
 4          int maxAliveYear  =  getMaxAliveYear(populationDeltas);
@@ -15023,30 +14537,25 @@ Solutions to Chapter 16  I     Moderate
 33
 34        return maxAliveYear;
 35   }
-This algorithm takesO(R  + P) time, whereR is the range of years andPis the number of people. Although O(R  + P)  might be faster thanO(P log P) for many expected inputs, you cannot directly compare the speeds to say that one is faster than the other.
+```
+This algorithm takes O(R + P) time, whereR is the range of years andPis the number of people. Although O(R  + P)  might be faster than O(P log P) for many expected inputs, you cannot directly compare the speeds to say that one is faster than the other.
 
 
-16.11    Diving Board: You are building a diving board by placing a bunch of planks of wood end-to-end.
-There are two types of planks, one of length shorter and one of length longer. You must use exactly K planksof wood. Write a method to generate all possible lengths for the diving board.
+**16.11    Diving Board:** You are building a diving board by placing a bunch of planks of wood end-to-end. There are two types of planks, one of length shorter and one of length longer. You must use exactly K planksof wood. Write a method to generate all possible lengths for the diving board.
 
-pg 782
 
 SOLUTION
 
+---
+
 One way to approach this is to think about the choices we make as we're building a diving board. This leads us to a recursive algorithm.
 
-Recursive Solution
+**Recursive Solution**
 
 For a recursive solution, we can imagine ourselves building a diving board. We make K decisions, each time choosing which plank we will put on next. Once we've put on K planks, we have a complete diving board and we can add this to the list (assuming we haven't seen this length before).
 
-
-
-
-486         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  /   Moderate
-
-
 We can follow this logic to write recursive code. Note that we don't need to track the sequence of planks. All we need to know is the current length and the number of planks remaining.
+```java
 1      HashSet<Integer>  alllengths(int k,  int shorter, int longer) {
 2         HashSet<Integer>  lengths =  new HashSet<Integer>();
 3            getAlllengths(k,  0,  shorter,  longer, lengths);
@@ -15062,11 +14571,12 @@ We can follow this logic to write recursive code. Note that we don't need to tra
 13       getAlllengths(k  -  1,  total+  shorter, shorter, longer, lengths);
 14       getAllLengths(k  -  1,  total+  longer, shorter, longer, lengths);
 15   }
+```
 We've added each length to a hash set. This will automatically prevent adding duplicates.
 
 This algorithm takes O (2K) time, since there are two choices at each recursive call and we recurse to a depth of K.
 
-Memoization Solution
+**Memoization Solution**
 
 As in many recursive algorithms (especially those with exponential runtimes), we can optimize this through memorization  (a form of dynamic programming).
 
@@ -15075,10 +14585,11 @@ Observe that some of the recursive  calls will be essentially equivalent. For ex
 Therefore,  if we've seen this (total,  plank  count) pair before then we stop this recursive path. We can do this using a HashSet with a key of (total,  plank c ount).
 
 
-Many candidates will make a mistake here. Rather than stopping only when they've seen (total,   plank   count), they'll stop whenever they've seen just total before. This is incorrect. Seeing two planks of length 1 is not the same thing as one plank of length 2, because there are different numbers of planks remaining. In memoization problems, be very careful about what you choose for your key.
+> Many candidates will make a mistake here. Rather than stopping only when they've seen (total,   plank   count), they'll stop whenever they've seen just total before. This is incorrect. Seeing two planks of length 1 is not the same thing as one plank of length 2, because there are different numbers of planks remaining. In memoization problems, be very careful about what you choose for your key.
 
 
 The code for this approach is very similar to the earlier approach.
+```java
 1      HashSet<Integer>  alllengths(int k,  int shorter, int longer) {
 2         HashSet<Integer>  lengths =  new HashSet<Integer>();
 3            HashSet<String>  visited=  new HashSet<String>();
@@ -15087,19 +14598,12 @@ The code for this approach is very similar to the earlier approach.
 6     }
 7
 8     void  getAllLengths(int k,  int total,  int shorter, int longer,
-9                                                       HashSet<Integer>  lengths,  HashSet<String>  visited) {
+9                        HashSet<Integer>  lengths,  HashSet<String>  visited) {
 10       if (k  ==  0)  {
 11            lengths.add(total);
 12            return;
 13           }
 14       String key     k + "   "+  total;
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition          487 
-Solutions to Chapter  16  I     Moderate
-
-
 15       if (visited.contains(key)) {
 16             return;
 17        }
@@ -15107,6 +14611,7 @@ Solutions to Chapter  16  I     Moderate
 19       getAllLengths(k  -  1,  total+ longer, shorter,  longer, lengths,  visited);
 20        visited.add(key);
 21   }
+```
 For simplicity, we've set the key to be a string representation of total and the current plank count. Some people may argue it's better to use a data structure to represent this pair. There are benefits to this, but there are drawbacks as well. It's worth discussing this tradeoff with your interviewer.
 
 The runtime of this algorithm is a bit tricky to figure out.
@@ -15115,7 +14620,7 @@ One way we can think about the runtime is by understanding that we're basically 
 
 Of course, a bunch of those sums will never actually be reached. How many unique sums can we get? Observe that any path with the same number of each type of planks will have the same sum. Since we can have at most K planks of each type, there are only K different sums we can make. Therefore, the table is really KxK, and the runtime is O(K2).
 
-Optimal Solution
+**Optimal Solution**
 
 If you re-read the prior paragraph, you might notice something interesting. There are only K distinct sums we can get. Isn't that the whole point of the problem-to find all possible sums?
 
@@ -15123,6 +14628,7 @@ We don't actually need to go through all arrangements of planks. Wejust need to 
 {O of type A, K of type B}, {1 of type A, K-1 of type B}, {2 of type A, K-2 of type B}, ...
 
 This can be done in just a simple for loop. At each"sequence'; we just compute the sum.
+```java
 1     HashSet<Integer>  alllengths(int k,  int  shorter, int longer) {
 2          HashSet<Integer> lengths  = new HashSet<Integer>();
 3          for (int nShorter = 0;  nShorter <=  k;   nShorter++)  {
@@ -15132,43 +14638,39 @@ This can be done in just a simple for loop. At each"sequence'; we just compute t
 7          }
 8          return lengths;
 9       }
+```
 We've used a HashSet here for consistency with the prior solutions.This isn't really necessary though, since we shouldn't get any duplicates. We could instead use an Arraylist. If we do this, though, wejust need to handle an edge case where the two types of planks are the same length. In this case, we would just return an Arraylist of size 1.
 
 
-
-
-
-
-
-
-
-
-
-
-
-488       Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
-16.12  XML Encoding: Since XML is very verbose, you are given a way of encoding it where each tag gets mapped to a pre-defined integer value. The language/grammar is as follows:
-Element       -->   Tag Attributes END  Children END Attribute  -->   Tag Value
-END                     -->   0
-Tag              -->  some  predefined  mapping to int
-Value           -->  string value
-For example, the following XML might be converted into the compressed string below (assuming a mapping of family ->   1,   person  ->2,  firstName  ->  3,   lastName  ->  4,  state
-->  5).
+**16.12  XML Encoding:** Since XML is very verbose, you are given a way of encoding it where each tag gets mapped to a pre-defined integer value. The language/grammar is as follows:
+```
+Element    -->   Tag Attributes END  Children END 
+Attribute  -->   Tag Value
+END        -->   0
+Tag        -->  some  predefined  mapping to int
+Value      -->  string value
+```
+For example, the following XML might be converted into the compressed string below (assuming a mapping of family ->   1,   person  ->2,  firstName  ->  3,   lastName  ->  4,  state ->  5).
+```xml
 <family lastName="McDowell"  state="CA">
 <person  firstName="Gayle">Some  Message</ person>
-</ family> Becomes:
-1 4  McDowell 5 CA  0  2   3   Gayle  0  Some Message  0  0
+</ family>
+```
+Becomes:
+
+	1 4  McDowell 5 CA  0  2   3   Gayle  0  Some Message  0  0
+
 Write code to print the encoded version of an XML element (passed in Element and Attribute objects).
-pg  182
+
 
 SOLUTION
+
+---
 
 Since we know the element  will be passed in as an Element and Attribute, our code is reasonably simple. We can implement this by applying a tree-like approach.
 
 We repeatedly call encode () on parts of the XML structure, handling the code in slightly different ways depending on the type of the XML element.
+```java
 1     void  encode(Element root,  StringBuilder sb) {
 2             encode(root.getNameCode(),  sb);
 3         for (Attribute a  :   root.attributes)  {
@@ -15195,36 +14697,33 @@ We repeatedly call encode () on parts of the XML structure, handling the code in
 24        encode(attr.value, sb);
 25   }
 26
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition      489 
-Solutions to Chapter 16  I  Moderate 	
-
-
 27   String  encodeToString(Element root) {
 28        StringBuilder sb =  new StringBuilder();
 29        encode(root,  sb);
 30        return s b.toString();
 31   }
+```
 Observe in line 17, the use ofthe very simple encode method for a string. This is somewhat unnecessary; all it does is insert the string and a space following it. However, using this method is a nice touch as it ensures that every element will be inserted with a space surrounding it. Otherwise, it might be easy to break the encoding by forgetting to append the empty string.
 
 
-16.13   Bisect Squares: Given two squares on a two-dimensional plane, find a line that would cut these two squares in half. Assume that the top and the bottom sides of the square run parallel to the x-axis.
+**16.13   Bisect Squares:** Given two squares on a two-dimensional plane, find a line that would cut these two squares in half. Assume that the top and the bottom sides of the square run parallel to the x-axis.
 pg 182
 
 SOLUTION
+
+---
 
 Before we start, we should think about what exactly this problem means by a "line:' Is a line defined by a slope and a y-intercept? Or by any two points on the line? Or, should the line be really a line segment, which starts and ends at the edges of the squares?
 
 We will assume, since it makes the problem a bit more interesting, that we mean the third option: that the line should end at the edges of the squares. In an interview situation, you should discuss this with your interviewer.
 
-This line that cuts two squares in half must connect  the two middles. We can easily calculate the slope, knowing that  slope =          Once we calculate the slope using the two middles, we can use the same
+This line that cuts two squares in half must connect  the two middles. We can easily calculate the slope, knowing that  slope =  (y1 - y2)/(x1 - x2).  Once we calculate the slope using the two middles, we can use the same
 equation to calculate the start and end points of the line segment.
 
 In the below code, we will assume the origin ( 0,  0) is in the upper left-hand corner.
+```java
 1     public  class Square   {
-2
+2     .....
 3             public  Point middle() {
 4               return new Point((this.left +this.right)/2.0,
 5                                                             (this.top+ this.bottom)/2.0);
@@ -15244,39 +14743,23 @@ In the below code, we will assume the origin ( 0,  0) is in the upper left-hand 
 19                  return new Point(midl.x,  midl.y + ydir     size/2.0);
 20             }
 21 
-22
-23
-24
+22			double   slope  =  (midl.y  -  mid2.y)/(midl.x  -  mid2.x);
+23			double   xl  =    0;
+24			double   yl  =  0;
 25
-
-
-
-490
- 
-double   slope  =  (midl.y  -  mid2.y)/(midl.x  -  mid2.x);
-double   xl      0;
-double   yl  =  0;
-
-
-
-
-Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  \   Moderate
-
-
 26          /* Calculate slope  using  the  equation (yl   -  y2)/(xl  -  x2).
-27                *                                                                                                                                                                                  Note:  if the  slope  is "steep" (>1)  then  the  end of  the  line segment will
+27                * Note:  if the  slope  is "steep" (>1)  then  the  end of  the  line segment will
 28              *  hit size/2  units away from the  middle  on the  y axis. If the  slope  is
-29                *                                                                                                                                                                                      "shallow"   (<1)  the  end of  the  line segment will   hit size/2  units away
+29                * "shallow"   (<1)  the  end of  the  line segment will   hit size/2  units away
 30              *  from the  middle  on the  x axis.   */
 31            if (Math.abs(slope) ==  1)  {
-xl  =  midl.x  +  xdir    *                                                                                                                                                                                              size/2.0;
-33                 yl  =  midl.y  +  ydir    *                                                                                                                                                                                              size/2.0;
+32					xl  =  midl.x  +  xdir    * size/2.0;
+33                 yl  =  midl.y  +  ydir    *  size/2.0;
 34            }  else if (Math.abs(slope) <  1)  {//shallow  slope
-35                 xl  =  midl.x  +  xdir    *                                                                                                                                                                                        size/2.0;
-36                 yl  =  slope    *                                                                                                                                                                                          (xl -  midl.x) + midl.y;
+35                 xl  =  midl.x  +  xdir    *  size/2.0;
+36                 yl  =  slope    *  (xl -  midl.x) + midl.y;
 37            } else {//steep  slope
-38                 yl  =  midl.y  +  ydir     *                                                                                                                                                                                        size/2.0;
+38                 yl  =  midl.y  +  ydir     *  size/2.0;
 39                 xl  =  (yl -  midl.y)/slope  + midl.x;
 40            }
 41            return new Point(xl, yl);
@@ -15284,51 +14767,40 @@ xl  =  midl.x  +  xdir    *                                                     
 43
 44       public   Line  cut(Square other)  {
 45          /*  Calculate where a  line between each middle  would collide with  the  edges  of
-46                *                                                                                                                                                                                      the  squares   */
+46                *  the  squares   */
 47            Point  pl  =  extend(this.middle(),  other.middle(),  this.size);
-48            Point  p2 =  extend(this.middle(),  other.middle(),  -1    *                                                                                                                                                                              this.size);
+48            Point  p2 =  extend(this.middle(),  other.middle(),  -1    *   this.size);
 49            Point  p3 =  extend(other.middle(), this.middle(),  other.size);
-50            Point  p4 =  extend(other.middle(), this.middle(),  -1    *                                                                                                                                                                                    other.size);
+50            Point  p4 =  extend(other.middle(), this.middle(),  -1    *    other.size);
 51
 52          /*  Of above points,  find  start and end of  lines. Start is farthest left (with
-
 53		top    most as  a  tie  breaker) and end is farthest right (with  bottom most as
 54		*  a  tie  breaker.  */
 55		Point  start =  pl;
 56		Point  end=  pl;
 57		
 58		for  (int i= 0;  i <  points.length;  i++)  {
-59		if (points[i].x <  start.x I   I
+59		if (points[i].x <  start.x ||
 60		(points[i].x ==  start.x &&   points[i].y <   start.y)) {
 61		start =  points[i];
-62		} else if (points[i].x >  end.x   I   I
-63                                     (points[i].x ==  end.x  &&   points[i].y >  end.y)) {
+62		} else if (points[i].x >  end.x  ||
+63                (points[i].x ==  end.x  &&   points[i].y >  end.y)) {
 64                      end =  points[i];
 65                 }
 66            }
 67
 68            return new Line(start,   end);
 69        }
+```
 The main goal of this problem is to see how careful you are about coding.  It's easy to glance over the special cases (e.g., the two squares having the same middle). You should make a list of these special cases before you start the problem and make sure to handle them appropriately. This is a question that requires careful and thorough testing.
 
 
-
-
-
-
-
-
-
-
-
-CrackingTheCodinglnterview.com I  6th  Edition            491 
-Solutions to Chapter 16  I     Moderate
-
-
-16.14  Best  Line:  Given a two-dimensional graph with points on it, find a line which passes the most number of points.
+**16.14  Best  Line:**  Given a two-dimensional graph with points on it, find a line which passes the most number of points.
 pg 183
 
 SOLUTION
+
+---
 
 This solution seems quite straightforward at first. And it is-sort of.
 
@@ -15341,9 +14813,10 @@ To find the most common line then, we just iterate through all lines segments, u
 However, there's one little complication. We're defining two lines to be equal if the lines have the same slope and y-intercept. We are then, furthermore, hashing the lines based on these values (specifically, based on the slope). The problem is that floating point numbers cannot always be represented  accurately in binary. We resolve this by checking if two floating point numbers are within an epsilon value of each other.
 
 What does this mean for our hash table? It means that two lines with "equal" slopes may not be hashed to the same value.To solve this, we will round the slope down to the next epsilon and use this flooredSlope as the hash key. Then, to retrieve all lines that are potentially equal, we will search the hash table at three spots: flooredSlope, flooredSlope  -  epsilon, and flooredSlope + epsilon. This will ensure that we've checked out all lines that might be equal.
+```java
 1     /* Find  line that goes  through most  number of  points. */
 2     Line  findBestLine(GraphPoint[] points)  {
-3          HashMapList<Double,  Line>  linesBySlope=  getListOfLines(points);
+3         HashMapList<Double,  Line>  linesBySlope=  getListOfLines(points);
 4          return  getBestLine(linesBySlope);
 5      }
 6
@@ -15368,13 +14841,6 @@ What does this mean for our hash table? It means that two lines with "equal" slo
 25        Set<Double>  slopes =  linesBySlope.keySet();
 26
 27        for   (double slope  :   slopes)  {
-
-
-
-492         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  l    Moderate
-
-
 28            ArrayList<Line>  lines = linesBySlope.get(slope);
 29            for  (Line  line :   lines) {
 30                 I* count  lines that are  equivalent to  current line *I
@@ -15392,9 +14858,9 @@ Solutions to Chapter 16  l    Moderate
 42       return bestLine;
 43    }
 44
-45   I* Check  hashmap for  lines that are  equivalent. Note that we  need to  check  one
+45   /* Check  hashmap for  lines that are  equivalent. Note that we  need to  check  one
 *  epsilon above and below the  actual slope  since we're  defining two lines as
-47     *  equivalent if they're within   an epsilon of  each  other. *I
+47     *  equivalent if they're within   an epsilon of  each  other. */
 48  int countEquivalentLines(HashMapList<Double,  Line> linesBySlope,  Line  line) {
 49       double  key=  Line.floorToNearestEpsilon(line.slope);
 50       int count  =  countEquivalentLines(linesBySlope.get(key),  line);
@@ -15403,8 +14869,8 @@ Solutions to Chapter 16  l    Moderate
 53       return  count;
 54    }
 55
-56  I* Count lines within  an array of  lines which are   "equivalent" (slope and
-57    *  y-intercept are  within   an epsilon value) to  a given  line *I
+56  /* Count lines within  an array of  lines which are   "equivalent" (slope and
+57    *  y-intercept are  within   an epsilon value) to  a given  line */
 58  int  countEquivalentLines(ArrayList<Line> lines, Line line) {
 59       if (lines == null) return 0;
 60
@@ -15423,21 +14889,14 @@ Solutions to Chapter 16  l    Moderate
 73       private boolean  infinite_slope =  false;
 74
 75       public Line(GraphPoint  p,  GraphPoint  q)  {
-if (Math.abs(p.x  -  q.x)  >  epsilon) {  II if x's are  different
-77                 slope=  (p.y  -  q.y)  I (p.x  - q.x); II compute slope
-78                 intercept=  p.y  -  slope   *  p.x;   II  y intercept from y=mx+b
+76       if (Math.abs(p.x  -  q.x)  >  epsilon) {  // if x's are  different
+77                 slope=  (p.y  -  q.y)  / (p.x  - q.x); // compute slope
+78                 intercept=  p.y  -  slope   *  p.x;   //  y intercept from y=mx+b
 79            }  else {
 80                 infinite_slope =  true;
-81                 intercept =  p.x;   II  x-intercept,  since slope  is infinite
+81                 intercept =  p.x;   //  x-intercept,  since slope  is infinite
 82             }
 83          }
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition      493 
-Solutions to Chapter 16  I      Moderate
-
-
 84
 85        public static  double  floorToNearestEpsilon(double  d)  {
 86             int r =  (int) (d  / epsilon);
@@ -15460,40 +14919,36 @@ Solutions to Chapter 16  I      Moderate
 103
 104 /*  HashMapList<String, Integer>  is  a  HashMap  that maps from  Strings to
 105   *  ArrayList<Integer>.  See  appendix  for  implementation. */
+```
 We need to be careful about the calculation of the slope of a line. The line might be completely vertical, which means that it doesn't have a y-intercept and its slope is infinite. We can keep track of this in a separate flag (infinite_slope). We need to check this condition in the equals method.
 
 
-16.15  Master Mind: TheG ame of Master Mind is played as follows:
+**16.15  Master Mind:** TheG ame of Master Mind is played as follows:
 
-The computer has four slots, and each slot will contain a ball that is red (R), yellow (Y), green (G) or blue (B). For example, the computer might have RGGB (Slot #1 is red, Slots #2 and #3 are green, Slot
-#4 is blue).
+The computer has four slots, and each slot will contain a ball that is red (R), yellow (Y), green (G) or blue (B). For example, the computer might have RGGB (Slot #1 is red, Slots #2 and #3 are green, Slot#4 is blue).
 
 You, the user, are trying to guess the solution. You might, for example, guess YRGB.
 
 When you guess the correct color for the correct slot, you get a "hit:' If you guess a color that exists but is in the wrong slot, you get a "pseudo-hit:' Note that a slot that is a hit can never count as a pseudo-hit.
+
 For example, if the actual solution is RGBY and you guess GGRR , you have one hit and one pseudo­
 hit
 
 Write a method that, given a guess and a solution, returns the number of hits and pseudo-hits.
 
-pg  183
 
 SOLUTION
+
+---
 
 This problem is straightforward, but it's surprisingly easy to make little mistakes. You should check your code extremely thoroughly, on a variety of test cases.
 
 We'll implement this code by first creating a frequency array which stores how many times each character occurs in solution, excluding times when the slot is a "hit:'Then, we iterate through guess to count the number of pseudo-hits.
 
 The code below implements this algorithm.
+```java
 1       class  Result {
 2          public int hits =  0;
-
-
-
-494       Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I    Moderate
-
-
 3         public int pseudoHits  =  0;
 4
 5            public String toString()  {
@@ -15505,10 +14960,10 @@ Solutions to Chapter 16  I    Moderate
 11       switch   (c)  {
 12       case   'B':
 13            return 0;
-case  'G':
+14		 case  'G':
 15            return 1;
 16       case   'R':
-return 2;
+17			  return 2;
 18       case   'Y':
 19            return 3;
 20       default:
@@ -15542,46 +14997,54 @@ return 2;
 48            if (code  >=  0 &&   frequencies[code]  >  0 &&
 49                     guess.charAt(i)  != solution.charAt(i)) {
 50                 res.pseudoHits++;
-frequencies[code]--;
+51					frequencies[code]--;
 52            }
 53         }
 54       return res;
 55    }
+```
 Note that the easier the algorithm for a problem is, the more important it is to write clean and correct code. In this case, we've pulled code ( char   c) into its own method, and we've created a Result class to hold the result, rather than just printing it.
 
 
-CrackingTheCodinglnterview.com I  6th Edition         495 
-Solutions to Chapter 16  I       Moderate
+**16.16  Sub Sort:** Given an array of integers, write  a method to find indices m and n such that if you sorted elements m throughn, the  entire array would be sorted. Minimize n   -   m (that is, find the  smallest such sequence).
 
-
-16.16  Sub Sort: Given an array of integers, write  a method to find indices m and n such that if you sorted elements m throughn, the  entire array would be sorted. Minimize n   -   m (that is, find the  smallest such sequence).
+```
 EXAMPLE
 
 Input: 1,  2,  4,  7,  10,  11,  7,  12,  6,  7,  16,  18,  19
-
 Output: (3,  9)
+```
 
-pg 783
 
 SOLUTION
+
+---
 
 Before we begin, let's make sure  we understand what our answer will look like. If we're looking for just two indices,  this  indicates that some middle section of the  array  will be  sorted, with  the  start and  end of the array already being in order.
 
 Now, let's approach this problem by looking at an example.
-1,  2,  4,  7,  10,   11,   8,   12,   5,   6,   16,   18,   19
+
+	1,  2,  4,  7,  10,   11,   8,   12,   5,   6,   16,   18,   19
+
 Our first thoughtmight be to just find the longest increasing subsequence at the beginning and the longest increasing subsequence at the  end.
-left:	1,   2,  4,  7,  10,   11 middle:  8,   12
-right:   5,   6,   16,   18,   19
+
+	left:	1,   2,  4,  7,  10,   11 
+	middle:  8,   12
+	right:   5,   6,   16,   18,   19
 
 These subsequences are easy to generate. We just start from the  left and the right sides, and work our way inward. When  an element is out  of order,  then we have  found the  end of our increasing/decreasing subse­ quence.
 
 In order to solve our problem, though, we would need to be able to sort the middle part of the  array and, by doing just that, get all the  elements in the  array in order. Specifically, the following would have to be true:
-/* all  items on  left are smaller than all  items in middle */
-min(middle)  >   end(left)
 
-/* all items in  middle are  smaller than all  items in right */
-max(middle)  <   start(right) Or, in other words, for all elements:
-left< middle  <   right
+	/* all  items on  left are smaller than all  items in middle */
+	min(middle)  >   end(left)
+
+	/* all items in  middle are  smaller than all  items in right */
+	max(middle)  <   start(right) 
+
+Or, in other words, for all elements:
+	
+	left< middle  <   right
 
 In fact,  this condition will never be  met.  The middle section is, by definition, the  elements that were  out of order. That is, it is always the  case that left. end  >   middle. start and  middle. end  >  right. start. Thus, you cannot sort the  middle to make the  entire array sorted.
 
@@ -15592,17 +15055,10 @@ Let min  equal min(middle and right   side) and  max equal max(middle  and  left
 On the  left side, we start with the  end of the  subsequence (value 11, at element 5) and move to the  left. The value  min  equals 5. Once  we find an element i such that array[i] <  min, we know that we could sort the  middle and  have that part of the  array appear in order.
 
 
-
-
-
-496          Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I    Moderate
-
-
-
-right subsequence tvalue 6) and move to the right.We compare the max ot,2 to 6, then 7, then '\6.When reach 16, we know that no elements smaller than 12 could be after it (since it's an increasing subsequence). Thus, the middle of the array could now be sorted to make the entire array sorted.
+Then, we do a similar thing on the right side. The value max equals 12. So, we begin with the start of the right subsequence (value 6) and move to the right. We compare the max of 12 to 6, then 7, then 16. When reach 16, we know that no elements smaller than 12 could be after it (since it's an increasing subsequence). Thus, the middle of the array could now be sorted to make the entire array sorted.
 
 The following code implements this algorithm.
+```java
 1      void findUnsortedSequence(int[]  array)  {
 2           II find   left subsequence
 3           int end left= findEndOfleftSubsequence(array);
@@ -15653,34 +15109,35 @@ The following code implements this algorithm.
 48   int shrinkRight(int[] array, int max_index, int start) {
 49       int comp    array[max_index];
 50       for  (int i= start; i <   array.length; i++)  {
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition        497 
-Solutions to Chapter 16   I     Moderate
-
-
-Sl              if  (array(i1 >= comp) return i -  1;
+51              if  (array(i1 >= comp) return i -  1;
 52         }
 53       return array.length -  1;
 54    }
+```
 Note the use of other methods in this solution. Although we could have jammed it all into one method, it would have made the code a lot harder to understand, maintain, and test. In your interview coding, you should prioritize these aspects.
 
 
-16.17   Contiguous Sequence: You are given an array of integers (both positive and negative). Find the contiguous sequence with the largest sum. Return the sum.
+**16.17   Contiguous Sequence:** You are given an array of integers (both positive and negative). Find the contiguous sequence with the largest sum. Return the sum.
+```
 EXAMPLE
 Input: 2,  -8,  3,   -2,  4,  -10
 Output: 5  ( i. e • ,  {3,    -2,  4} )
-pg 783
+```
 
 SOLUTION
 
+---
+
 This is a challenging problem, but an extremely common one. Let's approach this by looking at an example:
-2          3       -8     -1       2         4       -2          3
+	
+	2          3       -8     -1       2         4       -2          3
+
 If we think about our array as having alternating  sequences  of positive and negative numbers, we can observe that we would never include only part of a negative subsequence or part of a positive sequence. Why would we? Including part of a negative subsequence would make things unnecessarily negative, and we should just instead not include that negative sequence at all. Likewise, including only part of a positive subsequence would be strange, since the sum would be even bigger if we included the whole thing.
 
 For the purposes of coming up with our algorithm, we can think about our array as being a sequence  of alternating negative and positive numbers. Each number corresponds to the sum of a subsequence of posi­ tive numbers of a subsequence of negative numbers. For the array above, our new reduced array would be:
-5        -9       6        -2       3
+
+	5        -9       6        -2       3
+
 This doesn't give away a great algorithm immediately, but it does help us to better understand what we're working with.
 
 Consider the array above.Would it ever make sense to have {5,   -9} in a subsequence? No.These numbers sum to -4, so we're better off not including either number, or possibly just having the sequence  be just
@@ -15696,17 +15153,10 @@ Now, we consider 6. This subsequence is greater than 5, so we update both maxSum
 
 Next, we look at -2. Adding this to 6 will set sum to 4. Since this is still a "value add" (when adjoined to another, bigger sequence), we might want {6,   -2}  in our max subsequence. We'll update  sum, but not maxSum.
 
-
-
-
-498         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
-Finally, we look at 3. Adding 3 to sum (4) gives us 7, so we update maxsum. The max subsequence is there­
-fore the sequence { 6,    -2,  3}.
+Finally, we look at 3. Adding 3 to sum (4) gives us 7, so we update maxsum. The max subsequence is there­fore the sequence { 6,    -2,  3}.
 
 When we look at this in the fully expanded  array, our logic is identical. The code below implements this algorithm.
+```java
 1     int  getMaxSum(int[J a)  {
 2           int maxsum  =  0;
 3          int sum =  0;
@@ -15720,52 +15170,47 @@ When we look at this in the fully expanded  array, our logic is identical. The c
 11        }
 12       return maxsum;
 13    }
-If the array is all negative numbers, what is the correct behavior? Consider this simple array: { - 3,    -10,
-- 5}. You could make a good argument that the maximum sum is either:
+```
+If the array is all negative numbers, what is the correct behavior? Consider this simple array: { - 3,    -10, - 5}. You could make a good argument that the maximum sum is either:
 
-1.   -3 (if you assume the subsequence can't be empty)
-
-2.  0 (the subsequence has length 0)
-
-3.  MINIMUM_INT (essentially,  the error case).
+1. -3 (if you assume the subsequence can't be empty)
+2. 0 (the subsequence has length 0)
+3. MINIMUM_INT (essentially,  the error case).
 
 We went with option #2 (maxSum =  0), but there's no "correct" answer. This is a great thing to discuss with your interviewer; it will show how detail-oriented you are.
 
 
-16.18  Pattern Matching: You are given two strings, pattern and value. The pattern string consists of just the letters a and b, describing a pattern within a string. For example, the string catcatgocatgo matches the pattern aabab (where cat is a and go is b). It also matches patterns like a, ab, and b. Write a method to determine if value matches pattern.
+**16.18  Pattern Matching:** You are given two strings, pattern and value. The pattern string consists of just the letters a and b, describing a pattern within a string. For example, the string catcatgocatgo matches the pattern aabab (where cat is a and go is b). It also matches patterns like a, ab, and b. Write a method to determine if value matches pattern.
 
-pg 783
 
 SOLUTION
 
+---
+
 As always, we can start with a simple brute force approach.
 
-Brute Force
+**Brute Force**
 
 A brute force algorithm is to just try all possible values for a and b and then check if this works.
 
 We could do this by iterating through all substrings for a and all possible substrings for b. There are 0(N² ) substrings in a string of length n, so this will actually take O(n4 ) time. But then, for each value of a and b, we need to build the new string of this length and compare it for equality. This building/comparison step takes O(n)  time, giving an overall runtime of O(n5 ).
+```java
 1     for each  possible  substring  a
 2          for each  possible substring b
 3               candidate  =  buildFromPattern(pattern,  a,   b)
 4               if candidate equals  value
 5                    return true
+```
 Ouch.
 
-
-
-CrackingTheCodinglnterview.com I 6th Edition      499 
-Solutions to Chapter 16  /   Moderate
-
-
-One  easy  optimization is to  notice that if the  pattern starts  with 'a'. then the  a string  must start  at  the beginning of value. (Otherwise, the b string must start at the beginning ofvalue.) Therefore, there aren't
-0(N² ) possible values for a; there are 0( n ).
+One  easy  optimization is to  notice that if the  pattern starts  with 'a'. then the  a string  must start  at  the beginning of value. (Otherwise, the b string must start at the beginning ofvalue.) Therefore, there aren't O(n² ) possible values for a; there are O( n ).
 
 The algorithm then is to check  if the  pattern starts with a or b. If it starts  with b, we can "invert" it (flipping each 'a' to a 'b' and  each 'b'to an 'a') so that it starts  with 'a'. Then, iterate through all possible substrings for a (each  of which  must begin at index 0) and  all possible substrings for b (each  of which must begin at some character after the end of a). As before, we then compare the  string for this pattern with the  original string.
 
-This algorithm now  takes  0( n4) time.
+This algorithm now  takes  O(n^4) time.
 
 There's one more minor (optional) optimization we can make. We don't actually need to do this "inversion" if the  string starts  with 'b' instead of 'a'. The buildF romPattern method can take care of this. We can think about the first character in the pattern as the "main" item and the  other character as the alternate character. The buildFromPattern method can build  the  appropriate string  based on whether 'a' is the  main  char­ acter or alternate character.
+```java
 1      boolean  doesMatch(String pattern,  String value) {
 2           if  (pattern.length()== 0) return value.length()    0·,
 3
@@ -15797,41 +15242,33 @@ There's one more minor (optional) optimization we can make. We don't actually ne
 29         }
 30         return sb.toString();
 31    }
+```
 We should look for a more optimal algorithm.
 
-Optimized
+**Optimized**
 
-Let's think  through our  current algorithm. Searching through all values for the  main  string is fairly fast  (it takes O(n)  time).  It's the  alternate string  that is so slow: 0(N² ) time. We should study how to optimize that.
-
-
-
-
-
-500         Cracking the Co ding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
+Let's think  through our  current algorithm. Searching through all values for the  main  string is fairly fast  (it takes O(n)  time).  It's the  alternate string  that is so slow: O(N² ) time. We should study how to optimize that.
 
 Suppose we have a pattem like aabab and we're comparing it to the string catcatgocatgo. Once we've picked "cat" as the value for a to try, then the a strings are going to take up nine characters (three a strings with length three each). Therefore, the b strings must take up the remaining four characters, with each having length two. Moreover, we actually know exactly where they must occur, too. If a is cat, and the pattern is aabab, then b must be go.
 
 In other words, once we've picked a, we've picked b too. There's no need to iterate. Gathering some basic stats on pattern (number of as, number of bs, first occurrence of each) and iterating through values for a (or whichever the main string is) will be sufficient.
+```java
 1      boolean  doesMatch(String pattern,  String value)   { 
-2         if (pattern.length()==    0)  return value.length()
+2         if (pattern.length()==    0)  return value.length() == 0;
 3
- 
-0·, 
 4          char  mainChar=    pattern.charAt(0);
-5              char  altChar =  mainChar ==   'a'? 'b'   'a';
-6              int size=    value.length();
+5          char  altChar =  mainChar ==   'a'? 'b'   'a';
+6          int size=    value.length();
 7
 8          int countOfMain=    countOf(pattern,   mainChar);
 9              int countOfAlt=   pattern.length() -  countOfMain;
 10        int firstAlt =  pattern.indexOf(altChar);
 11        int maxMainSize= size/ coµntOfMain;
 12
-13       for  (int mainSize=   0;  mainSize  <=         maxMainSize; mainSize++)  {
+13       for  (int mainSize=  0;  mainSize <= maxMainSize; mainSize++)  {
 14            int remaininglength=    size -  mainSize  *  countOfMain;
 15            String first=    value.substring(0,   mainSize);
-16            if (countOfAlt==    0  I   I      remainingLength  %   countOfAlt==   0)  {
+16            if (countOfAlt == 0  || remainingLength % countOfAlt == 0)  {
 17                 int altindex=    firstAlt *  mainSize;
 18                 int altSize =  countOfAlt  ==  0? 0  :   remaininglength/ countOfAlt;
 19                 String second =  countOfAlt==    0  ?   ""  :
@@ -15848,7 +15285,7 @@ In other words, once we've picked a, we've picked b too. There's no need to iter
 30
 31  int  countOf(String pattern,   char  c)  {
 32       int count  =  0;
-33       for   (int i=    0;  i <                                                                                                                                                                                                                                                                                                                                                                                      pattern.length();  i++)  {
+33       for   (int i=    0;  i <                                                                            pattern.length();  i++)  {
 34            if (pattern.charAt(i)==    c)  {
 35                 count++;
 36               }
