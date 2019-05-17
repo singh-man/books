@@ -1,4120 +1,13 @@
 ## 1 Solutions to Arrays and  Strings
 
-**1.1 Is Unique:** Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures?
-
-SOLUTION
-
----
-
-You should first ask your interviewer if the string is an ASCII string or a Unicode string. Asking this question will show an eye for detail and a solid foundation in computer science. We'll assume for simplicity the char­ acter set is ASCII. If this assumption is not valid, we would need to increase the storage size.
-
-One solution is to create an array of boolean values, where the flag at index i indicates whether character i in the alphabet is contained in the string. The second time you see this character you can immediately return false.
-
-We can also immediately return false if the string length exceeds the number of unique characters in the alphabet. After all, you can't form a string of 280 unique characters out of a 128-character alphabet.
-
->It's also okay to assume 256 characters. This would be the case in extended ASCII. You should clarify your assumptions with your interviewer.
-
-
-The code below implements this algorithm.
-
-```java
-1      boolean  isUniqueChars(String str) {
-2         if (str.length() >   128) return false;
-3
-4         boolean[]   char_set=  new boolean[128];
-5           for   (int i= 0;  i <  str.length(); i++)  {
-6              int val=  str.charAt(i);
-7              if  (char_set[val]) {//Already  found  this char  in  string
-8                   return false;
-9                }
-10            char_set[val]=  true;
-11         }
-12       return true;
-13   }
-```
-
-The time complexity for this code isO(n), where n is the length of the string. The space complexity isO(l). (You could also argue the time complexity is O(1), since the for loop will never iterate through more than 128 characters.) If you  didn't want to assume the character set is fixed, you could express the complexity as O(c) space and O(min (c, n)) or O(c)  time, where c is the size of the character set.
-
-
-We can reduce our space usage by a factor of eight by using a bit vector. We will assume, in the below code, that the string only uses the lowercase letters a through z. This will allow us to use just a single int.
-
-```java
-1    boolean   isUniqueChars(String str)  {
-2         int  checker=  0;
-3          for  (int  i= 0;  i < str.length(); i++) {
-4           int  val=  str.charAt(i) -   'a';
-5                if ((checker & (1 << val))  >   0) {
-6                   return false;
-7                }
-8               checker |=  (1 << val);
-9           }
-10       return true;
-11    }
-```
-
-If we can't use additional  data structures, we can do the following:
-
-1. Compare every character of the string to every other character of the string. This will take 0(N²) time and O(1) space.
-2.   If we are allowed to modify the input string, we could sort the string in O(n log(n)) time and then linearly check the string for neighboring  characters that are identical. Careful, though: many sorting algorithms take up extra space.
-
-These solutions are not as optimal in some respects, but might be better depending  on the constraints of the problem.
-
-
-**1.2 Check  Permutation:** Given two strings, write a method to decide if one is a permutation of the other. 
-
-
-SOLUTION
-
---- 
-
-Like in many questions, we should confirm some details with our interviewer. We should understand if the permutation  comparison  is case sensitive. That is: is God a permutation of dog? Additionally, we should ask if whitespace is significant. We will assume for this problem that the comparison is case sensitive and whitespace is significant. So, "god      " is different from "dog".
-
-Observe first that strings of different lengths cannot be permutations of each other. There are two easy ways to solve this problem, both of which use this optimization.
-
-
-**Solution #1: Sort  the  strings.**
-
-If two strings are permutations, then we know they have the same characters, but in different orders. There­ fore, sorting the strings will put the characters from two permutations in the same order. We just need to compare the sorted versions of the strings.
-
-```java
-1     String sort(String  s) {
-2         char[] content= s.toCharArray();
-3          java.util.Arrays.sort(content);
-4       return new  String(content);
-5       }
-6
-7    boolean  permutation(String s, String t)  {
-8         if (s.length()  !=  t.length()) {
-9               return false;
-10         }
-11      return  sort(s).equals(sort(t));
-12  }
-```
-
-Though this algorithm  is not as optimal in some senses, it may be preferable in one sense: It's clean,  simple and easy to understand. In a practical sense, this may very well be a superior way to implement the problem.
-
-However, if efficiency is very important, we can implement  it a different way.
-
-
-**Solution #2: Check if the two strings have identical character counts.**
-
-We can also use the definition of a permutation-two words with the same character counts-to imple­ ment this algorithm. We simply iterate through this code, counting how many times each character appears. Then, afterwards, we compare the two arrays.
-
-```java
-1      boolean permutation(String  s,  String  t)  {
-2       if (s.length() !=  t.length()) {
-3                return  false; 
-4       }
-5       
-6       int[] letters = new  int[128]; // Assumption 
-7       
-8       char[]  s_array =  s.toCharArray();
-9       for  (char c  :    s_array) {  // count number of  each char in  s.
-10       	letters[c]++;
-11       }
-12       
-13       for  (int i= 0; i < t.length(); i++) { 
-14       	int c=  (int) t.charAt(i); 
-15       	letters[c]--;
-16       	if (letters[c] <   0) {
-17       		return  false;
-18       	}
-19       }
-20       
-21   return  true; 
-22   }
-```
-
-Note the assumption on line 6. In your interview, you should always check with your interviewer about the size of the character set. We assumed that the character set was ASCII.
-
-
-**1.3 	URLify:** Write a method to replace all spaces in a string with '%20'. You may assume that the string has sufficient space at the end to hold the additional characters, and that you are given the "true" length of the string. (Note: if implementing in Java, please use a character array so that you can perform this operation in place.)
-
-```
-EXAMPLE
-Input:     "Mr  John  Smith       ",  13
-Output:    "Mr%20John%20Smith" 
-```
-
-SOLUTION
- 
----
-
-A common approach in string manipulation problems is to edit the string starting from the end and working backwards. This is useful because we have an extra buffer at the end, which allows us to change characters without worrying about what we're overwriting.
-
-We will use this approach in this problem. The algorithm employs a two-scan approach. In the first scan, we count the number of spaces. By tripling this number, we can  compute how  many  extra characters we will have in the final string.  In the second pass,  which is done in reverse order, we actually edit the string. When we see a space, we replace it with %20. If there is no space, then we copy the original character.
-The code below implements this algorithm.
-
-```java
-1      void replaceSpaces(char(J str,   int  trueLength) {
-2           int  spaceCount  =  0, index, i  =  0;
-3           for (i - 0; i <  trueLength;   i++)  {
-4                 if (str[i] ==  ' ') {
-5                       spaceCount++;
-6                 }
-7           } 
-g           index  =  truelength +  spaceCount  *  2;
-9          if (truelength < str.length)  str[trueLength] = '\0';  // End  array 
-10         for (i =  truelength -  1;   i >= 0;   i-- )  {
-11               if (str[i] ==  ' ') {
-12                     str[index -  1]    =  '0';
-13                     str[index -  2]   =  '2';
-14                     str[index -  3]   =   '%';
-15                     index  =  index -  3;
-16               }  else {
-17                     str[index  -  1]   =  str[i];
-18                     index--;
-19               }
-20         }
-21   }
-```
-
-We have implemented this problem using character arrays, because Java strings are immutable. If we used strings directly, the function would have to return a new copy of the string,  but it would allow us to imple­ ment this in just  one pass.
-
-
-**1.4 	Palindrome Permutation:** Given  a  string,  write   a  function to  check if it  is a  permutation of a  palindrome. A palindrome is a  word  or  phrase that is the same forwards and  backwards. A permutation is a rearrangement of letters. The  palindrome does not  need to  be  limited to just dictionary words.
-
-```
-EXAMPLE
-Input:      Tact  Coa
-Output:     True (permutations: "taco  cat'; "atco   cta", etc.)
-```
-
-SOLUTION
-
----
-
-This is a question where it helps to figure out what it means for a string to be a permutation of a palindrome. This is like asking  what the "defining features" of such  a string would be.
-
-A palindrome is a string that is the same forwards and backwards. Therefore, to decide if a string is a permu­tation of a palindrome, we need to know if it can be written such that it's the same forwards and backwards.
-
-What does it take to be able to write a set of characters the same way forwards and backwards? We need to have an even number of almost all characters, so that half can be  on one side and  half can be on the other side. At most one character (the middle character) can have an odd  count.
-
-For example, we know tactcoapapa is a permutation of a palindrome because it has two  Ts, four As, two Cs, two Ps, and one O. That O would be the center of all possible palindromes.
-
-
-> To be more precise, strings with even length (after removing all non-letter characters) must have all even counts of characters. Strings of an odd length must have exactly one character with an odd count. Of course, an "even" string can't have an odd number of exactly one character, otherwise it wouldn't be an even-length string (an odd number+ many even numbers= an odd number). Likewise, a string with odd length can't have  all characters with even counts (sum of evens is even). It's therefore sufficient to say that, to be a permutation ot a palindrome,  a string can have no more than one character that is odd. This will cover both the odd and the even cases.
-
-
-This leads us to our first algorithm.
-
-**Solution#1**
-
-Implementing this algorithm is fairly straightforward. We use a hash table to count how many times each character appears. Then, we iterate through the hash table and ensure that no more than one character has an odd count.
-
-```java
-1     boolean  isPermutationOfPalindrome(String phrase)   {
-2         int[] table = buildCharFrequencyTable(phrase);
-3           return checkMaxOneOdd(table);
-4       }
-5
-6     /*  Check that no more than  one character has  an odd count.   */
-7    boolean  checkMaxOneOdd(int[] table) {
-8         boolean  foundOdd=  false;
-9         for  (int count  :  table) {
-10            if  (count% 2  ==  1)  {
-11                 if (foundOdd)  {
-12                      return false;
-13                       }
-14                 foundOdd=  true;
-15             }
-16        }
-17       return true;
-18   }
-19
-20  /*  Map  each character to  a number. a  -> 0,   b  -> 1,   c  -> 2,  etc.
-21      * This  is case  insensitive.  Non-letter characters map  to   -1.  */
-22   int getCharNumber(Character c)  {
-23       int a  = Character.getNumericValue('a');
-24       int z  =  Character.getNumericValue('z');
-25       int val=  Character.getNumericValue(c);
-26       if (a<= val  &&   val<= z)  {
-27            return val  -   a;
-28        }
-29       return  -1;
-30   }
-31
-32    /*  Count how many  times  each character appears.   */
-33  int[] buildCharFrequencyTable(String phrase)  {
-34       int[] table =  new  int[Character.getNumericValue('z') - 
-35                             Character.getNumericValue('a') +  1];
-36       for   (char  c  : phrase.toCharArray()) {
-37            int x = getCharNumber(c);
-38             if (x  !=  -1)  {
-39                  table[x]++;
-40             }
-41        }
-42        return table;
-43   }
-```
-
-This algorithm takes O(N) time, where N is the length of the string.
-
-**Solution #2**
-
-We can't optimize the big O time here since any algorithm will always have to look through the entire string. However, we can make some smaller incremental improvements. Because this is a relatively simple problem, it can be worthwhile to discuss some small optimizations or at least some tweaks.
-
-Instead of checking the number of odd counts at the end, we can check as we go along. Then, as soon as we get to the end, we have our answer.
-
-```java
-1     boolean   isPermutationOfPalindrome(String  phrase)  {
-2          int countOdd =  0;
-3          int[]  table = new int[Character.getNumericValue('z')  -
-4                           Character.getNumericValue('a')  + 1];
-5          for (char c   :   phrase.toCharArray())  {
-6               int x = getCharNumber(c);
-7               if (x   !=  -1)   {
-8                    table[x]++;
-9                    if (table[x] %   2
-10                       countOdd++;
-11                  }  else  {
-12                       countOdd--;
-13                  }
-14             }
-15        }
-16       return countOdd <=  1;
-17   }
-```
-
-It's important to be very clear here that this is not necessarily more optimal. It has the same big O time and might even be slightly slower. We have eliminated a final iteration through the hash table, but now we have to run a few extra lines of code for each character in the string.
-
-You should discuss this with your interviewer as an alternate, but not necessarily more optimal, solution.
-
-**Solution #3**
-
-If you think more deeply about this problem, you might notice that we don't actually need to know the counts. We just need to know if the count is even or odd. Think about flipping a light on/off (that is initially off). If the light winds up in the off state, we don't know how many times we flipped it, but we do know it was an even count.
-
-Given this, we can use a single integer (as a bit vector). When we see a letter, we map it to an integer between  O and 26 (assuming an English alphabet). Then we toggle the bit at that value. At the end of the iteration, we check that at most one bit in the integer is set to 1.
-
-We can easily check that no bits in the integer are 1: just compare the integer to 0. There is actually a very elegant way to check that an integer has exactly one bit set to 1.
-
-Picture an integer like 00010000. We could of course shift the integer repeatedly to check that there's only a single 1. Alternatively,  if we subtract 1 from the number, we'll get 00001111. What's notable about this
-is that there is no overlap between the numbers (as opposed to say 00101000, which, when we subtract 1 from, we get 00100111.) So, we can check to see that a number has exactly one 1 because if we subtract 1 from it and then AND it with the new number, we should get 0. 
-
-```
-00010000   -  1  =  00001111
-00010000  &  00001111  = 0
-```
-
-This leads us to our final implementation.
-
-```java
-1     boolean  isPermutationOfPalindrome(String phrase)  {
-2          int  bitVector =  createBitVector(phrase);
-3         return  bitVector == 0  I   I     checkExactlyOneBitSet(bitVector);
-4     }
-5
-6     /* Create a  bit  vector for the  string. For  each  letter with   value   i,  toggle the
-7       * ith bit. */
-8     int  createBitVector(String phrase) {
-9          int  bitVector = 0;
-10        for (char c  :   phrase.toCharArray())  {
-11             int x=  getCharNumber(c);
-12             bitVector=  toggle(bitVector,  x);
-13        }
-14        return bitVector;
-15   }
-16
-17   /* Toggle  the   ith bit in  the   integer. */
-18   int toggle(int bitVector, int index) {
-19        if  (index <   0)  return bitVector;
-20 
-21       int mask=  1  << index;
-22        if  ((bitVector &  mask) == 0) {}
-23             bitVector  |= mask;
-24        }  else {
-25             bitVector &= ~mask; 
-26          }
-27        return  bitVector;
-28   }
-29
-30   /* Check that  exactly one  bit is set by subtracting one  from the   integer and
-31     *  ANDing  it with  the   original integer. */
-32   boolean   checkExactlyOneBitSet(int bitVector)  {
-33        return  (bitVector &  (bitVector  -  1)) ==  0;
-34    }
-```
-
-Like the other solutions, this is O(N).
-
-It's interesting to note a solution that we did not explore. We avoided solutions along the lines of"create all possible permutations and check if they are palindromes:'While such a solution would work, it's entirely infeasible in the real world. Generating all permutations requires factorial time (which is actually worse than exponential time), and it is essentially infeasible to perform on strings longer than about 10-15 characters.
-
-I mention this (impractical) solution because a lot of candidates hear a problem like this and say, "In order to check if A is in group B, I must know everything that is in B and then check if one of the items equals A:' That's not always the case, and this problem is a simple demonstration of it. You don't need to generate all permutations in order to check if one is a palindrome.
-
-**1.51 One Away:** There are three types of edits that can be performed  on strings: insert a character, remove a character, or replace a character. Given two strings, write a function to check if they are one edit (or zero edits) away.
-
-```
-EXAMPLE 
-pale,   ple  ->  true 
-pales,  pale ->  true 
-pale,   bale ->  true 
-pale,   bae  ->  false
-```
- 
-SOLUTION
-
----
-
-
-There is a "brute force" algorithm to do this. We could check all possible strings that are one edit away by testing the removal of each character (and comparing), testing the replacement  of each character (and comparing), and then testing the insertion of each possible character (and comparing).
-
-That would be too slow, so let's not bother with implementing it.
-
-This is one of those problems where it's helpful to think about the "meaning" of each of these operations. What does it mean for two strings to be one insertion, replacement, or removal away from each other?
-
-- **Replacement:** Consider two strings, such as bale and pale, that are one replacement  away. Yes, that does mean that you could replace a character in bale to make pale. But more precisely, it means that they are different only in one place.
-- **Insertion:** The strings apple and aple are one insertion away. This means that if you compared the strings, they would be identical-except for a shift at some point in the strings.
-- **Removal:** The strings apple and aple are also one removal away, since removal is just the inverse of insertion.
-
-We can go ahead and implement this algorithm now. We'll merge the insertion and removal check into one step, and check the replacement step separately.
-
-Observe that you don't need to check the strings for insertion, removal, and replacement edits. The lengths of the strings will indicate which of these you need to check.
-
-```java
-1     boolean   oneEditAway(String  first, String  second) {
-2         if (first.length()==    second.length()) {
-3               return oneEditReplace(first, second);
-4          }  else if (first.length()+  1==  second.length()) {
-5               return oneEditinsert(first,  second);
-6          }  else if (first.length() -  1==   second.length()) {
-7               return oneEditinsert(second, first);
-8          }
-9          return false;
-10   }
-11
-12   boolean   oneEditReplace(String sl,  String s2)   {
-13        boolean   foundDifference  =  false;
-14       for (int i=    0;  i <   sl.length();  i++)   {
-15             if (sl.charAt(i) !=          s2.charAt(i)) {
-16                  if (foundDifference)  { 
-17                       return false; 
-18                  }
-19
-20                  foundDifference  =  true;
-21             }
-22        }
-23        return true;
-24   }
-25
-26     /* Check if you  can  insert a  character into sl to make s2.   */
-27   boolean oneEditinsert(String  sl,  String s2)   {
-28        int indexl =  0;
-29        int index2   =  0;
-30           while  (index2<  s2.length() &&   indexl<  sl.length()) {
-31             if (sl.charAt(indexl)  !=  s2.charAt(index2)) {
-32                  if  (indexl !=index2) {
-33                       return false;
-34                        }
-35                  index2++;
-36             } else {
-37                  indexl++;
-38                  index2++;
-}
-40         }
-41        return true;
-42   }
-```
-
-This algorithm (and almost any reasonable algorithm) takes O(n)  time, where n is the length of the shorter string.
-
-
-> Why is the runtime dictated by the shorter string instead of the longer string? If the strings are the same length (plus or minusone character), then it doesn't matter whether we use the longer string or the shorter string to define the runtime. If the strings are very different lengths, then the algorithm will terminate in 0( 1)  time. One really, really long string therefore won't significantly extend the runtime. It increases the runtime only if both strings are long.
-
-
-We might notice that the code for oneEditReplace is very simtlar to that for oneEditinsert. We can merge them into one method.
-
-To do this, observe  that both methods follow similar logic: compare each character and ensure  that the strings are only different by one. The methods  vary in how they handle  that difference. The method oneEditReplace does nothing other than flag the difference, whereas oneEditinsert increments the pointer to the longer string. We can handle both of these in the same method.
-
-```java
-1     boolean  oneEditAway(String first,  String second)   {
-2          /* Length  checks. */
-3         if (Math.abs(first.length() -  second.length()) >   1)  {
-4               return false;
-5            }
-6
-7          /* Get  shorter and  longer string.*/
-8          String sl    first.length()<  second.length() ?  first :   second;
-9          String s2  =first.length()< second.length()  ?   second   :   first;
-10
-11        int  indexl =0;
-12        int index2  =0;
-13        boolean foundDifference  =  false;
-14        while  (index2<  s2.length() &&   indexl<  sl.length()) {
-15             if  (sl.charAt(indexl) !=s2.charAt(index2)) {
-16                    /* Ensure that  this  is  the first difference found.*/
-17                     if (foundDifference)  return false;
-18                    foundDifference =  true;
-19
-20                     if (sl.length() == s2.length()) {//On replace,  move  shorter pointer
-21                          indexl++;
-22                 }
-23               }  else {
-24                     indexl++;  // If matching,  move  shorter pointer
-25               }
-26               index2++;  // Always   move  pointer for longer string
-27          }
-28         return true;
-29   }
-```
-
-Some  people might argue the  first approach is better, as it is clearer and easier to follow. Others, however, will argue that the  second approach is better, since  it's more compact and doesn't duplicate code (which can facilitate maintainability).
-
-You don't necessarily need to "pick a side:'You can discuss the  tradeoffs with your interviewer.
-
-
-**1.6 	String  Compression:** Implement a method to perform basic string  compression using the  counts of repeated characters. For example, the  string aabcccccaaa would become a2blc5a3. If the "compressed" string would not  become smaller than the  original string, your method should return the original string. You can assume the  string has only uppercase and lowercase letters (a - z). 
-
-
-SOLUTION
- 
----
-
-At first glance, implementing this method seems fairly straightforward, but perhaps a bit tedious. We iterate through the  string,  copying characters to a new  string and counting the  repeats. At each iteration, check if the current character is the same as the next  character. If not, add its compressed version to the  result.
-
-How hard could it be?
-
-```java
-1      String compressBad(String str) {
-2           String compressedString=  "";
-3           int  countConsecutive =  0;
-4 	for (int i= 0;   i <   str.length();  i++) { S		countConsecutive++;
-6
-7                 /* If next  character is  different  than current,  append  this  char to result.*/
-8                 if (i +  1  >= str.length()  I   I     str.charAt(i)  !=  str.charAt(i +  1)) {
-9                       compressedString +=  ""   +  str.charAt(i)  +  countConsecutive;
-10                     countConsecutive =  0;
-11               }
-12        }
-13         return  compressedString.length() <   str.length() ?   compressedString     str;
-14    }
-```
-
-This works. ls it efficient,  though?Take a look at the  runtime of this code.
-
-The  runtime is O(p + k²), where p is the  size of the  original string and k is thelnumber of character sequences. For example, if the  string  is aabccdeeaa,  then there are  six characte  sequences. It's slow because string concatenation operates in O(n² ) time  (see StringBuilder on pg 89).
-
-We can fix this by using a StringBuilder.
-
-```java
-1     String compress(String str) {
-2         StringBuilder compressed=  new StringBuilder();
-3            int countConsecutive=  0;
-4         for   (int i= 0;  i <   str.length(); i++)  {
-5                  countConsecutive++;
-6
-7              /*  If next  character is different than  current,  append this char  to  result.*/
-8              if (i + 1  >=  str.length() I   I      str.charAt(i) != str.charAt(i +  1))  {
-9                   compressed.append(str.charAt(i));
-10                 compressed.append(countConsecutive);
-11                 countConsecutive=  0;
-12            }
-13        }
-14       return compressed.length() <   str.length() ?  compressed.toString()  :   str;
-15   }
-```
-
-Both of these solutions create the compressed string first and then return the shorter of the input string and the compressed string.
-
-Instead, we can check in advance.This will be more optimal in cases where we don't have a large number of repeating characters. It will avoid us having to create a stringthat we never use. The downside of this is that it causes a second loop through the characters and also adds nearly duplicated code.
-
-```java
-1     String  compress(String str) {
-2         /*  Check final  length and return input   string if it would be longer. */
-3         int finallength=  countCompression(str);
-4         if (finallength >=  str.length())  return str;
-5
-6         StringBuilder compressed=  new StringBuilder(finalLength);  // initial capacity
-7         int  countConsecutive =  0;
-8         for  (int i= 0;  i <   str.length(); i++)  {
-9              countConsecutive++;
-10
-11            /*  If next  character is different than  current,  append this char  to  result.*/
-12            if (i +  1  >=  str.length()  I   I      str.charAt(i)  != str.charAt(i + 1))   {
-13                 compressed.append(str.charAt(i));
-14                 compressed.append(countConsecutive);
-15                 countConsecutive=  0;
-16              }
-17        }
-18       return  compressed.toString();
-19    }
-20
-21  int  countCompression(String str) {
-22       int compressedlength=  0;
-23       int countConsecutive=  0;
-24       for  (int i= 0;  i <   str.length(); i++)  {
-25            countConsecutive++;
-26
-27            /*  If next  character is different than  current,  increase the  length.*/
-28            if (i +  1  >=  str.length()  I   I      str.charAt(i) != str.charAt(i + 1))   {
-compressedlength   +=  1 +  String.valueOf(countConsecutive).length();
-30                 countConsecutive =  0;
-31            }
-32        }
-33       return  compressedlength;
-34    }
-```
-
-One other  benefit of this approach  is that we can initialize StringBuilder to its necessary capacity up-front. Without this, StringBuilder will (behind the scenes) need to double its capacity every time it hits capacity. The capacity could be double what we ultimately need.
-
-
-**1.7 	Rotate Matrix:** Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes, write a method to rotate the image by 90 degrees. Can you do this in place?
-
-
-SOLUTION
-
---
-
-Because we're rotating the matrix by 90 degrees, the easiest way to do this is to implement the rotation in layers. We perform a circular rotation on each layer, moving the top edge to the right edge, the right edge to the bottom edge, the bottom edge to the left edge, and the left edge to the top edge.
-
-![](media/01_7.JPG)
-
-How do we perform this four-way edge swap? One option is to copy the top edge to an array, and then move the left to the top, the bottom to the left, and so on. This requires O(N)  memory, which is actually unnecessary.
-
-A better way to do this is to implement the swap index by index. In this case, we do the following:
-
-```
-1     for i =  0 to  n
-2         temp=  top[i];
-3          top[i] =  left[i]
-4         left[i] =  bottom[i]
-5          bottom[i]= right[i]
-6          right[i] = temp
-```
-
-We perform such a swap on each layer, starting from the outermost layer and working our way inwards. (Alternatively, we could start from the inner layer and work outwards.)
-
-The code for this algorithm is below.
-
-```java
-1     boolean   rotate(int[][] matrix)  {
-2          if  (matrix.length== 0  I   I     matrix.length  != matrix[0].length) return false;
-3            int n  = matrix.length;
-4          for (int  layer =  0;  layer <  n  / 2;  layer++)  {
-5               int first= layer;
-6               int last= n  -  1  -  layer;
-7               for(int i =  first; i <   last; i++)  {
-8                    int offset =  i -  first;
-9                    int top=  matrix[first][i]; II save top
-10
-11                  // left ->  top
-12                   matrix[first][i] =  matrix[last-offset][first];
-13
-14                  // bottom ->  left 
-15                   matrix[last-offset][first] = matrix[last][last  -  offset];
-16
-17                   // right  ->  bottom
-18                  matrix[last][last -  offset] = matrix[i][last]; 
-19
-20                  // top   ->  right
-21					matrix[i][last]  = top;   // right<-  saved top
-22				} 
-23        }
-24		return  true; 
-25   }
-```
-
-This algorithm is O(N²), which is the best we can do since any algorithm must touch all N² elements.
-
-
-**1.8 Zero Matrix:** Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column are set to 0.
-
-
-SOLUTION
-
----
-
-
-At first glance, this problem seems easy: just iterate through the matrix and every time we see a cell with value zero, set its row and column to 0. There's one problem with that solution though: when we come across other cells in that row or column, we'll see the zeros and change their row and column to zero.Pretty soon, our entire  matrix will be set to zeros.
-
-One way around this is to keep a second matrix which flags the zero locations. We would then do a second pass through the matrix to set the zeros.This would take O(MN) space.
-
-Do we really need O(MN) space?  No. Since we're going  to set the entire row and column to zero, we don't need to track that it was exactly cell[2][4] (row 2, column 4). We only need to know that row 2 has a zero somewhere, and column 4 has a zero somewhere.We'll set the entire row and column to zero anyway, so why would we care to keep track of the exact location of the zero?
-
-The code below implements this algorithm. We use two arrays to keep track of all the rows with zeros and all the columns with zeros. We then nullify rows and columns  based  on the values in these arrays.
-
-```java
-1     void setZeros(int[][] matrix)  {
-2          boolean[]  row = new  boolean[matrix .length];
-3          boolean[]   column  = new  boolean[matrix[0].length];
-4
-5          II Store  the  row and column  index with value  0
-6          for  (int i=  0; i< matrix.length; i++)   {
-7               for  (int j = 0; j< matrix[0].length;j++) {
-8                    if  (matrix[i][j] ==  0)  {
-9                         row[i] = true;
-10                       column[j]  = true;
-11                     }
-12              }
-13        }
-14
-15         // Nullify  rows
-16         for (inti= 0; i <  row.length;   i++) {
-17               if (row[i])  nullifyRow(matrix, i);
-18        }
-19
-20         // Nullify  columns
-21         for (int j =  0;   j <   column.length;  j++) {
-22               if (column[j])  nullifyColumn(matrix, j);
-23         }
-24    }
-25
-26    void nullifyRow(int[][]  matrix, int  row) {
-27         for (int j=    0;   j <   matrix[0].length;   j++) {
-28               matrix[row][j] =  0;
-29        }
-30    }
-31
-32    void nullifyColumn(int[][] matrix, int  col) {
-33         for (int  i=  0;   i <   matrix.length;   i++) {
-34               matrix[i][col]=  0;
-35         }
-36     }
-```
-
-To make this somewhat more space efficient we could  use  a bit vector instead of a boolean array. It would still be O(N)  space.
-
-We can  reduce the  space to O(1) by using the  first row as a replacement for the  row  array  and  the  first column as a replacement for the column array. This works as follows:
-
-1.  Check   if  the   first   row   and   first  column  have   any   zeros,   and   set   variables rowHasZero   and columnHasZero. (We'll nullify the first row and  first column later, if necessary.)
-2.  Iterate through the  rest of the  matrix,  setting matrix[i][0)  and  matrix[0) [j] to zero whenever there's a zero in matrix[i][j].
-3.  Iterate through rest of matrix, nullifying row i if there's a zero in matrix[i][0].
-4.   Iterate through rest of matrix, nullifying column j if there's a zero in matrix[0][j].
-5.  Nullify the  first row and  first column, if necessary (based on values from Step  1). 
-
-This code is below:
-
-```java
-1      void  setzeros(int[][] matrix) {
-2           boolean  rowHasZero = false;
-3           boolean  colHasZero  = false;
-4
-5           // Check   if first row  has a  zero
-6           for (int j=    0;   j <   matrix[0].length;  j++) {
-7                 if  (matrix[0][j] ==         0) {
-8                       rowHasZero  = true;
-9                       break;
-10              }
-11         }
-12
-13         // Check   if first column   has a  zero
-14         for (int i=     0;   i <   matrix.length;   i++) {
-15               if (matrix[i][0]==    0) {
-16                     colHasZero = true;
-17                     break;
-18              }
-19         }
-20 
-21 		// Check   for zeros in the rest  of the array 
-22 		for (int i=  1;   i <   matrix.length;  i++) {
-23 		for (int j =  1;   j <   matrix[0].length;j++) {
-24 		if  (matrix[iJ[jJ ==  0) { 
-25 		matrix[i][0]=  0; 
-26 		matrix[0J[j] =  0;
-27 		}
-28 		}
-29 		}
-30
-31		// Nullify rows   based  on  values in  first column 
-32		for (int i=   1;   i <   matrix.length; i++) {
-33		if  (matrix[i][0] == 0) {
-34		nullifyRow(matrix,  i); 
-35              }
-36        }
-37 
-38		// Nullify  columns based on  values in  first row
-39		for (int j=    1;   j <   matrix[0].length;   j++) {
-40		if (matrix[0][j]==    0) {
-41		nullifyColumn(matrix,  j);
-42		}
-43		}
-44
-45		// Nullify first row 
-46		if (rowHasZero) {
-47		nullifyRow(matrix,  0);
-48		}
-49		
-50		// Nullify first column 
-51		if (colHasZero) {
-52		nullifyColumn(matrix,  0);
-53		} 
-54   }
-```
-
-This code has  a lot of"do  this for the  rows, then the  equivalent action for the  column:' In an interview, you could abbreviate this code by adding comments and TODOs that explain that the next chunk of code looks the  same as the  earlier code,  but  using rows. This would allow you to focus  on the  most important parts of the  algorithm.
-
-
-**1.9 	String Rotation:** Assumeyou have a method i5Sub5tring which checks if one word is a substring of another. Given two strings,  51 and 52, write code to check if 52 is a rotation of 51 using only one
-call to i5Sub5tring (e.g., "waterbottle" is a rotation of" erbottlewat").
-
-SOLUTION
-
----
-
-If we imagine that 52  is a rotation of 51,  then we can  ask what the  rotation point is. For example, if you rotate waterbottle after  wat. you  get  erbottlewat. In a rotation, we cut 51  into  two  parts,  x and y, and rearrange them to get  s2.
-
-```
-51 =  xy   =  waterbottle
-x  =  wat
-y = erbottle
-s2  = yx   = erbottlewat
-```
-
-So, we need to check  if there's a way to split s1 into x  andy such that xy = s1 andyx = s2. Regardless of where the division between x andy is, we can see thatyx will always be a substring of xyxy.That is, s2 will always be a substring of s1s1.
-
-And this is precisely how we solve the problem: simply do isSubstring(slsl,  s2). The code below implements this algorithm.
-
-```java
-1     boolean  isRotation(String sl,  String s2)  {
-2         int len  =  sl.length();
-3            /*  Check that sl and s2 are  equal  length and not  empty*/
-4         if (len == s2.length() &&   len   >   0)  {
-5                  /*  Concatenate  sl and sl within new  buffer  */
-6              String slsl =  sl + sl;
-7              return isSubstring(slsl,  s2);
-8          }
-9         return false;
-10   }
-```
-
-The runtime of this varies based on the runtime of isSubstring. But if you assume that isSubstring runs inO(A+B) time (on strings of length A and B), then the runtime of isRotation isO(N).
-
-
 
 ## 2 Solutions to Linked Lists
 
 
-**2.1 Remove Dups:** Write code to remove duplicates from an unsorted linked list.
-
-FOLLOW UP
-
-How would you solve this problem if a temporary buffer is not allowed?
-
-SOLUTION
-
----
-
-In order to remove duplicates from a linked list, we  need to be able to track duplicates. A simple hash table will work well  here.
-
-In the below solution, we  simply iterate through the linked list, adding each element to a hash table. When we  discover a duplicate element, we remove the element and continue iterating. We can do this all in one pass since we are using a linked list.
-
-```java
-1      void deleteDups(LinkedListNode n)  {
-2            HashSet<Integer>  set =  new  HashSet<Integer>();
-3            LinkedListNode previous  =  null;
-4            while (n  !=  null) {
-5                  if  (set.contains(n.data)) {
-6                        previous.next =  n.next;
-7                  }  else {
-8                        set.add(n.data);
-9                        previous =  n;
-10            }
-11                n =  n.next;
-12        }
-13   }
-```
-
-The  above solution takes O(N) time, where N is the number ofelements in the linked list.
-
-**Follow  Up: No Buffer Allowed**
-
-lfwe don't have a buffer, we can iterate with two pointers: current which iterates through the linked list, and runner which checks all subsequent nodes for duplicates.
-
-```java
-1      void deleteDups(LinkedListNode   head)  {
-2            LinkedListNode  current =  head;
-3            while (current   !=  null) {
-4                  /* Remove  all future  nodes that  have the same value */
-5                  LinkedListNode runner  =  current;
-6                  while (runner.next  !=  null) {
-7                        if  (runner.next.data ==  current.data) {
-8                                 runner.next = runner.next.next;
-9                          } else {
-10                              runner  =   runner.next;
-11                      }
-12             }
-13             current     current.next;
-14        }
-15     }
-```
-
-This code runs in O(1) space, but O(N²) time.
-
-
-**2.2       Return Kth to Last:**  Implement an algorithm to find the kth to last element of a singly linked list.
-
-SOLUTION
-
----
-
-We will approach this problem both recursively and non-recursively. Remember that recursive solutions are often cleaner but less optimal. For example, in this problem, the recursive implementation is about half the length of the iterative solution but also takes 0( n) space, where n is the number of elements in the linked list.
-
-Note that for this solution, we have definedk such that passing ink   =  1 would return the last element,k
-2 would return to the second to last element, and so on. It is equally acceptable to definek such thatk
-=  0 would return the last element.
-
-##### Solution #1: If linked list size is known
-
-If the size of the linked list is known, then thekth to last element is the ( length  - k)th element. We can just iterate through the linked list to find this element. Because this solution is so trivial, we can almost be sure that this is not what the interviewer intended.
-
-##### Solution #2: Recursive
-
-This algorithm recurses through the linked list. When it hits the end, the method passes back a counter set to 0. Each parent call adds 1  to this counter. When the counter equalsk, we know we have reached thekth to last element of the linked list.
-
-Implementing this is short and sweet-provided we have a way of"passing back" an integer value through the stack. Unfortunately, we can't pass back a node and a counter using normal return statements. So how do we handle this?
-
-*Approach A: Don't Return the Element.*
-
-One way to do this is to change the problem to simply printing thekth to last element. Then, we can pass back the value of the counter simply through return values.
-
-```java
-1     int  printKthToLast(LinkedlistNode head,   int k)  {
-2          if  (head== null) {
-3                   return 0;
-4           }
-5          int index   = printKthToLast(head.next,  k)  + 1;
-6          if (index == k)  {
-7                    System.out.println(k +   "th   to last node  is " +  head.data);
-8           }
-9          return  index;
-10    }
-```
-
-Of course, this is only a valid solution if the interviewer says it is valid.
-
-*Approach B: Use C++.*
-
-A second way to solve this is to use C++ and to pass values by reference. This allows us to return the node value, but also update the counter by passing a pointer to it.
-
-```java
-1     node*  nthToLast(node*  head,   int k,  int&  i) {
-2          if (head==    NULL)  {
-3               return NULL;
-4          }
-5          node*  nd  =  nthToLast(head->next,  k,  i);
-6          i = i +  1;
-7          if (i == k)  {
-8               return head;
-9           }
-10        return nd;
-11   }
-12
-13   node*  nthToLast(node*  head,   int k)  {
-14        int i =  0;
-return  nthToLast(head, k,  i);
-16   }
-```
-
-*Approach C: Create a Wrapper Class.*
-
-We described earlier that the issue was that we couldn't simultaneously return a counter and an index. If we wrap the counter value with simple class (or even a single element  array), we can mimic passing by reference.
-
-```java
-1     class Index  { 
-2          public int value = 0;
-3     }
-4
-5     LinkedListNode  kthTolast(LinkedlistNode  head,   int k)  {
-6          Index  idx  = new Index();
-7          return  kthToLast(head, k,   idx);
-8     }
-9
-10   LinkedListNode kthToLast(LinkedListNode head, int k, Index  idx) {
-11        if  (head== null) {
-12            return null;
-13        }
-14        LinkedListNode  node      kthToLast(head.next,  k,   idx);
-15        idx.value =  idx.value + 1;
-16        if  (idx.value == k)  {
-17             return  head;
-18        }
-19        return node;
-20   }
-```
-
-Each of these recursive solutions takes 0(n) space due to the recursive calls.
-
-There are a number of other solutions that wehaven't addressed. We could store the counter in a static vari­ able. Or, we could create a class that stores both the node and the counter, and return an instance of that class. Regardless of which solution we pick, we need a way to update both the node and the counter in a way that all levels of the recursive stack will see.
-
-
-##### Solution #3: Iterative
-
-A more optimal, but less straightforward, solution is to implement this iteratively. We can use two pointers, pl and p2. We place them k nodes apart in the linked list by putting p2 at the beginning and moving pl k nodes into the list. Then, when we move them at the same pace, pl will hit the end of the linked list after LENGTH  - k steps. At that point, p2  will be LENGTH  - k nodes into the list, or k nodes from the end.
-
-The code below implements this algorithm.
-
-```java
-1     LinkedListNode  nthTolast(LinkedListNode head,  int k)  {
-2         LinkedlistNode pl   head;
-3            LinkedlistNode  p2 =  head;
-4
-5         /*  Move  pl  k nodes  into the  list.*/
-6         for  (int i= 0;  i <   k;  i++)  {
-7              if (pl ==  null) return null;  // Out of  bounds
-8              pl  =  pl.next;
-9         }
-10
-11       /*  Move  them at the  same pace.  When  pl  hits the  end,  p2 will be at the  right
-12         * element.   */
-13       while  (pl!=  null) {
-14            pl =  pl.next;
-15            p2 =  p2.next;
-16       }
-17       return p2;
-18    }
-```
-
-This algorithm takes O(n) time and O(1) space.
-
-
-**2.3 	Delete Middle  Node:**  Implement an algorithm to delete a node in the middle (i.e., any node but the first and last node, not necessarily the exact middle) of a singly linked list, given only access to that node.
-```
-EXAMPLE
-Input:the node c from the linked list a->b->c->d->e->f
-Result: nothing is returned, but the new linked list looks like a->b->d->e->f
-```
-
-SOLUTION
-
----
-
-In this problem, you are not given access to the head of the linked list. You only have access to that node. The solution is simply to copy the data from the next node over to the current node, and then to delete the next node.
-
-The code below implements this algorithm.
-
-```java
-1     boolean  deleteNode(LinkedListNode  n)  {
-2         if (n  ==  null  I   I     n.next ==  null)  {
-3                   return false;  // Failure
-4        }
-5         LinkedlistNode next  =  n.next;
-6         n.data=  next.data;
-7         n.next =  next.next;
-8         return true;
-9     }
-```
-
-Note that this problem cannot be solved if the node to be deleted is the last node in the linked list. That's okay-your interviewer wants you to point that out, and to discuss how to handle this case. You could, for example, consider marking the node as dummy.
-
-
-**2.4 Partition:** Write code to partition a linked list around a value x, such that all nodes less than x come before all nodes greater than or equal to x. If x is contained within the list the values of x only need to be after the elements less than x (see below). The partition element x can appear anywhere in the "right partition"; it does not need to appear between the left and right partitions.
-
-```
-EXAMPLE 
-Input:   3  ->   5  ->  8 -> 5  ->  10 -> 2  -> 1 [partition= 5] 
-Output:  3  ->  1 -> 2  ->  10  ->  5 -> 5  ->  8 
-```
-
-SOLUTION
-
----
-
-If this were an array, we would need to be careful about how we shifted elements. Array shifts are very expensive.
-
-However, in a linked list, the situation is much easier. Rather than shifting and swapping elements, we can actually create two different linked lists: one for elements less than x, and one for elements greater than or equal to x.
-
-We iterate through the linked list, inserting elements into our before list or our after list. Once we reach the end of the linked list and have completed this splitting, we merge the two lists.
-
-This approach is mostly "stable" in that elements stay in their original order, other than the necessary move­ment around the partition. The code below implements this approach.
-
-```java
-1     /*Pass in  the   head  of  the   linked list and  the   value  to partition around*/
-2     LinkedListNode  partition(LinkedListNode node,   int x)  {
-3         LinkedlistNode beforeStart=  null;
-4          LinkedListNode beforeEnd  =  null;
-5          LinkedListNode  afterStart    null;
-6          LinkedListNode afterEnd  = null;
-7
-8          /*Partition list*/
-9          while   (node!=  null)  {
-10             LinkedListNode next=  node.next;
-11             node.next  =  null;
-12             if (node.data<  x)  {
-/*Insert node  into end  of  before list*/
-14                  if  (beforeStart == null)  { 
-15					beforeStart = node;
-16					beforeEnd  =   beforeStart;
-17					} else {
-18						beforeEnd.next=  node;
-19						beforeEnd  =  node;
-20					}
-21					} else {
-22						/* Insert node  into end  of  after list*/
-23						if (afterStart == null)  {
-24							afterStart = node;
-25							afterEnd =  afterStart;
-26						}  else {
-27							afterEnd.next=  node;
-28							afterEnd=  node;
-29							} 
-30               }
-31               node       next;
-32        }
-34         if (beforeStart==     null) {
-35               return afterStart;
-36       }
-37
-38         /* Merge   before  list and   after list */
-39         beforeEnd.next=     afterStart;
-40         return beforeStart;
-41   }
-```
-
-If it bugs you to keep around four different variables for tracking two  linked  lists, you're  not  alone.  We can make this code a bit shorter.
-
-If we  don't care  about making the elements of the list "stable"  (which  there's no  obligation to, since  the interviewer hasn't specified that), then we can  instead rearrange the elements by growing the list at the head and  tail.
-
-In this approach, we start a"new" list (using the existing nodes). Elements bigger than the pivot element are put  at the tail and  elements smaller are put  at the head. Each time we insert  an element, we update either the head or tail.
-
-```java
-1      LinkedlistNode  partition(LinkedlistNode node, int  x)   {
-2           LinkedListNode head     node;
-3           LinkedListNode tail=     node;
-4
-5           while  (node !=  null)  {
-6                 LinkedListNode next  = node.next;
-7                 if (node.data <   x)   {
-8                       /* Insert node   at head. */
-9                       node.next=  head;
-10                     head=  node;
-11               }  else  {
-12                    /*  Insert  node at tail. */
-13                     tail.next=    node;
-14                    tail= node;
-15              }
-16               node=  next;
-17        }
-18         tail.next= null;
-19
-20         // The  head  has   changed,  so  we  need to  return it to the user.
-21         return head;
-22     }
-```
-
-There are many  equally optimal solutions to this problem. If you came up  with a different one, that's okay!
-
-
-**2.5 	Sum Lists:** You have two numbers represented by a linked list,where each node contains a single digit. The digits are stored in reverse order,such that the 1's digit  is at the head of the list. Write a function that adds the two numbers and returns the sum as a linked list.
-
-```
-EXAMPLE
-Input: (7-> 1 -> 6) +   (5 -> 9 -> 2). That is,617 +  295. 
-Output: 2 -> 1 -> 9. That is,912.
-```
-
-FOLLOW UP
-
-Suppose the digits are stored in forward order. Repeat the above problem. 
-
-```
-Input: (6 -> 1 -> 7) +  (2 -> 9 -> 5).That is,617 +  295.
-Output: 9 -> 1 -> 2.That is, 912.
-```
-
-SOLUTION
-
----
-
-It's useful  to remember in this problem how exactly addition works. Imagine the problem:
-
-```
-6 1 7
-+ 2  9  5
-```
-
-First, we add 7 and 5 to get 12. The digit 2 becomes the last digit of the number, and 1 gets carried over to the next step. Second,  we add 1, 1, and 9 to get 11.The 1 becomes the second digit,and the other 1 gets carried over the final step. Third and finally, we add 1,6 and 2 to get 9. So,our value becomes 912.
-
-We can mimic this process recursively by adding node by node,carrying  over any "excess" data to the next node.  Let's walk through this for the below linked list:
-
-```
-7  -> 1 -> 6
-+    5 -> 9 -> 2
-```
-
-We do the following:
-
-1.  We add 7 and 5 first,getting a result of 12. 2 becomes the first node in our linked list,and we"carry" the
-1 to the next sum. List: 2 ->?
-2.  We then  add 1 and 9, as well as the "carry;' getting a result of 11. 1 becomes the second element of our linked list, and we carry the 1 to the next sum.
-
-```
-List: 2 -> 1 ->?
-```
-
-3.  Finally, we add 6, 2 and our"carrY:'to get 9.This becomes the final element of our linked list.
-```
-List: 2 -> 1 -> 9.
-```
-
-The code below implements this algorithm.
-
-```java
-l  LinkedListNode addlists(LinkedListNode 11, LinkedListNode 12, int  carry) {
-2          if (11 ==·null &&  12==    null  &&   carry==   0) {
-3                return null;
-4         }
-5
-6	LinkedlistNode result	new  LinkedlistNode();
-7	int  value =  carry;	
-8	if (11 !=  null)  {	
-9	value +=  11.data;	
-10         }
-11     if (12 !=  null)  {
-12          value +=  12.data;
-13         }
-14
-15      result.data    value% 10; /* Second digit of  number */
-16
-17      /*Recurse  */
-18     if (11 != null II   12 != null) {
-19          LinkedlistNode  more = addlists(ll == null ?  null   :    11.next,
-20                                                          12== null? null :   12 . next,
-21                                                                       value>= 10?  1   :    0);
-22             result.setNext(more);
-23        }
-24     return  result;
-25   }
-```
-
-In implementing this code, we must be careful to handle the condition when one linked list is shorter than another. We don't want to get a null pointer exception.
-
-##### Follow Up
-
-Part B is conceptually the same (recurse, carry the excess), but has some additional complications when it comes to implementation:
-
-1. One list may be shorter than the other, and we cannot handle this "on the flY:' For example, suppose we were adding (1 -> 2 -> 3-> 4) and (5-> 6-> 7). We need to know that the 5 should be"matched"with the
-2, not the 1. We can accomplish this by comparing the lengths of the lists in the beginning and padding the shorter list with zeros.
-2.  In the first part, successive results were added to the tail (i.e., passed forward). This meant that the recur­ sive call would be passed the carry, and would return the result (which is then appended to the tail). In this case, however, results are added to the head (i.e., passed backward). The recursive call must return the result, as before, as well as the carry. This is not terribly challenging to implement, but it is more cumbersome. We can solve this issue by creating a wrapper class called Partial Sum.
-
-The code below implements this algorithm.
-
-```java
-1    class  PartialSum {
-2          public  LinkedListNode  sum   = null;
-3          public  int carry= 0;
-4    }
-5
-6    LinkedlistNode addLists(LinkedListNode 11, LinkedListNode  12) {
-7          int lenl   length(ll);
-8          int leN² =  length(l2);
-9
-10      /* Pad the shorter  list with zeros  -  see note (1) */
-11      if (lenl <   leN²)  {
-12          11  =  padlist(ll, leN²  -  lenl);
-13         }  else  {
-14          12  =  padlist(l2, lenl -  leN²);
-15          }
-16
-17        /* Add lists */
-18      PartialSum sum   =  addListsHelper(ll,  12);
-19
-20      /* If there was a carry value left over,  insert this  at the front of  the list.
-21         * Otherwise,  just  return  the linked  list. */
-22      if (sum.carry== 0) {
-21
-23            return sum.sum;
-24       }  else {
-25            LinkedListNode  result  = insertBefore(sum.sum, sum.carry);
-26            return result;
-27          }
-28   }
-2.9
-30  Partia1Sum addListsHelper(LinkedListNode  11,  LinkedlistNode 12)  {
-31       if  (11== null   &&   12==    null) {
-32            Partia1Sum sum=  new Partia1Sum();
-33            return sum;
-34       }
-35     /*    Add  smaller digits  recursively*/
-36          Partia1Sum sum=  addListsHelper(ll.next,  12.next);
-37
-38        /*    Add  carry  to  current data*/
-39           int val=  sum.carry  +  11.data  + 12.data;
-40
-41     /*    Insert sum of  current digits*/
-42       LinkedListNode full_result=  insertBefore(sum.sum,  val%   10);
-43
-44     /*    Return  sum so  far,  and the  carry   value*/
-45       sum.sum=    full_result;
-46       sum.carry      val/   10;
-47       return sum;
-48   }
-49
-50 /* Pad the  list with  zeros*/
-51  LinkedListNode padList(LinkedListNode  1,  int padding)  {
-52       LinkedlistNode head=    l;
-53       for  (int i= 0;  i <   padding;  i++)  {
-54            head= insertBefore(head,  0);
-55      }
-56       return head;
-57     }
-58
-59  /*    Helper  function to  insert node in  the  front of  a linked list*/
-60  LinkedListNode insertBefore(LinkedListNode  list,  int data)   {
-61       LinkedListNode node=  new LinkedListNode(data);
-62           if (list != null) {
-63            node.next=  list;
-64       }
-55       return node;
-66   }
-```
-
-Note how we have pulled insertBefore(), padlist(), and length() (not listed) into their own methods. This makes the code cleaner and easier to read-a wise thing to do in your interviews!
-
- 
-**2.6       Palindrome:** Implement a function to check if a linked list is a palindrome.
-
-
-SOLUTION
- 
---- 
-
-To approach this problem, we can picture a palindrome like 0  - >   1  - >   2  - >   1  - >  0. We know that, since it's a palindrome, the list must be the same backwards and forwards. This leads us to our first solution.
-
-
-##### Solution #1: Reverse and Compare
-
-Our first solution is to reverse the linked list and compare the reversed list to the original list. If they're the same, the lists are identical.
-
-Note that when we compare the linked list to the reversed list, we only actually need to compare the first half of the list.  If the first half of the normal list matches the first half of the reversed list, then the second half of the normal list must match the second half of the reversed list.
-
-```java
-1     boolean  isPalindrome(LinkedListNode head)  {
-2         LinkedListNode reversed=  reverseAndClone(head);
-3           return  isEqual(head, reversed);
-4      }
-5
-6    LinkedlistNode reverseAndClone(LinkedListNode  node)  {
-7         LinkedListNode head=   null;
-8         while  (node  != null) {
-9              LinkedListNode n=  new LinkedlistNode(node.data); // Clone
-10            n.next=    head;
-11            head
-12            node=   node.next;
-13        }
-14       return head;
-15    }
-16
-17   boolean  isEqual(LinkedListNode one,  LinkedListNode  two)  {
-18       while  (one  != null &&   two !=          null) {
-19            if (one.data  != two.data)  { 
-20				return false; 
-21              }
-22            one     one.next;
-23            two     two.next;
-24          }
-25       return one==  null   &&   two==  null;
-26     }
-```
-
-Observe that we've modularized this code into reverse and isEqua 1 functions. We've also created a new class so that we can return both the head and the tail of this method. We could have also returned a two­ element array, but that approach is less maintainable.
-
-##### Solution #2: Iterative Approach
-
-We want to detect linked lists where the front half of the list is the reverse of the second half. How would we do that? By reversing the front half of the list. A stack  can accomplish this.
-
-We need to push the first half of the elements onto a stack. We can do this in two different ways, depending on whether or not we know the size of the linked list.
-
-If we know the size of the linked list, we can iterate through the first half of the elements in a standard for loop, pushing each element onto a stack. We must be careful, of course, to handle the case where the length of the linked list is odd.
-
-If we don't know the size of the linked list, we can iterate through the linked list, using the fast runner/ slow runner technique described in the beginning of the chapter.  At each step in the loop, we push the data from the slow runner onto a stack. When the fast runner hits the end of the list, the slow runner will have reached the middle of the linked  list. By this point, the stack will have all the elements from the front of the linked list, but in reverse order.
-
-
-Now, we simply iterate through the rest of the linked list. At each iteration, we compare the node to the top of the stack. If we complete the iteration without finding a difference, then the linked list is a palindrome.
-
-```java
-1     boolean isPalindrome(LinkedListNode head)   {
-2          LinkedListNode fast= head;
-3          LinkedListNode slow=  head;
-4
-S             Stack<Integer> stack=     new Stack<Integer>();
-6
-7        /*    Push elements from  first  half of  linked list onto   stack. When  fast  runner
-8          * (which  is moving at 2x speed)  reaches the   end  of  the   linked list, then   we
-9          *   know we're at the   middle*/
-10        while   (fast != null &&  fast.next != null) {
-11             stack.push(slow.data);
-12             slow      slow.next;
-13             fast= fast.next.next;
-14        }
-15
-16      /* Has odd number of  elements,  so  skip the  middle  element*/
-17        if (fast!= null) {
-18             slow=  slow.next;
-19        }
-20
-21        while   (slow  != null) {
-22             int top=  stack.pop().intValue();
-23
-24           /*   If  values are   different, then   it's not   a  palindrome*/
-25             if (top != slow.data) {
-26                  return false;
-27             }
-28             slow=  slow.next;
-29        }
-30
-31   }
-```
-
-##### Solution #3: Recursive Approach
-
-First, a word on notation: in this solution, when we use the notation node  Kx, the variable K indicates the value of the node data, and x (which is either for b) indicates whether we are referring to the front node with that value or the back node. For example, in the below linked list node   2b would refer to the second (back) node with value 2.
-
-Now, like many linked list problems, you can approach this problem recursively. We may have some intui­ tive idea that we want to compare element 0 and element n  -   1, element 1 and element n - 2, element 2 and element n-3,  and so on, until the middle element(s). For example:
-```
-0  (  1  (  2  (  3  )   2  )   1  )  0
-```
-In order to apply this approach, we first need to know when we've reached the middle element, as this will form our base case. We can do this by passing in length  -  2 for the length each time. When the length equals 0 or 1, we're at the center of the linked list. This is because the length is reduced by 2 each time. Once we've recursed  Yi times, length will be down to 0.
-
-```
-1     recurse(Node n,  int length) {
-2          if  (length== 0  I   I      length==    1)  {
-3               return  [something]; //  At  middle
-4          }
-5          recurse(n.next,  length -  2);
-6	...
-7      }
-```
-
-This method will form the outline of the isPalindrome method. The "meat" of the algorithm though is comparing node i to node n  -  i to check if the linked list is a palindrome. How do we do that?
-
-Let's examine what the call stack looks like:
-
-```
-1    vl  =   isPalindrome:  list =   0  (  1  (  2  (  3  )  2  )  1  )  0.   length   =  7
-2         v2 =  isPalindrome: list  = 1  (  2  (  3  )  2  )  1  )  0.  length =  5
-3              v3 =  isPalindrome: list =   2  (  3  )  2  )  1  )  0.  length   =  3
-4                   v4 =  isPalindrome:   list  = 3  )  2  )  1  )  0.  length =  1
-5                         returns v3
-6                  returns v2
-7            returns vl
-8      returns  ?
-```
-
-In the above call stack, each call wants to check  if the list is a palindrome by comparing its head node with the corresponding node from the back of the list. That is:
-
-- Line 1  needs to compare node  0f with node   0b
-- Line 2 needs to compare node   1f with node   lb
-- Line 3 needs to compare node   2f with node   2b
-- Line 4 needs to compare node   3f with node   3b.
-
-If we rewind the stack, passing nodes back as described below, we can dojust that:
-
-- Line 4 sees that it is the middle node (since length =  1), and passes back head. next.The value head equals node   3, so head. next is node   2b.
-- Line 3 compares its head, node   2f, to returned_node (the value from the previous recursive call), which is node   2b. lf the values match, it passes a reference to node  lb (returned_node. next) up to line 2.
-- Line 2 compares its head (node   1f) to returned_node (node   lb). If the values match, it passes a reference to node   0b (or, returned_node. next) up to line 1.
-- Line 1   compares its head, node   0f, to returned_node, which is node   0b. If the values match, it returns true.
-
-To generalize, each call compares its head to returned_node, and then passes returned_node. next up the stack. In this way, every node i gets compared to node n   -   i. If at any point the values do not match, we return false, and every call up the stack checks for that value.
-
-But wait, you might ask, sometimes we said we'll return a boolean value, and sometimes we're returning a node. Which is it?
-
-It's both. We create a simple class with two members, a boolean and a node, and return an instance of that class.
-
-```
-1      class   Result  {
-2         public   LinkedlistNode  node;
-3            public   boolean  result;
-4     }
-```
-
-The example below illustrates the parameters and return values from this sample list.
-```
-1      isPalindrome:  list = 0  (  1  (  2  (  3  (  4  )  3  )  2  )  1  )  0.  len  =  9
-2         isPalindrome:  list =  1  (  2  (  3  (  4  )  3  )  2  )  1  )  0.  len  =  7
-3                  isPalindrome:  list =   2  (  3  (  4  )  3  )  2  )  1  )  0.  len  =   5
-4                   isPalindrome:  list =   3  (  4  )  3  )  2  )  1  )  0,   len=    3
-5                              isPalindrome:  list =  4  )  3  )  2  )  1  )  0.  len  =   1
-6                        returns node 3b,  true
-7                   returns node 2b,  true
-8              returns node lb,   true
-9         returns node 0b,  true
-10  returns null,  true
-```
-
-Implementing this code is nowjust a matter of filling in the details.
-```
-1     boolean  isPalindrome(LinkedListNode head)  {
-2         int length=    lengthOflist(head);
-3           Result  p=    isPalindromeRecurse(head,  length);
-4         return p.result;
-5      }
-6
-7       Result   isPalindromeRecurse(LinkedListNode  head,  int length) {
-8         if (head==   null  I   I     length<=    0)  {  II Even number of  nodes
-9                    return new  Result(head,  true);
-10       }  else   if (length==    1)  {  II Odd number of  nodes
-11            return new Result(head.next,  true);
-12       }
-13
-14       I* Recurse on sublist. *I
-15       Result  res  =  isPalindromeRecurse(head.next, length  -  2);
-16
-17       I* If child calls are  not  a palindrome,   pass  back up
-18         * a  failure. *I
-if (!  res.result  I   I      res.node==    null) {
-20            return res;
-21       }
-22
-23       I* Check if matches  corresponding node on other side.  *I
-24       res.result=    (head.data==    res.node.data);
-25
-26       I* Return  corresponding   node.  *I
-27       res.node=    res.node.next;
-28
-29       return res;
-30  }
-31
-32   int  lengthOfList(LinkedListNode n)  {
-33       int size=    0;
-34       while  (n  !=       null) {
-35            size++;
-36            n=   n.next;
-37       }
-38       return size;
-39     }
-```
-
-Some of you might be wondering why we went through all this effort to create a special Result class. Isn't there a better way? Not really-at least not in Java.
-
-However, if we were implementing this in C or C++, we could have passed in a double pointer.
-
-```
-1     bool  isPalindromeRecurse(Node  head,  int length, Node** next)   {
-2
-3      }
-```
-
-It's ugly, but it works.
-
-**2.7 		Intersection:**  Given two  (singly) linked lists, determine  if  the  two  lists intersect.  Return the intersecting node. Note that the intersection is defined based on reference, not value. That is, if the kth node of the first linked list is the exact same node (by reference) as the jth node of the second linked list, then they are intersecting. 
-
-
-
-SOLUTION
-
----
-
-
-Let's draw a picture of intersecting linked lists to get a better feel for what is going on. 
-
-Here is a picture of intersecting linked lists:
-
-![](media/02_7_1.JPG)
-
-And here is a picture of non-intersecting linked lists:
- 
-![](media/02_7_2.JPG)
-
-We should be careful here to not inadvertently draw a special case by making the linked lists the same length.
-
-Let's first ask how we would determine if two linked lists intersect.
-
-##### Determining if there's an intersection.
-
-How would we detect if two linked lists intersect? One approach  would be to use a hash table and just throw all the linked lists nodes into there. We would need to be careful to reference the linked lists by their memory location, not by their value.
-
-There's an easier way though. Observe that two intersecting linked lists will always have the same last node. Therefore, we can just traverse to the end of each linked list and compare the last nodes.
-
-How do we find where the intersection is, though?
-
-##### Finding  the intersecting node.
-
-One thought is that we could traverse backwards through each linked list. When the linked lists"split'; that's the intersection. Of course, you can't really traverse backwards through a singly linked list.
-
-If the linked lists were the same length, you could just traverse through them at the same time. When they collide, that's your intersection.
-
-
-![](media/02_7_3.JPG)
-
-When  they're not  the same length, we'd like to just"chop off"-or ignore-those excess (gray) nodes.
-
-How can we do this? Well, if we know the lengths of the two linked lists, then the  difference between those two linked  lists will tell us how much to chop off.
-
-We can get the lengths at the same time as we get the tails of the linked lists (which we used in the first step to determine if there's an intersection).
-
-##### Putting it all together.
-
-We now have a multistep process.
-
-1.  Run through each linked  list to get  the  lengths and  the  tails.
-
-2.  Compare the  tails. If they are different (by reference, not  by value), return immediately. There is no inter- section.
-3.  Set two pointers to the start  of each linked list.
-
-4.  On the  longer linked  list, advance its pointer by the difference in lengths.
-5.  Now, traverse on each linked  list until the  pointers are the  same. The implementation for this is below.
-
-```java
-1      LinkedlistNode findintersection(LinkedListNode  listl, LinkedListNode list2) {
-2           if (listl ==  null  I   I      list2 == null) return null;
-3 
-4		/* Get   tail and  sizes. */
-5		Result resultl    getTailAndSize(listl); 
-6		Result result2  = getTailAndSize(list2);
-7		
-8		/* If different tail  nodes, then  there's no  intersection. */
-9		if (resultl.tail !=  result2.tail) {
-10		return null;
-11		}
-12		
-13		/* Set pointers to the start  of  each linked  list. */
-14		LinkedlistNode shorter =  resultl.size <   result2.size?   list1 :   list2; 
-15		LinkedlistNode longer  =  resultl.size <   result2.size ?  list2 :    list1;
-16		
-17		/* Advance  the pointer for the longer linked list by  difference in lengths. */
-18		longer = getKthNode(longer,  Math.abs(resultl.size -  result2.size));
-19		
-20		/* Move both pointers until  you  have  a  collision. */
-21		while (shorter  !=  longer) { 
-22		shorter =  shorter.next; 
-23		longer = longer.next;
-24		}
-25		
-26		/* Return either  one. */
-27		return longer; 
-28    }
-29
-30   class  Result {
-31        public  LinkedlistNode tail;
-32        public int  size;
-33        public  Result(LinkedListNode tail,  int size) {
-34             this.tail   tail;
-35             this.size=  size;
-36        }
-37   }
-38
-39   Result  getTailAndSize(LinkedListNode list) {
-40        if (list == null) return null;
-41
-42        int size = 1;
-43        LinkedlistNode  current=  list;
-44        while   (current.next != null) {
-45             size++;
-46             current = current.next;
-47        }
-48       return new Result(current,   size);
-49    }
-50
-51   LinkedListNode   getKthNode(LinkedListNode  head,  int k)  {
-52        LinkedListNode   current=  head;
-53       while   (k  >   0 &&   current != null) {
-54             current =  current.next;
-55               k--;
-56         }
-57        return  current;
-58    }
-```
-
-This algorithm takes O(A  +  B) time, where A and Bare the lengths of the two linked lists. It takes O( 1)
-additional space.
-
-
-**2.8 	Loop Detection:** Given a circular linked list, implement an algorithm that returns the node at the beginning of the loop.
-
-DEFINITION
-
-Circular linked list: A (corrupt) linked list in which a node's next pointer points to an earlier node, so as to make a loop in the linked list.
-```
-EXAMPLE 
-Input:  A   - > B   - > C   - > D   - > E   - > C [the same C as earlier] 
-Output: C
-```
-
-SOLUTION
- 
----
- 
-This is a modification of a classic interview problem: detect if a linked list has a loop. Let's apply the Pattern Matching approach.
-
-##### Part  1 : Detect If Linked List Has A Loop
-
-An easy way to detect  if a linked list has a loop is through  the FastRunner / SlowRunner  approach. FastRunner moves two steps at a time, while SlowRunner moves one step. Much like two cars racing around a track at different steps, they must eventually meet.
-
-An astute reader  may  wonder   if FastRunner might  "hop  over"  SlowRunner completely,   without ever  colliding. That's  not  possible.  Suppose that  FastRunner did hop  over  SlowRunner, such  that SlowRunner is at spot  i and  FastRunner is at spot  i +   1. In the previous step, SlowRunner would be at spot i -   1 and FastRunner would at spot  ( ( i +  1)  -   2),  or spot i -   1. That is, they would have collided.
-
-##### Part 2: When Do They Collide?
-
-Let's assume  that the linked list has a "non-looped"part of size k.
-
-If we apply our algorithm  from part  l, when  will FastRunner and SlowRunner collide?
-
-We know that for every p steps that SlowRunner takes, FastRunner has taken 2p steps.Therefore, when SlowRunner enters the looped  portion  after k steps, FastRunner has taken 2k steps total and must be 2k   -   k steps, or k steps, into the looped portion. Since k might be much larger than the loop length, we should  actually write this as mod (k,  LOOP_SIZE) steps, which we will denote as K.
-
-At each subsequent step, FastRunner and  SlowRunner get either one step  farther  away or one step closer, depending on your perspective. That is, because we are in a circle, when A moves q steps away from B, it is also moving q steps  closer to B.
-
-So now we know the following facts:
-
-1.  SlowRunner is O steps  into the loop.
-2.  FastRunner is K steps  into the loop.
-3.  SlowRunner is K steps behind FastRunner.
-4.  FastRunner is LOOP_SIZE   -   K steps behind SlowRunner.
-5.  FastRunner catches  up to SlowRunner at a rate of 1 step per unit of time.
-
-So, when  do they  meet?  Well, if FastRunner is LOOP_SIZE           K  steps  behind  SlowRunner, and FastRunner catches  up at a rate of 1 step per unit of time, then they meet  after L OOP_SIZE   -   K steps. At this point, they will be K steps before the head of the loop. Let's call this point  Collisionspot.
-
-
-![](media/02_8_1.JPG)
-
-
-##### Part 3: How Do You Find The Start of the Loop?
-
-We now know that CollisionSpot is K nodes before the start of the loop. Because K  =  mod (k,  LOOP_ SIZE) (or, in other  words, k =  K   +  M    *  LOOP_SIZE, for any integer M), it is also correct to say that it is k nodes from the loop start. For example, if node N is 2 nodes into a 5 node loop, it is also correct to say that it is 7, 12, or even 397 nodes into the loop.
-
-Therefore, both  CollisionSpot and LinkedlistHead are k nodes from the start of the loop.
-
-Now, if we keep one pointer at CollisionSpot and move the other one to LinkedListHead, they will each be k nodes from LoopStart. Moving the two pointers at the same speed will cause them to collide again-this time after k steps, at which point they will both be at LoopStart. All we have to do is return this node.
-
-##### Part 4: Putting It All Together
-
-To summarize, we move  FastPointer twice as fast as SlowPointer. When SlowPointer enters the  loop, after k nodes,  FastPointer is k nodes into the loop. This means that  FastPointer and SlowPointer are LOOP_SIZE  -  k nodes away from each other.
-
-Next, if FastPointer moves two nodes for each node that SlowPointer moves, they move one node closer to each other on each turn. Therefore, they will meet after LOOP_SIZE  -   k turns. Both will be k nodes from the front of the loop.
-
-The head of the linked list is also k nodes from the front of the loop. So, if we keep one pointer where it is, and move the other pointer to the head of the linked list, then they will meet at the front of the loop.
-
-Our algorithm is derived directly from parts 1, 2 and 3.
-
-1.   Create two pointers, FastPointer and SlowPointer.
-2.  Move FastPointer at a rate of 2 steps and SlowPointer at a rate of 1 step.
-3.  When they collide, move SlowPointer to LinkedListHead. Keep FastPointer where it is.
-4.  Move SlowPointer and FastPointer at a rate of one step. Return the new collision point. 
-
-The code below implements this algorithm.
-
-```java
-1     LinkedListNode FindBeginning(LinkedlistNode  head)  {
-2          LinkedListNode slow      head;
-3          LinkedlistNode fast  = head;
-4
-5        /*   Find  meeting   point. This  will be  LOOP_SIZE  -  k steps into the   linked list. */
-6          while   (fast!=  null &&   fast.next!=  null) {
-7               slow  =  slow.next;
-8               fast =   fast.next.next;
-9               if (slow   ==  fast) {//Collision
-10                  break;
-11              }
-12        }
-13
-14      /*   Error check  -  no meeting  point,  and  therefore no  loop*/
-15        if (fast == null  I   I      fast.next == null)  {
-16             return null;
-17        }
-18
-19     /*   Move  slow  to Head.  Keep fast at Meeting  Point. Each are   k steps from  the
-20       *    Loop Start. If they   move at the   same pace,   they  must  meet  at Loop Start . */
-21        slow  =  head;
-22        while   (slow!=  fast) {
-23             slow      slow.next;
-24             fast= fast.next;
-25         }
-26
-27      /* Both  now point to the   start of  the   loop. */
-28        return fast;
-29     }
-```
-
-
-
-
 ## 3 Solutions to Stacks and Queues
-
-**3.1         Three in One:** Describe how you could use a single array to implement three stacks.
-
-
-SOLUTION
-
----
- 
-Like many problems, this one somewhat  depends  on how well we'd like to support these stacks. If we're okay with simply allocating a fixed amount of space for each stack, we can do that. This may mean though that one stack runs out of space, while the others are nearly empty.
-
-Alternatively, we can be flexible in our space allocation, but this significantly increases the complexity of the problem.
-
-Approach 1: Fixed  Division
-
-We can divide the array in three equal parts and allow the individual stack to grow in that limited space. Note: We will use the notation "[" to mean inclusive of an end point and "(" to mean exclusive of an end point.
-
-- For stack 1, we will use [0,  n/3X).
-- For stack 2, we will use [ n/3,  2n/3).
-- For stack 3, we will use [ 2n/3 ,  n) .
-
-The code for this solution is below.
-
-```
-1	class  FixedMultiStack {	
-2	private int numberOfStacks	3;
-3	private int stackCapacity;	
-4	private int[]  values;	
-5	private  int[] sizes;	
-6		
-7         public  FixedMultiStack(int stackSize) {
-8               stackCapacity  = stackSize;
-9               values  =  new int[stackSize *  numberOfStacks];
-10             sizes  =  new int[numberOfStacks];
-11        }
-12
-13       /* Push  value onto  stack.  */
-14       public void  pus h(int stackNum,  int value) throws   FullStackException  {
-15             /* Check that we have  space  for  the next  element */
-16             if (isFull(stackNum)) {
-17                  throw  new FullStackException();
-18
-19
-20			/* Increment stack pointer and then update top value.*/
-21			sizes[stackNum]++;
-22			values[indexOfTop(stackNum)]   =  value;
-23       }
-24
-
-}
-
- 
-25		/*  Pop item  from top  stack.  */
-26		public   int  pop(int stackNum) {
-27		if (isEmpty(stackNum))  {
-28		throw new EmptyStackException();
-29		}
-30		
-31		int toplndex  =  indexOfTop(stackNum);
-32		int value  =  values[toplndex];  // Get top
-33		values[topindex]  =  0;  // Clear 
-34		sizes[stackNum]--;  // Shrink
-35		return  value;
-36		}
-37
-38		/*  Return  top  element.   */
-39		public   int peek(int stackNum) {
-40		if (isEmpty(stackNum))  {
-41		throw new EmptyStackException();
-42		}
-43		return values[indexOfTop(stackNum)];
-44		}
-45		
-46		/*  Return  if stack  is empty.  */
-47		public  boolean  isEmpty(int stackNum) {
-48		return sizes[stackNum]   ==  0;
-49		}
-50		
-51		/*  Return  if stack  is full. */
-52		public   boolean  isFull(int stackNum) {
-53		return  sizes[stackNum] ==  stackCapacity;
-54		}
-55
-56		/*  Returns  index  of  the  top  of  the  stack.  */
-57		private  int  indexOfTop(int stackNum) { 
-58			int offset =  stackNum * stackCapacity; 
-59			int size =  sizes[stackNum];
-60			return offset+  size -  1;
-61		} 
-62     }
-```
-
-If we had additional information about the expected usages of the stacks, then we could modify this algo­ rithm accordingly.  For example,  if we expected Stack  1  to have many more elements than Stack 2, we could allocate more space to Stack 1  and lessspace to Stack 2.
-
-##### Approach 2: Flexible Divisions
-
-A second approach is to allow the stack blocks to be flexible in size. When one stack exceeds its initial capacity, we grow the allowable capacity and shift elements as necessary.
-
-We will also design our array to be circular, such that the final stack may start at the end of the array and wrap around to the beginning.
-
-Please note that the code for this solution is far more complex than would be appropriate for an interview. You could be responsible for pseudocode, or perhaps the code of individual components, but the entire implementation would be far too much work.
-
-```java
-1    public class  MultiStack {
-2         /*  Stackinfo is  a  simple  class that holds  a  set of  data  about  each  stack. It
-3               * does not  hold  the  actual items  in  the  stack. We  could  have done this with
-4           * just a  bunch of  individual variables,  but  that's messy and doesn't gain  us
-5               * much.  */
-6         private class  Stackinfo {
-7              public int start,  size,  capacity;
-8              public Stackinfo(int start,  int capacity) {
-9                   this.start =start;
-10                 this.capacity=    capacity;
-11            }
-12
-13            /*  Check if an index  on the  full array   is within   the  stack boundaries. The
-* stack can  wrap around  to  the  start of  the  array. */
-15            public boolean  isWithinStackCapacity(int index)   {
-16                 /*  If outside of  bounds of  array, return false.  */
-17                 if (index< 0  I   I      index  >=values.length) {
-18                      return false; 
-19						}
-20						
-21						/*  If index  wraps around,  adjust it.  */
-22						int  contiguousindex =index< start?  index  + values.length    index;
-23						int end=  start +  capacity;
-24						return start<=  contiguousindex  &&   contiguousindex< end; 
-25              }
-26
-27            public int  lastCapacityindex() {
-28                 return adjustindex(start + capacity  -  1);
-29              }
-30
-31            public int  lastElementindex() {
-32                 return adjustindex(start + size -  1);
-33                }
-34
-35            public boolean  isFull() {  return size==    capacity;  }
-36            public boolean  isEmpty()   {  return size==    0;  }
-37          }
-38
-39       private  Stackinfo[J info;
-40       private int[]  values;
-41
-42       public MultiStack(int numberOfStacks,  int defaultSize) {
-43            /*  Create  metadata  for  all the  stacks.  */
-44            info   =   new Stackinfo[numberOfStacks];
-45            for  (int i=    0;  i< numberOfStacks; i++)  {
-46                 info[i]  =   new Stackinfo(defaultSize * i,  defaultSize);
-47                 }
-48            values   =  new int[numberOfStacks * defaultSize];
-49       }
-50
-51       /*  Push value  onto  stack num, shifting/expanding stacks as  necessary. Throws
-52         * exception if  all  stacks are  full. */
-53       public void  push(int stackNum, int value) throws  FullStackException {
-54            if (allStacksAreFull()) {
-55                 throw new FullStackException();
-56              }
-57
-58            /* If this stack  is full, expand it. */
-59            Stackinfo stack=  info[stackNum];
-60            if (stack.isFull()) {
-61                 expand(stackNum);
-62               }
-63
-64 /* Find  the  index  of  the  top  element  in  the  array +  1,  and increment  the
-65              * stack   pointer */
-66            stack.size++;
-67            values[stack.lastElementindex()]     value;
-68         }
-69
-70       I*  Remove  value  from stack. *I
-71       public   int pop(int stackNum) throws  Exception  {
-72            Stackinfo stack=  info[stackNum];
-73            if (stack.isEmpty())  {
-74                 throw new EmptyStackException();
-75               }
-76
-77            /*  Remove  last  element. */
-78            int value=  values[stack.lastElementindex()];
-79            values[stack.lastElementindex()] =  e; // Clear  item
-80            stack.size--; II Shrink  size
-81            return value;
-82       }
-83
-84       /*  Get top  element  of  stack.*/
-85       public   int peek(int stackNum) {
-86            Stackinfo stack  =  info[stackNum];
-87            return values[stack.lastElementindex()];
-88         }
-89       /*  Shift items  in  stack   over  by one element. If we  have available capacity, then
-90         * we'll end up shrinking the  stack   by one element. If we  don't have available
-91         * capacity,  then  we'll need to  shift the  next  stack   over  too. */
-private void  shift(int stackNum) {
-93            System.out.println("/// Shifting"  +  stackNum);
-94            Stackinfo stack  =  info[stackNum];
-95
-96            I*  If this stack is at its  full capacity, then  you need to  move  the  next
-97              * stack   over  by one element. This  stack   can now  claim  the  freed   index. */
-98            if (stack.size >=  stack.capacity) {
-99                 int nextStack=  (stackNum +  1)  %  info.length;
-100               shift(nextStack);
-101               stack.capacity++;  // claim  index  that next  stack   lost
-102             }
-103
-104          /*  Shift all elements  in  stack over  by one.  */
-105          int index=  stack.lastCapacityindex();
-106          while  (stack.isWithinStackCapacity(index)) {
-107               values[index]  =  values[previousindex(index)];
-108               index=  previousindex(index);
-109             }
-110
-111          /* Adjust  stack data. */
-112          values[stack.start] =  0;  II  Clear  item
-113          stack.start =  nextindex(stack.start);  II move start
-114          stack.capacity--;  II  Shrink  capacity
-115       }
-116
-117     /* Expand stack  by shifting over  other stacks */
-118     private void  expand(int stackNum) {
-119          shift((stackNum + 1)  %  info.length);
-120          info[stackNum].capacity++;
-121     }
-122
-123     /* Returns  the  number of  items  actually present in  stack.  */
-124     public  int numberOfElements()  {
-125          int size =  0;
-126          for  (Stackinfo sd  :   info) {
-127               size+= sd.size;
-128          }
-129          return size;
-130      }
-131
-132     /* Returns  true   is all the  stacks are  full. */
-133     public  boolean  allStacksAreFull() {
-134          return numberOfElements()  ==  values.length;
-135      }
-136
-137     /* Adjust  index  to  be within the  range  of  0 -> length -  1.  */
-138     private int  adjustindex(int index) {
-139          I* Java's mod  operator can  return neg values. For example,  (-11% 5)  will
-140            * return -1,  not  4. We  actually want the  value  to  be 4 (since we're  wrapping
-141            *  around  the  index). *I
-142          int max =  values.length;
-143          return ((index% max)+  max)% max;
-144      }
-145
-146     /*  Get index  after this index,   adjusted for  wrap around.*/
-147     private int nextindex(int index) {
-148          return  adjustindex(index     1);
-149     }
-150
-151     /* Get  index  before  this index,   adjusted for  wrap around.  */
-152     private int  previouslndex(int index) {
-153          return  adjustindex(index -  1);
-154       }
-155}
-```
-
-In problems like this, it's important to focus on writing clean, maintainable code. You should use additional classes, as we did with Stackinfo, and pull chunks of code into separate methods. Of course, this advice applies to the "real world" as well.
-
-**3.2 	Stack Min:** How would you design a stack which, in addition to push and pop, has a function min which returns the minimum element? Push, pop and min should all operate in O(1) time. 
-
-
-SOLUTION
-
----
-
-The thing with minimums is that they don't change very often. They only change when a smaller element is added.
-
-One solution is to have just a single int value, minValue, that's a member  of the Stack class. When minValue is popped from the stack, we search through the stack to find the new minimum. Unfortunately, this would break the constraint that push and pop operate in O(1) time.
-
-To further understand this question, let's walk through it with a short example:
-
-```
-push(5);  // stack is {5},   min is 5 
-push(6);   // stack is {6,  5},  min is 5 
-push(3);  //  stack is {3,  6,  5},   min is 3 
-push(7);  //  stack is {7,  3,  6,  5},   min is 3
-pop();  // pops  7.  stack is {3,   6,   5},   min is 3 
-pop();  // pops  3. stack   is {6,   5}.   min is 5.
-
-```
-
-Observe how once the stack goes back to a prior state ({ 6, 5}), the minimum also goes back to its prior state (5). This leads us to our second solution.
-
-If we kept track of the minimum at each state, we would be able to easily know the minimum. We can do this by having each node record what the minimum beneath itself is. Then, to find the min, you just look at what the top element thinks is the min.
-
-When you push an element onto the stack, the element is given the current minimum. It sets its "local min"to be the min.
-
-```java
-1     public class  StackWithMin extends Stack<NodeWithMin> {
-2          public void  push(int   value)  {
-3               int newMin  =  Math.min(value,  min());
-4               super.push(new NodeWithMin(value,   newMin));
-5          }
-6
-7          public int min()   {
-8               if (this.isEmpty())  {
-9                    return Integer.MAX_VALUE;  // Error  value
-10             } else  {
-11                  return peek().min;
-12              }
-13        }
-14   }
-15
-16   class NodeWithMin  {
-17        public int value;
-18        public int min;
-19        public NodeWithMin(int  v,  int min){
-20             value   =  v;
-21             this.min =  min;
-22         }
-23    }
-```
-
-There's just one issue with this: if we have a large stack, we waste a lot of space by keeping track of the min for every single element. Can we do better?
-
-We can (maybe) do a bit better than this by using an additional stack which keeps  track of the mins.
-
-```java
-1      public class  StackWithMiN² extends  Stack<Integer>  {
-2            Stack<Integer>  s2;
-3            public  stackWithMiN²() {
-4             s2 =  new Stack<Integer>();
-5          }
-6
-7            public  void   push(int value){
-8                  if (value  <=   min()) {
-9                        s2.push(value);
-10              }
-11                super.push(value);
-12          }
-13
-14          public Integer pop() {
-15                int  value =  super.pop();
-16                if (value  ==  min())  {
-17                      s2.pop();
-18             }
-19                return  value;
-20        }
-21
-22          public int min() {
-23                if (s2.isEmpty()) {
-24                      return  Integer.MAX_VALUE;
-25                } else {
-26                      return s2.peek();
-27                }
-28      }
-29     }
-```
-
-Why might  this be more space efficient? Suppose we had a very large stack and the  first element inserted happened to be the minimum.  In the first solution,  we would be keeping n integers, where n is the size of the stack. In the second solution though, we store just a few pieces of data: a second stack with one element and the members within this stack.
-
-
-**3.3      Stack of Plates:** Imagine  a  (literal)  stack  of  plates.  If  the  stack  gets  too  high,  it might  topple.
-Therefore, in real life, we would  likely start  a new  stack  when  the  previous  stack  exceeds some threshold. Implement a data  structure SetOfStacks that  mimics  this. SetOfStacks should  be composed of several stacks and should create a new stack once the previous one  exceeds capacity. SetOfStacks.push() and  SetOfStacks. pop() should  behave identically  to a single  stack (that is, pop()  should  return the same values as it would if there  were just  a single stack).
-
-FOLLOW UP
-
-Implement a function  popAt(int  index) which  performs  a pop  operation on a specific  sub­ stack.
-
-SOLUTION
-
----
-
-In this problem, we've been told what our data structure should look like:
-
-```
-1      class  SetOfStacks {
-2            Arraylist<Stack>  stacks     new Arraylist<Stack>();
-3            public  void    push(int  v)   {  ... }
-4          public int  pop() {...  }
-5      }
-```
-
-We know that push () should behave identically to a single stack, which means that we need push () to call push () on the last stack in the array of stacks. We have to be a bit careful here though: if the last stack is at capacity, we need to create a new stack. Our code should look something like this:
-
-```
-1     void  push(int v)  {
-2          Stack  last= getlastStack();
-3         if (last!= null &&    !last.isFull()) {//add  to last stack
-4               last.push(v);
-5          } else {//must  create new stack
-6               Stack  stack=  new Stack(capacity);
-7               stack.push(v);
-8               stacks.add(stack);
-9           }
-10    }
-```
-
-What should pop() do? It should behave similarly to push () in that it should operate on the last stack. If the last stack is empty (after popping), then we should remove the stack from the list of stacks.
-
-```
-1     int pop() {
-2          Stack  last= getlastStack();
-3         if (last == null) throw  new EmptyStackException();
-4          int v=  last.pop();
-5         if (last.size== 0)  stacks.remove(stacks.size()  -  1);
-6          return v;
-7      }
-```
-
-##### Follow Up: Implement popAt(int index)
-
-This is a bit trickier to implement, but we can imagine a "rollover" system. If we pop an element from stack
-1, we need to remove the bottom of stack 2 and push it onto stack 1. We then need to rollover from stack 3 to stack 2, stack 4 to stack 3, etc.
-
-You could make an argument  that, rather than "rolling over;' we should be okay with some stacks not being at full capacity. This would improve the time complexity (by a fair amount, with a large number  of elements), but it might get us into tricky situations later on if someone assumes that all stacks (other than the last) operate at full capacity. There's no "right answer" here; you should discuss this trade-off with your interviewer.
-
-```java
-1     public  class  SetOfStacks {
-2          ArrayList<Stack> stacks  = new ArrayList<Stack>();
-3         public int capacity;
-4          public  SetOfStacks(int capacity)  {
-5               this.capacity=  capacity;
-6           }
-7
-8          public Stack  getLastStack() {
-9               if (stacks.size()== 0)  return null;
-10             return stacks.get(stacks.size()  -  1);
-11          }
-12
-13        public void  push(int v)  {/*see  earlier code    */}
-14       public int pop()   {/*see  earlier code    */}
-15        public boolean   isEmpty() {
-16             Stack  last =  getlastStack();
-17             return last==  null I   I      last.isEmpty();
-18       }
-19
-20       public int  popAt(int index)   {
-21            return leftShift(index, true);
-22         }
-23
-24       public   int leftShift(int index,   boolean  removeTop) {
-25            Stack  stack   =  stacks.get(index);
-26            int removed_item;
-27            if (removeTop) removed_item= stack.pop();
-28            else removed_item = stack.removeBottom();
-29            if (stack.isEmpty()) {
-30                 stacks.remove(index);
-31            }  else if (stacks.size() >  index  +  1)  {
-32                 int v=  leftShift(index + 1,  false);
-33                 stack.push(v);
-34            }
-35            return removed_item;
-36        }
-37  }
-38
-39  public class Stack  {
-40       private int  capacity;
-41       public Node top,   bottom;
-42       public int size =  0;
-43
-44       public Stack(int capacity) {this.capacity=  capacity;  }
-45       public boolean  isFull() {return  capacity==  size;  }
-46
-47       public void  join(Node  above,  Node below)  {
-48            if (below != null) below.above=  above;
-49            if (above  != null) above.below  =   below;
-50         }
-51
-52       public boolean  push(int v)  {
-53            if (size >=  capacity) return false;
-54            size++;
-55            Node n =  new Node(v);
-56            if (size== 1)  bottom = n;
-57            join(n,  top);
-58            top=  n;
-59            return true;
-60        }
-61
-62       public int pop()  {
-63            Node t =  top;
-64            top= top.below;
-65            size--;
-66            return t.value;
-67       }
-68
-69       public boolean  isEmpty()   {
-70            return size ==    0;
-71        }
-72
-73       public int removeBottom() {
-74            Node b   =  bottom;
-75             bottom  =  bottom.above;
-76            if (bottom  != null)  bottom.below = null;
-77             size- -;
-78             return b.value;
-79         }
-80    }
-```
-
-This problem is not conceptually that tough, but it requires a lot of code to implement it fully. Your inter­viewer would not ask you to implement the entire code.
-
-A good strategy on problems like this is to separate code into other methods, like a leftShift method that popAt  can call. This will make your code cleaner and give you the opportunity to lay down the skel­ eton of the code before dealing with some of the details.
-
-
-**3.4       Queue via Stacks:** Implement a MyQueue class which implements a queue using two stacks.
-
-SOLUTION
-
----
-
-Since the major difference between a queue and a stack is the order (first-in first-out vs. last-in first-out), we know that we need to modify peek() and pop() to go in reverse order. We can use our second stack to reverse the order of the elements (by popping sl and pushing the elements on to s2). In such an imple­ mentation, on each peek() and pop() operation, we would pop everything from sl onto s2, perform the peek/pop operation, and then push everything back.
-
-This will work, but if two pop/peeks are performed back-to-back, we're needlessly moving elements. We can implement a"lazy" approach where we let the elements sit in s2 until we absolutely must reverse the elements.
-
-In this approach,  stackNewest has the  newest  elements  on top  and stackOldest has the  oldest elements on top. When we dequeue  an element, we want to remove the oldest element first, and so we dequeue  from stackOldest. If stackOldest is empty, then  we want to transfer all elements  from stackNewest into this stack in reverse order. To insert an element, we push onto stackNewest, since it has the newest elements on top.
-
-The code below implements this algorithm.
-
-```java
-1     public class MyQueue<T>   {
-2          Stack<T> stackNewest, stackOldest;
-3
-4          public MyQueue() {
-5               stackNewest     new Stack<T>();
-6               stackOldest = new Stack<T>();
-7             }
-8
-9          public int size()  {
-19             return stackNewest.size() + stackOldest.size();
-11         }
-12
-13        public void  add(T  value)  {
-14            /*  Push  onto  stackNewest,  which  always  has  the   newest  elements on  top   */
-15             stackNewest.push(value);
-16        }
-
-18       /*  Move elements  from  stackNewest into  stackOldest.  This  is usually done so  that
-19          *      we can  do  operations on stackOldest. */
-20			private  void shiftStacks()  {
-21				if  (stackOldest.isEmpty()) {
-22					while (!stackNewest.isEmpty())  {
-23						stackOldest.push(stackNewest.pop());
-24					}
-25				}
-26			}
-27			
-28			public T  peek() {
-29				shiftStacks();  // Ensure stackOldest  has the  current  elements 
-30				return  stackOldest.peek(); // retrieve the oldest item.
-31			}
-32			
-33			public T  remove()  {
-34				shiftStacks(); // Ensure stackOldest  has   the  current  elements 
-35				return  stackOldest.pop(); // pop  the oldest item.
-36			}
-37    }
-```
-
-During  your actual interview, you may find that you forget the  exact API calls. Don't stress too  much if that happens to  you.  Most  interviewers are  okay  with  your  asking for them to  refresh your  memory on  little details. They're much more concerned with your big picture understanding.
-
-
-**3.5 	Sort  Stack:** Write a program to sort a stack  such that the  smallest items are on the  top. You can use an additional temporary stack,  but  you may  not  copy  the  elements into  any  other data structure
-(such as an array). The stack  supports the  following operations: push, pop, peek, and isEmpty. 
-
-
-
-SOLUTION
- 
----
-
-One approach is to implement a rudimentary sorting algorithm. We search through the  entire stack  to find the  minimum element and then push that onto a new  stack. Then,  we find  the  new  minimum element and push that. This will actually require a total  of three stacks: s1 is the  original stack, s2 is the  final sorted stack,  and s3 acts  as a buffer  during our searching of sl. To search sl for each minimum, we need to pop elements from sl and push them onto the buffer, s3.
-
-Unfortunately, this requires two  additional stacks, and we can only use one. Can we do better? Yes.
-
-Rather  than searching for the  minimum repeatedly, we can sort  sl by inserting each element from sl in order into s2. How would this work?
-
-Imagine we have the  following stacks,  where s2 is "sorted" and sl is not:
-
-| s1 | s2 |
-| -- | -- |
-| 5	 | 8  |
-| 10 | 3  |
-| 7	 | 1  |
-
-When we pop 5 from s1, we need to find the  right place in s2 to insert this number. In this case, the  correct place is on s2 just above 3. How do we get  it there? We can  do this by popping 5 from sl and holding it in a temporary variable.Then, we move 12 and 8 over to s1 (by popping them from s2 and pushing them onto sl) and then push 5 onto s2.
-
-![](media/03_5_1.JPG)
-
-Note that 8 and 12 are still in sl-and that's okay!We just repeat the same steps for those two numbers as we did for 5, each time popping offthe top of sl and putting it into the "right place" on s2. (Of course, since 8 and 12 were moved from s2 to s1 precisely because they were larger than 5, the "right place" for these elements will be right on top of 5. We won't need to muck around with s2's other elements, and the inside of the below while loop will not be run when tmp is 8 or 12.)
-
-```java
-1     void  sort(Stack<Integer> s) {
-2          Stack<Integer> r  =  new Stack<Integer>();
-3         while(!s.isEmpty()) {
-4               /*  Insert each  element   in s  in  sorted order into r.  */
-5               int tmp =  s.pop();
-6               while(!r.isEmpty() &&   r.peek() > tmp)  {
-7                    s.push(r.pop());
-8                 }
-9               r.push(tmp);
-10         }
-11
-12       /*   Copy the   elements   from r back  into s. */
-13       while   (!r.isEmpty()) {
-14             s.push(r.pop());
-15           }
-16   }
-```
-
-This algorithm is O ( N²) time and O ( N) space.
-
-If we were allowed to use unlimited stacks, we could implement a modified quicksort or mergesort.
-
-With the mergesort  solution, we would create two extra stacks and divide the stack into two parts. We would recursively sort each stack, and then merge them back together  in sorted order into the original stack. Note that this would require the creation of two additional stacks per level of recursion.
-
-With the quicksort solution, we would create two additional stacks and divide the stack into the two stacks based on a pivot element. The two stacks would be recursively sorted, and then merged  back together into the original stack. Like the earlier solution, this one involves creating two additional stacks per level of recursion.
-
-
-**3.6 		Animal Shelter:** An animal  shelter, which holds only dogs andcats, operates on a strictly"first in, first out"basis. People must adopt either the "oldest" (based on arrival time) ofall animals at the  shelter, or they  can  select whether they  would prefer  a dog or a cat  (and  will receive the  oldest animal  of that type). They cannot select which  specific animal  they would  like. Create the  data structures to maintain this system and implement operations such as enqueue, dequeueAny, dequeueDog, and  dequeueCat.You may use the built-in Linkedlist data structure.
-
-
-SOLUTION
-
----
-
-We could  explore a variety  of solutions to this problem. For instance, we  could maintain a single  queue. This would make dequeueAny easy, but dequeueDog and dequeueCat would require iteration through the  queue to find the  first dog or cat. This would increase the  complexity of the  solution and decrease the efficiency.
-
-An alternative approach that is simple,  clean  and efficient is to simply  use  separate queues for dogs and cats, and to place them within a wrapper class calledAnimalQueue. We then store some sort of timestamp to mark when each animal was enqueued. When  we call dequeueAny, we peek at the  heads of both the dog and cat queue and return the oldest.
-
-```java
-1      abstract class Animal  {
-2           private int  order;
-3           protected String name;
-4           public Animal(String n) {name  =  n;   }
-5           public void setOrder(int  ord) {  order     ord;  }
-6           public int  getOrder() { return order;  }
-7
-8           /* Compare   orders of animals to  return the older item. */
-9           public  boolean isOlderThan(Animal a)  {
-10               return this.order  <  a.getOrder();
-11        }
-12   }
-13
-14    class AnimalQueue  {
-15         Linkedlist<Dog>  dogs     new  Linkedlist<Dog>();
-16         Linkedlist<Cat> cats     new  Linkedlist<Cat>();
-17         private int order =  0;   // acts  as  timestamp
-18
-19         public  void  enqueue(Animal a)  {
-20               /*  Order is  used as a  sort  of timestamp, so   that we  can   compare the  insertion
-21                 *  order of a  dog  to a  cat. */
-22               a.setOrder(order);
-23               order++;
-24
-25               if  (a instanceof Dog)  dogs.addlast((Dog) a);
-26               else if (a instanceof Cat) cats.addlast((Cat)a);
-27        }
-28
-29         public  Animal dequeueAny() {
-30               /* Look  at tops of dog  and   cat  queues, and   pop  the  queue with the  oldest
-31                 *  value.  */
-32               if  (dogs.size()     0) {
-33                     return  dequeueCats();
-34               }  else if (cats.size()==    0) {
-35                     return dequeueDogs();
-36               }
-37
-38                Dog dog=   dogs.peek();
-39                Cat   cat=  cats.peek();
-40                if (dog.isOlderThan(cat))  {
-41                       return  dequeueDogs();
-42                } else {
-43                       return  dequeueCats();
-44                }
-45          }
-46
-47          public Dog dequeueDogs()  {
-48                return dogs.poll();
-49         }
-50
-51          public  Cat   dequeueCats()  {
-52                return cats.poll();
-53        }
-54   }
-55
-56    public class  Dog  extends  Animal   {
-57          public  Dog(String n)   {  super(n); }
-58   }
-59
-60    public class  Cat   extends  Animal   {
-61          public Cat(String n) {  super(n);  }
-62    }
-```
-
-It is important that Dog and Cat both inherit from an Animal class since dequeueAny() needs to be able to support returning both Dog and Cat objects.
-
-If we wanted, order could be a true timestamp with the actual  date and time. The advantage of this is that we wouldn't have to set and maintain the numerical order. If we somehow wound up with two animals with
-the same timestamp, then  (by definition)  we don't have an older animal and we could  return either one.
 
 
 ## 4 Solutions to Trees and  Graphs
-
-**4.1 	Route Between Nodes:** Given a directed graph, design an algorithm to find out whether there is a route between two nodes. 
-
-
-
-SOLUTION
-
----
- 
-This problem can be solved by just simple graph traversal, such as depth-first search or breadth-first search. We start with one of the two nodes and, during traversal, check if the other node is found. We should mark any  node found in the course of the algorithm as  "already visited" to avoid cycles and repetition of the nodes.
-
-The code below provides an iterative implementation of breadth-first search.
-
-```java
-1      enum  State {  Unvisited, Visited,  Visiting;  }
-2
-3      boolean  search(Graph g,  Node   start, Node   end) {
-4         if (start ==  end) return true;
-5
-6            II operates  as Queue
-7            LinkedList<Node>  q   =  new   Linkedlist<Node>();
-8
-9            for  (Node u   :  g.getNodes())  {
-10                u.state =  State.Unvisited;
-11        }
-12          start.state =  State.Visiting;
-13          q.add(start);
-14          Node   u;
-15          while (!q.isEmpty())  {
-16                u  =  q.removeFirst();   II i.e., dequeue()
-17                if (u !=   null) {
-18                      for  (Node v   :   u.getAdjacent()) {
-19                            if (v.state ==  State.Unvisited) {
-20                                   if (v ==  end)  {
-21                                         return true;
-22                                   }  else {
-23                                         v.state =  State.Visiting;
-24                                         q.add(v);
-25                              }
-26                         }
-27                        }
-28                      u.state     State.Visited;
-29            }
-30        }
-31       return false;
-32    }
-```
-
-It may be worth discussing with your interviewer the tradeoffs between breadth-first search and depth-first search for this and other problems. For example, depth-first search is a bit simpler to implement since it can be done with simple recursion. Breadth-first search can also be useful to find the shortest path, whereas depth-first search may traverse one adjacent node very deeply before ever going onto the immediate neighbors.
-
-
-**4.2 	Minimal  Tree:**  Given a sorted (increasing order) array with unique  integer elements, write an algorithm to create a binary search tree with minimal height.
-
-SOLUTION
-
----
-
-To create a tree of minimal height, we need to match the number of nodes in the left subtree to the number of nodes in the right subtree as much as possible. This means that we want the root to be the middle of the array, since this would  mean that half the elements  would  be less than the root and half would  be greater than it.
-
-We proceed with constructing our tree in a similar fashion. The middle of each subsection of the array becomes the root of the node. The left half of the array will become our left subtree, and the right half of the array will become the right subtree.
-
-One way to implement this is to use a simple root.insertNode(int  v) method which inserts the value v through a recursive process that starts with the root node. This will indeed construct a tree with minimal height but it will not do so very efficiently.  Each insertion  will require traversing the tree, giving a total cost ofO(N  log  N) to the tree.
-
-Alternatively, we can cut out the extra traversals by recursively using the createMinimalBST method. This method is passed just a subsection of the array and returns the root of a minimal tree for that array.
-
-The algorithm is as follows:
-
-1.  Insert into the tree the middle  element of the array.
-2.  Insert (into the left subtree) the left subarray elements.
-3.  Insert (into the right subtree) the right subarray elements.
-4.  Recurse.
-
-The code below implements this algorithm.
-
-```java
-1     TreeNode   createMinimalBST(int array[])  {
-2          return createMinimalBST(array,  0, array.length -  1);
-3        }
-4
-5     TreeNode   createMinimalBST(int arr[],  int  start,  int  end) {
-6         if (end< start)  {
-7               return null;
-8           }
-9          int  mid= (start+ end)/  2;
-10     TreeNode n = new   TreeNode(arr[mid]);
-11       n.left =  createMinimalBST(arr,  start,  mid -  1);
-12       n.right  =  createMinimalBST(arr,  mid+  1, end);
-13       return n;
-14   }
-```
-
-Although this code does not seem especially complex, it can be very easy to make little off-by-one errors. Be sure to test these parts of the code very thoroughly.
-
-
-**4.3 	List of Depths:** Given a binary tree, design an algorithm which creates a linked list of all the nodes at each depth (e.g., if you have a tree with depth D, you'll have D linked lists).
-
-
-SOLUTION
-
----
-
-Though we might think at first glance that this problem requires a level-by-level traversal, this isn't actually necessary. We can traverse the graph any way that we'd like, provided we know which level we're on as we do so.
-
-We can implement a simple modification of the pre-order traversal algorithm, where we pass in level +
-1 to the next recursive call. The code below provides an implementation using depth-first search.
-
-```java
-1      void  createLevelLinkedList(TreeNode root,   ArrayList<LinkedList<TreeNode>>  lists,
-2                                                        int level) {
-3            if (root==    null) return; II base  case
-4
-5           LinkedList<TreeNode> list = null;
-6         if (lists.size()==    level) {  II Level  not  contained in  list
-7              list =  new LinkedList<TreeNode>();
-8              /* Levels  are  always traversed in  order. So,  if this is the  first time  we've
-9                *  visited level i,  we  must have seen  levels 0 through  i -  1.  We   can
-10              *  therefore safely add the  level at the  end.  */
-11            lists.add(list);
-12       }  else {
-13            list = lists.get(level); 
-14		}
-15		list.add(root);
-16		createLevelLinkedList(root.left,  lists,  level+ 1);
-17		createlevelLinkedList(root.right,  lists,  level+ 1); 
-18   }
-19
-20  ArrayList<LinkedList<TreeNode>>  createLevelLinkedList(TreeNode root)  {
-21       ArrayList<Linkedlist<TreeNode>>  lists = new ArrayList<LinkedList<TreeNode>>();
-22       createlevellinkedlist(root,  lists, 0);
-23       return lists;
-24     }
-```
-
-Alternatively, we can also implement a modification of breadth-first search. With this implementation, we want to iterate through the root first, then level 2, then level 3, and so on.
-
-With each level i, we will have already  fully visited all nodes on level i -  1. This means that to get which nodes are on level i, we can simply look at all children of the nodes of level i -  1.
-
-The code below implements this algorithm.
-
-```java
-1    ArrayList<LinkedList<TreeNode>>  createLevelLinkedlist(TreeNode root)  {
-2         ArrayList<LinkedList<TreeNode>>  result = new ArrayList<Linkedlist<TreeNode>>();
-3         /*  "Visit" the  root   */
-4         LinkedList<TreeNode> current=    new LinkedList<TreeNode>();
-5            if (root != null) {
-6              current.add(root);
-7            }
-8
-9          while   (current.size() > 0)  {
-10               result.add(current);//    Add previous level
-11             Linkedlist<TreeNode> parents  =   current;//Go  to next  level
-12               current =  new LinkedList<TreeNode>();
-13               for (TreeNode  parent  :   parents) {
-14                /*   Visit the   children*/
-15                  if (parent.left !=  null)  {
-16                       current.add(parent.left);
-17                  }
-18                  if (parent.right != null) {
-19						current.add(parent.right);
-20                     }
-21             }
-22        } 
-23		return result; 
-24   }
-```
- 
-
-One might ask which of these solutions is more efficient. Both run in O(N) time, but what about the space efficiency? At first, we might want to claim that the second solution is more space efficient.
-
-In a sense, that's correct. The first solution uses 0(log N) recursive calls (in a balanced tree), each of which adds a new level to the stack. The second solution, which is iterative, does not require this extra space.
-
-However, both solutions require returning O(N) data. The extra 0(log N) space usage from the recursive implementation is dwarfed by the O(N) data that must be returned. So while the first solution may actually use more data, they are equally efficient when it comes to "big O:'
-
-
-**4.4 	Check Balanced:** Implement a function to check if a binary tree is balanced. For the purposes of this question, a balanced tree is defined to be a tree such that the heights of the two subtrees of any node never differ by more than one.
-pg 7 70
-
-SOLUTION
-
----
-
-In this question, we've been fortunate enough to be told exactly what balanced means: that for each node, the two subtrees differ in height by no more than one. We can implement a solution based on this defini­ tion. We can simply recurse through the entire tree, and for each node, compute the heights of each subtree.
-
-```java
-1     int  getHeight(TreeNode root) {
-2          if (root == null) return -1;//    Base  case
-3         return  Math.max(getHeight(root.left), getHeight(root.right)) + 1;
-4     }
-5
-6     boolean   isBalanced(TreeNode  root) {
-7          if (root == null) return true;//    Base  case
-8
-9          int heightDiff =   getHeight(root.left)  -  getHeight(root.right);
-10        if (Math.abs(heightDiff) >   1)  {
-11             return false;
-12        } else {//Recurse
-13             return isBalanced(root.left) &&  isBalanced(root.right);
-14         }
-15   }
-```
-
-Although this works. it's not very efficient. On each node. we recurse through its entire subtree. This means that getHeight is called repeatedly on the same nodes. The algorithm isO(N  log N) since each node is "touched" once per node above it.
-
-We need to cut out some of the calls to getHeight.
-
-If we inspect this method, we may notice that getHeight could actually check if the tree is balanced at the same time as it's checking heights. What do we do when we discover that the subtree isn' t balanced? Just return an error code.
-
-This improved algorithm works by checking the height of each subtree as we recurse down from the root. On each node, we recursively get the heights of the left and right subtrees  through  the checkHeight method. If the subtree is balanced, then checkHeight will return the actual height of the subtree. If the subtree  is not balanced, then checkHeight will return an error code. We will immediately break and return an error code from the current call.
-
-
-> What do we use for an error code? The height of a null tree is generally defined to be -1, so that's not a great idea for an error code. Instead, we' ll use Integer. MIN_VALUE.
-
-
-The code below implements this algorithm.
-
-```java
-1     int checkHeight(TreeNode root)   {
-2          if (root == null)  return -1;
-3
-4          int  leftHeight = checkHeight(root.left);
-5         if (leftHeight   Integer.MIN_VALUE)  return Integer.MIN_VALUE;  // Pass  error  up
-6
-7          int rightHeight  checkHeight(root.right);
-8          if (rightHeight == Integer.MIN_VALUE)  return Integer.MIN_VALUE;  // Pass  error  up
-9
-10       int  heightDiff =  leftHeight -  rightHeight;
-11        if (Math.abs(heightDiff)  >   1)  {
-12             return Integer.MIN_VALUE; // Found error -> pass  it back
-13        } else {
-14             return  Math.max(leftHeight, rightHeight)  + 1;
-15        }
-16   }
-17
-18   boolean   isBalanced(TreeNode root)   {
-19        return  checkHeight(root) !=  Integer.MIN_VALUE;
-20   }
-```
-
-This code runs in O(N) time and O(H) space, where H is the height of the tree.
-
-
-**4.5        Validate BST:** Implement a function to check if a binary tree is a binary search tree.
-
-SOLUTION
-
----
-
-We can implement this solution in two different ways. The first leverages the in-order traversal, and the second builds off the property that left <=  c urrent  <  right.
-
-
-##### Solution #1:  In-Order Traversal
-
-Our first thought might be to do an in-order traversal, copy the elements to an array, and then check  to see if the array is sorted. This solution takes up a bit of extra memory, but it works-mostly.
-
-The only problem  is that it can't handle duplicate values in the tree properly. For example,  the algorithm cannot distinguish between the two trees below (one of which is invalid) since they have the same in-order traversal.
- 
-![](media/04_1_1.JPG)
-
-However, if we assume that the tree cannot have duplicate values, then this approach works. The pseudo­code for this method looks something like:
-
-```java
-1     int   index =  0;
-2     void copyBST(TreeNode  root,   int[] array)   {
-3          if  (root ==  null)  return;
-4          copyBST(root.left,   array);
-5          array[index]   =  root.data;
-6          index++;
-7          copyBST(root.right,  array);
-8     }
-9
-10   boolean checkBST(TreeNode  root) {
-11        int[] array=  new  int[root.size];
-12        copyBST(root,  array);
-13        for  (int i=   1;  i <  array.length; i++)  {
-14             if (array[i] <= array[i -  1])   return  false;
-15        }
-16        return  true;
-17   }
-```
-
-Note that it is necessary  to keep track of the logical "end" of the array, since it would be allocated to hold all the elements.
-
-When we examine this solution, we find that the array is not actually necessary. We never use it other than to compare an element to the previous element. So why notjust track the last element we saw and compare it as we go?
-
-The code below implements this algorithm.
-
-```java
-1     Integer   last_printed =  null;
-2     boolean checkBST(TreeNode  n)  {
-3          if (n==    null) return  true;
-4
-5            II Check I recurse  left
-6          if (!checkBST(n.left)) return  false;
-7
-8          II Check current
-9          if  (last_printed !=  null  &&   n.data  <=        last_printed) {
-10             return  false;
-11         }
-12        last_printed = n.data;
-13
-14       // Check / recurse  right
-15        if (!checkBST(n.right)) return false;
-16
-17        return true;// All   good!
-18    }
-```
-
-We've used an Integer instead of int so that we can know when last_printed has been set to a value.
-
-If you don't  like the  use of static  variables, then  you can tweak  this code  to use a wrapper  class for the integer, as shown below.
-```
-1     class  Wraplnt {
-2          public int  value;
-3     }
-```
-Or, if you're implementing this in C++ or another language that  supports passing  integers by reference, then  you can simply do that.
-
-##### Solution #2: The Min / Max Solution
-
-In the second solution, we leverage the definition of the binary search tree.
-
-What does it mean for a tree to be a binary search tree? We know that it must, of course, satisfy the condition left. data <=  c urrent. data <  right. data for each node, but this isn't quite sufficient. Consider the following small tree:
-
-![](media/04_2_1.JPG)
-
-
-Although  each node is bigger than its left node  and smaller than its right node, this is clearly not a binary search tree since 25 is in the wrong place.
-
-More precisely, the condition is that  a// left nodes must  be less than  or equal  to the current  node,  which must be less than all the right nodes.
-
-Using this thought, we can approach the problem  by passing down the min and max values. As we iterate through the tree, we verify against  progressively  narrower ranges.
-
-Consider the following sample tree:
-
-![](media/04_2_2.JPG)
-
-We start with a range of (min  =  NULL,  max  =  NULL), which the root obviously meets. (NULL indicates that there is no min or max.) We then  branch left, checking that these  nodes are within the range  (min  = NULL,  max   =  20). Then, we branch  right, checking  that the nodes are within the range  (min    =  20, max  =  NULL).
-
-We proceed through the tree with this approach. When we branch  left, the  max gets  updated. When we branch right, the min gets updated. If anything fails these checks, we stop and return false.
-
-The time complexity for this solution is O(N), where N is the number of nodes in the tree. We can prove that this is the best we can do, since any algorithm must touch all N nodes.
-
-Due to the use of recursion, the space complexity is O(log  N) on a balanced tree. There are up to O(log
-N) recursive calls on the stack since we may recurse up to the depth of the tree.
-
-The recursive code for this is as follows:
-```
-1    boolean  checkBST(TreeNode  n)  {
-2         return checkBST(n, null, null);
-3      }
-4
-5      boolean  checkBST(TreeNode  n,  Integer min,  Integer max) {
-6         if (n  == null) {
-7              return true;
-8          }
-9         if ((min  != null &&   n.data <=  min)  I  I      (max != null &&   n.data >   max)) {
-10            return false;
-11        }
-12
-13       if (!checkBST(n.left,  min,  n.data)  I  I      !checkBST(n.right, n.data,  max)) {
-14            return false;
-15        }
-16       return true;
-17   }
-```
-Remember that in recursive algorithms, you should always make sure that your base cases, as well as your null cases, are well handled.
-
-
-**4.6 	Successor:** Write an algorithm to find the "next" node (i.e., in-order successor) of a given node in a binary search tree. You may assume that each node has a link to its parent.
-
-SOLUTION
-
----
-
-Recall that an in-order traversal traverses the left subtree, then the current node, then the right subtree. To approach this problem, we need to think very, very carefully about what happens.
-
-Let's suppose we have a hypothetical node. We know that the order goes left subtree, then current side, then right subtree. So, the next node we visit should be on the right side.
-
-But which node on the right subtree? It should be the first node we'd visit if we were doing an in-order traversal of that subtree. This means that it should be the leftmost node on the right subtree. Easy enough!
-
-But what if the node doesn't have a right subtree? This is where it gets a bit trickier.
-
-If a node n doesn't have a right subtree, then we are done traversing n's subtree. We need to pick up where we left off with n's parent, which we'll call q.
-
-If n was to the left of q, then the next node we should traverse should be q (again, since left - >  current
-->  right).
-
-If n were to the right of q, then we have fully traversed q's subtree as well. We need to traverse upwards from q until we find a node x that we have not fully traversed.  How do we know that we have not fully traversed a node x? We know we have hit this case when we move from a left node to its parent.The left node is fully traversed, but its parent is not.
-
-The pseudocode looks like this:
-```java
-1    Node inorderSucc(Node  n)  {
-2         if (n  has  a right subtree) {
-3                  return leftmost child of  right subtree
-4         }  else {
-5                 while  (n  is a right child of  n.parent) {
-6                   n =  n.parent; // Go  up
-7                  }
-8              return n.parent;  // Parent  has  not  been  traversed
-9         }
-10   }
-```
-But wait-what if we traverse all the way up the tree before finding a left child?This will happen only when we hit the very end of the in-order traversal. That is, if we're already on the far right of the tree, then there is no in-order successor. We should return null.
-
-The code below implements this algorithm (and properly handles the null case).
-
-```java
-1     TreeNode inorderSucc(TreeNode  n)  {
-2         if (n  ==  null) return null;
-3
-4         /*  Found right children -> return leftmost node of  right subtree. */
-5           if (n.right != null) {
-6              return leftMostChild(n.right);
-7         }  else {
-8              TreeNode q = n;
-9              TreeNode x =  q.parent;
-10            // Go  up until we're  on left  instead of  right
-11            while  (x  != null &&   x.left != q)  {
-12                 q     x;
-13                 x =  x.parent;
-14              }
-return x;
-16         }
-17   }
-18
-19  TreeNode leftMostChild(TreeNode n)  {
-20       if (n  ==  null) {
-21            return null;
-22        }
-23       while  (n.left != null) {
-24            n = n.left;
-25          }
-26       return  n;
-27   }
-```
-
-This is not the most algorithmically complex problem in the world, but it can be tricky to code perfectly. In a problem like this, it's useful to sketch out pseudocode to carefully outline the different cases.
-
-
-**4.7 	Build Order:** You are given a list of projects and a list of dependencies (which is a list of pairs of projects, where the secondproject is dependent on the first project). All of a project's dependencies must be built before the project is. Find a build order that will allow the projects to be built. If there is no valid build order, return an error.
-
-EXAMPLE 
-
-```
-Input:
-projects:  a, b,   c,  d,   e, f
-dependencies: (a,  d),  (f,  b),  (b,   d),  (f,  a),  (d,   c) 
-Output: f,  e, a, b,   d,   c
-```
-
-SOLUTION
-
----
-
-Visualizing the information as a graph probably works best. Be careful  with the direction of the arrows. In the graph below, an arrow from d to g means that d must be compiled before g. You can also draw them in the opposite direction, but you need to consistent and clear about what you mean. Let's draw a fresh example.
-
-
-![](media/04_7_1.JPG)
-
-
-In drawing this example (which is not the example from the problem description), I looked for a few things.
-
-- I wanted the nodes labeled somewhat randomly. If I had instead put a at the top, with b and c as chil­dren, then d and e, it could be misleading. The alphabetical order would match the compile order.
-- I wanted a graph with multiple parts/components, since a connected graph is a bit of a special case.
-- I wanted a graph where a node links to a node that cannot immediately follow it. For example,  f links to a but a cannot immediately follow it (since b and c must come before a and after f).
-- I wanted a larger graph since I need to figure out the pattern.
-- I wanted nodes with multiple dependencies.
-
-Now that we have a good example, let's get started with an algorithm.
-
-##### Solution#l
-
-Where do we start? Are there any nodes that we can definitely compile immediately?
-
-Yes. Nodes with no incoming edges can be built immediately since they don't depend on anything. Let's add all such nodes to the build order.  In the earlier example, this means we have an order of f, d (or d, f).
-
-Once we've done that, it's irrelevant that some nodes are dependent on d and f since d and f have already been built. We can reflect this new state by removing d and f's outgoing edges.
-
-build   order: f,  d
-
-![](media/04_7_2.JPG)
-
-
-Next, we know that c, b, and g are free to build since they have no incoming edges. Let's build those and then remove their outgoing edges.
-
-build  order: f,  d,  c,  b,  g
-
-![](media/04_7_3.JPG)
-
-
-Project a can be built next, so let's do that and remove its outgoing edges. This leaves just e. We build that next, giving us a complete build order.
-
-build  order:   f, d,  c,  b,  g,  a,  e
-
-Did this algorithm work, or did we just get lucky? Let's think about the logic.
-
-1.  We first added the nodes with no incoming edges. If the set of projects can be built, there must be some "first" project, and that project can't have any dependencies.  If a project has no dependencies (incoming edges), then we certainly can't break anything by building it first.
-2.  We removed all outgoing edges from these roots. This is reasonable. Once those root projects were built, it doesn't matter if another project depends  on them.
-3.  After that, we found the nodes that now have no incoming edges. Using the same logic from steps 1 and
-2, it's okay if we build these. Now we just repeat the same steps: find the nodes with no dependencies, add them to the build order, remove their outgoing edges, and repeat.
-4.  What if there are nodes remaining, but all have dependencies (incoming edges)? This means there's no way to build the system. We should return an error.
-
-The implementation follows this approach very closely. 
-
-Initialization and setup:
-
-1.  Build a graph where each project is a node and its outgoing edges represent the projects that depend
-on it. That is, if A has an edge to B (A-> B), it means B has a dependency  on A and therefore A must be built before B. Each node also tracks the number of incoming edges.
-
-2.  Initialize a buildOrder array. Once we determine a project's build order, we add it to the array. We also continue to iterate through the array, using a toBeProcessed pointer to point to the next node to be fully processed.
-3.   Find all the  nodes  with zero incoming edges  and  add  those  to  a  buildOrder array. Set a toBeProcessed pointer to the beginning of the array.
-
-Repeat until toBeProcessed is at the end of the buildOrder:
-
-1.  Read node at toBeProcessed.
-
-	- If node is null, then all remaining nodes have a dependency and we have detected a cycle.
-
-2.  For each child of node:
-
-	- Decrement child. dependencies (the number of incoming edges).
-	- If child. dependencies is zero, add child to end of buildOrder.
-
-3.  Increment  toBeProcessed.
-
-The code below implements this algorithm.
-
-```java
-1    /*  Find a correct build   order. */
-2     Project[]  findBuildOrder(String[] projects, String[][] dependencies)  {
-3            Graph graph= buildGraph(projects,  dependencies);
-4         return orderProjects(graph.getNodes());
-5      }
-6
-7     /*  Build  the  graph,  adding  the  edge (a,   b)  if b is dependent  on a. Assumes  a  pair
-8      * is listed in  "build order". The pair (a,   b)  in  dependencies  indicates that b
-9      * depends on a  and a must be built before  b. */
-10  Graph buildGraph(String[] projects, String[][] dependencies) {
-11       Graph graph= new Graph();
-12       for  (String project  :   projects) {
-13            graph.createNode(project);
-}
-15
-16       for  (String[] dependency  :   dependencies)  {
-17            String first= dependency[0];
-18            String second=  dependency[l];
-19            graph.addEdge(first,  second);
-20         }
-21
-22       return  graph;
-23    }
-24
-25  /*  Return  a list of  the  projects a correct build   order.*/
-26   Project[]  orderProjects(Arraylist<Project> projects)  {
-27       Project[] order  =  new Project[projects.size()];
-28
-29       /*  Add  "roots" to  the  build   order  first.*/
-30       int endOfList= addNonDependent(order,  projects,  0);
-31
-32       int toBeProcessed= 0;
-33       while  (toBeProcessed <  order.length) {
-34            Project current= order[toBeProcessed];
-35
-36            /*  We  have a circular dependency since   there are  no remaining  projects with
-37              *  zero  dependencies. */
-38            if  (current== null) {
-39                 return null;
-40      }
-41
-42            /*  Remove  myself  as  a  dependency.  */
-43            Arraylist<Project> children = current.getChildren();
-44            for  (Project child :   children) {
-45				child.decrementDependencies();
-46             }
-47
-48            /*  Add children that have no one depending  on them.  */
-49            endOfList=  addNonDependent(order,  children,  endOfList);
-50            toBeProcessed++;
-51        }
-52
-53       return order;
-54    }
-55
-56  /*  A  helper  function to  insert projects with  zero  dependencies  into the  order
-57    *  array, starting at index  offset. */
-58  int addNonDependent(Project[]   order, Arraylist<Project> projects,  int  offset)  {
-59       for  (Project project:  projects) {
-60            if (project.getNumberDependencies() == 0)  {
-61                 order[offset]  =  project;
-62                 offset++;
-63               }
-64        }
-65       return offset;
-66   }
-67
-68  public class Graph {
-69       private Arraylist<Project> nodes=  new Arraylist<Project>();
-70       private HashMap<String, Project> map  =  new HashMap<String, Project>();
-71
-72       public   Project  getOrCreateNode(String name) {
-73            if (!map.containsKey(name)) {
-74                 Project node =  new Project(name);
-75                 nodes.add(node);
-76                 map.put(name,  node);
-77            }
-78
-79            return map.get(name);
-80       }
-81
-82       public   void  addEdge(String startName,   String endName)   {
-83            Project start  = getOrCreateNode(startName);
-84            Project end=  getOrCreateNode(endName);
-85            start.addNeighbor(end);
-86       }
-87
-88       public Arraylist<Project> getNodes()   {  return nodes;  }
-89   }
-90
-91  public  class Project {
-92       private Arraylist<Project> children = new Arraylist<Project>();
-93       private HashMap<String, Project> map=  new HashMap<String, Project>();
-94       private  String name;
-95       private int dependencies      0;
-96
-97       public   Project(String n)  {  name    n;  }
-98
-99         public  void addNeighbor(Project node) {
-100             if (!map.containsKey(node.getName()))  {
-101                   children.add(node);
-102                   map.put(node.getName(),  node);
-103                   node.incrementDependencies();
-104             }
-105       }
-106
-107       public  void incrementDependencies()  {  dependencies++;  }
-108       public  void decrementDependencies() {  dependencies--;  }
-109
-110       public String  getName()  {  return name;   }
-111       public Arraylist<Project> getChildren()  {  return  children; }
-112       public int  getNumberDependencies()  {  return  dependencies; }
-113  }
-```
-
-This solution takes O ( P  +  D) time, where P is the number of projects and  D is the  number of dependency pairs.
-
-
-> Note:  You might recognize this as the  topological sort algorithm on page 632. We've rederived this from scratch. Most people won't  know  this algorithm and  it's reasonable for an interviewer to expect you to be able to derive it.
-
-
-##### Solution #2
-
-Alternatively, we can use depth-first search (DFS) to find the build  path.
-
-
-![](media/04_7_4.JPG)
-
-Suppose we picked an arbitrary node (say b) and  performed a depth-first search on it. When  we get  to the end of a path and  can't  go  any  further (which will happen at h and  e), we know  that those terminating
-nodes can be the  last projects to be built.  No projects depend on them.
-```
-DFS(b)			// Step  1
-	DFS(h)		// Step  2
-		build order	= ... ,	h	// Step  3
-	DFS(a)			// Step  4
-		DFS(e)			// Step 5
-			build  order     ... , e, h          // Step  6
-		...				// Step 7+
-	...
-```
-
-Now, consider what happens at node a when we return from  the  DFS of e. We know  a's children need to appear after  a in the  build  order.  So, once we return from searching a's children (and  therefore they have been added), we can choose to add  a to the  front of the  build order.
-
-
-Once we return from a, and complete the DFS of b's other children, then everything that must appear after b is in the list. Add b to the front.
-
-```
-DFS(b) 					// Step  1
-	DFS(h)					// Step  2
-		build order = ... ,  h  // Step  3
-	DFS(a)					// Step  4
-		DFS(e)					// Step  5
-			build order =   ..., e,  h  // Step  6
-		build order =  ... , a,   e,   h  // Step  7
-	DFS(e)  -> return					// Step  8
-	build order =  ...,   b,   a,   e,   h  // Step  9
-```
-
-Let's mark these nodes as having been built too, just in case someone else needs to build them.
-
-
-![](media/04_7_5.JPG)
-
-
-Now what? We can start with any old node again, doing a DFS on it and then adding the node to the front of the build queue when the DFS is completed.
-```
-DFS(d) 
-	DFS(g)
-		build  order =  ...,   g,  b,   a,   e,   h 
-	build order =  ...,   d,   g,  b,   a,   e,   h
-DFS(f) 
-	DFS(c)
-		build order =  ...,   c,   d,   g,  b,   a,   e,   h 
-		build order= f,  c,   d,   g,  b,   a,   e,   h
-```
-In an algorithm like this, we should think about the issue of cycles. There is no possible build order if there is a cycle. But still, we don't want to get stuck in an infinite loop just because there's no possible solution.
-
-A cycle will happen if, while doing a DFS on a node, we run back into the same path.What we need there­fore is a signal that indicates"I'm still processing this node, so if you see the node again, we have a problem:'
-
-What we can do for this is to mark each node as a"partial"(or"is visiting") state just before we start the DFS on it. If we see any node whose state is partial, then we know we have a problem. When we're done with this node's DFS, we need to update the state.
-
-We also need a state to indicate"I've already processed/built this node" so we don't re-build the node. Our state therefore can have three options: COMPLETED, PARTIAL, and BLANK.
-
-The code below implements this algorithm.
-
-```java
-1     Stack<Project> findBuildOrder(String[]  projects, String[][]  dependencies) {
-2         Graph  graph=  buildGraph(projects,  dependencies);
-3          return orderProjects(graph.getNodes());
-4     }
-5
-6    Stack<Project> orderProjects(ArrayList<Project>  projects){
-7         Stack<Project> stack   =  new Stack<Project>();
-8         for  (Project project:  projects){
-9              if  (project.getState() ==  Project.State.BLANK){
-10                 if (!doDFS(project,  stack)){
-11                      return null;
-12                   }
-13              }
-14       }
-15		return stack;
-16   }
-17
-18  boolean  doDFS(Project  project,   Stack<Project> stack){
-19       if (project.getState() ==  Project.State.PARTIAL){
-20            return false; //  Cycle
-21         }
-22
-23       if  (project.getState() ==  Project.State.BLANK){
-24            project.setState(Project.State.PARTIAL);
-25            ArrayList<Project> children  =   project.getChildren();
-26            for  (Project child :   children){
-27                 if (!doDFS(child,  stack)){ 
-28						return false; 
-29                 }
-30              }
-31            project.setState(Project.State.COMPLETE);
-32            stack.push(project);
-33       }
-34       return true;
-35    }
-36
-37 /*    Same  as  before*/
-38   Graph buildGraph(String[] projects, String[][] dependencies){...}
-39  public class  Graph{}
-40
-41 /*    Essentially equivalent to earlier  solution,  with  state info  added and
-42  *   dependency count  removed.*/
-43  public class Project{
-44	public enum  State{COMPLETE,  PARTIAL,   BLANK}; 
-45  private State state  =  State.BLANK;
-46  public  State getState(){  return state;  }
-47  public void  setState(State st){  state =   st; }
-48  /*    Duplicate code removed for  brevity*/ 
-49    }
-```
-
-Like the earlier algorithm, this solution is O (P+D) time, where P is the number of projects and D is the number of dependency pairs.
-
-By the way, this problem is called **topological sort:**  linearly ordering the vertices in a graph such that for every edge (a,  b), a appears before b in the linear order.
-
-**4.8		First Common Ancestor:** Design an algorithm and write code to find the first common ancestor of two nodes in a binary tree. Avoid storing additional nodes in a data structure. NOTE: This is not
-necessarily a binary search tree.
-
-SOLUTION
-
----
-
-If this were a binary search tree, we could modify the find operation for the two nodes and see where the paths diverge. Unfortunately, this is not a binary search tree, so we must try other approaches.
-
-Let's assume we're looking for the common ancestor of nodes p and q. One question to ask here is if each node in our tree has a link to its parents.
-
-##### Solution #1: With Links to Parents
-
-If each node has a link to its parent, we could trace p and q's paths up until theyintersect.This is essentially the same problem as question 2.7 which find the intersection of two linked lists. The "linked list" in this case is the path from each node up to the root. (Review this solution on page 221.)
-
-```java
-1     TreeNode commonAncestor(TreeNode  p,  TreeNode q)  {
-2          int delta=  depth(p) - depth(q); // get   difference in depths
-3          TreeNode first = delta >   0? q  :   p;  // get   shallower node
-4          TreeNode second=  delta  >  0? p  :   q;  // get   deeper   node
-5         second=    goUpBy(second,  Math.abs(delta));  // move  deeper   node  up
-6
-7          /* Find  where  paths intersect. */
-8          while  (first != second  &&   first != null &&   second   != null) {
-9               first=    first.parent;
-10             second=  second.parent;
-11        } 
-12        return first==    null  I   I       second
-13   }
-14
- 
-null?  null    first; 
-15   TreeNode goUpBy(TreeNode node,  int delta) {
-16        while   (delta>  0 &&   node  != null) {
-17             node=    node.parent;
-18             delta--;
-19        }
-20        return node;
-21   }
-22
-23   int   depth(TreeNode node)  {
-24        int depth=  0;
-25        while   (node   != null) {
-26             node  =  node.parent;
-27             depth++;
-28        }
-29        return depth;
-30    }
-```
-
-This approach will take O(d)  time, where d is the depth of the deeper node.
-
-##### Solution #2: With Links to Parents (Better Worst-Case Runtime)
-
-Similar to the  earlier approach, we could trace p's path  upwards and check if any of the nodes cover  q. The first node that covers q (we already know that every node on this path will cover p) must be the first common ancestor.
-
-Observe that we don't need to re-check the entire subtree. As we move from a node x to its parent y, all the nodes under x have already been checked for q. Therefore, we only need to check the new nodes "uncov­ ered'; which will be the nodes under x's sibling.
-
-For example, suppose we're looking for the first common ancestor of node   p  =  7 and node   q  =  17. When we go to p.parent  (5), we uncover the subtree  rooted at 3. We therefore need  to search this subtree for q.
-
-Next, we go to node 10, uncovering the subtree rooted at 15. We check this subtree  for node 17 and­
-voila-there it is.
-
-![](media/04_7_6.JPG)
-
-
-To implement this, we can just traverse upwards from p, storing the parent and the sibling node in a variable. (The sibling node is always a child of parent and refers to the newly uncovered  subtree.) At each iteration, sibling gets set to the old parent's sibling node and parent gets set to parent. parent.
-
-```java
-1     TreeNode  commonAncestor(TreeNode root, TreeNode p,  TreeNode q)  {
-2          /* Check if either node  is not  in  the   tree, or  if one  covers the   other. */
-3          if  (!covers(root, p)   11  !covers(root, q)) {
-4               return null;
-5          }  else if  (covers(p,
-6               return  p;
-7          } else if  (covers(q, p)) {
-8               return  q;
-9          }
-10
-11       /*  Traverse upwards  until you find a  node  that  covers q. */
-12        TreeNode sibling=    getSibling(p);
-13        TreeNode parent=    p.parent;
-14        while   (!covers(sibling, q)) {
-15             sibling=    getSibling(parent);
-16             parent=    parent.parent;
-17        }
-18        return parent;
-19   }
-20
-21   boolean   covers(TreeNode root,   TreeNode p)  {
-22        if (root==    null) return false;
-23        if (root ==         p)  return true;
-24        return covers(root.left,  p)  11   covers(root.right,  p);
-25   }
-26
-27   TreeNode getSibling(TreeNode node)  {
-28        if (node==    null  I   I     node.parent == null) {
-29             return null;
-30      }
-31
-32       TreeNode parent     node.parent;
-33        return parent.left==  node?  parent.right  :   parent.left;
-34   }
-```
-
-This algorithm takes O(t) time, wheretis the size of the subtree for the first common ancestor. In the worst case, this will be O(n), where n is the number of nodes in the tree. We can derive this runtime by noticing that each node in that subtree is searched once.
-
-##### Solution #3: Without Links to Parents
-
-Alternatively, you could follow a chain in which p and q are on the same side. That is, if p and q are both on the left of the node, branch left to look for the common ancestor. If they are both on the right, branch right to look for the common ancestor. When p and q are no longer on the same side, you must have found the first common ancestor.
-
-The code below implements this approach.
-
-```java
-1     TreeNode  commonAncestor(TreeNode root,  TreeNode p,  TreeNode q)  {
-2          /*  Error check  -  one  node  is not  in the   tree. */
-3          if  (!covers(root, p)  11    covers(root,   q))   {
-4               return null;
-5          }
-6          return  ancestorHelper(root, p,  q);
-7     }
-8
-9     TreeNode ancestorHelper(TreeNode root,   TreeNode p,  TreeNode q)  {
-10        if (root== null II root==    p  I I    root== q)  {
-11             return root;
-12        }
-13
-14        boolean  plsOnleft=    covers(root.left, p);
-15        boolean   qlsOnLeft=     covers(root.left,  q);
-16        if (plsOnLeft !=          qlsOnLeft)  {//Nodes  are   on  different side
-17             return root;
-18         }
-19        TreeNode  childSide=    pisOnLeft?  root.left    root.right;
-20       return  ancestorHelper(childSide, p,  q);
-21   }
-22
-23   boolean   covers(TreeNode root,   TreeNode p)  {
-24       if (root==    null) return false;
-25        if (root==    p)  return true;
-26       return covers(root.left,  p)   I   I      covers(root.right,   p);
-27   }
-```
-
-This algorithm runs in O(n) time on a balanced tree. This is because covers is called on 2n nodes in the first call (n nodes for the left side, and n nodes for the right side). After that the algorithm branches left or right, at which point c overs will be called on  2n/2  nodes, then  2n/4, and so on. This results in a runtime of O(n).
-
-We know at this point that we cannot do better than that in terms of the asymptotic runtime since we need to potentially look at every node in the tree. However, we may be able to improve it by a constant multiple.
-
-##### Solution #4: Optimized
-
-Although Solution #3 is optimal in its runtime, we may recognize that there is still some inefficiency in how it operates. Specifically, covers searches all nodes under root for p and q, including the nodes in each subtree (root. left and root.right). Then, it picks one of those subtrees and searches all of its nodes. Each subtree is searched over and over again.
-
-We may recognize that we should only need to search the entire tree once to find p and q.We should then be able to "bubble up" the findings to earlier nodes in the stack. The basic logic is the same as the earlier solution.
-
-We recurse through the entire tree with a function called commonAncestor(TreeNode    root, TreeNode  p,  TreeNode  q).This function returns values as follows:
-
-- Returns p, if root's subtree includes p (and not q). 
-- Returns q, if root's subtree includes q (and not p). 
-- Returns null, if neither p nor q are in root's subtree. 
-- Else, returns the common ancestor of p and q.
-
-Finding the common ancestor of p and q in the final case is easy.When commonAncestor(n. left, p, q) and commonAncestor(n. right, p,  q) both return non-null values (indicating that p and q were found in different subtrees),then n will be the common ancestor.
-
-The code below offers an initial solution, but it has a bug. Can you find it?
-
-```java
-1      /* The below code has a bug. */
-2     TreeNode commonAncestor(TreeNode root,  TreeNode p, TreeNode q) {
-3          if (root       null) return  null;
-4        if (root  ==  p &&  root  ==  q) return  root;
-5
-6          TreeNode x  =  commonAncestor(root.left,  p, q);
-7       if (x  != null  &&   x  !=  p &&   x  != q) {   II Already found ancestor
-8               return  x;
-9           }
-Hi
-11      TreeNode y =  commonAncestor(root.right, p, q);
-12     if (y  !=  null  &&   y !=  p &&   y !=  q) {   II Already found ancestor
-13          return  y;
-14      }
-15
-16     if (x !=  null  &&   y !=  null) {   II p and q  found in  diff. subtrees
-17          return  root;  II This  is the common  ancestor
-18      }  else  if (root  ==  p I   I      root  ==  q) {
-19          return  root;
-20      }  else  {
-21             return  x  == null?  y    x;   I* return  the non-null  value  *I
-22         }
-23    }
-```
-
-The problem with this code occurs in the case where a node is not contained in the tree. For example, look at the following tree:
-
-![](media/04_7_7.JPG)
-
-
-Suppose we call commonAncestor(node  3,  node  5,  node 7).0f course,node 7does not exist­ and that's where the issue will come in. The calling order looks like:
-
-```
-1    commonAnc(node  3, node 5, node 7)                      //-->  s
-2        calls commonAnc(node  1, node 5, node 7)         //-->  null
-3			calls commonAnc(node  5,  node 5,  node 7)	// -->  5
-4				calls commonAnc(node  8,  node 5,  node 7)	// -->  null
-```
-
-In other words, when we call c ommonAncestor on the right subtree, the code will return node 5, just as it should. The problem is that in finding the common ancestor of pand q, the calling function can't distin­ guish between the two cases:
-
-- Case 1: p is a child of q (or, q is a child of p)
-- Case 2: p is in the tree and q is not (or, q is in the tree and pis not)
-
-In either ofthese cases, c ommonAncestor will return p. In the firstcase, this is the correct return value, but in the second case, the return value should be null.
-
-We somehow need to distinguish between these two cases, and this is what the code below does. This code solves the problem by returning two values: the node itself and a flag indicating whether this node is actually the common ancestor.
-
-```java
-1     class Result   {
-2         public TreeNode node;
-3         public boolean  isAncestor;
-4         public Result(TreeNode  n,  boolean  isAnc)  {
-5                  node =  n;
-6              isAncestor =  isAnc;
-7            }
-8      }
-9
-10  TreeNode commonAncestor(TreeNode  root,  TreeNode p,  TreeNode q)  {
-11       Result  r =  commonAncestorHelper(root,  p,  q);
-12       if  (r.isAncestor) {
-13            return r.node;
-14       }
-15       return null;
-16    }
-17
-18   Result   commonAncHelper(TreeNode  root,  TreeNode p,  TreeNode q)  {
-19       if (root     null) return new Result(null,  false);
-20
-21       if (root    p &&   root== q)  {
-22            return new Result(root, true);
-23         }
-24
-25       Result  rx  =  commonAncHelper(root.left,  p,  q);
-26       if  (rx.isAncestor) {//Found  common  ancestor
-27            return rx;
-28       }
-29
-30       Result  ry  =  commonAncHelper(root.right,  p,  q);
-31       if  (ry.isAncestor) {//Found  common  ancestor
-32            return ry;
-33       }
-34
-35       if (rx.node != null &&   ry.node   != null) {
-36            return new Result(root, true);  // This  is the  common  ancestor
-37       }  else if (root == p  I   I      root  ==  q)  {
-38            /*  If we're  currently at  p or  q,  and we  also  found one of  those  nodes in  a
-39              * subtree,  then  this is truly an ancestor and the  flag   should  be  true. */
-40            boolean  isAncestor = rx.node != null || ry.node   != null;
-41			  return new  Result(root,  isAncestor);
-42         } else {
-43				return new  Result(rx.node!=null? rx.node : ry.node,  false); 
-44         }
-45    }
-```
- 
-Of course, as this issue only comes up when p or q is not actually in the tree, an alternative solution would be to first search through the  entire tree  to make sure  that both nodes exist.
-
-
-**4.9	BST Sequences:** A binary  search tree  was created by traversing through an array from left to right and inserting each element. Given  a binary  search tree  with  distinct elements, print  all possible arrays that could have  led to this tree.
-
-EXAMPLE
-
-```
-Input:
-			2
-
-		  /   \
-		1		3
-
-Output: {2,   1,   3}, {2,  3,  1}
-```
- 
-SOLUTION
-
----
-
-It's useful to kick off this question with a good example.
-
-```
-			50
-		   /  \
-		20		60
-	   /  \    /  \
-     10		25		70
-   /   \   /   \   /   \
-  5		15		65		80
-```
-
-We should also think  about the  ordering of items in a binary  search tree.  Given a node, all nodes on its left must be  less than all nodes on  its right.  Once  we reach a place  without a node, we insert the  new  value there.
-
-What this means is that the  very first element in our array must have  been a 50 in order to create the  above tree.  If it were  anything else, then that value  would have  been the  root  instead.
-
-What  else  can  we say? Some  people jump to the  conclusion that everything on the  left must have  been inserted before elements on the right, but that's not  actually true.  In fact, the reverse is true: the order of the left or right  items doesn't matter.
-
-Once  the  50 is inserted, all items less than 50 will be routed to the  left and all items greater than 50 will be routed to the  right. The 60 or the  20 could be inserted first, and it wouldn't matter.
-
-Let's think  about this problem recursively.  If we had all arrays  that could have  created the  subtree rooted at  20  (call this  arraySet20),  and all arrays  that could have  created the  subtree rooted at  60  (call this array5et60), how would that give us the full answer? We couldjust"weave"each array from array5et20 with each array from arraySet60-and then prepend each array with a 50.
-
-Here's what we mean by weaving. We are merging two arrays in all possible ways, while keeping the elements within each array in the same relative order.
-```
-arrayl: {l,  2}
-array2: {3,   4}
-weaved: {l, 2,   3,  4},  {l, 3,  2,  4},  {1,   3,  4,  2},
-		{3, 1,   2,  4},  {3, 1,  4,  2},  {3,   4,  1,  2}
-```
-Note that, as long as there  aren't any duplicates in the original array sets, we won't have to worry that weaving will create duplicates.
-
-The last piece to talk about here is how the weaving works Let's think recursively about how to weave{1,
-2,   3} and {4, S,  6}. What are the subproblems?
-
-- Prepend al to all weaves of{2,  3}and{4,  5,   6}. 
-- Prepend a4 to all weaves of{l,  2,   3}and{S,   6}.
-
-To implement this, we'll store each as linked lists. This will make it easy to add and remove elements. When we recurse, we'll push the prefixed elements down the recursion When first or second are empty, we add the remainder to prefix and store the result.
-
-It works something like this:
-```
-	weave(first,  second,   prefix):
-		weave({l,   2},  {3,   4},  {})
-			weave({2},   {3,   4},   {1})
-				weave({},   {3,   4},   {l, 2})
-					{1,   2,   3,  4}
-				weave({2},   {4},  {1,   3})
-					weave({},   {4},   {l,   3,  2})
-						{l,   3,  2,  4}
-					weave({2},   {},   {l, 3,  4})
-						{l, 3,  4,   2}
-			weave({l,  2},  {4},   {3})
-				weave({2},  {4},   {3,   1})
-					weave({},   {4},   {3,   1,   2})
-						{3,   1,   2,  4}
-					weave({2},   {},   {3,   1,   4})
-						{3,   1,  4,   2}
-				weave({l,  2},  {},   {3,   4})
-					{3,   4,   1,   2}
-```
-
-Now, let's think through the implementation of removing, say,1 from{1,   2}and recursing. We need to be careful about modifying this list, since a later recursive call (e .g., weave({1,   2},   {4},   {3})) might need the 1  still in{1,  2}.
-
-We could clone the list when we recurse, so that we only modify the recursive calls. Or, we could modify the list but then"revert"the changes after we're done with recursing.
-
-We've chosen to implement it the latter way. Since we're keeping the same reference to first, second, and prefix the entire way down the recursive call stack, then we'll need to clone prefix just before we store the complete result.
-
-```java
-1     ArrayList<LinkedList<Integer>> allSequences(TreeNocte  node)  {
-2          Arraylist<Linkedlist<Integer>> result = new Arraylist<Linkedlist<Integer>>();
-3
-4          if (node  == null)  {
-5               result.add(new Linkedlist<Integer>());
-6               return result;
-7            }
-8
-9         Linkedlist<Integer> prefix     new Linkedlist<Integer>();
-10       prefix.add(node.data);
-11
-12       /*   Recurse  on left and right subtrees. */
-13       Arraylist<Linkedlist<Integer>> leftSeq  =  al1Sequences(node.left);
-14       ArrayList<LinkedList<Integer>> rightSeq  =  al1Sequences(node.right);
-15
-16       /*  Weave  together each  list from the  left and right sides. */
-17       for  (Linkedlist<Integer> left :   leftSeq) {
-18            for  (LinkedList<Integer> right   :   rightSeq) {
-19                 ArrayList<LinkedList<Integer>>  weaved=
-20                      new Arraylist<Linkedlist<Integer>>();
-21                 weavelists(left, right,  weaved, prefix);
-22                 result.addAll(weaved);
-23            }
-24       }
-25       return result;
-26   }
-27
-28  /*  Weave  lists together in  all possible ways. This  algorithm works by removing the
-29     * head from one list, recursing,  and then  doing  the  same thing   with  the  other
-30    * list.  */
-31  void  weaveLists(LinkedList<Integer> first, LinkedList<Integer>  second,
-32                 ArrayList<LinkedList<Integer>> results, LinkedList<Integer> prefix)  {
-33       /*  One list is empty.  Add  remainder  to  [a  cloned]   prefix and store result.  */
-34       if (first.size()==    0 11 second.size() ==  0)  {
-35            Linkedlist<Integer> result  =  (Linkedlist<Integer>) prefix.clone();
-36            result.addAll(first);
-37            result.addAll(second);
-38            results.add(result);
-39            return;
-40       }
-41
-42       /*  Recurse with head of  first added to  the  prefix. Removing the  head will  damage
-43         * first, so  we'll need to  put  it back where we  found it afterwards. */
-44       int headfirst=  first.removeFirst();
-45       prefix.addLast(headFirst);
-46       weavelists(first, second,   results,  prefix);
-47       prefix.removelast();
-first.addFirst(headFirst);
-49
-50       /*  Do  the  same thing with  second,  damaging and then  restoring the  list.*/
-51       int headSecond =  second.removeFirst();
-52       prefix.addLast(headSecond);
-53       weavelists(first, second,  results,  prefix);
-54       prefix.removelast();
-55       second.addFirst(headSecond);
-56   }
-```
-
-Some people struggle with this problem because there are two different recursive algorithms that must be designed and implemented. They get confused with how the algorithms should interact with each other and they try to juggle both in their heads.
-
-If this sounds like you, try this: trust and focus. Trust that one method does the right thing when imple­
-menting an independent method, and focus on the one thing that this independent method needs to do.
-
-
-264           Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 4  I    Trees and Graphs
-
-
-Look at weaveLists. It has a specific job: to weave two lists together and return a list of all possible weaves.The existence of allSequences is irrelevant. Focus on the task that weavelists has to do and design this algorithm.
-
-As you're implementing allSequences (whether you do this before or after weavelists), trust that weavelists will do the right thing. Don't concern yourself with the particulars of how weaveLists operates while implementing something that is essentially independent. Focus on what you're doing while you're doing it.
-
-In fact, this is good advice in general when you're confused during whiteboard coding. Have a good under­ standing of what a particular function should do ("okay, this function is going to return a list of \__"). You should verify that it's really doing what you think. But when you're not dealing with that function, focus on the one you are dealing with and trust that the others do the right thing. It's often too much to keep the implementations of multiple algorithms straight in your head.
-
-
-**4.1 O      Check Subtree:** Tl and T2 are two very large binary trees, withTl much bigger thanT2. Create an algorithm to determine ifT2 is a subtree ofTl.
-
-A tree T2 is a subtree of Tl  if there exists a node n in Tl  such that the subtree of n is identical to T2.
-That is, if you cut off the tree at node n, the two trees would be identical.
-
-SOLUTION
-
----
-
-In problems like this, it's useful to attempt to solve the problem assuming that there is just a small amount of data. This will give us a basic idea of an approach that might work.
-
-###### The Simple Approach
-
-In this smaller, simpler problem, we could consider comparing string representations of traversals of each tree. lfT2 is a subtree ofTl, thenT2's traversal should be a substring ofTl. ls the reverse true? If so,  should we use an in-order traversal or a pre-order traversal?
-
-An in-order traversal will definitely not work. After all, consider a scenario in which we were using binary search  trees. A binary search tree's in-order traversal always prints out the values in sorted order.Therefore, two binary search trees with the same values will always have the same in-order traversals, even if their structure is different.
-
-What about a pre-order traversal?This  is a bit more promising.  At least in this case we know certain things, like the first element in the pre-order traversal is the root node.The left and right elements will follow.
-
-Unfortunately, trees with different structures could still have the same pre-order traversal.
-
-```
-		3		 3
-	   /		  \
-	  4				4
-```
-There's a simple  fix though.We can store NULL nodes in the pre-order traversal string as a special character, like an 'X'. (We'll  assume that the binary trees contain only integers.)The left tree would have the traversal { 3,   4,   X} and the right tree will have the traversal { 3,   X,  4}.
-
-Observe that, as long as we represent the NULL nodes, the pre-order traversal of a tree is unique.That is, if two trees have the same pre-order traversal, then we know they are identical trees in values and structure.
-
-To see this, consider reconstructing a tree from its pre-order  traversal (with NULL nodes indicated). For example: 1, 2, 4, X, X, X, 3, X, X.
-
-The root is 1, and its left node, 2, follows it. 2.left must be 4. 4 must have two NULL nodes (since it is followed by two Xs). 4 is complete, so we move back up to its parent, 2. 2.right is another X (NULL). 1's left subtree is now complete, so we move to 1's right child. We place a 3 with two NULL children there.The tree is now complete.
-
-```
-			  1
-		    /    \
-		2			3
-	  /   \       /   \
-	4		x 	x 		x
-   /  \
- x 		x
-```
-
-This whole process was deterministic, as it will be on any other tree. A pre-order traversal always starts at the root and, from there, the path we take is entirely defined by the traversal.Therefore, two trees are iden­ tical if they have the same pre-order traversal.
-
-Now consider the subtree problem. lfT2's pre-order traversal is a substring of Tl's pre-order traversal, then T2's root element must be found inTl. If we do a pre-order traversal from this element in Tl, we will follow an identical path toT2's traversal. Therefore, T2 is a subtree of Tl.
-
-Implementing this is quite straightforward. Wejust need to construct and compare the pre-order traversaIs.
-
-```java
-1     boolean  containsTree(TreeNode tl, TreeNode t2) {
-2          StringBuilder stringl     new StringBuilder();
-3         StringBuilder string2  = new StringBuilder();
-4
-5          getOrderString(tl,  stringl);
-6          getOrderString(t2,  string2);
-7
-8          return stringl.indexOf(string2.toString())  != -1;
-9      }
-10
-11   void  getOrderString(TreeNode node,   StringBuilder sb)   {
-12        if (node  == null) {
-13             sb. append("X");                            // Add null indicator
-14             return;
-15        }
-16		  sb.append(node.data  +  "   ");  // Add root
-17		  getOrderString(node.left, sb);   // Add left 
-18		  getOrderString(node.right, sb);  // Add right
-19   }
-```
-
-This approach takes O(n  +  m) time and O(n  +  m) space, where n and mare the number of nodes inTl and T2, respectively. Given millions of nodes, we might want to reduce the space complexity.
-
-##### The Alternative Approach
-
-An alternative approach is to search through the larger tree, Tl. Each time a node in Tl matches the root ofT2, call matchTree.The matchTree method will compare the two subtrees to see if they are identical.
-
-Analyzing the runtime is somewhat complex. A naive answer would be to say that it is O(nm) time, where n is the number of nodes in Tl and mis the number of nodes in T2. While this is technically correct, a little more thought can produce a tighter bound.
-
-We do not actually call matchTree on every node in Tl. Rather, we call it k times, where k is the number of occurrences ofT2's root inTl.The runtime is closer too(n   +  km).
-
-In fact, even that overstates the runtime.  Even if the root were identical, we exit matchTree when we find a difference betweenTl andT2. We therefore probably do not actually look at m nodes  on each call of matchTree.
-
-The code below implements this algorithm.
-
-```java
-1      boolean containsTree(TreeNode  tl, TreeNode  t2)  {
-2        if (t2  ==   null) return  true;   //  The empty  tree  is always a  subtree
-3             return  subTree(tl,   t2);
-4    }
-5
-6     boolean  subTree(TreeNode   rl, TreeNode  r2)  {
-7           if (rl ==   null)  {
-8                return  false;   // big  tree  empty   &  subtree still not found.
-9           }  else if (rl.data ==   r2.data  &&  matchTree(rl,  r2))  {
-10              return  true;
-11        }
-12        return  subTree(rl.left,  r2)   ||  subTree(rl.right,  r2);
-13    }
-14
-15   boolean  matchTree(TreeNode   rl, TreeNode  r2)  {
-16        if (rl == null  &&  r2 ==  null) {
-17              return  true;   II nothing left in  the  subtree
-18         }  else if (rl == null   ||  r2  ==  null) {
-19               return  false;   // exactly tree  is empty, therefore  trees  don't  match
-20      }  else if (rl.data  != r2.data)   {
-21              return  false;    // data doesn't  match
-22      }  else {
-23           return  matchTree(rl.left,  r2.left) &&  matchTree(rl.right,  r2.right);
-24      }
-25    }
-```
-
-When might the simple solution be better, and when might the alternative approach be better? This is a great conversation to have with your interviewer.  Here are a few thoughts on that matter:
-
-1.  The simple solution  takes O(n + m) memory. The alternative solution takes O(log(n)  + log(m))
-memory. Remember: memory usage can be a very big deal when it comes to scalability.
-2.  The simple solution  is O(n   +  m) time and the alternative  solution  has a worst case time of O(nm).
-However, the worst  case time can be deceiving; we need to look deeper than that.
-3. A slightly tighter bound on the runtime, as explained  earlier, is O(n  +  km), where k is the number of occurrences ofT2's root inTl. Let's suppose the node data forTl andT2 were random numbers picked
-between O and p.The value of k would be approximately n/p. Why? Because each of n nodes in Tl has a  1/p chance of equaling the root, so approximately  n/p nodes in Tl should equal T2. root. So, let's
-say p =  1000, n =  1000000 and m =  100. We would  do somewhere  around  l,100,000 node checks (1100000 = 1000000 + (100 * 1000000)/100).
-4.  More complex mathematics and assumptions could get us an even tighter  bound. We assumed in #3 above that if we call matchTree, we would end up traversing  all m nodes of T2. It's far more likely, though,  that we will find a difference  very early on in the tree and will then exit early.
-
-In summary, the alternative approach is certainly more optimal in terms of space and is likely more optimal in terms of time  as well. It all depends on what assumptions you make and whether you prioritize reducing
- the average case runtime at the expense of the worst case runtime. This is an excellent point to make to your interviewer.
-
-**4.11 	Random Node:** You are implementing a binary search tree class from scratch, which, in addition to insert, find, and delete, has a method getRandomNode()  which returns a random node from the tree. All nodes should be equally likely to be chosen. Design and implement an algorithm for getRandomNode,  and explain how you would implement the rest of the methods.
-
-SOLUTION
-
----
-
-Let's draw an example.
-```
-			20
-		   /   \
-		10		30
- 	  /    \
-	5		15
-   /  \	   /   \
-3		7		17
-```
-
-We're going to explore many solutions until we get to an optimal one that works.
-
-One thing we should realize here is that the question was phrased in a very interesting way. The interviewer did not simply say, "Design an algorithm to return a random node from a binary tree:'We were told that this is a class that we're building from scratch. There is a reason the question was phrased that way.We probably need access to some part of the internals of the data structure.
-
-##### Option #1  [Slow & Working]
-
-One solution is to copy all the nodes to an array and return a random element in the array. This solution will take O(N)  time and O(N)  space, where N is the number of nodes in the tree.
-
-We can guess our interviewer is probably looking for something more optimal, since this is a little too straightforward  (and should make us wonder why the interviewer gave us a binary tree, since we don't need that information).
-
-We should keep in mind as we develop this solution that we probably need to know something about the internals of the tree. Otherwise, the question probably wouldn't specify that we're developing the tree class from scratch.
-
-##### Option #2  [Slow & Working)
-
-Returning  to our original  solution  of copying  the nodes to an array, we can explore  a solution  where  we maintain  an array at all times that lists all the nodes in the tree. The problem  is that we'll need to remove nodes from this array as we delete them from the tree, and that will take O(N) time.
-
-##### Option #3  [Slow & Working]
-
-We could label all the nodes with an index from 1  to N and label them in binary search tree order (that is, according to its inorder traversal). Then, when we call getRandomNode,  we generate a random index between 1  and N. If we apply the label correctly, we can use a binary search tree search to find this index.
-
-However, this leads to a similar issue as earlier solutions. When we insert a node or a delete a node, all of the indices might need to be updated. This can take O(N) time.
-
-##### Option #4 [Fast & Not Working]
-
-What if we knew the depth of the tree? (Since we're building  our own class, we can ensure that we know this. It's an easy enough piece of data to track.)
-
-We could pick a random depth, and then traverse left/right randomly until we go to that depth. This wouldn' t actually ensure that all nodes are equally likely to be chosen though.
-
-First, the tree doesn't necessarily have an equal number of nodes at each level. This means that nodes on levels with fewer nodes might be more likely to be chosen than nodes on a level with more nodes.
-
-Second, the random path we take might end up terminating before we get to the desired level. Then what? We could just return the last node we find, but that would mean unequal probabilities at each node.
-
-##### Option #5 [Fast & Not Working]
-
-We could try just a simple approach: traverse randomly down the tree. At each node:
-
-- With  1/3 odds, we return the current node.
-- With  1/3 odds, we traverse left.
-- With  1/3 odds, we traverse right.
-
-This solution, like some of the others, does not distribute the probabilities evenly across the nodes. The root has a X probability of being selected-the same as all the nodes in the left put together.
-
-##### Option #6 [Fast & Working]
-
-Rather than just continuing to brainstorm new solutions, let's see if we can fix some of the issues in the previous solutions. To do so, we must diagnose-deeply-the root problem in a solution.
-
-Let's look at Option #5. It fails because the probabilities aren't evenly distributed across the options. Can we fix that while keeping the basic algorithm the same?
-
-We can start with the root. With what probability should we return the root? Since we have N nodes, we must return the root node with 1/N probability. (In fact, we must return each node  with 1/N probability. After all, we have N nodes and each must have equal probability. The total must be 1 (100%), therefore each must have 1/N probability.)
-
-We've resolved the issue with the root. Now what about the rest of the problem? With what probability should we traverse left versus right? It's not  50/50.  Even in a balanced tree, the number of nodes on each side might not be equal.  If we have more nodes on the left than the right, then we need to go left more often.
-
-One way to think about it is that the odds of picking something-anything-from the left must be the sum of each individual probability. Since each node must have probability 1/N, the odds of picking something from the left must have probability LEFT_SIZE  *  1/N. This should therefore be the odds of going left.
-Likewise, the odds of going right should be RIGHT_SIZE *   1/N.
-
-This means that each node must know the size of the nodes on the left and the size of the nodes on the right. Fortunately, our interviewer has told us that we're building  this tree class from scratch. It's easy to keep track of this size information on inserts and deletes. We can just store a size variable in each node. Increment size on inserts and decrement it on deletes.
-
-```java
-1      class TreeNode {
-2         private int data;
-3            public  TreeNode left;
-4         public  TreeNode right;
-5            private int size =  0;
-6
-7             public  TreeNode(int  d)  {
-8              data    =   d;
-9              size =  1;
-10      }
-11
-12       public  TreeNode getRandomNode()   {
-13            int leftSize  =left    ==null?  0     left.size();
-14             Random  random  =  new Random();
-15            int index  =  random.nextint(size);
-16            if (index   <  leftSize) {
-17                 return  left.getRandomNode();
-18          } else if (index    ==    leftSize) {
-19                 return this;
-20          } else {
-21                 return  right.getRandomNode();
-22          }
-23      }
-24
-25          public   void  insertinOrder(int d)  {
-26            if (d  <=  data) {
-27                        if (left ==null) {
-28                      left = new TreeNode(d);
-29                } else {
-30                      left.insertlnOrder(d);
-31                }
-32          } else {
-33                 if (right == null) {
-34                      right   =new  TreeNode(d);
-35               } else {
-36                      right.insertinOrder(d);
-37               }
-38          }
-39            size++;
-40      }
-41
-42       public  int size() {  return size;}
-43       public  int data() {  return data;}
-44
-45       public   TreeNode find(int d)  {
-46            if (d    ==data)  {
-47                 return this;
-48           } else if (d  <=  data) {
-49                 return left  != null?  left.find(d) :   null;
-50          } else if (d  >  data) {
-51                 return right  != null ?  right.find(d) :  null;
-52                }
-53            return null;
-54       }
-55 }
-```
-
-In a balanced tree, this algorithm will be O(log N), where N is the number of nodes.
-
-##### Option #7 [Fast & Working]
-
-Random number calls can be expensive.  If we'd like, we can reduce the number of random number calls substantially.
-
-*Imagine* we called getRandomNode on the tree below, and then traversed left.
-
-```
-			20
-		   /   \
-		10		30
- 	  /    \	   \
-	5		15		35
-   /  \	   /   \
-3		7		17
-```
-
-We traversed left because we picked a number between O and 5 (inclusive). When we traverse left, we again pick a random number between O and 5. Why re-pick? The first number will workjust fine.
-
-But what if we went right instead? We have a number between 7 and 8 (inclusive) but we would need a number between O and 1  (inclusive). That's easy to fix:just subtract out LEFT_SIZE  +  1.
-
-Another way to think about what we're doing is that the initial random number call indicates which node (i) to return, and then we're locating the ith node in an in-order traversal. Subtracting LEFT_SIZE  +  1 from i reflects that, when we go right, we skip over LEFT_SIZE  + 1 nodes in the in-order traversal.
-
-```java
-1     class  Tree {
-2       TreeNode root=   null;
-3 
-4        public int size() { return  root == null?  0   root.size(); } 
-5
-6          public  TreeNode getRandomNode() {
-7               if (root  ==  null) return  null;
-8
-9               Random random  =  new Random();
-10          int i=   random.nextlnt(size());
-11             return  root.getlthNode(i);
-12      }
-13
-14      public  void insertinOrder(int value) {
-15            if (root==  null) {
-16                  root  = new   TreeNode(value);
-17              }  else  {
-18                 root.insertlnOrder(value);
-19              }
-20           }
-21  }
-22
-23   class  TreeNode {
-24     /* construc tor  and variables are the same. */
-25
-26        public  TreeNode  getlthNode(int i) {
-27             int leftSize =left==   null?  0: left.size();
-28             if (i <   leftSize) {
-29              return  left.getithNode(i);
-30          }  else  if (i ==  leftSize) {
-31                 return  this;
-32          }  else  {
-33                    /*  Skipping over leftSize +  1  nodes, so subtract  them. */
-34                    return right.getlthNode(i -  (leftSize +  1));
-35            }
-36        }
-37 		 public void insertlnOrder(int  d) {/* same  */}
-38		 public int size() { return size; }
-39		 public  TreeNode find(int d) {/* same   */} 
-40
-41    }
-```
- 
-
-Like the  previous algorithm, this algorithm takes  O( log  N) time  in a balanced tree. We can also describe the  runtime as O(D), whereDis the max depth of the  tree.  Note that O(D) is an accurate description of the runtime whether the  tree  is balanced or not.
-
-
-**4.12 	Paths  with Sum:** You are given  a binary  tree  in which  each node contains an integer value (which might be  positive or negative). Design  an algorithm to count the  number of paths that sum  to a given  value. The path does not  need to start  or end at the  root  or a leaf, but  it must go downwards
-(traveling only from parent nodes to child nodes).
-
-SOLUTION
-
----
-
-Let's pick a potential sum-say, 8-and then draw  a binary  tree  based on this. This tree  intentionally has a number of paths with this sum.
-
-```
-			10
-		   /   \
-		5		-3
- 	  /    \	   \
-	3		2		11
-   /  \	   /  \
-  3	    -2		1
-```
-
-##### Solution #1: Brute  Force
-
-In the  brute force approach, we just  look at all possible paths. To do this, we traverse to each node.  At each node,  we recursively try all paths downwards, tracking the  sum  as we go. As soon  as we hit our target sum, we increment the  total.
-
-```java
-1      int countPathsWithSum(TreeNode  root,  int  targetSum) {
-2           if (root ==  null)  return  0;
-3
-4           /*  Count paths with sum  starting from the root.   */
-5           int pathsFromRoot =  countPathsWithSumFromNode(root, targetSum,   0);
-
-7           /* Try   the  nodes on  the left  and  right. */
-8           int  pathsOnleft =  countPathsWithSum(root.left,  targetSum);
-9           int  pathsOnRight =  countPathsWithSum(root.right,  targetSum);
-10
-11         return pathsFromRoot +  pathsOnLeft +  pathsOnRight;
-12    }
-13
-14   /*  Returns the  number of  paths  with this sum  starting from this  node. */
-15 int countPathsWithSumFromNode(TreeNode  node, int targetSum,  int currentSum) {
-16       if (node == null)  return 0;
-17
-18       currentSum += node.data;
-19
-20       int  totalPaths = 0;
-21       if (currentSum ==  targetSum) {  II Found a path from the  root
-22            totalPaths++;
-23         }
-24
-25         totalPaths += countPathsWithSumFromNode(node.left,   targetSum,  currentSum);
-26       totalPaths += countPathsWithSumFromNode(node.right,   targetSum,  currentSum);
-27       return totalPaths;
-28  }
-```
-
-What is the time complexity of this algorithm?
-
-Consider that node at depth d will be "touched" (via countPathsWithSumFromNode)  by d nodes above it. 
-
-In a balanced binary tree, d will be no more than approximately log   N. Therefore, we know that with N nodes in the tree, countPathsWithSumFromNode will be called O(N log  N) times.The runtime is O(N log N).
-
-We can also approach this from the other direction. At the root node, we traverse to all N - 1 nodes beneath it (via countPathsWithSumFromNode). At the second level (where there are two nodes), we traverse to N   -  3 nodes. At the third level (where there are four nodes, plus three above those), we traverse to N   -   7 nodes. Following this pattern, the total work is roughly:
-```
-(N -  1)  + (N -  3) + (N  -  7)  +  (N  -  15)  +  (N -  31) + ••• +  (N  -  N)
-```
-To simplify this, notice that the left side of each term is always N and the right side is one less than a power of two. The number of terms is the depth of the tree, which is O(log  N). For the right side, we can ignore the fact that it's one less than a power  of two. Therefore, we really have this:
-```
-O(N   *  [number  of  terms]  -  [sum  of  powers  of  two from 1 through  N])
-O(N  log  N   -  N)
-O(N  log  N)
-```
-If the value of the sum of powers of two from 1 through N isn't obvious to you, think about what the powers of two look like in binary:
-0001
-```
-+  0010
-+  0100
-+  1000
--------
-=  1111
-```
-Therefore, the runtime  is O(N log N) in a balanced tree.
-
-In an unbalanced tree, the runtime could be much worse. Consider a tree that is just a straight line down. At the root, we traverse to N  -  1 nodes. At the next level (withjust  a single node), we traverse to N -  2 nodes. At the third level, we traverse to N   -   3 nodes, and so on. This leads us to the sum of numbers between 1 and N, which is 0(N² ).
-
-##### Solution #2: Optimized
-
-In analyzing the last solution, we may realize that we repeat some work. For a path such as 10  ->  5   -> 3  ->   -2, we traverse this path (or parts of it) repeatedly. We do it when we start with node  10, then when we go to node 5 (looking at 5, then 3, then  -2), then  when  we go to node  3, and then  finally  when  we go to node -2. Ideally, we'd like to reuse this work.
-
-```
-			10
-		   /   \
-		5		-3
- 	  /    \	   \
-	3		1		11
-   /  \	   /  \
-  3	    -2	   2
-```
-
-
-Let's isolate a given path and treat it as just an array. Consider a (hypothetical, extended) path like:
-```
-10 -> 5   -> 1  -> 2  ->  -1  ->  -1  -> 7  -> 1  -> 2
-```
-What we're really saying then is: How many contiguous subsequences in this array sum to a target sum such as 8? In other words, for each y, we're trying to find the x values  below.  (Or, more accurately, the number of x values below.)
-
-![](media/04_7_8.JPG)
-
-If each value knows its running sum (the sum of values from s through itself), then we can find this pretty easily. We just need to leverage this simple equation: runningSumx   =   runningSumY -  targetSum. 
-We then look for the values of x where this is true.
-
-![](meida/04_7_9.JPG)
-
-Since we're just looking for the number of paths, we can use a hash table. As we iterate through the array, build a hash table that maps from a runningSum to the number of times we've seen that sum. Then, for
-each y, look up runningSumY   -  targetSum in the hash table. The value in the hash table will tell you the number of paths with sum targetsum that end at y.
-
-For example:
-```
-index:   0       1         2          3            4         5         6       7       8 
-------------------------------------------------------------------------------------------
-value:   10 ->   5  -> 1  -> 2 -> -1  ->  -1  -> 7  ->  1  ->  2 
-sum:       10     15     16     18       17       16     23        24     26
-```
-The value of runningSum7 is 24. lf targetSum is 8, then we'd look up 16 in the hash table.This would have a value of 2 (originating from index 2 and index 5). As we can see above, indexes 3 through 7 and indexes
-6 through 7 have sums of 8.
-
-Now that we've settled the algorithm for an array, let's review this on a tree. We take a similar approach.
-
-We traverse through the tree using depth-first search. As we visit each node:
-
-1.  Track its runningSum. We'll take this in as a parameter and immediately increment it by node. value.
-2.  Look up runningSum  -  targetSum in the hash table. The value there indicates the total number. Set totalPaths to this value.
-3.   If runningSum  ==  targetSum, then there's one additional path that starts at the root. Increment totalPaths.
-4.   Add runningSum to the hash table (incrementing the value if it's already  there).
-5.   Recurse left and right, counting the number of paths with sum targetSum.
-6.   After we're done recursing left and right, decrement the value of runningSum in the hash table. This is essentially backing out of our work; it reverses the changes to the hash table so that other nodes don't use it (since we're now done with node).
-
-Despite the complexity of deriving this algorithm, the code to implement this is relatively simple.
-
-```java
-1     int countPathsWithSum(TreeNode root, int targetSum)   {
-2         return  countPathsWithSum(root, targetSum,   0,  new HashMap<Integer, Integer>());
-3     }
-4
-5    int countPathsWithSum(TreeNode  node,  int targetSum,   int runningSum,
-6                                              HashMap<Integer, Integer> pathCount)  {
-7         if (node  ==  null) return 0;  // Base case
-8
-9         /*  Count paths   with  sum ending  at the  current node.  */
-10       runningSum +=  node.data;
-11       int sum=  runningSum -  targetSum;
-12       int totalPaths =  pathCount.getOrDefault(sum,  0);
-13
-14       /*  If runningSum equals   targetSum,   then  one additional path  starts at root.
-15         * Add   in  this path.*/
-16       if (runningSum == targetSum)  {
-17            totalPaths++;
-18       }
-19
-20       /*  Increment  pathCount,  recurse,  then  decrement  pathCount. */
-21       incrementHashTable(pathCount,  runningSum,  1);  // Increment  pathCount
-22       totalPaths += countPathsWithSum(node.left,  targetSum,   runningSum, pathCount);
-23       totalPaths +=  countPathsWithSum(node.right,  targetSum,   runningSum, pathCount);
-24       incrementHashTable(pathCount,  runningSum, -1);   // Decrement pathCount
-25
-26       return totalPaths;
-27   }
-28
-29  void  incrementHashTable(HashMap<Integer,  Integer> hashTable,   int key,  int delta) {
-30       int newCount   =  hashTable.getOrDefault(key,  0)  +  delta;
-31       if (newCount == 0)  {//Remove  when zero  to  reduce  space  usage
-32            hashTable.remove(key);
-33       }  else   {
-34            hashTable.put(key,  newCount);
-35         }
-36   }
-```
-
-The runtime for this algorithm is O(N), where N is the number of nodes in the tree. We know it is O(N) because we travel to each node just once, doing O(1) work each time. In a balanced tree, the space complexity is O( log   N) due to the hash table. The space complexity can grow to O(n) in an unbalanced tree.
-
 
 
 ## 5 Solutions to Bit Manipulation
@@ -4892,4228 +785,11 @@ Be careful on this problem; there are a lot of"gotchas" and special cases. For e
 
 ## 6 Solutions to Math and  Logic  Puzzles
 
-**6.1       The Heavy Pill:** You have 20 bottles ofpills. 19 bottles have 1.0 gram pills, but one has pills of weight 1.1 grams. Given a scale that provides an exact measurement, how would you find the heavy bottle? You can only use the scale once.
-
-SOLUTION
-
----
-
-Sometimes, tricky constraints can be a clue. This is the case with the constraint that we can only use the scale once.
-
-Because we can only use the scale once, we know something interesting: we must weigh multiple pills at the same time. In fact, we know we must weigh pills from at least 19 bottles at the same time. Other­ wise, if we skipped two or more bottles entirely, how could we distinguish between those missed bottles? Remember that we only have one chance to use the scale.
-
-So how can we weigh pills from more than one bottle and discover which bottle has the heavy pills? Let's suppose there were just two bottles, one of which had heavier pills. If we took one pill from each bottle, we would get a weight of 2.1 grams, but we wouldn't know which bottle contributed the extra 0.1 grams. We know we must treat the bottles differently somehow.
-
-If we took one pill from Bottle #1 and two pills from Bottle #2, what would the scale show? It depends. If Bottle #1 were the heavy bottle, we would get 3.1 grams. If Bottle #2 were the heavy bottle, we would get
-3.2 grams. And that is the trick to this problem.
-
-We know the "expected" weight of a bunch of pills. The difference between the expected weight and the actual weight will indicate which bottle contributed the heavier pills, provided we select a different number of pills from each bottle.
-
-We can generalize this to the full solution: take one pill from Bottle #1, two pills from Bottle #2, three pills from Bottle #3, and so on. Weigh this mix of pills. If all pills were one gram each, the scale would read 210 grams (1  +  2  +   •  •  •     +  20  =  20  *   21  / 2  =  210). Any "overage" must come from the extra 0.1 gram pills.
-
-This formula will tell you the bottle number:
-```
-	weight - 210 grams
-	------------------
-		0.l grams
-```
-
-So, if the set of pills weighed 211.3 grams, then Bottle #13 would have the heavy pills.
-
-**6.2        Basketball:** You have a basketball  hoop  and someone  says that  you can play one oftwo games.
-
-Game 1: You get one shot to make the hoop.
-
-Game 2: You get  three  shots and you have to make two of three shots.
-
-If p is the probability  of making a particular shot, forwhich  values of p should you pick one game or the other?
-
-SOLUTION
-
----
-
-To solve this problem, we can apply straightforward  probability  laws by comparing the probabilities of winning each game.
-
-
-##### Probability of winning Game  1:
-
-The probability ofwinning Game  1 is p, by definition.
-
-
-##### Probability of winning Game 2:
-
-Lets ( k, n) be the probability ofmaking exactly k shots out ofn. The probability ofwinning Game 2is the probability of making exactly two shots out ofthree OR making all three shots. In other words:
-
-P(winning)=  s(2, 3)+  s(3, 3) 
-
-The probability  of making all three shots is:
-
-s( 3, 3)   =    p^3
-
-The probability of making exactly two shots is: 
-
-```
-P(making1 and  2,  and missing 3)
-	+  P(making 1  and   3, and mis sing2)
-	+  P(mis s ing1,  and making2and  3)
-   = p *  p *  (1-p)  +  p  *  (1-p)  *  p +   (1-p)  *  p *  P
-   = 3(1-p)p^2
-```
-
-Adding these together, we get:
-
-```
-   = p^3   +  3(1  -   p)p^2
-   = p^3   +  3p^2   - 3p^3
-   = 3p^2   - 2p^3
-```
-
-Which game should you play?
-
-You should play Game 1  if P ( Game   1)  >   P (Game   2):
-```
-p >  3p^2   -  2p^3 •
-1  >   3p   - 2p^2
-2p^2   - 3p +  1   >  0 
-(2p - l)(p -   1) >   0 
-```
-Both terms must be positive, or both must be negative. But we know p  <   1, so p  -  1  <  0. This means both terms must be negative.
-```
-2p-1  <   0
-2p <   1
-p <    .5
-```
-So, we should play Game 1 if0  <   p  <  .5 and  Game  2 if .5   <   p  <   1.
-
-lf p  =  0,0.5,or 1, then P(Game  1)  = P(Game 2),so it doesn't matterwhichgame we play.
-
-
-**6.3       Dominos:** There is an 8x8 chessboard in which two diagonally opposite corners have been cut off. You are given 31 dominos,  and a single domino can cover exactly two squares. Can you use the 31 dominos to cover the entire board? Prove your answer (by providing an example or showing why it's impossible).
-
-SOLUTION
-
----
-
-At first, it seems like this should be possible. It's an 8 x 8 board, which has 64 squares, but two have been cut off, so we're down to 62 squares. A set of 31 dominoes should be able to fit there, right?
-
-When we try to lay down dominoes on row 1, which only has 7 squares, we may notice that one domino must stretch into the row 2. Then, when we try to lay down dominoes onto row 2, again we need to stretch a domino into row 3.
-
-![](media/06_3_1.JPG)
-
-For each row we place, we'll always have one domino that needs to poke into the next row. No matter how many times and ways we try to solve this issue, we won't be able to successfully lay down all the dominoes.
-
-There's a cleaner, more solid proof for why it won't work. The chessboard initially has 32 black and 32 white squares. By removing opposite corners (which must be the same color), we're left with 30 of one color and 32 of the other color. Let's say, for the sake of argument, that we have 30 black and 32 white squares.
-
-Each domino we set on the board will always take up one white and one black square. Therefore,  31 dominos will take up 31 white squares and 31 black squares exactly. On this board, however, we must have 30 black squares and 32 white squares. Hence, it is impossible.
-
-
-**6.4 	Ants on a Triangle:** There are three ants on different vertices of a triangle. What is the probability of collision (between any two or all of them) if they start walking on the sides of the triangle? Assume that each ant randomly picks a direction, with eitherdirection being equally likely to be chosen, and that they walk at the same speed.
-Similarly, find the probability of collision with n ants on an n-vertex polygon.
-
-SOLUTION
-
----
-
-The ants will collide  if any of them are moving towards each other. So, the only way that they won't collide is if they are all moving in the same direction  (clockwise or counterclockwise). We can compute this prob­ ability and work backwards from there.
-
-Since each ant can move in two directions, and there are three ants, the probability  is:
-
-```
-P (clockwise)= (1/2)^3
-P (counter clockwise)= (1/2)^3
-P (same direction)= (1/2)^3 + (1/2)^3 = 1/4
-```
-The probability of collision  is therefore the  probability of the  ants not moving in the  same direction:
-
-```
-P (collision)= 1-P (same direction)= 1-1/4 = 3/4
-```
-To generalize this to an n-vertex polygon: there are still only two ways in which the  ants can move to avoid a collision, but there are 2" ways they  can move in total. Therefore, in general, probability of collision  is:
-```
-P (clockwise)= (1/2)^n 
-P (counter)= (1/2)^n
-P (same direction)= 2 (1/2)^n = (1/2)^(n-1)
-P (collision)= 1- P (same direction)= 1- (1/2)^(n-1)
-```
-
-**6.5 	Jugs of Water:** You have  a five-quart jug, a three-quart jug, and an unlimited supply of water (but no measuring cups).  How would you come up with  exactly  four quarts of water? Note that the jugs are oddly shaped, such that filling up exactly "half" of the jug would be impossible.
-
-SOLUTION
-
----
-
-If we just play with the jugs,  we'll find that we can pour water back and forth between them as follows:
-
-| 5 Quart | 3 Quart | Action                                  |
-| --      | --      | --                                      |
-| 5       | 0       | Filled 5-quart jug.                     |
-| 2       | 3       | Filled 3-quart with 5-quart's contents. |
-| 2       | 0       | Dumped 3-quart.                         |
-| 0       | 2       | Fill 3-quart with 5-quart's contents.   |
-| 5       | 2       | Filled 5-quart.                         |
-| 4       | 3       | Fill remainder of 3-quart with          |
-| 4       |         | Done! We have  4 quarts.                |
-
-This question, like many puzzle questions, has a math/computer science root.  If the  two jug  sizes are rela­tively prime, you can measure any value between one  and the  sum of the jug  sizes.
-
-
-**6.6 	Blue-Eyed Island:** A bunch of people are living on an island, when a visitor comes with a strange order: all blue-eyed people must leave the island as soon as possible. There will be a flight out at
-8:00pm every evening. Each person can see everyone else's eye color, but they do not know their own (nor is anyone allowed to tell them). Additionally, they do not know how many people have blue eyes, although they do know that at least one person does. How many days will it take the blue-eyed people to leave?
-pg113
-
-SOLUTION
-
----
-
-Let's apply the Base Case and Build approach. Assume that there are n people on the island and c of them have blue eyes. We are explicitly told that c  >   0.
-
-
-##### Case c = 1: Exactly one person has blue eyes.
-
-Assuming all the people are intelligent, the blue-eyed person should look around and realize that no one else has blue eyes. Since he knows that at least one person has blue eyes, he must conclude that it is he who has blue eyes. Therefore, he would take the flight that evening.
-
-
-##### Case c = 2: Exactly two people have blue eyes.
-
-The two blue-eyed people see each other, but are unsure whether c is 1  or 2. They know, from the previous case, that if c = 1, the blue-eyed person would leave on the first night. Therefore, if the other blue-eyed person is still there, he must deduce that c = 2, which means that he himself has blue eyes. Both men would then leave on the second night.
-
-
-##### Case c > 2: The  General Case.
-
-As we increase  c, we can see that this logic continues to apply. If c = 3, then those three people will imme­ diately know that there are either 2 or 3 people with blue eyes.  If there were two people, then those two people would have left on the second night. So, when the others are still around after that night, each person would conclude that c = 3 and that they, therefore, have blue eyes too. They would leave that night.
-
-This same pattern extends up through any value of c.Therefore, if c men have blue eyes, it will take c nights for the blue-eyed men to leave. All will leave on the same night.
-
-
-**6.7 The  Apocalypse:** In the new post-apocalyptic world, the world queen is desperately concerned about the birth rate. Therefore, she decrees that all families should ensure that they have one girl or else they face massive fines. If all families abide by this policy-that is, they have continue to have children until they have one girl, at which point they immediately stop-what will the gender ratio of the new generation be? (Assume that the odds of someone having a boy or a girl on any given pregnancy  is equal.) Solve this out logically and then write a computer simulation of it. 
-
-
-SOLUTION
- 
----
-
-If each family abides by this policy, then each family will have a sequence of zero or more boys followed by a single girl. That is, if "G" indicates a girl and "B" indicates a boy, the sequence of children will look like one of: G; BG; BBG; BBBG; BBBBG; and so on.
-
-We can solve this problem multiple ways.
-
-##### Mathematically
-
-We can work out the probability for each gender sequence.
-
-- P(G) = 1/2.T hat is, 50% of families  will have a girl first. The others will go on to have more children.
-- P(BG) = 1/4. Of those who have a second child (which is 50%), 50% of them will have a girl the next time.
-- P(BBG) = 1/8. Of those who have a third child (which  is 25%), 50% of them will have a girl the next time.
-
-And so on.
-
-We know  that every family has exactly one girl. How many  boys does each family have, on average? To compute this, we can look at the expected  value  of the number of boys. The expected value of the number of boys is the probability of each sequence multiplied by the number of boys in that sequence.
-
-| Sequence | Number of Boys | Probablility | Number of Boys * Probablility |
-| --       | --             | --           | --                            |
-| G        | 0              | 1/2          | 0                             |
-| BG       | 1              | 1/4          | 1/4                           |
-| BBG      | 2              | 1/8          | 2/8                           |
-| BBBG     | 3              | 1/16         | 3/16                          |
-| BBBBG    | 4              | 1/32         | 4/32                          |
-| BBBBBG   | 5              | 1/64         | 5/64                          |
-| BBBBBBG  | 6              | 1/128        | 6/128                         |
-
-Or in other words,  this is the sum of i to infinity of i divided  by 2^i.
-
-Σ(i/2, i=0, ∞)
-
-You probably won't know this off the top of your head, but we can try to estimate it. Let's try converting the above values to a common denominator of 128 (2^6). 
-
-```
-1/4 = 32/128			4/32 = 16/128
-2/8 = 32/128			5/64 = 10/128
-3/16 = 24/128			6/128 = 6/128
-
-32 + 32 + 24 + 16 + 10 + 6   120
--------------------------- = ---
-           128				 128
-```
-
-This looks like it's going  to inch closer to 12X28  (which  is of course  1). This "looks like" intuition is valuable, but it's not exactly a mathematical concept. It's a clue though and we can turn to logic here. Should it be 1?
-
-
-##### Logically
-
-If the earlier sum is 1, this would mean that the gender ratio is even. Families contribute exactly one girl and on average one boy. The birth policy  is therefore ineffective. Does this make sense?
-
-At first glance. this seems wrong. The policy is clPsigned to favor girls as it ensures that all families have a girl.
-
-On the other hand, the families that  keep having children contribute  (potentially) multiple boys to the population. This could offset the impact of the "one girl" policy.
-
-One way to think about this is to imagine that we put all the gender sequence of each family into one giant string. So if family  1  has BG, family  2 has BBG, and family 3 has G, we would write BGBBGG.
-
-In fact, we don't really care about the groupings of families because we're concerned about the population as a whole. As soon as a child is born, we can just append its gender (B or G) to the string.
-
-What are the odds of the next character being a G? Well, if the odds of having a boy and girl is the same, then the odds of the next character being a G is 50%. Therefore, roughly half of the string should be Gs and half should be Bs, giving an even gender ratio.
-
-This actually makes a lot of sense. Biology hasn't been changed. Half of newborn babies are girls and half are boys. Abiding by some rule about when to stop having children doesn't change this fact.
-
-Therefore, the gender ratio is 50% girls and 50% boys.
-
-
-Simulation
-
-We'll write this in a simple way that directly corresponds to the problem.
-
-```java
-1     double  runNFamilies(int n)  {
-2          int boys  = 0;
-3         int girls =  0;
-4          for (int i =  0;  i <   n;  i++)   {
-5               int[] genders   = runOneFamily();
-6               girls += genders[0);
-7               boys  += genders[l];
-8           }
-9          return girls I (double) (boys  +  girls);
-10   }
-11
-12   int[] runOneFamily()  {
-13        Random  random = new Random();
-14         int boys  =  0;
-15        int girls = 0;
-16        while  (girls == 0)  { II until we have  a  girl
-17             if (random.nextBoolean())  { II girl
-18                  girls += 1;
-19             } else { II boy
-20                  boys  += 1;
-21             }
-22        }
-23        int[] genders   =  {girls,  boys};
-24        return genders;
-25   }
-```
-
-Sure enough, if you run this on large values of n, you should get something very close to 0.5.
-
-
-**6.8 	The Egg Drop Problem:**  There is a building of 100 floors. If an egg drops from the Nth floor or above, it will break. If it's  dropped from any floor below, it will not break.You're given two eggs. Find N, while minimizing the number of drops for the worst case.
-
-SOLUTION
-
----
-
-We may observe that, regardless of how we drop Egg 1, Egg 2 must do a linear search (from lowest to highest) between the "breaking floor" and the next highest non-breaking floor. For example,  if Egg 1 is dropped from floors 5 and 10 without breaking, but it breaks when it's dropped from floor 15, then Egg 2 must be dropped, in the worst case, from floors 11, 12, 13, and 14.
-
-
-##### The Approach
-
-As a first try, suppose we drop an egg from the 10th floor, then the 20th, ...
-
-- If Egg  1 breaks on the first drop (floor 10), then we have at most 10 drops total.
-- If Egg  1 breaks on the last drop (floor 100), then we have at most 19 drops total (floors 10, 20, ...,90, 100, then 91 through 99).
-
-That's pretty good, but all we've considered  is the absolute worst case.We should do some "load balancing" to make those two cases more even.
-
-Our goal is to create a system for dropping Egg 1 such that the number of drops is as consistent as possible, whether Egg 1 breaks on the first drop or the last drop.
-
-1. A perfectly load-balanced system would be one in which Drops ( Egg 1)  + Drops ( Egg 2) is always the same, regardless of where Egg 1 breaks.
-2. For that to be the case, since each drop of Egg 1 takes one more step, Egg 2 is allowed one fewer step.
-3. We  must,   therefore,  reduce   the   number   of   steps   potentially  required   by   Egg  2   by one  drop  each  time.  For example,  if   Egg  1  is  dropped   on  floor  20  and  then  floor  30, Egg 2 is potentially required to take 9 steps.When we drop Egg 1 again, we must reduce potential Egg 2 steps to only 8. That is, we must drop Egg 1 at floor 39.
-4. Therefore, Egg 1 must start at floor X, then go up by X-1 floors, then X- 2, ..., until it gets to 100.
-
-5. Solve for X.
-```
-X+(X  - l)+(X- 2)+...+1=100
-X(X+l)/2 = 100
-X ≈ 13.65
-```
-X clearly needs to be an integer.Should we round X up or down?
-
-- If we round X up to 14, then we would go up by 14, then 13, then 12, and so on.The last increment would be 4, and it would happen on floor  99. If Egg 1 broke on any of the prior floors, we know we've balanced the eggs such that the number of drops of Egg 1 and Egg 2 always sum to the same thing: 14. If Egg
-1 hasn't broken by floor 99, then we just need one more drop to determine if it will break at floor 100.
-Either way, the number of drops is no more than 14.
-
-- If we round X down to 13, then we would go up by 13, then 12, then 11, and so on.The last increment will be 1 and it will happen at floor 91. This is after 13 drops. Floors 92 through 100 have not been covered yet. We can't cover those floors in just omi drop (which would be necessary to merely tie the "round up" case).
-
-Therefore, we should round X up to 14. That is, we go to floor 14, then 27, then 39, .... This takes 14 steps in the worse case.
-
-As in many other maximizing/minimizing problems, the key in this problem is "worst case balancing:' 
-
-The following code simulates this approach.
-
-```
-1     int  breakingPoint =  ...,
-2     int countDrops=  0;
-3
-4     boolean  drop(int floor) {
-5          countDrops++;
-6         return floor >=  breakingPoint;
-7     }
-8
-9     int  findBreakingPoint(int floors) {
-10       int interval=  14;
-11        int  previousFloor = 0;
-12       int egg1=  interval;
-13
-14       /*  Drop egg1  at  decreasing intervals.  */
-15       while  (!drop(egg1) &&  egg1  <=  floors) {
-16             interval -=  1;
-17             previousFloor = eggl;
-18             egg1  += interval;
-19        }
-20
-21       /*  Drop egg2  at 1 unit increments. */
-22        int egg2  = previousFloor  + 1;
-23       while   (egg2   <  egg1  &&   egg2  <=  floors &&    !drop(egg2)) {
-24             egg2  += 1;
-25        }
-26
-27       /* If it didn't  break, return  -1.   */
-28       return egg2  >floors?  -1  :   egg2;
-29   }
-```
-
-If we want to generalize this code for more building sizes, then we can solve for x in:
-x(x+l)/2  =  number of floors
-
-This will involve the quadratic formula.
-
-
-**6.9         100 Lockers:** There are 100 closed lockers in a hallway.  A man begins by opening all 100 lockers.
-Next, he closes every second locker. Then, on his third pass, he toggles every third locker (closes it if it is open or opens it if it is closed). This process continues for 100 passes, such that on each pass i, the man toggles every ith locker. After his 100th pass in the hallway, in which he toggles only locker #100, how many lockers are open?
-
-SOLUTION
-
----
-
-We can tackle this problem by thinking through what it means for a door to be toggled. This will help us deduce which doors at the very end will be left opened.
-
-##### Question: For which rounds is a door toggled (open or closed)?
-
-A door n is toggled once for each factor of n, including itself and 1. That is, door 15 is toggled on rounds 1,
-3, 5, and 15.
-
-
-##### Question: When would a door be left open?
-
-A door is left open if the number of factors (which we will call x) is odd. You can think about this by pairing factors off as an open and a close. If there's one remaining, the door will be open.
-
-
-##### Question: When would x be odd?
-
-The value x is odd if n is a perfect square. Here's why: pair n's factors by their complements. For example, if n is 36, the factors are (1, 36), (2, 18), (3, 12), (4, 9), (6, 6). Note that (6, 6) only contributes one factor, thus giving n an odd number of factors.
-
-
-Question: How many perfect squares are there?
-
-There are 1O perfect squares. You could count them (1, 4, 9, 16, 25, 36, 49, 64, 81, 100), or you could simply realize that you can take the numbers 1   through 10 and square them:
-```
-1*1,  2*2,  3*3,  ...,   10*10
-```
-
-Therefore, there are 10 lockers open at the end of this process.
-
-
-**6.1 O      Poison:** You have 1000 bottles of soda, and exactly one is poisoned. You have 10 test strips which can be used to detect poison. A single drop of poison will turn the test strip positive permanently. You can put any number of drops on a test strip at once and you can reuse a test strip as many times as you'd like (as long as the results are negative). However, you can only run tests once per day and it takes seven days to return a result. How would you figure out the poisoned bottle in as few days as possible?
-Follow up: Write code to simulate your approach.
-
-
-SOLUTION
-
----
-
-Observe the wording of the problem. Why seven days? Why not have the results just return immediately? 
-
-The fact that there's such a lag between  starting a test and reading the results likely means that we'll be doing something else in the meantime (running additional tests). Let's hold on to that thought, but start off with a simple approach just to wrap our heads around the problem.
-
-##### Naive Approach (28 days)
-
-A simple approach is to divide the bottles across the 10 test strips, first in groups of 100. Then, we wait seven days. When the results come back, we look for a positive result across the test strips. We select the bottles associated with the positive test strip, "toss" (i.e., ignore) all the other bottles, and repeat the process. We perform this operation until there is only one bottle left in the test set.
-
-1.  Divide hottlP<; across available test strips, one drop per test strip.
-2.  After seven days, check the test strips for results.
-3.  On the positive test strip: select the bottles associated with it into a new set of bottles. If this set size is 1,we have located the poisoned bottle. If it's greater than one, go to step 1.
-
-To simulate  this, we'll build classes for Bottle and TestStrip that mirror the problem's functionality.
-```
-1     class Bottle {
-2         private boolean  poisoned=  false;
-3         private int id;
-4
-5            public   Bottle(int id)   {this.id= id;}
-6         public   int get!d() {return  id;}
-7         public   void  setAsPoisoned() {poisoned=  true;}
-8         public   boolean  isPoisoned() {return  poisoned;}
-9       }
-10
-11  class TestStrip {
-12       public   static int DAYS_FOR_RESULT=  7;
-13       private  Arraylist<Arraylist<Bottle>> dropsByDay
-14            new ArrayList<ArrayList<Bottle>>();
-15       private int id;
-16
-17       public   TestStrip(int id) {this.id      id;}
-18       public   int getid() {return  id;}
-19
-20       /*  Resize  list of  days/drops to  be large enough.  */
-21       private void  sizeDropsForDay(int day)  {
-22            while  (dropsByDay.size()  <=  day)  {
-23                 dropsByDay.add(new ArrayList<Bottle>());
-24               }
-25        }
-26
-27       /*  Add  drop  from bottle on specific day.  */
-28       public   void  addDropOnDay(int day,  Bottle bottle)  {
-29            sizeDropsForDay(day);
-30            ArrayList<Bottle> drops  =  dropsByDay.get(day);
-31            drops.add(bottle);
-32      }
-33
-34       /*  Checks if any of  the  bottles in  the  set are  poisoned. */
-35       private boolean  hasPoison(ArrayList<Bottle> bottles) {
-36            for  (Bottle b  :   bottles) {
-37                 if (b.isPoisoned()) {
-38                      return true;
-39                      }
-40              }
-41            return false;
-42          }
-43
-44       /*  Gets  bottles used in  the  test DAYS_FOR_RESULT  days ago.  */
-45       public   Arraylist<Bottle> getlastWeeksBottles(int  day)  {
-46            if (day  <  DAYS_FOR_RESULT) {
-47                 return null;
-48               }
-49            return dropsByDay.get(day  -  DAYS_FOR_RESULT);
-50          }
-51
-52       /*  Checks for  poisoned  bottles since   before  DAYS_FOR_RESULT  */
-53       public   boolean  isPositiveOnDay(int day)  {
-54            int testDay  =  day  -  DAYS_FOR_RESULT;
-55            if (testDay <  0  I    I       testDay  >= dropsByDay.size()) {
-56                 return false;
-57            }
-58            for  (int d =  0;  d <=  testDay;   d++) {
-59                 Arraylist<Bottle> bottles  =  dropsByDay.get(d);
-60                 if (hasPoison(bottles)) {
-61                      return true;
-62                       }
-63            }
-64            return false;
-55       }
-66   }
-```
-
-This is just one way of simulating the behavior of the bottles and test strips, and each has its pros and cons. With this infrastructure built, we can now implement code to test our approach.
-
-```
-1     int  findPoisonedBottle(ArrayList<Bottle> bottles, ArrayList<TestStrip>    strips) {
-2         int today= 0;
-3
-4         while  (bottles.size()    1 &&   strips.size()    0)  {
-5              /*  Run tests. */
-5                  runTestSet(bottles, strips,  today);
-7
-8                  /*  Wait for  results. */
-9                  today+=  TestStrip.DAYS_FOR_RESULT;
-10
-11            /*  Check results. */
-12            for  (TestStrip strip  :   strips) {
-13                 if (strip.isPositiveOnDay(today)) {
-14                      bottles =  strip.getLastWeeksBottles(today);
-15                      strips.remove(strip);
-16                      break;
-17                      }
-18              }
-19        }
-20
-21       if (bottles.size()== 1)  {
-22            return bottles.get(0).getid();
-23	  }
-24       return  -1;
-25    }
-26
-27   /*  Distribute bottles across test  strips  evenly. */
-28  void  runTestSet(ArrayList<Bottle>   bottles, ArrayList<TestStrip>    strips, int day)  {
-29       int index= 0;
-for  (Bottle bottle  :   bottles) {
-31            TestStrip strip  =  strips.get(index);
-32            strip.addDropOnDay(day,   bottle);
-33            index  ; (index  +  1)  %  strips.size();
-34         }
-35   }
-36
-37  /*  The complete  code  can be found in  the  downloadable  code attachment. */
-```
-
-Note that this approach makes the assumption that there will always  be multiple test strips at each round. This assumption is valid for 1000 bottles and 10 test strips.
-
-If we can't assume this, we can implement a fail-safe. If we have just one test strip remaining, we start doing one bottle at a time: test a bottle, wait a week, test another bottle. This approach will take at most 28 days.
-
-##### Optimized Approach (10  days)
-
-As noted in the beginning of the solution, it might be more optimal to run multiple tests at once.
-
-If we divide the bottles up into 10 groups (with bottles O - 99 going to strip 0, bottles 100 - 199 going to strip 1, bottles 200 - 299 going to strip 2, and so on), then day 7 will reveal the first digit of the bottle number. A
-positive result on strip i at day 7 shows that the first digit (1OO's digit) of the bottle number is i.
-
-Dividing the bottles in a different way can reveal the second or third digit. We just need to run these tests on different days so that we don't confuse the results.
-
-|         | Day 0 -> 7 | Day 1 -> 8 | Day 2 -> 9 |
-| --      | --         | --         | --         |
-| Strip 0 | 0xx        | x0x        | xx0        |
-| Strip 1 | 1xx        | xlx        | xxl        |
-| Strip 2 | 2xx        | x2x        | xx2        |
-| Strip 3 | 3xx        | x3x        | xx3        |
-| Strip 4 | 4xx        | x4x        | xx4        |
-| Strip 5 | Sxx        | xSx        | xxS        |
-| Strip 6 | 6xx        | x6x        | xx6        |
-| Strip 7 | 7xx        | x7x        | xx7        |
-| Strip 8 | 8xx        | x8x        | xx8        |
-| Strip 9 | 9xx        | x9x        | xx9        |
-
-For example, if day 7 showed a positive result on strip 4, day 8 showed a positive result on strip 3, and day 9 showed a positive result on strip 8, then this would map to bottle #438.
-
-This mostly works, except for one edge case: what happens if the poisoned bottle has a duplicate digit? For example, bottle #882 or bottle #383.
-
-In fact, these cases are quite different. If day 8 doesn't have any"new" positive results, then we can conclude that digit 2 equals digit 1.
-
-The bigger issue is what happens if day 9 doesn't have any new positive results.  In this case, all we know is that digit 3 equals either digit 1 or digit 2. We could not distinguish between bottle #383 and bottle #388. They will both have the same pattern of test results.
-
-We will need to run one additional test. We could run this at the end to clear up ambiguity, but we can also run it at day 3, just in case there's any ambiguity. All we need to do is shift the final digit so that it winds up in a different place than day 2's results.
-
- 
-|         | Day 0 -> 7 | Day 1 -> 8 | Day 2 -> 9 | Day 3 -> 10 |
-| --      | --         | --         | --         | --          |
-| Strip 0 | 0xx        | x0x        | xx0        | xx9         |
-| Strip 1 | 1xx        | xlx        | xxl        | xx0         |
-| Strip 2 | 2xx        | x2x        | xx2        | xx1         |
-| Strip 3 | 3xx        | x3x        | xx3        | xx2         |
-| Strip 4 | 4xx        | x4x        | xx4        | xx3         |
-| Strip 5 | 5xx        | x5x        | xx5        | xx4         |
-| Strip 6 | 6xx        | x6x        | xx6        | xx5         |
-| Strip 7 | 7xx        | x7x        | xx7        | xx6         |
-| Strip 8 | 8xx        | x8x        | xx8        | xx7         |
-| Strip 9 | 9xx        | x9x        | xx9        | xx8         |
-
- 
-
-Now, bottle #383 will see (Day 7 = #3, Day  8 -> #8, Day 9-> [NONE], Day 10 -> #4), while bottle  #388 will see (Day 7 = #3, Day  8 -> #8, Day 9->  [NONE],  Day  10 -> #9). We can distinguish between these by "reversing" the shifting on day 1O's results.
-
-What happens, though, if day 10 still doesn't see any new results? Could this happen? 
-
-Actually, yes. Bottle #898 would  see (Day 7 = #8, Day 8 -> #9, Day  9->  [NONE],  Day  10 -> [N=ONE]). That's okay, though. Wejust need to distinguish bottle #898 from #899. Bottle #899 will see (Day 7 = #8, Day 9 -> [NONE],  Day  10->  #0).
-
-The "ambiguous" bottles from day 9 will always map to different values on day 10. The logic is:
-
-- If Day  3-> 1O's test reveals a new test result, "unshift" this value to derive the third digit.
-- Otherwise, we know that the third digit equals either the first digit or the second digit and that the third digit, when shifted, still equals either the first digit or the second digit. Therefore, wejust need to figure out whether the first digit "shifts" into the second digit or the other way around. In the former  case, the third digit equals the first digit.  In the latter case, the third digit equals the second digit.
-
-Implementing this requires some careful work to prevent bugs.
-
-```java
-1     int  findPoisonedBottle(ArrayList<Bottle> bottles,  ArrayList<TestStrip>  strips) {
-2       if (bottles.size() >  1000 I  I     strips.size() <  10) return  -1;
-3
-4       int  tests  =  4; II three  digits, plus  one extra
-5          int nTestStrips    =strips.size();
-6
-7          I* Run tests. *I
-8          for  (int day= 0; day < tests;   day++)   {
-9           runTestSet(bottles, strips,  day);
-16          }
-11
-12       I* Get results. *I
-13      HashSet<Integer> previousResults    =new  HashSet<Integer>();
-14     int[] digits  =new  int[tests];
-15        for  (int day= 0; day < tests;   day++)   {
-16             int resultDay   =day+ TestStrip.DAYS_FOR_RESULT;
-17          digits[day] =  getPositi veOnDay(strips,  resultDay,  previousResults);
-18         previousResults.add(digits[day]);
-19         }
-20
-21     I*  If day l's  results matched day 0's,  update the digit. *I
-22      if (digits[l] ==-1)  {
-23             digits[l]  =digits[0];
-24          }
-25
-25     /* If day 2 matched  day 0 or day 1,  check day 3. Day 3 is  the  s ame  as day 2, but
-27       *  in cremented  by 1. */
-28      if (digits[2] ==   -1) {
-29		if (digits[3] ==    -1)  {/*    Day 3 didn't give  new result*/
-30		/*    Digit 2 equals digit  0 or  digit 1.  But,  digit 2,  when incremented  also
-31		*   matches digit 0 or  digit 1. This  means that digit 0 incremented  matches
-32		*   digit 1,  or  the  other   way  around.*/
-33		digits[2]  =  ((digits[0] + 1)%  nTestStrips) ==  digits[l]  ?
-34		digits[0] :   digits[l];
-35		}  else   {
-36                      digits[2]=    (digits[3] -  1 +  nTestStrips)% nTestStrips;
-37                }
-38       }
-39
-40       return digits[0] * 100+digits[!]*    10+digits[2];
-41   }
-42
-43  /*    Run set of  tests for  this day.*/
-44  void  runTestSet(Arraylist<Bottle> bottles,   ArrayList<TestStrip>  strips, int day)  {
-45       if (day  >   3)  return;//    only  works for   3 days  (digits)+one  extra
-46
-47       for  (Bottle bottle :  bottles) {
-48            int index  =  getTestStripindexForDay(bottle,  day,  strips.size());
-49            TestStrip testStrip  =  strips.get(index);
-50            testStrip.addDropOnDay(day,  bottle);
-51       }
-52   }
-53
-54 /*    Get strip that should  be used  on this bottle on this day.*/
-55  int  getTestStripindexForDay(Bottle bottle, int day,  int nTestStrips) {
-56       int id=    bottle.getid();
-57       switch  (day)  {
-58            case  0:  return id/100;
-59                case  1:  return (id% 100)/    10;
-60         case  2:  return id%  10;
-61         case  3:  return (id% 10+1)%  nTestStrips;
-62          default: return -1;
-63     }
-64    }
-
-66  /*    Get results that are  positive for  a  particular day,  excluding   prior results.*/
-67  int getPositiveOnDay(ArrayList<TestStrip>  testStrips,  int  day,
-68                              HashSet<Integer>  previousResults)  {
-69     for  (TestStrip testStrip  :   testStrips) {
-70            int id  =  testStrip.getid();
-71            if (testStrip.isPositiveOnDay(day)  &&    !previousResults.contains(id))  {
-72                 return testStrip.getid();
-73                  }
-74       }
-75       return -1;
-76     }
-```
-
-It will take 10 days in the worst case to get a result with this approach.
-
-##### Optimal Approach (7 days)
-
-We can actually optimize this slightly more, to return a result in just seven days. This is  of course the minimum number of days possible.
-
-Notice what each test strip really means. It's a binary indicator for poisoned or unpoisoned. Is it possible to map 1000 keys to 10 binary values such that each key is mapped to a unique configuration of values? Yes, of course. This is what a binary number is.
-
-We can take each bottle number and look at its binary representation. If there's a 1 in the ith digit, then we will add a drop of this bottle's contents to test strip i. Observe that 210 is 1024, so 10 test strips will be enough to handle up to 1024 bottles.
-
-We wait seven days, and then read the results.  If test strip i is positive, then set bit i of the result value. Reading all the test strips will give us the ID of the poisoned bottle.
-
-```java
-1     int  findPoisonedBottle(ArrayList<Bottle> bottles, ArrayList<TestStrip> strips) {
-2         runTests(bottles,  strips);
-3            Arraylist<Integer> positive  =  getPositiveOnDay(strips,  7);
-4         return setBits(positive);
-5      }
-6
-7    /*  Add  bottle  contents to  test strips */
-8    void  runTests(Arraylist<Bottle> bottles,   ArrayList<TestStrip> testStrips) {
-9         for  (Bottle bottle  :   bottles) {
-10            int id=    bottle.getid();
-11            int bitindex =  0;
-12             while  (id > 0) {
-13                 if ((id &   1)==   1)  {
-14                      testStrips.get(bitindex).addDropOnDay(0,  bottle);
-15                 }
-16                 bitindex++;
-17                 id  »=   1;
-18             }
-19       }
-20    }
-21
-22  /*  Get test strips that are  positive on a  particular day.  */
-23  Arraylist<Integer>  getPositiveOnDay(Arraylist<TestStrip> testStrips, int day)  {
-24       Arraylist<Integer> positive  =  new Arraylist<Integer>();
-25       for  (TestStrip testStrip  :    testStrips) {
-26            int id=    testStrip.getid();
-27             if (testStrip.isPositiveOnDay(day))  {
-28                 positive.add(id);
-29            }
-30         }
-31       return positive;
-32    }
-33
-34  /*  Create  number by setting bits with  indices specified in  positive. */
-35   int  setBits(ArrayList<Integer> positive)  {
-36       int id=    0;
-37       for  (Integer  bitindex  :   positive) {
-38            id  I=            1 <<  bitindex;
-39         }
-40       return id;
-41   }
-```
-
-This approach will work as long as 2T   >=  B, where T is the number of test strips and B is the number of bottles.
-
 
 ## 7 Solutions to Object-Oriented Design
 
-**7.1 	Deck of Cards:**  Design the data structures for a generic deck of cards. Explain how you would subclass the data structures to implement blackjack.
-
-SOLUTION
-
----
-
-First, we need to recognize that a "generic" deck of cards can mean many things. Generic could mean a standard deck of cards that can play a poker-like game, or it could even stretch to Uno or Baseball cards. It is important to ask your interviewer what she means by generic.
-
-Let's assume that your interviewer clarifies that the deck is a standard 52-card set, like you might see used in a blackjack or poker game. If so,  the design might look like this:
-
-```java
-1    public   enum Suit   {
-2            Club (0),  Diamond  (1),  Heart  (2), Spade (3);
-3            private int value;
-4         private Suit(int v)  {value  =  v;}
-5           public   int  getValue() {return  value;  }
-6         public   static Suit  getSuitFromValue(int value)  {... }
-7    }
-8
-9    public   class Deck <T  extends   Card> {
-10       private ArrayList<T>  cards;//   all cards,   dealt or  not
-11          private int  dealtlndex =  0;  // marks first undealt card
-12
-13       public   void  setDeckOfCards(ArrayList<T>  deckOfCards) {... }
-14
-15       public   void  shuffle() {... }
-16       public   int  remainingCards() {
-17            return cards.size()  -  dealtlndex;
-18      }
-19       public   T[]  dealHand(int  number) {... }
-20       public T  dealCard()  {... }
-21  }
-22
-23  public   abstract class Card {
-24       private boolean  available =  true;
-25
-26       /*  number or  face  that's on card  -  a number 2 through  10,  or  11 for  Jack,   12 for
-27         *    Queen,  13 for   King,  or  1 for  Ace */
-28       protected int faceValue;
-29       protected Suit  suit;
-30
-31       public   Card(int c,  Suit  s) {
-32            faceValue  =  c;
-33            suit =  s;
-34          }
-
-36       public  abstract int value();
-37       public   Suit  suit() {return  suit;}
-38
-39       /*  Checks if the  card  is available to  be given  out  to  someone */
-40       public  boolean  isAvailable() {return  available;  }
-41       public   void  markUnavailable() {available  =  false; }
-42       public   void  markAvailable()  {available  =   true; }
-43     }
-44
-45   public   class Hand <T  extends  Card> {
-46       protected  Arraylist<T> cards  =  new Arraylist<T>();
-47
-48       public   int score() {
-49            int score  =  0;
-50            for  (T  card   :   cards) {
-51                 score  += card.value();
-52             }
-53            return score;
-54       }
-55
-56       public   void  addCard(T card)   {
-57            cards.add(card);
-58        }
-59    }
-```
-
-In the above code, we have implemented Deck with generics but restricted the type of T to Card. We have also implemented Card as an abstract class, since methods like value() don't make much sense without a specific game attached to them. (You could make a compelling argument that they should be implemented anyway, by defaulting to standard poker rules.)
-
-Now, let's say we're building a blackjack game, so we need to know the value of the cards. Face cards are 10 and an ace is 11 (most of the time, but that's the job of the Hand class, not the following class).
-
-```java
-1     public   class BlackJackHand extends  Hand<BlackJackCard>  {
-2         /*  There are  multiple possible  scores for  a  blackjack hand,  since   aces  have
-3               * multiple values.  Return  the  highest possible score  that's under  21,  or  the
-4           * lowest  score  that's  over. */
-5            public   int score() {
-6              Arraylist<Integer> scores =  possibleScores();
-7              int maxUnder  =   Integer.MIN_VALUE;
-8              int minOver =   Integer.MAX_VALUE;
-9              for  (int score   :   scores) {
-10                 if (score > 21 &&   score  < minOver) { 
-11						minOver =  score;
-12						}  else if (score<= 21 &&   score>  maxUnder) {
-13						maxUnder   =  score;
-14						} 
-15             }
-16			return maxUnder == Integer.MIN_VALUE  ?  minOver  :  maxUnder; 
-17        }
-18
-19			 /* return a  list of  all poss ible  scores   this hand could  have  (evaluating each
-*  ace  as  both  1  and  11 */
-private  Arraylist<Integer> pos sibleScores() { ... }
-20			 /* return a  list of  all poss ible  scores   this hand could  have  (evaluating each *  ace  as  both  1  and  11 */
-21 private  Arraylist<Integer> pos sibleScores() { ... }
-22 
-23 /* return a  list of  all poss ible  scores   this hand could  have  (evaluating each *  ace  as  both  1  and  11 */
-private  Arraylist<Integer> pos sibleScores() { ... }
-/* return a  list of  all poss ible  scores   this hand could  have  (evaluating each
-*  ace  as  both  1  and  11 */
-private  Arraylist<Integer> pos sibleScores() { ... }
-23		public boolean  busted()  { return score()>  21;  } 
-24		public boolean   is21() {  return s core()==    21;  } 
-25		public boolean   isBlackJack() { ... } 
-26   }
-27
-28   public  class  BlackJackCard extends   Card  {
-29        public  BlackJackCard(int c,   Suit s)  {  super(c,   s);}
-30        public int  value()  {
-31             if (isAce()) return 1;
-32             else if (faceValue >= 11  &&   faceValue  <=  13)  return 10;
-33             else return faceValue;
-34      }
-35
-36        public int minValue() {
-37             if (isAce()) return 1;
-38             else return  v alue();
-39        }
-40
-41        public int maxValue()  {
-42             if (isAce()) return 11;
-43             else return value();
-44          }
-45
-46        public boolean   isAce() {
-47             return  faceValue == 1;
-48      }
-49
-50        public boolean   isFaceCard()  {
-51             return  faceValue >=         11  &&   faceValue  <= 13;
-52      }
-53 }
-```
-
-This is just one way of handling aces. We could, alternatively, create  a class of type Ace that  extends
-BlackJackCard.
-
-An executable, fully automated  version of blackjack is provided in the downloadable code attachment.
-
-
-**7.2 	Call Center:** Imagine you have a call center with three levels of employees: respondent, manager, and director. An incoming telephone call must be first allocated to a respondent  who is free. If the respondent can't handle the call, he or she must escalate the call to a manager. If the manager is not free or not able to handle it, then the call should be escalated to a director. Design the classes and data structures for this problem. Implement a method  dispatchCall () which assigns a call to the first available employee.
-
-SOLUTION
-
----
-
-All three ranks of employees have different work to be done, so those specific functions are profile specific. We should keep these things within their respective class.
-
-There are a few things which are common to them, like address,  name, job title, and age. These things can be kept in one class and can be extended or inherited by others.
-
-Finally, there should be one CallHandler class which would route the calls to the correct person.
-
-Note that on any object-oriented design question, there are many ways to design the objects. Discuss the trade-offs of different solutions with your interviewer.  You should usually design for long-term code flex­ ibility and maintenance.
-
-We'll go through each of the classes below in detail.
-
-CallHandler represents the body of the program, and all calls are funneled first through it.
-
-```java
-1      public class  CallHandler {
-2         /*  3 levels of  employees:  respondents,  managers,  directors. */
-3            private final int LEVELS=  3;
-4
-5           /*  Initialize 10 respondents,  4 managers,  and 2 directors. */
-6         private final int NUM_RESPONDENTS = 10;
-7         private final int NUM_MANAGERS = 4;
-8         private final int NUM_DIRECTORS=  2;
-9
-10       /*  List of  employees,  by level.
-11         * employeeLevels[0]      respondents
-12         * employeeLevels[l]     managers
-13         * employeeLevels[2]       directors
-14         */
-15       List<List<Employee>> employeeLevels;
-16
-17       /*  queues  for  each  call's rank  */
-18       List<List<Call>> callQueues;
-19
-20       public CallHandler() {  ... }
-21
-22       /*  Gets  the  first available employee who  can handle  this call.*/
-public Employee getHandlerForCall(Call call) {  ... }
-24
-25       /*  Routes  the  call to  an available employee,  or  saves  in  a  queue if no employee
-26         * is available. */
-27       public void  dispatchCall(Caller caller)  {
-28            Call  call= new Call(caller);
-29            dispatchCall(call);
-30       }
-31 
-32		/*  Routes  the  call to  an available employee,  or  saves  in  a  queue if no employee
-33		* is available. */
-34		public void  dispatchCall(Call call)  {
-35			/*  Try to  route the  call to  an employee with  minimal rank. */ 
-36			Employee emp=  getHandlerForCall(call);
-37			if (emp != null) {
-38				emp.receiveCall(call);
-39				call.setHandler(emp);
-40			}  else {
-41				/*  Place  the  call into   corresponding call  queue according  to  its rank.  */ 
-42				call.reply("Please wait  for   free employee to  reply"); 
-43				callQueues.get(call.getRank().getValue()).add(call);
-44			}
-45		}
-46
-47       /*An  employee got  free. Look for  a waiting   call that employee can serve.  Return
-48       *true  if we  assigned a  call, false otherwise.*/
-49       public boolean  assignCall(Employee emp) {... }
-50   }
-```
-
-Call represents a call from a user. A call has a minimum rank and is assigned to the first employee who can handle it.
-
-```java
-1    public class  Call  {
-2         /*Minimal rank of  employee who can handle  this call.*/
-3           private Rank rank;
-4
-5            /*Person   who  is calling.*/
-6         private Caller caller;
-7
-8         /*Employee who  is handling  call.*/
-9         private Employee handler;
-10
-11       public Call(Caller  c)  {
-12            rank  =  Rank.Responder;
-13            caller =  c;
-14      }
-15
-16       /*Set employee who  is handling  call.*/
-17       public void  setHandler(Employee  e)  {handler      e; }
-18 
-19		public void  reply(String message)  {... }
-20		public Rank getRank()  {return  rank;}
-21		public void  setRank(Rank r)   {rank  =  r; }
-22		public Rank incrementRank()  {... }
-23		public void  disconnect()  {  ... } 
-24   }
-```
-
-Employee is a super class for the Director, Manager, and Respondent classes. It is implemented as an abstract class since there should be no reason to instantiate an Employee type directly.
-
-```java
-1     abstract class Employee {
-2         private Call  currentCall =  null;
-3           protected Rank rank;
-4
-5           public  Employee(CallHandler  handler)   { ... }
-6
-7         /*Start the  conversation*/
-8         public void  receiveCall(Call call)  {  ... }
-9
-10       /*the issue is  resolved, finish the  call*/
-11       public void  callCompleted()  {  ... }
-12
-13       /*The issue has  not  been resolved. Escalate the  call, and assign a new call to
-14       *the  employee.*/
-15       public void  escalateAndReassign()  {    }
-16
-17       /*Assign  a new call to  an employee,  if the  employee is free.*/
-18       public  boolean  assignNewCall()   {  ... }
-19
-20       /*Returns  whether  or  not  the  employee is free.*/
-21       public boolean  isFree()  { return currentCall ==  null;  }
-22
-23       public Rank getRank()  {  return rank;}
-24   }
-25
-```
-
-The Respondent, Director, and Manager classes are now just simple extensions of the  Employee class.
-
-```java
-1     class  Director extends Employee {
-2          public Director()  {
-3               rank=  Rank.Director;
-4           }
-5      }
-6
-7     class Manager extends  Employee {
-8          public Manager()  {
-9               rank  =  Rank.Manager;
-10        }
-11    }
-12
-13   class Respondent  extends  Employee {
-14       public  Respondent() {
-15             rank  =  Rank.Responder;
-16        }
-17   }
-```
-
-This is just one way of designing this problem. Note that there are many other ways that are equally good.
-
-This may seem like an awful lot of code to write in an interview, and it is. We've been much more thorough here than you would need. In a real interview, you would likely be much lighter on some of the details until you have time to fill them in.
-
- 
-**7.3  Jukebox:** Design a musical jukebox using object-oriented principles.
-
-
-SOLUTION
- 
----
-
-In any object-oriented  design  question, you first want to start off with asking your interviewer some questions to clarify design constraints. Is this jukebox playing CDs? Records?  MP3s? Is it a simulation on a computer, or is it supposed to represent a physical jukebox? Does it take money, or is it free? And if it takes money, which currency? And does it deliver change?
-
-Unfortunately, we don't have an interviewer here that we can have this dialogue with. Instead, we'll make some assumptions. We'll assume that the jukebox is a computer simulation that closely mirrors physical jukeboxes, and we'll assume that it's free.
-
-Now that we have that out of the way, we'll outline the basic system components:
-
-- Jukebox
-- CD
-- Song
-- Artist
-- Playlist
-- Display (displays details on the screen)
-
-Now, let's break this down further and think about the possible actions.
-
-- Playlist  creation (includes add, delete, and shuffle)
-- CD selector 
-- Song selector 
-- Queuing up a song
-- Get next song from playlist
-
-A user also can be introduced:
-
-- Adding
-- Deleting
-- Credit information
-
-Each of the main system components  translates  roughly to an object, and each action translates to a method. Let's walk through one potential design.
-
-The Jukebox class represents the body of the problem. Many of the interactions between the components of the system, or between the system and the user, are channeled through here.
-
-```java
-1     public class Jukebox  {
-2         private CDPlayer  cdPlayer;
-3         private User  user;
-4          private Set<CD> cdCollection;
-5         private  SongSelector ts;
-6
-7          public Jukebox(CDPlayer  cdPlayer,  User  user,  Set<CD>  cdCollection,
-8                                        SongSelector ts) {          }
-9
-10       public Song getCurrentSong()  {  return  ts.getCurrentSong(); }
-11        public void  setUser(User  u)  {  this.user =  u;}
-12 }
-```
-
-Like a real CD player, the CDP layer class supports storing just one CD at a time. The CDs that are not in play are stored in the jukebox.
-
-```java
-1     public class CDPlayer  {
-2         private Playlist p;
-3         private CD  c;
-4
-5         /*Constructors.*/
-6          public CDPlayer(CD c,   Playlist p)  {  ...}
-7          public CDPlayer(Playlist p)  {  this.p =  p;}
-8          public CDPlayer(CD c)  {  this.c =  c;}
-9
-10       /*Play song*/
-11        public void  playSong(Song s)  {  ... }
-12
-13        /*Getters and  setters*/
-14       public Playlist  getPlaylist()  {  return p;}
-15       public void  setPlaylist(Playlist p)  {  this.p    p;}
-16
-17       public CD   getCD()  {  return c; }
-18        public void   setCD(CD c)  { this.c =  c; }
-19   }
-```
-
-The Playlist manages the current and next songs to play. It is essentially a wrapper class for a queue and offers some additional methods for convenience.
-
-```java
-1      public class Playlist  {
-2           private Song  song;
-3           private Queue<Song>   queue;
-4           public  Playlist(Song  song, Queue<Song>   queue) {
-5
-6            }
-7           public Song   getNextSToPlay()  {
-8                 return  queue.peek();
-9         }
-10         public  void queueUpSong(Song  s) {
-11               queue.add(s);
-12        }
-13   }
-```
-
-The classes  for CD, Song, and  User are all fairly straightforward. They consist mainly  of member variables and  getters and  setters.
-
-```java
-1      public  class CD   {/*  data for id,  artist, songs, etc  */}
-2
-3      public  class Song   {/*  data for id,  CD  (could be  null), title,  length,  etc  */}
-4
-5      public  class  User {
-6           private  String  name;
-7           public String  getName() { return name;}
-8           public  void setName(String name)   {   this.name  name;}
-9           public long getID() { return ID;}
-10         public  void setID(long  iD) {ID= iD;}
-11         private  long ID;
-12         public User(String name,   long iD) {  ... }
-13         public User getUser() { return this;}
-14         public static  User addUser(String  name,   long iD) {  ... }
-15   }
-```
-
-This is by no means the  only "correct" implementation. The interviewer's responses to initial questions, as well as other constraints, will shape the design of thejukebox classes.
-
- 
-**7.4        Parking Lot:** Design a parking lot using object-oriented principles.
-
-
-SOLUTION
- 
----
-
-The wording of this question is vague, just as it would be in an actual interview. This requires you to have a conversation with  your  interviewer about what types of vehicles it can support, whether the  parking lot has multiple levels, and  so on.
-
-For our purposes right now, we'll make the  following assumptions. We made these specific assumptions to add a bit of complexity to the problem without adding too much. If you made different assumptions, that's totally fine.
-
-- The parking lot has multiple levels. Each level has multiple rows of spots.
-- The parking lot can park motorcycles, cars, and  buses.
-- The parking lot has motorcycle spots, compact spots, and large spots.
-- A motorcycle can park in any spot.
-- A car can park in either a single compact spot or a single  large spot.
-- A bus can park in five large spots that are consecutive and within the same row. It cannot park in small spots.
-
-In the below implementation, we have created an abstract class Vehicle, from which Car, Bus, and Motorcycle inherit. To handle the different parking spot sizes, we have just one class ParkingSpot which has a member variable indicating the size. 
-
-```java
-1      public enum  VehicleSize {  Motorcycle,   Compact,
-2
-3     public abstract  class Vehicle  {
- 
-Large } 
-4         protected  ArrayList<ParkingSpot> parkingSpots     new ArrayList<ParkingSpot>();
-5         protected String licensePlate;
-6         protected int  spotsNeeded;
-7         protected  VehicleSize size;
-8
-9         public  int  getSpotsNeeded() {  return spotsNeeded;   }
-10       public VehicleSize getSize()  {  return size;  }
-11
-12       /*  Park  vehicle in  this spot  (among others, potentially) */
-public void  parkinSpot(ParkingSpot s)  {  parkingSpots.add(s);  } 
-14
-15		/*  Remove  car  from spot,  and notify spot  that it's gone */
-16		public void  clearSpots() {  ... }
-17		
-18		/*  Checks if the  spot  is big  enough for  the  vehicle (and  is  available). This
-19		* compares the  SIZE only. It does  not  check if it has  enough spots. */
-20		public abstract boolean  canFitinSpot(ParkingSpot spot); 
-21   }
-22
-23  public class  Bus extends  Vehicle  {
-24       public Bus()  {
-25            spotsNeeded  =  5;
-26            size =  VehicleSize.Large;
-27       }
-28
-29          /*  Checks if the  spot  is a  Large.  Doesn't  check num  of  spots  */ 
-30		public boolean  canFitinSpot(ParkingSpot spot)  {             } 
-31   }
-32
-33  public class Car extends  Vehicle  {
-34       public Car()   {
-35            spotsNeeded  =  1;
-36            size =  VehicleSize.Compact; 
-37			}
-38			
-39			/*  Checks if the  spot  is a Compact  or  a Large.  */
-40			public boolean  canFitinSpot(ParkingSpot spot)  {  ... } 
-41   }
-42
-43  public class Motorcycle  extends  Vehicle  {
-44       public  Motorcycle() {
-45            spotsNeeded  =  1;
-46            size =  VehicleSize.Motorcycle;
-47         }
-48
-49          public   boolean  canFitinSpot(ParkingSpot spot)  {  ... }
-50  }
-```
-
-The ParkingLot class is essentially a wrapper class for an array of Levels. By implementing it this way, we are able to separate out logic that deals with actually finding free spots and parking cars out from the broader actions of the ParkingLot. If we didn't do it this way, we would need to hold parking spots in some sort of doublearray (or hash table which maps from a level number to the list of spots).  It's cleaner to just separate ParkingLot from Level.
-
-```java
-1    public class ParkingLot  {
-2         private Level[]   levels;
-3            private final int NUM_LEVELS        5;
-4
-5            public ParkingLot() {  ... }
-6
-7         /*  Park the  vehicle in  a  spot  (or   multiple spots).  Return  false if failed. */
-8         public boolean  parkVehicle(Vehicle vehicle)  {  ... }
-9      }
-10
-11  /*  Represents a  level   in  a parking  garage  */
-12  public class  Level {
-13       private int floor;
-14       private  ParkingSpot[] spots;
-15       private int  availableSpots =  0; // number of  free  spots
-16       private static  final int SPOTS_PER_ROW       10;
-17
-18       public Level(int flr,  int  numberSpots)  {  ... }
-19
-20       public int availableSpots() {  return availableSpots;  }
-21
-22       /*  Find a  place   to  park  this vehicle. Return  false if  failed. */
-23       public boolean  parkVehicle(Vehicle vehicle)  {  ... }
-24
-25       /*  Park  a  vehicle starting at the  spot  spotNumber, and continuing until
-26         *  vehicle.spotsNeeded. */
-27       private boolean  parkStartingAtSpot(int  num, Vehicle  v)  {  ... }
-28
-29       /*  Find  a  spot  to  park  this vehicle. Return  index  of  spot,  or  -1 on failure. */
-30       private  int  findAvailableSpots(Vehicle vehicle)  {  ... }
-31
-32       /*  When  a  car  was removed from the  spot,  increment  availableSpots */
-33       public void  spotFreed() {  availableSpots++;}
-34   }
-```
-
-The ParkingSpot is implemented by having just a variable which represents the size of the spot. We could have implemented this by having classes for LargeSpot, CompactSpot, and MotorcycleSpot which inherit from ParkingSpot, but this is probably overkill. The spots probably do not have different behaviors, other than their sizes.
-
-```java
-1    public class  ParkingSpot  {
-2         private Vehicle  vehicle;
-3         private VehicleSize   spotSize;
-4         private int row;
-5            private int spotNumber;
-6         private Level level;
-7
-8         public  ParkingSpot(Level lvl, int r,  int n,  VehicleSize   s) {...}
-9
-10       public boolean  isAvailable() {  return  vehicle == null; }
-11
-12         /* Check   if the spot is b ig  enough  and   is available */
-13         public  boolean c anFitVehicle(Vehicle vehicle)  {  ... }
-14
-15         /* Park vehicle in this  spot. */
-16         public  boolean park(Vehicle  v)   {           }
-17
-18       public int  getRow()  {  return row;   } 
-19		public int  getSpotNumber()  {  return spotNumber;  }
-20		
-21		/* Remove  vehicle from   spot,  and   notify level that a  new  spot is available  */
-22		public  void removeVehicle() {  ... } 
-23    }
-```
-
-A full implementation of this  code,  including executable test  code,  is provided in the  downloadable code attachment.
-
- 
-**7.5         Online Book Reader:** Design the data structures for an online book reader system.
-
-
-SOLUTION
- 
----
-
-Since the  problem doesn't describe much about the  functionality, let's assume we want to design a basic online reading system which  provides the following functionality:
-
-- User membership creation and  extension.
-- Searching the  database of books.
-- Reading a book.
-- Only one active  user  at a time
-- Only one active  book by this user.
-
-To implement these operations we may  require many other functions, like get, set, update, and  so on. The objects required would likely include User, Book,  and  Library.
-
-The class OnlineReaderSystem represents the body of our program. We could implement the class such that it stores information about all the books, deals with user  management, and  refreshes the  display,  but that would make this class rather hefty.  Instead, we've chosen to tear off these components into  Library, UserManager, and  Display classes.
-
-```java
-1      public  class  OnlineReaderSystem {
-2           private  Library library;
-3           private UserManager userManager;
-4           private  Display display;
-5
-6           private Book  activeBook;
-7           private  User activeUser;
-8
-9           public  OnlineReaderSystem() {
-10               userManager  =  new  UserManager();
-11               library    new  Library();
-12               display=  new  Display();
-13        }
-14
-15         public  Library getLibrary()  {  return library; }
-16         public   UserManager getUserManager()  {  return userManager;}
-17       public Display  getDisplay() { return display; }
-18
-19       public Book getActiveBook() {  return  activeBook; }
-20       public void  setActiveBook(Book book)  {
-21            activeBook=  book;
-22            display.displayBook(book);
-23          }
-24
-25       public User getActiveUser() {  return activeUser; }
-26       public void  setActiveUser(User user)  {
-27            activeUser =  user;
-28            display.displayuser(user);
-29         }
-30    }
-```
-
-We then implement separate classes to handle the user manager, the library, and the display components.
-
-```java
-1     public class  Library   {
-2         private HashMap<Integer, Book>  books;
-3
-4         public Book addBook(int  id,   String details)  {
-5              if (books.containsKey(id)) {
-6                   return null;
-7                }
-8              Book book=  new Book(id,  details);
-9              books.put(id,  book);
-10            return  book;
-11       }
-12
-13       public boolean  remove(Book b)  {  return remove(b.getID());}
-14       public boolean  remove(int id)  {
-15            if (!books.containsKey(id)) {
-16                 return false;
-17           }
-18            books.remove(id);
-19            return true;
-20        }
-21
-22       public Book find(int id) {
-23            return books.get(id);
-24          }
-25   }
-26
-27  public class UserManager {
-28       private HashMap<Integer, User> users;
-29
-30       public User  addUser(int id,   String details, int accountType)  {
-31            if (users.containsKey(id))  {
-32                 return null;
-33              }
-34            User  user  =  new User(id, details,  accountType);
-35            users.put(id,  user);
-36            return user;
-37       }
-38
-39       public User find(int id) {  return users.get(id); }
-40       public boolean  remove(User u)  {  return remove(u.getID());}
-41       public boolean  remove(int id)  {
-42            if (!users.containsKey(id)) {
-43                 return false;
-44           }
-users.remove(id);
-46            return true;
-47       }
-48   }
-49
-50  public   class Display  {
-51       private Book activeBook;
-52       private User activeuser;
-53		private int pageNumber   =  0;
-54
-55       public   void  displayUser(User user)  {
-56            activeUser =  user;
-57            refreshUsername();
-58        }
-59
-60       public  void  displayBook(Book book) {
-61            pageNumber   =  0;
-62            activeBook  =  book;
-63
-64            refreshTitle();
-65            refreshDetails();
-66            refreshPage();
-67			}
-68
-69       public  void  turnPageForward() {
-70            pageNumber++;
-71            refreshPage();
-72          }
-73
-74       public   void  turnPageBackward()  {
-75            pageNumber--;
-76            refreshPage();
-77       }
-78
-79       public   void  refreshUsername()  {/* updates  username display*/} 
-80       public void  refreshTitle() {/*  updates  title display*/} 
-81       public   void refreshDetails() {/*  updates  details  display*/ } 
-82		public  void  refreshPage() {/*  updated  page display*/} 
-83   }
-```
-
-The classes for User and Book simply hold data and provide little true functionality.
-
-```java
-1    public   class Book {
-2         private int  bookid;
-3         private String details;
-4
-5           public   Book(int  id,   String det) {
-6              bookid  =  id;
-7              details =  det;
-8          }
-9
-10       public   int  getID() {return  bookld;}
-11       public   void  setID(int id) {  bookld  =id;}
-12       public   String getDetails()  {  return details;  }
-13       public   void  setDetails(String d)  {details  =  d};
-14   }
-15
-16   public class User   {
-17         private int userid;
-18         private String details;
-19          private int  accountType;
-20
-21         public  void renewMembership()  {  }
-22
-23         public User(int id, String details,  int  accountType)  {
-24               userid = id;
-25               this.details =  details;
-26               this.accountType =  accountType;
-27        }
-28
-29         /* Getters and  setters */
-30         public int getID() {  return userid;}
-31         public void setID(int  id)  {  userid =id;}
-32 			public String getDetails()  {
-33               return details;
-34       }
-35
-36		public void setDetails(String  details)  {
-37               this.details =  details;
-38      }
-39         public int getAccountType()  {  return accountType;}
-40         public  void setAccountType(int t) {  accountType  =t; }
-41    }
-```
-
-The decision to tear offuser management, library, and display into their own classes, when this functionality could have been in the  general OnlineReaderSystem class, is an interesting one. On a very small system, making this decision could make the  system overly complex. However,  as the  system grows,  and more and more functionality gets added to OnlineReaderSystem, breaking off such components prevents this main class from getting overwhelmingly lengthy.
-
-
-**7.6 	Jigsaw:** Implement an NxN jigsaw  puzzle.  Design  the  data  structures and  explain an algorithm to solve  the  puzzle.  You can  assume that you  have  a fitsWith method which, when passed two
-puzzle edges, returns true if the  two edges belong together. 
-
-
-SOLUTION
- 
----
-
-We have  a traditional jigsaw puzzle. The puzzle is grid-like, with rows and columns. Each piece is located in a single  row and column and has four edges. Each edge comes in one  of three types:  inner, outer, and  flat. A corner piece, for example, will have two flat edges and  two other edges, whichcould be inner  or outer.
-
-
-![](media/07_6_1.JPG)
-
-
-As we solve the jigsaw puzzle (manually or algorithmically), we'll need to store the position of each piece. We could think about the position as absolute or relative:
-
-- *Absolute Position:* "This piece is located at position (12, 23):'
-- *Relative Position:* "I don't know where this piece is actually located, but I know it is next to this other piece:'
-
-For our solution, we will use the absolute position.
-
-We'll need classes to represent Puzzle, Piece, and Edge. Additionally, we'll want enums for the different shapes (inner, outer, flat) and the orientations of the edges (left, top, right, bottom).
-
-Puzzle will start off with a list of the pieces. When we solve the puzzle, we'll fill in an NxN solution matrix of pieces.
-
-Piece will have a hash table that maps from an orientation to the appropriate edge. Note that we might rotate the piece at some point, so the hash table could change. The orientation of the edges will be arbi­ trarily assigned at first.
-
-Edge will have just its shape and a pointer back to its parent piece. It will not keep  its orientation. 
-
-A potential object-oriented design looks like the following:
-
-```java
-1     public  enum  Orientation {
-2          LEFT, TOP, RIGHT, BOTTOM;  //  Should stay in  this  order
-3
-4       public  Orientation getOpposite()  {
-5                switch (this) {
-6                    case LEFT: return  RIGHT;
-7                    case RIGHT:  return  LEFT;
-8                    case TOP:  return  BOTTOM;
-9                    case BOTTOM:  return  TOP;
-10              default:   return  null;
-11          }
-12         }
-13    }
-
-15  public  enum  Shape   {
-16     INNER,  OUTER,  FLAT;
-17
-18     public  Shape getOpposite()  {
-19          switch (this) {
-20              case INNER:  return  OUTER;
-21                  case OUTER:  return  INNER;
-22                  default:  return  null;
-23              }
-24         }
-25   }
-26
-27  public   class Puzzle  {
-28       private  Linkedlist<Piece> pieces;  /*  Remaining pieces to  put  away. */
-29       private Piece[][] solution;
-30       private int size;
-31
-32       public   Puzzle(int  size,   Linkedlist<Piece> pieces)  {  ... }
-33
-34
-35       /*  Put  piece  into the  solution,  turn  it appropriately,  and remove from list. */
-36       private void  setEdgeinSolution(LinkedList<Piece> pieces,  Edge edge,  int row,
-37            int column, Orientation orientation)  {
-38            Piece  piece  =  edge.getParentPiece();
-39            piece.setEdgeAsOrientation(edge,  orientation);
-40            pieces.remove(piece);
-41            solution[row][column]  =  piece;
-42         }
-43
-44       /*  Find the  matching piece  in  piecesToSearch  and insert it at row,  column. */
-45       private boolean  fitNextEdge(LinkedList<Piece> piecesToSearch,   int row,  int col);
-46
-/*  Solve  puzzle.  */
-48       public  boolean  solve() {  ... }
-49    }
-50
-51  public   class Piece  {
-52       private HashMap<Orientation,  Edge> edges     new HashMap<Orientation,  Edge>();
-53
-54       public  Piece(Edge[J   edgelist) {  ... }
-55
-56       /*  Rotate  edges  by  "numberRotations". */
-57       public   void rotateEdgesBy(int numberRotations)  {  ... }
-58 
-59		public   boolean  isCorner() {            }
-60		public   boolean  isBorder() {            } 
-61    }
-62
-63   public   class Edge {
-64       private Shape shape;
-65       private Piece  parentPiece;
-66       public   Edge(Shape shape)  {  ... }
-67       public   boolean  fitsWith(Edge edge)  {  ... }
-68     }
-```
-
-##### Algorithm to Solve the  Puzzle
-
-Just as a kid might in solving a puzzle, we'll start with grouping the pieces into corner pieces, border pieces, and inside pieces.
-
-Once we've done that, we'll pick an arbitrary corner piece and put it in the top left corner. We will then walk through the puzzle in order, filling in piece by piece. At each location, we search through the correct group of pieces to find the matching piece. When we insert the piece into the puzzle, we need to rotate the piece to fit correctly.
-
-The code below outlines this algorithm.
-
-```java
-1      /*Find  the  matching  piece  within   piecesToSearch  and insert it at row,  column.    */
-2     boolean  fitNextEdge(LinkedList<Piece> piecesToSearch, int  row,  int column)  {
-3         if (row == 0 &&   column == 0)  {//On top  left  corner, just put  in  a piece
-4              Piece  p =  piecesToSearch.remove();
-5              orientTopleftCorner(p);
-6              solution[0][0] = p;
-7         }  else {
-8                /*Get  the  right edge and list to  match.    */
-9              Piece  pieceToMatch =  column ==  0?  solution[row -  1][0]  :
-10                                                                              solution[row][column  -  1];
-11            Orientation  orientationToMatch    column == 0? Orientation.BOTTOM
-12                                                                                                     Orientation.RIGHT;
-13            Edge edgeToMatch   = pieceToMatch.getEdgeWithOrientation(orientationToMatch);
-14
-15              /*Get  matching  edge.    */
-16            Edge edge =  getMatchingEdge(edgeToMatch, piecesToSearch);
-17            if (edge  ==  null) return false;   //Can't  solve
-18
-19              /*Insert piece  and edge.    */
-20            Orientation orientation  = orientationToMatch.getOpposite();
-21            setEdgeinSolution(piecesToSearch,  edge,  row,  column,  orientation);
-
-22	}	
-23	return true;	
-24	}	
-25		
-26	boolean  solve() {	
-27	/*Group pieces.   */	
-28	Linkedlist<Piece> cornerPieces	new  Linkedlist<Piece>();
-29	Linkedlist<Piece> borderPieces	new  Linkedlist<Piece>();
-30	Linkedlist<Piece> insidePieces	new  Linkedlist<Piece>();
-31       groupPieces(cornerPieces,  borderPieces,  insidePieces);
-32
-33         /*Walk through  puzzle,   finding the  piece   that joins the  previous one.    */
-solution = new  Piece[size][size];
-35       for  (int row =  0;  row <  size;  row++) {
-36            for  (int column =  0;  column <  size; column++) {
-37                 Linkedlist<Piece> piecesToSearch  =  getPieceListToSearch(cornerPieces,
-38                      borderPieces, insidePieces,  row,  column);
-39                 if (!fitNextEdge(piecesToSearch,  row,  column))  {
-40                      return false;
-41                 }
-42            }
-}
-44
-45       return true;
-46   }
-```
-
-The full code for this solution can be found in the downloadable code attachment.
-
-**7.7         Chat  Server:** Explain how you would design a chat server. In particular, provide details about the various backend components, classes, and methods. What would be the hardest problems to solve?
-pg  128
-
-SOLUTION
-
----
-
-Designing a chat server is a huge project, and it is certainly far beyond the scope of what could be completed in an interview. After all, teams of many people spend months or years creating a chat server. Part of your job, as a candidate, is to focus on an aspect of the problem that is reasonably broad, but focused enough that you could accomplish it during an interview. It need not match real life exactly, but it should be a fair representation  of an actual implementation.
-
-For our purposes, we'll focus on the core user management and conversation  aspects: adding a user, creating a conversation, updating one's status, and so on. In the interest of time and space, we will not go into the networking aspects of the problem, or how the data actually gets pushed out to the clients.
-
-We will assume that "friending" is mutual; I  am only your contact if you are mine. Our chat system will support both group chat and one-on-one  (private) chats. We will not worry about voice chat, video chat, or file transfer.
-
-
-##### What specific actions does it need to support?
-
-This is also something to discuss with your interviewer, but here are some ideas: 
-
-- Signing online and offiine.
-- Add requests (sending, accepting, and rejecting).
-- Updating a status message. 
-- Creating private and group chats.
-- Adding new messages to private and group chats.
-
-This is just a partial list.  If you have more time, you can add more actions.
-
-
-##### What can we learn  about these requirements?
-
-We must have a concept of users, add request status, online status, and messages.
-
-
-##### What are  the  core  components of the system?
-
-The system would likely consist of a database, a set of clients, and a set of servers. We won't include these parts in our object-oriented design, but we can discuss the overall view of the system.
-
-The database will be used for more permanent storage, such as the user list or chat archives. A SQL database is a good bet, or, if we need more scalability, we could potentially use BigTable or a similar system.
-
-For communication  between  the client and servers, using XML will work well. Although it's not the most compressed format (and you should point this out to your interviewer), it's nice because it's easy for both computers and humans to read. Using  XML will make your debugging  efforts easier-and that matters a lot.
-
-The server will consist of a set of machines. Data will be split across machines, requiring us to potentially hop from machine to machine. When possible, we will try to replicate some data across machines to minimize the lookups. One major design constraint here is to prevent having a single point of failure. For instance, if one machine controlled all the  user  sign-ins,  then we'd  cut  off millions  of users  potentially if a single machine lost network connectivity.
-
-##### What are the key objects  and methods?
-
-The key objects of the  system will be a concept of users, conversations, and status messages. We've imple­ mented a UserManager class. If we were  looking more at the  networking aspects of the problem, or a different component, we might have instead dived into those objects.
-
-```java
-1      /*  UserManager serves as a  central place for core user actions. */
-1     public class UserManager  {
-2           private static UserManager  instance;
-3           /* maps  from   a  user id to a  user */
-4           private HashMap<Integer,  User>   usersByid;
-5
-6           /* maps  from   an  account name  to a  user */
-7           private HashMap<String,  User>   usersByAccountName;
-8
-9           /* maps  from   the user id to an  online user */
-10         private HashMap<Integer,  User>   onlineUsers;
-11
-12         public static  UserManager getinstance() {
-13               if (instance == null) instance =  new  UserManager();
-14               return instance;
-15        }
-16 
-17		  public  void addUser(User fromUser, String  toAccountName)  {  ... }
-18		  public void  approveAddRequest(AddRequest req) {  ... } 
-19		  public  void rejectAddRequest(AddRequest req)  {   ... } 
-20		  public  void userSignedOn(String accountName)  {  ... } 
-21		  public  void userSignedOff(String  accountName)  {  ... } 
-22   }
-```
-
-The  method receivedAddRequest,  in  the   User class,   notifies User  B that User  A has  requested to  add him.   User  B  approves  or  rejects the   request  (via  UserManager. approveAddRequest  or rejectAddRequest), and the UserManager takes care  of adding the  users  to each other's contact lists.
-
-The method sentAddRequest in the  User class  is called by UserManager to add an AddRequest to User A's list of requests. So the flow is:
-
-1.  User A clicks"add user" on the client and it gets sent to the server.
-2.  User A calls requestAddUser(User B).
-3.  This method calls UserManager. addUser.
-4.  UserManager calls both User  A. sentAddRequest and
-    User B.receivedAddRequest.
-
-Again, this isjustone way ofdesigning these interactions. It is not the only way, oreven the only"good"way.
-
-```java
-1      public  class  User {
-2           private int id;
-3           private UserStatus status  =  null;
-4
-5           /* maps  from   the other participant's  user id to the chat */
-6          private HashMap<Integer, PrivateChat>  privateChats;
-7
-8           /* list of group chats  */
-9         private ArrayList<GroupChat> groupChats;
-10
-11       /*  maps from the  other person's user  id  to  the  add request */
-12       private HashMap<Integer, AddRequest> receivedAddRequests;
-13
-14       /*  maps from the  other person's user  id  to  the  add request */
-15       private HashMap<Integer, AddRequest>  sentAddRequests;
-16
-17       /*  maps from the  user  id  to  user  object */
-18       private HashMap<Integer, User> contacts;
-19
-20       private String accountName;
-21       private String fullName;
-22
-23       public User(int id,   String accountName, String fullName)  {  ... }
-24       public boolean  sendMessageToUser(User to,   String content){  ... }
-25       public boolean  sendMessageToGroupChat(int id,   String cnt){...}
-26       public void  setStatus(UserStatus status)  {            }
-27       public UserStatus getStatus()  {  ... }
-28       public boolean  addContact(User   user)   {  ... }
-29       public void  receivedAddRequest(AddRequest req)  {  ... }
-30       public void  sentAddRequest(AddRequest req)  {  ... }
-31       public void  removeAddRequest(AddRequest  req)   {  ... }
-32       public void  requestAddUser(String accountName) {  ... }
-33       public void  addConversation(PrivateChat conversation)  {         }
-34       public void  addConversation(GroupChat  conversation) {   ... }
-35       public   int getid() {  ... }
-36       public String getAccountName() {   ... }
-37       public String getFullName()  {  ... }
-38   }
-```
-
-The Conversation class is implemented  as an abstract class, since all Conversations must be either a GroupChat or a PrivateChat, and since these two classes each have their own functionality.
-
-```java
-1    public abstract  class  Conversation {
-2         protected  Arraylist<User> participants;
-3           protected int id;
-4         protected Arraylist<Message>   messages;
-5
-6         public Arraylist<Message>   getMessages()  {  ... }
-7         public boolean  addMessage(Message m)  {  ... }
-8         public int getid() {  ... }
-9       }
-10
-11  public class GroupChat extends  Conversation {
-12       public void  removeParticipant(User user)  {  ... }
-13       public   void  addParticipant(User user)   {  ... }
-14   }
-15
-16  public class  PrivateChat extends  Conversation   {
-17       public PrivateChat(User userl,  User user2)   {   ...
-18       public User getOtherParticipant(User primary)   {  ... }
-19   }
-20
-21  public   class Message {
-22       private  String content;
-23       private Date date;
-24       public  Message(String content,  Date date) {  ... }
-25         public String  getContent() {  ... }
-26         public  Date getDate()  {  ... }
-27    }
-```
-
-AddRequest and UserStatus are simple classes with little functionality. Their main  purpose is to group data that other classes will act upon.
-
-```java
-1      public class AddRequest  {
-2           private  User fromUser;
-3           private  User toUser;
-4        private Date date;
-5           RequestStatus status;
-6 
-7		public  AddRequest(User from,  User to,   Date date)   {  ... }	
-8		public RequestStatus getStatus()  {  ... }	
-9		public  User getFromUser() {  ... } 	
-10		public  User getToUser()  {  ... } 	
-11		public  Date getDate()  {  ... } 	
-12    }
-13
-14    public class  UserStatus {
-15           private String message;
-16           private UserStatusType  type;
-17           public  UserStatus(UserStatusType type,  String  message) {  ... }
-18           public  UserStatusType getStatusType()  {  ... }
-19           public  String  getMessage() {  ... }
-20    }
-21
-22    public enum  UserStatusType  {
-23         Offline,  Away, Idle,  Available, Busy
-24    }
-25
-26    public enum  RequestStatus {
-27         Unread,  Read,   Accepted, Rejected
-28   }
-```
-
-The downloadable code attachment provides a more detailed look at these methods, including implemen­tations for the methods shown above.
-
-What problems would be  the hardest to solve (or  the most interesting)?
-
-The following questions may be interesting to discuss with your interviewer further.
-
-Q1: How do we know ifsomeone is online-1 mean, really, really know?
-
-While we would like users to tell us when they  sign off, we can' t know for sure. A user's connection might have died,  for example. To make sure that we know  when a user has signed off, we  might try regularly pinging the client to make sure it's still there.
-
-Q2: How do we deal with conflicting information?
-
-We have some information stored in the  computer's memory and some in the  database. What happens if they get  out of sync?  Which one is"right"?
-
-Q3: How do we make our server scale?
-
-While we designed out chat server without worrying-too much- about scalability, in real life this would be a concern. We'd need to split our data across many servers, which would increase our concern about out-of-sync data.
-
-Q4: How we dopreventdenial ofservice attacks?
-
-Clients can push data to us-what if they try to DOS (denial of service) us? How do we prevent that?
-
-
-**7.8        Othello:** Othello is played as follows: Each Othello piece is white on one side and black on the other.
-When a piece is surrounded by its opponents on both the left and right sides, or both the top and bottom, it is said to be captured and its color is flipped. On your turn, you must capture at least one of your opponent's pieces. The game ends when either user has no more valid moves. The win is assigned to the person with the most pieces. Implement the object-oriented design for Othello.
-
-SOLUTION
-
----
-
-Let's start with an example. Suppose we have the following moves in an Othello game:
-
-1.  Initialize the board with two black and two white pieces in the center. The black pieces are placed at the upper left hand and lower right hand corners.
-2.  Play a black piece at (row 6, column 4). This flips the piece at (row 5, column 4) from white to black.
-
-3. Play a white piece at (row 4, column 3). This flips the piece at (row 4, column 4) from black to white. 
-
-This sequence of moves leads to the board below.
-
-![](media/07_8_1.JPG)
-
-
-The core objects in Othello are probably the game, the board, the pieces (black or white), and the players. How do we represent these with elegant object-oriented design?
-
-
-##### Should BlackPiece and WhitePiece  be classes?
-
-At first, we might think we want to have a BlackPiece class and a WhitePiece class, which inherit from an abstract Piece.  However, this is probably not a great idea. Each piece may flip back and forth between colors frequently, so continuously destroying and creating what is really the same object is probably not wise. It may be better to just have a Piece class, with a flag in it representing the current color.
-
-
-##### Do we need separate Board and Game classes?
-
-Strictly speaking,  it may not be necessary to have both a Game object and a Board object. Keeping the objects separate allows us to have a logical separation between the board (which contains just logic involving placing pieces) and the game (which involves times, game flow, etc.). However, the drawback is that we are adding extra layers to our program. A function may call out to a method in Game, only to have it immediately call Board.  We have made the choice below to keep Game and Board separate, but you should discuss this with your interviewer.
-
-
-##### Who keeps score?
-
-We know we should probably have some sort of score keeping for the number of black and white pieces. But who should maintain this information? One could make a strong argument for either Game or Board maintaining this information, and possibly even for Piece (in static methods). We have implemented this with Board holding this information, since it can be logically grouped with the board. It is updated by Piece or Board calling the colorChanged and colorAdded methods within Board.
-
-
-##### Should  Game  be a Singleton class?
-
-Implementing Game as a singleton class has the advantage of making it easy for anyone to call a method within Game, without  having to pass around references to the Game object.
-
-However, making Game a singleton means it can only be instantiated once. Can we make this assumption? You should discuss this with your interviewer.
-
-One possible design for Othello is below.
-
-```java
-1     public enum  Direction  {
-2          left, right,  up, down
-3      }
-4
-5     public enum  Color {
-6          White, Black
-7     }
-8
-9     public  class Game  {
-10       private Player[] players;
-11       private static  Game  ins tance;
-12       private Board board;
-13        private final int  ROWS=  10;
-14       private final int  COLUMNS=    10;
-15
-15       private Game()   {
-17            board=   new Board(ROWS,   COLUMNS);
-18            players=   new Player[2];
-players[0]    new  Player(Color.Black);
-20            players[l]=   new Player(Color.White);
-21         }
-22
-23       public  static  Game  getinstance() {
-24            if (instance==   null)  instance =  new Game();
-25             return instance;
-26         }
-27
-28       public  Board getBoard() {
-29            return board;
-30        }
-31    }
-```
-
-The Board class manages the actual pieces themselves.  It does not handle much of the game play, leaving that up to the Game class.
-
-```java
-1     public class Board {
-2         private int blackCount     0;
-3            private int whiteCount     0;
-4         private Piece[][]  board;
-5
-6		public Board(int rows,  int columns)  {
-7			board= new Piece[rows][columns];
-8		}
-9		
-10		public void  initialize() {
-11			/*  initialize  center black  and white  pieces   */
-12		}
-13		
-14		/*  Attempt to  place  a piece  of  color   color   at (row,  column).  Return  true if we
-15		* were successful. */
-16		public boolean  placeColor(int row,  int column, Color color)  {
-17		
-18		}
-19
-20		/*  Flips  pieces   starting at (row,  column) and proceeding  in  direction d. */
-21		private int flipSection(int row,  int column,  Color  color,  Direction d)  {            }
-22		
-23		public  int  getScoreForColor(Color c)  {
-24			if (c  ==  Color.Black) return  blackCount;
-25			else  return whiteCount;
-26		}
-27		
-28		/*  Update board  with  additional newPieces pieces   of  color   newColor. Decrease
-29		* score  of  opposite color.  */
-30		public void  updateScore(Color  newColor,  int newPieces)  {  ... } 
-31   }
-``` 
-
-As described earlier, we implement the black and white pieces with the Piece class, which has a simple Color variable representing whether it is a black or white piece.
-
-```java
-1      public class   Piece  {
-2         private Color  color;
-3            public Piece(Color c)  {  color      c; }
-4
-5            public void  flip() {
-6              if (color ==  Color.Black) color      Color.White;
-7              else color   =  Color.Black;
-8        }
-9
-10       public Color  getColor() {  return color; }
-11 }
-```
-
-The Player holds only a very limited amount of information. It does not even hold its own score, but it does have a method one can call to get the score. Player.getScore() will call out to the Game object to retrieve this value.
-
-```java
-1	public  class Player  {	
-2		
-3	public  Player(Color c)  {  color	c;}
-4		
-5	public   int  getScore() {   ...  }	
-6
-7         public boolean   playPiece(int r,  int  c)  {
-8              return  Game.getlnstance().getBoard().placeColor(r, c,   color);
-9            }
-10
-11        public Color  getColor() { return  color; }
-12    }
-```
-
-A fully functioning (automated) version of this code can be found in the downloadable code attachment.
-
-Remember that in many problems, what you did is less important than why you did it. Your interviewer probably doesn't care much whether you chose to implement Game as a singleton or not, but she probably does care that you took the time to think about it and discuss the trade-offs.
-
-**7.9 	Circular Array:** Implement a CircularArray class that supports an array-like data structure which can be efficiently rotated. If possible, the class should use a generic type (also called a template), and should support iteration via the standard for (Obj   o   :   circularArray) notation. 
-
-
-SOLUTION
- 
----
-
-This problem really has two parts to it. First, we need to implement the CircularArray class. Second, we need to support iteration. We will address these parts separately.
-
-
-##### Implementing the  CircularArray class
-
-One way to implement  the CircularArray class is to actually shift the elements  each time we call rotate (int   shiftRight). Doing this is, of course, not very efficient.
-
-Instead, we can just create a member variable head  which points to what should be conceptually viewed as the start of the circular array. Rather than shifting around the elements in the array, we just increment head  by shiftRight.
-
-The code below implements this approach.
-
-```java
-1     public  class  CircularArray<T> {
-2          private T[]  items;
-3         private int head=  0;
-4
-5         public CircularArray(int size)  {
-6               items = (T[]) new Object[size];
-7          }
-8
-9          private int  convert(int index) {
-10             if (index < 0)  {
-11                  index+= items.length;
-12             }
-13             return (head+  index)% items.length;
-14        }
-15
-16       public void   rotate(int  shiftRight) {
-17             head=  convert(shiftRight);
-18       }
-19
-20        public T  get(int i) {
-21             if (i <   0  ||   i >=  items.length)  {
-22                  throw  new java.lang.IndexOutOfBoundsException("  ...");
-23              }
-24             return items[convert(i)];
-25          }
-26
-27        public  void  set(int i, Titem)  {
-28             items[convert(i)] = item;
-29        }
-30   }
-```
-
-There are a number of things here which are easy to make mistakes on, such as:
-
-- In Java, we cannot create an array of the generic type. Instead,we must either cast the array or define iterns to be of type List<T>. For simplicity, we have done the former.
-- The % operator will return a negative value when we do negValue %  posVal. For example, -8  % 3 is -2. This is different from how mathematicians  would define the modulus function. We must add iterns.length to a negative index to get the correct positive result.
-- We need to be sure to consistently convert the raw index to the rotated index. For this reason,we have implemented a convert function that is used by other methods.  Even the rotate function uses convert. This is a good example of code reuse.
-
-Now that we have the basic code for CircularArray out of the way, we can focus on implementing an iterator.
-
-
-##### Implementing the  Iterator Interface
-
-The second part of this question asks us to implement the CircularArray class such that we can do the following:
-```
-1     CircularArray<String>  array= ...
-2     for (Strings  :   array) {  ... }
-```
-Implementing this requires implementing  the Iterator interface. The details of this implementation apply to Java, but similar things can be implemented in other languages.
-
-To implement the Iterator interface, we need to do the following:
-
-- Modify the CircularArray<T> definition to add implements Iterable<T>. This will also require us to add an iterator() method to CircularArray<T>.
-- Create a CircularArrayiterator<T> which implements  Iterator<T>. This will also require us to implement,in the CircularArrayiterator,the methods hasNext(),next(),and remove ().
-
-Once we've done the above items,the for loop will "magically"work.
-
-In the code below, we have removed the aspects of CircularArray which were identical to the earlier implementation.
-
-```java
-1     public  class  CircularArray<T> implements   Iterable<T>  {
-2
-3          public  Iterator<T> iterator() {
-4               return new CircularArrayiterator<T>(this);
-5             }
-6
-7          private class CircularArrayiterator<Tl> implements   Iterator<Tl>{
-8               /*  current reflects  the   offset from  the  rotated head,   not   from  the   actual
-9                 * start of  the   raw  array.  */
-10             private int   current =   -1;
-11				private TI[]   _items;
-12				
-13				public  CircularArrayiterator(CircularArray<TI>  array){
-14					items   =  array.items;
-15				}
-16				
-17				@Override
-18				public  boolean hasNext() {
-19					return _current<  items.length -  1;
-20				}
-21				
-22				@Override
-23				public TI  next() {
-24					_current++;
-25					TI  item  =  (TI) _items[convert(_current)];
-26					return  item;
-27				}
-28
-29				@Override
-30				public  void  remove()   {
-31					throw  new UnsupportedOperationException("...");
-32				} 
-33        }
-34   }
-```
-
-In the above code, note that the first iteration of the for loop will call hasNext ()and then next (). Be very sure that your implementation  will return the correct values here.
-
-When you get a problem like this one in an interview, there's a good chance you don't remember exactly what the various methods and interfaces are called. In this case, work through the problem as well as you can. If you can reason out what sorts of methods one might need, that alone will show a good degree of competency.
-
-
-**7.1 O      Minesweeper:** Design and implement a text-based Minesweeper game. Minesweeper is the classic single-player computer game where an NxN grid has B mines (or bombs) hidden across the grid. The remaining cells are either blank or have a number behind them. The numbers reflect the number of bombs in the surrounding eight cells. The user then uncovers a cell.  If it is a bomb, the player loses. If it is a number, the number is exposed. If it is a blank cell, this cell and all adjacent blank cells (up to and including the surrounding numeric cells) are exposed. The player wins when all non-bomb cells are exposed. The player can also flag certain places as potential bombs. This doesn't affect game play, other than to block the user from accidentally clicking a cell that is thought  to have a bomb. (Tip for the reader: if you're not familiar with this game, please play a few rounds online first.) 
-
-![](media/07_10_1.JPG)
-
-SOLUTION
-
----
-
-Writing an entire game-even a text-based one-would take far longer than the allotted time you have in an interview. This doesn't mean that it's not fair game as a question. It just means that your interviewer's expectation will not be that you actually write all of this in an interview.  It also means that you need to focus on getting the key ideas-or structure-out.
-
-Let's start with what the classes are. We certainly want a Cell class as well as a Board class. We also prob­ably want to have a Game class.
- 
-> We could potentially merge Board  and Game together, but it's probably best to keep them separate. Err towards more organization, not less. Board can hold the list of Ce11 objects and do some basic moves with flipping over cells. Game will hold the game state and handle user input.
-
-##### Design: Cell
-
-Cell will need to have knowledge of whether it's a bomb, a number, or a blank. We could potentially subclass Cell to hold this data, but I'm not sure that offers us much benefit.
-
-We could also have an enum TYPE {BOMB,   NUMBER,   BLANK} to describe the type of cell. We've chosen not to do this because BLANK is really a type of NUMBER cell,  where the number is 0. It's sufficient to just have an isBomb flag.
-
-It's okay to have made different choices here. These aren't the only good choices. Explain the choices you make and their tradeoffs with your interviewer.
-
-We also need to store state for whether the cell is exposed or not. We probably do not want to subclass Cell for ExposedCell and UnexposedCell. This is a bad idea because Board holds a reference to the cells, and we'd have to change the reference when we flip a cell. And then what if other objects reference the instance of Cell?
-
-It's better to just have a boolean flag for isExposed. We'll do a similar thing for isGuess.
-
-```java
-1      public   class Cell  {
-2         private int row;
-3           private int column;
-4         private boolean  isBomb;
-5            private int number;
-6         private boolean  isExposed  =  false;
-7         private boolean  isGuess  =  false;
-8
-9            public   Cell(int r, int c)  {  ... }
-10
-11        /*  Getters and setters for   above variables. */
-12
-13
-14        public   boolean  flip() {
-15              isExposed  =  true;
-16              return  !isBomb;
-17        }
-18
-19       public   boolean  toggleGuess()  {
-20              if (!isExposed)  {
-21                   isGuess  =  !isGuess;
-22              }
-23              return  isGuess;
-24        }
-25
-26        /*  Full   code can be found  in  downloadable  code solutions.  */
-27   }
-```
-
-##### Design: Board
-
-Board will need to have an array of all the Cell objects.  A two-dimension array will work just fine.
-
-We'll probably want Board to keep state of how many unexposed cells there are. We'll track this as we go, so we don't have to continuously count it.
-
-Board will also handle some of the basic algorithms: 
-
-- Initializing the board and laying out the bombs. 
-- Flipping a cell.
-- Expanding  blank areas.
-
-It will receive the  game plays from  the  Game object and  carry them  out.  It will then  need  to  return  the result of the play, which could be any of {clicked a bomb and lost, clicked out of bounds, clicked an already exposed area,  clicked  a blank area  and still playing,  clicked  a blank area  and won, clicked  a number  and won}. This is really two different  items  that  need  to  be  returned:  successful (whether or not the  play was successfully made)  and  a game state (won, lost, playing).  We'll use  an  additional  GamePlayResult to return this data.
-
-We'll also use a GamePlay class  to hold the  move  that  the  player  plays. We need  to use  a row, column, and then  a flag to indicate whether this was an actual flip or the user was just marking this as a "guess" at a possible bomb.
-
-The basic skeleton of this class might  look something like this:
-
-```java
-1      public class  Board   {
-2            private int nRows;
-3            private int  nColumns;
-4            private int nBombs  =  0;
-5            private Cell[][] cells;
-6            private Cell[]  bombs;
-7            private int numUnexposedRemaining;
-8
-9          public Board(int r,  int  c,  int  b)   {        }
-10
-11          private void initializeBoard()   {  ...}
-12          private  boolean flipCell(Cell cell)  { ... }
-13          public  void expandBlank(Cell cell)  { ... }
-14          public UserPlayResult playFlip(UserPlay play)  {  ...}
-15          public int  getNumRemaining()   {  return numUnexposedRemaining;   }
-16   }
-17
-18    public  class  UserPlay {
-19          private int row;
-20          private  int  column;
-21          private  boolean isGuess;
-22          /*  constructor, getters,  setters. */
-23     }
-24
-25    public class  UserPlayResult {
-26          private  boolean successful;
-27          private Game.GameState  resultingState;
-28          /*  constructor, getters, setters.  */
-29     }
-```
-
-##### Design: Game
-
-The Game class will store references to the  board and hold the game state.  It also takes  the user input and sends  it off to Board.
-
-```java
-1      public class  Game {
-2            public  enum GameState {  WON,    LOST,  RUNNING}
-3
-4         private  Board   board;
-5            private  int  rows;
-6            private  int  columns;
-7            private int   bombs;
-8            private  GameState state;
-9
-10			public Game(int  r, int c,  int b)  {  ... }
-11			
-12			public  boolean initialize() {  ... }
-13			public  boolean s tart()  {   ... }
-14			private  boolean playGame()  { ... } // Loops until game is over. 
-15   }
-```
-
-##### Algorithms
-
-This is the basic object-oriented design in our code. Our interviewer might ask us now to implement a few of the most interesting algorithms.
-
-In this case, the three interesting algorithms is the initialization (placing the bombs randomly), setting the values of the numbered cells, and expanding  the blank region.
-
-*Placing the Bombs*
-
-To place the bombs, we could randomly pick a cell and then place a bomb if it's still available, and otherwise pick a different location for it. The problem with this is that if there are a lot of bombs, it could get very slow. We could end up in a situation where we repeatedly pick cells with bombs.
-
-To get around this, we could take an approach  similar to the card deck shuffling problem  (pg 531). We could place the K bombs in the first K cells and then shuffle all the cells around.
-
-Shuffling an array operates  by iterating through the array from i = 0 through N-1. For each i, we pick a random indexbetween i and N-1 and swap it with that index.
-
-To shuffle a grid, we do a very similar thing, just converting the index into a row and column location.
-
-```java
-1     void  shuffleBoard()  {
-2          int nCells   =  nRows *  nColumns ;
-3         Random  random =  new  Random();
-4          for (int indexl =  0;  indexl <   nCells;  indexl++) {
-5               int index2   =  indexl + random.nextint(nCells  -  indexl);
-6               if (indexl != index2)  {
-7                    /* Get  cell at  indexl.  */ 
-8				int rowl  =  indexl / nColumns;
-9				int columnl  =  (indexl -  rowl  *  nColumns)  %  nColumns; 
-10				Cell   celll =  cells[rowl][columnl];
-11				
-12				/* Get  cell at  index2. */
-13				int row2 =  index2   / nColumns;
-14				int columN² =  (index2 -  row2 *  nColumns)  %  nColumns; 
-15				Cell   cell2 =  cells[row2][columN²] ;
-16				
-17				/* Swap.  */ 
-18				cells[rowl][columnl] =  cell2; 
-19				cell2.setRowAndColumn(row1,   column!); 
-20				cells[row2][columN²]   =  celll; 
-21				cell1.setRowAndColumn(row2,   columN²);
-22			  }
-23        }
-24   }
-```
-
-*Setting the Numbered  Cells*
-
-Once the bombs have been placed, we need to set the values of the numbered cells. We could go through each cell and check how many bombs are around it. This would work, but it's actually a bit slower than is necessary.
-
-Instead, we can go to each bomb and increment each cell around it. For example,  ceffs with 3 bombs wiff get incrementNumber called three times on them and will wind up with a number of 3.
-
-```java
-1     /*  Set  the  cells around the  bombs  to the  right number. Although the  bombs have
-2       *  been shuffled,  the  reference in  the  bombs array  is still to  same object. */
-3      void  setNumberedCells() {
-4         int[][] deltas =  {  II Offsets of  8 surrounding cells
-5                     {-1,  -1},  {-1,  0},   {-1,  1},
-6                         {0,  -1},              {0,  1},
-7                   {  1,  -1},   {  1,  0},  {  1,  1}
-8         };
-9         for  (Cell bomb:  bombs) {
-10            int row =  bomb.getRow();
-11            int col=  bomb.getColumn();
-12            for  (int[] delta :   deltas) {
-13                 int r= row+  delta[0];
-14                 int c  =  col+  delta[1];
-15                 if (inBounds(r,  c))   {
-16                      cells[r][c].incrementNumber();
-17                        }
-18            }
-19          }
-20  }
-```
-*Expanding a Blank Region*
-
-Expanding the blank region could be done either iteratively or recursively. We implemented it iteratively. 
-
-You can think about this algorithm like this: each blank cell is surrounded by either blank cells or numbered cells (never a bomb). All need to be flipped. But, if you're flipping a blank cell, you also need to add the blank
-cells to a queue, to flip their neighboring cells.
-
-```java
-1      void  expandBlank(Cell  cell) {
-2         int[][]  deltas =  {
-3                     {-1,  -1},  {-1,  0},   {-1,  1},
-4                   {   0,  -1},                    {  0,  l},
-5                        { 1,  -1},  { 1,  0},  {  1,  1}
-6         };
-7
-8         Queue<Cell> toExplore     new Linkedlist<Cell>();
-9         toExplore.add(cell);
-10
-11       while  (!toExplore.isEmpty()) {
-12            Cell  current =  toExplore.remove();
-13
-14            for  (int[]  delta :   deltas) {
-15                 int r    current.getRow() +  delta[0];
-16                 int c=  current.getColumn()  + delta[l];
-17
-18                      if (inBounds(r,  c))   {
-19                      Cell  neighbor  =  cells[r][c];
-20                      if  (flipCell(neighbor) &&   neighbor.isBlank()) {
-21                           toExplore.add(neighbor);
-22                       }
-23                  }
-24                 }
-25        }
-26   }
-```
-
-You could instead implement this algorithm recursively. In this algorithm, rather than adding the cell to a queue, you would make a recursive call.
-
-Your implementation of these algorithms could vary substantially depending  on your class design.
-
-
-**7.11	File System:** Explain the data structures and algorithms that you would use to design an in-memory file system. Illustrate with an example in code where possible.
-
-SOLUTION
-
----
-
-Many candidates may see this problem and instantly panic. A file system seems so low level!
-
-However, there's no need to panic. If we think through the components  of a file system, we can tackle this problem just like any other object-oriented design question.
-
-A file system, in its most simplistic version, consists  of Files and Directories. Each Directory contains a set of Files and Directories. Since Files and Directories share so many characteris­ tics, we've implemented them such that they inherit from the same class, Entry.
-
-```java
-1     public abstract class  Entry  {
-2         protected  Directory parent;
-3         protected long  created;
-4          protected long  lastUpdated;
-5         protected long  lastAccessed;
-6          protected String name;
-7
-8          public Entry(String n,   Directory p)  {
-9               name =  n;
-10             parent =  p;
-11             created=  System.currentTimeMillis();
-12            lastUpdated = System.currentTimeMillis();
-13             lastAccessed =  System.currentTimeMillis();
-14           }
-15
-15       public boolean   delete() {
-17             if (parent == null) return false;
-18             return parent.deleteEntry(this);
-19        }
-20
-21       public abstract int size();
-22
-23        public String getFullPath()  {
-24             if (parent == null) return name;
-25             else return  parent. getFullPath()  + "/" + name;
-26      }
-27
-28       /*  Getters and setters.  */
-29       public long  getcreationTime()  {  return created; }
-30          public long  getLastUpdatedTime()  { return lastUpdated;}
-31       public  long getLastAccessedTime() { return lastAccessed; }
-32       public void  changeName(String n)  {name  =  n;}
-33       public String getName() {return  name;}
-34    }
-35
-36  public class File   extends  Entry  {
-37       private String content;
-38       private int size;
-39
-40       public File(String  n,  Directory p,  int sz)  {
-41            super(n,  p);
-42            size =  sz;
-43          }
-44
-45       public int size() {  return size; }
-46       public String getContents() {return  content; }
-47		public void  setContents(String c)  {content  =  c;}
-48     }
-49
-50  public class  Directory extends  Entry  {
-51       protected Arraylist<Entry> contents;
-52
-53       public Directory(String n,  Directory p)  {
-54            super(n,  p);
-55            contents =  new Arraylist<Entry>();
-56          }
-57
-58       public int size() {
-59            int size =  0;
-60            for  (Entry  e  :   contents) {
-61                 size +=  e.size();
-62          }
-63            return size;
-64      }
-65
-66       public  int  numberOfFiles() {
-67            int count  =  0;
-68            for   (Entry  e  :   contents)  {
-69                 if (e  instanceof Directory) {
-70                      count++;  // Directory counts  as  a  file
-71                      Directory d =  (Directory) e;
-72                      count  +=  d. numberOfFiles();
-73               } else if (e  instanceof File) {
-74
-75               }
-76              }
-77            return count;
-78         }
-79
-80       public boolean  deleteEntry(Entry entry)  {
-81            return contents.remove(entry);
-82         }
-83
-84       public void  addEntry(Entry entry)  {
-85            contents.add(entry);
-86          }
-87
-88        protected  ArrayList<Entry> getContents()   {  return  contents; }
-89   }
-```
-
-Alternatively, we could have implemented  Directory such that it contains separate  lists for files and subdirectories. This makes the nurnberOfFiles() method  a bit cleaner, since it doesn't need to use the instanceof operator, but it does prohibit us from cleanly sorting files and directories by dates or names.
-
-
-**7.12	Hash  Table:**   Design and  implement  a hash table  which uses  chaining (linked lists) to handle collisions.
-pg 129
-
-SOLUTION
-
----
-
-Suppose we are implementing a hash table that looks like Hash<K,   V>. That is, the hash table maps from objects of type K to objects of type V.
-
-At first, we might think our data structure would look something like this:
-
-```java
-1     class Hash<K, V>  {
-2          Linkedlist<V>[]  items;
-3         public void  put(K  key,   V  value) { ... }
-4          public V  get(K  key)  { ... }
-5     }
-```
-
-Note that iterns is an array of linked lists, where iterns[ i] is a linked list of all objects with keys that map to index i (that is, all the objects that collided at i).
-
-This would seem to work until we think more deeply about collisions. Suppose we have a very simple hash function that uses the string length.
-
-```
-1     int hashCodeOfKey(K key)  {
-2         return key.to5tring().length()  %  items.length;
-3      }
-```
-
-The keys jim and bob will map to the same index in the array, even though they are different keys. We need to search through the linked list to find the actual object that corresponds to these keys. But how would we do that? All we've stored in the linked list is the value, not the original key.
-
-This is why we need to store both the value and the original key.
-
-One way to do that is to create another object called Ce 11 which pairs keys and values. With this implemen­tation, our linked list is of type Cell.
-
-The code below uses this implementation.
-
-```java
-1     public class  Hasher<K,  V>  {
-2         /* Linked  list node  class. Used only  within hash  table. No  one  else  should get
-3           *  access to  this. Implemented  as  doubly  linked list. */
-4          private static  class LinkedlistNode<K,  V>  {
-5               public LinkedListNode<K,   V>  next;
-6               public  LinkedListNode<K,   V>  prev;
-7               public K   key;
-8               public V  value;
-9               public  LinkedListNode(K k,  V  v)  {
-10                  key=  k;
-11                  value   =  v;
-12             }
-13        }
-14
-15       privateArrayList<LinkedListNode<K,  V>>  arr;
-16       public Hasher(int capacity)  {
-17            /*  Create  list of  linked   lists at a  particular size. Fill list  with  null
-18              * values,  as  it's the  only  way to  make  the  array the  desired size. */
-19            arr =   newArrayList<LinkedListNode<K,  V>>();
-20            arr.ensureCapacity(capacity);  // Optional  optimization
-21            for  (int i= 0;  i < capacity;  i++)  {
-22                 arr.add(null);
-23              }
-24       }
-25
-26       /*  Insert key and value  into hash table. */
-27       public void  put(K  key,  V   value) {
-28            LinkedListNode<K, V>  node = getNodeForKey(key);
-29            if (node  != null) {//Already  there
-30                 node.value =   value;   // just update  the  value.
-31                 return;
-32              }
-33
-34            node =   new  LinkedListNode<K, V>(key, value);
-35            int index = getindexForKey(key);
-36            if (arr.get(index) != null) {
-37                 node.next= arr.get(index);
-38                 node.next.prev=  node;
-39                }
-40            arr.set(index,  node);
-41        }
-42
-43       /*  Remove  node for  key.  */
-44       public void  remove(K key)  {
-45            LinkedListNode<K, V>  node =   getNodeForKey(key);
-46            if (node.prev != null) {
-47                 node.prev.next=  node.next;
-48            }  else   {
-/*  Removing  head  -  update. */
-50                 int hashKey = getindexForKey(key);
-51                 arr.set(hashKey,  node.next);
-52            }
-
-54            if (node.next != null) {
-55                 node.next.prev =   node.prev;
-56                }
-57          }
-58
-59       /*  Get value  for  key.  */
-60       public V  get(K  key)  {
-61            LinkedListNode<K, V>  node =   getNodeForKey(key);
-62            return node == null ?  null :   node.value;
-63          }
-64
-65       /*  Get linked   list node associated with  a  given  key.  */
-66       private LinkedListNode<K, V>  getNodeForKey(K key)  {
-67            int index=  getindexForKey(key);
-68            LinkedListNode<K, V>   current=  arr.get(index);
-69            while  (current != null) {
-70			if  (current.key== key)  {
-71                       return current;
-72                     }
-73                  current=  current.next;
-74              }
-75             return null;
-76          }
-77
-78       /* Really   naive   function to  map  a  key to an index. */
-79        public   int   getindexForKey(K key)  {
-80             return  Math.abs(key.hashCode() %   arr.size());
-81        }
-82   }
-83
-```
-
-Alternatively, we could implement a similar data structure (a key->value lookup) with a binary search tree as the underlying data structure. Retrieving an element will no longer be O(1)  (although, technically, this implementation is not O(1) if there are many collisions), but it prevents us from creating an unnecessarily large array to hold items.
-
-
 
 ## 8 Solutions to Recursion and  Dynamic Programming
-
-
-**8.1 		Triple Step:** A child is running up a staircase with n steps and can hop either 1 step, 2 steps, or 3 steps at a time. Implement a method to count how many possible ways the child can run up the stairs.
-pg134
-
-SOLUTION
-
----
-
-Let's think about this with the following question: What is the very last step that is done?
-
-The very last hop the child makes-the one that lands her on the nth step-was either a 3-step hop, a
-2-step hop, or a 1-step hop.
-
-How many ways then are there to get up to the nth step? We don't know yet, but we can relate it to some subproblems.
-
-If we thought  about all of the paths to the nth step, we could just build them off the paths to the three previous steps. We can get up to the nth step by any of the following:
-
-- Going to the (n - l)st step and hopping 1 step.
-- Going to the (n - 2)nd step and hopping 2 steps.
-- Going to the (n - 3)rd step and hopping3  steps.
-
-Therefore, we just need to add the number of these paths together.
-
-Be very careful here. A lot of people want to multiply them. Multiplying one path with another would signify taking one path and then taking the other. That's not what's happening here.
-
-
-##### Brute  Force  Solution
-
-This is a fairly straightforward algorithm to implement recursively. We just need to follow logic like this:
-```
-countWays(n-1)   + countWays(n-2)   + countWays(n-3)
-```
-The one tricky bit is defining the base case. If we haveO steps to go (we're currently standing on the step), are there zero paths to that step or one path?
-
-That is, what is countWays(0)? Is it 1  orO?
-
-You could define it either way. There is no"right" answer here.
-
-However, it's a lot easier to define it as 1. If you defined it as 0, then you would need some additional base cases (or else you'd just wind up with a series ofOs getting added).
-
-A simple implementation of this code is below.
-
-```java
-1      int countWays(int n)  {
-2           if (n <   0) {
-3                 return 0;
-4           }  else if  (n     0) {
-5               return  1;
-6           }  else {
-7                 return countWays(n-1) +  countWays(n-2)+  countWays(n-3);
-8           }
-9      }
-```
-
-Like the  Fibonacci problem, the  runtime of this  algorithm is exponential (roughly O ( 3^n) ), since  each call branches out to three more calls.
-
-
-##### Memoization Solution
-
-The previous solution for countWays is called  many times for the  same values,  which  is unnecessary. We can fix this through memoization.
-
-Essentially, if we've seen this value of n before, return the cached value. Each time we compute a fresh value, add  it to the cache.
-
-Typically we use  a HashMap<Integer,   Integer> for a cache. In this case,  the  keys  will be  exactly  1 through n. It's more compact to use an integer array.
-
-```java
-1      int countWays(int n)  {
-2           int[] memo =  new  int[n+ 1];
-3           Arrays.fill(memo, -1);
-4           return countWays(n,  memo);
-5       }
-6
-7      int countWays(int n,  int[] memo)  {
-8           if (n <   0) {
-9                 return 0;
-10         }  else if (n ==  0) {
-11               return 1;
-12         }  else if (memo[n]  >   -1) {
-13               return memo[n];
-14         }  else {
-15		         memo[n]   =  countWays(n - 1,  memo)+  countWays(n -  2,  memo)+
-16                                     countWays(n  -  3,   memo);
-17               return memo[n];
-18       }
-19   }
-```
-
-Regardless of whether or not you use memoization, note that the number of ways will quickly overflow  the bounds of an integer. By the  time you get  to just  n   = 37, the  result has already overflowed. Using a long will delay, but not completely solve, this issue.
-
-It is great to  communicate this  issue  to  your  interviewer. He probably won't ask you  to  work  around it (although you  could,  with  a Biginteger class). but  it's nice to demonstrate that you think about these
-issues.
-
-**8.2 Robot in a Grid:** Imagine a robot sitting on the upper left corner of grid with r rows and c columns. The robot can only move in two directions, right and down, but certain cells are "off limits" such that the robot cannot step on them. Design an algorithm to find a path for the robot from the top left to the bottom right.
-
-
-SOLUTION
-
----
- 
-
-If we picture this grid, the only way to move to spot ( r, c) is by moving to one of the adjacent spots: ( r-1, c) or ( r, c-1). So, we need to find a path to either ( r-1, c) or ( r, c-1).
-
-How do we find a path to those spots? To find a path to ( r-1, c) or ( r, c-1), we need to move to one of its adjacent cells. So, we need to find a path to a spot adjacent to ( r-1, c),  which are coordinates ( r-2, c) and ( r-1, c-1). or a spot adjacent to ( r, c -1).  which are soots ( r- L c -1) and ( r. c-2). Observe that we list the point ( r-1,c-1) twice; we'll discuss that issue later.
-
-
-> Tip: A lot of people use the variable namesxandy when dealing with two-dimensional arrays. This can actually cause some bugs. People tend to think aboutx as the first coordinate in the matrix andy as the second coordinate (e.g., matrix[x] [y]). But, this isn't really correct. The first coordinate is usually thought of as the row number,  which is in fact they value (it goes verti­ cally!). You should write matrix[y] [x].  Or, just make your life easier by using r (row) and c (column) instead.
-
-
-So then, to find a path from the origin, we just work backwards like this. Starting from the last cell, we try to find a path to each of its adjacent cells. The recursive code below implements this algorithm.
-
-```java
-1     Arraylist<Point> getPath(boolean[][] maze) {
-2            if (maze ==  null  I   I     maze.length     ==0) return null;
-3            ArrayList<Point> path  =  new Arraylist<Point>();
-4         if (getPath(maze,  maze.length  -  1,  maze[0].length  -  1,  path)) {
-5                  return path;
-6            }
-7         return null;
-8     }
-9
-10   boolean  getPath(boolean[][] maze, int row,  int col,   Arraylist<Point> path)  {
-11       /*  If out  of  bounds or  not  available,  return.*/
-12       if (col  < 0 11 row < 0 11   !maze[row][col]) {
-13            return false;
-14        }
-15
-16       boolean  isAtOrigin   =(row  == 0)  &&   (col     ==0);
-17
-18       /*  If there's a path  from the  start to  here,   add my  location. */
-19       if (isAtOrigin  I   I      getPath(maze,   row,  col  -  1,  path)  I   I
-20               getPath(maze,   row -  1,  col,   path)) {
-21            Point  p =  new Point(row,   col);
-22            path.add(p);
-23            return true;
-24        }
-25
-26       return false;
-27   }
-```
-
-This solution is O ( 2^(r+c)), since each path has r+c steps and there are two choices we can make at each step.
-
-We should look for a faster way.
-
-Often, we can optimize exponential algorithms by finding duplicate work. What work are we repeating?
-
-If  we walk through  the algorithm, we'll see that we are visiting squares multiple times. In fact, we visit each square many, many times. After all, we have re squares but we're doing O(Y+c) work. If we were only visiting each square once, we would probably have an algorithm that was O(re) (unless we were somehow doing a lot of work during each visit).
-
-How does our current algorithm work? To find a path to (r, c),  we look for a path to an adjacent coor­ dinate: (r-1, c) or (r, c-1). Of course, if one of those squares is off limits, we ignore it.  Then, we look at their adjacent coordinates: (r-2, c),  (r-1, c-1), (r-1, c-1), and (r, c-2). The spot (r -1, c-1) appears  twice, which means that we're duplicating effort. Ideally, we should remember  that we already visited (r-1, c-1) so that we don't waste our time.
-
-This is what the dynamic programming algorithm below does.
-
-```java
-1     Arraylist<Point> getPath(boolean[][]  maze)  {
-2         if (maze  ==null   I   I      maze.length==  0)  return null;
-3          Arraylist<Point>  path=new  Arraylist<Point>();
-4          HashSet<Point> failedPoints =  new HashSet<Point>();
-5         if (getPath(maze,  maze.length  -  1,   maze[0].length  -  1,   path, failedPoints))  {
-6               return path;
-7            }
-8          return null;
-9      }
-10
-11   boolean  getPath(boolean[][] maze,  int row,  int  col,  Arraylist<Point> path,
-12                                   HashSet<Point>  failedPoints) {
-13        /* If out  of  bounds  or  not   available,  return.*/
-14       if (col < 0  11  row < 0 11  !maze[row][col])  {
-return false;
-16        }
-17
-18        Point p =  new Point(row,  col);
-19
-20        /* If we've  already visited this  cell,  return. */
-21       if  (failedPoints.contains(p)) {
-22             return false;
-23        }
-24
-25       boolean  isAtOrigin=(row==   0)  &&   (col==    0);
-26
-27        /* If there's a  path  from  start to my  current location,  add  my   location.*/
-28       if  (isAtOrigin I   I      getPath(maze,  row,  col  -  1,  path, failedPoints)  I   I
-29                getPath(maze,  row -  1,   col,  path, failedPoints))  {
-30             path.add(p);
-31             return true;
-32        }
-33
-34        failedPoints.add(p);  // Cache result
-35        return false;
-36    }
-```
-
-This simple change will make our code run substantially faster. The algorithm will now take O(XY) time because we hit each cell just once.
-
-**8.3      Magic Index:** A magic index in an array A[1.•.n-1]  is defined to be an index such that A[i] = i. Given a sorted array of distinct integers, write a method to find a magic index, if one exists, in array A.
-
-FOLLOW UP
-
-What if the values are not distinct?
-
-SOLUTION
-
----
-
-Immediately, the brute force solution should jump to mind-and there's no shame in mentioning it. We simply iterate through the array, looking for an element which matches this condition.
-
-```java
-1     int  magicSlow(int[] array)  {
-2          for (int i=    0;  i <   array.length;  i++)  {
-3               if (array[i] == i) {
-4                    return i;
-5                  }
-6          }
-7          return -1;
-8     }
-```
-
-Given that the array is sorted, though, it's very likely that we're supposed  to use this condition.
-
-We may recognize that this problem sounds a lot like the classic binary search problem. Leveraging the
-Pattern Matching approach for generating algorithms, how might we apply binary search here?
-
-In binary search, we find an element  k by comparing it to the middle element, x, and determining  if k would land on the left or the right side of x.
-
-Building off this approach, is there a way that we can look at the middle element  to determine  where a magic index might be? Let's look at a sample array:
-
-When we look at the middle elementA[5]  =  3, we know that the magic index must be on the right side, sinceA[mid]  <   mid.
-
-Why couldn't the magic index be on the left side? Observe that when we move from i to i-1, the value at this index must decrease  by at least 1, if not more (since the array is sorted and all the elements  are distinct). So, if the middle element is already too small to be a magic index, then when we move to the left, subtracting k indexes and (at least) k values, all subsequent elements will also be too small.
-
-We continue to apply this recursive algorithm, developing code that looks very much like binary search.
-
-```java
-1     int  magicFast(int[]  array)  {
-2          return  magicFast(array, 0,  array.length -  1);
-3       }
-4
-5     int  magicFast(int[] array, int start, int end)  {
-6          if (end<  start) {
-7               return -1;
-8            }
-9          int mid=  (start+ end)/  2;
-10        if (array[mid] ==   mid)  {
-11             return mid;
-12        }  else if (array[mid]  >   mid){
-13                return  magicFast(array,  start,  mid  -  1);
-14          }  else {
-15                return magicFast(array, mid+  1,  end);
-16        }
-17   }
-```
-
-##### Follow Up: What if the elements are not  distinct?
-
-If the elements are not  distinct, then this algorithm fails. Consider the following  array:
-
-|     |    |    |    |    |     |    |    |    |    |    |
-| --  | -- | -- | -- | -- | --  | -- | -- | -- | -- | -- |
-| -10 | -5 | 2  | 2  | 2  | *3* | 4  | 7  | 9  | 12 | 13 |
-| 0   | 1  | 2  | 3  | 4  | *5* | 6  | 7  | 8  | 9  | 10 |
-
-When  we see  that A[mid]    <   mid,  we cannot conclude which side the magic  index is on. It could  be on the right side, as before.  Or, it could be on the left side (as it, in fact, is).
-
-Could it be anywhere on the left side? Not exactly. Since A[5]  =  3, we know that A[4] couldn't  be a magic index. A[4] would need to be 4 to be the magic  index,  but A[4] must be less than or equal  to A[5].
-
-In fact, when we see that A[5] =   3, we'll need to recursively search the right side as before.  But, to search the left side, we can  skip a bunch of elements and only recursively search elements A[0] through A[3]. A[3]  is the first element that could be a magic  index.
-
-The general pattern is that  we compare midIndex and midValue for equality  first. Then, if they are not equal, we recursively search the left and right sides as follows:
-
-- Left side: search indices  start through Math. min(midlndex -  1,  midValue).
-- Right side: search indices  Math. max(midlndex  +  1,   midValue) through end. 
-
-The code  below implements this algorithm.
-
-```java
-1      int magicFast(int[]  array) {
-2            return magicFast(array, 0,  array.length  -  1);
-3      }
-4
-5      int  magicFast(int[] array, int start,  int end) {
-6            if (end<   start)  return -1;
-7
-8            int  midindex =(start+  end)/2;
-9            int midValue    =   array[midindex];
-10          if (midValue    ==midindex)  {
-11                return midindex;
-12          }
-13
-14       /* Search  left */
-15          int leftindex =  Math.min(midindex  -  1,  midValue);
-16          int left   =magicFast(array,  start, leftindex);
-17          if (left>=  0) {
-18                return left;
-19        }
-20
-21        /*  Search right */
-22          int rightindex =   Math.max(midindex  +  1,  midValue);
-23          int right =   magicFast(array, rightlndex,  end);
-24
-25          return right;
-26    }
-```
-
-Note that in the above code,if the elements are all distinct,the method operates almost identically to the first solution.
-
- 
-**8.4       Power Set:** Write a method to return all subsets of a set.
-
-
-SOLUTION
-
----
- 
-We should first have some reasonable expectations of our time and space complexity.
-
-How many subsets of a set are there? When we generate a subset, each element has the "choice" of either being in there or not. That  is, for the first element, there are two choices: it is either in the set or it is not. For the second, there are two, etc. So, doing {2  *  2  *  . . .  } n times gives us 2^n subsets.
-
-Assuming that we're going to be returning a list of subsets, then our best case time is actually the total number of elements across all of those subsets. There are 2^n subsets and each of the n elements will be contained in half of the subsets (which 2^(n-1) subsets).Therefore, the total number of elements across all of those subsets is n  *  2^(n -1).
-
-We will not be able to beat O(n2^n) in space or time complexity.
-
-The subsets of {a1,     a2,     ..., an} are also called the powersetP({a1,     a2,     ..., an}), or just P(n).
-
-##### Solution #1: Recursion
-
-This problem is a good candidate for the Base Case and Build approach. Imagine that we are trying to find all subsets of a set like S  =   {a1,    a2, • • • ,  an}. We can start with the Base Case. 
-
-Base Case:n =  0.
-
-There isjust one subset of the empty set: {}.
-
-Case:n =   1.
-
-There are two subsets of the set {a}: {}, {a1}.
-
-Case:n =  2.
-
-There are four subsets of the set {a1 ,  a2}: {} ,{a1}, {a2},{a1 ,  a2}.
-
-Case:n =  3.
-
-Now here's where things get interesting. We want to find a way of generating the solution for n = 3 based on the prior solutions.
- 
-
-What is the difference between the solution for n = 3 and the solution for n  =  2? Let's look at this more deeply:
-```
-P(2) = { } , {a1}, {a2}, {a1 , a2}
-P(3) = { }, {a1}, {a2 }, {a3}, {a1, a2}, {a1, a3}, {a2, a3}, {a1, a2, a3}
-```
-The difference between these solutions  is thatP(2) is missing all the subsets containing a3•
-```
-P(3) - P(2) = {a3}, {a1, a3}, {a2, a3}, {a1, a2, a3}
-```
-How can we use P(2) to create P(3)? We can simply clone the subsets in P(2) and add a3  to them: 
-```
-P(2) = {}  , {a1},    {a2}, {a1,    a2} 
-P(2)  +  a3 =  {a3},     {a1,     a3},     {a2,     a3), {a1,     a2,     a3}
-```
-
-When merged together, the lines above make P(3).
-
-Case:n  >   0
-
-Generating P(n)  for the general case is just a simple generalization of the above steps. We compute P (n-1), clone the results, and then add an to each of these cloned sets. 
-
-The following code implements this algorithm:
-
-```java
-1      Arraylist<Arraylist<Integer>> getSubsets(Arraylist<Integer> set,  int  index) {
-2         Arraylist<Arraylist<Integer>> allsubsets;
-3            if (set.size()==    index) {//Base  case   -  add  empty set
-4               allsubsets=  new Arraylist<Arraylist<Integer>>();
-5               allsubsets.add(new Arraylist<Integer>());  // Empty set
-6          }  else {
-7               allsubsets=  getSubsets(set,  index+    1);
-8               int item=  set.get(index);
-9               Arraylist<Arraylist<Integer>> moresubsets
-10                  new Arraylist<Arraylist<Integer>>();
-11             for (Arraylist<Integer> subset :   allsubsets) {
-12                  Arraylist<Integer>  newsubset =  new Arraylist<Integer>();
-13                  newsubset.addAll(subset);  //
-14                  newsubset.add(item);
-15                  moresubsets.add(newsubset);
-16              }
-17             allsubsets.addAll(moresubsets);
-18        }
-19       return allsubsets;
-20     }
-```
-
-This solution will be O(n2^n) in time and space, which is the best we can do. For a slight optimization, we could also implement this algorithm iteratively.
-
-##### Solution #2: Combinatorics
-
-While there's nothing wrong with the above solution, there's another way to approach it.
-
-Recall that when we're generating a set, we have two choices for each element: (1) the element is in the set (the "yes" state) or (2) the element is not in the set (the "no" state). This means that each subset is a sequence of yeses I nos-e.g., "yes, yes, no, no, yes, no"
-
-This gives us 2^n possible subsets. How can we iterate through all possible sequences of "yes" /"no" states for all elements? If each "yes" can be treated as a 1 and each "no" can be treated as a 0, then each subset can be represented as a binary string.
-
-Generating all subsets, then, really just comes down to generating all binary numbers (that is, all integers). We iterate through  all numbers from 0 to 2^n (exclusive) and translate the binary representation  of the numbers into a set. Easy!
-
-```java
-1     Arraylist<Arraylist<Integer>>  getSubsets2(ArrayList<Integer> set)  {
-2          ArrayList<ArrayList<Integer>> allsubsets=  new Arraylist<Arraylist<Integer>>();
-3         int max=  1 << set.size();  /* Compute 2An */
-4          for (int k  = 0;  k < max; k++   ) {
-5               ArrayList<Integer> subset=  convertintToSet(k  , set);
-6               allsubsets.add(subset);
-7          }
-8          return allsubsets;
-9      }
-10
-11   Arraylist<Integer> convertlntToSet(int x, Arraylist<Integer> set) {
-12       Arraylist<Integer> subset =  new  Arraylist<Integer>();
-13       int  index =  0;
-14     for  (int  k  = x; k  > 0;   k  >>= 1) {
-15		if ((k & 1) ==   1) {
-16		subs et.add(set.get(index));
-17		}
-18		index++;
-19		}
-20	    return subset;
-21	}	
-```
-
-There's nothing  substantially better or worse about this solution compared  to the first one.
-
-
-**8.5 	Recursive Multiply:**  Write a recursive function to multiply two positive integers without using the * operator  (or / operator). You can use addition, subtraction, and bit shifting, but you should minimize the number of those operations.
-
-SOLUTION
-
----
-
-Let's pause for a moment and think about what it means to do multiplication.
-
-> This is a good approach for a lot of interview questions. It's often  useful  to think  about  what  it really means to do something, even when it's pretty obvious.
-
-
-We can think about multiplying 8x7 as doing  8+8+8+8+8+8+8 (or adding  7 eight times). We can also think about it as the number of squares in an 8x7 grid.
-
-![](media/08_5_1.JPG)
-
-
-##### Solution #1
-
-How would we count the number of squares in this grid? We could just count each cell. That's pretty slow, though.
-
-Alternatively, we could count half the squares and then double  it (by adding this count to itself). To count half the squares, we repeat the same process.
-
-Of course, this "doubling" only works if the number is in fact even. When it's not even, we need to do the counting/summing from scratch.
-
-```java
-1     int  minProduct(int a, int  b) {
-2     int  bigger =  a <  b? b: a;
-3         int smaller =a< b? a: b;
-4         return  minProductHelper(smaller, bigger);
-5       }
-6
-7    int  minProductHelper(int smaller,  int  bigger)  {
-8            if  (smaller ==  0) { //  0 x bigger  = 0
-9              return 0;
-10       }  else   if  (smaller ==  1)  {  // 1 x bigger      bigger
-11            return  bigger;
-12       }
-1.3
-14       /*  Compute  half. If uneven, compute other half. If  even,  double it. */
-15       int s  =smaller  >>  1;  // Divide  by 2
-16       int sidel =minProduct(s,  bigger);
-17       int side2  =sidel;
-18       if  (smaller% 2  ==1) {
-19            side2  =minProductHelper(smaller  -  s,  bigger);
-20          }
-21
-22       return sidel +  side2;
-23   }
-```
-
-Can we do better? Yes.
-
-##### Solution #2
-
-If we observe how the recursion operates, we'll notice that we have duplicated work. Consider this example:
-```
-minProduct(17,  23)
-	minProduct(8,   23)
-		minProduct(4,   23)  * 2
-			...
-	+ minProduct(9,   23)
-		minProduct(4,   23)
-			...
-		+  minProduct(S,  23)
-```
-
-The second call to minProduct (4,   23) is unaware of the prior call, and so it repeats the same work. We shouldcache these results.
-
-```java
-1    int  minProduct(int a,  int b)  {
-2         int bigger    =  a< b? b:  a;
-3            int  smaller =a<  b? a: b;
-4
-5            int memo[]=  new  int[smaller + 1];
-6         return  minProduct(smaller, bigger,  memo);
-7     }
-8
-9    int  minProduct(int smaller,  int  bigger, int[]   memo)  {
-10       if  (smaller == 0)  {
-11            return 0;
-12       }  else  if (smaller == 1)  {
-13            return bigger;
-14       }  else  if (memo[smaller]  >  0)  {
-15            return memo[smaller];
-16       }
-17
-18       /*  Compute  half. If uneven, compute other half. If even,  double  it.  */
-19         int s     =smaller  >>  1;   II Divide  by  2
-20         int sidel  =minProduct(s,   bigger,  memo);   II Compute half
-21         int  side2  =sidel;
-22         if  (smaller% 2  ==1) {
-23               side2 =minProduct(smaller   -  s,  bigger, memo);
-24         }
-25
-26         I* Sum and  cache.*/
-27         memo[smaller]  =  sidel +  side2;
-28         return memo[smaller];
-29     }
-```
-
-We can still make  this a bit faster.
-
-##### Solution#3
-
-One  thing we might notice when we look at this code is that  a call to minProduct on an even number is much faster than one on an odd  number. For example, if we call minProduct(30,    35), then we'll just do minProduct(15,  35) and double the result.  However,  if we do minProduct(31,   35), then we'll need to call minProduct(15,  35) and minProduct(16,   35).
-
-This is unnecessary. Instead, we can do:
-```
-minProduct(31, 35) =  2  *  minProduct(15, 35) +  35
-```
-After all, since 31   =   2\*15+1, then 31x35  =  2\*15\*35+35.
-
-The logic in this final solution is that, on even numbers, we just dividesmaller by 2 and double the result of the recursive call. On odd  numbers, we do the same,  but  then we also add  b igger to this result.
-
-In doing so, we have  an unexpected "win:'  Our minProduct function just recurses straight downwards, with increasingly small  numbers each time.  It will never  repeat the  same call, so there's no need to cache any information.
-
-```java
-1      int  minProduct(int a,  int  b)   {
-2           int  bigger =a< b? b:  a;
-3           int  smaller  =a<   b? a   :   b;
-4           return  minProductHelper(smaller, bigger);
-5     }
-6
-7      int  minProductHelper(int smaller,  int  bigger) {
-8           if (smaller ==0)  return  0;
-9           else if (smaller  ==1)  return  bigger;
-10
-11         int s     =smaller  >>  1;   II Divide by  2
-12         int halfProd  =minProductHelper(s,   bigger);
-13
-14			if  (smaller% 2     ==0)  {
-15               return  halfProd +  halfProd;
-16         }  else {
-17               return  halfProd +  halfProd +  bigger;
-18         }
-19    }
-```
-
-This algorithm will run in O(log s) time,  wheres is the smaller of the  two numbers.
-
-**8.6	Towers of Hanoi:** In the classic problem of the Towers of Hanoi, you have 3 towers and N disks of different sizes which can slide onto any tower. The puzzle starts with disks sorted in ascending order of size from top to bottom (i.e., each disk sits on top of an even larger one). You have the following constraints:
-
-1. Only one disk can be moved at a time. 
-2. A disk is slid off the top of one tower onto another tower. 
-3. A disk cannot be placed on top of a smaller disk.
-
-Write a program to move the disks from the first tower to the last using Stacks.
-
-
-
-SOLUTION
-
----
-
-This problem sounds like a good candidate for the Base Case and Build approach.
-
-![](media/08_6_1.JPG)
-
-Let's start with the smallest possible example: n =  1.
-
-Case n =  1. Can we move Disk 1 from Tower 1 to Tower 3? Yes.
-
-1. We simply move Disk 1 from Tower 1 to Tower 3.
-
-Case n =  2. Can we move Disk 1 and Disk 2 from Tower 1 to Tower 3? Yes.
-
-1.  Move Disk 1  from Tower 1 to Tower 2
-
-2. Move Disk 2 from Tower 1 to Tower 3
-
-3.  Move Disk 1 from Tower 2 to Tower 3
- 
-Note how in the above steps, Tower 2 acts as a buffer, holding a disk while we move other disks to Tower 3. 
-
-Case n =  3. Can we move Disk 1, 2, and  3 from Tower 1  to Tower 3? Yes.
-
-1. We know we can move the top two disks from one tower to another (as shown  earlier), so let's assume we've already done that. But instead, let's move them to Tower 2.
-
-2.  Move Disk 3 to Tower  3.
-
-3.  Move Disk 1 and Disk 2 to Tower 3. We already know how to do this-just repeat what we did in Step 1. 
-
-Case n =  4. Can we move Disk 1, 2, 3 and 4 from Tower 1 to Tower 3? Yes.
-
-1.  Move  Disks 1, 2, and 3 to Tower 2. We know how to do that from the earlier examples.
-
-2.  Move Disk 4 to Tower 3.
-
-3.  Move  Disks 1, 2 and 3 back to Tower 3.
-
-Remember that the labels of Tower 2 and Tower 3 aren't important. They're equivalent towers. So, moving disks to Tower 3 with Tower 2 serving as a buffer is equivalent to moving disks to Tower 2 with Tower 3 serving as a buffer.
-
-This approach leadsto a natural recursive algorithm. In each part, we are doing the following steps, outlined below with pseudocode:
-
-```java
-1    moveDisks(int  n,  Tower origin,  Tower destination,  Tower buffer) {
-2         /*  Base case  */
-3            if (n  <=  0)  return;
-4
-5         /*  move  top  n - 1 disks from origin to buffer, using  destination as  a  buffer.  */
-6         moveDisks(n -  1,  origin, buffer, destination);
-7
-8         /*  move  top  from origin to  destination*/
-9         moveTop(origin,  destination);
-10
-11       /*  move  top  n  -  1  disks from buffer to  destination, using  origin as  a buffer. */
-12       moveDisks(n -  1,  buffer, destination, origin);
-13   }
-```
-
-The following code provides a more detailed implementation of this algorithm, using concepts of object­ oriented design.
-
-```java
-1    void  main(String[] args) {
-2         int n =  3;
-3         Tower[]  towers  =  new Tower[n];
-4         for  (int i= 0;  i < 3;  i++)  {
-5                  towers[i] =  new Tower(i);
-6         }
-7
-8         for  (int i= n - 1;  i >=  0;  i--) {
-9              towers[0].add(i);
-10         }
-11       towers[0].moveDisks(n, towers[2],  towers[l]);
-12    }
-13
-14   class Tower {
-1S         private  Stack<Integer> disks;
-16       private int index;
-17       public  Tower(int  i) {
-18            disks    new Stack<Integer>();
-19            index  =  i;
-20          }
-21
-22       public   int index() {
-23            return  index;
-24       }
-25
-26       public   void  add(int d)  {
-27            if (!disks.isEmpty() &&   disks.peek() <=  d)  {
-28                 System.out.println("Error  placing disk" + d);
-29            }  else {
-30                 disks.push(d);
-31              }
-32        }
-33
-34       public   void  moveTopTo(Tower  t) {
-35            int top=  disks.pop();
-36              t.add(top);
-37        }
-38
-39         public  void  moveDisks(int  n,  Tower destination,  Tower buffer) {
-40             if (n  >  0)  {
-41                  moveDisks(n  -  1,  buffer,  destination);
-42                  moveTopTo(destination);
-43                  buffer.moveDisks(n  - 1,  destination,  this);
-44             }
-45        }
-46     }
-```
-
-Implementing the towers as their own objects is not strictly necessary, but it does help to make the code cleaner in some respects.
-
-
-***8.7 	Permutations without Dups:** Write a method to compute all permutations of a string of unique characters.
-
-
-SOLUTION
-
----
-
-Like in many recursive problems, the Base Case and Build approach will be useful. Assume we have a string S represented by the characters a1a2...an.
-
-##### Approach 1: Building from permutations of first n-1 characters.
-
-*Base Case:* permutations offirst character substring
-
-The only permutation of a1 is the string a1.So: 
-```
-P(a1 )  = a
-```
-*Case: permutations of* a1a2
-```
-P(a1a2)  = a1a2   and a2a1
-```
-*Case: permutations of* a1a2a
-```
-P(a1a2a3) =  a 1 a 2 a 3 , a 1 a 3 a 2 , a 2 a 1 a 3 , a 2 a 3 a 1 , a 3 a 1 a 2 , a 3 a 2 a 1 ,
-```
-*Case: permutations of* a1a2a3a4
-
-This is the first interesting case. How can we generate permutations of a 1 a 2 a 3 a 4 from a 1 a 2 a ?
-
-Each permutation of a 1 a 2 a 3 a 4 represents an ordering of a 1 a 2 a 3 . For example, a 2 a 4 a 1 a 3 represents the order a 2 a 1 a 3 .
-
-Therefore, if we took all the permutations of a 1 a 2 a 3 and added a 4 into all possible locations, we would get all permutations of a 1 a 2 a 3 a 4 .
-
-```
-
-a 1 a 2 a 3 -> a 4 a 1 a 2 a 3, a1 a4 a 2 a 3 ,a 1 a 2 a 4 a 3,a 1 a 2 a 3 a 4
-a 1 a 3 a 2 -> a 4 a 1 a 3 a 2, a1 a4 a 3 a 2 ,a 1 a 3 a 4 a 2 ,a 1 a 3 a z a 4
-a 3 a 1 a 2 -> a 4 a 3 a 1 a 2, a3 a4 a 1 a 2 ,a 3 a 1 a 4 a 2,a 3 a 1 a 2 a 4
-a 2 a 1 a 3 -> a 4 a 2 a 1 a 3, a 2 a 4 a 1 a3,a 2 a 1 a 4 a 3 ,a 2 a 1 a 3 a 4
-a 2 a 3 a 1 -> a 4 a 2 a 3 a 1, a 2 a 4 a 3 a 1,a 2 a 3 a 4 a 1,a 2 a 3 a 1 a 4
-a 3 a 2 a , -> a 4 a 3 a 2 a 1, a3 a4 a 2 a 1 ,a 3 a 2 a 4 a 1 ,a 3 a 2 a , a 4
-```
-
-We can now implement this algorithm recursively.
-
-```java
-1     Arraylist<String>  getPerms(String str) {
-2          if (str == null) return null;
-3
-4          Arraylist<String>   permutations    new ArrayList<String>();
-5          if (str.length() == 0)  {//base  case
-6               permutations. add('"');
-7                return  permutations;
-8          }
-9
-10        char  first= str.charAt(0);  // get  the   first char
-11        String remainder=  str.substring(l); // remove the   first char
-12        Arraylist<String> words=  getPerms(remainder);
-13        for (String word:   words)   {
-14              for (int    =  0;       <= word.length();   ++)  {
-15                   String s=  insertCharAt(word, first, j);
-16                   permutations.add(s);
-17              }
-18        }
-19        return permutations;
-20   }
-21
-22   /* Insert char   c  at  index i in word.   */
-23   String insertCharAt(String word,   char   c,   int i) {
-24        String start=  word.substring(0,  i);
-25        String end=  word.substring(i);
-26        return start+ c  +  end;
-27     }
-```
-
-##### Approach 2: Building from permutations of all n-1 character substrings.
-
-*Base Case: single-character strings*
-
-The onlypermutation of a1 is the string a1. So: 
-```
-P(a1 )  =  a1
-```
-
-*Case: two-character strings*
-```
-P(a1a)   =  a1a2   and  a2a1 .
-P(a2a)  =  a2a3   and  a3a2 .
-P(a1a3 ) =  a1 a3   and  a3a1 .
-```
-*Case: three-character strings*
-
-Here is where the cases get more interesting.  How can we generate all permutations of three-character strings, such as a1 a2a3,  given the permutations of two-character strings?
-
-Well, in essence, we just need to "try" each character as the first character and then append the permuta­tions.
-```
-P(a1 a2a3 ) =  {a1   +  P(a2a3 )}  +  a2   +  P(a1a3)}   +  {a3    +  P(a1a2 )}
-	{a1   +  P(a2a3)}  ->   a1a2a3 ,  a1a3 a2
-	{a2    + P(a1a)}   -> a2 a1 a3 ,  a2 a3a1
-	{a3   +  P(a1a2)} -> a3 a1 a2 ,  a3 a2 a1
-```
-Now that we can generate all permutations of three-character strings, we can use this to generate permuta­tions of four-character strings.
-```
-P(a1a2a3a4)     = {a1+ P(a2a3a4)} + {a2+ P(a1a3,a4)}    +  {a3, +  P(a1a2a4)}+ {a4   +  P(a1a2a3)} 
-```
-This is now a fairly straightforward algorithm to implement.
-
-```java
-1     Arraylist<String>  getPerms(String  remainder)  {
-2          int len   - remainder.length();
-)       A1Tc1ylist<:Slrl11g>   r·e�ui-t  "'  new ArrayL1st<Str1ng>();
-4
-5          /* Base case.   */
-6		if (len==    0)  {
-	7		result.add(""); // Be  sure  to  return empty string!
-	8		return result;
-9		}
-10		
-11		
-12		for   (int i=    0;  i < len;   i++)  {
-13			/*  Remove  char  i and find  permutations of  remaining  chars.*/
-14			String before=  remainder.substring(0,  i);
-15			String after  =  remainder.substring(i + 1,  len); 
-16			Arraylist<String> partials =  getPerms(before +  after);
-17		
-18			/*  Prepend  char  i to  each  permutation.*/
-19			for  (String s  :   partials) {
-20				result.add(remainder.charAt(i) + s);
-21			}
-22		}
-23
-24		return result; 
-25    }
-```
-
-Alternatively, instead of passing the permutations back up the stack, we can push the prefix down the stack. When we get to the bottom (base case), prefix holds a full permutation.
-
-```java
-1    Arraylist<String>  getPerms(String str) {
-2         Arraylist<String> result  =  new Arraylist<String>();
-3            getPerms("",  str, result);
-4         return result;
-5       }
-6
-7    void  getPerms(String prefix,  String remainder,   Arraylist<String> result) {
-8         if (remainder.length()==    0)  result.add(prefix);
-9
-10       int len  =  remainder.length();
-11       for  (int i= 0;  i < len;   i++)  {
-12            String before  =  remainder.substring(0,  i);
-13            String after  =  remainder.substring(i +  1,  len);
-14            char  c =  remainder.charAt(i);
-15            getPerms(prefix +  c,  before  +  after, result);
-16        }
-17   }
-```
-
-For a discussion of the runtime of this algorithm, see Example 12 on page 51.
-
-
-**8.8 	Permutations with  Duplicates:** Write a method to compute all permutations of a string whose characters are not necessarily unique. The list of permutations should not have duplicates. 
-
-
-SOLUTION
- 
----
-
-This is very similar to the previous problem, except that now we could potentially have duplicate characters
-in the word.
-
-One simple way of handling this problem is to do the same work to check  if a permutation has been created before and then, if not, add it to the list. A simple  hash table will do the trick here. This solution will take O(n ! ) time in the worst case (and, in fact in all cases).
-
-While it's true that we can't beat this worst case time, we should be able to design an algorithm to beat this in many cases. Consider a string with all duplicate characters, like aaaaaaaaaaaaaaa. This will take an extremely long time (since there are over 6 billion permutations of a 13-character string), even though there is only one unique permutation.
-
-Ideally, we would like to only create the unique permutations, rather than creating every permutation and then ruling out the duplicates.
-
-We can start with computing the count of each letter (easy enough to get this-just use a hash table). For a string such as aabbbbc, this would be:
-```
-a->2 I      b->4 I      c->1
-```
-Let's imagine generating a permutation of this string (now represented as a hash table). The first choice we make is whether to use an a, b, or c as the first character. After that, we have a subproblem to solve: find all permutations of the remaining characters, and append those to the already picked "prefix:'
-
-```
-P(a->2 |  b->4 |  c->1) ={a +  P(a->1 |      b->4 |      c->1)} +
-						 {b +  P(a->2 |      b->3 |      c->1)} +
-						 {c +  P(a->2 |      b->4 |      c->0)}
-	P(a->1 | b->4 |  c->1) ={a +  P(a->0 |      b->4 |     c->l)} +
-						    {b +  P(a->1 |      b->3 |     c->1)} +
-							{c +  P(a->1 |      b->4 |     c->0)}
-	P(a->2 | b->3 |  c->1) ={a +  P(a->1 |      b->3 |     c->l)} +
-							{b +  P(a->2 |      b->2 |     c->1)} +
-							{c +  P(a->2 |      b->3 |     c->0)}
-	P(a->2 |  b->4 | c->0) ={a +  P(a->1 |      b->4 |     c->0)} +
-					        {b +  P(a->2 |      b->3 |     c->0)}
-```
-
-Eventually, we'll get down to no more characters remaining.
-
-The code below implements this algorithm.
-
-```java
-1     Arraylist<String> printPerms(String s) {
-2          Arraylist<String> result  = new Arraylist<String>();
-3         HashMap<Character,   Integer> map  =  buildFreqTable(s);
-4       printPerms(map, '"',  s.length(), result);
-5          return  result;
-6      }
-7
-8    HashMap<Character,   Integer> buildFreqTable(String s) {
-9         HashMap<Character,   Integer> map=  new HashMap<Character,   Integer>();
-10     for  (char c  :   s.toCharArray()) {
-11          if (!map.containsKey(c)) {
-12              map.put(c, 0);
-13              }
-14          map.put(c, map.get(c) +  1);
-15         }
-16        return  map;
-17   }
-18
-19  void printPerms(HashMap<Character,  Integer> map,  String  prefix, int remaining,
-20                           ArrayList<String>  result) {
-21     /* Base case. Permutation has been completed. */
-22      if (remaining== 0) {
-23          result.add(prefix);
-24          return;
-25          }
-26
-27     /* Try remaining letters for  next char,  and generate remaining permutations.  */
-28         for  (Character c   :   map.keySet()) {
-29               int count=  map.get(c);
-39               if  (count >  0) {
-31                     map.put(c,   count - 1);
-32                    printPerms(map, prefix  +  c,  remaining - 1,   result);
-33                     map.put(c,    count);
-34               }
-35          }
-36    }
-```
-
-In situations where the  string has many duplicates, this algorithm will run a lot faster  than the  earlier  algo­rithm.
-
-
-**8.9 	Parens:** Implement an algorithm to print  all valid (i.e., properly opened and  closed) combinations of n pairs of parentheses.
-EXAMPLE Input: 3
-Output: ((())),   (()()),   (())(),   ()(()),   ()()()
-
-SOLUTION
-
----
-
-Our first thought here might be  to  apply a recursive approach where we build  the  solution for f(n) by adding pairs of parentheses to f(n-1). That's certainly a good instinct.
-
-Let's consider the  solution for n   =  3: 
-```
-(()())       ((()))      ()(())		(())()      () () () 
-```
-How might we build this from n   =  2?
-```
-(())      ()()
-```
-
-We can  do this by inserting a pair of parentheses inside  every existing pair of parentheses, as well as one at the  beginning of the  string.  Any other places that we could insert parentheses, such  as at the end  of the string, would reduce to the earlier cases.
-
-So, we have the following:
-
-```
-(()) ->  (()()) I* inserted pair after  1st left  paren*/
-     ->  ((())) /*inserted pair after  2nd  left paren*/
-     ->  ()(()) /*inserted  pair  at  beginning of string*/ 
-() ()->  (())() /*inserted pair after 1st left  paren*/ 
-     ->  ()(()) /*inserted pair after  2nd  left paren*/ 
-     ->  () () () /*inserted  pair  at  beginning of string*/ 
-```
- 
-But wait-we have some duplicate pairs listed. The string ()(()) is listed twice.
-
-If we're going to apply this approach, we'll need to check for duplicate values  before adding a string to our list.
-
-```java
-1      Set<String> generateParens(int  remaining) {
-2           Set<String> set= new  HashSet<String>();
-3           if (remaining==  0) {
-4                 set.add("");
-5           }  else {
-6                 Set<String> prev =  generateParens(remaining - 1);
-7                 for (String str  :   prev) {
-8                       for (int i= 0;   i <   str.length();  i++) {
-9                        if (str.charAt(i) ==   '(') {
-10                           String s  =  insertlnside(str, i);
-11                             /*Add  s  to set if it's not  already in  there. Note:    HashSet
-12                               *automatically  checks for  duplicates before   adding,   so  an explicit
-13                               *check is not  necessary.   */
-14                           set.add(s);
-15                      }
-16                      }
-17                 set.add("()" + str);
-18             }
-19       }
-20       return set;
-21       }
-22
-23  String insertlnside(String str,  int leftlndex) {
-24       String left  =  str.substring(0,  leftlndex + 1);
-25       String right  =  str.substring(leftindex + 1,  str.length());
-26       return left  + "()" + right;
-```
-
-This works, but it's not very efficient. We waste a lot of time coming up with the duplicate strings.
-
-We can avoid this duplicate string issue by building the string from scratch. Under this approach, we add left and right parens, as long as our expression stays valid.
-
-On each recursive call, we have the index for a particular character in the string. We need to select either a left or a right paren. When can we use a left paren, and when can we use a right paren?
-
-1. *Left Paren:* As long as we haven't used up all the left parentheses, we can always insert a left paren.
-
-2. *Right Paren:* We can insert a right paren as long as it won't lead to a syntax error. When will we get a syntax  error? We will get a syntax error if there are more right parentheses than left.
-
-So, we simply keep track of the number of left and right parentheses allowed. If there are left parens remaining,  we'll insert a left paren and recurse. If there are more right parens remaining than left (i.e., if there are more left parens in use than right parens), then we'll insert a right paren and recurse.
-
-```java
-1     void  addParen(Arraylist<String> list, int leftRem,  int rightRem,  char[] str,
-2                               int index)   {
-3         if (leftRem  < 0  I   I      rightRem < leftRem)  return;//invalid  state
-4
-5         if (leftRem  == 0 &&  rightRem ==  0)  {/*Out  of  left and right  parentheses  */
-6              list.add(String.copyValueOf(str));
-7         }  else {
-8              str[index] =  '(';//Add  left and recurse
-9              addParen(list,  leftRem  -  1,  rightRem,  str, index  + 1);
-10
-11            str[index] =  ')';//Add  right and recurse
-12            addParen(list,  leftRem,   rightRem  -  1,  str, index  + 1);
-13       }
-14   }
-15
-16   ArrayList<String> generateParens(int  count)  {
-17       char[] str  =  new char[count *2];
-18       Arraylist<String> list =  new Arraylist<String>();
-addParen(list,  count,   count,   str, 0);
-20       return list;
-21    }
-```
-
-Because we insert left and right parentheses at each index in the string, and we never repeat an index, each string is guaranteed to be unique.
-
-
-**8.10    Paint  Fill:** Implement the "paint fill" function that one might see on many image editing programs.
-That is, given a screen (represented by a two-dimensional array of colors), a point, and a new color, fill in the surrounding area until the color changes from the original color.
-pg 136
-
-SOLUTION
-
----
-
-First, let's visualize how this method  works. When we call paintFill (i.e., "click" paint fill in the image editing application) on, say, a green pixel, we want to"bleed" outwards. Pixel by pixel, we expand outwards by calling paintFill on the surrounding pixel. When we hit a pixel that is not green, we stop.
-
-We can implement this algorithm recursively:
-
-```java
-1     enum Color  {   Black,   White,   Red,  Yellow,  Green}
-2
-3     boolean   PaintFill(Color[][] screen, int  r,  int  c,  Color  ncolor) {
-4          if (screen[r][c] == ncolor) return false;
-5          return PaintFill(screen, r,  c,  screen[r][c],  ncolor);
-6   }
-7
-8     boolean   PaintFill(Color[][] screen, int r,  int  c,  Color  ocolor,  Color  ncolor) {
-9          if (r <   0  I I  r >=  screen.length  II   c  <   0  I I  c  >=  screen[0].length) {
-10             return false;
-11         }
-12
-13        if (screen[r][c] == ocolor) {
-14              screen[r][c] = ncolor; 
-15              PaintFill(screen, r -  1, c,  ocolor, ncolor); // up
-16              PaintFill(screen, r + 1, c,  ocolor, ncolor); // down
-17              PaintFill(screen, r, c - 1,   ocolor, ncolor); // left 
-18				PaintFill(screen, r,  C   + 1,   ocolor, ncolor); // right 
-19        }
-20		return true; 
-21   }
-```
-
-If you used the variable names x and y to implement this, be careful about the ordering of the variables in screen [y]  [x]. Because x represents the horizontal axis (that is, it's left to right), it actually corresponds to the column number, not the row number. The value of y equals the number of rows. This is a very easy place to make a mistake in an interview, as well as in your daily coding. It's typically clearer to userow and column  instead, as we've done here.
-
-Does this algorithm seem familiar? It should! This is essentially depth-first search on a graph. At each pixel. we are searching outwards to each surrounding pixel. We stop once we've fully traversed all the surrounding pixels of this color.
-
-We could alternatively implement this using breadth-first search.
-
-**8.11 	Coins:** Given an infinite number  of quarters  (25 cents), dimes (1O  cents), nickels (5 cents), and pennies (1 cent), write code to calculate the number of ways of representing n cents.
-
-SOLUTION
-
----
-
-This is a recursive problem, so let's figure out how to computemakeChange(n) using prior solutions (i.e., subproblems).
-
-Let's say n  =  100. We want to compute the number of ways of making change for 100 cents. What is the relationship between this problem and its subproblems?
-
-We know that making change for 100 cents will involve either 0, 1, 2, 3, or 4 quarters. So:
-```
-makeChange(100)=  makeChange(100 using 0  quarters)+ 
-				  makeChange(100 using 1  quarter) + 
-				  makeChange(100 using 2 quarters)+ 
-				  makeChange(100 using 3 quarters)+ 
-				  makeChange(100 using 4  quarters)
-```
-Inspecting this further, we can see that some of these problems reduce. For example, makeChange(100 using 1  quarter) will equalmakeChange(75 using 0  quarters). This is because,if we must use exactly one quarter to make change for 100 cents, then our only remaining choices involve making change for the remaining 75 cents.
-
-We can apply thesame logic tomakeChange(100 using  2  quarters),makeChange(100  using 3  quarters) andmakeChange(100 using  4  quarters). We have thus reduced the above state­ment to the following.
-```
-makeChange(100)=  makeChange(100 using 0  quarters)+ 
-				  makeChange(75 using 0  quarters)+ 
-				  makeChange(50 using 0  quarters)+ 
-				  makeChange(25 using 0  quarters)+
-1
-```
-
-Note that the final statement from above,makeChange(100  using 4   quarters), equals 1. We call this "fully reduced:'
-
-Now what? We've used up all our quarters, so now we can start applying our next biggest denomination:
-dimes.
-
-Our approach for quarters applies to dimes as well, but we apply this for each of the four of five parts of the above statement. So, for the first part, we get the following statements:
-```
-makeChange(100 using 0  quarters)= makeChange(100 using 0  quarters,  0 dimes)+ 
-								   makeChange(l00  using 0  quarters,  1  dime) + 
-								   makeChange(100 using 0  quarters,  2 dimes)+
-								   ...
-								   makeChange(l00  using 0  quarters,  10 dimes)
-
-makeChange(75 using 0  quarters) = makeChange(75 using 0  quarters,  0 dimes)+ 
-								makeChange(75 using 0  quarters,  1  dime) + 
-								makeChange(75 using 0  quarters,  2 dimes)+
-								...
-								makeChange(75 using 0  quarters,  7  dimes)
-
-makeChange(50 using 0  quarters) = makeChange(50 using 0  quarters,  0 dimes)+ 
-								makeChange(50 using 0  quarters,  1 dime) + 
-								makeChange(50 using 0  quarters,  2  dimes)+ 
-								...
-								makeChange(50  using  0 quarters,  5 dimes)
-
-make(hange(25 using  0 quarters)= makeChange(25  using  0 quarters,  0 dimes)+ 
-								makeChange(25  using  0 quarters,  1 dime)  + 
-								makeChange(25  using  0 quarters,  2 dimes)
-```
-
-Each one of these, in turn, expands out once we start applying nickels. We end up with a tree-like recursive structure where each call expands out to four or more calls.
-
-The base case of our recursion is the fully reduced  statement. For example,  makeChange(50 using   0 quarters,  5  dimes) is fully reduced to 1, since 5 dimes equals 50 cents.
-
-This leads to a recursive algorithm that looks like this:
-
-```java
-1      int makeChange(int  amount,  int[] denoms, int index)   {
-2             if (index   >=  denoms.length   -  1)  return 1;    //last denom
-3             int denomAmount  denoms[index];
-4         int ways = 0;
-5             for  (int i= 0;  i *  denomAmount   <=  amount; i++)  {
-6              int amountRemaining  = amount -  i *  denomAmount;
-7              ways+=  makeChange(amountRemaining,  denoms, index  +  1);
-8         }
-9             return ways;
-10     }
-11
-12  int makeChange(int n)  {
-13       int[] denoms = {25,  10,  5,  1};
-14       return makeChange(n, denoms, 0);
-15    }
-```
-
-This works, but it's not as optimal as it could be. The issue is that we will be recursively calling makeChange several times for the same values of amount and index.
-
-We can resolve this issue by storing the previously computed values. We'll need to store a mapping from each pair (amount,   index) to the precomputed result.
-
-```java
-1    int makeChange(int n)  {
-2         int[] denoms = {25,  10,  5,  l};
-3             int[][] map  = new int[n+ l][denoms.length];   //precomputed  vals
-4         return makeChange(n, denoms, 0,  map);
-5       }
-6
-7    int makeChange(int amount,  int[] denoms, int index,   int[][] map) {
-8             if (map[amount][index]   >  0)  {//retrieve  value
-9              return map[amount][index];
-10           }
-11       if (index   >=  denoms.length   -  1)  return 1;    //one  denom  remaining
-12       int denomAmount  denoms[index];
-13       int ways =  0;
-14       for  (int i =  0;  i *  denomAmount    <=  amount; i++)  {
-15              //go  to  next  denom, assuming i coins  of  denomAmount
-16            int amountRemaining  = amount -  i *  denomAmount;
-17            ways += makeChange(amountRemaining,  denoms, index  +  1,  map);
-18       }
-19       map[amount][index]=  ways;
-20       return ways;
-21   }
-```
-
-Note that we've used a two-dimensional array of integers to store the previously computed values. This is simpler, but takes up a little extra space. Alternatively, we could use an actual hash table that maps from amount  to a new hash table, which then maps from denom to the precomputed value. There are other alternative data structures as well.
-
-
-**8.12	Eight Queens:** Write an algorithm to print all ways of arranging eight queens on an 8x8 chess board so that none of them share the same row, column, or diagonal. In this case, "diagonal" means all diagonals, not just the two that bisect the board.
-
-SOLUTION
-
----
-
-We have eight queens which must be lined up on an 8x8 chess board such that none share the same row, column or diagonal. So, we know that each row and column (and diagonal) must be used exactly once.
-
-![](media/08_12_1.JPG)
-
-Picture the queen that is placed last, which we'll assume is on row 8. (This is an okay assumption to make since the ordering of placing the queens is irrelevant.) On which cell in row 8 is this queen? There are eight possibilities, one for each column.
-
-So if we want to know all the valid ways of arranging 8 queens on an 8x8 chess board, it would be:
-```
-ways to  arrange 8  queens  on an  8x8  board= 
-	ways to  arrange 8  queens  on  an  8x8  board  with  queen  at (7,	0)  + 
-	ways to  arrange 8  queens  on  an  8x8  board  with   queen  at (7, 1)  +
-	ways to  arrange 8  queens  on  an  8x8  board  with  queen  at  (7, 2)  +
-	ways to  arrange 8  queens  on  an  8x8  board  with  queen  at (7, 3)  +
-	ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 4)  + ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 5)  + ways to arrange 8  queens  on  an 8x8  board  with   queen  at (7, 6)  +
-	ways to arrange 8  queens  on  an  8x8  board  with   queen  at (7, 7)
-```
-We can compute each one of these using a very similar approach:
-```
-ways to  arrange 8  queens  on  an  8x8  board  with  queen  at (7,   3)
-	ways to ... with  queens  at (7,   3)  and  (6,   0)  + 
-	ways to ... with  queens  at (7,   3)  and  (6,   1)  + 
-	ways to ... with  queens  at (7,   3)  and  (6,   2)  + 
-	ways to ... with  queens  at (7,   3)  and  (6,   4)  + 
-	ways to ... with  queens  at (7,   3)  and  (6,   5)  +
-	ways to ... with  queens  at (7,   3)  and  (6,   6)  +
-	ways to ... with  queens  at (7,   3)  and  (6,   7) 
-```
-Note that we don't need to consider combinations with queens at ( 7,  3) and ( 6, 3), since this is a violation of the requirement that every queen is in its own row, column and diagonal.
-
-Implementing this is now reasonably straightforward.
-
-```java
-1      int GRID_SIZE   =  8;
-2
-3      void  placeQueens(int row,  Integer[] columns,  Arraylist<Integer[]> results)  {
-4         if (row == GRID_SIZE)  {//Found  valid placement
-5                  results.add(columns.clone());
-6            }  else {
-7                for   (int col= 0;  col< GRID_SIZE;  col++)  {
-8                   if (checkValid(columns,  row,  col)) {
-9                        columns[row]  = col;     // Place  queen
-10                      placeQueens(row + 1,  columns,  results);
-11                 }
-12            }
-13       }
-14   }
-15
-16  /*  Check if (rowl,   column!)  is a  valid spot  for  a queen by checking  if  there is a
-17    * queen in  the  same column or  diagonal. We  don't need to  check it for  queens in
-18    * the  same row because  the  calling placeQueen only  attempts to  place  one queen at
-19    * a  time.   We  know this row is empty. */
-20  boolean  checkValid(Integer[]  columns,  int rowl,   int column1) {
-21       for  (int row2 =  0;  row2 <   rowl;  row2++) {
-22            int columN² =  columns[row2];
-23            /*  Check if (row2,  columN²) invalidates (rowl,   columnl)  as  a
-24              * queen spot.   */
-25
-26            /*  Check if rows have a  queen in  the  same column */
-27            if (columnl  ==  columN²) {
-28                 return false;
-29            }
-30
-31            /*  Check diagonals: if  the  distance between the  columns equals  the  distance
-32              * between the  rows,  then  they're in  the  same diagonal. */
-33            int columnDistance  =  Math.abs(columN²  -  columnl);
-34
-35            /*  rowl  >   row2,  so  no need  for  abs  */
-36            int rowDistance  =  rowl  -  row2;
-37            if (columnDistance  ==  rowDistance)   {
-38                 return false;
-39            }
-40       }
-41       return true;
-42   }
-```
-
-Observe that since each row can only have one queen, we don't need to store our board as a full 8x8 matrix. We only need a single array where column [ r]  =  c indicates that row r has a queen at column c.
-
-**8.13 	Stack of Boxes:** You have a stack of n boxes, with widths w1, heights hi, and depths di. The boxes cannot be rotated and can only be stacked on top of one another if each box in the stack is strictly larger than the box above it in width, height, and depth. Implement a method to compute the
-height of the tallest possible stack. The height of a stack is the sum of the heights of each box.
-
-SOLUTION
-
----
-
-To tackle this problem, we need to recognize the relationship between the different subproblems.
-
-##### Solution#1
-
-Imagine we had the following boxes: b1 ,   b2 ,   ••• ,   bn. The biggest stack that we can build with all the boxes equals the max of (biggest stack with bottom b1, biggest stack with bottom b2 ,   •••, biggest stack with bottom bn).That is, if we experimented with each box as a bottom and built the biggest stack possible with each, we would find the biggest stack possible.
-
-But, how would we find the biggest stack with a particular bottom? Essentially the same way. We experi­ment with different boxes for the second level, and so on for each level.
-
-Of course, we only experiment with valid boxes. If b5 is bigger than b1, then there's no point in trying to build a stack that looks like {b1 ,  b5   ,  ••• }. We already know b1 can't be below b5.
-
-We can perform a small optimization here. The requirements of this problem stipulate that the lower boxes must be strictly greater than the higher boxes in all dimensions. Therefore, if we sort (descending order) the boxes on a dimension-any dimension-then we know we don't have to look backwards in the list. The box b1 cannot be on top of box b5, since its height (or whatever dimension we sorted on) is greater than b5's height.
-
-The code below implements this algorithm recursively.
-
-```java
-1    int createStack(ArrayList<Box>  boxes)  {
-2         /*  Sort  in  decending  order  by height. */
-3            Collections.sort(boxes,  new BoxComparator());
-4         int maxHeight =  0;
-5         for  (int i= 0;  i <   boxes.size();  i++)  {
-6              int height   =  createStack(boxes,  i);
-7                  maxHeight =  Math.max(maxHeight, height);
-8            }
-9         return maxHeight;
-10    }
-11
-12  int createStack(ArrayList<Box>  boxes,  int bottomindex)  {
-13       Box bottom =  boxes.get(bottomindex);
-14          int maxHeight =  0;
-15          for  (inti =  bottomlndex  + 1; i <  boxes.size();  i++)  {
-16                if (boxes.get(i).canBeAbove(bottom))  {
-17                 int height=  createStack(boxes,  i);
-18                 maxHeight =  Math.max(height,  maxHeight);
-19                }
-20        }
-21       maxHeight +=  bottom.height;
-22       return maxHeight;
-23    }
-24
-25   class BoxComparator implements  Comparator<Box>  ,{
-26       @Override
-27       public int compare(Box x,   Box y){
-28             return y.height -  x.height;
-29        }
-30     }
-``` 
-
-The problem in this code is that it gets very inefficient. We try to find the best solution that looks like { b 3 ,b 4 , ••• } even though we may have already found the best solution with b 4 at the bottom. Instead of generating these solutions from scratch, we can cache these results using memoization.
-
-```java
-1     int  createStack(ArrayList<Box> boxes)   {
-2         Collections.sort(boxes,  new BoxComparator());
-3         int maxHeight  =  0;
-4          int[] stackMap  =  new int[boxes.size()];
-5         for   (int i= 0;  i < boxes.size();  i++)   {
-6               int height =  createStack(boxes,  i, stackMap);
-7               maxHeight  =  Math.max(maxHeight,   height);
-8           }
-9         return maxHeight;
-10   }
-11
-12   int createStack(ArrayList<Box>  boxes,   int  bottomindex, int[] stackMap)   {
-13	 if (bottom!ndex  <   boxes.size() &&   stackMap[bottomindex]  >   0)  {
-14             return stackMap[bottomindex];
-15        }
-16
-17        Box bottom  =  boxes.get(bottomindex);
-18       int maxHeight=  0;
-19        for (int i=  bottomindex + 1;  i <   boxes.size();  i++)   {
-20             if (boxes.get(i).canBeAbove(bottom)) {
-21                  int  height=  createStack(boxes, i, stackMap);
-22                  maxHeight  =  Math.max(height,  maxHeight);
-23             }
-24           }
-25       maxHeight += bottom.height;
-26        stackMap[bottomindex]  =  maxHeight;
-27       return maxHeight;
-28   }
-```
-
-Because we're only mapping from an index to a height, we canjust use an integer array for our "hash table:'
-
-Be very careful here with what each spot in the hash table represents. In this code, stackMap [ i] repre­ sents the tallest stack with box i at the bottom. Before pulling the value from the hash table, you have to ensure that box i can be placed on top of the current bottom.
-
-It helps to keep the line that recalls from the hash table symmetric with the one that inserts. For example, in this code, we recall from the hash table with bottomindex at the start of the method. We insert into the hash table with bottomindex at the end.
-
-##### Solution #2
-
-Alternatively, we can think about the recursive algorithm as making a choice, at each step, whether to put a particular box in the stack. (We will again sort our boxes in descending  order by a dimension, such as height.)
-
-First, we choose whether or not to put box Oin the stack. Take one recursive path with box Oat the bottom and one recursive path without box 0. Return the better of the two options.
-
-Then, we choose whether or not to put box 1 in the stack. Take one recursive path with box 1  at the bottom and one path without box 1. Return the better of the two options.
-
-We will again use memoization to cache the height of the tallest stack with a particular bottom.
-
-```java
-1     int  createStack(ArrayList<Box> boxes)   {
-2          Collections.sort(boxes,  new BoxComparator());
-3            int[] stackMap=   new int[boxes.size()];
-4          return createStack(boxes, null,  0,   stackMap);
-5      }
-
-7     int  createStack(ArrayList<Box> boxes,   Box bottom,   int offset, int[]  stackMap)   {
-8          if (offset >= boxes.size()) return 0;  // Base case
-9
-10        /*height with  this bottom*/
-11        Box newBottom =  boxes.get(offset);
-12        int heightWithBottom = 0;
-13        if (bottom==    null  I    I       newBottom .canBeAbove(bottom))  {
-14             if (stackMap[offset] == 0)  {
-15                  stackMap[offset]=    createStack(boxes,  newBottom,  offset+ 1,   stackMap);
-16                  stackMap[offset] += newBottom.height;
-17             }
-18             heightWithBottom =  stackMap[offset];
-19        }
-20
-21        /*without this  bottom*/
-22        int  heightWithoutBottom createStack(boxes, bottom,   offset+ 1,   stackMap);
-23 
-24		/* Return  better of  two  options. */
-25		return Math.max(heightWithBottom,  heightWithoutBottom); 
-26   }
-```
-
-Again, pay close attention to when you recall and insert values into the hash table. It's typically best if these are symmetric, as they are in lines 15 and 16-18.
-
-
-**8.14 	Boolean Evaluation:** Given a boolean expression consisting  of the symbols 0 (false), 1 (true), & (AND),  I    (OR), and /\ (XOR), and a desired boolean result value result, implement a function to count the number of ways of parenthesizing the expression such that it evaluates to result. The expressionshouldbe fully parenthesized (e.g., ( 0)^( 1)) but not extraneously (e.g., ( ( ( 0))^( 1))).
-
-EXAMPLE
-```
-countEval("l^0|0|1",  false) ->  2 
-countEval("0&0&0&1^l|0",   true)-> 10 
-```
-
-SOLUTION
-
----
- 
-As in other recursive problems, the key to this problem is to figure out the relationship between a problem and its subproblems.
-
-##### Brute Force
-
-Consider  an  expression  like 0"0&0"111  and  the  target  result  true. How can  we  break  down countEval(0^0&0^1|1,  true) into smaller problems?
-
-We could just essentially iterate through each possible place to put a parenthesis.
-
-```
-countEval(0A0&0Alll,  true)=
-     countEval(0^0&0^l|l  where paren  around  char  1,  true)
- +   countEval(0^0&0^l|l  where paren  around  char  3,  true)
- +   countEval(0^0&0^l|l  where paren  around  char  S,  true)
- +   countEval(0^0&0^l|l  where paren  around  char  7,  true)
-```
-
-Now what? Let's lookatjust one ofthose expressions-the paren aroundchar 3. This gives us (0^0)&(0^\1). 
-
-In order to make that expression true, both the left and right sides must be true. So:
-```
-left= "0^0"
-right =  "0^1|1"
-countEval(left &  right, true)= countEval(left,  true)*  countEval(right,  true)
-```
-The reason we multiply the results of the left and right sides is that each result from the two sides can be paired up with each other to form a unique combination.
-
-Each of those terms can now be decomposed into smaller problems in a similar process. 
-
-What happens when we have an "|"(OR)? Or an "^"(XOR)?
-
-If it's an OR, then either the left or the right side must be true-or both.
-
-```
-	countEval(left  |     right,  true) =  countEval(left, true) * countEval(right,  false)
-										+   countEval(left,  false)* countEval(right,  true)
-										+   countEval(left, true) * countEval(right,  true)
-```
-If it's an XOR, then the left or the right side can be true, but not both.
-```
-countEval(left ^   right, true)=    countEval(left,  true)*  countEval(right,  false)
-							   +   countEval(left,  false)*  countEval(right,  true)
-```
-What if we were trying to make the result false instead? We can switch up the logic from above:
-```
-countEval(left &  right,  false) = countEval(left, true) * countEval(right,  false)
-								 + countEval(left,  false)*  countEval(right,  true)
-								 + countEval(left,  false)* countEval(right,  false) 
-countEval(left | right, false) = countEval(left,  false)* countEval(right,  false)
-countEval(left ^ right, false) = countEval(left,  false)* countEval(right,  false) 
-							   +   countEval(left, true) * countEval(right,  true)
-```
-
-Alternatively, we can just use the same logic from above and subtract it out from the total number of ways of evaluating the expression.
-```
-totalEval(left) =  countEval(left,  true)+  countEval(left,  false) 
-totalEval(right)=    countEval(right,  true)+    countEval(right,  false) totalEval(expression)  =  totalEval(left)* totalEval(right)
-countEval(expression,  false)= totalEval(expression)  -  countEval(expression,  true)
-```
-
-This makes the code a bit more concise.
-
-```java
-1      int  countEval(String s,  boolean  result) {
-2         if (s.length()   0)  return  0; 
-3            if  (s.length()== 1)  return  stringToBool(s) == result ? 1 : 0;
-4
-5            int ways=  0;
-6         for   (int i= 1;  i <   s.length();  i+=    2)  {
-7              char  c=    s.charAt(i);
-8              String left=    s.substring(0,  i);
-9              String right= s.substring(i+    1,  s.length());
-10
-11            /* Evaluate  each side  for   each result. */
-12            int leftTrue=    countEval(left,  true);
-13            int leftFalse    countEval(left, false);
-14            int rightTrue =  countEval(right,  true);
-15            int  rightFalse =   countEval(right,  false);
-16            int total=  (leftTrue + leftFalse) *  (rightTrue + rightFalse);
-17
-18            int  totalTrue =  0;
-19            if (c  == '^')  { // required: one true  and one false
-20                 totalTrue = leftTrue *  rightFalse + leftFalse * rightTrue;
-21            }  else  if (c  == '&') {//required:  both true
-22                 totalTrue  =   leftTrue *  rightTrue;
-23            }  else  if (c  ==   '|') {  // required: anything  but  both  false
-24                totalTrue  = leftTrue * rightTrue + leftFalse * rightTrue +
-25                                       leftTrue *  rightFalse;
-26            }
-27
-28            int subways=  result?  totalTrue   total  -  totalTrue;
-29           ways+=  subways;
-30           }
-31
-32       return ways;
-33  }
-34
-35  boolean stringToBool(String  c)  {
-36       return c.equals("l")  ?   true:  false;
-37     }
-```
-
-Note that the tradeoff of computing the false results from the true ones, and of computing the {leftTrue,  rightTrue,  leftFalse,  and  rightFalse} values upfront, is a small amount of extra work in some cases. For example, if we're looking for the ways that an AND (&) can result in true, we never would have needed the leftFa1se and rightFa1se results. Likewise, if we're looking for the ways that an OR (|) can result in false, we never would have needed the leftTrue and rightTrue results.
-
-Our current code is blind to what we do and don't actually need to do and instead just computes all of the values. This is probably a reasonable tradeoff to make (especially given the constraints of whiteboard coding) as it makes our code substantially shorter and less tedious to write. Whichever approach you make, you should discuss the tradeoffs with your interviewer.
-
-That said, there are more important optimizations we can make.
-
-##### Optimized Solutions
-
-If we follow the recursive path, we'll note that we end up doing the same computation  repeatedly. Consider the expression 0/\0&0/\1 I 1 and these recursion paths:
-
-- Add parens around char 1. (0)^(0&0^1 | 1)
-    - Add parens around char 3. (0) ^((0)&(0^1|1))
-- Add parens around char 3. (0^0)&(0^1|1)
-    - Add parens around char 1. ((0)^(0))&(0^1|1)
-
-Although these two expressions are different, they have a similar component: (0^1 | 1). We should reuse our effort on this.
-
-We can do  this  by  using memoization,  or  a hash table. We just  need to  store the  result of countEval (expression, result) for each expression and result. If we see an expression that we've calculated before, wejust return it from the cache.
-
-```java
-1      int  countEval(String s,  boolean result,  HashMap<String, Integer>  memo)  {
-2         if (s.length()      0)  return  0;
-3            if (s.length() == 1)  return  stringToBool(s) ==result?  1   :   0;
-4		if ( memo.containsKey(result  + s))  return memo.get(result   +   s);
-5		
-6		int ways       0;
-7		
-8		for  (inti= 1;  1  <  s.length();  i +=   2) {
-9			char c  =  s.charAt(i);
-10			String left =   s.substring(0,  i);
-11			String right  =  s.substring(i  +  1,  s.length());
-12			int  leftTrue =  countEval(left,   true,  memo); 
-13			int   leftFalse =  countEval(left, false,  memo); 
-14			int  rightTrue =  countEval(right, true,  memo); 
-15			int  rightFalse =  countEval(right, false,   memo);
-16			int total=   (leftTrue +  leftFalse) *   (rightTrue +  rightFalse);
-17		
-18			int  totalTrue =  0;
-19			if ( C    ==   '^' ) {
-20				totalTrue =  leftTrue *  rightFalse +  leftFalse *  rightTrue;
-21			} else if  (c ==   '&')  {
-22				totalTrue  =  leftTrue * rightTrue;
-23			} else   if (c   ==   '|') {
-24				totalTrue=   leftTrue * right True   +  leftFalse *  rightTrue  +
-25				leftTrue  * rightFalse;
-26			}
-27		
-28			int subways  =  result  ?  totalTrue    total  -  totalTrue;
-29			ways  +=   subways;
-30		}
-31		
-32		memo.put(result   +   s,  ways);
-33		return ways; 
-34   }
-```
-
-The added benefit of this is that we could actually end  up with the same substring in multiple parts of the expression. For example, an expression like 0"1"0&0"1"0 has  two instances of 0"1"0. By caching the result of the  substring  value  in a memoization table,  we'll get  to reuse the  result  for the  right part of the expression after computing it for the left.
-
-There  is one further  optimization we can  make,  but  it's far beyond the  scope of  the  interview. There  is a closed form expression for the  number of ways of parenthesizing an expression, but  you wouldn't be expected to know it. It is given by the Catalan numbers,  where n is the number of operators:
-
-```
-Cn = (2n)!/((n + 1)!n!)
-```
-
-We could  use  this to compute the  total ways of evaluating the  expression. Then,  rather  than  computing leftTrue and  leftFalse, we just  compute one of those and  calculate the  other  using  the  Catalan numbers.  We would do the same thing for the right side.
 
 
 ## 9 Solutions to System Design and  Scalability
@@ -13265,8 +4941,11 @@ This line essentially checks if x and y have different values. It will result in
 
 2.   y  =  X  ^  y
 
-Or:y  =  {0  if originally same,    1  if different}  ^   {original y}
-Observe that XORing a bit with 1  always flips the bit, whereas XORing with O will  never change it. Therefore, if we do y =  1  ^   { original y} when x != y, theny will be flipped and therefore have
+	Or:y  =  {0  if originally same,    1  if different}  ^   {original y}
+
+Observe that XORing a bit with 1  always flips the bit, whereas XORing with O will  never change it. 
+
+Therefore, if we do y =  1  ^   { original y} when x != y, theny will be flipped and therefore have
 x's original value.
 
 Otherwise, if x == y, then we do y =  0  ^ {original y} and the value of y does notchange. 
@@ -14139,8 +5818,7 @@ The only operation we have to work with is the add operator. In each of these pr
 
 **Subtraction**
 
-How can we phrase subtraction in terms of addition? This one is pretty straightforward. The operation a -   b is the same thing as a  +  ( -1)    *  b. However, because we are not allowed to use the * (multiply)
-operator, we must implement a negate function.
+How can we phrase subtraction in terms of addition? This one is pretty straightforward. The operation a -   b is the same thing as a  +  ( -1)    *  b. However, because we are not allowed to use the * (multiply) operator, we must implement a negate function.
 ```java
 1      /*  Flip  a positive  sign  to negative  or  negative sign  to pos.  */
 2    int negate(int  a)  {
@@ -14191,18 +5869,18 @@ Observe that reducinga by half takesO(log a)work. Why? For each round of"reduce 
 
 We do O(log a) rounds.
 
-1.   Reducinga to a/2 takes 0(log a)time.
+1.  Reducinga to a/2 takes O(log a)time.
 2.  Reducing a/2 to a/4 takes O(log a/2) time.
-3.  Reducing a/4 to a/8 takes 0(log  a/4 ) time.
+3.  Reducing a/4 to a/8 takes O(log  a/4 ) time.
 
-... As so on ,for O(log a)rounds.
+... As so on ,for O(log a) rounds.
 
 The runtime therefore is O(log a+ log(a/2) +log(a/4)+ ... ),withO(log a)terms in the expression.
 
 Recall two rules of logs:
 
 - log(xy) =  log x + log  y
-- log( x/y)  = log  x   -  log y.
+- log(x/y)  = log  x   -  log y.
 
 
 If we apply this to the above expression, we get:
@@ -14707,6 +6385,7 @@ Observe in line 17, the use ofthe very simple encode method for a string. This i
 
 
 **16.13   Bisect Squares:** Given two squares on a two-dimensional plane, find a line that would cut these two squares in half. Assume that the top and the bottom sides of the square run parallel to the x-axis.
+
 pg 182
 
 SOLUTION
@@ -14843,10 +6522,10 @@ What does this mean for our hash table? It means that two lines with "equal" slo
 27        for   (double slope  :   slopes)  {
 28            ArrayList<Line>  lines = linesBySlope.get(slope);
 29            for  (Line  line :   lines) {
-30                 I* count  lines that are  equivalent to  current line *I
+30                 /* count  lines that are  equivalent to  current line */
 31                 int count  =  countEquivalentLines(linesBySlope,  line);
 32
-33                 I* if better than  current line,  replace it *I
+33                 /* if better than  current line,  replace it */
 34                 if (count>  bestCount) {
 35                      bestLine =  line;
 36                      bestCount  =  count;
@@ -15294,21 +6973,19 @@ In other words, once we've picked a, we've picked b too. There's no need to iter
 39    }
 40
 41   String buildFromPattern(...)  {  /* same as  before   */}
+```
+
 This algorithm takes O ( N² ), since we iterate through O(n) possibilities  for the main string and do O (n)
 work to build and compare the strings.
 
 Observe that we've also cut down the possibilities for the main string that we try. If there are three instances of the main string, then its length cannot be any more than one third of value.
 
 
+**Optimized (Alternate}**
 
-CrackingTheCodinglnterview.com I  6th Edition            S01 
-Solutions to Chapter 16  I     Moderate
-
-
-Optimized (Alternate}
 If you don't like the work ofbuilding a string only to compare it (and then destroy it), we can eliminate this. Instead, we can iterate through the values for a and b as before.  But this time, to check if the string matches
 the pattern (given those values for a andb), we walk through value, comparing each substring to the first instance of the a and b strings.
-
+```java
 1	boolean  doesMatch(String pattern,  String value) {	
 2	if (pattern.length()== 0)  return value.length()	0;
 3		
@@ -15323,17 +7000,14 @@ the pattern (given those values for a andb), we walk through value, comparing ea
 12
 13       for  (int mainSize =  0;  mainSize  <=  maxMainSize; mainSize++)  {
 14            int remaininglength=    size -  mainSize  *   countOfMain;
-15            if (countOfAlt   == 0  I   I      remaininglength %  countOfAlt  ==  0)  {
+15            if (countOfAlt   == 0  || remaininglength %  countOfAlt  ==  0)  {
 16                 int altlndex =  firstAlt     mainSize;
 17                 int altSize =  countOfAlt  == 0? 0  :   remaininglength/ countOfAlt;
 18                 if (matches(pattern,  value,   mainSize,  altSize,  altlndex)) { 
-19
-20
+19						return true;
+20						}
 21            }
 22       }
- 
-return true;
-} 
 23       return false;
 24    }
 25
@@ -15356,34 +7030,29 @@ return true;
 42     }
 43
 44 /* Checks if two substrings are  equal,   starting at given  offsets and continuing to
-45        size. */
+45   *     size. */
 46   boolean  isEqual(String sl, int offsetl, int offset2, int size) {
 47       for  (int i= 0;  i <   size;  i++)  {
 48            if (s1.charAt(offset1 +  i) != s1.charAt(offset2 + i)) {
 49                 return false;
-
-
-
-502            Cracking  the  Coding  Interview, 6th  Edition 
-Solutions to Chapter  16  \   Moderate
-
-
 50               }
 51         }
 52         return true;
 53    }
+```
 This algorithm will still take  O ( N² ) time,  but the  benefit is that it can short circuit when matches fail early (which they  usually  will). The previous algorithm must go through all the  work to build  the string  before it can learn that it has failed.
 
 
-16.19   Pond Sizes: You have an integer matrix representing a plot of land, where the value at that location represents the  height above sea  level. A value  of zero  indicates water.  A pond is a region of water connected vertically,  horizontally, or  diagonally. The  size  of  the   pond is the   total number of connected water cells. Write a method to compute the sizes of all ponds in the  matrix.
+**16.19   Pond Sizes:** You have an integer matrix representing a plot of land, where the value at that location represents the  height above sea  level. A value  of zero  indicates water.  A pond is a region of water connected vertically,  horizontally, or  diagonally. The  size  of  the   pond is the   total number of connected water cells. Write a method to compute the sizes of all ponds in the  matrix.
+
 EXAMPLE
 
 Input:
 
-0	2	1	0
-0	1	0	1
-1	1	0	1
-0	1	0	1
+	0	2	1	0
+	0	1	0	1
+	1	1	0	1
+	0	1	0	1
  
 Output: 2, 4, 1  (in any order)
 
@@ -15391,14 +7060,13 @@ Output: 2, 4, 1  (in any order)
 SOLUTION
  
 
-pg 784 
-
 The first thing we can try is just walking through the  array. It's easy enough to find water:  when it's a zero, that's water.
 
 Given a water cell, how can we compute the  amount of water nearby? If the  cell is not  adjacent to any zero cells, then the  size of this pond is 1. If it is, then we need to add in the  adjacent cells, plus  any water cells adjacent to those cells. We need to, of course, be careful to not recount any cells. We can do this with a modi­ fied breadth-first or depth-first search. Once  we visit a cell, we permanently mark it as visited.
 
 For each cell, we need to check  eight adjacent cells. We could do this by writing in lines to check up, down, left, right, and  each of the  four diagonal cells. It's even easier,  though, to do this with a loop.
-1     Arraylist<Integer>  computePondSizes(int[J[]   land) {
+```java
+1     Arraylist<Integer>  computePondSizes(int[][]   land) {
 2           Arraylist<Integer>  pondSizes =  new  Arraylist<Integer>();
 3           for (int r =  0;   r <   land.length;   r++) {
 4                 for (int  c  =  0;   c  <   land[r].length;  c++)   {
@@ -15411,18 +7079,12 @@ For each cell, we need to check  eight adjacent cells. We could do this by writi
 11         return pondSizes;
 12    }
 13
-14    int  computeSize(int[J[] land, int  row,   int col) {
+14    int  computeSize(int[][] land, int  row,   int col) {
 15           / If out  of  bounds or already visited.  */
-16         if (row   <   0   I  I     col< 0   I   I     row  >=    land.length  I   I     col >=  land[row].length  I   I
+16         if (row   <   0   ||     col< 0   || row  >=    land.length  ||  col >=  land[row].length || 
 17                  land[row][col)  !=  0) {//visited  or not water
 18               return 0;
 19         }
-
-
-CrackingTheCodinglnterview.com I  6th  Edition           503 
-Solutions to Chapter  16  I     Moderate
-
-
 20         int size =  1;
 21         land[row][col] =  -1;  // Mark  visited
 22         for (int  dr =  -1;  dr <=  1;   dr++)  {
@@ -15432,12 +7094,13 @@ Solutions to Chapter  16  I     Moderate
 26         }
 27         return size;
 28    }
-In this  case,  we  marked a cell as  visited  by  setting its  value  to  -1. This allows  us  to  check,  in one line
-(land [ row] [col]  ! =  0), if the  value  is valid dry land  or visited. In either case, the  value will be zero.
+```
+In this  case,  we  marked a cell as  visited  by  setting its  value  to  -1. This allows  us  to  check,  in one line (land[row][col] != 0), if the  value  is valid dry land  or visited. In either case, the  value will be zero.
 
 You might also  notice that the  for loop iterates through nine  cells, not  eight. It includes the  current cell. We could add  a line in there to not  recurse if dr  ==  0 and de    ==  0. This really doesn't save  us much. We'll execute this if-statement in eight cells unnecessarily,just to avoid one recursive call. The recursive call returns immediately since the  cell is marked as visited.
 
 If you don't like modifying the  input matrix, you can create a secondary visited matrix.
+```java
 1      Arraylist<Integer>  computePondSizes(int[][] land)  {
 2           boolean[][] visited =  new  boolean[land.length][land[0].length];
 3           Arraylist<Integer>  pondSizes =  new  Arraylist<Integer>();
@@ -15467,24 +7130,10 @@ If you don't like modifying the  input matrix, you can create a secondary visite
 27         }
 28         return size;
 29    }
+```
 Both implementations are O(WH), whereWis the  width of the  matrix  and  His the  height.
  
-I
-
-
-
-
-
-
-S04
- 
-Note:  Many people say "O(N)" or "O(N² )'; as though Nhas some inherent meaning. It doesn't. Suppose this were  a square matrix. You could describe the  runtime as 0( N) or 0( N² ). Both are correct, depending on what you mean by N. The runtime is O(N² ), where N is the length of one side. Or, if N is the  number of cells, it is 0(N). Be careful  by what you mean by N. In fact, it might be safer to just  not  use  Nat all when there's any ambiguity as to what it could mean.
-
-
-
-Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter l6 \   Moderate
-
+> Note:  Many people say "O(N)" or "O(N² )'; as though Nhas some inherent meaning. It doesn't. Suppose this were  a square matrix. You could describe the  runtime as 0( N) or 0( N² ). Both are correct, depending on what you mean by N. The runtime is O(N² ), where N is the length of one side. Or, if N is the  number of cells, it is 0(N). Be careful  by what you mean by N. In fact, it might be safer to just  not  use  Nat all when there's any ambiguity as to what it could mean.
 
 Some people will miscompute the runtime to be 0(N4), reasoning that the computeSize method could take as long as O( N² ) time and you might call it as much as 0(N² ) times (and apparently assuming an NxN matrix, too). While those are both basically correct statements, you can't just multiply them together. That's because as a single call to computeSize gets more expensive, the number of times it is called goes down.
 
@@ -15494,91 +7143,39 @@ O(N² ) time, but then we never call computeSize again.
 Another way to compute this is to think about how many times each cell is "touched" by either call. Each cell will be touched once by the computePondSizes function. Additionally, a cell might be touched once by each of its adjacent cells. This is still a constant number of touches per cell. Therefore, the overall runtime is O(N²) on an NxN matrix or, more generally, O(WH).
 
 
-16.20  T9: On old cell phones, users typed on a numeric keypad and the phone would provide a list of words that matched these numbers. Each digit mapped to a set of O - 4 letters.  Implement an algorithm to return a list of matching  words, given a sequence  of digits. You are provided a list of valid words (provided in whatever data structure you'd like). The mapping is shown  in the diagram below: 
+**16.20  T9:** On old cell phones, users typed on a numeric keypad and the phone would provide a list of words that matched these numbers. Each digit mapped to a set of O - 4 letters.  Implement an algorithm to return a list of matching  words, given a sequence  of digits. You are provided a list of valid words (provided in whatever data structure you'd like). The mapping is shown  in the diagram below: 
 
 
+![](media/16_20_1.JPG)
 
 
+EXAMPLE 
+
+Input:   8733
+
+Output:  tree, used
 
 
+**SOLUTION**
 
-
-
-
-EXAMPLE Input: Output:
-
-
-SOLUTION
- 
-
-
-
-
-
-
-
-
-
-
-
-8733
-tree, used
- 
-
-1
-
-4
-ghi
-7
-pqrs
- 
-
-2            3
-abc      def
-5                6
-jkl      mno
-8            9
-tuv     wxyz
-0
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-pg 184 
+---
 
 We could approach this in a couple of ways. Let's start with a brute force algorithm.
 
-Brute Force
+**Brute Force**
 
 Imagine how you would solve the problem if you had to do it by hand. You'd probably try every possible value for each digit with all other possible values.
 
 This is exactly what we do algorithmically. We take the first digit and run through all the characters that map to that digit. For each character, we add it to a prefix variable and recurse, passing the prefix downward. Once we run out of characters, we print prefix (which now contains the full word) if the string is a valid word.
 
 We will assume the list of words is passed in as a HashSet. A HashSet operates similarly to a hash table, but rather than offering key->value lookups, it can tell us if a word is contained  in the set in O( 1) time.
+```java
 1     ArrayList<String> getValidT9Words(String number, HashSet<String>  wordList) {
 2          ArrayList<String> results  =  new   Arraylist<String>();
 3          getValidWords(number,  0, "",  wordList, results);
 4       return results;
 5      }
 6
-
-
-CrackingTheCodinglnterview.com I  6th Edition          SOS 
-Solutions to Chapter  16  I     Moderate
-
-
 7     void  getValidWords(String number,  int index,   String prefix,
 8                                           HashSet<String>  wordSet,   Arraylist<String>  results) {
 9          /* If it's  a  complete   word,  print it. */
@@ -15601,7 +7198,7 @@ Solutions to Chapter  16  I     Moderate
 26
 27   /* Return   array of  characters that map to this digit.  */
 28   char[]  getT9Chars(char digit) {
-if (!Character.isDigit(digit)) {
+29 if (!Character.isDigit(digit)) {
 30             return null;
 31        }
 32        int  dig=  Character.getNumericValue(digit) -  Character.getNumericValue('0');
@@ -15609,41 +7206,31 @@ return t9Letters[dig];
 34   }
 35
 36   /* Mapping of  digits to letters.  */
-37   char[][]  t9Letters =  {null, null,  {'a',   'b',   'c'},   {'d',   'e',   'f'}, 
-38        {'g',  'h', 'i'}, {'j', 'k',  'l'},   {'m',
- 
-'n',  'o'},  {'p',  'q',  'r',   's,}, 
+37   char[][]  t9Letters =  {null, null,  {'a', 'b', 'c'}, {'d', 'e', 'f'}, 
+38        {'g',  'h', 'i'}, {'j', 'k', 'l'},   {'m','n', 'o'},  {'p', 'q', 'r',   's,}, {'t',  'u', 'v'}, {'w',   'x',  'y',  'z'}
 39
 40   };
+```
  
-{'t',  'u', 'v'},
- 
-{'w',   'x',  'y',  'z'} 
-This algorithm runs in O(4N ) time, where N is the length of the string. This is because we recursively branch four times for each call to getValidWords, and we recurse until a call stack depth  of N.
+
+This algorithm runs in O(4^N ) time, where N is the length of the string. This is because we recursively branch four times for each call to getValidWords, and we recurse until a call stack depth  of N.
 
 This is very, very slow on large strings.
 
-Optimized
+**Optimized**
 
-Let's return to thinking about how you would do this, if you were doing it by hand. Imagine the example of
-33835676368 (which corresponds to development). If you were doing this by hand, I bet you'd skip over solutions thatstart with fftf [3383], as no valid words start with those characters.
+Let's return to thinking about how you would do this, if you were doing it by hand. Imagine the example of 33835676368 (which corresponds to development). If you were doing this by hand, I bet you'd skip over solutions thatstart with fftf [3383], as no valid words start with those characters.
 
 Ideally, we'd like our program to make the same sort of optimization: stop recursing down paths which will obviously fail. Specifically, if there are no words in the dictionary thatstart with prefix, stop recursing.
 
 The Trie data structure  (see "Tries (Prefix Trees)" on page  1 OS) can do this for us. Whenever we reach a string which is not a valid prefix, we exit.
+```java
 1     Arraylist<String> getValidT9Words(String  number,  Trie   trie) {
 2          Arraylist<String> results  =  new Arraylist<String>();
 3            getValidWords(number,  0,  "", trie.getRoot(),  results);
 4          return results;
 5     }
 6
-
-
-
-S06          Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  {  Moderate
-
-
 7     void  getValidWords(String number,  int  index, String prefix, TrieNode  trieNode,
 8                                           Arraylist<String> results)  {
 9         /*If  it's a  complete  word,  print it.  */
@@ -15663,21 +7250,18 @@ Solutions to Chapter 16  {  Moderate
 23             for (char letter  :   letters) {
 24                  TrieNode  child=  trieNode.getChild(letter);
 25                  /* If there are  words  that start with   prefix + letter, 
-26
-27
-28
-29
+26					*  then continue recursing. */
+27					if (child != null) {
+28						getValidWords(number, index + 1, prefix + letter,  child, results);
+29					} 
 30                }
 31        }
 32   }
- 
-*  then continue recursing. */
-if (child != null) {
-getValidWords(number,  index   + 1,  prefix + letter,  child, results);
-} 
+```
+
 It's difficult to describe the runtime of this algorithm since it depends  on what the language  looks like. However, this "short-circuiting" will make it run much, much faster in practice.
 
-Most Optimal
+**Most Optimal**
 
 Believe or not, we can actually make it run even faster. We just need to do a little bit of preprocessing. That's not a big deal though. We were doing that to build the trie anyway.
 
@@ -15685,28 +7269,24 @@ This problem is asking us to list all the words represented  by a particular num
 
 Our algorithm now has a few steps:
 
-Pre-Computation:
+**Pre-Computation:**
 
 1.   Create a hash table that maps from a sequence of digits to a list of strings.
 
-2.  Go through each word in the dictionary and convert it to its T9 representation (e.g., APPLE - >   27753).
-Store each of these in the above hash table. For example, 8733 would map to {used, tree}.
+2.  Go through each word in the dictionary and convert it to its T9 representation (e.g., APPLE - >   27753). Store each of these in the above hash table. For example, 8733 would map to {used, tree}.
 
-Word Lookup:
+**Word Lookup:**
 
-1.   Just look up the entry in the hash table and return the list. That's it!
-1     /* WORD LOOKUP   * /
+1.   Just look up the entry in the hash table and return the list. 
+
+That's it!
+```java
+1     /* WORD LOOKUP   */
 2     ArrayList<String>  getValidT9Words(String numbers,
 3                                                                         HashMapList<String,  String> dictionary)  {
 4          return dictionary.get(numbers);
 5      }
 6
-
-
-CrackingTheCodinglnterview.com I  6th Edition      S07 
-Solutions to Chapter 16  \  Moderate
-
-
 7    /*  PRECOMPUTATION  */
 8
 9    /*  Create  a hash  table that maps from a number to  all words that have this
@@ -15729,16 +7309,16 @@ Solutions to Chapter 16  \  Moderate
 26       HashMap<Character, Character>   letterToNumberMap
 27            new HashMap<Character, Character>();
 28       for  (int i= 0;  i <  t9Letters.length; i++)  {
-char[] letters  =  t9Letters[i];
+29 char[] letters  =  t9Letters[i];
 30            if (letters !=null) {
-for  (char letter  :   letters) {
-char  c =Character.forDigit(i,   10);
+31 for  (char letter  :   letters) {
+32 char  c =Character.forDigit(i,   10);
 33                      letterToNumberMap.put(letter,  c);
 }
 35            }
 36       }
 37       return letterToNumberMap;
-
+38 }
 39
 40  /*  Convert  from a  string to  its T9 representation. */
 41  String  convertToT9(String word, HashMap<Character, Character>  letterToNumberMap) {
@@ -15756,47 +7336,50 @@ char  c =Character.forDigit(i,   10);
 53
 54  /*  HashMaplist<String,  Integer>  is a HashMap  that maps from Strings to
 55     *  Arraylist<Integer>.  See appendix for  implementation.  */
+```
 Getting the wordsthatmap to this number will run inO(N) time, whereN is the number of digits. TheO(N) comes in during the hash table look up (we need to convert the number to a hash table). If you know the words are never longer than a certain max size, then you could also describe the runtime as O(1).
 
 Note that it's easy to think, "Oh, linear-that's not that fast:' But it depends what it's linear on. Linear on the length of the word is extremely fast. Linear on the length of the dictionary is not so fast.
 
+**16.21   Sum Swap:** Given two  arrays of integers, find a pair of values (one value  from  each array) that you can swap to give the  two arrays the  same sum.
 
-
-508         Cracking  the  Coding  Interview, 6th  Edition 
-Solutions to Chapter 16  I    Moderate
-
-
-16.21   Sum Swap: Given two  arrays of integers, find a pair of values (one value  from  each array) that you can swap to give the  two arrays the  same sum.
 EXAMPLE
-lnput:{4,   1,  2,  1,  1,  2}and{3,   6,  3,  3} Output: {1,   3}
 
-pg  184
+Input:{4,   1,  2,  1,  1,  2} and {3,   6,  3,  3} 
+
+Output: {1,   3}
+
 
 SOLUTION
+
+---
 
 We should start  by trying  to understand what exactly  we're looking for.
 
 We have  two arrays and  their  sums.  Although we likely aren't given  their  sums  upfront, we can just  act like we are for now. After all, computing the sum is an O(N) operation and we know  we can't  beat O(N) anyway. Computing the sum, therefore, won't impact the  runtime.
 
-When  we move a (positive) value  a from array A to array B, then the  sum  of A drops by a and  the  sum of B
-increases by a.
+When  we move a (positive) value  a from array A to array B, then the  sum  of A drops by a and  the  sum of B increases by a.
 
 We are looking for two  values,  a and  b, such  that:
-sumA -  a  +  b  =  sumB  -  b  +  a
+
+	sumA -  a  +  b  =  sumB  -  b  +  a
 
 Doing some quick math:
-2a   -  2b  =  sumA -  sumB
-a  -  b  = (sumA  -  sumB)  / 2
+	
+	2a   -  2b  =  sumA -  sumB
+	a  -  b  = (sumA  -  sumB)  / 2
 
 Therefore, we're looking for two values  that have  a specific  target difference: (sumA  -  sumB)  / 2.
 
-Observe that because that the target must be an integer (after all, you can't swap two integers to get  a non­
-integer difference), we can conclude that the  difference between the sums must be even to have  a valid pair.
+Observe that because that the target must be an integer (after all, you can't swap two integers to get  a non­ integer difference), we can conclude that the  difference between the sums must be even to have  a valid pair.
 
-Brute Force
+**Brute Force**
 
 A brute force  algorithm is simple enough. We just  iterate through the  arrays and  check all pairs of values. We can either do this the "naive" way (compare the  new  sums)  or by looking for a pair with that difference.
+
 Naive approach:
+
+```java
 1     int[] findSwapValues(int[] arrayl,  int[]  array2) {
 2           int suml       sum(arrayl);
 3           int sum2  =  sum(array2);
@@ -15807,23 +7390,19 @@ Naive approach:
 8                       int newSum2 =  sum2  -  two  +  one;
 9                       if (newsuml  ==  new5um2)   {
 10                          int[]  values =  { one,  two}; 
-11
-12
+11							return values;
+12						} 
 13              }
 14        }
 15
- 
-return values;
-} 
 16         return null;
 17   }
+```
+
 Target approach:
+
+```java
 1     int[] findSwapValues(int[] arrayl,  int[]  array2) {
-
-
-CrackingTheCodinglnterview.com \ 6th Edition 
-Solutions to Chapter 16 I    Moderate
-
 2          Integer target  =  getTarget(arrayl,  array2);
 3          if (target==    null) return null;
 4
@@ -15843,17 +7422,16 @@ Solutions to Chapter 16 I    Moderate
 18        int suml      sum(arrayl);
 19        int sum2=  sum(array2);
 20 
-21
-22
+21		if ((suml  -  sum2) %   2   != 0)  return null;
+22		return (suml   -  sum2) / 2; 
 23   }
- 
-if ((suml  -  sum2) %   2   != 0)  return null;
-return (suml   -  sum2) / 2; 
+```
+
 We've used an Integer (a boxed data type) as the return value for getTarget. This allows us to distin- guish an"error" case.
 
 This algorithm takes O(AB) time.
 
-Optimal Solution
+**Optimal Solution**
 
 This problem reduces to finding a pair of values that have a particular difference. With that in mind, let's revisit what the brute force does.
 
@@ -15867,6 +7445,7 @@ How can we more quickly find an element in B that equals one   -  target?
 one   -  target. 
 
 We can do this very quickly with a hash table. We just throw all the elements in B into a hash table. Then, iterate through A and look for the appropriate element in B.
+```java
 1     int[] findSwapValues(int[]  arrayl, int[]  array2) {
 2          Integer target=    getTarget(arrayl,  array2);
 3          if (target==    null) return null;
@@ -15882,13 +7461,6 @@ We can do this very quickly with a hash table. We just throw all the elements in
 13                  int[]  values =  {one,  two};
 14                  return values;
 15             }
-
-
-
-510         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I      Moderate
-
-
 16          }
 17
 18       return null;
@@ -15902,11 +7474,13 @@ Solutions to Chapter 16  I      Moderate
 26         }
 27          return set;
 28  }
+```
 This solution will take O(A+B)  time. This is the Best Conceivable Runtime (BCR), since we have to at least touch every element in the two arrays.
 
-Alternate Solution
+**Alternate Solution**
 
 If the arrays are sorted, we can iterate through them to find an appropriate pair. This will require less space.
+```java
 1      int[] findSwapValues(int[] arrayl,  int[]  array2) {
 2            Integer target  =  getTarget(arrayl,  array2);
 3            if (target ==  null) return null;
@@ -15935,41 +7509,34 @@ If the arrays are sorted, we can iterate through them to find an appropriate pai
 26
 27          return null;
 28  }
+```
 This algorithm takes O(A  +  B) time but requires the arrays to be sorted. If the arrays aren't sorted, we can still apply this algorithm but we'd have to sort the arrays first. The overall runtime would be O(A   log   A  + B   log   B).
 
 
-
-
-
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition         S11 
-Solutions to Chapter 16  I      Moderate
-
-
-16.22   Langton's Ant: An ant is sitting on an infinite grid of white and black squares. It initially faces right.
+**16.22   Langton's Ant:** An ant is sitting on an infinite grid of white and black squares. It initially faces right.
 At each step, it does the following:
-(1) At a white square, flip the color of the square, turn 90 degrees right (clockwise), and move forward one unit.
-(2) At a black square, flip the color of the square, turn 90 degrees left (counter-clockwise), and move forward one unit.
+
+1. At a white square, flip the color of the square, turn 90 degrees right (clockwise), and move forward one unit.
+2. At a black square, flip the color of the square, turn 90 degrees left (counter-clockwise), and move forward one unit.
+
 Write a program to simulate the first K moves that the ant makes and print the final board as a grid. Note that you are not provided with the data structure to represent the grid. This is something you must design yourself. The only input to your method is K. You  should print the final grid and return nothing. The method signature might be something like void  printKMoves (int  K).
-pg 185
+
 
 SOLUTION
 
+---
+
 At first glance, this problem seems very straightforward:  create a grid, remember the ant's position and orientation, flip the cells, turn, and move. The interesting part comes in how to handle an infinite grid.
 
-Solution #1: Fixed Array
+**Solution #1: Fixed Array**
 
 Technically, since we're only running the first K moves,  we do have a max size for the grid. The ant cannot move more than K moves in either direction. If we create a grid that has width 2K and height 2K (and place the ant at the center), we know it will be big enough.
 
-The problem with this is that it's not very extensible. If you run K moves and then want to run another K
-moves, you might be out of luck.
+The problem with this is that it's not very extensible. If you run K moves and then want to run another K moves, you might be out of luck.
 
-Additionally, this solution wastes a good amount of space. The max might be K moves in a particular dimen­
-sion, but the ant is probably going in circles a bit. You probably won't need all this space.
+Additionally, this solution wastes a good amount of space. The max might be K moves in a particular dimen­sion, but the ant is probably going in circles a bit. You probably won't need all this space.
 
-Solution #2: Resizable Array
+**Solution #2: Resizable Array**
 
 One thought is to use a resizable array, such as Java's ArrayList class. This allows us to grow an array as necessary, while still offering 0( 1) amortized insertion.
 
@@ -15979,21 +7546,14 @@ However, we take a similar approach by building our own resizable grid. Each tim
 
 What about the negative expansions? While conceptually we can talk about something being at negative positions, we cannot actually access array indices with negative values.
 
-One way we can handle this is to create "fake indices:' Let us treat the ant as being at coordinates ( - 3,
--10), but track some sort of offset or delta to translate these coordinates into array indices.
+One way we can handle this is to create "fake indices:' Let us treat the ant as being at coordinates ( - 3, -10), but track some sort of offset or delta to translate these coordinates into array indices.
 
 This is actually unnecessary,  though. The ant's location does not need to be publicly exposed or consistent (unless, of course, indicated by the interviewer). When the ant travels into negative coordinates, we can double the size of the array and just move the ant and all cells into the positive coordinates. Essentially, we are relabeling all the indices.
 
 This relabeling will not impact the big O time since we have to create a new matrix anyway.
+```java
 1     public   class Grid  {
 2         private boolean[][] grid;
-
-
-
-512          Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
 3            private Ant ant      new Ant();
 4
 5         public   Grid()   {
@@ -16046,15 +7606,10 @@ Solutions to Chapter 16  I     Moderate
 52        }
 53
 54     /*  Flip  color of  cells.  */
-
 55	private void  flip(Position  position) {	
 56	int row=  position.row;	
 57	int column=  position.column;	
 58	grid[row][column]=  grid[row][column)  ?  false	true;
-CrackingTheCodinglnterview.com I  6th Edition        513 
-Solutions to Chapter 16  I     Moderate
-
-
 59       }
 60
 61       /*  Move ant. */
@@ -16075,21 +7630,19 @@ if (r == ant.position.row &&   c  ==  ant.position.column)  {
 76                      }  else if (grid[r][c]) {
 77                              sb.append("X");
 78                      }  else {
-sb.append("_");
+79								sb.append("_");
 80                      }
 81                 } 
-82
-83            }
- 
-sb.append("\n"); 
-84
-85
+82					sb.append("\n"); 
+83            }	
+84			sb.append("Ant:  "  +  ant.orientation + ". \n");
+85			return sb.toString(); 
 86       }
 87   }
- 
-sb.append("Ant:  "  +  ant.orientation +         \n");
-return sb.toString(); 
+```
+
 We pulled the Ant code into a separate class. The nice thing about this is that if we need to have multiple ants for some reason, we can easily extend the code to support this.
+```java
 1     public class Ant {
 2         public Position position  =  new Position(0,  0);
 3            public Orientation orientation  = Orientation.right;
@@ -16115,13 +7668,9 @@ We pulled the Ant code into a separate class. The nice thing about this is that 
 23            position.column +=  shiftColumn;
 24       }
 25   }
-
-
-514          Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
+```
 Orientation is also its own enum,  with a few useful functions.
+```java
 1     public enum  Orientation {
 2           left, up,   right, down;
 3
@@ -16150,8 +7699,9 @@ Orientation is also its own enum,  with a few useful functions.
 26               }
 27        }
 28    }
-We've also put  Position into its own simple class. We could just  as easily track the  row and  column sepa­
-rately.
+```
+We've also put  Position into its own simple class. We could just  as easily track the  row and  column sepa­rately.
+```java
 1      public class  Position {
 2           public int row;
 3           public int  column;
@@ -16161,9 +7711,10 @@ rately.
 7                 this.column=  column;
 8           }
 9      }
+```
 This works, but it's actually more complicated than is necessary.
 
-Solution #3: HashSet
+**Solution #3: HashSet**
 
 Although it may seem "obvious"that we would  use a matrix to represent a grid, it's actually easier not to do that.  All we actually need is a list of the white squares (as well as the ant's location and  orientation).
 
@@ -16174,11 +7725,7 @@ The one tricky bit is how to print the  board. Where  do we start printing? Wher
 Since we will need to print  a grid, we can track what should be top-left and  bottom-right corner of the grid. Each time  the  ant  moves,  we compare the  ant's  position to the  most top-left position and  most bottom­ right position, updating them if necessary.
 
 
-
-CrackingTheCodinglnterview.com \ 6th Edition        515 
-Solutions to Chapter 16  I     Moderate
-
-
+```java
 1     public class  Board {
 2         private HashSet<Position>  whites  =  new HashSet<Position>();
 3            private Ant ant  =  new Ant();
@@ -16205,12 +7752,12 @@ Solutions to Chapter 16  I     Moderate
 24          }
 25
 26       /*  Grow  grid   by tracking the  most top-left and bottom-right positions.*/
-private void  ensureFit(Position position)  {
+27	private void  ensureFit(Position position)  {
 28            int row =  position.row;
 29            int column =  position.column;
 30
 31            topLeftCorner.row =  Math.min(topLeftCorner.row,  row);
-topLeftCorner.column  =  Math.min(topLeftCorner.column,  column);
+32			topLeftCorner.column  =  Math.min(topLeftCorner.column,  column);
 33
 34            bottomRightCorner.row   =  Math.max(bottomRightCorner.row,   row);
 35            bottomRightCorner.column  =  Math.max(bottomRightCorner.column,  column);
@@ -16229,43 +7776,30 @@ topLeftCorner.column  =  Math.min(topLeftCorner.column,  column);
 48       /*  Print board.  */
 49       public String toString()  {
 50            5tringBuilder sb  =  new StringBuilder();
-int rowMin  =  topLeftCorner.row;
+51			int rowMin  =  topLeftCorner.row;
 52            int rowMax      bottomRightCorner.row;
 53            int colMin =  topLeftCorner.column;
 54            int colMax =  bottomRightCorner.column;
 55            for  (int r  =  rowMin; r <=  rowMax;   r++)  {
 56                 for  (int c  =  colMin;  c <=  colMax; c++)  {
-
-
-
-516         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter  16  l   Moderate
-
- 
-57
-58
-59
-60
-61
-62
-63
+57						if (r ==  ant.position.row &&   c  ==  ant.position.column)  {
+58							sb.append(ant.orientation);
+59						}  else if  (isWhite(r, c)) {
+60							sb.append("X");
+61						}  else {
+62							sb.append("_");
+63						}
 64                }
- 
-if (r ==  ant.position.row &&   c  ==  ant.position.column)  {
-sb.append(ant.orientation);
-}  else if  (isWhite(r, c)) {
-sb.append("X");
-}  else {
-sb.append("_");
-} 
 65                 sb.append("\n");
 66            }
 67            sb.append("Ant:  "  + ant.orientation + "    \n");
 68            return sb.toString();
 69       }
+```
 The implementation of Ant and Orientation is the same.
 
 The implementation of Position gets updated slightly, in order to support the HashSet functionality. The position will be the key, so we need to implement a hashCode () function.
+```java
 1    public   class Position {
 2         public int row;
 3            public int column;
@@ -16279,13 +7813,7 @@ The implementation of Position gets updated slightly, in order to support the Ha
 11       public boolean  equals(Object o)  {
 12            if (o  instanceof Position)  {
 13                 Position p =  (Position) o;
-14                 return p.row  ==  row &&   p.column
- 
-
-
-
-
-column; 
+14                 return p.row  ==  row &&   p.column == column; 
 15                }
 16            return false;
 17       }
@@ -16300,88 +7828,72 @@ column;
 26            return new Position(row,  column);
 27         }
 28   }
+```
 The nice thing about this implementation is that if we do need to access a particular cell elsewhere, we have consistent row and column labeling.
 
 
 
-
-
-
-
-
-
-
-
-
-CrackingTheCodinglnterview.com I  6th  Edition            517 
-Solutions to Chapter 16  I     Moderate
-
-
-16.23   Rand7 from  Rand5: Implement a method rand7 () given randS (). That is, given a method that generates a random number between O and 4 (inclusive), write a method that generates a random number between O and 6 (inclusive).
-pg 186
+**16.23   Rand7 from  Rand5:** Implement a method rand7 () given randS (). That is, given a method that generates a random number between O and 4 (inclusive), write a method that generates a random number between O and 6 (inclusive).
 
 SOLUTION
+
+---
 
 To implement this function correctly, we must have each of the values between O and 6 returned with 1 /7th probability.
 
 
-First Attempt (Fixed  Number of Calls)
+**First Attempt (Fixed  Number of Calls)**
 
 As a first attempt, we might try generating all numbers between O and 9, and then mod the resulting value by 7. Our code for it might look something like this:
+```java
 1      int rand7() {
 2         int v =  rands()+  rands();
 3            return v %   7;
 4      }
+```
 Unfortunately, the above code will not generate the values with equal probability. We can see this by looking at the results of each call to rands () an d the return result of the rand7 () function.
 
-1st Call
-0	2nd  Call
-0	Result	1st Call
+| 1st Call | 2nd  Call | Result | ----- | 1st Call | 2nd  Call | Result |
+| --       | --        | --     | --    | --       | --        | --     |
+| 0        | 0         | 0      | ----- | 2        | 3         | 5      |
+| 0        | 1         | 1      | ----- | 2        | 4         | 6      |
+| 0        | 2         | 2      | ----- | 3        | 0         | 3      |
+| 0        | 3         | 3      | ----- | 3        | 1         | 4      |
+| 0        | 4         | 4      | ----- | 3        | 2         | 5      |
+| 1        | 0         | 1      | ----- | 3        | 3         | 6      |
+| 1        | 1         | 2      | ----- | 3        | 4         | 0      |
+| 1        | 2         | 3      | ----- | 4        | 0         | 4      |
+| 1        | 3         | 4      | ----- | 4        | 1         | 5      |
+| 1        | 4         | 5      | ----- | 4        | 2         | 6      |
+| 2        | 0         | 2      | ----- | 4        | 3         | 0      |
+| 2        | 1         | 3      | ----- | 4        | 4         | 1      |
+| 2        | 2         | 4      | ----- | 4        |           |        |
 
-2	2nd  Call
+Each individual row has a 1  in 25 chance of occurring, since there are two calls to rand5() and each distrib­utes its results with 1/5th probability. If you count up the number of times each number occurs, you'll note that this rand7() function will return 4 with 5/25th probability but return O with just 3/25th probability.
+This means that our function has failed; the results do not have probability 1/7th.
 
-3	Result
-0	1		2	4	
-0	2		3	0	
-0	3		3	1	
-0	4		3	2	
-1	0		3	3	
-1	1		3	4	
-1	2		4	0	
-1	3		4	1	
-1	4		4	2	
-2	0		4	3	
-2	1		4	4	
-2	2				
-Each individual row has a 1  in 25 chance of occurring, since there are two calls to rands () and each distrib­
-utes its results with Ys th probability. If you count up the number of times each number occurs, you'll note that this rand7 () function will return 4 with Yis th probability but return O with just Xs th probability.
-This means that our function has failed; the results do not have probability ;0th.
+Now, imagine we modify our function to add an if-statement, to change the constant multiplier, or to insert a new call to rand5(). We will still wind up with a similar looking table, and the probability of getting any one of those rows will be 1/(5^k), where k is the number of calls to rand5() in that row. Different rows may have different number of calls.
 
-Now, imagine we modify our function to add an if-statement, to change the constant multiplier, or to insert a new call to rands (). We will still wind up with a similar looking table, and the probability of getting any one of those rows will be Ys,, where k is the number of calls to rands () in that row. Different rows may have different number of calls.
+The probability of winding up with the result of the rand7() function being, say, 6 would be the sum of the probabilities  of all rows that result in 6. That is:
 
-The probability of winding up with the result of the rand7 () function being, say, 6 would be the sum of the probabilities  of all rows that result in 6. That is:
-P(rand7()  =  6)  =   Ys; + Ysi + ... + Ysm
+	P(rand7() = 6)  = 1/5i +1/5j + .... + 1/5m
 
 
-- S 18         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
+We know that, in order for our function to be correct, this probability must equal 1/7. This is impossible *though. Because 5 and 7 are relatively prime, no series of reciprocal powers of 5 will result in 1/7.*
 
-
-We know that, in order for our function to be correct, this probability must equal ;/,. This is impossible
-though. Because 5 and 7 are relatively prime, no series ofreciprocal  powers of5 will result in 1,,1.
-
-Does this mean the problem is impossible?  Not exactly. Strictly speaking,  it means that, as long as we can list out the combinations of randS () results that will result in a particular value of rand7 (), the function will not give well distributed results.
+Does this mean the problem is impossible?  Not exactly. Strictly speaking,  it means that, as long as we can list out the combinations of rand5() results that will result in a particular value of rand7(), the function will not give well distributed results.
 
 We can still solve this prob/em. We just have to use a while loop, and realize that there's no telling just how many turns will be required to return a result.
 
 
-Second Attempt (Nondeterministic Number of Calls)
+**Second Attempt (Nondeterministic Number of Calls)**
 
 As soon as we've allowed for a while loop, our work gets much easier. We just need to generate a range of values where each value is equally likely (and where the range has at least seven elements). If we can do this, then we can discard the elements greater than the previous multiple of 7, and mod the rest of them by 7. This will get us a value within the range of Oto 6, with each value being equally likely.
 
-In the below code, we generate the range O through 24  by doing S    *   rands ()   +   rands (). Then, we discard the values between 21  and 24, since they would otherwise make rand? () unfairly weighted towards Othrough 3. Finally, we mod by 7 to give us the values in the range Oto 6 with equal probability.
+In the below code, we generate the range 0 through 24  by doing 5 * rand5() +   rand5(). Then, we discard the values between 21  and 24, since they would otherwise make rand7() unfairly weighted towards 0 through 3. Finally, we mod by 7 to give us the values in the range 0 to 6 with equal probability.
 
-Note that because we discard values in this approach, we have no guarantee on the number of rands () calls it may take to return a value. This is what is meant by a nondeterministic number of calls.
+Note that because we discard values in this approach, we have no guarantee on the number of rand5() calls it may take to return a value. This is what is meant by a nondeterministic number of calls.
+```java
 1      int rand?() {
 2         while  (true) {
 3                  int num  =  5*randS()  + randS();
@@ -16390,12 +7902,13 @@ Note that because we discard values in this approach, we have no guarantee on th
 6                }
 7          }
 8     }
-Observe that doing S   *  rands ()  +  rands () gives us exactly one way of getting each number in its range (0 to 24). This ensures that each value is equally probable.
+```
+Observe that doing 5 * rands5()  +  rands5() gives us exactly one way of getting each number in its range (0 to 24). This ensures that each value is equally probable.
 
-Could we instead do 2  *  rands ()  +  rands ()? No, because the values wouldn't be equally distributed. For example,  there would be three ways of getting a 6 (6 =  2  *  1  +  4, 6  =  2  *  2  +  2, and 6  =  2
-*  3  +  0) but only one way of getting a O(0=2 *0+0). The values in the range are not equally probable.
+Could we instead do 2  *  rands5()  +  rands5()? No, because the values wouldn't be equally distributed. For example, there would be three ways of getting a 6 (6 =  2  *  1  +  4, 6  =  2  *  2  +  2, and 6  =  2 *  3  +  0) but only one way of getting a O(0=2\*0+0). The values in the range are not equally probable.
 
 There is a way that we can use 2  *  rands () and still get an identically distributed range, but it's much more complicated. See below.
+```java
 1    int rand?() {
 2         while  (true) {
 3                  int rl =  2*rands();  /*evens  between 0 and 9*/
@@ -16404,40 +7917,30 @@ There is a way that we can use 2  *  rands () and still get an identically distr
 6                   int randl =  r2  %  2;  /*Generate 0 or  1*/
 7                   int num  =  rl +  randl; /*will be in  the  range  0 to  9*/
 8                        if (num <   7)   { 
-9
-10
+9							return num;
+10							} 
 11              }
 12       }
 13    }
- 
-return num;
-} 
-
-
-
-
-
-CrackingTheCodinglnterview.com I  6th  Edition            519 
-Solutions to Chapter 16  I     Moderate
-
+```
 
 In fact, there is an infinite number of ranges we can use. The key is to make sure that the range is big enough and that all values are equally likely.
 
 
-16.24 Pairs with Sum: Design an algorithm to find all pairs of integers within an array which sum to a specified value. 
+**16.24 Pairs with Sum:** Design an algorithm to find all pairs of integers within an array which sum to a specified value. 
 
 
-SOLUTION
+**SOLUTION**
+
+---
  
-
-pg 185 
-
-Let's start with a definition. If we're trying to find a pair of numbers that sums to z, the complement of x will be z  -  x (that is, the number  that can be added to x to make z). For example, if we're trying to find a pair of numbers that sums to 12, the complement of-5 would be 17.
+Let's start with a definition. If we're trying to find a pair of numbers that sums to z, the complement of x will be z  -  x (that is, the number  that can be added to x to make z). For example, if we're trying to find a pair of numbers that sums to 12, the complement of -5 would be 17.
 
 
-Brute Force
+**Brute Force**
 
 A brute force solution is to just iterate through all pairs and print the pair if its sum matches the target sum.
+```java
 1     Arraylist<Pair> printPairSums(int[] array,  int sum) {
 2          ArrayList<Pair>  result=   new Arraylist<Pair>();
 3          for  (int  i=   0 ; i <  array.length; i++) {
@@ -16449,12 +7952,13 @@ A brute force solution is to just iterate through all pairs and print the pair i
 9         }
 10      return  result;
 11  }
-
+```
 If there are duplicates in the array (e.g., { 5,  6,  5}), it might print the same sum twice. You should discuss this with your interviewer.
 
-Optimized Solution
+**Optimized Solution**
 
 We can optimize this with a hash map, where the value in the hash map reflects the number of"unpaired" instances of a key. We walk through  the array. At each element x, check how many unpaired instances of x's complement preceded it in the array. If the count is at least one, then there is an unpaired instance of x's complement. We add this pair and decrement x's complement to signify that this element has been paired. If the count is zero, then increment the value of x in the hash table to signify that x is unpaired.
+```java
 1     Arraylist<Pair> printPairSums(int[] array,  int sum) {
 2          Arraylist<Pair> result=   new Arraylist<Pair>();
 3         HashMap<Integer,   Integer> unpairedCount =  new HashMap<Integer,   Integer>();
@@ -16470,29 +7974,26 @@ We can optimize this with a hash map, where the value in the hash map reflects t
 
 14   }
 15
-
-
-
-520          Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
-15   void  adjustCounterBy(HashMap<Integer, Integer>  counter,   int key,   int delta) {
+16   void  adjustCounterBy(HashMap<Integer, Integer>  counter,   int key,   int delta) {
 17        counter.put(key,  counter.getOrDefault(key, 0)+ delta);
 18   }
-This solution will print duplicate pairs, but will not reuse the same instance of an element. It will takeO(N)
-time andO(N) space.
+```
+
+This solution will print duplicate pairs, but will not reuse the same instance of an element. It will take O(N) time andO(N) space.
 
 
-Alternate Solution
+**Alternate Solution**
 
 Alternatively, we can sort the array and then find the pairs in a single pass. Consider this array:
-{-2,   -1,   0,   3,   5,  6,  7,  9,  13,   14}.
-Letfirst point to the head of the array and last point to the end of the array. To find the complement of first, wejust move last backwards until we find it. lffirst +  last <  sum, then there is no comple­ ment forfirst. We can therefore movefirst forward. We stop whenfirst is greater than last.
+
+	{-2,   -1,   0,   3,   5,  6,  7,  9,  13,   14}.
+
+Letfirst point to the head of the array and last point to the end of the array. To find the complement of first, wejust move last backwards until we find it. If first +  last <  sum, then there is no comple­ ment forfirst. We can therefore movefirst forward. We stop whenfirst is greater than last.
 
 Why must this find all complements forfirst? Because the array is sorted and we're trying progressively smaller numbers. When the sum offirst and last is less than the sum, we know that trying even smaller numbers (as last) won't help us find a complement.
 
 Why must this find all complements for last? Because all pairs must be made up of afirst and a last. We've found all complements forfirst, therefore we've found all complements of last.
+```java
 1     void  printPairSums(int[] array, int  sum)  {
 2         Arrays.sort(array);
 3            int first =  0;
@@ -16509,49 +8010,38 @@ Why must this find all complements for last? Because all pairs must be made up o
 14            }
 15        }
 16   }
-This algorithm takesO(N   log N) time to sort andO(N) time to find the pairs.
+```
+This algorithm takes O(N   log N) time to sort and O(N) time to find the pairs.
 
 Note that since the array is presumably unsorted, it would be equally fast in terms of big Oto  just do a binary search at each element for its complement. This would give us a two-step algorithm, where each step isO(N  log  N).
 
 
-16.25  LRU Cache: Design and build a"least recently used"cache, which evicts the least recently used item.
+**16.25  LRU Cache:** Design and build a"least recently used"cache, which evicts the least recently used item.
 The cache should map from keys to values (allowing you to insert and retrieve a value associated with a particular key) and be initialized with a max size. When it is full, it should evict the least recently used item. You can assume the keys are integers and the values are strings. 
 
 
-SOLUTION
+**SOLUTION**
+
+---
 
 We should start off by defining the scope of the problem. What exactly do we need to achieve?
-Inserting Key, Value Pair: We need to be able to insert a (key, value) pair.
- 
 
-pg 785 
-
-
-
-CrackingTheCodinglnterview.com I  6th  Edition            521 
-Solutions to Chapter 16  I      Moderate
-
-
-Retrieving Value by Key: We need to be able to retrieve the value using the key.
-
-Finding Least  Recently  Used: We need to know the least recently used item (and, likely, the usage ordering of all items).
-Updating Most Recently Used: When we retrieve a value by key,we need to update the order to be the most recently used item.
-Eviction: The cache should have a max capacity and should remove the least recently used item when it hits capacity.
+- **Inserting Key, Value Pair:** We need to be able to insert a (key, value) pair.
+- **Retrieving Value by Key:** We need to be able to retrieve the value using the key.
+- **Finding Least  Recently  Used:** We need to know the least recently used item (and, likely, the usage ordering of all items).
+- **Updating Most Recently Used:** When we retrieve a value by key,we need to update the order to be the most recently used item.
+- **Eviction:** The cache should have a max capacity and should remove the least recently used item when it hits capacity.
 
 The (key, value) mapping suggests a hash table. This would make it easy to look up the value associated with a particular key.
 
-
-
-
-
-Keychain                    Book                      Blanket                       Food
+![](media/16_25_1.JPG)
 
 
 Unfortunately,a hash table usually would not offer a quick way to remove the most recently used item. We could mark each item with a timestamp and iterate through the hash table to remove the item with the lowest timestamp, but that can get quite slow (O(N) for insertions).
 
 Instead, we could use a linked list, ordered by the most recently used. This would make it easy to mark an item as the most recently used (just put it in the front of the list) or to remove the least recently used item (remove the end).
 
-72, Food                13, Keychain             45, Blanket                 27,Book
+![](media/16_25_2.JPG)
 
 
 Unfortunately, this does not offer a quick way to look up an item by its key. We could iterate through the linked list and find the item by key. But this could get very slow (O(N) for retrieval).
@@ -16562,30 +8052,17 @@ Can we get the best parts of each? Yes. By using both!
 
 The linked list looks as it did in the earlier example, but now it's a doubly linked list. This allows us to easily remove an element from the middle of the linked list. The hash table now maps to each linked list node rather than the value.
 
-
-
-
-
-
-72,Food                 13, Keychain             45, Blanket                 27,Book
+![](media/16_25_3.JPG)
 
 
 The algorithms now operate as follows:
 
-Inserting Key, Value Pair: Create a linked list node with key, value. Insert into head of linked list. Insert key-> node mapping into hash table.
-Retrieving Value by Key: Look up node in hash table and return value. Update most recently used item
-
-
-
-522         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
-(see below).
-•    Finding Least Recently Used: Least recently used item will be found at the end of the linked list.
-
-Updating Most Recently Used: Move node to front of linked list. Hash table does not need to be updated.
-Eviction: Remove tail of linked list. Get key from linked list node and remove key from hash table. The code below implements  these classes and algorithms.
+- **Inserting Key, Value Pair:** Create a linked list node with key, value. Insert into head of linked list. Insert key-> node mapping into hash table.
+- **Retrieving Value by Key:** Look up node in hash table and return value. Update most recently used item (see below).
+- **Finding Least Recently Used:** Least recently used item will be found at the end of the linked list.
+- **Updating Most Recently Used:** Move node to front of linked list. Hash table does not need to be updated.
+- **Eviction:** Remove tail of linked list. Get key from linked list node and remove key from hash table. The code below implements  these classes and algorithms.
+```java
 1      public  class Cache  {
 2        private  int maxCacheSize;
 3            private  HashMap<Integer,  LinkedListNod�>  map
@@ -16600,38 +8077,26 @@ s           private  LinkedListNode listHead  =  nullf
 12      /* Get value for  key and mark as most necently used. */
 13         public  String  getValue(int  key)  {
 14           LinkedListNode item= map.get(key);
-15              if (item== null) return  null;          I
+15              if (item== null) return  null;        
 16 
-17
-18
-19
-20
-21
-22
+17					/* Move  to  front of  list to  mark  as �ost  recently  used. */
+18					if (item  != listHead)  {
+19						removeFromLinkedList(item);
+20						insertAtFrontOfLinkedList(item);
+21					}
+22					return  item.value; 
 23         }
 24
- 
-/* Move  to  front of  list to  mark  as �ost  recently  used. */
-if (item  != listHead)  {
-removeFromLinkedList(item);
-insertAtFrontOfLinkedList(item);
-}
-return  item.value; 
 25         /* Remove node  from linked  list. */
 26         private  void  removeFromLinkedlist(LinkedListNode  node) {
 27              if (node== null)  return;
-28                                                                                                               I
+28                                                                                
 29              if (node.prev != null) node.prev.nextl=  node.next;
 30          if (node.next  != null) node.next.prev = node.prev;
 31              if (node      listTail) listTail    node.prev; 
-32
+32				if (node  ==  listHead)  listHead  =  node.next;
 33         }
 34
- 
-if (node  ==  listHead)  listHead  =  node
- 
-ext;
-r 
 35         /* Insert node  at  front of  linked  list. */
 36        private  void insertAtFrontOflinkedList(LinkedListNode node) {
 37               if (listHead  == null)  {
@@ -16646,132 +8111,111 @@ r
 46
 47      /* Remove  key/value pair  from cache, deleting  from hashtable and linked  list. */
 48         public  boolean removeKey(int  key) {
-
-
-CrackingTheCodinglnterview.com I 6th Edition          S23 
-Solutions to Chapter 16  I     Moderate
-
- 
-49
-50
-51
-52
+49				LinkedListNode  node   =  map.get(key); 
+50				removeFromLinkedlist(node); 
+51				map.remove(key);
+52				return true; 
 53        }
 54
- 
-LinkedListNode  node   =  map.get(key); removeFromLinkedlist(node); map.remove(key);
-return true; 
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
+55			/* Put key, value pair  in  cache. Removes  old value for  key   if necessary.  Inserts
+56			*  pair into linked list and  hash table.*/
+57			public  void setKeyValue(int key, String  value)  {
+58			/* Remove  if already there.  */
+59			removeKey(key);
+60			
+61			/* If full,  remove  least  recently used item from   cache. */
+62			if (map.size() >=  maxCacheSize  &&   listTail !=  null) {
+63			removeKey(listTail.key);
+64			}
+65			
+66			/* Insert new  node. */
+67			LinkedListNode node   =  new  LinkedListNode(key,  value);
+68			insertAtFrontOfLinkedList(node);
+69			map.put(key,  node);
+70			}
 71
-72
-73
-74
-75
-76
-
-78
-79
-80
+72			private static  class  LinkedListNode { 
+73				private  LinkedListNode next,  prev; 
+74				public int  key;
+75				public String value;
+76				public LinkedListNode(int  k,   String v) {
+77					key=  k;
+78					value =  v;
+79				}
+80			} 
 81     }
- 
-/* Put key, value pair  in  cache. Removes  old value for  key   if necessary.  Inserts
-*  pair into linked list and  hash table.*/
-public  void setKeyValue(int key, String  value)  {
-/* Remove  if already there.  */
-removeKey(key);
+```
 
-/* If full,  remove  least  recently used item from   cache. */
-if (map.size() >=  maxCacheSize  &&   listTail !=  null) {
-removeKey(listTail.key);
-}
-
-/* Insert new  node. */
-LinkedListNode node   =  new  LinkedListNode(key,  value);
-insertAtFrontOfLinkedList(node);
-map.put(key,  node);
-}
-
-private static  class  LinkedListNode { private  LinkedListNode next,  prev; public int  key;
-public String value;
-public LinkedListNode(int  k,   String v) {
-key=  k;
-value =  v;
-}
-} 
 Note that we've chosen to makeLinkedListNode an inner class of Cache, since no other classes should need access to this class and really should only exist within  the scope of Cache.
 
 
-16.26  Calculator:Given an arithmeticequationconsistingofpositiveintegers,+,-,* and/ (no parentheses), compute t he result.
+**16.26  Calculator:** Given an arithmeticequationconsistingofpositiveintegers,+,-,* and/ (no parentheses), compute t he result.
+
 EXAMPLE 
 
-Input: Output:
+Input: 2*3+5/6*3+15
+
+Output: 23.5
 
 
 SOLUTION
- 
 
-2*3+5/6*3+15
-
-23.5
- 
-
-
-
-
-pg 185 
+---
 
 The first thing we should realize  is that the dumb thing-just applying each operator left to right-won't work. Multiplication and division are considered "higher priority" operations, which  means that they have to happen before addition.
-For example, if you have the simple expression 3+6*2, the multiplication must be performed first, and then the addition. If you just  processed the equation left to  right,  you  would end up  with  the incorrect result,
-18, rather than the correct one,  15. You know  all of this, of course, but  it's worth really spelling out  what it means.
+
+For example, if you have the simple expression 3+6\*2, the multiplication must be performed first, and then the addition. If you just  processed the equation left to  right,  you  would end up  with  the incorrect result, 18, rather than the correct one,  15. You know  all of this, of course, but  it's worth really spelling out  what it means.
 
 
-
-524         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
-Solution #1
+**Solution #1**
 
 We can still process the equation from left to right; we just have to be a little smarter about how we do it. Multiplication and division need to be grouped together such that whenever we see those operations, we perform them immediately on the surrounding terms.
 
 For example, suppose we have this expression:
-2 - 6    - 7*8/2  +  5
-It's fine to compute2-6 immediately and store itintoa result variable. But, when wesee7* (something), we know we need to fully process that term before adding it to the result.
+	
+	2 - 6    - 7*8/2  +  5
+
+It's fine to compute2-6 immediately and store itintoa result variable. But, when we see 7* (something), we know we need to fully process that term before adding it to the result.
 
 We can do this by reading left to right and maintaining two variables.
-,   The first is processing, which maintains the result of the current cluster of terms (both the operator and the value). In the case of addition and subtraction, the cluster will be just the current term. In the case of multiplication and division, it will be the full sequence (until you get to the next addition or subtraction).
-•    The second is the result variable. If the next term is an addition or subtraction (or there is no next term), then processing is applied to result.
+
+- The first is processing, which maintains the result of the current cluster of terms (both the operator and the value). In the case of addition and subtraction, the cluster will be just the current term. In the case of multiplication and division, it will be the full sequence (until you get to the next addition or subtraction).
+- The second is the result variable. If the next term is an addition or subtraction (or there is no next term), then processing is applied to result.
 
 On the above example, we would do the following:
 
-1.  Read +2. Apply it to processing. Apply processing to result. Clear processing. processing={+,   2} -->  null
-result= 0                  -->  2
-2.  Read -6. Apply it to processing. Apply processing  to result. Clear processing. processing={-,  6} -->  null
-result=2
-3.  Read -7. Apply it to processing. Observe next sign is a"*.Continue. processing={-,  7}
-result =  -4
-4.  Read *8. Apply it to processing. Observe next sign is a/. Continue. processing={-,  56}
-result=-4
+1.  Read +2. Apply it to processing. Apply processing to result. Clear processing. 
+	
+		processing={+,   2} -->  null
+		result= 0                  -->  2
+
+2.  Read -6. Apply it to processing. Apply processing  to result. Clear processing. 
+
+		processing={-,  6} -->  null
+		result=2
+
+3.  Read -7. Apply it to processing. Observe next sign is a\*.Continue.
+		
+		processing={-,  7}
+		result =  -4
+
+4.  Read \*8. Apply it to processing. Observe next sign is a/. Continue. 	
+		
+		processing={-,  56}
+		result=-4
+
 5.  Read /2. Apply it to processing. Observe next sign is a+, which terminates this multiplication and division cluster. Apply processing  to result. Clear processing.
-processing={-,  28}      -->  null result=-4
-6.  Read +5. Apply it to processing. Apply processing to result. Clear processing. processing={+,   5} -->  null
-result=-32               -->  -27
+	
+		processing={-,  28}      -->  null 
+		result=-4           --> 32
+
+6.  Read +5. Apply it to processing. Apply processing to result. Clear processing. 
+
+		processing={+,   5} -->  null
+		result=-32               -->  -27
+
 The code below implements this algorithm.
+```java
 1    /* Compute the  result of  the  arithmetic sequence. This  works by reading left  to
 2       *    right and applying   each term  to  a result. When  we see  a multiplication  or
 3        *  division,  we  instead   apply  this s equence to  a temporary  variable. */
@@ -16782,40 +8226,30 @@ The code below implements this algorithm.
 8         double  result =  0;
 9         Term processing     null;
 10       for  (int i= 0;  i < terms.size(); i++)  {
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition         525 
-Solutions to Chapter 16  I     Moderate
-
- 
 11            Term current=    terms.get(i);
-12            Term next=  i+ 1 <   terms.size() ?  terms.get(i+  1)
+12            Term next=  i+ 1 <   terms.size() ?  terms.get(i + 1) : null; 
 13
-/*    Apply the  current term  to  "processing". */
- 
-
-null; 
+14 	/*    Apply the  current term  to  "processing". */
 15            processing=   collapseTerm(processing,   current);
 16
 17          /* If next  term  is + or  -,  then  this cluster is done and we  should  apply
 18              *  "processing" to  "result".  */
-19            if (next==    null  I  I    next.getOperator()==    Operator.ADD
-20                    I   I      next.getOperator() == Operator.SUBTRACT)   {
+19            if (next==    null  ||    next.getOperator()==    Operator.ADD
+20                    ||  next.getOperator() == Operator.SUBTRACT)   {
 21                 result=   applyOp(result, processing.getOperator(),  processing.getNumber());
 22                 processing=    null;
-}
+23			}
 24      }
 25
 26       return result;
-
+27	}
 28
 29 /*    Collapse  two terms  together using  the  operator in  secondary  and the  numbers
-30    *                                                                                                                           from each.  */
+30    *       from each.  */
 31  Term collapseTerm(Term  primary,   Term secondary) {
 32       if (primary==    null) return secondary;
 33       if (secondary==    null) return primary;
-
+34
 35       double  value=    applyOp(primary.getNumber(),  secondary.getOperator(),
 36                                    secondary.getNumber());
 37       primary.setNumber(value);
@@ -16845,86 +8279,42 @@ null;
 61
 62       public double  getNumber() {return  value;}
 63       public Operator  getOperator() {return  operator;}
-public void  setNumber(double  v)  {value=    v;}
+64		public void  setNumber(double  v)  {value=    v;}
 65
 66     /*    Parses  arithmetic sequence  into a  list of  Terms.  For example,  3-5*6 becomes
-
-
-
-S26         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I     Moderate
-
-
 67         *  something  like:  [{BLANK,3},    {SUBTRACT, 5},  {MULTIPLY,   6}}.
 68        *  If improperly   formatted, returns  null.  */
 69       public   static ArrayList<Term> parseTermSequence(String sequence)  {
 70            /*  Code can be found  in  downloadable solutions.  */
 71         }
 72    }
+```
+
 This takes O(N) time, where N is the length of the initial string.
 
-Solution #2
+**Solution #2**
 
 Alternatively, we can solve this problem using two stacks: one for numbers and one for operators.
-2 -  6  -  7 * 8 / 2 + 5
+
+	2 -  6  -  7 * 8 / 2 + 5
+
 The processing works as follows:
 
-Each time we see a number, it gets pushed onto numberStack.
-•     Operators get pushed onto operatorStack-as long as the operator has higher priority than the current top of the stack. If priority(currentOperator)    <=   priority(operatorStack. top()), then we"collapse"the top of the stacks:
-»   Collapsing:  pop two elements off numberStack, pop an operator off operatorStack, apply the operator, and push the result onto numberStack.
-»     Priority: addition  and subtraction have equal priority, which is lower than the priority of multipli­
-cation and division (also equal priority).
+- Each time we see a number, it gets pushed onto numberStack.
+- Operators get pushed onto operatorStack-as long as the operator has higher priority than the current top of the stack. If priority(currentOperator)    <=   priority(operatorStack. top()), then we"collapse"the top of the stacks:
+  - Collapsing:  pop two elements off numberStack, pop an operator off operatorStack, apply the operator, and push the result onto numberStack.
+  - Priority: addition  and subtraction have equal priority, which is lower than the priority of multipli­cation and division (also equal priority).
 
 This collapsing continues until the above inequality is broken, at which point c urrentOperator is pushed onto operatorStack.
-•    At the very end, we collapse the stack.
+
+- At the very end, we collapse the stack.
 
 Let's see this with an example: 2 -  6  -  7 * 8 / 2 +  5
  
-action
-2     numberStack.push(2)
--     operatorStack.push(-)
-6    number5tack.push(6)
--     c ollapseStacks         -
- 
-numberstack       operatorStack
-2                               [empty]
-2                                 -
-6,   2                         -
--4                        [empty] 
-operatorStack.push(-)
-7     numberStack.push(7)
-*   operatorStack.push(*)
-· Bit   numberstack:push(8)
-I    collapseStack   [7  *
-numberStack.push(/)
-2     numberStack.pi.ish(2)
-+	c ollapseStack   [56  I c ollapseStack   [-4 - 28] operatorStack.push(+)
-5      numberStack.pµsh,(S)  .... +>     · •  
-collapseStack  [-32 +   5]
-...
- 
--4                      -
-7,   -4                  -
-7,  -4                  *
-s:  '7.,7)/-'  4,,      7       V        * ,  - 	
-56,    -4                   -
-56,  -4                     /, -
-2,   56,  -4              /,  -
-28,   -4                    -
--32                            [empty]
--32                           +
-5,   .,32                  +
--27                       [empty] 
-return  -27
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition          527 
-Solutions to Chapter 16  I     Moderate
-
-
+![](meida/16_26_1.JPG)
 
 The code below implements this algorithm.
+```java
 1     public enum  Operator  {
 2         ADD,  SUBTRACT,  MULTIPLY,   DIVIDE,    BLANK
 3      }
@@ -16979,22 +8369,11 @@ The code below implements this algorithm.
 52                 break;
 53            }
 54        }
-
-
-S28         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 16  I    Moderate
-
- 
 55   }
 56
 57 /*  Return  priority of  operator.  Mapped  so  that:
-
+58 * addition== subtraction< multiplication == division. */
 59  int  priorityOfOperator(Operator op)  {
- 
-
-
-
-division. */ 
 60       switch  (op)  {
 61            case  ADD:   return  1;
 62            case  SUBTRACT:   return  1;
@@ -17009,7 +8388,7 @@ division. */
 71  double  applyOp(double  left, Operator  op,  double  right) {
 72       if (op==   Operator.ADD) return left+  right;
 73       else if (op== Operator. SUBTRACT)  return left  -  right;
-74       else if (op== Operator.MULTIPLY)  return left   *                                                                                                                                                                                                        right;
+74       else if (op== Operator.MULTIPLY)  return left   *  right;
 75       else if  (op== Operator.DIVIDE) return left/right;
 76       else return right;
 77   }
@@ -17029,29 +8408,16 @@ division. */
 91       if (offset< sequence.length()) {
 92            char  op=   sequence.charAt(offset);
 93            switch(op) { 
-94
-95
-96
-97
+94					case '+': return Operator.ADD;
+95					case '-': return Operator.SUBTRACT;
+96					case '*': return Operator.MULTIPLY;
+97					case '/': return Operator.DIVIDE;
 98            }
 99       }
- 
-case
-case
-case
-case
- 
-'+':
-, .
-'*-' :
-'I, :
- 
-return Operator.ADD;
-return Operator.SUBTRACT;
-return Operator.MULTIPLY;
-return Operator.DIVIDE; 
 100     return Operator.BLANK;
 101 }
+```
+
 This code also takes 0( N) time, where N is the length of the string.
 
 This solution involves a lot of annoying string parsing code. Remember that getting all these details out is not that important in an interview.  In fact, your interviewer might even let you assume the expression is passed in pre-parsed into some sort of data structure.
@@ -17062,24 +8428,23 @@ the details can wait!
 
 
 
-CrackingTheC odinglnterview.com I  6th Edition        S29 
-17
-
-Solutions to Hard
+## Solutions to Hard
 
 
-
-
-17.1      Add Without Plus: Write a function that adds two numbers. You should not use+ or any arithmetic operators.
+**17.1      Add Without Plus:** Write a function that adds two numbers. You should not use+ or any arithmetic operators.
 pg 786
 
 SOLUTION
 
+---
+
 Our first instinct in problems like these should be that we're going to have to work with bits. Why? Because when you take away the+ sign, what other choice do we have? Plus, that's how computers do it!
 
 Our next thought should be to deeply understand how addition works. We can walk through an addition problem to see if we can understand something new-some pattern-and then see if we can replicate that with code.
-So let's do just that-let's walk through an addition problem. We'll work in base 10 so that it's easier to see. To add 759+ 674, I  would usually add digit [0] from each number, carry the one, add digit [1] from
-each number, carry the one, and so on. You could take the same approach in binary: add each digit, and carry the one as necessary.
+
+So let's do just that-let's walk through an addition problem. We'll work in base 10 so that it's easier to see. 
+
+To add 759 + 674, I  would usually add digit [0] from each number, carry the one, add digit [1] from each number, carry the one, and so on. You could take the same approach in binary: add each digit, and carry the one as necessary.
 
 Can we make this a little easier? Yes! Imagine I decided to split apart the "addition" and "carry" steps. That is, I do the following:
 
@@ -17087,8 +8452,7 @@ Can we make this a little easier? Yes! Imagine I decided to split apart the "add
 
 2. Add 759+ 674 but only do the carrying, rather than the addition of each digit. I then get 1110.
 
-3. Add the result of the first two operations (recursively, using the same process described in step 1 and 2):
-1110+ 323 = 1433.
+3. Add the result of the first two operations (recursively, using the same process described in step 1 and 2): 1110+ 323 = 1433.
 
 Now, how would we do this in binary?
 
@@ -17097,20 +8461,17 @@ Now, how would we do this in binary?
 3.  Now, recurse until there's nothing to carry.
 
 The following code implements this algorithm.
+
+```java
 1     int  add(int  a,  int  b) {
 2          if (b ==  0) return  a;
 3           int  sum   =  a Ab;// add without  carrying
 4       int  carry=   (a & b) <<  1; //  carry,  but don't  add
-
-
-
-530        Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 17  I     Hard
-
-
-S             return add(sum,   carry); //  recurse with  sum + carry
+5             return add(sum,   carry); //  recurse with  sum + carry
 6     }
+```
 Alternatively, you can implement this iteratively.
+```java
 1     int add(int a,   int b)  {
 2          while   (b   != 0)  {
 3               int sum =  a  Ab; /I add  without carrying
@@ -17120,24 +8481,28 @@ S                   a      sum;
 7          }
 8          return  a;
 9     }
+```
 Problems requiring us to implement core operations like addition and subtraction are relatively common. The key in all of these problems is to dig into how these operations are usually implemented, so that we can re-implement them with the constraints of the given problem.
 
 
-17.2    Shuffle: Write a method to shuffle a deck of cards. It must be a perfect shuffle-in other words, each of the 52! permutations  of the deck has to be equally likely. Assume that you are given a random number generator which is perfect.
-
-pg 186
+**17.2    Shuffle:** Write a method to shuffle a deck of cards. It must be a perfect shuffle-in other words, each of the 52! permutations  of the deck has to be equally likely. Assume that you are given a random number generator which is perfect.
 
 SOLUTION
 
+---
+
 This is a very well known interview question, and a well known algorithm. If you aren't one of the lucky few to already know this algorithm, read on.
 
-Let's imagine our n-element array. Suppose it looks like this: (l] [2]  [3]  [4]  (S]
-Using our BaseCase and Buildapproach,wecan askthisquestion:suppose we had a method shuffle ( ...)
-that worked on n  -   1 elements. Could we use this to shuffle n elements?
+Let's imagine our n-element array. Suppose it looks like this: 
+
+	[l] [2]  [3]  [4]  [5]
+
+Using our BaseCase and Buildapproach,wecan askthisquestion:suppose we had a method shuffle ( ...) that worked on n  -   1 elements. Could we use this to shuffle n elements?
 
 Sure. In fact, that's quite easy. We would first shuffle the first n - 1   elements. Then, we would take the nth element and randomly swap it with an element in the array. That's it!
 
 Recursively, that algorithm looks like this:
+```java
 1   /*   Random  number between  lower  and  higher,  inclusive*/
 2     int rand(int lower,   int higher) {
 3         return lower  + (int)(Math.random() *    (higher  -  lower  + l));
@@ -17156,17 +8521,13 @@ s
 16
 17       /* Return   shuffled array*/
 18       return cards;
-
-
-
-CrackingTheCodinglnterview.com J  6th Edition      531 
-Solutions to Chapter 17   I      Hard
-
-
 19   }
+```
+
 What would this algorithm look like iteratively? Let's think  about it. All it does is moving through the  array and, for each element i. swapping array [ i] with a random element between 0 and i, inclusive.
 
 This is actually a very clean  algorithm to implement iteratively:
+```java
 1      void shuffleArrayiteratively(int[]  cards) {
 2           for (inti= 0; i <  cards.length;   i++) {
 3                 int k  =  rand(0,  i);
@@ -17175,15 +8536,15 @@ This is actually a very clean  algorithm to implement iteratively:
 6                 cards[i] = temp;
 7           }
 8     }
-
+```
 The iterative approach is usually  how we see this algorithm written.
 
 
-17.3     Random Set: Write a method to randomly generate a set of m integers from an array of size n. Each element must have  equal probability of being chosen.
-
-pg 786
+**17.3     Random Set:** Write a method to randomly generate a set of m integers from an array of size n. Each element must have  equal probability of being chosen.
 
 SOLUTION
+
+---
 
 Like the  prior problem which was similar, (problem 17.2 on page 531), we can  look at this problem recur­
 sively using the  Base Case and Build approach.
@@ -17193,6 +8554,7 @@ Suppose we have an algorithm that can pull a random set of m elements from an ar
 We can  first pull a random set  of size m from  the  first n    -   1 elements. Then,  we just need to decide if array[ n] should be inserted into  our subset (which  would require pulling out  a random element from it). An easy way to do this is to pick a random number k from 0 through n. If k  <  m, then insert array[ n] into  subset[ k]. This will both "fairly" (i.e., with proportional probability) insert  array[n] into the  subset and "fairly" remove a random element from the  subset.
 
 The pseudocode for this recursive algorithm would look like this:
+```java
 1      int[] pickMRecursively(int[]  original, int m,  int i) {
 2           if (i +  1  ==  m)  {  II Base   case
 3                 I*  return first  m   elements of original  *I
@@ -17206,162 +8568,127 @@ The pseudocode for this recursive algorithm would look like this:
 11         }
 12         return null;
 13    }
+```
 This is even cleaner to  write  iteratively. In this  approach, we  initialize  an  array  subset to  be  the  first m elements in original. Then,  we iterate through the  array, starting at element m, inserting array[ i] into the subset at (random) position k whenever k   <  m.
+```java
 1     int[] pickMiteratively(int[] original,  int  m)  {
 2           int[]  subset =  new  int[m];
 3
-
-
-
-532         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 17   I    Hard
-
- 
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
+4			/* Fill  in subset array   with  first  part of  original array*/
+5			for (int i=  0;  i <  m  ;   i++)   {
+6				subset[i]=  original[i];
+7			}
+8			
+9			/* Go  through rest  of  original  array.  */
+10			for (int i= m;   i <   original.length;  i++)  {
+11				int k  =  rand(0, i);  //Random#  between  0 and  i, inclusive 
+12				if (k  <  m)   {
+13					subset[k] =  original[i];
+14				}
+15			}
+16			
+17			return  subset; 
 18   }
- 
-/* Fill  in subset array   with  first  part of  original array*/
-for (int i=  0;  i <  m  ;   i++)   {
-subset[i]=  original[i];
-}
+```
 
-/* Go  through rest  of  original  array.  */
-for (int i= m;   i <   original.length;  i++)  {
-int k  =  rand(0, i);  //Random#  between  0 and  i, inclusive if (k  <  m)   {
-subset[k] =  original[i];
-}
-}
-
-return  subset; 
 Both solutions are, not surprisingly, very similar to the algorithm to shuffle an array.
 
 
 17.4    Missing  Number: An array A contains all the integers from O to n, except for one number which is missing. In this problem, we cannot access an entire integer in A with a single operation. The elements of A are represented in binary, and the only operation we can use to access them is "fetch the jth bit of A[i];' which takes constant time. Write code to find the missing integer. Can you do it in O(n) time?
-pg 786
 
 SOLUTION
 
+---
+
 You may have seen a very similar sounding  problem: Given a list of numbers from O to n, with exactly one number removed, find the missing number. This problem can be solved by simply adding the list of numbers and comparing it to the actual sum of O through n, which is n(n+1,Vi. The difference will be the missing number.
 
-We could solve this by computing the value of each number, based on its binary representation,  and calcu­
-lating the sum.
-The runtime of this solution is n   *   length(n), when length is the number of bits in n. Note that length (n) = log/n). So, the runtime is actuallyO(n   log(n) ).  Not quite good enough!
+We could solve this by computing the value of each number, based on its binary representation,  and calcu­lating the sum.
+
+The runtime of this solution is n * length(n), when length is the number of bits in n. Note that length(n) = log2(n). So, the runtime is actually O(n log(n) ).  Not quite good enough!
 
 So how else can we approach it?
+
 We can actually use a similar approach, but leverage the bit values more directly. Picture a list of binary numbers (the - - - - - indicates the value that was removed):
 
+```
 00000	00100	01000	01100
 00001	00101	01001	01101
 00010	00110	01010	
-	00111	01011	
+-----	00111	01011	
+```
 Removing the number above creates an imbalance of ls and Os in the least significant bit, which we'll call LSB1 •   In a list of numbers from Oto n, we would expect there to be the same number of Os as 1 s (if n is odd), or an additional O if n is even. That is:
-if n %   2 == 1 then  count(0s)=  count(ls)
-if n %   2 == 0 then   count(0s)  =  1 + count(ls)
-Note that this means that count(0s) is always greater than or equal to count (ls).
 
+	if n %   2 == 1 then  count(0s)  =  count(1s)
+	if n %   2 == 0 then  count(0s)  =  1 + count(1s)
 
-
-CrackingTheCodinglnterview.com I  6th Edition      S33 
-Solutions to Chapter 17  I  Hard 	
-
+Note that this means that count(0s) is always greater than or equal to count (1s).
 
 When we remove  a valuevfrom the  list,we'll know immediately  ifvis even or odd just by looking at the least significant bits of all the other  values in the list.
 
+![](media/17_04_1.JPG)
 
+So,if c ount(0s) <=  c ount(1s),thenvis even. If count(0s) >  count(1s), then v is odd. 
 
+We can now remove all the evens and focus on the odds,or remove all the odds  and focus on the evens.
 
+Okay, but how do we figure out what the next bit in v is? If v were contained in our (now smaller) list,then we should expect to find the following (where c ount2 indicates  the number of Os or 1 s in the second least significant bit):
 
- 
-a  1  is removed. count(0s)  >   count(ls)
- 
-a  1  is removed. count(0s)  >   count(ls) 
+	count2(0s)  = count2(ls)  OR count2(0s) =  1 + count2(1s)
 
-So,if c ount(0s) <=  c ount(ls),thenvis even.lf  c ount(0s) >  c ount(ls),thenvis odd. We can now remove all the evens and focus on the odds,or remove all the odds  and focus on the evens.
-Okay,but how do we figure out what the next bit invis? Ifvwere contained in our (now smaller) list,then we should expect to find the following (where c ount2 indicates  the number of Os or 1 s in the second least
-significant bit):
-count,(0s)  = count,(ls)      OR           count2(0s)   =  1 +  count2(ls)
 As in the earlier example,we can deduce the value of the second least significant bit (LSB) ofv.
 
+![](media/17_04_2.JPG)
 
-	a  0  is removed. count2(0s)   = count2(ls)	a  0  is removed.
-count2 ( 0s)   <   count2(ls)
-	a  1  is removed. count2(0s)   >   count2(ls)	a  1  is removed. count2(0s)   >   count2(ls)
+Again, we have the same conclusion:
 
-Again,we have the same conclusion:
-lf countz<0s)  <=  c ount2 (ls),thenLSBz(v) = 0. lf countz<0s)  > c ount2 (ls),thenLSB2 (v) =   1.
+- If count2(0s)  <=  count2(1s), then LSB2(v) = 0. 
+- If count2(0s)  > count2(1s), then LSB2(v) = 1.
 
-We can repeat this process for each bit. On each iteration,we count the number of Osand 1s in bit i to check ifLSBi (v) is O or 1. Then,we discard the numbers whereLSBi (x)   !=  LSBi (v). That is,ifvis even,we
-discard the odd numbers,and so on.
+We can repeat this process for each bit. On each iteration,we count the number of Osand 1s in bit i to check if LSBi(v) is O or 1. Then,we discard the numbers whereLSBi (x !=  LSBi(v). That is, if v is even, we
+discard the odd numbers, and so on.
 
-By the end of this process,we will have computed all bits inv.In each successive iteration,we look at n,then n   / 2,then n   / 4,and so on,bits.This results in a runtime of O(N).
+By the end of this process, we will have computed all bits inv.In each successive iteration,we look at n, then n/2, then n/4, and so on, bits. This results in a runtime of O(N).
 
-If it helps,we can also move through this more visually. In the first iteration,we start with all the numbers:
-
+If it helps,we can also move through this more visually. In the first iteration, we start with all the numbers:
+```
 00000	00100	01000	01100
 00001	00101	01001	01101
 00010	00110	01010	
-	00111	01011	
-Since c ount1 (0s)  >  c ount/ ls), we know thatLSB/v)  =   1. Now,discard all numbersxwhere
-LSB1 (x)  != LSB1 (v).
-
-00000	0file0	01000	0rW0
+-----	00111	01011	
+```
+Since count1(0s)  >  count1(1s), we know that LSB1(v)  =   1. Now, discard all numbers x where LSB1 (x)  != LSB1 (v).
+```
+~00000~	~00100~	~01000~	~01100~
 00001	00101	01001	01101
-000ie	00H0
-00111	0i-0f0
-01011	
+~00010~	~00110~ ~01010~
+-----   00111   01011	
+```
+Now, count2(0s) > count2(1s), so we know that LSB2(v) = 1. Now, discard all numbers x where LSB2(x)  != LSB2(v).
+
+```
+~00000~	~00100~	~01000~	~01100~
+00001	~00101~	~01001~	~01101~
+~00010~	~00110~ ~01010~
+-----   00111   01011	
+```
+This time, count3(0)s <= count3(1s), we know that LSB3(v) = 0. Now discard all numbers x where LSB3(x) != LSB3(v).
  
-Now, count2 (0s) >  count2 (ls),so we know thatLSB2 (v)
-LSB)x)  != LSB2 (v).
+```
+~00000~	~00100~	~01000~	~01100~
+~00001~	~00101~	~01001~	~01101~
+~00010~	~00110~ ~01010~
+-----   ~00111~   01011	
+```
 
+We're down to just one number. In this case, count4(0s) <= count4(1s),  so LSB4(v) =   0.
 
+When we discard all numbers where LSB4(x) != 0, we'll wind up with an empty list. Once the list is empty, then count1(0s) <= count1(1s), so LSBi(v) = 0. In other words, once we have an empty list, we can fill in the rest of the bits of v with 0.
 
+This process will compute that, for the example above, v  =  00011.
 
-534          Cracking  the Coding  Interview, 6th  Edition
- 
-1. Now,discard all numbersxwhere 
-Solutions to Chapter 17  I    Hard
+The code below implements this algorithm. We've implemented the discarding aspect by partitioning the array by bit value as we go.
 
- 
-ooree OOWi­ OOHe
-00111
- 
-ewee
-0ie0r
-0r0ie
-01011 
-This time,count3 ( 0s) <= count/ls), we know that LSB3(v) LSB/x)  != LSB/v).
- 
-
-0. Now,discard  all numbers x where 
-
-00000	ooree	ewee              ettee
-00001-
-000i0	00Wi-
-00He
-001H	0ie0r
-0r0ie
-01011	9H0l-
-We're  down   to   just   one   number.   In  this   case, count4 (0s)       <=        count4 (1s),  so
-LSB/v) =   0.
-
-When we discard all numbers whereLSB4(x)    ! =   0, we'll wind up with an empty list. Once the list is empty,thencounti(0s)   <= counti(1s),soLSB;(v)  =  0.ln other words,once we have an empty list, we can fill in the rest of the bits of v with 0.
-
-This processwill compute that,for the example above, v  =  00011.
-
-The code below implements this algorithm.We've implemented the discarding aspect by partitioning the array by bit value as we go.
+```java
 1    int  findMissing(Arraylist<Bitinteger> array) {
 2         /*  Start from the  least significant bit,  and work our  way  up */
 3            return  findMissing(array, 0);
@@ -17389,39 +8716,35 @@ The code below implements this algorithm.We've implemented the discarding aspect
 25            return (v  << 1)  I     1;
 26       }
 27   }
+```
 
-In lines 24 and 27, we recursively calculate the other bits of v.Then, we insert either a O or 1,depending on whether or notcount/ 0s) <= count1 (ls).
-
-
-
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition         S3S 
-Solutions to Chapter 17  I      Hard
+In lines 24 and 27, we recursively calculate the other bits of v.Then, we insert either a O or 1, depending on whether or not count1(0s) <= count1(1s).
 
 
 17.5	Letters and Numbers: Given an array filled with letters and numbers, find the longest subarray with an equal number of letters and numbers.
 
-pg  186
-
 SOLUTION
+
+---
 
 In the introduction, we discussed the importance of creating a really good, general-purpose example. That's absolutely true. It's also important, though, to understand what matters.
 
 In this case, we just want an equal number of letters and numbers. All letters are treated identically and all numbers are treated identically. Therefore, we can use an example with a single letter and a single number-or, for that matter, As and Bs, Os and 1 s, or Thingls and Thing2s.
 With that said, let's start with an example:
-[A, B, A, A, A,  B, B, B, A,  B, A, A,  B, B, A, A, A, A, A, A]
+
+	[A, B, A, A, A,  B, B, B, A,  B, A, A,  B, B, A, A, A, A, A, A]
+
 We're looking for the smallest subarray where count (A,  subarray) =   count(B,  subarray).
 
-Brute Force
+**Brute Force**
 
 Let's start with the obvious solution. Just go through all subarrays, count the number ofAs and Bs (or letters and numbers), and find the longest one that is equal.
 
 We can make one small optimization to this. We can start with the longest subarray and, as soon as we find one which fits this equality condition, return it.
+```java
 1     /* Return the largest  subarray with  equal number of  0s and ls. Look at  each
 2     * subarray,  starting from the longest. As soon as we  find  one that's equal,  we
-3     *  return.
+3     *  return.*/
 4    char[]  findLongestSubarray(char[]  array)  {
 5          for  (int len= array.length; len  >   1; len--)  {
 6               for  (int i= 0; i <=  array.length -  len;  i++) {
@@ -17440,12 +8763,10 @@ We can make one small optimization to this. We can start with the longest subarr
 19          if (Character.isletter(array[i])) {
 20              counter++;
 21          }  else  if (Character.isDigit(array[i])) { 
-22
+22				counter--;
 23              }
 24      }
- 
-counter--; 
-25      return  counter      0
+25      return  counter  ==   0
 26  }
 27
 28  /* Return subarray of  array between start and end (inclusive). */
@@ -17453,45 +8774,50 @@ counter--;
 30     char[]  subarray =  new   char[end -  start +  1];
 31     for  (int i= start;   i <=  end; i++) {
 32          subarray[i  - start]= array[i];
-
-
-536         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 17  !    Hard
-
-
 33        }
 34        return subarray;
 35   }
+```
 Despite the one optimization we made, this algorithm is still O ( N² ), where N is the length of the array.
 
-Optimal Solution
+**Optimal Solution**
 
 What we're trying to do is find a subarray where the count of letters equals the count of numbers. What if we just started from the beginning, counting the number of letters and numbers?
-           a    a    a    a    1    1    a    1    1    a    a    1    a    a    1    a    a   a  a   a
-#a      1   2   3   4   4    4    5   5   5   6   7   7    8   9   9 10 11 12 13  14
-#1      0   0   0    0   1   2    2   3    4   4    4    5   5   5   6   6    6    6   6   6
+
+|    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+|    | a  | a  | a  | a  | 1  | 1  | a  | 1  | 1  | a  | a  | 1  | a  | a  | 1  | a  | a  | a  | a  | a  |
+| #a | 1  | 2  | 3  | 4  | 4  | 4  | 5  | 5  | 5  | 6  | 7  | 7  | 8  | 9  | 9  | 10 | 11 | 12 | 13 | 14 |
+| #1 | 0  | 0  | 0  | 0  | 1  | 2  | 2  | 3  | 4  | 4  | 4  | 5  | 5  | 5  | 6  | 6  | 6  | 6  | 6  | 6  |
+
 Certainly, whenever the number of letters equals the number of numbers, we can say that from index Oto that index is an "equal" subarray.
 
 That will only tell us equal subarrays that start at index 0. How can we identify all equal subarrays?
 
-Let's picture this. Suppose we inserted an equal subarray (like a11a1a) after an array like a1aaa1. How would that impact the counts?
-a  1  a  a  a  1  I a  1  1  a  1  a
-#a  1  1 2 3  4  4  I       s  s  s  6  6 1
-#1  0 1 1  1 1 2  I      2 3  4 4  s  s
+Let's picture this. Suppose we inserted an equal subarray (like a11a1a) after an array (like a1aaa1). How would that impact the counts?
+
+|    | a  | 1  | a  | a  | a  | 1  | I  | a  | 1  | 1  | a  | 1  | a  |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| #a | 1  | 1  | 2  | 3  | 4  | 4  | I  | 5  | 5  | 5  | 6  | 6  | 7  |
+| #1 | 0  | 1  | 1  | 1  | 1  | 2  | I  | 2  | 3  | 4  | 4  | 5  | 5  |
+
 Study the numbers before the subarray (4, 2) and the end (7, 5). You might notice that, while the values aren't the same, the differences are: 4   -   2  =    7   -   5. This makes sense. Since they've added the same number of letters and numbers, they should maintain the same difference.
 
-
-Observe that when the difference is the same, the subarray starts one after the initial matching index and continues through the final matching index. This explains line 10 in the code below.
+> Observe that when the difference is the same, the subarray starts one after the initial matching index and continues through the final matching index. This explains line 10 in the code below.
 
 
 Let's update the earlier array with the differences.
-           a    a   a  a    1     1    a   1    1    a    a    1    a     a     1    a   a   a     a    a
-#a      1   2   3    4   4    4    5   5   5   6   7     7     8    9     9   10 11 12 13   14
-#1      0   0   0    0   1   2    2   3    4   4    4    5   5    5   6   6   6    6   6    6
-1   2   3     4   3     2   3     2    1   2   3     2   3    4    3   4    5   6   7     8
+|    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+|    | a  | a  | a  | a  | 1  | 1  | a  | 1  | 1  | a  | a  | 1  | a  | a  | 1  | a  | a  | a  | a  | a  |
+| #a | 1  | 2  | 3  | 4  | 4  | 4  | 5  | 5  | 5  | 6  | 7  | 7  | 8  | 9  | 9  | 10 | 11 | 12 | 13 | 14 |
+| #1 | 0  | 0  | 0  | 0  | 1  | 2  | 2  | 3  | 4  | 4  | 4  | 5  | 5  | 5  | 6  | 6  | 6  | 6  | 6  | 6  |
+| -  | 1  | 2  | 3  | 4  | 3  | 2  | 3  | 2  | 1  | 2  | 3  | 2  | 3  | 4  | 3  | 4  | 5  | 6  | 7  | 8  |
+
 Whenever we return the same difference, then  we know we have found an equal subarray. To find the biggest subarray, we just have to find the two indices farthest apart with the same value.
 
 To do so, we use a hash table to store the first time we see a particular difference.Then, each time we see the same difference, we see if this subarray (from first occurrence of this index to current index) is bigger than the current max. If so, we update the max.
+```java
 1     char[]  findLongestSubarray(char[] array)  {
 2          /* Compute deltas between  count  of  numbers  and  count  of  letters.*/
 3         int[]  deltas =  computeDeltaArray(array);
@@ -17504,13 +8830,6 @@ To do so, we use a hash table to store the first time we see a particular differ
 10        return extract(array,  match[0]   + 1,  match[l]);
 11     }
 12
-
-
-
-CrackingTheCodinglnterview.com I 6th Edition      S37 
-Solutions to Chapter 17  I      Hard
-
-
 13    /*   Compute  the  difference between the  number of  letters and numbers between the
 14      *beginning  of  the  array and each  index.     */
 15  int[] computeDeltaArray(char[] array)  {
@@ -17525,7 +8844,7 @@ Solutions to Chapter 17  I      Hard
 24            deltas[i]= delta;
 25       }
 26       return deltas;
-
+27 }
 28
 29    /*Find  the  matching  pair of  values   in  the  deltas array with  the  largest
 30      *difference in  indices.  */
@@ -17550,32 +8869,25 @@ Solutions to Chapter 17  I      Hard
 49  }
 50
 51  char[] extract(char[] array, int start,  int end)  {/*same    */}
+```
+
 This solution takes 0( N) time, where N is size of the array.
 
  
-17.6    Count  of 2s: Write a method to count the number of 2s between O and n.
+**17.6    Count  of 2s:** Write a method to count the number of 2s between O and n.
 
 
 SOLUTION
  
+---
 
-
-pg  186 
-
-Our first approach to this problem can be-and probably should be-a brute force solution. Remember
-that interviewers want to see how you're approaching a problem. Offering a brute force solution is a great way to start.
+Our first approach to this problem can be-and probably should be-a brute force solution. Remember that interviewers want to see how you're approaching a problem. Offering a brute force solution is a great way to start.
+```java
 1      /*Counts  the  number of  '2'  digits between 0 and n   */
 2    int numberOf2sinRange(int  n)  {
 3         int count=  0;
 4         for  (int i= 2;  i <= n;  i++)  {//Might  as  well  start at 2
 5                  count  += number0f2s(i);
-
-
-
-538         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 17 l    Hard
-
-
 6            }
 7          return count;
 8     }
@@ -17591,15 +8903,20 @@ Solutions to Chapter 17 l    Hard
 18        }
 19        return count;
 20   }
+```
+
 The only interesting part is that it's probably cleaner to separate out number0f2s into a separate method. This demonstrates an eye for code cleanliness.
 
+**Improved Solution**
 
-Improved Solution
 Rather than looking at the problem by ranges of numbers, we can look at the problem digit by digit. Picture a sequence of numbers:
-0     1	2     3	4     5      6       7	8       9
-10   11	12    13	16	18   19
-20   21	22   23	24           26   27	28   29
+```
+  0    1   2   3   4   5   6   7   8   9
+ 10   11  12  13  14  15  16  17  18  19
+ 20   21  22  23  24  25  26  27  28  29
+ ...
 110  111 112 113 114 115 116 117 118 119
+```
 We know that roughly one tenth of the time, the last digit will be a 2 since it happens once in any sequence of ten numbers. In fact, any digit is a 2 roughly one tenth of the time.
 
 We say"roughly" because there are (very common) boundary conditions. For example, between 1 and 100, the 1O's digit is a 2 exactly Yio th of the time. However, between  1   and 37, the 1O's digit is a 2 much more than 1/1Q'h of the time.
