@@ -32,7 +32,7 @@ It’s a bug with 18.03 and you can easily fix it. Hit CTRL + Shift + ECS to ope
 
 ### Install **dev tools below**
 ```sh
-sudo apt install git nginx openssh-client openssh-server
+sudo apt install git nginx openssh-client openssh-server nmap
 sudo apt install python3-pip
 pip3 install pytest
 # Google for docker-ce, awscli
