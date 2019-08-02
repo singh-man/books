@@ -1,6 +1,26 @@
 Java Data Structure
 ===================
 
+## Java 8 memory structure!
+
+	Java Process Memory (Java process consuming memory in OS)
+		JVM Memory 
+			Java Heap (-Xms / -Xmx)
+				Young Gen
+					Eden
+					Survivor 0
+					Survivor 1
+				Old Gen
+			Non-Heap (Note:- This is not a part of JVM heap!)
+				Thread Stacks
+				Metaspace
+				Compressed Class Space
+				Code Cache
+				NIO Direct Buffers
+				Other JVM Memory
+		Non-JVM Memory (native libraries)
+
+
 ## Java Collection hierarchy
 
 ```java
@@ -17,7 +37,7 @@ Iterable
 			CopyOnWriteArraySet
 		List<I> -> add(i, x), get(ith)
 			ArrayList -> Singly Linked List/Dyanmic Array
-			CopyOnWriteArrayList ->  get an immutable snapshot of the data in the list at the time iterator() was called. remove() not supported
+			CopyOnWriteArrayList -> get an immutable snapshot of the data in the list at the time iterator() was called. remove() not supported
 			Vector
 				Stack
 			LinkedList -> DoublyLinkedList
@@ -30,7 +50,7 @@ Iterable
 				ConcurrentLinkedDeque
 			PriorityQueue
 			BlockingQueue <I>
-				LinkedBlockingQueue -> used for prod/cons model
+				LinkedBlockingQueue -> used for producer/consumer model
 				BlockingDeque <I>
 					LinkedBlockingDeque
 				DelayQueue
@@ -76,6 +96,31 @@ Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
 | Indexed with links |            |               | LinkedHashSet | LinkedHashMap |
 | Bit string         |            |               | EnumSet       | EnumMap       |
 
+```java
+Iterator <I>
+	ListIterator <I>
+
+Collection <I>
+	Set <I>
+		SortedSet <I>
+			TreeSet
+		HashSet 
+		LinkedHashSet
+	List <I>
+		ArrayList
+		Vector
+		LinkedList
+	Queue <I>
+		LinkedList
+		PriorityQueue
+
+Map <I>
+	HahsTable    
+	LinkedHashMap    
+	HashMap
+	SortedMap <I>
+		TreeMap
+````
 
 ```
              +----------->Collection <I> <----+^-----------------------+
@@ -91,7 +136,7 @@ Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
     |        |            ^             |         |            |     |              |
     |        |            |             |         |            |     |              |
     +        |            +             |         |            |     |              +
-HashSet LinkedHashSet    TreeSet      Ar+ayList   +ector    Lin+edLis+    PriorityQueue
+HashSet LinkedHashSet    TreeSet      ArrayList   Vector    LinkedList    PriorityQueue
 
 
 
@@ -107,8 +152,6 @@ HashSet LinkedHashSet    TreeSet      Ar+ayList   +ector    Lin+edLis+    Priori
 HahsTable    +inkedHashMap    HashMap    TreeMap
 ```
 
-	Iterator <I>
-		ListIterator <I>
 
 
 

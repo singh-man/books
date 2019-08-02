@@ -12,32 +12,16 @@
 
 ## 5 Solutions to Bit Manipulation
 
-5.1 	Insertion: You are given two 32-bit numbers, N and M, and two bit positions, iand j. Write a method to insert  Minto N such  that Mstarts at bit j and  ends at bit i. You can assume that the bits j through ihave enough space to fit all of M. That  is, if M = 10011, you can assume that  there are at least  5
-bits between j and  i. You would not, for example, have j = 3and i= 2, because Mcould  not  fully
-fit between bit 3 and  bit 2. 
+5.1 	**Insertion:** You are given two 32-bit numbers, N and M, and two bit positions, iand j. Write a method to insert  Minto N such  that Mstarts at bit j and  ends at bit i. You can assume that the bits j through ihave enough space to fit all of M. That  is, if M = 10011, you can assume that  there are at least  5 bits between j and  i. You would not, for example, have j = 3and i= 2, because Mcould  not  fully fit between bit 3 and  bit 2.
 
-EXAMPLE Input: 	N Output: N
+EXAMPLE 
+
+Input: 	N = 10000000000,  M = 10011,  i =  2,  j   6
+
+Output: N = 10001001100
 
 
 SOLUTION
- 
-
-
-10000000000,  M
-
-10001001100
- 
-
-
-10011,  i =  2,  j   6
- 
-
-
-
-
-
-
-pg 115 
 
 This problem can be approached in three key steps:
 
@@ -45,43 +29,36 @@ This problem can be approached in three key steps:
 
 2.  Shift Mso that  it lines up with  bits j through i
 
-3.  Merge Mand N.
+3.  Merge M and N.
 
 The trickiest part is Step  1. How do we clear the  bits in N? We can do this with a mask. This mask will have all
 1 s, except for Os in the  bits j through i. We create this mask  by creating the  left half of the  mask first, and then the  right half.
-```
+```java
 1      int  updateBits(int n, int  m,  int i, int j) {
-2           I* Create a  mask  to clear bits i through j in  n.   EXAMPLE:   i =  2,   j =  4.  Result
-3             *  should  be  11100011.  For   simplicity, we'll use just  8  bits  for the  example. *I
-4           int  allOnes =  -0;  II  will  equal sequence of all ls
+2           /* Create a mask to clear bits i through j in n. EXAMPLE: i = 2, j = 4.  Result
+3             *  should  be  11100011.  For   simplicity, we'll use just  8  bits  for the  example. */
+4           int  allOnes =  -0;  // will  equal sequence of all ls
 5
-6           II  ls  before position j,  then 0s. left =  11100000
+6           // 1s  before position j,  then 0s. left =  11100000
 7           int left= allOnes <<  (j +  1);
 8
-9           II  l's after position i.  right =  00000011
+9           // 1's after position i.  right =  00000011
 10         int right =  ((1 <<  i) -   1);
 11
-12         II All ls,  except for 0s   between i and  j. mask       11100011
-13         int mask      left I     right;
+12         //All 1s,  except for 0s   between i and  j. mask       11100011
+13         int mask  =    left |     right;
 14
-15         /* Clear bits  j through i then put min there  *I
-16         int  n_cleared =  n  &  mask;   II  Clear bits j through i.
-17         int  m_shifted =  m  <<  i; II  Move m   into  correct position.
-
-
-
-276          Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter  5  I     Bit Manipulation
-
-
+15         /* Clear bits  j through i then put min there  */
+16         int  n_cleared =  n  &  mask; //  Clear bits j through i.
+17         int  m_shifted =  m  <<  i; //  Move m   into  correct position.
 18
-19       return  n_cleared  I     m_shifted; // OR  them, and we're done!
+19       return  n_cleared  |   m_shifted; // OR  them, and we're done!
 20  }
 ```
 In a problem like this (and many bit manipulation problems), you should make sure to thoroughly test your code. It's extremely easy to wind up with off-by-one errors.
 
 
-5.2 	Binary to String: Given a real number between 0 and 1 (e.g., 0.72) that is passed in as a double, print the binary representation. If the number cannot be represented accurately in binary with at
+**5.2 	Binary to String:** Given a real number between 0 and 1 (e.g., 0.72) that is passed in as a double, print the binary representation. If the number cannot be represented accurately in binary with at
 most 32 characters, print"ERROR:'
 
 pg 176
@@ -5603,7 +5580,7 @@ A more optimal approach is to sort the arrays. Once the arrays are sorted, we ca
 
 Consider the following two arrays: 
 ```
-:  {l,   2,  11,  15}
+A:  {l,   2,  11,  15}
 B: {4,  12,  19,  23,  127,  235}
 ```
 Try the following approach:
@@ -8919,10 +8896,9 @@ Rather than looking at the problem by ranges of numbers, we can look at the prob
 ```
 We know that roughly one tenth of the time, the last digit will be a 2 since it happens once in any sequence of ten numbers. In fact, any digit is a 2 roughly one tenth of the time.
 
-We say"roughly" because there are (very common) boundary conditions. For example, between 1 and 100, the 1O's digit is a 2 exactly Yio th of the time. However, between  1   and 37, the 1O's digit is a 2 much more than 1/1Q'h of the time.
+We say"roughly" because there are (very common) boundary conditions. For example, between 1 and 100, the 1O's digit is a 2 exactly 1/10th of the time. However, between  1   and 37, the 1O's digit is a 2 much more than 1/10th of the time.
 
-We can work out what exactly the ratio is by looking at the three cases individually: digit <   2, digit =
-2, and digit >   2.
+We can work out what exactly the ratio is by looking at the three cases individually: digit < 2, digit =  2, and digit >   2.
 
 Case digit< 2
 
@@ -8932,50 +8908,46 @@ Consider the value x  =  61523  and d  =  3, and observe that x [ d]   =  1 (tha
 
 In other words, we can round down to the nearest 10d+1, and then divide by 10, to compute the number of
 2s in the dth digit.
-if x[d)   <   2:   count2sinRangeAtDigit(x,   d) let y  =  round  down to nearest 10d•1 return y  / 10
 
+```
+if x[d] < 2: count2sinRangeAtDigit(x, d) = 
+	let y  =  round  down to nearest 10^(d+1)
+	return y  / 10
+```
+*Case digit> 2*
 
-
-
-
-
-
-
-CrackingTheCodinglnterview.com I  6th Edition          539 
-Solutions to Chapter 17  I       Hard
-
-
-Case digit> 2
-
-Now, let's look at the case where dth digit of xis greater thaN² (x[ d]  >  2). We can apply almost the exact same logic to see that there are the same number of2s in the  3rd digit  in the range 0   -  63525 as there as in the  range 0   -  70000. So, rather than rounding down,  we round up.
+Now, let's look at the case where dth digit of xis greater than 2(x[d] > 2). We can apply almost the exact same logic to see that there are the same number of 2s in the 3rd digit in the range 0 - 63525 as there as in the range 0 - 70000. So, rather than rounding down,  we round up.
+```
 if  x[d] >  2:   count2slnRangeAtDigit(x,  d)=
-let y  =  round up  to nearest 10a+i
-return y  I 10
+	let y  =  round up  to nearest 10a+i
+	return y  / 10
+```
+*Case digit= 2*
 
-Case digit= 2
-
-The final case may be the trickiest,  but it follows from the earlier logic. Consider x =  62523 and d =  3. We know that there are the same ranges of2s from before (that is, the ranges 2000  -  2999, 12000  -  12999,
-..., 52000  -   52999). How many  appear in the  3rd digit  in the final, partial range from 62000  -   62523? Well, that should be pretty easy. It's just 524 (62000,  62001,  ...,   62523).
+The final case may be the trickiest,  but it follows from the earlier logic. Consider x =  62523 and d =  3. We know that there are the same ranges of2s from before (that is, the ranges 2000  -  2999, 12000  -  12999, ..., 52000  -   52999). How many  appear in the  3rd digit  in the final, partial range from 62000  -   62523? Well, that should be pretty easy. It's just 524 (62000,  62001,  ...,   62523).
+```
 if  x[d]   2:   count2sinRangeAtDigit(x, d) =
-let y=  round down  to nearest 10a+1
-let z=  right  side of x  (i.e., x% 10d)
-return y  I 10+  z+  1
+	let y=  round down  to nearest 10^(d+1)
+	let z=  right  side of x  (i.e., x % 10^d)
+	return y / 10 + z + 1
+```
 Now, all you  need is to iterate through each digit  in the  number. Implementing this  code is reasonably straightforward.
+```java
 1      int count2sinRangeAtDigit(int  number, int  d) {
 2           int powerOf10=  (int) Math.pow(10,  d);
 3           int nextPowerOf10  =  power0f10  *  10;
 4           int right=  number% power0f10;
 5
 6           int roundDown   =  number   -  number% nextPowerOf10;
-7           int  roundup   roundDown+  nextPowerOf10;
+7           int  roundup =  roundDown+  nextPowerOf10;
 8
-9           int digit =  (number I power0f10)% 10;
-10         if (digit< 2) {  II if  the digit in spot digit is
-11               return roundDown   I 10;
+9           int digit =  (number / power0f10)% 10;
+10         if (digit< 2) {  // if  the digit in spot digit is
+11               return roundDown   / 10;
 12         }  else if (digit == 2) {
-13               return roundDown   I 10+  right+  1;
+13               return roundDown   / 10+  right+  1;
 14         }  else {
-15               return  roundup I 10;
+15               return  roundup / 10;
 16         }
 17    }
 18
@@ -8987,67 +8959,49 @@ Now, all you  need is to iterate through each digit  in the  number. Implementin
 24         }
 25         return count;
 26    }
-
+```
 This question requires very careful  testing. Make sure  to generate a list of test  cases,  and  to work through each of them.
 
 
+**17.7	Baby Names:** Each year, the government  releases a list of the 10,000 most common baby names and their frequencies (the number of babies with that name). The only problem with this is that some names have multiple spellings. For example, "John" and ''.Jon" are essentially the same name but would be listed separately in the list. Given two lists, one of names/frequencies  and the other of pairs of equivalent names, write an algorithm to print a new list of the true frequency of each name. Note that if John and Jon are synonyms, and Jon and Johnny are synonyms, then John and Johnny are synonyms. (It is both transitive and symmetric.) In the final list, any name can be used as the "real" name.
+
+EXAMPLE 
+
+Input:
+```
+	Names: John (15), Jon (12), Chris  (13), Kris (4), Christopher (19)
+	Synonyms: (Jon, John), (John, Johnny), (Chris,  Kris), (Chris,  Christopher) 
+```
+Output: John (27), Kris (36)
 
 
-
-
-
-
-540          Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 17  \   Hard
-
-
-17.7	Baby Names: Each year, the government  releases a list of the 10,000 most common baby names and their frequencies (the number of babies with that name). The only problem with this is that some names have multiple spellings. For example, "John" and ''.Jon" are essentially the same name but would be listed separately in the list. Given two lists, one of names/frequencies  and the other of pairs of equivalent names, write an algorithm to print a new list of the true frequency of each name. Note that if John and Jon are synonyms, and Jon and Johnny are synonyms, then John and Johnny are synonyms. (It is both transitive and symmetric.) In the final list, any name can be used as the "real" name.
-EXAMPLE Input:
-Names: John (15), Jon (12), Chris  (13), Kris (4), Christopher (19)
-Synonyms: (Jon, John), (John, Johnny), (Chris,  Kris), (Chris,  Christopher) Output: John (27), Kris (36)
-
-pg 787
-
-SOLUTION
+**SOLUTION**
 
 Let's start off with a good example. We want an example with some names with multiple synonyms and some with none. Additionally, we want the synonym list to be diverse in which name is on the left side and which is on the right. For example, we wouldn't want Johnny to always be the name on the left side as we're creating the group of (John, Jonathan, Jon, and Johnny).
 
-This list should work fairly well.
-
-Alternate John Johnny John Carrie
-Carleton          Carlton
-
-
-
-
-
-Carrie               5
+![](media/17_07_1.JPG)
 
 The final list should be something like: John (33), Kari (8), Davis(2), Carleton (10).
 
-Solution #1
+**Solution #1**
 
 Let's assume our baby names list is given to us as a hash table. (If not, it's easy enough to build one.)
 
 We can start reading pairs in from the synonyms list. As we read the pair (Jonathan, John), we can merge the counts for Jonathan and John together. We'll need to remember, though, that we saw this pair, because, in the future, we could discover that Jonathan is equivalent to something else.
 
 We can use a hash table (Ll) that maps from a name to its "true" name. We'll also need to know, given a "true" name, all the names equivalent to it. This will be stored in a hash table L2. Note that L2 acts as a reverse lookup of Ll.
-READ   (Jonathan,  John)
 
+	READ   (Jonathan,  John)
+		Li.ADD  Jonathan  -> John
+		L2.ADD  John  -> Jonathan
+	READ   (Jon,   Johnny)
+		Li.ADD  Jon  -> Johnny
+		LZ.ADD   Johnny ->  Jon
+	READ   (Johnny,   John)
+		LI.ADD  Johnny -> John
+		Li.UPDATE  Jon  -> John
+		LZ.UPDATE  John  -> Jonathan,   Johnny,  Jon
 
-CrackingTheCodinglnterview.com / 6th Edition          541 
-Solutions to Chapter 17  I      Hard
-
-
-Li.ADD  Jonathan  -> John
-L2.ADD  John  -> Jonathan
-READ   (Jon,   Johnny)
-Li.ADD  Jon  -> Johnny
-LZ.ADD   Johnny ->  Jon
-READ   (Johnny,   John)
-LI.ADD  Johnny -> John
-Li.UPDATE  Jon  -> John
-LZ.UPDATE  John  -> Jonathan,   Johnny,  Jon
 If we later find that John is equivalent to, say, Jonny, we'll need to look up the names in Ll and L2 and merge together all the names that are equivalent to them.
 
 This will work, but it's unnecessarily complicated to keep track of these two lists.
@@ -9055,27 +9009,28 @@ This will work, but it's unnecessarily complicated to keep track of these two li
 Instead, we can think of these names as"equivalenceclasses:'When we find a pair (Jonathan, John), we put these in the same set (or equivalence classes). Each name maps to its equivalence  class. All items in the set map to the same instance of the set.
 
 If we need to merge two sets, then we copy one set into the other and update the hash table to point to the new set.
-READ   (Jonathan,  John)
-CREATE  Setl =  Jonathan,   John
-Ll.ADD  Jonathan  -> Setl
-Ll.ADD  John  -> Setl
-READ   (Jon,   Johnny)
-CREATE  Set2  =  Jon,  Johnny
-Li.ADD  Jon  -> Set2
-Ll.ADD   Johnny -> Set2
-READ   (Johnny,   John)
-COPY  Set2  into Setl.
-Setl =  Jonathan,   John,  Jon,  Johnny
-Ll.UPDATE  Jon  -> Setl
-Ll.UPDATE   Johnny -> Setl
-In the last step above, we iterated through all items in S et2 and updated the reference to point to Setl. As we do this, we keep track of the total frequency of names. 
-1     HashMap<String, Integer>  trulyMostPopular(HashMap<String,   Integer>
-2                                                                                              String[][] synonyms) {
+	
+	READ   (Jonathan,  John)
+		CREATE  Setl =  Jonathan,   John
+		Ll.ADD  Jonathan  -> Setl
+		Ll.ADD  John  -> Setl
+	READ   (Jon,   Johnny)
+		CREATE  Set2  =  Jon,  Johnny
+		Li.ADD  Jon  -> Set2
+		Ll.ADD   Johnny -> Set2
+	READ   (Johnny,   John)
+		COPY  Set2  into Setl.
+			Setl =  Jonathan,   John,  Jon,  Johnny
+		Ll.UPDATE  Jon  -> Setl
+		Ll.UPDATE   Johnny -> Setl
+
+In the last step above, we iterated through all items in S et2 and updated the reference to point to Setl. As we do this, we keep track of the total frequency of names.
+```java 
+1     HashMap<String, Integer>  trulyMostPopular(HashMap<String, Integer> names, 
+2           String[][] synonyms) {
 3          /*  Parse  list and initialize equivalence  classes.*/
 4           HashMap<String, NameSet>  groups  =  constructGroups(names);
 5
- 
-names, 
 6         /*  Merge equivalence classes  together.  */
 7         mergeClasses(groups,  synonyms);
 8
@@ -9088,16 +9043,9 @@ names,
 * the  first set.*/
 16  void  mergeClasses(HashMap<String,  NameSet>  groups,  String[][] synonyms) {
 17       for  (String[] entry:  synonyms) {
-18            String namel     entry[e];
-String name2    entry[l];
-20            NameSet  setl    groups.get(namel);
-
-
-
-542         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 17   I    Hard
-
-
+18            String namel =  entry[e];
+19			  String name2 = entry[l];
+20            NameSet  setl =   groups.get(namel);
 21            NameSet set2 =  groups.get(name2);
 22            if (setl != set2) {
 23                 /*  Always merge the  smaller set into the  bigger  one.  */
@@ -9106,7 +9054,7 @@ Solutions to Chapter 17   I    Hard
 26
 27                 /*  Merge lists*/
 28                 Set<String> otherNames =  smaller.getNames();
-29                 int frequency=  smaller.getFrequency();
+29                 int frequency = smaller.getFrequency();
 30                 bigger.copyNamesWithFrequency(otherNames,  frequency);
 31
 32                 /*  Update mapping*/
@@ -9138,7 +9086,7 @@ Solutions to Chapter 17   I    Hard
 58       return list;
 59   }
 60
-61  public   class NameSet   {
+61  public class NameSet   {
 62       private  Set<String> names    new HashSet<String>();
 63       private int frequency=  0;
 64       private String rootName;
@@ -9154,18 +9102,13 @@ Solutions to Chapter 17   I    Hard
 74            frequency+= freq;
 75       }
 76
-
-
-
-CrackingTheCodinglnterview.com j 6th Edition         S43 
-Solutions to Chapter 17  I     Hard
-
-
 77       public   Set<String>   getNames()  {  return names;  }
 78       public   String getRootName() {  return rootName; }
 79       public   int  getFrequency() {  return frequency;  }
 80       public   int size() {  return names.size();}
 81   }
+```
+
 The runtime of the algorithm is a bit tricky to figure out. One way to think about it is to think about what the worst case is.
 
 For this algorithm, the worst case is where all names are equivalent-and we have to constantly merge sets together. Also, for the worst case, the merging should come in the worst possible way: repeated pairwise merging of sets. Each merging requires copying the set's elements into an existing set and updating the pointers from those items. It's slowest  when the sets are larger.
@@ -9176,16 +9119,15 @@ If you don't notice that parallel, here's another way to think about it.
 
 Imagine we had the names (a, b, c, d, •••, z). In our worst case, we'd first pair up the items into equivalence classes: (a, b), (c, d), (e, f), ..., (y, z). Then, we'd merge pairs of those: (a, b, c, d), (e, f, g, h), •••, (w, x, y, z). We'd continue doing this until we wind up with just one class.
 
-At each "sweep"through the list where we merge sets together, half of the items get moved into a new set. This takes O(N) work per sweep. (There are fewer sets to merge, but each set has grown larger.)
+At each "sweep" through the list where we merge sets together, half of the items get moved into a new set. This takes O(N) work per sweep. (There are fewer sets to merge, but each set has grown larger.)
 
-How many sweeps do we do? At each sweep, we have half as many sets as we did before. Therefore, we do
-O(log N) sweeps.
+How many sweeps do we do? At each sweep, we have half as many sets as we did before. Therefore, we do O(log N) sweeps.
 
 Since we're doing O(log N) sweeps and O(N) work per sweep, the total runtime  is O(N log N).
 
 This is pretty good, but let's see if we can make it even faster.
 
-Optimized Solution
+**Optimized Solution**
 
 To optimize the old solution, we should think about what exactly makes it slow. Essentially, it's the merging and updating of pointers.
 
@@ -9193,38 +9135,24 @@ So what if we just didn't do that? What if we marked that there was an equivalen
 
 In this case, we'd be building essentially a graph.
 
-
-Kari
-
-
-
-
-
-
-Carrie
-
-
+![](media/17_07_2.JPG)
 
 Now what? Visually, it seems easy enough. Each component is an equivalent set of names. We just need to group the names by their component, sum up their frequencies, and return a list with one arbitrarily chosen name from each group.
 
-
-544            Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 17  I     Hard
-
-
 In practice, how does this work? We could pick a name and do a depth-first (or breadth-first) search to sum the frequencies of all the names in one component. We would have to make sure that we hit each compo­ nent exactly once. That's easy enough to achieve: mark a node as visited after it's discovered in the graph search, and only start the search for nodes where visited is false.
-1    HashMap<String, Integer> trulyMostPopular(HashMap<String,   Integer>  names,
-2                                                                                    String[)[) synonyms) {
-3            I* Create  data. *I
+```java
+1    HashMap<String, Integer> trulyMostPopular(HashMap<String, Integer>  names,
+2 				String[][] synonyms) {
+3            /* Create  data. */
 4         Graph graph= constructGraph(names);
-s          connectEdges(graph,  synonyms);
+s         connectEdges(graph,  synonyms);
 6
-7         /*  Find components.  *I
+7         /*  Find components.  */
 8         HashMap<String, Integer> rootNames    getTrueFrequencies(graph);
 9         return rootNames;
 10    }
 11
-12  /*  Add all names to  graph  as  nodes.   *I
+12  /*  Add all names to  graph  as  nodes.   */
 13  Graph constructGraph(HashMap<String, Integer>  names) {
 14       Graph graph=  new Graph();
 1S       for  (Entry<String,  Integer> entry   :   names.entrySet()) {
@@ -9235,7 +9163,7 @@ s          connectEdges(graph,  synonyms);
 20       return graph;
 21   }
 22
-23  /*  Connect synonymous spellings. *I
+23  /*  Connect synonymous spellings. */
 24    void  connectEdges(Graph  graph,  String[][] synonyms) {
 25       for  (String[]  entry :   synonyms) {
 26              String namel = entry[0);
@@ -9243,9 +9171,9 @@ s          connectEdges(graph,  synonyms);
 28               graph.addEdge(name1,    name2);
 29       }
 30   }
-
+31
 32  /*  Do  DFS  of  each  component.  If a node has  been visited before,   then  its component
-33    * has  already been computed.  *I
+33    * has  already been computed.  */
 34-    HashMap<String, Integer>  getTrueFrequencies(Graph graph)  {
 35       HashMap<String, Integer>  rootNames =  new HashMap<String, Integer>();
 36       for  (GraphNode node  :   graph.getNodes()) {
@@ -9258,19 +9186,13 @@ s          connectEdges(graph,  synonyms);
 43       return rootNames;
 44    }
 45
-46  I* Do  depth-first search  to  find  the  total frequency  of  this component, and mark
+46  /* Do  depth-first search  to  find  the  total frequency  of  this component, and mark
 47    * each node as  visited.*/
 48   int getcomponentFrequency(GraphNode node)  {
 49       if (node.isVisited()) return 0;  fl Already  visited
 50
 51       node.setisVisited(true);
 52       int sum =  node.getFrequency();
-
-
-CrackingTheCodinglnterview.com I  6th Edition        545 
-Solutions to Chapter 17 I      Hard
-
-
 53       for (GraphNode  child  :  node.getNeighbors()) {
 54             sum += getComponentFrequency(child);
 55          }
@@ -9279,66 +9201,57 @@ Solutions to Chapter 17 I      Hard
 58
 59   /* Code for GraphNode and Graph  is  fairly  self-explanatory, but  can  be  found  in
 60     * the   downloadable   code  solutions.*/
+```
 To analyze the efficiency, we can think about the efficiency of each part of the algorithm.
 
-Reading in the data is linear with respect to the size of the data, so it takesO(B  + P) time, where B is the number of baby names and P is the number of pairs of synonyms. This is because we only do a constant amount of work per piece of input data.
-•    To compute the frequencies, each edge gets "touched" exactly once across all of the graph searches and each node gets touched exactly once to check if it's been visited. The time of this part isO(B   +  P).
+- Reading in the data is linear with respect to the size of the data, so it takesO(B  + P) time, where B is the number of baby names and P is the number of pairs of synonyms. This is because we only do a constant amount of work per piece of input data.
+- To compute the frequencies, each edge gets "touched" exactly once across all of the graph searches and each node gets touched exactly once to check if it's been visited. The time of this part is O(B   +  P).
 
 Therefore, the total time of the algorithm is 0(B   +  P). We know we cannot do better than this since we must at least read in the B  +  P pieces of data.
 
 
-17.8	Circus Tower: A circus is designing a tower routine consisting of people standing atop one another's shoulders. For practical and aesthetic reasons, each person must be both shorter and lighter than the person below him or her. Given the heights and weights of each person in the circus, write a method to compute the largest possible number of people in such a tower.
+**17.8	Circus Tower:** A circus is designing a tower routine consisting of people standing atop one another's shoulders. For practical and aesthetic reasons, each person must be both shorter and lighter than the person below him or her. Given the heights and weights of each person in the circus, write a method to compute the largest possible number of people in such a tower.
 
-pg187
  
 SOLUTION
- 
-
-· ··· ···---····-··----- 
+---
 
 When we cut out all the "fluff" to this problem, we can understand that the problem is really the following.
 
-We have a list ofpairs ofitems. Find the longest sequence such that both the first and second items are in non­
-decreasing order.
+We have a list ofpairs ofitems. *Find the longest sequence such that both the first and second items are in non­-decreasing order.*
 
 One thing we might first try is sorting the items on an attribute. This is useful actually, but it won't get us all the way there.
 
 By sorting the items by height, we have a relative order the items must appear in. We still need to find the longest increasing subsequence of weight though.
 
 
-Solution 1: Recursive
+**Solution 1: Recursive**
 
 One approach is to essentially try all possibilities. After sorting by height, we iterate through the array. At each element, we branch into two choices: add this element to the subsequence (if it's valid)  or do not.
+```java
 1     Arraylist<Htwt> longestincreasingSeq(ArrayList<Htwt> items)  {
 2          Collections.sort(items);
 3          return  bestSeqAtindex(items, new Arraylist<Htwt>(), 0);
 4    }
 5
-6     Arraylist<Htwt> bestSeqAtindex(ArrayList<Htwt> array,   Arraylist<Htwt> sequence,
-7                                                                   int index) {
+6     Arraylist<Htwt> bestSeqAtindex(ArrayList<Htwt> array, Arraylist<Htwt> sequence,
+7                                       int index) {
 8          if  (index >=  array.size())  return sequence;
 9
 10        HtWt value   = array.get(index);
 11
-
-
-
-546       Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 17  I    Hard
-
-
-12       Arraylist<Htwt>   bestWith  =                                                                                                                                                                                                                                                                                                                                                                                          null;
+12       Arraylist<Htwt>   bestWith  =  null;
 13       if (canAppend(sequence,  value))  {
-14
-1s             sequenceWitn.add(value);
-16
-17      J
+14			   ArrayList<HtWt> sequenceWith = (ArrayList<HtWt>) sequence.clone();
+15             sequenceWitn.add(value);
+16			   bestWith = bestSeqAtIndex(array, sequenceWith, index + 1);
+17      }
 18
-19        ArrayList<Htwt>  bestWitnout= bestSeqAtlndex(array,  sequence,   index  + 1);
+19      ArrayList<Htwt>  bestWitnout= bestSeqAtlndex(array, sequence, index  + 1);
 20
-21       if (bestWith ==  null  I   I     bestWithout.size() >   bestWith.size()) {
+21       if (bestWith ==  null || bestWithout.size() > bestWith.size()) {
 22            return  bestWithout;
-23           }  else {
+23       }  else {
 24            return  bestWith;
 25       }
 26   }
@@ -9347,13 +9260,10 @@ Solutions to Chapter 17  I    Hard
 29       if (solution== null) return false;
 30       if (solution.size()== 0)  return true;
 31 
-32
-33
+32		HtWt last = solution.get(solution.size() -  1);
+33		return last.isBefore(value); 
 34  }
 35
- 
-HtWt last =                                                                                                                                                                                                                                                                                                                                                                          solution.get(solution.size() -  1);
-return last.isBefore(value); 
 36  Arraylist<HtWt>  max(ArrayList<HtWt> seql,  ArrayList<Htwt>  seq2)  {
 37       if (seql == null) {
 38            return  seq2;
@@ -9376,53 +9286,44 @@ return last.isBefore(value);
 55                  }
 56       }
 57
-58           /*  Returns  true if "this" should  be  lined up before   "other". Note that it's
-59             * possible that this.isBefore(other) and other.isBefore(this) are  both  false.
+58    /* Returns true if "this" should  be  lined up before   "other". Note that it's
+59   * possible that this.isBefore(other) and other.isBefore(this) are  both  false.
 60         * This  is different from the  compareTo  method,  where if a < b then  b >  a. */
 61       public   boolean  isBefore(Htwt other)  {
 62            if (height < other.height &&  weight  < other.weight) { 
-63
-64
-65
-66
+63				return true;
+64				}  else {
+65				return false;
+66				} 
 67       }
- 
-return true;
-}  else {
-return false;
-} 
-
-
-
-CrackingTheCodinglnterview.com I 6th Edition         547 
-Solutions to Chapter 17  I      Hard
-
-
 68   }
-This algorithm will take 0(2°) time. We can optimize it using memoization (that is,  caching the best
-sequences).
+```
+This algorithm will take 0(2°) time. We can optimize it using memoization (that is,  caching the best sequences).
 
 There's a cleaner way to do this though.
 
 
-Solution #2: Iterative
+**Solution #2: Iterative**
 
-Imagine we had the longest subsequence that terminates with each element, A[ 0] through A[ 3]. Could we use this to find the longest subsequence that terminates with A[ 4]?
-Array:  13,  14,  10,  11,  12
-Longest(ending  with  A[0]):   13
-Longest(ending with  A[l]):  13,   14
-Longest(ending  with  A[2]):   10
-Longest(ending with  A[3]):   10,  11
-Longest(ending  with  A[4]):   10,  11,  12
-Sure. We just append A[ 4] on to the longest subsequence that it can be appended to. This is now fairly straightforward to implement.
+Imagine we had the longest subsequence that terminates with each element, A[ 0] through A[3]. Could we use this to find the longest subsequence that terminates with A[4]?
+
+	Array:  13,  14,  10,  11,  12
+	Longest(ending  with  A[0]):   13
+	Longest(ending with  A[l]):  13,   14
+	Longest(ending  with  A[2]):   10
+	Longest(ending with  A[3]):   10,  11
+	Longest(ending  with  A[4]):   10,  11,  12
+
+Sure. We just append A[4] on to the longest subsequence that it can be appended to. 
+
+This is now fairly straightforward to implement.
+```java
 1    Arraylist<Htwt> longestincreasingSeq(Arraylist<Htwt> array)  {
 2         Collections.sort(array);
 3 
-4            Arraylist<Arraylist<HtWt>> solutions
-5             Arraylist<Htwt> bestSequence=  null;
+4       Arraylist<Arraylist<HtWt>> solutions = new Arraylist<Arraylist<Htwt>>(); 
+5       Arraylist<Htwt> bestSequence=  null;
 6
- 
-new Arraylist<Arraylist<Htwt>>(); 
 7             /*  Find the  longest subsequence  that terminates with  each  element. Track the
 8               * longest overall subsequence  as  we  go.  */
 9             for  (int i= 0;  i <  array.size(); i++)  {
@@ -9443,39 +9344,34 @@ new Arraylist<Arraylist<Htwt>>();
 24
 25       /*  Find the  longest subsequence  that we  can  append this element  to. */
 26       for  (int i= 0;  i <  index;  i++)  {
-27                 Arraylist<HtWt>  solution =  solutions.get(i);
+27             Arraylist<HtWt>  solution =  solutions.get(i);
 28            if (canAppend(solution, value))  {
 29                        bestSequence  =  max(solution,  bestSequence);
 30              }
 31       }
 32
 33       /*  Append  element. */
-
-34	ArrayList<HtWt> best	(Arraylist<Htwt>) bestSequence.clone();
+34	ArrayList<HtWt> best = (Arraylist<Htwt>) bestSequence.clone();
 35	best.add(value);	
 36		
-S48         Cracking the Coding Interview, 6th Edition 
-Solutions to Chapter 17  I     Hard
-
-
 37       return best;
 38    }
-This algorithm operates in O( N² ) time. An 0(n   log(n)) algorithm does exist, but it is considerably  more complicated and it is highly unlikely that you would derive this in an interview-even with some help. However, if you are interested in exploring this solution, a quick internet search will turn up a number of explanations of this solution.
+```
+This algorithm operates in O( N² ) time. An 0(n log(n)) algorithm does exist, but it is considerably  more complicated and it is highly unlikely that you would derive this in an interview-even with some help. However, if you are interested in exploring this solution, a quick internet search will turn up a number of explanations of this solution.
 
 
-17.9    Kth Multiple: Design an algorithm to find the kth number such that the only prime factors are 3, 5, and 7. Note that 3, 5, and 7 do not have to be factors, but it should not have any other prime factors. For example, the first several multiples would be (in order) 1, 3, 5, 7, 9, 15, 21.
-
-pg 187
+**17.9    Kth Multiple:** Design an algorithm to find the kth number such that the only prime factors are 3, 5, and 7. Note that 3, 5, and 7 do not have to be factors, but it should not have any other prime factors. For example, the first several multiples would be (in order) 1, 3, 5, 7, 9, 15, 21.
 
 SOLUTION
+---
 
-Let's first understand what this problem is asking for. It's asking for the kth smallest number that is in the form 3a   *  Sb    *  7c, Let's start with a brute force way of finding this.
+Let's first understand what this problem is asking for. It's asking for the kth smallest number that is in the form 3^a * 5^b * 7^c, Let's start with a brute force way of finding this.
 
 
-Brute Force
+**Brute Force**
 
-We know that biggest this kth number could be is 3k   *  Sk     *  ?k. So, the "stupid" way of doing this is to compute 3a   *  Sb    *  7c for all values of a, b, and c between 0 and k. We can throw them all into a list, sort
-the list, and then pick the kth smallest value.
+We know that biggest this kth number could be is 3^k * 5^k * 7^k. So, the "stupid" way of doing this is to compute 3^a * 5^b * 7^c for all values of a, b, and c between 0 and k. We can throw them all into a list, sort the list, and then pick the kth smallest value.
+```java
 1      int getKthMagicNumber(int k)  {
 2         Arraylist<Integer> possibilities    allPossibleKFactors(k);
 3            Collections.sort(possibilities);
@@ -9493,8 +9389,8 @@ the list, and then pick the kth smallest value.
 15                      int value  =  powA  *powB  *powC;
 16
 17                        /*   Check for  overflow. */
-18                      if  (value < 0  I   I      powA  ==  Integer.MAX_VALUE    I   I
-19                             powB ==  Integer.MAX_VALUE    I   I
+18                      if  (value < 0  ||    powA  ==  Integer.MAX_VALUE  ||
+19                             powB ==  Integer.MAX_VALUE    ||
 20                             pow( ==  Integer.MAX_VALUE)   {
 21                           value  =  Integer.MAX_VALUE;
 22                         }
@@ -9504,7 +9400,7 @@ the list, and then pick the kth smallest value.
 26          }
 27       return values;
 28   }
-
+```
 
 
 

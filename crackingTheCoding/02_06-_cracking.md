@@ -48,7 +48,7 @@ gcd * lcm = 2^min(j0, k0) * 2^max(j0, k0) * 3^min(j1, k1) * 3^max(j1,  k1) * ...
 This question is so common that we feel the need to specifically cover it. The naive way is to simply iterate from 2 through n-1,  checking for divisibility on each iteration.
 
 ```java
-1     boolean   primeNaive(int n){
+1     boolean primeNaive(int n){
 2          if(n<2){
 3                   return false;
 4           }
@@ -1788,7 +1788,7 @@ We then implement separate classes to handle the user manager, the library, and 
 42            if (!users.containsKey(id)) {
 43                 return false;
 44           }
-users.remove(id);
+45			users.remove(id);
 46            return true;
 47       }
 48   }
