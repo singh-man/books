@@ -203,3 +203,239 @@ Hints start on page 676.
 
  
 ![](media/IX_14_03.JPG)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Questions 1  through 3 refer to the following database schema:
+
+![](media/14_01_1.JPG)
+
+Note that each apartment can have multiple tenants, and each tenant can have multiple apartments. Each apartment belongs to one building, and each building belongs to one complex.
+
+
+**14.1 	Multiple Apartments:** Write a SQL query to get a list of tenants who are renting more than  one apartment.							pg  172
+
+SOLUTION
+
+---
+
+To implement this, we can use the HAVING and GROUP   BY clauses and then perform an INNER  JOIN with
+Tenants.
+```sql
+1     SELECT  TenantName
+2     FROM   Tenants
+3     INNER  JOIN
+4           (SELECT  TenantID  FROM  AptTenants  GROUP   BY  TenantID  HAVING  count(*)   >   1)  C
+5     ON   Tenants.TenantID = C.TenantID
+```
+
+Whenever  you write a GROUP BY clause in an interview  (or in real life), make sure that  anything in the SELECT clause is either an aggregate function or contained within the GROUP BY clause.
+
+
+**14.2    Open  Requests:** Write a SQL query to get a list of all buildings and the number of open requests
+(Requests in which status equals'Open'). 
+
+
+SOLUTION
+
+---
+ 
+This problem uses a straightforward join of Requests and Apartments to get a list of building IDs and the number of open requests. Once we have this list, we join it again with the Buildings table.
+```sql
+1     SELECT  BuildingName,   ISNULL(Count,  0)  as  'Count'
+2     FROM  Buildings
+3       LEFT  JOIN
+4          (SELECT  Apartments.BuildingID,  count(*)  as   'Count'
+5            FROM  Requests   INNER  JOIN Apartments
+6            ON  Requests.AptID  =  Apartments.AptID
+7            WHERE  Requests.Status  =   'Open'
+8            GROUP  BY  Apartments.BuildingID)  ReqCounts
+9     ON  ReqCounts.BuildingID =  Buildings.BuildingID
+```
+Queries like this that utilize sub-queries should be thoroughly tested, even when coding by hand. It may be useful to test the inner part of the query first, and then test the outer part.
+
+
+**14.3 	Close All Requests:** Building #11 is undergoing a major renovation. Implement a query to close all requests from apartments in this building. 
+
+
+SOLUTION
+
+---
+ 
+UPDATE queries, like SELECT queries, can have WHERE clauses. To implement this query, we get a list of all apartment IDs within building #11 and the list of update requests from those apartments.
+```sql
+1     UPDATE  Requests
+2     SET  Status =   'Closed'
+3     WHERE  AptID  IN (SELECT  AptID  FROM   Apartments   WHERE  BuildingID =  11)
+```
+
+
+**14.4 	Joins:** What are the different types of joins? Please explain how they differ and why certain types are better in certain situations. 
+
+SOLUTION
+
+---
+ 
+JOIN is used to combine the results of two tables. To perform a JOIN, each of the tables must have at least one field that will be used to find matching records from the other table. The join type defines which records will go into the result set.
+
+Let's take for example two tables: one table lists the "regular" beverages, and another lists the calorie-free beverages. Each table has two fields: the beverage name and its product code. The "code"field will be used to perform the record matching.
+
+Regular Beverages:
+
+| Name      | Code      |
+| --        | --        |
+| Budweiser | BUDWEISER |
+| Coca-Cola | COCACOLA  |
+
+
+| Name  | Code  |
+| --    | --    |
+| Pepsi | PEPSI |
+
+Calorie-Free Beverages:
+
+| Name           | Code     |
+| --             | --       |
+| Diet Coca-Cola | COCACOLA |
+| Fresca         | FRESCA   |
+| Diet Pepsi     | PEPSI    |
+| Pepsi Light    | PEPSI    |
+| Purified Water | Water    |
+
+If we wanted to join Beverage with Calorie-Free Beverages, we would have many options. These are discussed below.
+
+- INNER JOIN:The result set would contain only the data where the criteria match. In our example, we would get three records: one with a COCACOLA code and two with PEPSI codes.
+- OUTER JOIN: An OUTER  JOIN will always contain the results of INNER JOIN, but it may also contain some records that have no matching record in the other table. OUTER     JOINs are divided into the following subtypes:
+	- LEFT OUTER   JOIN, or simply LEFT JOIN:The result will contain all records from the left table.
+	If no matching records were found in the right table, then its fields will contain theNULL values. In our example, we would get four records. In addition to INNER JOIN results, BUDWEISER would be listed, because it was in the left table.
+	- RIGHT OUTER   JOIN, or simply RIGHT JOIN:This type of join is the opposite ofLEFT  JOIN. It will contain every record from the right table; the missing fields from the left table will be NULL. Note that if we have two tables, A and B, then we can say that the statement A  LEFT JOIN  B is equivalent to the statement B  RIGHT JOIN  A. In our example above, we will get five records. In addition to INNER JOIN results, FRESCA and WATER records will be listed.
+	- FULL OUTER   JOIN:This type of join combines the results of the LEFT and RIGHT  JOINS. All records from both tables will be included in the result set, regardless of whether or not a matching record exists in the other table. If no matching record was found, then the corresponding result fields will have a NULL value. In our example, we will get six records.
+
+
+**14.5     Denormalization:** What is denormalization? Explain the pros and cons.
+ 
+SOLUTION
+ 
+--- 
+
+Denormalization is a database  optimization technique  in which we add redundant  data to one or more tables. This can help us avoid costlyjoins in a relational database.
+
+By contrast, in a traditional normalized database, we store data in separate logical tables and attempt  to minimize redundant data. We may strive to have only one copy of each piece of data in the database.
+
+For example, in a normalized database, we might have a Courses table and a Teachers table. Each entry in Courses would store the teacherID for a Course but not the teacherName. When we need to retrieve a list of all Courses with the Teacher name, we would do a join between  these two tables.
+
+In some ways, this  is great; if a teacher changes his or her name, we only have to update the  name in one place.
+
+The drawback, however, is that if the tables are large, we may spend an unnecessarily long time doing joins on tables.
+
+Denormalization, then, strikes  a different compromise. Under denormalization, we decide that we're  okay with  some redundancy and  some extra  effort  to update the  database in order to get  the  efficiency  advan­
+tages of fewer joins.
+
+
+|Cons of Denomaralization|Pros of Denomaralization|
+|--|--|
+|Updates and inserts are more expensive.|Retrieving data is faster  since  we do fewer joins.|
+|Denormalization can make update and  insert code harder to write.|Queries to  retrieve can  be  simpler (and  therefore less likely to have bugs),  since  we need to look at fewer  tables.|
+|Data  may  be  inconsistent. Which  is the  "correct" value for a piece of data?||
+|Data redundancy necessitates  more storage.||
+
+In a system that demands scalability,  like that of any major tech companies, we almost always use elements of both normalized and denormalized databases.
+
+
+**14.6 		Entity-Relationship Diagram:** Draw an entity-relationship diagram for a database with companies, people, and  professionals (people who work for companies). 
+
+
+SOLUTION
+ 
+---
+
+People who  work for Companies are  Professionals. So, there is an ISA  ("is a") relationship between People and  Professionals (or we could say that a Professional is derived from People).
+
+Each Professional has additional information such  as degree and  work experiences in addition to the properties derived from People.
+
+A Professional works for one company at a time  (probably-you might want to validate this assump­ tion),  but  Companies can  hire many Professionals. So, there is a many-to-one relationship between Professionals and  Companies. This"Works  For " relationship can store attributes such as an employee's start date and salary. These attributes are defined only when we relate a Professional with a Company.
+
+A Person can have multiple phone numbers, which is why Phone is a multi-valued attribute.
+
+![](media/14_07_1.JPG)
+
+**14.7    Design  Grade  Database:** Imagine a  simple database  storing information for  students' grades. Design what this database might look like and  provide a SQL query to return a list of the  honor roll students (top  10%), sorted by their  grade point average.  pg 173
+
+SOLUTION
+
+---
+
+In a simplistic database, we'll have at least  three objects: Students, Courses, and  CourseEnrollment. Students will have  at  least  a student name and   ID and  will likely have other personal information. Courses will contain the course name and  ID and  will likely contain the course description, professor, and other information. CourseEnrollment will pair Students and Courses and  will also contain a field for
+CourseGrade.
+
+| Students    |              |
+| --          | --           |
+| StudentID   | int          |
+| StudentName | varchar(100) |
+| Address     | varchar(S00) |
+ 
+| Courses     |              |
+| --          | --           |
+| CourseID    | int          |
+| CourseName  | varchar(100) |
+| ProfessorID | int          |
+ 
+| CourseEnrollment |       |
+| --               | --    |
+| CourseID         | int   |
+| StudentID        | int   |
+| Grade            | float |
+| Term             | int   |
+
+This database could get arbitrarily more complicated if we wanted to add in professor information, billing information, and other data.
+
+Using the Microsoft SQL Server TOP ..... PERCENT function, we might (incorrectly) first try a query like this:
+```sql
+1     SELECT   TOP  10 PERCENT  AVG(CourseEnrollment.Grade) AS  GPA,
+2                       CourseEnrollment.StudentID
+3     FROM  CourseEnrollment
+4     GROUP   BY  CourseEnrollment.StudentID
+5     ORDER   BY  AVG(CourseEnrollment.Grade)
+```
+The problem with the above code is that it will return literally the top 10% of rows, when sorted by GPA. Imagine a scenario in which there are 100 students, and the top 15 students all have 4.0 GPAs. The above function will only return 1O of those students, which is not really what we want. In case of a tie, we want to include the students who tied for the top 10% -- even if this means that our honor roll includes more than
+1 0% of the class.
+
+To correct this issue, we can build something similar to this query, but instead first get the GPA cut off.
+```sql
+1     DECLARE  @GPACutOff  float;
+2     SET @GPACutOff  = (SELECT  min(GPA) as  'GPAMin' FROM  (
+3                   SELECT   TOP  10 PERCENT  AVG(CourseEnrollment.Grade) AS  GPA
+4               FROM  CourseEnrollment
+5               GROUP   BY  CourseEnrollment.StudentID
+6               ORDER  BY  GPA   desc)  Grades);
+```
+Then, once we have @GPACutOff defined, selecting the students  with at least this GPA is reasonably straightforward.
+```sql
+1     SELECT  StudentName,  GPA
+2     FROM (SELECT   AVG(CourseEnrollment.Grade) AS  GPA,   CourseEnrollment.StudentID
+3                 FROM  CourseEnrollment
+4                 GROUP   BY  CourseEnrollment.StudentID
+5                 HAVING  AVG(CourseEnrollment.Grade)  >= @GPACutOff)   Honors
+6     INNER  JOIN Students  ON   Honors.StudentID  =  Student.StudentID
+```
+Be very careful about what implicit assumptions you make. If you look at the above database description, what potentially incorrect assumption  do you see? One is that each course can only be taught  by one professor. At some schools, courses may be taught by multiple professors.
+
+However, you will need to make some assumptions, or you'd drive yourself crazy. Which assumptions you make is less important than just recognizing that you made assumptions. Incorrect assumptions, both in the real world and in an interview, can be dealt with as long as they are acknowledged.
+
+Remember, additionally, that there's a trade-off between flexibility and complexity. Creating a system in which a course can have multiple professors does increase the database's flexibility, but it also increases its complexity. If we tried to make our database  flexible to every possible situation, we'd wind up with some­ thing hopelessly complex.
+
+Make your design reasonably flexible, and state any other assumptions or constraints. This goes for not just database design, but object-oriented design and programming in general.
