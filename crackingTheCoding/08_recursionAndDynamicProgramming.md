@@ -507,9 +507,9 @@ SOLUTION
  
 We should first have some reasonable expectations of our time and space complexity.
 
-How many subsets of a set are there? When we generate a subset, each element has the "choice" of either being in there or not. That  is, for the first element, there are two choices: it is either in the set or it is not. For the second, there are two, etc. So, doing {2  *  2  *  . . .  } n times gives us 2^n subsets.
+How many subsets of a set are there? When we generate a subset, each element has the "choice" of either being in there or not. That  is, for the first element, there are two choices: it is either in the set or it is not. For the second, there are two, etc. So, doing {2  *  2  *  . . .  } n times gives us 2ⁿ subsets.
 
-Assuming that we're going to be returning a list of subsets, then our best case time is actually the total number of elements across all of those subsets. There are 2^n subsets and each of the n elements will be contained in half of the subsets (which 2^(n-1) subsets).Therefore, the total number of elements across all of those subsets is n  *  2^(n -1).
+Assuming that we're going to be returning a list of subsets, then our best case time is actually the total number of elements across all of those subsets. There are 2ⁿ subsets and each of the n elements will be contained in half of the subsets (which 2⁽ⁿ⁻¹⁾ subsets).Therefore, the total number of elements across all of those subsets is n  *  2⁽ⁿ⁻¹⁾.
 
 We will not be able to beat O(n2^n) in space or time complexity.
 
@@ -582,7 +582,7 @@ The following code implements this algorithm:
 20     }
 ```
 
-This solution will be O(n2^n) in time and space, which is the best we can do. For a slight optimization, we could also implement this algorithm iteratively.
+This solution will be O(n2ⁿ) in time and space, which is the best we can do. For a slight optimization, we could also implement this algorithm iteratively.
 
 ##### Solution #2: Combinatorics
 
@@ -590,9 +590,9 @@ While there's nothing wrong with the above solution, there's another way to appr
 
 Recall that when we're generating a set, we have two choices for each element: (1) the element is in the set (the "yes" state) or (2) the element is not in the set (the "no" state). This means that each subset is a sequence of yeses I nos-e.g., "yes, yes, no, no, yes, no"
 
-This gives us 2^n possible subsets. How can we iterate through all possible sequences of "yes" /"no" states for all elements? If each "yes" can be treated as a 1 and each "no" can be treated as a 0, then each subset can be represented as a binary string.
+This gives us 2ⁿ possible subsets. How can we iterate through all possible sequences of "yes" /"no" states for all elements? If each "yes" can be treated as a 1 and each "no" can be treated as a 0, then each subset can be represented as a binary string.
 
-Generating all subsets, then, really just comes down to generating all binary numbers (that is, all integers). We iterate through  all numbers from 0 to 2^n (exclusive) and translate the binary representation  of the numbers into a set. Easy!
+Generating all subsets, then, really just comes down to generating all binary numbers (that is, all integers). We iterate through  all numbers from 0 to 2ⁿ (exclusive) and translate the binary representation  of the numbers into a set. Easy!
 
 ```java
 1     Arraylist<Arraylist<Integer>>  getSubsets2(ArrayList<Integer> set)  {

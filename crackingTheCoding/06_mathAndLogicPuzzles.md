@@ -10,7 +10,7 @@ We'll go through some common approaches for tackling these questions, as well as
 ### Prime Numbers
 
 As you probably know, every positive integer can be decomposed into a product of primes. For example:
-84  =   2²  * 3¹ * 5⁰ * 7¹ * 11⁰   *  13⁰    *  17⁰    *  ... 
+84  =   2²  * 3¹ * 5⁰ * 7¹ * 11⁰ * 13⁰ * 17⁰ * ... 
 
 Note that many of these primes have an exponent of zero.
 
@@ -19,27 +19,28 @@ Note that many of these primes have an exponent of zero.
 
 The prime number law stated above means that, in order for a numberx to divide a number y (written x\y, or mod (y, x)  =  0), all primes inx's prime factorization must be in y's prime factorization. Or, more specifically:
 
-![](media/IX_06_01.JPG)
+```
+Let X = 2ʲ⁰ * 3ʲ¹ * 5ʲ² * 7ʲ³ * 11ʲ⁴ * ...
+Let y = 2ᵏ⁰ * 3ᵏ¹ * 5ᵏ² * 7ᵏ³ * 11ᵏ⁴ * ...
+```
 
-
-lfx\y,then for alli,ji <=  ki.
+If x\y,then for alli, ji <=  ki.
 
 In fact, the greatest common divisor ofxand y will be:
 
-gcd (x, y) = 2^min(j0, k0) * 3^min(j1, k1) * 5^min(j2, k2) * ....
+gcd (x, y) = 2ᵐⁱⁿ⁽ʲ⁰, ᵏ⁰⁾   * 3ᵐᶦⁿ⁽ʲ¹, ᵏ¹⁾ * 5ᵐᶦⁿ⁽ʲ², ᵏ²⁾ * ....
 
 The least common multiple ofx and y will be:
 
-lcm (x, y) = 2^max(j0,  k0) * 3^max(j1, k1) * 5^max(j2, k2) * ...
+lcm (x, y) = 2ᵐᵃˣ⁽ʲ⁰, ᵏ⁰⁾ * 3ᵐᵃˣ⁽ʲ¹, ᵏ¹⁾ * 5ᵐᵃˣ⁽ʲ², ᵏ²⁾ * ...
 
 As a fun exercise, stop for a moment and think what would happen if you did gcd * lcm:
 
 ```
-gcd * lcm = 2^min(j0, k0) * 2^max(j0, k0) * 3^min(j1, k1) * 3^max(j1,  k1) * ....
-
-          = 2^min(j0, k0) + max(j0, k0) * 3^(min(j1,  k1) + max(j1, k1)) * ...
-          = 2^(j0  +  k0) *  3(j1  +  k1) *  ... 
-          = 2^j0 * 2k0 *  3(j1 * 3k1) *  ... 
+gcd * lcm = 2ᵐⁱⁿ⁽ʲ⁰, ᵏ⁰⁾ * 2ᵐᵃˣ⁽ʲ⁰, ᵏ⁰⁾ * 3ᵐⁱⁿ⁽ʲ¹, ᵏ¹⁾ * 3ᵐᵃˣ⁽ʲ¹, ᵏ¹⁾ * ....
+          = 2ᵐⁱⁿ⁽ʲ⁰, ᵏ⁰⁾ ⁺ ᵐᵃˣ⁽ʲ⁰, ᵏ⁰⁾ * 3ᵐⁱⁿ⁽ʲ¹, ᵏ¹⁾ ⁺ ᵐᵃˣ⁽ʲ¹, ᵏ¹⁾ * ...
+          = 2ʲ⁰ ⁺ ᵏ⁰  *  3ʲ¹ ⁺ ᵏ¹ * ... 
+          = 2ʲ⁰ * 2ᵏ⁰ *  3ʲ¹ * 3ᵏ¹ * ... 
           = xy
 ```
 
@@ -65,7 +66,7 @@ A small but important improvement is to iterate only up through the square root 
 
 ```java
 1     boolean   primeSlightlyBetter(int n){
-2          if (n<    2){
+2          if (n < 2){
 3               return false;
 4           }
 5         int sqrt=  (int) Math.sqrt(n);
@@ -311,57 +312,57 @@ SOLUTION
 To solve this problem, we can apply straightforward  probability  laws by comparing the probabilities of winning each game.
 
 
-##### Probability of winning Game  1:
+**Probability of winning Game  1:**
 
 The probability ofwinning Game  1 is p, by definition.
 
 
-##### Probability of winning Game 2:
+**Probability of winning Game 2:**
 
-Lets ( k, n) be the probability ofmaking exactly k shots out ofn. The probability ofwinning Game 2is the probability of making exactly two shots out ofthree OR making all three shots. In other words:
+Let s(k,n) be the probability ofmaking exactly k shots out ofn. The probability ofwinning Game 2is the probability of making exactly two shots out ofthree OR making all three shots. In other words:
 
-P(winning)=  s(2, 3)+  s(3, 3) 
+P(winning) = s(2,3) + s(3,3) 
 
 The probability  of making all three shots is:
 
-s( 3, 3)   =    p^3
+s(3,3) = p³
 
 The probability of making exactly two shots is: 
 
 ```
-P(making1 and  2,  and missing 3)
-	+  P(making 1  and   3, and mis sing2)
-	+  P(mis s ing1,  and making2and  3)
-   = p *  p *  (1-p)  +  p  *  (1-p)  *  p +   (1-p)  *  p *  P
-   = 3(1-p)p^2
+P(making 1 and  2,  and missing 3)
+	+  P(making 1  and   3, and missing 2)
+	+  P(missing 1,  and making 2 and 3)
+   = p *  p *  (1 - p)  +  p  *  (1 - p)  *  p +   (1 - p)  *  p *  P
+   = 3 (1 - p) p²
 ```
 
 Adding these together, we get:
 
 ```
-   = p^3   +  3(1  -   p)p^2
-   = p^3   +  3p^2   - 3p^3
-   = 3p^2   - 2p^3
+   = p³   + 3(1 - p)p²  
+   = p³   + 3p² - 3p³
+   = 3p²  - 2p³
 ```
 
 Which game should you play?
 
 You should play Game 1  if P ( Game   1)  >   P (Game   2):
 ```
-p >  3p^2   -  2p^3 •
-1  >   3p   - 2p^2
-2p^2   - 3p +  1   >  0 
-(2p - l)(p -   1) >   0 
+p  >  3p² - 2p³ •
+1  >  3p  - 2p²
+2p²   - 3p +  1  >  0 
+(2p - l)(p -  1) >   0 
 ```
 Both terms must be positive, or both must be negative. But we know p  <   1, so p  -  1  <  0. This means both terms must be negative.
 ```
-2p-1  <   0
-2p <   1
-p <    .5
+2p - 1  <   0
+2p < 1
+p  < .5
 ```
-So, we should play Game 1 if0  <   p  <  .5 and  Game  2 if .5   <   p  <   1.
+So, we should play Game 1 if 0 < p < .5 and  Game  2 if .5   <   p  <   1.
 
-lf p  =  0,0.5,or 1, then P(Game  1)  = P(Game 2),so it doesn't matterwhichgame we play.
+lf p  =  0,0.5,or 1, then P(Game  1)  = P(Game 2), so it doesn't matterwhichgame we play.
 
 
 **6.3       Dominos:** There is an 8x8 chessboard in which two diagonally opposite corners have been cut off. You are given 31 dominos,  and a single domino can cover exactly two squares. Can you use the 31 dominos to cover the entire board? Prove your answer (by providing an example or showing why it's impossible).
@@ -396,21 +397,21 @@ The ants will collide  if any of them are moving towards each other. So, the onl
 Since each ant can move in two directions, and there are three ants, the probability  is:
 
 ```
-P (clockwise)= (1/2)^3
-P (counter clockwise)= (1/2)^3
-P (same direction)= (1/2)^3 + (1/2)^3 = 1/4
+P (clockwise) = (1/2)³
+P (counter clockwise) = (1/2)³
+P (same direction) = (1/2)³ + (1/2)³ = 1/4
 ```
 The probability of collision  is therefore the  probability of the  ants not moving in the  same direction:
 
 ```
-P (collision)= 1-P (same direction)= 1-1/4 = 3/4
+P (collision) = 1-P (same direction)= 1 - 1/4 = 3/4
 ```
 To generalize this to an n-vertex polygon: there are still only two ways in which the  ants can move to avoid a collision, but there are 2" ways they  can move in total. Therefore, in general, probability of collision  is:
 ```
-P (clockwise)= (1/2)^n 
-P (counter)= (1/2)^n
-P (same direction)= 2 (1/2)^n = (1/2)^(n-1)
-P (collision)= 1- P (same direction)= 1- (1/2)^(n-1)
+P (clockwise)= (1/2)ⁿ 
+P (counter)= (1/2)ⁿ
+P (same direction)= 2 (1/2)ⁿ = (1/2)⁽ⁿ⁻¹⁾
+P (collision)= 1 - P (same direction)= 1 - (1/2)⁽ⁿ⁻¹⁾
 ```
 
 **6.5 	Jugs of Water:** You have  a five-quart jug, a three-quart jug, and an unlimited supply of water (but no measuring cups).  How would you come up with  exactly  four quarts of water? Note that the jugs are oddly shaped, such that filling up exactly "half" of the jug would be impossible.
@@ -444,17 +445,17 @@ SOLUTION
 Let's apply the Base Case and Build approach. Assume that there are n people on the island and c of them have blue eyes. We are explicitly told that c  >   0.
 
 
-##### Case c = 1: Exactly one person has blue eyes.
+**Case c = 1: Exactly one person has blue eyes.**
 
 Assuming all the people are intelligent, the blue-eyed person should look around and realize that no one else has blue eyes. Since he knows that at least one person has blue eyes, he must conclude that it is he who has blue eyes. Therefore, he would take the flight that evening.
 
 
-##### Case c = 2: Exactly two people have blue eyes.
+**Case c = 2: Exactly two people have blue eyes.**
 
 The two blue-eyed people see each other, but are unsure whether c is 1  or 2. They know, from the previous case, that if c = 1, the blue-eyed person would leave on the first night. Therefore, if the other blue-eyed person is still there, he must deduce that c = 2, which means that he himself has blue eyes. Both men would then leave on the second night.
 
 
-##### Case c > 2: The  General Case.
+**Case c > 2: The  General Case.**
 
 As we increase  c, we can see that this logic continues to apply. If c = 3, then those three people will imme­ diately know that there are either 2 or 3 people with blue eyes.  If there were two people, then those two people would have left on the second night. So, when the others are still around after that night, each person would conclude that c = 3 and that they, therefore, have blue eyes too. They would leave that night.
 
@@ -472,11 +473,11 @@ If each family abides by this policy, then each family will have a sequence of z
 
 We can solve this problem multiple ways.
 
-##### Mathematically
+**Mathematically**
 
 We can work out the probability for each gender sequence.
 
-- P(G) = 1/2.T hat is, 50% of families  will have a girl first. The others will go on to have more children.
+- P(G) = 1/2. That is, 50% of families  will have a girl first. The others will go on to have more children.
 - P(BG) = 1/4. Of those who have a second child (which is 50%), 50% of them will have a girl the next time.
 - P(BBG) = 1/8. Of those who have a third child (which  is 25%), 50% of them will have a girl the next time.
 
@@ -496,7 +497,7 @@ We know  that every family has exactly one girl. How many  boys does each family
 
 Or in other words,  this is the sum of i to infinity of i divided  by 2^i.
 
-Σ(i/2, i=0, ∞)
+Σ(i/2ⁱ, i=0, ∞)
 
 You probably won't know this off the top of your head, but we can try to estimate it. Let's try converting the above values to a common denominator of 128 (2^6). 
 
@@ -513,7 +514,7 @@ You probably won't know this off the top of your head, but we can try to estimat
 This looks like it's going  to inch closer to 12X28  (which  is of course  1). This "looks like" intuition is valuable, but it's not exactly a mathematical concept. It's a clue though and we can turn to logic here. Should it be 1?
 
 
-##### Logically
+**Logically**
 
 If the earlier sum is 1, this would mean that the gender ratio is even. Families contribute exactly one girl and on average one boy. The birth policy  is therefore ineffective. Does this make sense?
 
@@ -532,7 +533,7 @@ This actually makes a lot of sense. Biology hasn't been changed. Half of newborn
 Therefore, the gender ratio is 50% girls and 50% boys.
 
 
-Simulation
+**Simulation**
 
 We'll write this in a simple way that directly corresponds to the problem.
 
@@ -576,12 +577,12 @@ SOLUTION
 We may observe that, regardless of how we drop Egg 1, Egg 2 must do a linear search (from lowest to highest) between the "breaking floor" and the next highest non-breaking floor. For example,  if Egg 1 is dropped from floors 5 and 10 without breaking, but it breaks when it's dropped from floor 15, then Egg 2 must be dropped, in the worst case, from floors 11, 12, 13, and 14.
 
 
-##### The Approach
+**The Approach**
 
 As a first try, suppose we drop an egg from the 10th floor, then the 20th, ...
 
 - If Egg  1 breaks on the first drop (floor 10), then we have at most 10 drops total.
-- If Egg  1 breaks on the last drop (floor 100), then we have at most 19 drops total (floors 10, 20, ...,90, 100, then 91 through 99).
+- If Egg  1 breaks on the last drop (floor 100), then we have at most 19 drops total (floors 10, 20,...,90, 100, then 91 through 99).
 
 That's pretty good, but all we've considered  is the absolute worst case.We should do some "load balancing" to make those two cases more even.
 
@@ -591,22 +592,20 @@ Our goal is to create a system for dropping Egg 1 such that the number of drops 
 2. For that to be the case, since each drop of Egg 1 takes one more step, Egg 2 is allowed one fewer step.
 3. We  must,   therefore,  reduce   the   number   of   steps   potentially  required   by   Egg  2   by one  drop  each  time.  For example,  if   Egg  1  is  dropped   on  floor  20  and  then  floor  30, Egg 2 is potentially required to take 9 steps.When we drop Egg 1 again, we must reduce potential Egg 2 steps to only 8. That is, we must drop Egg 1 at floor 39.
 4. Therefore, Egg 1 must start at floor X, then go up by X-1 floors, then X- 2, ..., until it gets to 100.
-
 5. Solve for X.
 ```
-X+(X  - l)+(X- 2)+...+1=100
+X + (X - l)+(X - 2)+...+1 = 100
 X(X+l)/2 = 100
 X ≈ 13.65
 ```
 X clearly needs to be an integer.Should we round X up or down?
 
-- If we round X up to 14, then we would go up by 14, then 13, then 12, and so on.The last increment would be 4, and it would happen on floor  99. If Egg 1 broke on any of the prior floors, we know we've balanced the eggs such that the number of drops of Egg 1 and Egg 2 always sum to the same thing: 14. If Egg
-1 hasn't broken by floor 99, then we just need one more drop to determine if it will break at floor 100.
+- If we round X up to 14, then we would go up by 14, then 13, then 12, and so on.The last increment would be 4, and it would happen on floor  99. If Egg 1 broke on any of the prior floors, we know we've balanced the eggs such that the number of drops of Egg 1 and Egg 2 always sum to the same thing: 14. If Egg 1 hasn't broken by floor 99, then we just need one more drop to determine if it will break at floor 100.
 Either way, the number of drops is no more than 14.
 
 - If we round X down to 13, then we would go up by 13, then 12, then 11, and so on.The last increment will be 1 and it will happen at floor 91. This is after 13 drops. Floors 92 through 100 have not been covered yet. We can't cover those floors in just omi drop (which would be necessary to merely tie the "round up" case).
 
-Therefore, we should round X up to 14. That is, we go to floor 14, then 27, then 39, .... This takes 14 steps in the worse case.
+Therefore, we should round X up to 14. That is, we go to floor 14, then 27, then 39,.... This takes 14 steps in the worse case.
 
 As in many other maximizing/minimizing problems, the key in this problem is "worst case balancing:' 
 
@@ -659,18 +658,18 @@ SOLUTION
 
 We can tackle this problem by thinking through what it means for a door to be toggled. This will help us deduce which doors at the very end will be left opened.
 
-##### Question: For which rounds is a door toggled (open or closed)?
+**Question: For which rounds is a door toggled (open or closed)?**
 
 A door n is toggled once for each factor of n, including itself and 1. That is, door 15 is toggled on rounds 1,
 3, 5, and 15.
 
 
-##### Question: When would a door be left open?
+**Question: When would a door be left open?**
 
 A door is left open if the number of factors (which we will call x) is odd. You can think about this by pairing factors off as an open and a close. If there's one remaining, the door will be open.
 
 
-##### Question: When would x be odd?
+**Question: When would x be odd?**
 
 The value x is odd if n is a perfect square. Here's why: pair n's factors by their complements. For example, if n is 36, the factors are (1, 36), (2, 18), (3, 12), (4, 9), (6, 6). Note that (6, 6) only contributes one factor, thus giving n an odd number of factors.
 
@@ -700,7 +699,7 @@ Observe the wording of the problem. Why seven days? Why not have the results jus
 
 The fact that there's such a lag between  starting a test and reading the results likely means that we'll be doing something else in the meantime (running additional tests). Let's hold on to that thought, but start off with a simple approach just to wrap our heads around the problem.
 
-##### Naive Approach (28 days)
+**Naive Approach (28 days)**
 
 A simple approach is to divide the bottles across the 10 test strips, first in groups of 100. Then, we wait seven days. When the results come back, we look for a positive result across the test strips. We select the bottles associated with the positive test strip, "toss" (i.e., ignore) all the other bottles, and repeat the process. We perform this operation until there is only one bottle left in the test set.
 
@@ -709,7 +708,7 @@ A simple approach is to divide the bottles across the 10 test strips, first in g
 3.  On the positive test strip: select the bottles associated with it into a new set of bottles. If this set size is 1,we have located the poisoned bottle. If it's greater than one, go to step 1.
 
 To simulate  this, we'll build classes for Bottle and TestStrip that mirror the problem's functionality.
-```
+```java
 1     class Bottle {
 2         private boolean  poisoned=  false;
 3         private int id;
@@ -780,7 +779,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 
 This is just one way of simulating the behavior of the bottles and test strips, and each has its pros and cons. With this infrastructure built, we can now implement code to test our approach.
 
-```
+```java
 1     int  findPoisonedBottle(ArrayList<Bottle> bottles, ArrayList<TestStrip>    strips) {
 2         int today= 0;
 3
@@ -810,7 +809,7 @@ This is just one way of simulating the behavior of the bottles and test strips, 
 27   /*  Distribute bottles across test  strips  evenly. */
 28  void  runTestSet(ArrayList<Bottle>   bottles, ArrayList<TestStrip>    strips, int day)  {
 29       int index= 0;
-for  (Bottle bottle  :   bottles) {
+30       for  (Bottle bottle  :   bottles) {
 31            TestStrip strip  =  strips.get(index);
 32            strip.addDropOnDay(day,   bottle);
 33            index  ; (index  +  1)  %  strips.size();
@@ -824,7 +823,7 @@ Note that this approach makes the assumption that there will always  be multiple
 
 If we can't assume this, we can implement a fail-safe. If we have just one test strip remaining, we start doing one bottle at a time: test a bottle, wait a week, test another bottle. This approach will take at most 28 days.
 
-##### Optimized Approach (10  days)
+**Optimized Approach (10  days)**
 
 As noted in the beginning of the solution, it might be more optimal to run multiple tests at once.
 
@@ -906,7 +905,7 @@ Implementing this requires some careful work to prevent bugs.
 18         previousResults.add(digits[day]);
 19         }
 20
-21     I*  If day l's  results matched day 0's,  update the digit. *I
+21     /*  If day l's  results matched day 0's,  update the digit. */
 22      if (digits[l] ==-1)  {
 23             digits[l]  =digits[0];
 24          }
@@ -966,7 +965,7 @@ Implementing this requires some careful work to prevent bugs.
 
 It will take 10 days in the worst case to get a result with this approach.
 
-##### Optimal Approach (7 days)
+**Optimal Approach (7 days)**
 
 We can actually optimize this slightly more, to return a result in just seven days. This is  of course the minimum number of days possible.
 
@@ -1020,4 +1019,4 @@ We wait seven days, and then read the results.  If test strip i is positive, the
 41   }
 ```
 
-This approach will work as long as 2T   >=  B, where T is the number of test strips and B is the number of bottles.
+This approach will work as long as 2ᵀ >= B, where T is the number of test strips and B is the number of bottles.

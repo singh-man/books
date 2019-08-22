@@ -93,7 +93,7 @@ A perfect binary tree is one that is both full and complete. All leaf  nodes wil
 ![](media/IX_04_05.JPG)
 
 
-Note that perfect trees are rare in interviews and in real life, as a perfect tree must have exactly 2^k -  1 nodes
+Note that perfect trees are rare in interviews and in real life, as a perfect tree must have exactly 2ᵏ -  1 nodes
 (where k is the number of levels). In an interview, do not assume a binary tree is perfect.
 
 
@@ -351,7 +351,7 @@ Bidirectional search is used to find the shortest path between  a source and des
 To see why this is faster, consider  a graph  where every node has at most  k adjacent nodes and the shortest path from node s to nodet has length d.
 
 - In traditional breadth-first search, we would  search up to k nodes in the first "level" of the search. In the second level, we would  search up to k nodes for each of those first k nodes, so k2 nodes total (thus far). We would do this d times, so that's 0( kd) nodes.
-- In bidirectional search, we have two searches that collide after approximately d/2 levels (the midpoint of the path). The search from s visits approximately k^(d/2), as does the search fromt.That's approximately 2 k^(d/2), or O(k^(d/2)), nodes total.
+- In bidirectional search, we have two searches that collide after approximately d/2 levels (the midpoint of the path). The search from s visits approximately k⁽ᵈ/²⁾ , as does the search fromt.That's approximately 2 k⁽ᵈ/²⁾, or O(k⁽ᵈ/²⁾), nodes total.
 
 This might seem like a minor  difference,  but it's not. It's huge. Recall that tional search is actually faster by a factor of kd12.
 
