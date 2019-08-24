@@ -1991,7 +1991,7 @@ What we're really saying then is: How many contiguous subsequences in this array
 If each value knows its running sum (the sum of values from s through itself), then we can find this pretty easily. We just need to leverage this simple equation: runningSumx   =   runningSumY -  targetSum. 
 We then look for the values of x where this is true.
 
-![](meida/04_7_9.JPG)
+![](media/04_7_9.JPG)
 
 Since we're just looking for the number of paths, we can use a hash table. As we iterate through the array, build a hash table that maps from a runningSum to the number of times we've seen that sum. Then, for
 each y, look up runningSumY   -  targetSum in the hash table. The value in the hash table will tell you the number of paths with sum targetsum that end at y.

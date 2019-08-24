@@ -79,7 +79,19 @@ What  is the runtime of this function? Think for a second before you answer.
 
 If you said O(n) or O(n²) (as many people do). think again. Study the code path that the code takes. Drawing the code paths as a tree (that is, the recursion tree) is useful on this and many recursive problems.
 
-![](media/IX_06_05.JPG)
+```
+                         ----------fib(5)----
+                        /                    \
+                       /                      \
+                      /                        \
+               fib(4)                           fib(3)     
+              /      \                          /   \     
+        fib(3)        fib(2)                fib(2)   fib(1)
+         /   \        /     \               /  \
+    fib(2)   fib(1)  fib(1)  fib(0)    fib(1)  fib(0)
+     /  \
+fib(1)  fib(0)
+```
 
 Observe that the leaves on the tree are all fib ( 1) and fib( 0). Those signify the base cases.
 
@@ -778,7 +790,21 @@ SOLUTION
 
 This problem sounds like a good candidate for the Base Case and Build approach.
 
-![](media/08_6_1.JPG)
+```
+                  +                          +                          +
+                  |                          |                          |
+                +-++                         |                          |
+                |  |                         |                          |
+             +--+--+--+                      |                          |
+             |        |                      |                          |
+           +-+--------+-+                    |                          |
+           |            |                    |                          |
+        +--+------------+--+                 |                          |
+        |                  |                 |                          |
+     +--+------------------+-+               |                          |
+     |                       |               |                          |
++----+-----------------------+---------------+--------------------------+--------------+
+```
 
 Let's start with the smallest possible example: n =  1.
 

@@ -3412,7 +3412,7 @@ This collapsing continues until the above inequality is broken, at which point c
 
 Let's see this with an example: 2 -  6  -  7 * 8 / 2 +  5
  
-![](meida/16_26_1.JPG)
+![](media/16_26_1.JPG)
 
 The code below implements this algorithm.
 ```java
