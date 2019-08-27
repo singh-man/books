@@ -16,15 +16,15 @@ By scanning  through the various sorting algorithms, we might notice that bucket
 
 Learning (or re-learning) the common sorting algorithms is a great way to boost your performance.  Of the five algorithms  explained below, Merge Sort, Quick Sort and Bucket Sort are the most commonly used in interviews.
 
-##### Bubble Sort | Runtime: 0(n²) average and worst case. Memory: 0( 1) .
+##### Bubble Sort | Runtime: O(n²) average and worst case. Memory: O(1) .
 
 In bubble sort, we start at the beginning of the array and swap the first two elements  if the first is greater than the second. Then, we go to the next pair, and so on, continuously making sweeps of the array until it is sorted. In doing so, the smaller items slowly"bubble" up to the beginning of the list.
 
-##### Selection Sort | Runtime: 0(n²) average and worst case. Memory: 0( 1) .
+##### Selection Sort | Runtime: O(n²) average and worst case. Memory: O(1) .
 
 Selection sort is the child's algorithm: simple, but inefficient.  Find the smallest element using a linear scan and move it to the front (swapping it with the front element). Then, find the second smallest and move it, again doing a linear scan. Continue doing this until all the elements are in place.
 
-##### Merge Sort | Runtime: 0 ( n  log ( n)) average and worst case. Memory: Depends.
+##### Merge Sort | Runtime: O(n log (n)) average and worst case. Memory: Depends.
 
 Merge sort divides the array in half, sorts each of those halves, and then merges them back together. Each of those halves has the same sorting algorithm applied to it. Eventually, you are merging  just two single­ element arrays. It is the "merge" part that does all the heavy lifting.
 
@@ -78,12 +78,12 @@ The merge method operates by copying all the elements from the target array segm
 
 You may notice that only the remaining elements from the left half of the helper array are copied into the target array. Why not the right half? The right half doesn't need to be copied because it's already there. 
 
-Consider, for example, an array like [1,   4,  5 ||  2,   8,   9]  (the "11" indicates the partition point). Prior to merging the two halves, both the helper array and the target array segment will end with [ 8,   9]. Once we copy over four elements (1,  4,   5, and 2) into the target array, the [ 8,   9] will still be in place in both arrays. There's no need to copy them over.
+Consider, for example, an array like [1,   4,  5 ||  2,   8,   9]  (the "||" indicates the partition point). Prior to merging the two halves, both the helper array and the target array segment will end with [ 8,   9]. Once we copy over four elements (1,  4,   5, and 2) into the target array, the [ 8,   9] will still be in place in both arrays. There's no need to copy them over.
 
 The space complexity of merge sort is O(n) due to the auxiliary space used to merge parts of the array.
 
 
-##### Quick Sort  I  Runtime: O(n  log(n)) average, O(N² ) worst case. Memory: O(log(n)).
+##### Quick Sort | Runtime: O(n  log(n)) average, O(n² ) worst case. Memory: O(log(n)).
 
 In quick sort we pick a random element and partition the array, such that all numbers that are less than the partitioning element come before all elements that are greater than it. The partitioning can be performed efficiently through a series of swaps (see below).
 
@@ -92,26 +92,26 @@ If we repeatedly partition the array (and its sub-arrays) around an element, the
 ```java
 1    void  quickSort(int[] arr,  int left,  int right) {
 2            int index  =  partition(arr, left,  right);
-3            if (left< index  -  1)   { II Sort  left half
+3            if (left< index  -  1)   { // Sort  left half
 4              quickSort(arr, left,  index  - 1);
 5            }
-5         if (index< right) {  II Sort  right half
+5         if (index< right) {  // Sort  right half
 7                  quickSort(arr,  index,   right);
 3         }
 9       }
 10
 11    int partition(int[] arr, int left,  int right) {
-12       int pivot   =  arr[(left + right) I 2];  II Pick  pivot  point
+12       int pivot   =  arr[(left + right) I 2];  // Pick  pivot  point
 13      while  (left<= right) {
-14            II Find element  on left that should  be on right
+14            // Find element  on left that should  be on right
 15            while  (arr[left]< pivot) left++;
 16
-17            II Find element  on right that should  be on left
+17            // Find element  on right that should  be on left
 18            while  (arr[right] >   pivot) right--;
 19
-20            II Swap  elements,   and move  left and right indices
+20            // Swap  elements,   and move  left and right indices
 21            if (left<= right) {
-22                 swap(arr,   left,  right); II swaps elements
+22                 swap(arr,   left,  right); // swaps elements
 23                 left++;
 24                      right--;
 25              }
@@ -124,14 +124,14 @@ If we repeatedly partition the array (and its sub-arrays) around an element, the
 
 Radix sort is a sorting algorithm for integers (and some other data types) that takes advantage of the fact that integers have a finite number of bits. In radix sort, we iterate through each digit of the number, grouping numbers by each digit. For example,  if we have an array of integers, we might first sort by the first digit, so that the Os are grouped together. Then, we sort each of these groupings by the next digit. We repeat this process sorting by each subsequent digit, until finally the whole array is sorted.
 
-Unlike comparison sorting algorithms, which cannot perform better than O(n   log(n)) in the average case, radix sort has a runtime of O(kn), where n is the number of elements and k is the number of passes of the sorting algorithm.
+Unlike comparison sorting algorithms, which cannot perform better than O(n log(n)) in the average case, radix sort has a runtime of O(kn), where n is the number of elements and k is the number of passes of the sorting algorithm.
 
 
 ### Searching Algorithms
 
 When we think of searching algorithms, we generally think of binary search. Indeed, this is a very useful algorithm to study.
 
-In binary search, we look for an element xin a sorted array by first comparing xto the midpoint of the array. If xis less than the midpoint, then we search the left half of the array. If xis greater than the midpoint, then we search the right half of the array. We then repeat this process, treating the left and right halves as subar­ rays. Again, we compare xto the midpoint of this subarray and then search either its left or right side. We repeat this process until we either find x or the subarray has size 0.
+In binary search, we look for an element xin a sorted array by first comparing xto the midpoint of the array. If xis less than the midpoint, then we search the left half of the array. If xis greater than the midpoint, then we search the right half of the array. We then repeat this process, treating the left and right halves as subar­ rays. Again, we compare xto the midpoint of this subarray and then search either its left or right side. We repeat this process until we either find x or the subarray has size O.
 
 Note that although the concept is fairly simple, getting all the details right is far more difficult than you might think. As you study the code below, pay attention to the plus ones and minus ones.
 

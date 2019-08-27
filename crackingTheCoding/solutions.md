@@ -291,7 +291,7 @@ The code below implements this algorithm. We've implemented the discarding aspec
 In lines 24 and 27, we recursively calculate the other bits of v.Then, we insert either a O or 1, depending on whether or not count1(0s) <= count1(1s).
 
 
-17.5	Letters and Numbers: Given an array filled with letters and numbers, find the longest subarray with an equal number of letters and numbers.
+**17.5	Letters and Numbers:** Given an array filled with letters and numbers, find the longest subarray with an equal number of letters and numbers.
 
 SOLUTION
 
@@ -444,7 +444,7 @@ To do so, we use a hash table to store the first time we see a particular differ
 This solution takes 0( N) time, where N is size of the array.
 
  
-**17.6    Count  of 2s:** Write a method to count the number of 2s between O and n.
+**17.6    Count  of 2s:** Write a method to count the  number of 2s that appear in all the  numbers between O and  n (inclusive). 
 
 
 SOLUTION
@@ -805,7 +805,13 @@ Therefore, the total time of the algorithm is 0(B   +  P). We know we cannot do 
 
 **17.8	Circus Tower:** A circus is designing a tower routine consisting of people standing atop one another's shoulders. For practical and aesthetic reasons, each person must be both shorter and lighter than the person below him or her. Given the heights and weights of each person in the circus, write a method to compute the largest possible number of people in such a tower.
 
- 
+EXAMPLE
+```
+Input(ht,wt): (65,   100)  (70,  150)    (56,  90)    (75,  190)  (60,  95)    (68,  110) 
+
+Output: The longest tower is length 6 and includes from top to bottom:
+(56, 90)    (60,95)  (65,100)  (68,110)  (70,150)  (75,190)
+```
 SOLUTION
 ---
 
@@ -994,13 +1000,6 @@ We know that biggest this kth number could be is 3^k * 5^k * 7^k. So, the "stupi
 27       return values;
 28   }
 ```
-
-
-
-
-
-CrackingTheCodinglnterview.com / 6th  Edition            S49 
-Solutions to Chapter 17  I Hard     	
 
 
 What is the runtime of this approach? We have nested for loops, each of which runs for k iterations. The runtime of the allPossibleKFactors isO(k3). Then, we sort the k3   results in D(k3   log  (k3)) time (which is equivalent  toO(k3    log   k)  . This gives us a runtime ofO(k3   log   k).

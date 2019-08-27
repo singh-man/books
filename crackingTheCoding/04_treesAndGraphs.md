@@ -20,7 +20,7 @@ The tree cannot contain cycles. The nodes may or may not be in a particular orde
 
 A very simple class definition for Node is:
 
-```
+```java
 1      class  Node {
 2          publi c String  name;
 3          public  Node[] children;
@@ -29,10 +29,10 @@ A very simple class definition for Node is:
 
 You might also have a Tree class to wrap this node. For the purposes of interview questions, we typically do not use a Tree class. You can if you feel it makes your code simpler or better, but it rarely does.
 
-```
+```java
 1     class  Tree {
 2       public  Node root;
-3       }
+3     }
 ```
 
 Tree and graph questions are rife with ambiguous details and incorrect assumptions. Be sure to watch out for the following issues and seek clarification when necessary.
@@ -303,14 +303,14 @@ The pseudocode below implements DFS.
 
 ```java
 1     void  search(Node  root) {
-2          if  (root== null) return;
+2          if  (root == null) return;
 3          visit(root);
-4          root.visited=    true;
+4          root.visited = true;
 5          for each  (Node n in root.adjacent) {
 6               if (n.visited == false) {
 7                    search(n);
-8                  }
-9            }
+8               }
+9           }
 10   }
 ```
 
@@ -330,11 +330,11 @@ In BFS, node a visits each of a's neighbors before visiting any of their neighbo
 7               Node r=    queue.dequeue();  // Remove  from the   front of  the   queue
 8               visit(r);
 9               foreach (Node n in r.adjacent) {
-10                  if (n.marked==    false) {
-11                       n.marked=    true;
+10                  if (n.marked == false) {
+11                       n.marked = true;
 12                       queue.enqueue(n);
 13                   }
-14             }
+14              }
 15         }
 16   }
 ```
@@ -381,7 +381,7 @@ The code below provides an iterative implementation of breadth-first search.
 3      boolean  search(Graph g,  Node   start, Node   end) {
 4         if (start ==  end) return true;
 5
-6            II operates  as Queue
+6            // operates  as Queue
 7            LinkedList<Node>  q   =  new   Linkedlist<Node>();
 8
 9            for  (Node u   :  g.getNodes())  {
@@ -391,7 +391,7 @@ The code below provides an iterative implementation of breadth-first search.
 13          q.add(start);
 14          Node   u;
 15          while (!q.isEmpty())  {
-16                u  =  q.removeFirst();   II i.e., dequeue()
+16                u  =  q.removeFirst();  || i.e., dequeue()
 17                if (u !=   null) {
 18                      for  (Node v   :   u.getAdjacent()) {
 19                            if (v.state ==  State.Unvisited) {

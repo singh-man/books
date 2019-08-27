@@ -32,46 +32,46 @@ Overloading is a term used to describe when two  methods have the  same name but
 Overriding, however, occurs when a method shares the  same name and  function signature as another method in its super class.
 
 ```java
-1      public  abstract  class  Shape {
-2           public  void printMe()  {
-3                 System.out.println("I am a  shape.");
-4            }
-5           public abstract  double  computeArea();
-6     }
-7
-8     public   class Circle extends  Shape {
-9         private double  rad=  5;
-10       public   void  printMe()   {
-11            System.out.println("I am  a  circle.");
-12       }
-13
-14       public   double  computeArea()  {
-15            return rad*  rad*3.15;
-16       }
-17   }
-18
-19   public   class Ambiguous extends  Shape {
-20        private double  area=  10;
-21       public   double  computeArea()  {
-22            return area;
-23           }
-24   }
-25
-26  public   class  IntroductionOverriding {
-27       public  static void  main(String[] args)  {
-28            Shape[]  shapes  =  new Shape[2];
-29            Circle circle  =  new Circle();
-30            Ambiguous  ambiguous =  new Ambiguous();
-31 
-32            shapes[0] = circle;
-33            shapes[l] = ambiguous;
-34
-35            for  (Shape  s  :   shapes)   {
-36                 s.printMe();
-37                 System.out.println(s.computeArea());
-38            }
-39          }
-40   }
+1 	public  abstract  class  Shape {
+2 		public  void printMe()  {
+3 			System.out.println("I am a  shape.");
+4 		}
+5 		public abstract  double  computeArea();
+6 	}
+7	
+8 	public   class Circle extends  Shape {
+9 		private double  rad =  5;
+10		public   void  printMe()   {
+11			System.out.println("I am  a  circle.");
+12		}
+13	
+14		public   double  computeArea()  {
+15			return rad *  rad * 3.15;
+16		}
+17	}
+18	
+19	public   class Ambiguous extends  Shape {
+20		private double  area =  10;
+21		public   double  computeArea()  {
+22			return area;
+23		}
+24	}
+25	
+26	public   class  IntroductionOverriding {
+27		public  static void  main(String[] args)  {
+28			Shape[]  shapes  =  new Shape[2];
+29			Circle circle  =  new Circle();
+30			Ambiguous  ambiguous =  new Ambiguous();
+31	
+32			shapes[0] = circle;
+33			shapes[l] = ambiguous;
+34	
+35			for  (Shape  s  :   shapes)   {
+36				s.printMe();
+37				System.out.println(s.computeArea());
+38			}
+39		}
+40	}
 ```
 
 The above code will print:
@@ -82,7 +82,7 @@ The above code will print:
 4    10.0
 ```
 
-Observe that Cire le overrode printMe(), whereas Ambiguous just left this method as-is.
+Observe that Circle overrode printMe(), whereas Ambiguous just left this method as-is.
 
 
 ### Collection Framework
@@ -90,32 +90,32 @@ Observe that Cire le overrode printMe(), whereas Ambiguous just left this method
 Java's collection framework is incredibly useful, and you will see it used throughout this book. Here are some of the most useful items:
 
 ArrayList: An ArrayList is a dynamically resizing array, which grows as you insert elements.
-```
+```java
 1    Arraylist<String> myArr =  new Arraylist<String>();
-2    myArr. add("one");
+2    myArr.add("one");
 3    myArr.add("two");
-4    System.out.println(myArr.get(0));  /*   prints <one>*/
+4    System.out.println(myArr.get(0));  /* prints <one> */
 ```
 Vector: A vector is very similar to an Arraylist except that it is synchronized.  Its syntax is almost identical as well.
 
-```
+```java
 1	Vector<String>  myVect	new	Vector<String>();
 2	myVect.add("one");		
-3	myVect. add("two");		
+3	myVect.add("two");		
 4   system.out.printin(myVect.get(0));
 ```
 LinkedList: Linkedlist is, of course, Java's built-in Linkedlist class. Though it rarely comes up in an interview, it's useful to study because it demonstrates some of the syntax for an iterator.
-```
+```java
 1     Linkedlist<String> mylinkedlist  = new Linkedlist<String>();
-2     mylinkedlist. add("two");
+2     mylinkedlist.add("two");
 3     myLinkedList.addFirst("one");
 4     Iterator<String> iter  =  mylinkedlist.iterator();
-5     while   (iter.hasNext()) {
+5     while (iter.hasNext()) {
 6          System.out.println(iter.next());
 7      }
 ```
 HashMap:The HashMap collection is widely used, both in interviews and in the real world. We've provided a snippet of the syntax below.
-```
+```java
 1     HashMap<String,   String> map=  new HashMap<String,  String>();
 2     map.put("one", "uno");
 3     map.put("two",  "dos");
