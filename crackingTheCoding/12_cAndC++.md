@@ -10,34 +10,34 @@ Though C++ classes have similar characteristics to those of other languages, we'
 The code below demonstrates the implementation of a basic class with inheritance.
 
 ```C
-1     #include <iostream>
-2    using namespace  std;
-3
-4    #define NAME_SIZE  50 II Defines a macro
-5
-6    class  Person {
-7          int id;  II all members  are private  by default
-8          char name[NAME_SIZE];
-9
-10     public:
-11      void aboutMe() {
-12          cout << "I  am  a person.";
-13        }
-14    } ;
-15
-16  class  Student :    public  Person {
-17     public:
-18        void  aboutMe() {
-19          cout <<  "I  am  a student.";
-20      }
-21   };
-22
-23  int main() {
-24      Student *  p = new   Student();
-25     p->aboutMe(); II prints  "I  am  a student."
-26      delete  p; II Important! Make sure to delete  allocated  memory.
-27     return  0;
-28     }
+1 	#include <iostream>
+2 	using namespace  std;
+3	
+4 	#define NAME_SIZE  50 // Defines a macro
+5	
+6 	class  Person {
+7 	int id;  // all members  are private  by default
+8 		char name[NAME_SIZE];
+9	
+10	public:
+11		void aboutMe() {
+12			cout << "I  am  a person.";
+13		}
+14	} ;
+15	
+16	class  Student :    public  Person {
+17	public:
+18		void  aboutMe() {
+19			cout <<  "I  am  a student.";
+20		}
+21	};
+22	
+23	int main() {
+24		Student *  p = new   Student();
+25		p->aboutMe(); // prints  "I  am  a student."
+26		delete  p; // Important! Make sure to delete  allocated  memory.
+27		return  0;
+28	}
 ```
 
 All data members and  methods are  private by  default in C++. One  can  modify  this  by introducing the keyword public.
@@ -52,14 +52,14 @@ If you just need to initialize primitive types,  a simple way to do it is this:
 ```C
 1      Person(int a) {
 2           id =  a;
-3       }
+3      }
 ```
 
 This works for primitive types,  but  you might instead want to do this:
 
 ```C
 1      Person(int a)  :   id(a) {
-2
+2      ...
 3      }
 ```
 
@@ -68,9 +68,9 @@ The  data member id  is assigned before the  actual object is created and  befor
 The destructor cleans up upon object deletion and  is automatically called  when an object is destroyed. It cannot take  an argument as we don't explicitly call a destructor.
 
 ```C
-1     -Person() {
-2           delete  obj;   //  free  any  memory   allocated  within  class 
-3      }
+1     ~Person() {
+2          delete  obj;   //  free  any  memory   allocated  within  class 
+3     }
 ```
 
 
@@ -78,14 +78,14 @@ The destructor cleans up upon object deletion and  is automatically called  when
 
 In an earlier example, we defined p to be of type Student:
 
-```
+```c
 1      Student *  p  =  new  Student();
 2      p->aboutMe();
 ```
 
 What would happen if we defined p to be a Person\*, like so?
 
-```
+```c
 1      Person *  p  =  new  Student();
 2      p->aboutMe();
 ```
@@ -95,19 +95,19 @@ In this case, "I   am  a  person" would be printed instead. This is because the 
 If we want to ensure that the  Student's implementation of aboutMe is called, we can define aboutMe in the  Person class to be virtual.
 
 ```C
-1      class  Person {
-2
-3           virtual void  aboutMe() {
-4                 cout <<  "I am a  person.";
-5           }
-6      };
-7
-8      class  Student :   public  Person {
-9        public:
-10         void  aboutMe() {
-11               cout <<  "I am a  student.";
-12       }
-13   } ;
+1 	class  Person {
+2	    ...
+3 		virtual void  aboutMe() {
+4 			cout <<  "I am a  person.";
+5 		}
+6 	};
+7	
+8 	class  Student :   public  Person {
+9 	public:
+10		void  aboutMe() {
+11			cout <<  "I am a  student.";
+12		}
+13	} ;
 ```
 
 Another usage for virtual functions is when we can't (or don't want to) implement a method for the parent class. Imagine, for example, that we want Student and Teacher to inherit from Person so that we can implement a common method such as addCourse(string  s). Calling addCourse on Person, however, wouldn't make much sense since the implementation depends on whether the object is actually a Student or Teacher.
@@ -116,34 +116,34 @@ In this case, we might want addCourse to be a virtual function defined within Pe
 mentation being left to the subclass.
 
 ```C
-1     class Person {
-2         int  id;// all members  are private by default
-3          char name[NAME_SIZE];
-4      public:
-5           virtual  void aboutMe() {
-6              cout <<  "I  am a  person." <<  endl;
-7          }
-8          virtual  bool addCourse(string s) =  0;
-9      };
-10
-11 class Student :    public Person {
-12    public:
-13        void aboutMe() {
-14            cout <<  "I  am a  student." <<  endl;
-15       }
-16
-17       bool addCourse(string s) {
-18            cout <<  "Added course " <<  s <<  "to student." <<  endl;
-19            return true;
-20        }
-21   };
-22
-23   int  main() { 
+1 	class Person {
+2 		int  id;// all members  are private by default
+3 		char name[NAME_SIZE];
+4 	public:
+5 		virtual  void aboutMe() {
+6 			cout <<  "I  am a  person." <<  endl;
+7 		}
+8 		virtual  bool addCourse(string s) =  0;
+9 	};
+10	
+11	class Student :    public Person {
+12	public:
+13		void aboutMe() {
+14			cout <<  "I  am a  student." <<  endl;
+15		}
+16	
+17		bool addCourse(string s) {
+18			cout <<  "Added course " <<  s <<  "to student." <<  endl;
+19			return true;
+20		}
+21	};
+22	
+23	int  main() {
 24		Person *  p  = new  Student();
-25		p->aboutMe();  //  prints  "I am a  student." 
+25		p->aboutMe();  //  prints  "I am a  student."
 26		p->addCourse("History");
-27		delete p; 
-28    }
+27		delete p;
+28	}
 ```
 
 Note that by defining addCourse to be a "pure virtual function;· Person is now an abstract class and we cannot instantiate it.
@@ -155,24 +155,24 @@ The virtual function naturally introduces the concept of a "virtual destructor."
 ment a destructor method for Person and Student. A naive solution might look like this:
 
 ```C
-1   class  Person {
-2       public:
-3          ~Person() {
-4           cout << "Deleting a person." << endl;
-5            }
-6     };
-7
-8     class Student    public Person   {
-9       public:
-10      ~student() {
-11          cout << "Deleting  a student."  << endl;
-12        }
-13   } ;
-14
-15   int  main() {
-16      Person *  p      new  Student();
-17     delete  p; //  prints "Deleting  a person."
-18  }
+1 	class  Person {
+2 	public:
+3 		~Person() {
+4 			cout << "Deleting a person." << endl;
+5 		}
+6 	};
+7	
+8 	class Student    public Person   {
+9 	public:
+10		~student() {
+11			cout << "Deleting  a student."  << endl;
+12		}
+13	} ;
+14	
+15	int  main() {
+16		Person *  p      new  Student();
+17		delete  p; //  prints "Deleting  a person."
+18	}
 ```
 
 As in the earlier example, since p is a Person, the destructor for the Person class is called. This is problem­atic because the memory for Student may not be cleaned up.
@@ -180,24 +180,24 @@ As in the earlier example, since p is a Person, the destructor for the Person cl
 To fix this, we simply define the destructor  for Person to be virtual.
 
 ```C
-1    class  Person {
-2     public:
-3          virtual �Person() {
-4            cout << "Deleting  a person."  << endl;
-5           }
-6    };
-7
-8     class  Student :  public  Person {
-9       public:
-10      ~student() {
-11          cout << "Deleting  a student."  < <   endl;
-12         }
-13   } ;
-14
-15   int  main() {
-16        Person *  p      new  Student();
-17     delete  p;
-18  }
+1 	class  Person {
+2 	public:
+3 		virtual ~Person() {
+4 			cout << "Deleting  a person."  << endl;
+5 		}
+6 	};
+7	
+8 	class  Student :  public  Person {
+9 	public:
+10		~student() {
+11			cout << "Deleting  a student."  < <   endl;
+12		}
+13	} ;
+14	
+15	int  main() {
+16		Person *  p      new  Student();
+17		delete  p;
+18	}
 ```
 
 This will output the following: 
@@ -210,14 +210,13 @@ Deleting  a person.
 
 Functions can specify default values, as shown below. Note that all default parameters must be on the right side of the function declaration,  as there would be no other way to specify how the parameters line up.
 
-```
-1   int func(int a, int b =  3) {
-2             X  =  a;
-
-3	y =  b;
-4 return  a +  b;	
-5	}	
-6		
+```c
+1	int func(int a, int b =  3) {
+2		X  =  a;
+3		y =  b;
+4		return  a +  b;
+5	}
+6	
 7	w = func(4);
 8	z = func(4,  5);
 ```
@@ -247,15 +246,15 @@ Two pointers can  equal each other,  such  that changing one's  value  also chan
 Note  that the  size of a pointer varies  depending on the  architecture: 32 bits on a 32-bit  machine and  64 bits on a 64-bit  machine. Pay attention to this difference, as it's common for interviewers to ask exactly  how much space a data structure takes  up.
 
 
-##### References
+**References**
 
 A reference is another name (an alias) for a pre-existing object and  it does not have memory of its own. For example:
 
 ```
-1     int a  =  s·,
-2       int &    b =  a.,
-3      b 
-4      cout << a; // prints  7 
+1     int a  =  5;
+2     int & b =  a;
+3     b = 7;
+4     cout << a; // prints  7 
 ```
 
 In line 2 above, b is a reference to a; modifying b will also modify  a.
@@ -263,12 +262,12 @@ In line 2 above, b is a reference to a; modifying b will also modify  a.
 You cannot create a reference without specifying where in memory it refers to. However, you can create a free-standing reference as shown below:
 ```
 1  /* allocates  memory  to store 12  and  makes   b  a  reference to this
-2   *  piece of memory.   *I
-3    const int  &    b  =  12;
+2   * piece of memory.   */
+3  const int  &    b  =  12;
 ```
 Unlike pointers, references cannot be null and  cannot be reassigned to another piece of memory.
 
-##### Pointer Arithmetic
+**Pointer Arithmetic**
 
 One  will often see programmers perform addition on a pointer, such  as what you see  below:
 
@@ -288,126 +287,44 @@ Performing p++  will skip ahead by  sizeof(int) bytes,  such  that the  code out
 Templates are a way of reusing code to apply the same class to different data types. For example, we might have a list-like data structure which we would like to use for lists of various types. The code below imple­ ments this with the Shiftedlist class.
 
 ```C
-1    template  <class T>class ShiftedList  {
-2           T* array;
-3            int  offset,  size;
-4     public:
-5            Shiftedlist(int sz)  :   offset(0),  size(sz) {
-6              array=  new  T[size];
-7            }
-8
-9         ~Shiftedlist()  {
-10           delete  [] array;
-11        }
-12
-13         void  shiftBy(int  n)  {
-14           offset=  (offset+  n)%  size;
-15          }
-16
-17          T  getAt(int i) {
-18               return array[convertindex(i)];
-19        }
-20
-21         void  setAt(T  item,  int i) {
-22            array[convertindex(i)]  =  item;
-23           }
-24
-25    private:
-26         int  convertlndex(int i) {
-27               int index  =  (i -  offset)%  size;
-28           while  (index  <   0)  index  +=  size;
-29               return  index;
-30       }
-31   };
+1 	template  <class T>class ShiftedList  {
+2 		T* array;
+3 		int  offset,  size;
+4 	public:
+5 		Shiftedlist(int sz)  :   offset(0),  size(sz) {
+6 			array =  new  T[size];
+7 		}
+8	
+9 		~Shiftedlist()  {
+10			delete  [] array;
+11		}
+12	
+13		void  shiftBy(int  n)  {
+14			offset =  (offset +  n) %  size;
+15		}
+16	
+17		T  getAt(int i) {
+18			return array[convertindex(i)];
+19		}
+20	
+21		void  setAt(T  item,  int i) {
+22			array[convertindex(i)]  =  item;
+23		}
+24	
+25	private:
+26		int  convertlndex(int i) {
+27			int index  =  (i -  offset) %  size;
+28			while  (index  <   0)  index  +=  size;
+29			return  index;
+30		}
+31	};
 ```
 
 ---
 Interview Questions
 ---
  
-12.1    Last K Lines: Write a method to print the last Klines of an input file using C++.
-
-Hints:#449, #459
-
-12.2 	Reverse String: Implement a function void reverse( char* str) in C or C++ which reverses a null-terminated string.
-
-Hints:#410, #452....... 423
-
-12.3 	Hash Table vs. STL Map: Compare and contrast a hash table and an STL map.  How  is a hash table implemented? If the number of inputs is small, which data structure options can be used instead of a hash table?
-
-Hints:#423 ....pg423
-
-12.4    Virtual Functions: How do virtual functions work in C++?
-
-Hints:#463
-
-12.5	Shallow vs. Deep Copy: What is the difference between deep copy and shallow copy? Explain how you would use each.
-
-Hints:#445
-
-
-12.6    Volatile: What is the significance of the keyword"volatile"in C?
-
-Hints:#456
-
-
-12.7    Virtual Base Class: Why does a destructor in base class need to be declared virtual?
-
-Hints:#421, #460 ··--·····------- --·--- ..........--P9 427
-
-12.8 	Copy Node: Write a method that takes a pointer to a Node structure as a parameter and returns a complete copy of the passed in data structure. The Node data structure contains two pointers to other Nodes.
-
-Hints:#427, #462
-
-12.9 	Smart Pointer: Write a smart pointer class. A smart pointer is a data type, usually implemented with templates, that simulates a pointer while also providing automatic garbage collection. It automati­ cally counts the number of references to a SmartPointer<T\*> object and frees the object of type T when the reference count hits zero.
-
-Hints: #402, #438, #453 ,..            pg428
-
-12.10  Malloc: Write an aligned malloc and free function that supports allocating memory such that the memory address returned is divisible by a specific power of two.
-
-EXAMPLE
-
-align_malloc (1000, 128) will return a memory address that is a multiple of 128 and that points to memory of size 1000 bytes.
-
-aligned_free () will free memory allocated by align_malloc.
-
-Hints:#473, #432, #440 .......pg430
-
-12.11 20 Alloc: Write a function in C called my2DA1loc  which allocates a two-dimensional array. Mini­ mize the number of calls to malloc and make sure that the memory is accessible by the notation arr[i][j].
-
-Hints: #406, #478, #426
-
-Additional Questions: Linked Lists (#2.6), Testing (#11.1), Java  (#13.4), Threads and Locks (#15.3). 
-
-Hints start on page 676.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-12.1    Last K Lines: Write a method to print the last Klines of an input file using C++.
-
-
+**12.1    Last K Lines:** Write a method to print the last Klines of an input file using C++.
 
 SOLUTION
 
@@ -423,37 +340,37 @@ With a circular array, we always replace  the oldest item when we read a new lin
 
 The following is an example of a circular array: 
 ```
-step  1 (initially): array    {a,   b,  c,   d,  e, f}. p   =    0
-step  2 (insert g):  array    {g,   b,  c,   d,  e, f}. p   =    1    
-step  3 (insert h):  array    {g,   h,  c,   d,  e, f}. p   =    2 
-step  4 (insert i):  array    {g,   h,  i,   d,  e, f}. p   =    3
+step  1 (initially): array    {a,   b,  c,   d,  e, f}. p = 0
+step  2 (insert g):  array    {g,   b,  c,   d,  e, f}. p = 1    
+step  3 (insert h):  array    {g,   h,  c,   d,  e, f}. p = 2 
+step  4 (insert i):  array    {g,   h,  i,   d,  e, f}. p = 3
 ```
 
 The code below implements this algorithm.
  
 ```c
-1     void  printlast10Lines(char*  fileName)  {
-2          const  int K   =  10;
-3         ifstream  file (fileName);
-4          string L[K);
-5         int size   = 0;
-6
-7         /* read file  line by   line into circular array  */
-8          /* peek()  so an EOF   following  a line ending is not  considered a  separate  line */
-9          w hile  (file.peek()  !=  EOF) {
-10             getline(file,   L[size% K));
-11             size++;
-12        }
-13
-14       /* compute  start of  circular array,   and the  size  of  it */
-15       int start    size>  K?   (size%  K)  :   0;
-16        int count=  min(K, size);
-17
-18         /* print  elements in the order they were   read */
-19        for  (inti=  0;  i <  count;  i++)  {
-20               cout <<  L[(start +  i) %   K]  <<  endl;
-21          }
-22    }
+1 	void  printlast10Lines(char*  fileName)  {
+2 		const  int K   =  10;
+3 		ifstream  file (fileName);
+4 		string L[K];
+5 		int size   = 0;
+6	
+7 		/* read file  line by   line into circular array  */
+8 		/* peek()  so an EOF   following  a line ending is not  considered a  separate  line */
+9 		while  (file.peek()  !=  EOF) {
+10			getline(file,   L[size % K]);
+11			size++;
+12		}
+13	
+14		/* compute  start of  circular array,   and the  size  of  it */
+15		int start    size >  K ?   (size %  K)  :   0;
+16		int count =  min(K, size);
+17	
+18		/* print  elements in the order they were   read */
+19		for  (inti =  0;  i <  count;  i++)  {
+20			cout <<  L[(start +  i) %   K]  <<  endl;
+21		}
+22	}
 ```
 
 This solution will require reading in the whole file, but only ten lines will be in memory at any given point.
@@ -469,24 +386,25 @@ This is a classic interview question. The only"gotcha" is to try to do it in pla
 We will implement this in C.
 
 ```c
-1      void reverse(char *str)  {
-2           char* end=  str;
-3          char tmp;
-4           if (str) {
-5                while (*end)  {/*  find end   of the string*/
-6                     ++end;
-7                  } 
-8				  --end; /* set one   char back, since last  char is  null  */
-9				  
-10				  /* swap  characters from   start  of string with the end   of the string, until the
-11				  *  pointers meet   in middle. */
-12				  while (str <  end)  {
-13				  	tmp=  *str;
-14				  	*str++ =  *end;
-15				  	*end-- =  tmp;
-16				  } 
-17        }
-18   }
+1 	void reverse(char *str)  {
+2 		char* end =  str;
+3 		char tmp;
+4 		if (str) {
+5 			while (*end)  {/*  find end   of the string*/
+6 				++end;
+7 			}
+8			--end; /* set one   char back, since last  char is  null  */
+
+9	
+10			/* swap  characters from   start  of string with the end   of the string, until the
+11			*  pointers meet   in middle. */
+12			while (str <  end)  {
+13				tmp =  *str;
+14				*str++ =  *end;
+15				*end-- =  tmp;
+16			}
+17		}
+18	}
 ```
 
 This is just one  of many  ways to implement this solution. We could even implement this code recursively (but we wouldn't recommend it).
@@ -503,7 +421,7 @@ In a hash  table, a value  is stored by calling  a hash  function on a key. Valu
 
 An STL map inserts the key/value pairs into a binary search tree based on the keys. There is no need to handle collisions, and, since the tree is balanced,the insert andlookup time is guaranteed to be O(log N).
 
-##### How is a hash table implemented?
+**How is a hash table implemented?**
 
 A hash table is traditionally implemented with an array of linked lists. When we want to insert a key/value pair, we map the key to an index in the array using a hash function. The value is then inserted into the linked list at that position.
 
@@ -517,7 +435,7 @@ To summarize, the hash table will be implemented with an array of linked lists, 
 
 3.  We may also wish to implement  methods  to dynamically increase or decrease  the  hash table  size depending on capacity. For example, when the ratio of the number of elements to the table size exceeds a certain threshold, we may wish to increase the hash table size. This would mean creating a new hash table and transferring the entries from the old table to the new table. Because this is an expensive opera­ tion, we want to be careful to not do it too often.
 
-##### What  can be used instead of a hash table, if the number of inputs  is small?
+**What  can be used instead of a hash table, if the number of inputs  is small?**
 
 You can use an STL map or a binary tree. Although this takes O ( log (n)) time, the number of inputs may be small enough to make this time negligible.
 
@@ -535,29 +453,29 @@ Thus, when we assign the derived class object to the base class pointer, the vpt
 Consider the following code.
 
 ```c
-1     class Shape  {
-2         public:
-3         int edge_length;
-4          virtual int circumference()   {
-5                 cout <<  "Circumference of  Base   Class\n";
-6                 return  0;
-7           }
-8     };
-9
-10    class  Triangle:  public Shape   {
-11        public:
-12         int  circumference () {
-13               cout<< "Circumference of Triangle  Class\n";
-14              return 3  *  edge_length;
-1.5           }
-16   };
-17
-18    void main()  {
-19         Shape   *  x  = new  Shape();
-20         x->circumference();  // "Circumference of  Base   Class"
-21         Shape   *y  = new  Triangle();
-22         y->circumference();  // "Circumference of Triangle  Class"
-23   }
+1 	class Shape  {
+2 	public:
+3 		int edge_length;
+4 		virtual int circumference()   {
+5 			cout <<  "Circumference of  Base   Class\n";
+6 			return  0;
+7 		}
+8 	};
+9	
+10	class  Triangle:  public Shape   {
+11	public:
+12		int  circumference () {
+13			cout << "Circumference of Triangle  Class\n";
+14			return 3  *  edge_length;
+15		}
+16	};
+17	
+18	void main()  {
+19		Shape   *  x  = new  Shape();
+20		x->circumference();  // "Circumference of  Base   Class"
+21		Shape   *y  = new  Triangle();
+22		y->circumference();  // "Circumference of Triangle  Class"
+23	}
 ```
 
 In the  previous example, circumference is a virtual  function in the  Shape class, so it becomes virtual in each of the  derived classes (Triangle, etc). C++ non-virtual function calls are resolved at compile time with static binding, while virtual function calls are resolved at runtime with dynamic binding.
@@ -574,18 +492,18 @@ A shallow copy copies all the  member values from one  object to another. A deep
 An example of shallow and  deep copy is below.
 
 ```c
-1      struct  Test {
-2           char *  ptr;
-3       };
-4
-5      void  shallow_copy(Test &  src,  Test &  dest) {
-6           dest.ptr = src.ptr;
-7      }
-8
-9     void deep_copy(Test &  src,  Test &  dest) {
-10        dest.ptr =  (char*)malloc(strlen(src.ptr) +  1);
-11         strcpy(dest.ptr, src.ptr);
-12    }
+1 	struct  Test {
+2 		char *  ptr;
+3 	};
+4	
+5 	void  shallow_copy(Test &  src,  Test &  dest) {
+6 		dest.ptr = src.ptr;
+7 	}
+8	
+9 	void deep_copy(Test &  src,  Test &  dest) {
+10		dest.ptr =  (char*)malloc(strlen(src.ptr) +  1);
+11		strcpy(dest.ptr, src.ptr);
+12	}
 ```
 
 Note that shallow_copy may cause a lot of programming runtime errors, especially with the creation and deletion of objects. Shallow copy  should be used very carefully  and  only when a programmer really under­ stands what he wants to do. In most cases,  shallow copy  is used when there is a need to pass  information about a complex structure without actual duplication of data.  One must also be careful with destruction of objects in a shallow copy.
@@ -601,10 +519,10 @@ SOLUTION
 The keyword volatile informs the compiler that the value of variable it is applied to can change from the outside, without any update done by the code. This may be done by the operating system, the hardware, or another thread. Because the value can change unexpectedly, the compiler will therefore reload the value each time from memory.
 
 A volatile integer can be declared by either of the following statements:
-	```
+```
 	int volatile x;
 	volatile int x;
-	```
+```
 To declare a pointer to a volatile integer, we do the following:
 ```
 volatile int *  x;
@@ -619,7 +537,7 @@ If you wanted to declare a volatile variable pointer for volatile memory (both p
 int volatile *  volatile  x;
 ```
 Volatile variables are not optimized, which can be very useful. Imagine this function:
-```
+```c
 1     int opt  =  1;
 2     void  Fn(void)   {
 3         start:
@@ -628,7 +546,7 @@ Volatile variables are not optimized, which can be very useful. Imagine this fun
 6     }
 ```
 At first glance, our code appears to loop infinitely. The compiler may try to optimize it to:
-```
+```c
 1     void  Fn(void)   {
 2          start:
 3               int opt  =  1;
@@ -639,7 +557,7 @@ At first glance, our code appears to loop infinitely. The compiler may try to op
 This becomes an infinite loop. However, an external operation might write 'O'to the location of variable opt, thus breaking the loop.
 
 To prevent the compiler from performing such optimization, we want to signal that another element of the system could change the variable. We do this using the volatile keyword, as shown below.
-```
+```c
 1     volatile int opt  =  1;
 2     void  Fn(void)   {
 3          start:
@@ -659,25 +577,25 @@ SOLUTION
 Let's think about why we have virtual methods to start with. Suppose we have the following code:
 
 ```c
-1       class Foo {
-2      public:
-3           void f();
-4      };
-5
-6      class Bar : public  Foo {
-7       public:
-8          void f();
-9     }
-10
-11   Foo * p = new   Bar();
-12   p->f();
+1 	class Foo {
+2 	public:
+3 		void f();
+4 	};
+5	
+6 	class Bar : public  Foo {
+7 	public:
+8 		void f();
+9 	}
+10	
+11	Foo * p = new   Bar();
+12	p->f();
 ```
 
-Calling p->f() will result in a call to Foo: :f().This is because pis a pointer to Foo, andf() is not virtual.
+Calling p->f() will result in a call to Foo: :f().This is because pis a pointer to Foo, and f() is not virtual.
 
-To ensure that p- >f() will invoke the most derived implementation off(), we need to declaref() to be a virtual function.
+To ensure that p->f() will invoke the most derived implementation of f(), we need to declare f() to be a virtual function.
 
-Now, let's go back to our destructor. Destructors are used to clean up memory  and resources.   If Foo's destructor were not virtual, then Foo's destructor would be called, even when pis really of type Bar.
+Now, let's go back to our destructor. Destructors are used to clean up memory  and resources. If Foo's destructor were not virtual, then Foo's destructor would be called, even when pis really of type Bar.
 
 This is why we declare destructors to be virtual; we want to ensure that the destructor for the most derived class is called.
 
@@ -689,38 +607,37 @@ SOLUTION
 
 ---
 
-
 The algorithm will maintain a mapping from a node address in the original structure to the corresponding node in the new structure.This mapping will allow us to discover previously copied nodes during a tradi­ tional depth-first traversal of the structure. Traversals often mark visited nodes-the mark can take many forms and does not necessarily need to be stored in the node.
 
 Thus, we have a simple recursive algorithm:
 ```c
-1     typedef map<Node*,  Node*> NodeMap;
-2
-3      Node * copy_recursive(Node   * cur, NodeMap  & nodeMap)   {
-4       if (cur == NULL)   {
-5               return NULL;
-6            }
-7
-8        NodeMap::iterator  i =  nodeMap.find(cur);
-9          if (i !=  nodeMap.end()) {
-10            // we've been here before, return the copy
-11            return i->second;
-12        }
-13
-14       Node*  node =  new Node;
-15       nodeMap[cur] =  node; //  map current before   traversing links
-16       node->ptrl =  copy_recursive(cur->ptrl,  nodeMap);
-17       node->ptr2  =  copy_recursive(cur->ptr2,  nodeMap);
-18       return node;
-19     }
-20
-21  Node*  copy_structure(Node* root)  {
-22       NodeMap  nodeMap; //  we  will need an empty map
-23       return  copy_recursive(root, nodeMap);
-24   }
+1 	typedef map<Node*,  Node*> NodeMap;
+2	
+3 	Node * copy_recursive(Node   * cur, NodeMap  & nodeMap)   {
+4 		if (cur == NULL)   {
+5 			return NULL;
+6 		}
+7	
+8 		NodeMap::iterator  i =  nodeMap.find(cur);
+9 		if (i !=  nodeMap.end()) {
+10			// we've been here before, return the copy
+11			return i->second;
+12		}
+13	
+14		Node*  node =  new Node;
+15		nodeMap[cur] =  node; //  map current before   traversing links
+16		node->ptrl =  copy_recursive(cur->ptrl,  nodeMap);
+17		node->ptr2  =  copy_recursive(cur->ptr2,  nodeMap);
+18		return node;
+19	}
+20	
+21	Node*  copy_structure(Node* root)  {
+22		NodeMap  nodeMap; //  we  will need an empty map
+23		return  copy_recursive(root, nodeMap);
+24	}
 ```
 
-**12.9 	Smart Pointer:** Write a smart pointer class. A smart pointer is a data type, usually implemented with templates, that simulates a pointer while also providing automatic garbage collection.  It automatically counts the number of references to a SmartPointer<T\*> object and frees the object of type T when the reference count hits zero.
+**12.9 	Smart Pointer:** Write a smart pointer class. A smart pointer is a data type, usually implemented with templates, that simulates a pointer while also providing automatic garbage collection.  It automatically counts the number of references to a *SmartPointer<T\*>* object and frees the object of type T when the reference count hits zero.
 
 SOLUTION
 
@@ -733,97 +650,97 @@ This is one of those problems that seems at first glance pretty overwhelming, es
 In terms of the approach, we need a reference count variable that is incremented when we add a new refer­ ence to the object and decremented when we remove a reference. The code should look something like the below pseudocode:
 
 ```c
-1      template   <class  T>  class SmartPointer {
-2       /*    The smart  pointer class needs  pointers to  both  the  object itself and to  the
-3         *   ref count.   These must be  pointers, rather than  the  actual object or  ref count
-4         *   value,   since  the  goal  of  a  smart  pointer is that the  reference count  is
-5         *   tracked across  multiple smart  pointers to  one object. */
-6         T*   obj;
-7             unsigned*   ref_count;
-8       }
+1	template   <class  T>  class SmartPointer {
+2		/*    The smart  pointer class needs  pointers to  both  the  object itself and to  the
+3		*   ref count.   These must be  pointers, rather than  the  actual object or  ref count
+4		*   value,   since  the  goal  of  a  smart  pointer is that the  reference count  is
+5		*   tracked across  multiple smart  pointers to  one object. * /
+6		T*   obj;
+7		unsigned*   ref_count;
+8	}
 ```
 We know we need constructors and a single destructor for this class, so let's add those first.
 ```c
-1    SmartPointer(T*  object)  {
-2       /*    We   want to  set  the  value  of  T*   obj,   and  set  the  reference  counter  to  1. */
-3      }
-4
-5      SmartPointer(SmartPointer<T>& sptr)  {
-6       /*    This  constructor creates a new smart  pointer that  points to  an existing
-7             *   object.  We   will need to  first set  obj  and ref_count to  pointer to  sptr's  obj
-8         *   and ref_count.  Then,  because  we  created a new reference to  obj,   we  need to
-9           *  increment  ref_count. */
-10    }
-11
-12  ~SmartPointer(SmartPointer<T> sptr)   {
-13     /*    We   are  destroying a reference to  the  object.  Decrement ref_count.  If
-14         * ref count  is 0,  then  free the  memory  created by the  integer and destroy the
-15         * object.  */
-16   }
+1 		SmartPointer(T *  object)  {
+2 			/* We want to set the value of T* obj, and set  the  reference  counter  to  1. */
+3 		}
+4	
+5 		SmartPointer(SmartPointer<T>& sptr)  {
+6 		   /* This  constructor creates a new smart  pointer that  points to  an existing
+7 			* object.  We   will need to  first set  obj  and ref_count to  pointer to  sptr's  obj
+8 			* and ref_count.  Then,  because  we  created a new reference to  obj,   we  need to
+9 			* increment  ref_count. */
+10		}
+11	
+12		~SmartPointer(SmartPointer<T> sptr)   {
+13		   /* We   are  destroying a reference to  the  object.  Decrement ref_count.  If
+14			* ref count  is 0,  then  free the  memory  created by the  integer and destroy the
+15			* object.  */
+16		}
 ```
 There's one additional way that referencescan becreated: by setting one SmartPointer equal to another. We'll want to override the equal operator to handle this, but for now, let's sketch the code like this.
 ```c
 1      onSetEquals(SmartPoint<T>  ptrl, SmartPoint<T> ptr2) {
 2         /*  If ptrl has  an existing value,   decrement  its  reference count.   Then,  copy the
-3              * pointers to  obj  and ref_count over.  Finally,  since   we  created a  new
-4           * reference,  we  need to  increment  ref_count. */
+3          * pointers to  obj  and ref_count over.  Finally,  since   we  created a  new
+4          * reference,  we  need to  increment  ref_count. */
 5       }
 ```
 Getting just the approach, even without filling in the complicated C++ syntax, would count for a lot. Finishing out the code is now just a matter of filling the details.
 ```c
-1      template <class  T>  class  SmartPointer {
-2      public:
-3            SmartPointer(T * ptr) {
-4              ref= ptr;
-5                  ref_count= (unsigned*)malloc(sizeof(unsigned));
-6              *ref_count =  1;
-7           }
-8
-9         SmartPointer(SmartPointer<T>  &  sptr) {
-10            ref= sptr.ref;
-11            ref_count= sptr.ref_count;
-12            ++(*ref_count);
-13          }
-14
-15       /*  Override  the  equal  operator,  so  that when you set one smart  pointer equal  to
-16         * another   the  old  smart  pointer has  its  reference count  decremented  and the  new
-17         * smart  pointer has  its  reference count  incrememented.  */
-18       SmartPointer<T> &  operator=(SmartPointer<T>  &   sptr) {
-19            if (this == &sptr)  return *this;
-20
-21            /*  If already assigned to  an object,  remove one reference.  */
-22            if (*ref_count  >   0)  {
-23                 remove();
-24                }
-25
-26            ref= sptr.ref;
-27            ref_count =  sptr.ref_count;
-28            ++(*ref_count);
-29            return *this;
-30        }
-31
-32       ~SmartPointer() {
-33            remove();//  Remove  one reference to  object.
-34        }
-35
-36       T  getValue() {
-37            return *ref;
-38         }
-39
-40    protected:
-41       void  remove()  {
-42            --(*ref_count);
-43            if (*ref_count== 0)  {
-44                    delete ref;
-45                   free(ref_count);
-46                   ref= NULL;
-47                  ref_count = NULL;
-48              }
-49         }
-50
-51        T  *  ref;
-52        unsigned *  ref_count;
-53     } ;
+1 	template <class  T>  class  SmartPointer {
+2 		public:
+3 				SmartPointer(T * ptr) {
+4 					ref = ptr;
+5 					ref_count = (unsigned*)malloc(sizeof(unsigned));
+6 					*ref_count =  1;
+7 				}
+8		
+9 				SmartPointer(SmartPointer<T>  &  sptr) {
+10					ref = sptr.ref;
+11					ref_count = sptr.ref_count;
+12					++(*ref_count);
+13				}
+14		
+15				/* Override  the  equal  operator,  so  that when you set one smart  pointer equal  to
+16				 * another   the  old  smart  pointer has  its  reference count  decremented  and the  new
+17				 * smart  pointer has  its  reference count  incrememented. */
+18				SmartPointer<T> &  operator=(SmartPointer<T>  &   sptr) {
+19				if (this == &sptr)  return *this;
+20		
+21				/*  If already assigned to  an object,  remove one reference. */
+22				if (*ref_count  >   0)  {
+23					remove();
+24				}
+25		
+26				ref = sptr.ref;
+27				ref_count =  sptr.ref_count;
+28				++(*ref_count);
+29				return *this;
+30			}
+31		
+32			~SmartPointer() {
+33				remove();//  Remove  one reference to  object.
+34			}
+35		
+36			T  getValue() {
+37				return *ref;
+38			}
+39		
+40		protected:
+41			void  remove()  {
+42				--(*ref_count);
+43				if (*ref_count == 0)  {
+44					delete ref;
+45					free(ref_count);
+46					ref = NULL;
+47					ref_count = NULL;
+48				}
+49			}
+50		
+51			T  *  ref;
+52			unsigned *  ref_count;
+53	} ;
 ```
 The code for this problem is complicated, and you probably wouldn't be expected to complete it flawlessly.
 
@@ -847,12 +764,12 @@ Suppose we are requesting  a 100-byte chunk of memory, and we want it to start a
 
 We could then do something like:
 ```c
-1     void*  aligned_malloc(size_t required_bytes,  size_t  alignment) {
-2          int offset =  alignment  -  1;
-3          void*  p=  (void*)  malloc(required_bytes + offset);
-4          void*  q = (void*) (((size_t)(p)  + offset) &  =(alignment  -  1));
-5          return q;
-6     }
+1	void*  aligned_malloc(size_t required_bytes,  size_t  alignment) {
+2		int offset =  alignment  -  1;
+3		void*  p =  (void*)  malloc(required_bytes + offset);
+4		void*  q = (void*) (((size_t)(p)  + offset) &  = (alignment  -  1));
+5		return q;
+6	}
 ```
 Line 4 is a bit tricky, so let's discuss it. Suppose alignment is 16. We know that one of the first 16 memory address in the block at p must be divisible by 16. With (p +  15)   &  11.  .. 10000 we advance as need to this address. ANDing the last four bits of p  +  15 with 0000 guarantees  that this new value will be divisible by 16 (either at the original p or in one of the following 15 addresses).
 
@@ -866,23 +783,23 @@ Therefore, to guarantee both an aligned address and space for this pointer, we w
 
 The code below implements this approach.
 ```c
-1     void*  aligned_malloc(size_t required_bytes, size  t alignment)  {
-2          void*  pl;//  initial block
-3          void*  p2;  // aligned block  inside initial  block
-4          int offset=  alignment -  1  + sizeof(void*);
-5          if ((pl= (void*)malloc(required_bytes  + offset))      NULL)  {
-6               return NULL;
-7          }
-8          p2 =  (void*)(((size_t)(pl) + offset) &  =(alignment  -  1));
-9          ((void  **)p2)[-1]  =  pl;
-10        return p2;
-11   }
+1 	void*  aligned_malloc(size_t required_bytes, size  t alignment)  {
+2 		void*  pl;//  initial block
+3 		void*  p2;  // aligned block  inside initial  block
+4 		int offset =  alignment -  1  + sizeof(void*);
+5 		if ((pl = (void*)malloc(required_bytes  + offset))      NULL)  {
+6 			return NULL;
+7 		}
+8 		p2 =  (void*)(((size_t)(pl) + offset) &  = (alignment  -  1));
+9 		((void  **)p2)[-1]  =  pl;
+10		return p2;
+11	}
 12
-13   void  aligned_free(void *p2)  { 
-14	/* for   consistency,  we  use  the  same names as  aligned_malloc*/
-15	void*  pl  =  ((void**)p2)[-1];
-16	free(pl); 
-17   }
+13	void  aligned_free(void *p2)  {
+14		/* for   consistency,  we  use  the  same names as  aligned_malloc*/
+15		void*  pl  =  ((void**)p2)[-1];
+16		free(pl);
+17	}
 ```
 
 Let's look at the pointer arithmetic in lines 9 and 15.  If we treat p2 as a void** (or an array of void\*'s), we can just look at the index -  1 to retrieve pl.
@@ -891,7 +808,7 @@ In aligned_free, we take p2 as the same p2 returned  from aligned_malloc. As bef
 
 
 **12.11 2D Alloc:**  Write a function in C  called my2DA1loc which allocates a two-dimensional  array.
-Minimize the number  of calls to malloc and make sure that  the memory is accessible by the notation arr [ i] [ j].
+Minimize the number  of calls to malloc and make sure that  the memory is accessible by the notation arr[i][j].
 
 SOLUTION
 
@@ -903,15 +820,15 @@ The basic idea is to create a one-dimensional array of pointers. Then, for each 
 
 The code below implements this.
 ```c
-l    int** my2DA1loc(int  rows,   int cols) {
-2          int**  rowptr;
-3          int i;
-4          rowptr   =  (int**) malloc(rows  * sizeof(int*));
-5             for   (i =  0;  i <   rows;   i++)    {
-5               rowptr[i]  =  (int*)  malloc(cols * sizeof(int));
-7          }
-8           return rowptr;
-9     }
+l	int** my2DA1loc(int  rows,   int cols) {
+2		int**  rowptr;
+3		int i;
+4		rowptr   =  (int**) malloc(rows  * sizeof(int*));
+5		for   (i =  0;  i <   rows;   i++)    {
+5			rowptr[i]  =  (int*)  malloc(cols * sizeof(int));
+7		}
+8		return rowptr;
+9	}
 ```
 
 Observe how, in the above code, we've told rowptr where exactly each index should point. The following diagram represents how this memory is allocated.
@@ -920,12 +837,12 @@ Observe how, in the above code, we've told rowptr where exactly each index shoul
 
 To free this memory, we cannot simply  call free on rowptr. We need to make sure  to free not  only the memory from the  first malloc call, but  also each subsequent call.
 ```c
-1      void  my2DDealloc(int** rowptr,   int  rows) {
-2           for (i =  0;   i <   rows; i++)  {
-3                 free(rowptr[i]);
-4        }
-5           free(rowptr);
-6       }
+1	void  my2DDealloc(int** rowptr,   int  rows) {
+2		for (i =  0;   i <   rows; i++)  {
+3			free(rowptr[i]);
+4		}
+5		free(rowptr);
+6	}
 ```
 Rather  than allocating the  memory in many different blocks  (one  block  for each row, plus  one block  to specify where each row is located), we can allocate this in a consecutive block of memory. Conceptually, for a two-dimensional array with five rows and  six columns, this would look like the  following.
 
@@ -935,19 +852,19 @@ If it seems strange to view the  2D array like this (and it probably does),  rem
 
 To implement this solution, we do the following.
 ```c
-1     int** my2DA1loc(int rows,  int cols) {
-2           int i;
-3           int  header =  rows   *  sizeof(int*);
-4           int  data = rows   *  cols *  sizeof(int);
-5           int**  rowptr =  (int**)malloc(header +  data);
-6           if (rowptr ==  NULL) return NULL;
+1 	int** my2DA1loc(int rows,  int cols) {
+2 		int i;
+3 		int  header =  rows   *  sizeof(int*);
+4 		int  data = rows   *  cols *  sizeof(int);
+5 		int**  rowptr =  (int**)malloc(header +  data);
+6 		if (rowptr ==  NULL) return NULL;
 7
-8           int* buf   =  (int*)  (rowptr +  rows);
-9           for (i =  0;   i <   rows; i++)  {
-10               rowptr[i]  =  buf   +  i *  cols;
-11         }
-12         return rowptr;
-13     }
+8 		int* buf   =  (int*)  (rowptr +  rows);
+9 		for (i =  0;   i <   rows; i++)  {
+10			rowptr[i]  =  buf   +  i *  cols;
+11		}
+12		return rowptr;
+13	}
 ```
 You should carefully  observe what is happening on lines 11 through 13. lf there are five rows of six columns each,  array[0] will point to array[S], array[1] will point to array[11], and  so on.
 

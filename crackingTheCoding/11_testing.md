@@ -27,29 +27,29 @@ Some candidates are surprised to be asked questions like how to test a pen. Afte
 
 Question: How would you test a paperclip?
 
-###### Step 1: Who will use it? And why?
+**Step 1: Who will use it? And why?**
 
 You need to discuss with your interviewer who is using the product and for what purpose. The answer may not be what you think. The answer could be"by teachers, to hold papers together;' or it could be"by artists, to bend into the shape of animal:' Or, it could be both. The answer to this question will shape how you handle the remaining questions.
 
-###### Step 2: What are the use cases?
+**Step 2: What are the use cases?**
 
 It will be useful for you to make a list of the use cases. In this case, the use case might be simply fastening paper together in a non-damaging (to the paper) way.
 
 For other questions, there might be multiple use cases. It might be, for example, that the product needs to be able to send and receive content, or write and erase, and so on.
 
-###### Step 3: What are the bounds of use?
+**Step 3: What are the bounds of use?**
 
 The bounds of use might mean holding up to thirty sheets of paper in a single usage without permanent damage (e.g., bending), and thirty to fifty sheets with minimal permanent bending.
 
 The bounds also extend to environmental factors as well. For example, should the paperclip work during very warm temperatures (90 - 110 degrees Fahrenheit)? What about extreme cold?
 
-###### Step 4: What are the stress/ failure conditions?
+**Step 4: What are the stress/ failure conditions?**
 
 No product is fail-proof, so analyzing failure conditions  needs to be part of your testing. A good discussion to have with your interviewer is about when it's acceptable (or even necessary) for the product  to fail, and what failure should mean.
 
 For example, if you were testing a laundry machine, you might decide that the machine should be able to handle at least 30 shirts or pants. Loading 30 - 45 pieces of clothing may result in minor failure, such as the clothing being inadequately cleaned. At more than 45 pieces of clothing, extreme failure might be accept­ able. However, extreme failure in this case should probably mean the machine never turning on the water. It should certainly not mean a flood or a fire.
 
-###### Step 5: How would you perform the testing?
+**Step 5: How would you perform the testing?**
 
 In some cases, it might also be relevant to discuss the details of performing the testing. For example, if you need to make sure a chair can withstand normal usage for five years, you probably can't actually place it in a home and wait five years. Instead, you'd need to define what"normal" usage is (How many "sits" per year on the seat? What about the armrest?). Then, in addition to doing some manual testing, you would likely want a machine to automate some of the usage.
 
@@ -65,29 +65,28 @@ Note that software testing has two core aspects to it:
 
 Let's walk through an approach from start to end.
 
-###### Step 1: Are we doing Black Box Testing or White Box Testing?
+**Step 1: Are we doing Black Box Testing or White Box Testing?**
 
 Though this question can often be delayed to a later step, I like to get it out of the way early on. Check with your interviewer as to whether you're doing black box testing or white box testing-or both.
 
-###### Step 2: Who will  use it? And why?
+**Step 2: Who will  use it? And why?**
 
 Software typically has one or more target users, and  the features are designed  with this in mind. For example, if you're asked to test software for parental controls on a web browser, your target users include both parents (who are implementing the blocking) and children (who are the recipients of blocking). You may also have "guests" (people who should neither be implementing nor receiving blocking).
 
-###### Step 3: What are the use cases?
+**Step 3: What are the use cases?**
 
 In the software blocking scenario, the use cases of the parents include installing the software, updating controls, removing controls, and of course their own personal internet usage. For the children, the use cases include accessing legal content as well as "illegal" content.
 
 Remember that it's not up to you to just magically decide the use cases. This is a conversation to have with your interviewer.
-
-###### Step 4: What are  the bounds of use?
+**###### Step 4: What are  the bounds of use?**
 
 Now that we have the vague use cases defined, we need to figure out what exactly this means. What does it mean for a website to be blocked? Should just the "illegal" page be blocked, or the entire website? Is the application supposed to"learn" what is bad content, or is it based on a white list or black list? If it's supposed to learn what inappropriate content is, what degree of false positives or false negatives is acceptable?
 
-###### Step 5: What are the stress conditions/ failure conditions?
+**Step 5: What are the stress conditions/ failure conditions?**
 
 When the software fails-which it inevitably will-what should the failure look like? Clearly, the software failure shouldn't crash the computer. Instead, it's likely that the software should just permit a blocked site, or ban an allowable site. In the latter  case, you might want to discuss the possibility  of a selective override with a password from the parents.
 
-###### Step 6: What are the test cases? How would you perform the testing?
+**Step 6: What are the test cases? How would you perform the testing?**
 
 Here is where the distinctions between manual and automated testing, and between black box and white box testing, really come into play.
 
@@ -104,9 +103,9 @@ In many ways, testing a function  is the easiest type of testing. The conversati
 
 However, don't overlook the value of some conversation with your interviewer. You should discuss any assumptions with your interviewer, particularly with respect to how to handle specific situations.
 
-Suppose you were asked to write code to test sort ( int [] array), which sorts an array of integers. You might proceed as follows.
+Suppose you were asked to write code to test sort (int [] array), which sorts an array of integers. You might proceed as follows.
 
-###### Step  1: Define the test cases
+**Step  1: Define the test cases**
 
 In general, you should think about the following types of test cases:
 
@@ -117,23 +116,23 @@ In general, you should think about the following types of test cases:
 
 Generating these tests does require knowledge of the function you are writing. If you are unclear as to the constraints, you will need to ask your interviewer about this first.
 
-###### Step 2: Define the expected result
+**Step 2: Define the expected result**
 
 Often, the expected result is obvious: the right output. However, in some cases, you might want to validate additional aspects. For instance, if the sort method returns a new sorted copy of the array, you should probably validate that the original array has not been touched.
 
 
-###### Step  3: Write test code
+**Step  3: Write test code**
 
 Once you have the test cases and results defined, writing the code to implement the test cases should be fairly straightforward.Your code might look something like:
 
 ```java
-1     void testAddThreeSorted() {
-2          Mylist list  =  new   Mylist();
-3           list.addThreeSorted(3,  1, 2); //  Adds 3 items  in  sorted order
-4       assertEquals(list.getElement(0),  1);
-5           as sertEquals(list.getElement(l), 2);
-6          as sertEquals(list.getElement(2),  3);
-7       }
+1	void testAddThreeSorted() {
+2		Mylist list  =  new   Mylist();
+3		list.addThreeSorted(3,  1, 2); //  Adds 3 items  in  sorted order
+4		assertEquals(list.getElement(0),  1);
+5		as sertEquals(list.getElement(l), 2);
+6		as sertEquals(list.getElement(2),  3);
+7	}
 ```
 
 ### Troubleshooting Questions
@@ -145,7 +144,7 @@ Let's walk through this problem with an example: You're working on the Google Ch
 Reinstalling the browser might solve this user's problem, but it wouldn't help the other users who might be experiencing the same issue.Your goal is to understand what's really happening, so that the developers can fix it.
 
 
-###### Step  1: Understand the  Scenario
+**Step  1: Understand the  Scenario**
 
 The first thing you should do is ask questions to understand  as much about the situation as possible.
 
@@ -154,7 +153,7 @@ The first thing you should do is ask questions to understand  as much about the 
 - Does the issue happen consistently, or how often does it happen? When does it happen? 
 - Is there an error report that launches?
 
-###### Step  2: Break Down the  Problem
+**Step  2: Break Down the  Problem**
 
 Now that you understand the details of the scenario, you want to break down the problem into testable units. In this case, you can imagine the flow of the situation as follows:
 
@@ -169,63 +168,13 @@ Now that you understand the details of the scenario, you want to break down the 
 
 At some point in this process, something  fails and it causes the browser to crash. A strong tester would iterate through the elements of this scenario to diagnose the problem.
 
-###### Step  3: Create Specific, Manageable Tests
+**Step  3: Create Specific, Manageable Tests**
 
 Each of the above components should have realistic instructions-things that you can ask the user to do, or things that you can do yourself (such as replicating steps on your own machine). In the real world, you will be dealing with customers, and you can't give them instructions that they can't or won't do.
 
 ---
 Interview Questions
 ---
-
-11.1      Mistake: Find the mistake(s) in the following code:
-
-```
-unsigned int i;
-for (i =  100;   i >=  0;  --i)
-	printf("%d\n", i);
-Hints: #257, #299, #362
-```
-
-11.2 	Random Crashes: You are given the source to an application which crashes when it is run. After running it ten times in a debugger, you find it never crashes in the same place. The application is single threaded, and uses only the C standard library. What programming errors could be causing this crash? How would you test each one?
-
-Hints:#325
-
-
-11.3 	ChessTest:We have the following method used in a chess game: boolean  canMoveTo(int x, int y). This method is part of the Piece class and returns whether or not the piece can move to position (x, y).  Explain how you would test this method.
-
-Hints:#329,#401
-
-
-11.4    No Test Tools: How would you load test a webpage without using any test tools?
-
-Hints:#313, #345
-
-11.5      Test a Pen: How would you test a pen?
-
-Hints:#140, #164, #220-··-·····---·······  _    pg 420 
-
-11.6    Test an ATM:  How would you test an ATM in a distributed banking system?
-
-Hints:#210, #225, #268, #349, #393···---P9 421
-
-Hints start on page 662.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 **11.1      Mistake:** Find the mistake(s) in the following code:
 
@@ -268,10 +217,10 @@ SOLUTION
 
 The question largely depends on the type of application being diagnosed. However, we can give some general causes of random crashes.
 
-1. "Random Variable:"The application may use some random number or variable component that may not be fixed for every execution of the program. Examples include user input, a random number generated by the program, or the time of day.
-1. Uninitialized Variable: The application could have an uninitialized variable which, in some languages, may cause it to take on an arbitrary value. The values of this variable could result in the code taking a slightly different path each time.
-1. Memory Leak:The program may have run out of memory. Other culprits are totally random for each run since it depends  on the number of processes running at that particular time. This also includes heap overflow or corruption of data on the stack.
-1. External Dependencies: The program may depend on another application, machine, or resource. ff there are multiple dependencies, the program could crash at any point.
+1. *"Random Variable:"* The application may use some random number or variable component that may not be fixed for every execution of the program. Examples include user input, a random number generated by the program, or the time of day.
+1. *Uninitialized Variable:* The application could have an uninitialized variable which, in some languages, may cause it to take on an arbitrary value. The values of this variable could result in the code taking a slightly different path each time.
+1. *Memory Leak:* The program may have run out of memory. Other culprits are totally random for each run since it depends  on the number of processes running at that particular time. This also includes heap overflow or corruption of data on the stack.
+1. *External Dependencies:* The program may depend on another application, machine, or resource. ff there are multiple dependencies, the program could crash at any point.
 
 To track down the issue, we should start with learning as much as possible about the application. Who is running it? What are they doing with it? What kind of application is it?
 
@@ -293,7 +242,7 @@ SOLUTION
 
 In this problem, there are two primary types of testing: extreme case validation (ensuring that the program doesn't crash on bad input), and general case testing. We'll start with the first type.
 
-##### Testing  Type #1: Extreme Case Validation
+**Testing  Type #1: Extreme Case Validation**
 
 We need to ensure that the program handles bad or unusual input gracefully. This means checking the following conditions:
 
@@ -307,18 +256,18 @@ We need to ensure that the program handles bad or unusual input gracefully. This
 
 For the error cases above, we should ask our interviewer whether we want to return false or throw an excep­tion, and we should test accordingly.
 
-##### Testing Type #2: General Testing:
+**Testing Type #2: General Testing:**
 
 General testing is much more expansive. Ideally, we would test every  possible board, but there are far too many  boards. We can, however, perform a reasonable coverage of different boards.
 
 There are 6 pieces in chess,  so we can test each piece against every other piece,  in every possible direction. This would look something like the below code:
 ```
-1      foreach piece  a:
-2           for  each other type of piece b  (6  types +  empty   space)
-3                 foreach direction  d
-4                       Create a  board with piece  a.
-5                       Place piece  b  in  direction d.
-6                       Try   to move  - check return  value.
+1   foreach piece  a:
+2      foreach other type of piece b  (6  types +  empty   space)
+3         foreach direction  d
+4               Create a  board with piece  a.
+5               Place piece  b  in  direction d.
+6               Try   to move  - check return  value.
 ```
 The key to this  problem is recognizing that we can't test every  possible scenario, even if we would like to. So, instead, we must focus on the essential areas.
 
@@ -340,7 +289,7 @@ To perform load testing, we  must first identify the performance critical scenar
 
 Then, we design tests to simulate the load, taking care to measure each of these criteria.
 
-In the absence of formal  testing tools,  we  can  basically  create our  own.  For example, we could simulate concurrent users by creating thousands of virtual  users.  We would write  a multi-threaded program with thousands of threads, where each thread acts as a real-world user loading the page.  For each user, we would programmatically measure response time, data 1/0, etc.
+In the absence of formal  testing tools,  we  can  basically  create our  own.  For example, we could simulate concurrent users by creating thousands of virtual  users.  We would write  a multi-threaded program with thousands of threads, where each thread acts as a real-world user loading the page.  For each user, we would programmatically measure response time, data I/O, etc.
 
 We would then analyze the results based on the data gathered during the tests and  compare it with  the accepted values.
 
@@ -399,7 +348,7 @@ SOLUTION
 The first thing to do on this question is to clarify assumptions. Ask the following questions:
 
 - Who is going to use the ATM? Answers might be "anyone;' or it might be "blind people;' or any number of other answers.
-What are they going  to use it for? Answers might be "withdrawing  money;' "transferring money;' "checking their balance;' or many other answers.
+- What are they going  to use it for? Answers might be "withdrawing  money;' "transferring money;' "checking their balance;' or many other answers.
 - What tools do we have to test? Do we have access to the code, or just to the ATM? 
 
 Remember: a good tester makes sure she knows what she's testing!

@@ -45,8 +45,8 @@ Alternatively, you can implement this iteratively.
 1     int add(int a,   int b)  {
 2          while   (b   != 0)  {
 3               int sum =  a  Ab; /I add  without carrying
-4               int carry=  (a &   b)  <<  1;  II carry, but  don't add
-S                   a      sum;
+4               int carry=  (a &   b)  <<  1;  // carry, but  don't add
+5               a  = sum;
 6               b  = carry;
 7          }
 8          return  a;

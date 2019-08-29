@@ -37,7 +37,7 @@ StudentCourses:  CourseID*,  StudentID*
 
 Using the above table, implement the following queries.
 
-###### Query 1: Student Enrollment
+**Query 1: Student Enrollment**
 
 Implement a query to get a list of all students and how many courses each student is enrolled in. At first, we might try something like this:
 ```
@@ -55,7 +55,7 @@ This has three problems:
 3.  We've grouped by Students. StudentID, but there are still multiple StudentNames in each group. How will the database know which StudentName to return? Sure, they may all have the same value, but the database doesn't understand that. We need to apply an aggregate function to this, such as first (Students.StudentName).
 
 Fixing these issues gets us to this query:
-```
+```sql
 1     /* Solution 1:  Wrap with another query*/
 2     SELECT  StudentName,   Students.StudentID,  Cnt
 3     FROM  (
@@ -66,7 +66,7 @@ Fixing these issues gets us to this query:
 8     ) T INNER  JOIN Students on T.studentID =  Students.StudentID
 ```
 Looking at this code, one might ask why we don't just select the student name on line 3 to avoid having to wrap lines 3 through 6 with another query. This (incorrect) solution is shown below.
-```
+```sql
 1     /* Incorrect Code */
 1     SELECTStudentName, Students.StudentID, count(StudentCourses.CourseID)  as [Cnt]
 2     FROM Students LEFTJOIN StudentCourses
@@ -76,18 +76,20 @@ Looking at this code, one might ask why we don't just select the student name on
 The answer is that we can't do that - at least not exactly as shown. We can only select values that are in an aggregate function or in the GROUP BY clause.
 
 Alternatively, we could resolve the above issues with either of the following statements:
-```
+```sql
 1     /* Solution 2:  Add StudentName  to GROUP BY  clause. */
 2     SELECT  StudentName,   Students.StudentID,  count(StudentCourses.CourseID)  as [Cnt]
 3     FROM  Students LEFT JOIN StudentCourses
 4     ON  Students.StudentID =  StudentCourses.StudentID
 5     GROUP  BY  Students.StudentID, Students.StudentName
+```
 OR
+```sql
 1     /* Solution 3:  Wrap with   aggregate function.  */
-2     SELECT     max(StudentName)   as  [StudentName],   Students.StudentID,
+2     SELECT max(StudentName)   as  [StudentName],   Students.StudentID,
 3                count(StudentCourses.CourseID)  as   [Count]
-4     FROM  Students LEFT  JOIN StudentCourses
-5     ON   Students.StudentID = StudentCourses.StudentID
+4     FROM Students LEFT  JOIN StudentCourses
+5     ON Students.StudentID = StudentCourses.StudentID
 6     GROUP BY  Students.StudentID
 ```
 *Query 2: Teacher Class Size*
@@ -102,7 +104,7 @@ We can construct this query step by step. First, let's get a list of TeacherIDs 
 4     GROUP   BY  Courses.TeacherID
 ```
 Note that this INNER  JOIN will not select teachers who aren't teaching classes. We'll handle that in the below query when we join it with the list of all teachers.
-```
+```sql
 1     SELECT  TeacherName,  isnull(StudentSize.Number,  0)
 2     FROM   Teachers  LEFT  JOIN
 3               (SELECT  TeacherID,   count(StudentCourses.CourseID)  AS  [Number]
@@ -120,7 +122,7 @@ Note how we handled the NULL values in the SELECT statement to convert the NULL 
 Additionally, you might be asked to design your own database. We'll walk you through an approach  for this. You might notice the similarities between this approach and the approach for object-oriented design.
 
 
-###### Step  1: Handle Ambiguity
+**Step  1: Handle Ambiguity**
 
 Database questions often have some ambiguity, intentionally or unintentionally. Before you proceed with your design, you must understand exactly what you need to design.
 
@@ -132,7 +134,7 @@ Imagine you are asked to design a system to represent an apartment rental agency
 Next, we should look at the core objects of our system. Each of these core objects typically translates into a table. In this case, our core objects might be Property, B uilding, Apartment, Tenant and Manager.
 
 
-###### Step 3: Analyze Relationships
+**Step 3: Analyze Relationships**
 
 Outlining the core objects should give us a good sense of what the tables should be. How do these tables relate to each other? Are they many-to-many? One-to-many?
 
@@ -149,7 +151,7 @@ If we want to allow for the possibility that one person rents more than one apar
 The TenantApartments table stores a relationship between Tenants and Apartments.
 
 
-###### Step 4: Investigate Actions
+**Step 4: Investigate Actions**
 
 Finally, we fill in the details. Walk through the common actions that will be taken and understand how to store and retrieve the relevant data. We'll need to handle lease terms, moving out, rent payments, etc. Each of these actions requires new tables and columns.
 
@@ -161,64 +163,6 @@ When designing a large, scalable database, joins (which are required in the abov
 ---
 Interview Questions
 ---
-
-Questions 1  through 3 refer to the database schema at the end of the chapter. Each apartment can have multiple tenants, and each tenant can have multiple apartments. Each apartment belongs to one building, and each building belongs to one complex.
-
-14.1 	Multiple Apartments: Write a SOL query to get a list of tenants who are renting more than one apartment.
-
-Hints:#408.............pg
-
-
-14.2     Open Requests: Write a SQL query to get a list of all buildings and the number of open requests
-(Requests in which status equals 'Open').
-
-Hints: #411 .........pg 44.2
-
-14.3 	Close All Requests: Building #11 is undergoing a major renovation. Implement a query to close all requests from apartments  in this building.
-
-Hints:#431 ....... pg442
-
-14.4 	Joins: What are the different types of joins? Please explain how they differ and why certain types are better in certain situations.
-
-Hints: #451
-
-
-14.5    Denormalization: What is denormalization? Explain the pros and cons.
-
-Hints: #444, #455
-
-
-14.6 	Entity-Relationship Diagram: Draw an entity-relationship diagram for a database with companies, people, and professionals (people who work for companies).
-
-Hints:#436 .......             pg444
-
-14.7    Design Grade Database: Imagine a simple database  storing information for students'  grades.
-Design what this database might look like and provide a SQL query to return a list of the honor roll students  (top 10%), sorted by their grade point average.
-
-Hints: #428, #442........... pg445
-
-Additional Questions: Object-Oriented Design (#7.7), System Design and Scalability (#9.6) 
-
-Hints start on page 676.
-
- 
-![](media/IX_14_03.JPG)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 Questions 1  through 3 refer to the following database schema:
 
@@ -318,7 +262,7 @@ Calorie-Free Beverages:
 
 If we wanted to join Beverage with Calorie-Free Beverages, we would have many options. These are discussed below.
 
-- INNER JOIN:The result set would contain only the data where the criteria match. In our example, we would get three records: one with a COCACOLA code and two with PEPSI codes.
+- INNER JOIN: The result set would contain only the data where the criteria match. In our example, we would get three records: one with a COCACOLA code and two with PEPSI codes.
 - OUTER JOIN: An OUTER  JOIN will always contain the results of INNER JOIN, but it may also contain some records that have no matching record in the other table. OUTER     JOINs are divided into the following subtypes:
 	- LEFT OUTER   JOIN, or simply LEFT JOIN:The result will contain all records from the left table.
 	If no matching records were found in the right table, then its fields will contain theNULL values. In our example, we would get four records. In addition to INNER JOIN results, BUDWEISER would be listed, because it was in the left table.
@@ -342,16 +286,15 @@ In some ways, this  is great; if a teacher changes his or her name, we only have
 
 The drawback, however, is that if the tables are large, we may spend an unnecessarily long time doing joins on tables.
 
-Denormalization, then, strikes  a different compromise. Under denormalization, we decide that we're  okay with  some redundancy and  some extra  effort  to update the  database in order to get  the  efficiency  advan­
-tages of fewer joins.
+Denormalization, then, strikes  a different compromise. Under denormalization, we decide that we're  okay with  some redundancy and  some extra  effort  to update the  database in order to get  the  efficiency  advan­tages of fewer joins.
 
 
-|Cons of Denomaralization|Pros of Denomaralization|
-|--|--|
-|Updates and inserts are more expensive.|Retrieving data is faster  since  we do fewer joins.|
-|Denormalization can make update and  insert code harder to write.|Queries to  retrieve can  be  simpler (and  therefore less likely to have bugs),  since  we need to look at fewer  tables.|
-|Data  may  be  inconsistent. Which  is the  "correct" value for a piece of data?||
-|Data redundancy necessitates  more storage.||
+| Cons of Denomaralization                                                         | Pros of Denomaralization                                                                                                   |
+| --                                                                               | --                                                                                                                         |
+| Updates and inserts are more expensive.                                          | Retrieving data is faster  since  we do fewer joins.                                                                       |
+| Denormalization can make update and  insert code harder to write.                | Queries to  retrieve can  be  simpler (and  therefore less likely to have bugs),  since  we need to look at fewer  tables. |
+| Data  may  be  inconsistent. Which  is the  "correct" value for a piece of data? |                                                                                                                            |
+| Data redundancy necessitates  more storage.                                      |                                                                                                                            |
 
 In a system that demands scalability,  like that of any major tech companies, we almost always use elements of both normalized and denormalized databases.
 
@@ -411,8 +354,7 @@ Using the Microsoft SQL Server TOP ..... PERCENT function, we might (incorrectly
 4     GROUP   BY  CourseEnrollment.StudentID
 5     ORDER   BY  AVG(CourseEnrollment.Grade)
 ```
-The problem with the above code is that it will return literally the top 10% of rows, when sorted by GPA. Imagine a scenario in which there are 100 students, and the top 15 students all have 4.0 GPAs. The above function will only return 1O of those students, which is not really what we want. In case of a tie, we want to include the students who tied for the top 10% -- even if this means that our honor roll includes more than
-1 0% of the class.
+The problem with the above code is that it will return literally the top 10% of rows, when sorted by GPA. Imagine a scenario in which there are 100 students, and the top 15 students all have 4.0 GPAs. The above function will only return 1O of those students, which is not really what we want. In case of a tie, we want to include the students who tied for the top 10% -- even if this means that our honor roll includes more than 10% of the class.
 
 To correct this issue, we can build something similar to this query, but instead first get the GPA cut off.
 ```sql

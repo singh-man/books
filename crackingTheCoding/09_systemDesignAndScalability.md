@@ -27,7 +27,7 @@ These questions are largely about the process rather than the ultimate design.
 If your manager asked you to design a system such asTinyURL, you probably wouldn't just say, "Okay'; then lock yourself in your office to design it by yourself. You would probably have a lot more questions before you do it.This is the way you should handle it in an interview.
 
 
-###### Step 1: Scope the Problem
+**Step 1: Scope the Problem**
 
 You can't design a system if you don't know what you're designing. Scoping the problem  is important because  you want to ensure that you're building what the interviewer wants and because this might be something that interviewer is specifically evaluating.
 
@@ -42,7 +42,7 @@ Make a list here as well of the major features or use cases. For example, forTin
 - Retrieving the URL associated with aTinyURL. 
 - User accounts and link management.
 
-###### Step 2: Make Reasonable Assumptions
+**Step 2: Make Reasonable Assumptions**
 
 It's okay to make some assumptions  (when necessary), but they should be reasonable. For example, it would not be reasonable to assume that your system only needs to process 100 users per day, or to assume that you have infinite memory available.
 
@@ -52,7 +52,7 @@ tion can help you calculate how much data your system might need to store.
 Some assumptions might take some "product sense" (which is not a bad thing). For example, is it okay for the data to be stale by a max of ten minutes? That all depends. If it takes 1O minutes for a just-entered URL to work, that's a deal-breaking issue. People usually want these URLs to be active immediately. However, if the statistics are ten minutes out of date, that might be okay.Talk to your interviewer about these sorts of assumptions.
 
 
-###### Step  3: Draw the Major Components
+**Step  3: Draw the Major Components**
 
 Get up out of that chair and go to the whiteboard. Draw a diagram of the major components. You might have something  like a frontend server (or set of servers) that pull data from the backend's data store. You might have another  set of servers that crawl the internet  for some data, and another set that process analytics. Draw a picture of what this system might look like.
 
@@ -60,7 +60,7 @@ Walk through your system from end-to-end to provide a flow. A user enters a new 
 
 It may help here to ignore major scalability challenges and just pretend that the simple, obvious approaches will be okay. You'll handle the big issues in Step 4.
 
-###### Step  4: Identify  the  Key Issues
+**Step  4: Identify  the  Key Issues**
 
 Once you have a basic design in mind, focus on the key issues. What will be the bottlenecks or major chal­lenges in the system?
 
@@ -69,7 +69,7 @@ For example, if you were designing TinyURL, one situation you might consider is 
 Your interviewer might provide some guidance here. If so, take this guidance and use it.
 
 
-###### Step  5: Redesign for the  Key Issues
+**Step  5: Redesign for the  Key Issues**
 
 Once you have identified the key issues, it's time to adjust your design for it. You might find that it involves a major redesign or just some minor tweaking (like using a cache).
 
@@ -85,21 +85,21 @@ In some cases, you're not being asked to design an entire system. You're just be
 In these cases, try the following approach.
 
 
-###### Step  1 : Ask Questions
+**Step  1 : Ask Questions**
 
 As in the earlier approach, ask questions to make sure you really understand the question. There might be details the interviewer left out (intentionally or unintentionally). You can't solve a problem if you don't understand exactly what the problem is.
 
 
-###### Step  2: Make Believe
+**Step  2: Make Believe**
 
 Pretend that the data can all fit on one machine and there are no memory limitations. How would you solve the problem? The answer to this question will provide the general outline for your solution.
 
 
-###### Step 3: Get Real
+**Step 3: Get Real**
 
 Now go back to the original problem. How much data can you fit on one machine, and what problems will occur when you split up the data? Common problems include figuring out how to logically divide the data up, and how one machine would identify where to look up a different piece of data.
 
-###### Step 4: Solve Problems
+**Step 4: Solve Problems**
 
 Finally, think about how to solve the issues you identified in Step 2. Remember that the solution for each issue might be to actually remove the issue entirely, or it might be to simply mitigate the issue. Usually, you can continue using (with modifications) the approach you outlined in Step 1, but occasionally you will need to fundamentally alter the approach.
 
@@ -113,7 +113,7 @@ Your goal is not to re-architect a complex system that companies have spent mill
 While system design questions aren't really tests of what you know, certain concepts can make things a lot easier. We will give a brief overview here. All of these are deep, complex topics, so we encourage you to use online resources for more research.
 
 
-###### Horizontal vs. Vertical Scaling
+**Horizontal vs. Vertical Scaling**
 
 A system can be scaled one of two ways.
 
@@ -124,12 +124,12 @@ tional memory to a server to improve its ability to handle load changes.
 Vertical scaling is generally easier than horizontal scaling, but it's limited. You can only add so much memory or disk space.
 
 
-###### Load Balancer
+**Load Balancer**
 
 Typically, some frontend parts of a scalable website will be thrown behind  a load balancer. This allows a system to distribute the load evenly so that one server doesn't crash and take down the whole system. To do so, of course, you have to build out a network of cloned servers that all have essentially the same code and access to the same data.
 
 
-###### Database Denormalization and  NoSQL
+**Database Denormalization and  NoSQL**
 
 Joins in a relational database such as SQL can get very slow as the system grows bigger. For this reason, you would generally avoid them.
 
@@ -137,7 +137,7 @@ Denormalization is one part of this. Denormalization means adding redundant info
 
 Or, you can go with a NoSQL database. A NoSQL database does not support joins and might structure data in a different way. It is designed to scale better.
 
-###### Database Partitioning (Sharding)
+**Database Partitioning (Sharding)**
 
 Sharding means splitting the data across multiple machines while ensuring you have a way of figuring out which data is on which machine.
 
@@ -150,7 +150,7 @@ A few common ways of partitioning include:
 Many architectures actually end up using multiple partitioning schemes.
 
 
-###### Caching
+**Caching**
 
 An in-memory cache can deliver very rapid results. It is a simple key-value pairing and typically sits between your application layer and your data store.
 
@@ -159,7 +159,7 @@ When an application requests a piece of information, it first tries the cache. I
 When you cache, you might cache a query and its results directly. Or, alternatively, you can cache the specific object (for example, a rendered version of a part of the website, or a list of the most recent blog posts).
 
 
-###### Asynchronous Processing & Queues
+**Asynchronous Processing & Queues**
 
 Slow operations should ideally be done asynchronously. Otherwise, a user might get stuck waiting and waiting for a process to complete.
 
@@ -168,7 +168,7 @@ In some cases, we can do this in advance (i.e., we can pre-process). For example
 In other cases, we might tell the user to wait and notify them when the process is done. You've probably seen this on websites before. Perhaps you enabled some new part of a website and it says it needs a few minutes to import your data, but you'll get a notification when it's done.
 
 
-###### Networking Metrics
+**Networking Metrics**
 
 Some of the most important metrics around networking include:
 
@@ -187,7 +187,7 @@ width.  You can get more items on the belt, thus transferring more in a given un
 Latency can be easy to disregard, but it can be very important in particular situations. For example,  if you're playing certain online games, latency can be a very big deal. How can you play a typical online sports game (like a two-player football game) if you aren't notified very quickly of your opponent's movement? Addition­ ally, unlike throughput where at least you have the option of speeding things up through data compres­ sion, there is often little you can do about latency.
 
 
-###### MapReduce
+**MapReduce**
 
 MapReduce is often associated with Google, but it's used much more broadly than that. A MapReduce program is typically used to process large amounts of data.
 
@@ -228,7 +228,7 @@ Your goal in these problems is to be able to understand use cases, scope a probl
 Before we start solving the problem, we need to understand whether this is a one time only operation, or if this findWords procedure will be called repeatedly. Let's assume that we will be calling findWords many times for the same set of documents, and, therefore, we can accept the burden of pre-processing.
 
 
-###### Step 1
+**Step 1**
 
 The first step is to pretend we just have a few dozen documents. How would we implement findWords in this case? (Tip: stop here and try to solve this yourself before reading on.)
 
@@ -242,7 +242,7 @@ One way to do this is to pre-process each document and create a hash table index
 To search for"many books;' we would simply do an intersection on the values for"books" and"many'; and return {doc3,  doc8}  as the result.
 
 
-###### Step2
+**Step2**
 
 Now go back to the original problem. What problems are introduced  with millions of documents?  For starters, we probably need to divide up the documents across many machines. Also, depending on a variety of factors, such as the number of possible words and the repetition of words in a document, we may not be able to fit the full hash table on one machine. Let's assume that this is the case.
 
@@ -254,7 +254,7 @@ This division introduces the following key concerns:
 
 These are just three concerns. There may be many others.
 
-###### Step3
+**Step3**
 
 In Step 3, we find solutions to each of these issues. One solution is to divide up the words alphabetically by keyword, such that each machine  controls a range of words (e.g., "after"through "apple").
 
@@ -276,57 +276,6 @@ Interview Questions
 
 These questions are designed to mirror a real interview, so they will not always be well defined. Think about what questions  you would ask your interviewer and then make reasonable  assumptions. You may make different assumptions than us, and that will lead you to a very different design. That's okay!
 
-9.1 	Stock Data: Imagine you are building some sort of service that will be called by up to 1,000 client applications to get simple end-of-day stock price information (open, close, high,  low). You may assume that you already have the data, and you can store it in any format you wish. How would you design the client-facing service that provides the information to client applications?You are respon­ sible for the development, rollout, and ongoing monitoring and maintenance of the feed. Describe the different methods  you considered and why you would recommend your approach. Your service can use any technologies  you wish, and can distribute the information to the client applications in any mechanism you choose.
-
-Hints: #385, #396
-
-
-9.2 	Social Network: How would you design the data structures for a very large social network like Face­ book or LinkedIn? Describe how you would design an algorithm to show the shortest path between two people (e.g., Me -> Bob -> Susan -> Jason -> You).
-
-Hints: #270, #285, #304, #321
-
-
-9.3         Web Crawler: Ifyou were designing a web crawler, how would you avoid getting into infinite loops?
-
-Hints: #334, #353, #365
-
-
-9.4 	Duplicate URLs: You have 10 billion  URLs. How  do you detect the duplicate documents? In this case, assume "duplicate" means that the URLs are identical.
-
-Hints: #326, #347..  ...  ... P9 380
-
-9.5 	Cache: Imagine a web server for a simplified search engine. This system has 100 machines to respond to search queries, which may then call out using processSearch (string   query) to anothercluster of machines to actually get the result.The machine which responds to a given query is chosen at random, so you cannot guarantee that the same machine will always respond to the same request. The method processSearch is very expensive. Design a caching mechanism for the most recent queries. Be sure to explain how you would update the cache when data changes.
-
-Hints: #259, #274, #293, #311
-
-
-9.6 	Sales  Rank: A large eCommerce company wishes to list the best-selling products, overall and by category. For example, oneproductmight be the #1056th best-sellingproductoverall but the #13th best-selling product under "Sports Equipment" and the #24th best-selling product under "Safety." Describe how you would design this system.
-
-Hints:#142, #158, #176, #189, #208, #223, #236, #244 ...... 385
-
-9.7 		Personal Financial Manager: Explain how you would design a personal financial manager (like Mint.com). This system would connect to your bank accounts, analyze your spending habits, and make recommendations.
-
-Hints:#762, #180, #199, #212, #247, #276
-
-9.8 	Pastebin: Design a system like Pastebin, where a user can enter a piece of text and get a randomly generated URL to access it.
-
-Hints:#165, #184, #206, #232 
-
-
-Additional Questions: Object-Oriented Design (#7.7) 
-
-Hints start on page 662.
-
-
-
-
-
-
-
-
-
-
-
 **9.1 	Stock Data:**  Imagine you are building some sort of service that will be called by up to 1,000 client applications to get simple end-of-day stock price information (open, close, high, low). You may assume that you already have the data, and you can store it in any format you wish. How would you design the client-facing service that provides the information to client applications? You are responsible for the development,  rollout, and ongoing monitoring and maintenance  of the feed. Describe the different methods  you considered and why you would recommend  your approach. Your service can use any technologies you wish, and can distribute the information to the client applications in any mechanism you choose. 
 
 
@@ -346,12 +295,12 @@ We want to start off by thinking about what the different aspects we should cons
 With this framework in mind, we can consider various proposals.
 
 
-##### Proposal #1
+**Proposal #1**
 
 One option is that we could keep the data in simple text files and let clients download the data through some sort of FTP server. This would be easy to maintain in some sense, since files can be easily viewed and backed up, but it would require more complex parsing to do any sort of query. And, if additional data were added to our text file, it might break the clients' parsing mechanism.
 
 
-##### Proposal #2
+**Proposal #2**
 
 We could use a standard SQL database,  and let the clients plug directly into that. This would provide the following benefits:
 
@@ -368,14 +317,14 @@ What are the disadvantages of using a SQL database?
 These disadvantages don't mean that we shouldn't provide SQL access. Rather, they mean that we should be aware of the disadvantages.
 
 
-##### Proposal #3
+**Proposal #3**
 
 XML is another  great option for distributing the information. Our data  has fixed format and fixed size:
 company_name, open, high, low, closing price. The XML could look like this:
 
 ```xml
 l   <root>
-2          <date   value="2008-10-12">
+2          <date value="2008-10-12">
 3               <company name="foo">
 4                    <open>l26.23</open>
 5                    <high>130.27</high>
@@ -389,7 +338,7 @@ l   <root>
 13                  <closingPrice>54.91</closingPrice>
 14             </company>
 15        </date>
-16         <date  value="2008-10-11">  .    •   . </date>
+16        <date  value="2008-10-11">  .  .  . </date>
 17   </root>
 ```
 
@@ -424,7 +373,7 @@ SOLUTION
 A good way to approach this problem is to remove some of the constraints and solve it for that situation first.
 
 
-##### Step  1: Simplify the  Problem-Forget About the  Millions of Users
+**Step  1: Simplify the  Problem-Forget About the  Millions of Users**
 
 First, let's forget  that we're dealing with millions of users. Design this for the simple case.
 
@@ -440,110 +389,110 @@ Alternatively, I  could do what's called a bidirectional breadth-first search. T
 In the implementation, we'll use two classes to help us. BFSData holds the data we need for a breadth-first search, such as the isVisited hash table and the toVisit queue. PathNode will represent the path as we're searching it, storing each P erson and the previousNode we visited in this path.
 
 ```java
-1     Linkedlist<Person> findPathBiBFS(HashMap<Integer,  Person> people,   int source,
-2                                                                   int destination) {
-3           BFSData  sourceData  = new BFSData(people.get(source));
-4         BFSData  destData   =  new BFSData(people.get(destination));
-5
-6         while  (!sourceData.isFinished() &&    !destData.isFinished()) {
-7              /*Search  out  from source.*/
-8              Person  collision =  searchlevel(people,  sourceData,   destData);
-9              if (collision != null) {
-10                 return  mergePaths(sourceData, destData,  collision.getID());
-11                }
-12
-13            /*Search  out  from destination.*/
-collision =  searchlevel(people,  destData,  sourceData);
-15            if (collision != null) {
-16                 return  mergePaths(sourceData, destData,  collision.getID());
-17            }
-18       }
-19       return null;
-20    }
-21
-22  /*Search   one level and return collision, if any.*/
-23  Person  searchLevel(HashMap<Integer,  Person> people,   BFSData  primary,
-24                                      BFSData secondary) {
-25       /*We  only  want to  search  one level at a time. Count how  many  nodes  are
-26       *currently  in  the  primary's level and only  do that many  nodes.  We'll  continue
-27       *to  add nodes to  the  end.*/
-28       int count  = primary.toVisit.size();
-29       for  (int i =  0;  i < count;   i++)  {
-30            /*Pull out  first node.*/
-31            PathNode pathNode =  primary.toVisit.poll();
-32            int  personld = pathNode.getPerson().getID();
-33
-/*Check if it's already been visited.*/
-35            if (secondary.visited.containsKey(personid)) {
-36                 return  pathNode.getPerson();
-37                }
-38
-39            /*   Add friends to  queue.  */
-40            Person  person  =  pathNode.getPerson();
-41            Arraylist<Integer> friends = person.getFriends();
-42            for  (int friendid :   friends) {
-43                 if (!primary.visited.containsKey(friendid)) {
-44                      Person  friend=  people.get(friendld);
-45                      PathNode next  =  new PathNode(friend,  pathNode);
-46                      primary.visited.put(friendld, next);
-47                      primary.toVisit.add(next);
-48                  }
-49            }
-50        }
-51       return null;
-52   }
-53
-54  /*  Merge paths  where searches met at connection. */
-55   Linkedlist<Person> mergePaths(BFSData bfsl, BFSData bfs2,   int  connection) {
-56       PathNode endl  = bfsl.visited.get(connection); // endl  -> source
-57       PathNode end2 = bfs2.visited.get(connection);  // end2 -> dest
-58       Linkedlist<Person> pathOne =  endl.collapse(false);
-59       Linkedlist<Person> pathTwo =  end2.collapse(true);  // reverse
-60       pathTwo.removeFirst();  // remove connection
-61       pathOne.addAll(pathTwo);  // add second  path
-62       return pathOne;
-63     }
-64
-65  class PathNode {
-66       private Person  person  =  null;
-67       private PathNode previousNode  =  null;
-68       public PathNode(Person  p,  PathNode previous) {
-69            person  =  p;
-70            previousNode = previous;
-71        }
-72
-73       public Person  getPerson() {  return person;  }
-74
-75       public  Linkedlist<Person> collapse(boolean  startsWithRoot) {
-76            Linkedlist<Person> path=  new Linkedlist<Person>();
-77            PathNode node = this;
-78            while  (node  != null) {
-79                 if (startsWithRoot) {
-80                      path.addlast(node.person);
-81                 }  else {
-82                      path.addFirst(node.person);
-83                    }
-84                 node = node.previousNode;
-85               }
-86            return path;
-}
-88   }
-89
-90  class BFSData   {
-91       public Queue<PathNode> toVisit =  new Linkedlist<PathNode>();
-92       public HashMap<Integer, PathNode> visited
-93            new HashMap<Integer,  PathNode>();
-94
-95       public BFSData(Person root) {
-96            PathNode sourcePath =  new PathNode(root,  null);
-97            toVisit.add(sourcePath);
-98            visited.put(root.getID(),   sourcePath);
-99        }
-100
-101     public boolean  isFinished() {
-102          return toVisit.isEmpty();
-103       }
-104}
+1  		Linkedlist<Person> findPathBiBFS(HashMap<Integer,  Person> people,   int source,
+2  		int destination) {
+3  			BFSData  sourceData  = new BFSData(people.get(source));
+4  			BFSData  destData   =  new BFSData(people.get(destination));
+5		
+6  			while  (!sourceData.isFinished() &&    !destData.isFinished()) {
+7  				/*Search  out  from source.*/
+8  				Person  collision =  searchlevel(people,  sourceData,   destData);
+9  				if (collision != null) {
+10 					return  mergePaths(sourceData, destData,  collision.getID());
+11 				}
+12		
+13 				/*Search  out  from destination.*/
+14 				collision =  searchlevel(people,  destData,  sourceData);
+15 				if (collision != null) {
+16 					return  mergePaths(sourceData, destData,  collision.getID());
+17 				}
+18 			}
+19 			return null;
+20 		}
+21		
+22 		/*Search   one level and return collision, if any.*/
+23 		Person  searchLevel(HashMap<Integer,  Person> people,   BFSData  primary,
+24 							BFSData secondary) {
+25 			/*We  only  want to  search  one level at a time. Count how  many  nodes  are
+26 			* currently  in  the  primary's level and only  do that many  nodes.  We'll  continue
+27 			* to  add nodes to  the  end. */
+28 			int count  = primary.toVisit.size();
+29 			for  (int i =  0;  i < count;   i++)  {
+30 				/*Pull out  first node.*/
+31 				PathNode pathNode =  primary.toVisit.poll();
+32 				int  personld = pathNode.getPerson().getID();
+33		
+34 				/* Check if it's already been visited. */
+35 				if (secondary.visited.containsKey(personid)) {
+36 					return  pathNode.getPerson();
+37 				}
+38		
+39 				/*   Add friends to  queue.  */
+40 				Person  person  =  pathNode.getPerson();
+41 				Arraylist<Integer> friends = person.getFriends();
+42 				for  (int friendid :   friends) {
+43 					if (!primary.visited.containsKey(friendid)) {
+44 						Person  friend =  people.get(friendld);
+45 						PathNode next  =  new PathNode(friend,  pathNode);
+46 						primary.visited.put(friendld, next);
+47 						primary.toVisit.add(next);
+48 					}
+49 				}
+50 			}
+51 			return null;
+52 		}
+53		
+54 		/* Merge paths  where searches met at connection. */
+55 		Linkedlist<Person> mergePaths(BFSData bfsl, BFSData bfs2,   int  connection) {
+56 			PathNode endl  = bfsl.visited.get(connection); // endl  -> source
+57 			PathNode end2 = bfs2.visited.get(connection);  // end2 -> dest
+58 			Linkedlist<Person> pathOne =  endl.collapse(false);
+59 			Linkedlist<Person> pathTwo =  end2.collapse(true);  // reverse
+60 			pathTwo.removeFirst();  // remove connection
+61 			pathOne.addAll(pathTwo);  // add second  path
+62 			return pathOne;
+63 		}
+64		
+65 		class PathNode {
+66 			private Person  person  =  null;
+67 			private PathNode previousNode  =  null;
+68 			public PathNode(Person  p,  PathNode previous) {
+69 				person  =  p;
+70 				previousNode = previous;
+71 			}
+72			
+73 			public Person  getPerson() {  return person;  }
+74			
+75 			public  Linkedlist<Person> collapse(boolean  startsWithRoot) {
+76 				Linkedlist<Person> path =  new Linkedlist<Person>();
+77 				PathNode node = this;
+78 				while  (node  != null) {
+79 					if (startsWithRoot) {
+80 						path.addlast(node.person);
+81 					}  else {
+82 						path.addFirst(node.person);
+83 					}
+84 					node = node.previousNode;
+85 				}
+86 				return path;
+87 			}
+88 		}
+89		
+90 		class BFSData   {
+91 			public Queue<PathNode> toVisit =  new Linkedlist<PathNode>();
+92 			public HashMap<Integer, PathNode> visited = 
+93 					new HashMap<Integer,  PathNode>();
+94			
+95 			public BFSData(Person root) {
+96 				PathNode sourcePath =  new PathNode(root,  null);
+97 				toVisit.add(sourcePath);
+98 				visited.put(root.getID(),   sourcePath);
+99 			}
+100			
+101			public boolean  isFinished() {
+102				return toVisit.isEmpty();
+103			}
+104		}
 ```
 
 Many people are surprised that this is faster. Some quick math can explain why.
@@ -555,15 +504,15 @@ Suppose every person has k friends, and node S and node D have a friend C in com
 
 Generalizing this to a path of length q, we have this:
 
-- BFS: O(k^q)
-- Bidirectional BFS: O(k^q/2  +  k^q/2), which is just 0( k^q/2)
+- BFS: O(k^q )
+- Bidirectional BFS: O(k^q/2   +  k^q/2), which is just 0( k^q/2)
 
 If you imagine a path like A -> B -> C -> D -> E where each person has 100 friends, this is a big difference. BFS will require looking at 100 million (1004) nodes. A bidirectional BFS will require looking at only 20,000 nodes (2  x  100²).
 
 A bidirectional  BFS will generally be faster than the traditional  BFS. However, it requires actually having access to both the source node and the destination nodes, which is not always the case.
 
 
-##### Step 2: Handle the Millions of Users
+**Step 2: Handle the Millions of Users**
 
 When we deal with a service the size of Linkedln or Facebook, we cannot possibly keep all of our data on one machine. That means that our simple Person  data structure from above doesn't quite work-our friends may not live on the same machine as we do. Instead, we can replace our list of friends with a list of their IDs, and traverse as follows:
 
@@ -576,64 +525,64 @@ When we deal with a service the size of Linkedln or Facebook, we cannot possibly
 The code below outlines this process. We've defined a class Server, which holds a list of all the machines, and a class Machine, which represents a single machine. Both classes have hash tables to efficiently lookup data.
 
 ```java
-1      class  Server {
-2         HashMap<Integer,   Machine>  machines =  new HashMap<Integer,   Machine>();
-3         HashMap<Integer,   Integer> personToMachineMap =  new HashMap<Integer,   Integer>();
-4
-5           public  Machine getMachineWithid(int machineID) {
-6           return  machines.get(machineID);
-7            }
-8
-9          public  int getMachineIDForUser(int  personID) {
-10          Integer  machineID  =  personToMachineMap.get(personID);
-11           return  machineID  == null ?  -1   :    machineID;
-12        }
-13
-14     public  Person getPersonWithID(int  personID) {
-15             Integer  machineID =  personToMachineMap.get(personID);
-16             if (machineID ==  null) return  null;
-17
-18          Machine machine =  getMachineWithid(machineID);
-19             if (machine ==  null) return  null;
-20
-21             return  machine.getPersonWithID(personID);
-22        }
-23    }
-24
-25   class  Person {
-26        private Arraylist<Integer> friends =  new Arraylist<Integer>();
-27        private int personID;
-28        private String info;
-29
-30        public Person(int id)  { this.personID =id;}
-31       public String getinfo()  {  return  info;  }
-32        public  void  setinfo(String info) {this.info  =  info;}
-33        public Arraylist<Integer>  getFriends()  {return  friends;}
-34        public int  getID() {return  personID;}
-35        public  void   addFriend(int id)  {friends.add(id); }
-36   }
+1 	class  Server {
+2 		HashMap<Integer,   Machine>  machines =  new HashMap<Integer,   Machine>();
+3 		HashMap<Integer,   Integer> personToMachineMap =  new HashMap<Integer,   Integer>();
+4	
+5 		public  Machine getMachineWithid(int machineID) {
+6 			return  machines.get(machineID);
+7 		}
+8	
+9 		public  int getMachineIDForUser(int  personID) {
+10			Integer  machineID  =  personToMachineMap.get(personID);
+11			return  machineID  == null ?  -1   :    machineID;
+12		}
+13	
+14		public  Person getPersonWithID(int  personID) {
+15			Integer  machineID =  personToMachineMap.get(personID);
+16			if (machineID ==  null) return  null;
+17	
+18			Machine machine =  getMachineWithid(machineID);
+19			if (machine ==  null) return  null;
+20	
+21			return  machine.getPersonWithID(personID);
+22		}
+23	}
+24	
+25	class  Person {
+26		private Arraylist<Integer> friends =  new Arraylist<Integer>();
+27		private int personID;
+28		private String info;
+29	
+30		public Person(int id)  { this.personID = id;}
+31		public String getinfo()  {  return  info;  }
+32		public  void  setinfo(String info) {this.info  =  info;}
+33		public Arraylist<Integer>  getFriends()  {return  friends;}
+34		public int  getID() {return  personID;}
+35		public  void   addFriend(int id)  {friends.add(id); }
+36	}
 ```
 
 There are more optimizations and follow-up questions here than we could possibly discuss, but here are just a few possibilities.
 
-##### Optimization: Reduce machine jumps
+**Optimization: Reduce machine jumps**
 
 Jumping from one machine to another is expensive. Instead of randomlyjumping from machine to machine with each friend, try to batch thesejumps-e.g., if five of my friends live on one machine, I shouId look them up all at once.
 
 
-##### Optimization: Smart division of people and machines
+**Optimization: Smart division of people and machines**
 
 People are much more likely to be friends with people who live in the same country as they do. Rather than randomly dividing people across machines, try to divide them by country, city, state, and so on. This will reduce the number of jumps.
 
 
-##### Question: Breadth-first search usually requires "marking" a node as visited. How do you  do that in this case?
+**Question: Breadth-first search usually requires "marking" a node as visited. How do you  do that in this case?**
 
 Usually, in BFS, we mark a node as visited by setting a visited flag in its node class. Here, we don't want to do that. There could be multiple searches going on at the same time, so it's a bad idea to just edit our data.
 
 Instead, we could mimic the marking of nodes  with a hash table to look up a node  id and determine whether it's been visited.
 
 
-##### Other Follow-Up Questions:
+**Other Follow-Up Questions:**
 
 - In the real world, servers fail. How does this affect you? 
 - How could you take advantage  of caching?
@@ -692,14 +641,14 @@ But, let's just pretend for a moment that we were miraculously holding this data
 Now that we have a solution for the simple version, what happens when we have all 4000 gigabytes of data and we can't store it all in memory? We could solve this either by storing some of the data on disk or by splitting up the data across machines.
 
 
-##### Solution #1: Disk Storage
+**Solution #1: Disk Storage**
 
 If we stored all the data on one machine, we would do two passes of the document. The first pass would split the list of URLs into 4000 chunks of 1 GB each. An easy way to do that might be to store each URL u in a file named<x>. txt where x  =  hash(u)   %  4000.That is, we divide up the URLs based on their hash value (modulo the number of chunks).This way, all URLs with the same hashvalue would be in the same file.
 
 In the second pass, we would essentially implement the simple solution we came up with earlier: load each file into memory, create a hash table of the URLs, and look for duplicates.
 
 
-##### Solution #2: Multiple  Machines
+**Solution #2: Multiple  Machines**
 
 The other solution is to perform essentially the same procedure, but to use multiple machines. In this solu­
 tion, rather than storing the data in file<x>. txt, we would send the URL to machine x. Using multiple machines has pros and cons.
@@ -713,14 +662,14 @@ Both are good solutions, though, and both should be discussed with your intervie
 
 **9.5 		Cache:** Imagine a web server for a simplified search engine. This system has  100 machines to respond to search queries, which may then call out using processSearch(string  query) to another cluster of machines to actually get the result. The machine which responds to a given query is chosen at random, so you cannot guarantee that the same machine will always respond to the same request. The method  processSearch is very expensive. Design a caching mechanism to cache the results of the most recent queries. Be sure to explain how you would update the cache when data changes.
 
-#### SOLUTION
+SOLUTION
 
 ---
 
 Before getting into the design of this system, we first have to understand what the question means. Many of the details are somewhat ambiguous, as is expected in questions like this. We will make reasonable assump­ tions for the purposes of this solution, but you should discuss these details-in depth-with your inter- viewer.
 
 
-##### Assumptions
+**Assumptions**
 
 Here are a few of the assumptions we make for this solution. Depending on the design of your system and how you approach the problem, you may make other assumptions. Remember that while some approaches are better than others, there is no one "correct" approach.
 
@@ -730,7 +679,7 @@ Here are a few of the assumptions we make for this solution. Depending on the de
 - The result for a given query is an ordered list of URLs, each of which has an associated 50 character title and 200 character summary.
 - The most popular queries are extremely popular, such that they would always appear in the cache. Again, these aren't the only valid assumptions. This is just one reasonable set of assumptions.
 
-##### System Requirements
+**System Requirements**
 
 When designing the cache, we know we'll need to support two primary functions: 
 
@@ -739,7 +688,7 @@ When designing the cache, we know we'll need to support two primary functions:
 
 In addition, we must also handle updating  or clearing the cache when the results for a query change. Because some queries are very common and may permanently reside in the cache, we cannot just wait for the cache to naturally expire.
 
-##### Step  1: Design  a Cache for a Single System
+**Step  1: Design  a Cache for a Single System**
 
 A good way to approach this problem is to start by designing it for a single machine. So, how would you create a data structure that enables you to easily purge old data and also efficiently look up a value based on a key?
 
@@ -753,60 +702,60 @@ In addition, we have a hash table that maps from a query to the corresponding no
 For illustrative  purposes, abbreviated code for the cache is below. The code attachment provides the full code for this part. Note that in your interview, it is unlikely that you would be asked to write the full code for this as well as perform the design for the larger system.
 
 ```java
-1     public  class   Cache {
-2         public   static int MAX   SIZE=  10;
-3            public   Node head,  tail;
-4         public   HashMap<String, Node>  map;
-5            public   int size =  0;
-6
-7         public   Cache()  {
-8              map=  new HashMap<String, Node>();
-9           }
-10
-11         /*Moves node to  front of  linked   list  */
-12       public   void  moveToFront(Node node)  {...  }
-13       public   void  moveToFront(String  query)  {...   }
-14
-15         /*Removes node from linked list  */
-16       public   void  removeFromlinkedlist(Node node)  {...  }
-17
-18         /*   Gets  results from cache,  and updates  linked list  */
-19       public String[]  getResults(String query)  {
-20            if (!map.containsKey(query))  return null;
-21
-22            Node node =  map.get(query);
-23            moveToFront(node);   //update  freshness
-24            return node.results;
-25        }
-26
-27         /* Inserts results  into linked list and hash   */
-28       public   void  insertResults(String query,   String[] results)  {
-29            if (map.containsKey(query))  {//update  values
-30                 Node node =  map.get(query);
-node.results=  results;
-32                 moveToFront(node);    //update  freshness
-33                 return;
-34               }
-35
-36            Node node =  new Node(query,  results);
-37            moveToFront(node);
-38            map.put(query,  node);
-39
-40            if (size > MAX_SIZE)  {
-41                 map.remove(tail.query);
-42                  removeFromLinkedlist(tail);
-43                 }
-44          }
-45    }
+1 	public  class   Cache {
+2 		public   static int MAX   SIZE =  10;
+3 		public   Node head,  tail;
+4 		public   HashMap<String, Node>  map;
+5 		public   int size =  0;
+6	
+7 		public   Cache()  {
+8 			map =  new HashMap<String, Node>();
+9 		}
+10	
+11		/*Moves node to  front of  linked   list  */
+12		public   void  moveToFront(Node node)  {...  }
+13		public   void  moveToFront(String  query)  {...   }
+14	
+15		/*Removes node from linked list  */
+16		public   void  removeFromlinkedlist(Node node)  {...  }
+17	
+18		/*   Gets  results from cache,  and updates  linked list  */
+19		public String[]  getResults(String query)  {
+20			if (!map.containsKey(query))  return null;
+21	
+22			Node node =  map.get(query);
+23			moveToFront(node);   //update  freshness
+24			return node.results;
+25		}
+26	
+27		/* Inserts results  into linked list and hash   */
+28		public   void  insertResults(String query,   String[] results)  {
+29			if (map.containsKey(query))  {//update  values
+30				Node node =  map.get(query);
+31				node.results =  results;
+32				moveToFront(node);    //update  freshness
+33				return;
+34			}
+35	
+36			Node node =  new Node(query,  results);
+37			moveToFront(node);
+38			map.put(query,  node);
+39	
+40			if (size > MAX_SIZE)  {
+41				map.remove(tail.query);
+42				removeFromLinkedlist(tail);
+43			}
+44		}
+45	}
 ```
 
-##### Step  2: Expand to Many Machines
+**Step  2: Expand to Many Machines**
 
 Now that we understand  how to design this for a single machine, we need to understand how we would design this when queries could be sent to many different machines. Recall from the problem statement that there's no guarantee that a particular query witl be consistently sent to the same machine.
 
 The first thing we need to decide is to what extent the cache is shared across machines. We have several options to consider.
 
-*Option 7: Each machine has its own cache.*
+*Option 1: Each machine has its own cache.*
 
 A simple option is to give each machine its own cache. This means that if "foo"is sent to machine 1  twice in a short amount of time, the result would be recalled from the cache on the second time. But, if "foo"is sent first to machine 1  and then to machine 2, it would be treated as a totally fresh query both times.
 
@@ -831,7 +780,7 @@ So, when a new query comes in to machine i, this machine would apply the formula
 Alternatively, you could design the system such that machine j just returns null if it doesn't have the query in its current cache. This would require machine  i to call processSearch and then  forward the results to machine j for storage. This implementation  actually increases the number of machine-to­ machine calls, with few advantages.
 
 
-##### Step  3: Updating results when  contents change
+**Step  3: Updating results when  contents change**
 
 Recall that some queries may be so popular that, with a sufficiently large cache, they would permanently be cached. We need some sort of mechanism to allow cached results to be refreshed, either periodically or "on-demand" when certain content changes.
 
@@ -850,7 +799,7 @@ Situation #3 is substantially  more difficult to handle. We could update single 
 A good way to handle Situation #3 (and likely something we'd want to do anyway) is to implement an "auto­ matic time-out" on the cache. That is, we'd impose  a time out where no query, regardless of how popular it is, can sit in the cache for more than x minutes. This will ensure that all data is periodically refreshed.
 
 
-##### Step 4: Further Enhancements
+**Step 4: Further Enhancements**
 
 There are a number of improvements and tweaks you could make to this design depending on the assump­
 tions you make and the situations you optimize for.
@@ -873,7 +822,7 @@ SOLUTION
 Let's first start off by making some assumptions to define the problem.
 
 
-##### Step  1: Scope the  Problem
+**Step  1: Scope the  Problem**
 
 First, we need to define what exactly we're building.
 
@@ -885,7 +834,7 @@ egories:'
 This part just gives us a good idea of what the problem, or scope of features, is.
 
 
-##### Step  2: Make Reasonable Assumptions
+**Step  2: Make Reasonable Assumptions**
 
 These are the sorts of things you'd want to discuss with your interviewer. Because we don't have an inter­
 viewer in front of us, we'll have to make some assumptions.
@@ -898,7 +847,7 @@ viewer in front of us, we'll have to make some assumptions.
 The important thing is not so much which decision you made at each possible issue, but whether it occurred to you that these are assumptions. We should get out as many of these assumptions as possible in the beginning. It's possible  you will need to make other assumptions along the way.
 
 
-##### Step  3: Draw the Major Components
+**Step  3: Draw the Major Components**
 
 We should now design just a basic, naive system that describes the major components. This is where you would go up to a whiteboard.
 
@@ -907,7 +856,7 @@ We should now design just a basic, naive system that describes the major compone
 In this simple design, we store every order as soon as it comes into the database. Every hour or so, we pull sales data from the database by category, compute the total sales, sort it, and store it in some sort of sales rank data cache (which is probably held in memory). The frontend just pulls the sales rank from this table, rather than hitting the standard database and doing its own analytics.
 
 
-##### Step  4: Identify the  Key Issues
+**Step  4: Identify the  Key Issues**
 
 *Analytics are Expensive*
 
@@ -990,8 +939,7 @@ We would run frequent jobs to merge files together  by product ID and time range
 
 To get the best-selling products within each category, we just need to sort each directory. How do we get the overall ranking? There are two good approaches:
 
-- We could treat the general category as just another directory, and write every purchase to that directory.
-That would mean a lot of files in this directory.
+- We could treat the general category as just another directory, and write every purchase to that directory. That would mean a lot of files in this directory.
 - Or, since we'll already have the products sorted by sales volume order for each category, we can also do an N-way merge to get the overall rank.
 
 Alternatively, we can take advantage of the fact that the data doesn't need (as we assumed earlier) to be
@@ -1004,7 +952,7 @@ To get the ranking for all products, we can be much lazier and only run this wor
 One of the advantages of this is that it scales nicely. We can easily divide up the files across multiple servers, as they aren't dependent on each other.
 
 
-##### Follow Up Questions
+**Follow Up Questions**
 
 The interviewer could push this design in any number of directions.
 
@@ -1024,7 +972,7 @@ SOLUTION
 The first thing we need to do is define what it is exactly that we are building.
 
 
-##### Step 1: Scope the Problem
+**Step 1: Scope the Problem**
 
 Ordinarily, you would clarify this system with your interviewer. We'll scope the problem as follows:
 
@@ -1038,7 +986,7 @@ Ordinarily, you would clarify this system with your interviewer. We'll scope the
 - We probably want email notifications either on a regular basis, or on certain conditions (spending over a certain threshold, hitting a budget  max, etc.).
 - We'll assume that there's no concept of user-specified rules for assigning categories to transactions. This gives us a basic goal for what we want to build.
 
-##### Step 2: Make Reasonable Assumptions
+**Step 2: Make Reasonable Assumptions**
 
 Now that we have the basic goal for the system, we should define some further assumptions  about  the characteristics of the system.
 
@@ -1050,7 +998,7 @@ Now that we have the basic goal for the system, we should define some further as
 
 It's okay to make different assumptions here, but you should explicitly state them to your interviewer.
 
-##### Step  3: Draw the Major Components
+**Step  3: Draw the Major Components**
 
 The most naive system would be one that pulls bank data on each login, categorizes all the data, and then analyzes the user's budget. This wouldn't quite fit the requirements, though, as we want email notifications on particular events.
 
@@ -1091,7 +1039,7 @@ The budget  analyzer pulls in the categorized transactions, updates  each user's
 The frontend pulls data from both the categorized transactions datastore as well as from the budget datas­ tore. Additionally, a user could also interact with the frontend by changing the budget or the categorization of their transactions.
 
 
-##### Step 4: Identify the Key Issues
+**Step 4: Identify the Key Issues**
 
 We should now reflect on what the major issues here might be.
 
@@ -1157,12 +1105,13 @@ The user might selectively override particular transactions to assign them to a 
 
 We could also just recompute the budget from scratch. The budget analyzer is fairly quick as it just needs to look over the past few weeks of transactions for a single user.
 
-##### Follow Up Questions
+**Follow Up Questions**
 
 - How would this change ifyou also needed to support a mobile app?
 - How would you design the component  which assigns items to each category? 
 - How would you design the recommended  budgets feature?
 - How would you. change this if the user could develop rules to categorize all transactions from a partic­ular seller differently than the default?
+
 
 **9.8 		Pastebin:** Design a system like Pastebin, where a user can enter a piece of text and get a randomly generated URL for public access. 
 
@@ -1272,7 +1221,7 @@ Every time a URL is visited, we can increment the appropriate row and column. Th
 As the stats are not listed on the regular pages and would generally be of less interest, it should not face as heavy of a load. We could still cache the generated HTML on thefrontend servers, so that we don't continu­ ously reaccess the data for the most popular URLs.
 
 
-##### Follow-Up Questions
+**Follow-Up Questions**
 
 - How would you support user accounts?
 - How would you add a new piece of analytics (e.g., referral source) to the stats page? 

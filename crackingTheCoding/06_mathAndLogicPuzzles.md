@@ -49,32 +49,32 @@ gcd * lcm = 2ᵐⁱⁿ⁽ʲ⁰, ᵏ⁰⁾ * 2ᵐᵃˣ⁽ʲ⁰, ᵏ⁰⁾ * 3ᵐ�
 This question is so common that we feel the need to specifically cover it. The naive way is to simply iterate from 2 through n-1,  checking for divisibility on each iteration.
 
 ```java
-1     boolean primeNaive(int n){
-2          if(n<2){
-3                   return false;
-4           }
-5          for   (int i=    2;  i<    n;  i++)  {
-6               if (n  %  i==    0){
-7                    return false;
-8               }
-9          }
-10        return true;
-11   }
+1 	boolean primeNaive(int n) {
+2 		if (n < 2) {
+3 			return false;
+4 		}
+5 		for   (int i =    2;  i <    n;  i++)  {
+6 			if (n  %  i ==    0) {
+7 				return false;
+8 			}
+9 		}
+10		return true;
+11	}
 ```
 
 A small but important improvement is to iterate only up through the square root of n.
 
 ```java
-1     boolean   primeSlightlyBetter(int n){
-2          if (n < 2){
-3               return false;
-4           }
-5         int sqrt=  (int) Math.sqrt(n);
-6          for   (int i=2;   i<=  sqrt;  i++)  {
-7               if (n  %  i==    0)  return false;
-8          }
-9          return true;
-10   }
+1 	boolean   primeSlightlyBetter(int n) {
+2 		if (n < 2) {
+3 			return false;
+4 		}
+5 		int sqrt =  (int) Math.sqrt(n);
+6 		for   (int i = 2;   i <=  sqrt;  i++)  {
+7 			if (n  %  i ==    0)  return false;
+8 		}
+9 		return true;
+10	}
 ```
 
 The √n is sufficient because, for every number a which divides n evenly, there is a complement b, where a * b = n. If a > √n, then b < √n (since (√n)² = n). We therefore don't need a to check n's primality, since we would have already checked with b.
@@ -93,39 +93,39 @@ The code below implements the Sieve of Eratosthenes.
 
 ```java
 1 	boolean[] sieveOfEratosthenes(int  max) {
-2 		boolean[] flags=  new boolean[max  + 1];
-3 		int count=    0;
-4		
-s 	         init(flags); // Set   all flags to  true other than  0  and 1
-6 	         int prime  =  2;
-7	         
-8 	         while  (prime<=    Math.sqrt(max))  {
-9 	         	/* Cross  off  remaining multiples  of  prime  */
-10	         	crossOff(flags,  prime);
-11	         	
-12	         	/* Find  next   value  which  is true */
-13	         	prime  =  getNextPrime(flags,  prime);
-14	         }
-15	         
-16	         return flags;
-17	     }
-18	     
-19	     void   crossOff(boolean[] flags,  int  prime)   {
-20	       /* Cross  off  remaining multiples  of  prime. We   can  start with  (prime*prime),
-21	          *  because  if we have  a  k  * prime,   where  k  <   prime,   this value  would  have
-22	          *  already been  crossed off in a  prior iteration.  */
-23	       for (int i= prime  *  prime;   i< flags.length; i += prime)   {
-24	       	flags[i]  =  false;
-25	       }
-26	   }
-27	   
-28	   int  getNextPrime(boolean[] flags, int prime)   {
-29	   	int next  = prime  + 1;
-30	   	while   (next<  flags.length &&    !flags[next]) {
-31	   		next++;
-32	   	}
-33	   	return  next;
-34	   }
+2 		boolean[] flags =  new boolean[max  + 1];
+3 		int count =    0;
+4	
+5 		init(flags); // Set   all flags to  true other than  0  and 1
+6 		int prime  =  2;
+7	
+8 		while  (prime <=    Math.sqrt(max))  {
+9 			/* Cross  off  remaining multiples  of  prime  */
+10			crossOff(flags,  prime);
+11	
+12			/* Find  next   value  which  is true */
+13			prime  =  getNextPrime(flags,  prime);
+14		}
+15	
+16		return flags;
+17	}
+18	
+19	void   crossOff(boolean[] flags,  int  prime)   {
+20		/* Cross  off  remaining multiples  of  prime. We   can  start with  (prime*prime),
+21		*  because  if we have  a  k  * prime,   where  k  <   prime,   this value  would  have
+22		*  already been  crossed off in a  prior iteration.  */
+23		for (int i = prime  *  prime;   i < flags.length; i += prime)   {
+24			flags[i]  =  false;
+25		}
+26	}
+27	
+28	int  getNextPrime(boolean[] flags, int prime)   {
+29		int next  = prime  + 1;
+30		while   (next <  flags.length &&    !flags[next]) {
+31			next++;
+32		}
+33		return  next;
+34	}
 ```
 
 Of course, there are a number of optimizations that can be made to this. One simple one is to only use odd numbersin the array, which would allow us to reduce our space usage by half.
@@ -135,8 +135,7 @@ Of course, there are a number of optimizations that can be made to this. One sim
 
 Probability can be a complex topic, but it's based in a few basic laws that can be logically derived.
 
-Let's look at a Venn diagram to visualize two eventsA and B. The areas of the two circles represent their rela­
-tive probability, and the overlapping area is the event {A and   B}.
+Let's look at a Venn diagram to visualize two eventsA and B. The areas of the two circles represent their rela­tive probability, and the overlapping area is the event {A and   B}.
 
 
 ![](media/IX_06_02.JPG)
@@ -151,17 +150,17 @@ P(A  and  B)  =  P(B given A)   P(A)
 For example, imagine we were picking a number between  1 and 10 (inclusive). What's the probability of picking an even number and a number between  1 and 5? The odds of picking a numberbetween 1  and 5 is 50%, and the odds of a number between  1 and 5 being even is 40%. So, the odds of doing both are: 
 
 ```
-= P(x   is even   and  x  <=  5)
-= P(x  is  even given x <= 5) P(x <= 5) 
+= P(x  is even and  x  <=  5)
+= P(x  is even given x <= 5) P(x <= 5) 
 = (2/5) * (1/2)
 = 1/5
 ```
 
 Observe that  since P(A  and   B)   =  P(B given A)  P(A) = P(A  given  B)  P(B), you can express the probability of A given B in terms of the reverse:
 
-P(A given B)   = P(B given A) P(A) / P(B) 
+P(A given B) = P(B given A) P(A) / P(B) 
 
-The above equation is called Bayes'Theorem.
+The above equation is called Bayes' Theorem.
 
 
 ###### Probability of A or B
@@ -194,7 +193,7 @@ indicates nothing about B.
 
 ###### Mutual Exclusivity
 
-If A and B are mutually exclusive (that is, if one happens, then the other cannot happen),thenP(A   or B) = P(A)+  P(B).This is becauseP(A  and   B)   =   0, so this term is removed from the earlierP(A  or
+If A and B are mutually exclusive (that is, if one happens, then the other cannot happen), then P(A   or B) = P(A)+  P(B).This is because P(A  and   B) = 0, so this term is removed from the earlier P(A  or
 B) equation.
 
 Many people,  strangely,  mix up  the  concepts of independence and mutual  exclusivity. They are entirely different.  In fact,two events  cannot be both  independent and  mutually  exclusive (provided  both  have probabilities  greater than  0). Why? Because mutual  exclusivity means  that  if one  happens then  the other cannot. Independence, however, says that one event happening means absolutely nothing about the other event.Thus, as long as two events  have non-zero probabilities,they will never be both  mutually  exclusive and independent.
@@ -207,7 +206,7 @@ If one  or both events have  a probability of zero (that  is, it is impossible),
 Don't panic when you get  a brainteaser. Like algorithm questions, interviewers want to see how you tackle a problem; they  don't  expect you to immediately know  the  answer. Start talking,  and show the  interviewer how you approach a problem.
 
 
-### Develop Rules  and Patterns
+### Develop Rules and Patterns
 
 In many cases,  you will find it useful  to write  down "rules" or patterns that you discover while  solving the problem. And yes, you really should write  these down-it will help you remember them as you solve the problem. Let's demonstrate this approach with an example.
 
@@ -234,11 +233,8 @@ Now, let's piece all of these together. We can turn rope 2 into a rope with 30 m
 From start  to end,  our approach is as follows:
 
 1. Light rope 1 at both ends and  rope 2 at one  end.
-
 2. When  the  two flames  on Rope 1 meet, 30 minutes will have  passed. Rope 2 has 30 minutes left of burn­ time.
-
 3. At that point, light Rope 2 at the other end.
-
 4. In exactly fifteen minutes, Rope 2 will be completely burnt.
 
 Note how solving this problem is made easier by listing out what you've learned and what "rules" you've discovered.
@@ -267,6 +263,7 @@ If you're stuck, consider applying one of the approaches for solving algorithm q
 
 ---
 Interview Questions
+
 ---
 
 **6.1       The Heavy Pill:** You have 20 bottles ofpills. 19 bottles have 1.0 gram pills, but one has pills of weight 1.1 grams. Given a scale that provides an exact measurement, how would you find the heavy bottle? You can only use the scale once.
@@ -319,20 +316,20 @@ The probability ofwinning Game  1 is p, by definition.
 
 **Probability of winning Game 2:**
 
-Let s(k,n) be the probability ofmaking exactly k shots out ofn. The probability ofwinning Game 2is the probability of making exactly two shots out ofthree OR making all three shots. In other words:
-
+Let s(k,n) be the probability ofmaking exactly k shots out of n. The probability of winning Game 2 is the probability of making exactly two shots out ofthree OR making all three shots. In other words:
+```
 P(winning) = s(2,3) + s(3,3) 
-
+```
 The probability  of making all three shots is:
-
+```
 s(3,3) = p³
-
+```
 The probability of making exactly two shots is: 
 
 ```
 P(making 1 and  2,  and missing 3)
-	+  P(making 1  and   3, and missing 2)
-	+  P(missing 1,  and making 2 and 3)
+	  +  P(making 1  and   3, and missing 2)
+	  +  P(missing 1,  and making 2 and 3)
    = p *  p *  (1 - p)  +  p  *  (1 - p)  *  p +   (1 - p)  *  p *  P
    = 3 (1 - p) p²
 ```
@@ -351,7 +348,7 @@ You should play Game 1  if P ( Game   1)  >   P (Game   2):
 ```
 p  >  3p² - 2p³ •
 1  >  3p  - 2p²
-2p²   - 3p +  1  >  0 
+2p² - 3p +  1  >  0 
 (2p - l)(p -  1) >   0 
 ```
 Both terms must be positive, or both must be negative. But we know p  <   1, so p  -  1  <  0. This means both terms must be negative.
@@ -404,7 +401,7 @@ P (same direction) = (1/2)³ + (1/2)³ = 1/4
 The probability of collision  is therefore the  probability of the  ants not moving in the  same direction:
 
 ```
-P (collision) = 1-P (same direction)= 1 - 1/4 = 3/4
+P (collision) = 1-P (same direction) = 1 - 1/4 = 3/4
 ```
 To generalize this to an n-vertex polygon: there are still only two ways in which the  ants can move to avoid a collision, but there are 2" ways they  can move in total. Therefore, in general, probability of collision  is:
 ```
@@ -429,7 +426,7 @@ If we just play with the jugs,  we'll find that we can pour water back and forth
 | 2       | 0       | Dumped 3-quart.                         |
 | 0       | 2       | Fill 3-quart with 5-quart's contents.   |
 | 5       | 2       | Filled 5-quart.                         |
-| 4       | 3       | Fill remainder of 3-quart with          |
+| 4       | 3       | Fill remainder of 3-quart with 5-quart  |
 | 4       |         | Done! We have  4 quarts.                |
 
 This question, like many puzzle questions, has a math/computer science root.  If the  two jug  sizes are rela­tively prime, you can measure any value between one  and the  sum of the jug  sizes.
@@ -538,31 +535,31 @@ Therefore, the gender ratio is 50% girls and 50% boys.
 We'll write this in a simple way that directly corresponds to the problem.
 
 ```java
-1     double  runNFamilies(int n)  {
-2          int boys  = 0;
-3         int girls =  0;
-4          for (int i =  0;  i <   n;  i++)   {
-5               int[] genders   = runOneFamily();
-6               girls += genders[0);
-7               boys  += genders[l];
-8           }
-9          return girls I (double) (boys  +  girls);
-10   }
-11
-12   int[] runOneFamily()  {
-13        Random  random = new Random();
-14         int boys  =  0;
-15        int girls = 0;
-16        while  (girls == 0)  { II until we have  a  girl
-17             if (random.nextBoolean())  { II girl
-18                  girls += 1;
-19             } else { II boy
-20                  boys  += 1;
-21             }
-22        }
-23        int[] genders   =  {girls,  boys};
-24        return genders;
-25   }
+1 	double  runNFamilies(int n)  {
+2 		int boys  = 0;
+3 		int girls =  0;
+4 		for (int i =  0;  i <   n;  i++)   {
+5 			int[] genders   = runOneFamily();
+6 			girls += genders[0];
+7 			boys  += genders[l];
+8 		}
+9 		return girls / (double) (boys  +  girls);
+10	}
+11	
+12	int[] runOneFamily()  {
+13		Random  random = new Random();
+14		int boys  =  0;
+15		int girls = 0;
+16		while  (girls == 0)  { // until we have  a  girl
+17			if (random.nextBoolean())  { // girl
+18				girls += 1;
+19			} else { // boy
+20				boys  += 1;
+21			}
+22		}
+23		int[] genders   =  {girls,  boys};
+24		return genders;
+25	}
 ```
 
 Sure enough, if you run this on large values of n, you should get something very close to 0.5.
@@ -611,36 +608,36 @@ As in many other maximizing/minimizing problems, the key in this problem is "wor
 
 The following code simulates this approach.
 
-```
-1     int  breakingPoint =  ...,
-2     int countDrops=  0;
-3
-4     boolean  drop(int floor) {
-5          countDrops++;
-6         return floor >=  breakingPoint;
-7     }
-8
-9     int  findBreakingPoint(int floors) {
-10       int interval=  14;
-11        int  previousFloor = 0;
-12       int egg1=  interval;
-13
-14       /*  Drop egg1  at  decreasing intervals.  */
-15       while  (!drop(egg1) &&  egg1  <=  floors) {
-16             interval -=  1;
-17             previousFloor = eggl;
-18             egg1  += interval;
-19        }
-20
-21       /*  Drop egg2  at 1 unit increments. */
-22        int egg2  = previousFloor  + 1;
-23       while   (egg2   <  egg1  &&   egg2  <=  floors &&    !drop(egg2)) {
-24             egg2  += 1;
-25        }
-26
-27       /* If it didn't  break, return  -1.   */
-28       return egg2  >floors?  -1  :   egg2;
-29   }
+```java
+1 	int  breakingPoint =  ...,
+2 	int countDrops =  0;
+3	
+4 	boolean  drop(int floor) {
+5 		countDrops++;
+6 		return floor >=  breakingPoint;
+7 	}
+8	
+9 	int  findBreakingPoint(int floors) {
+10		int interval =  14;
+11		int  previousFloor = 0;
+12		int egg1 =  interval;
+13	
+14		/*  Drop egg1  at  decreasing intervals. */
+15		while  (!drop(egg1) &&  egg1  <=  floors) {
+16			interval -=  1;
+17			previousFloor = eggl;
+18			egg1  += interval;
+19		}
+20	
+21		/*  Drop egg2  at 1 unit increments. */
+22		int egg2  = previousFloor  + 1;
+23		while   (egg2   <  egg1  &&   egg2  <=  floors &&    !drop(egg2)) {
+24			egg2  += 1;
+25		}
+26	
+27		/* If it didn't  break, return  -1. */
+28		return egg2  > floors ?  -1  :   egg2;
+29	}
 ```
 
 If we want to generalize this code for more building sizes, then we can solve for x in:
@@ -686,9 +683,7 @@ Therefore, there are 10 lockers open at the end of this process.
 
 **6.10      Poison:** You have 1000 bottles of soda, and exactly one is poisoned. You have 10 test strips which can be used to detect poison. A single drop of poison will turn the test strip positive permanently. You can put any number of drops on a test strip at once and you can reuse a test strip as many times as you'd like (as long as the results are negative). However, you can only run tests once per day and it takes seven days to return a result. How would you figure out the poisoned bottle in as few days as possible?
 
-Follow up:
-
-Write code to simulate your approach.
+Follow up: Write code to simulate your approach.
 
 
 SOLUTION
@@ -709,114 +704,114 @@ A simple approach is to divide the bottles across the 10 test strips, first in g
 
 To simulate  this, we'll build classes for Bottle and TestStrip that mirror the problem's functionality.
 ```java
-1     class Bottle {
-2         private boolean  poisoned=  false;
-3         private int id;
-4
-5            public   Bottle(int id)   {this.id= id;}
-6         public   int get!d() {return  id;}
-7         public   void  setAsPoisoned() {poisoned=  true;}
-8         public   boolean  isPoisoned() {return  poisoned;}
-9       }
-10
-11  class TestStrip {
-12       public   static int DAYS_FOR_RESULT=  7;
-13       private  Arraylist<Arraylist<Bottle>> dropsByDay
-14            new ArrayList<ArrayList<Bottle>>();
-15       private int id;
-16
-17       public   TestStrip(int id) {this.id      id;}
-18       public   int getid() {return  id;}
-19
-20       /*  Resize  list of  days/drops to  be large enough.  */
-21       private void  sizeDropsForDay(int day)  {
-22            while  (dropsByDay.size()  <=  day)  {
-23                 dropsByDay.add(new ArrayList<Bottle>());
-24               }
-25        }
-26
-27       /*  Add  drop  from bottle on specific day.  */
-28       public   void  addDropOnDay(int day,  Bottle bottle)  {
-29            sizeDropsForDay(day);
-30            ArrayList<Bottle> drops  =  dropsByDay.get(day);
-31            drops.add(bottle);
-32      }
-33
-34       /*  Checks if any of  the  bottles in  the  set are  poisoned. */
-35       private boolean  hasPoison(ArrayList<Bottle> bottles) {
-36            for  (Bottle b  :   bottles) {
-37                 if (b.isPoisoned()) {
-38                      return true;
-39                      }
-40              }
-41            return false;
-42          }
-43
-44       /*  Gets  bottles used in  the  test DAYS_FOR_RESULT  days ago.  */
-45       public   Arraylist<Bottle> getlastWeeksBottles(int  day)  {
-46            if (day  <  DAYS_FOR_RESULT) {
-47                 return null;
-48               }
-49            return dropsByDay.get(day  -  DAYS_FOR_RESULT);
-50          }
-51
-52       /*  Checks for  poisoned  bottles since   before  DAYS_FOR_RESULT  */
-53       public   boolean  isPositiveOnDay(int day)  {
-54            int testDay  =  day  -  DAYS_FOR_RESULT;
-55            if (testDay <  0  I    I       testDay  >= dropsByDay.size()) {
-56                 return false;
-57            }
-58            for  (int d =  0;  d <=  testDay;   d++) {
-59                 Arraylist<Bottle> bottles  =  dropsByDay.get(d);
-60                 if (hasPoison(bottles)) {
-61                      return true;
-62                       }
-63            }
-64            return false;
-55       }
-66   }
+1 	class Bottle {
+2 		private boolean  poisoned =  false;
+3 		private int id;
+4	
+5 		public   Bottle(int id)   {this.id = id;}
+6 		public   int get!d() {return  id;}
+7 		public   void  setAsPoisoned() {poisoned =  true;}
+8 		public   boolean  isPoisoned() {return  poisoned;}
+9 	}
+10	
+11	class TestStrip {
+12		public   static int DAYS_FOR_RESULT =  7;
+13		private  Arraylist<Arraylist<Bottle>> dropsByDay = 
+14			new ArrayList<ArrayList<Bottle>>();
+15		private int id;
+16	
+17		public   TestStrip(int id) {this.id      id;}
+18		public   int getid() {return  id;}
+19	
+20		/*  Resize  list of  days/drops to  be large enough. */
+21		private void  sizeDropsForDay(int day)  {
+22			while  (dropsByDay.size()  <=  day)  {
+23				dropsByDay.add(new ArrayList<Bottle>());
+24			}
+25		}
+26	
+27		/*  Add  drop  from bottle on specific day.  */
+28		public   void  addDropOnDay(int day,  Bottle bottle)  {
+29			sizeDropsForDay(day);
+30			ArrayList<Bottle> drops  =  dropsByDay.get(day);
+31			drops.add(bottle);
+32		}
+33	
+34		/*  Checks if any of  the  bottles in  the  set are  poisoned. */
+35		private boolean  hasPoison(ArrayList<Bottle> bottles) {
+36			for  (Bottle b  :   bottles) {
+37				if (b.isPoisoned()) {
+38					return true;
+39				}
+40			}
+41			return false;
+42		}
+43	
+44		/*  Gets  bottles used in  the  test DAYS_FOR_RESULT  days ago. */
+45		public   Arraylist<Bottle> getlastWeeksBottles(int  day)  {
+46			if (day  <  DAYS_FOR_RESULT) {
+47				return null;
+48			}
+49			return dropsByDay.get(day  -  DAYS_FOR_RESULT);
+50		}
+51	
+52		/*  Checks for  poisoned  bottles since   before  DAYS_FOR_RESULT */
+53		public   boolean  isPositiveOnDay(int day)  {
+54			int testDay  =  day  -  DAYS_FOR_RESULT;
+55			if (testDay <  0 ||     testDay  >= dropsByDay.size()) {
+56				return false;
+57			}
+58			for  (int d =  0;  d <=  testDay;   d++) {
+59				Arraylist<Bottle> bottles  =  dropsByDay.get(d);
+60				if (hasPoison(bottles)) {
+61					return true;
+62				}
+63			}
+64			return false;
+55		}
+66	}
 ```
 
 This is just one way of simulating the behavior of the bottles and test strips, and each has its pros and cons. With this infrastructure built, we can now implement code to test our approach.
 
 ```java
-1     int  findPoisonedBottle(ArrayList<Bottle> bottles, ArrayList<TestStrip>    strips) {
-2         int today= 0;
-3
-4         while  (bottles.size()    1 &&   strips.size()    0)  {
-5              /*  Run tests. */
-5                  runTestSet(bottles, strips,  today);
-7
-8                  /*  Wait for  results. */
-9                  today+=  TestStrip.DAYS_FOR_RESULT;
-10
-11            /*  Check results. */
-12            for  (TestStrip strip  :   strips) {
-13                 if (strip.isPositiveOnDay(today)) {
-14                      bottles =  strip.getLastWeeksBottles(today);
-15                      strips.remove(strip);
-16                      break;
-17                      }
-18              }
-19        }
-20
-21       if (bottles.size()== 1)  {
-22            return bottles.get(0).getid();
-23	  }
-24       return  -1;
-25    }
-26
-27   /*  Distribute bottles across test  strips  evenly. */
-28  void  runTestSet(ArrayList<Bottle>   bottles, ArrayList<TestStrip>    strips, int day)  {
-29       int index= 0;
-30       for  (Bottle bottle  :   bottles) {
-31            TestStrip strip  =  strips.get(index);
-32            strip.addDropOnDay(day,   bottle);
-33            index  ; (index  +  1)  %  strips.size();
-34         }
-35   }
-36
-37  /*  The complete  code  can be found in  the  downloadable  code attachment. */
+1 	int  findPoisonedBottle(ArrayList<Bottle> bottles, ArrayList<TestStrip>    strips) {
+2 		int today = 0;
+3	
+4 		while  (bottles.size()    1 &&   strips.size()    0)  {
+5 			/*  Run tests. */
+5 			runTestSet(bottles, strips,  today);
+7	
+8 			/*  Wait for  results. */
+9 			today +=  TestStrip.DAYS_FOR_RESULT;
+10	
+11			/*  Check results. */
+12			for  (TestStrip strip  :   strips) {
+13				if (strip.isPositiveOnDay(today)) {
+14					bottles =  strip.getLastWeeksBottles(today);
+15					strips.remove(strip);
+16					break;
+17				}
+18			}
+19		}
+20	
+21		if (bottles.size() == 1)  {
+22			return bottles.get(0).getid();
+23		}
+24		return  -1;
+25	}
+26	
+27	/*  Distribute bottles across test  strips  evenly. */
+28	void  runTestSet(ArrayList<Bottle>   bottles, ArrayList<TestStrip>    strips, int day)  {
+29		int index = 0;
+30		for  (Bottle bottle  :   bottles) {
+31			TestStrip strip  =  strips.get(index);
+32			strip.addDropOnDay(day,   bottle);
+33			index  ; (index  +  1)  %  strips.size();
+34		}
+35	}
+36	
+37	/*  The complete  code  can be found in  the  downloadable  code attachment. */
 ```
 
 Note that this approach makes the assumption that there will always  be multiple test strips at each round. This assumption is valid for 1000 bottles and 10 test strips.
@@ -885,82 +880,82 @@ The "ambiguous" bottles from day 9 will always map to different values on day 10
 Implementing this requires some careful work to prevent bugs.
 
 ```java
-1     int  findPoisonedBottle(ArrayList<Bottle> bottles,  ArrayList<TestStrip>  strips) {
-2       if (bottles.size() >  1000 I  I     strips.size() <  10) return  -1;
-3
-4       int  tests  =  4; II three  digits, plus  one extra
-5          int nTestStrips    =strips.size();
-6
-7          I* Run tests. *I
-8          for  (int day= 0; day < tests;   day++)   {
-9           runTestSet(bottles, strips,  day);
-16          }
-11
-12       I* Get results. *I
-13      HashSet<Integer> previousResults    =new  HashSet<Integer>();
-14     int[] digits  =new  int[tests];
-15        for  (int day= 0; day < tests;   day++)   {
-16             int resultDay   =day+ TestStrip.DAYS_FOR_RESULT;
-17          digits[day] =  getPositi veOnDay(strips,  resultDay,  previousResults);
-18         previousResults.add(digits[day]);
-19         }
-20
-21     /*  If day l's  results matched day 0's,  update the digit. */
-22      if (digits[l] ==-1)  {
-23             digits[l]  =digits[0];
-24          }
-25
-25     /* If day 2 matched  day 0 or day 1,  check day 3. Day 3 is  the  s ame  as day 2, but
-27       *  in cremented  by 1. */
-28      if (digits[2] ==   -1) {
-29		if (digits[3] ==    -1)  {/*    Day 3 didn't give  new result*/
-30		/*    Digit 2 equals digit  0 or  digit 1.  But,  digit 2,  when incremented  also
-31		*   matches digit 0 or  digit 1. This  means that digit 0 incremented  matches
-32		*   digit 1,  or  the  other   way  around.*/
-33		digits[2]  =  ((digits[0] + 1)%  nTestStrips) ==  digits[l]  ?
-34		digits[0] :   digits[l];
-35		}  else   {
-36                      digits[2]=    (digits[3] -  1 +  nTestStrips)% nTestStrips;
-37                }
-38       }
-39
-40       return digits[0] * 100+digits[!]*    10+digits[2];
-41   }
-42
-43  /*    Run set of  tests for  this day.*/
-44  void  runTestSet(Arraylist<Bottle> bottles,   ArrayList<TestStrip>  strips, int day)  {
-45       if (day  >   3)  return;//    only  works for   3 days  (digits)+one  extra
-46
-47       for  (Bottle bottle :  bottles) {
-48            int index  =  getTestStripindexForDay(bottle,  day,  strips.size());
-49            TestStrip testStrip  =  strips.get(index);
-50            testStrip.addDropOnDay(day,  bottle);
-51       }
-52   }
-53
-54 /*    Get strip that should  be used  on this bottle on this day.*/
-55  int  getTestStripindexForDay(Bottle bottle, int day,  int nTestStrips) {
-56       int id=    bottle.getid();
-57       switch  (day)  {
-58            case  0:  return id/100;
-59                case  1:  return (id% 100)/    10;
-60         case  2:  return id%  10;
-61         case  3:  return (id% 10+1)%  nTestStrips;
-62          default: return -1;
-63     }
-64    }
-
-66  /*    Get results that are  positive for  a  particular day,  excluding   prior results.*/
-67  int getPositiveOnDay(ArrayList<TestStrip>  testStrips,  int  day,
-68                              HashSet<Integer>  previousResults)  {
-69     for  (TestStrip testStrip  :   testStrips) {
-70            int id  =  testStrip.getid();
-71            if (testStrip.isPositiveOnDay(day)  &&    !previousResults.contains(id))  {
-72                 return testStrip.getid();
-73                  }
-74       }
-75       return -1;
-76     }
+1 	int  findPoisonedBottle(ArrayList<Bottle> bottles,  ArrayList<TestStrip>  strips) {
+2 		if (bottles.size() >  1000 ||    strips.size() <  10) return  -1;
+3	
+4 		int  tests  =  4; // three  digits, plus  one extra
+5 		int nTestStrips    = strips.size();
+6	
+7 		/* Run tests. */
+8 		for  (int day = 0; day < tests;   day++)   {
+9 			runTestSet(bottles, strips,  day);
+16		}
+11	
+12		/* Get results. */
+13		HashSet<Integer> previousResults    = new  HashSet<Integer>();
+14		int[] digits  = new  int[tests];
+15		for  (int day = 0; day < tests;   day++)   {
+16			int resultDay   = day + TestStrip.DAYS_FOR_RESULT;
+17			digits[day] =  getPositi veOnDay(strips,  resultDay,  previousResults);
+18			previousResults.add(digits[day]);
+19		}
+20	
+21		/*  If day l's  results matched day 0's,  update the digit. */
+22		if (digits[l] == -1)  {
+23			digits[l]  = digits[0];
+24		}
+25	
+25		/* If day 2 matched  day 0 or day 1,  check day 3. Day 3 is  the  s ame  as day 2, but
+27		*  in cremented  by 1. */
+28		if (digits[2] ==   -1) {
+29			if (digits[3] ==    -1)  {/*    Day 3 didn't give  new result*/
+30				/*    Digit 2 equals digit  0 or  digit 1.  But,  digit 2,  when incremented  also
+31				*   matches digit 0 or  digit 1. This  means that digit 0 incremented  matches
+32				*   digit 1,  or  the  other   way  around. */
+33				digits[2]  =  ((digits[0] + 1) %  nTestStrips) ==  digits[l]  ?
+34				digits[0] :   digits[l];
+35			}  else   {
+36				digits[2] =    (digits[3] -  1 +  nTestStrips) % nTestStrips;
+37			}
+38		}
+39	
+40		return digits[0] * 100 + digits[!] *    10 + digits[2];
+41	}
+42	
+43	/*    Run set of  tests for  this day. */
+44	void  runTestSet(Arraylist<Bottle> bottles,   ArrayList<TestStrip>  strips, int day)  {
+45		if (day  >   3)  return;//    only  works for   3 days  (digits)+one  extra
+46	
+47		for  (Bottle bottle :  bottles) {
+48			int index  =  getTestStripindexForDay(bottle,  day,  strips.size());
+49	 		TestStrip testStrip  =  strips.get(index);
+50			testStrip.addDropOnDay(day,  bottle);
+51		}
+52	}
+53	
+54	/*    Get strip that should  be used  on this bottle on this day. */
+55	int  getTestStripindexForDay(Bottle bottle, int day,  int nTestStrips) {
+56		int id =    bottle.getid();
+57		switch  (day)  {
+58		case  0:  return id / 100;
+59		case  1:  return (id % 100) /    10;
+60		case  2:  return id %  10;
+61		case  3:  return (id % 10 + 1) %  nTestStrips;
+62		default: return -1;
+63		}
+64	}
+65	
+66	/*    Get results that are  positive for  a  particular day,  excluding   prior results. */
+67	int getPositiveOnDay(ArrayList<TestStrip>  testStrips,  int  day,
+68	HashSet<Integer>  previousResults)  {
+69		for  (TestStrip testStrip  :   testStrips) {
+70			int id  =  testStrip.getid();
+71			if (testStrip.isPositiveOnDay(day)  &&    !previousResults.contains(id))  {
+72				return testStrip.getid();
+73			}
+74		}
+75		return -1;
+76	}
 ```
 
 It will take 10 days in the worst case to get a result with this approach.
@@ -976,47 +971,47 @@ We can take each bottle number and look at its binary representation. If there's
 We wait seven days, and then read the results.  If test strip i is positive, then set bit i of the result value. Reading all the test strips will give us the ID of the poisoned bottle.
 
 ```java
-1     int  findPoisonedBottle(ArrayList<Bottle> bottles, ArrayList<TestStrip> strips) {
-2         runTests(bottles,  strips);
-3            Arraylist<Integer> positive  =  getPositiveOnDay(strips,  7);
-4         return setBits(positive);
-5      }
-6
-7    /*  Add  bottle  contents to  test strips */
-8    void  runTests(Arraylist<Bottle> bottles,   ArrayList<TestStrip> testStrips) {
-9         for  (Bottle bottle  :   bottles) {
-10            int id=    bottle.getid();
-11            int bitindex =  0;
-12             while  (id > 0) {
-13                 if ((id &   1)==   1)  {
-14                      testStrips.get(bitindex).addDropOnDay(0,  bottle);
-15                 }
-16                 bitindex++;
-17                 id  »=   1;
-18             }
-19       }
-20    }
-21
-22  /*  Get test strips that are  positive on a  particular day.  */
-23  Arraylist<Integer>  getPositiveOnDay(Arraylist<TestStrip> testStrips, int day)  {
-24       Arraylist<Integer> positive  =  new Arraylist<Integer>();
-25       for  (TestStrip testStrip  :    testStrips) {
-26            int id=    testStrip.getid();
-27             if (testStrip.isPositiveOnDay(day))  {
-28                 positive.add(id);
-29            }
-30         }
-31       return positive;
-32    }
-33
-34  /*  Create  number by setting bits with  indices specified in  positive. */
-35   int  setBits(ArrayList<Integer> positive)  {
-36       int id=    0;
-37       for  (Integer  bitindex  :   positive) {
-38            id  I=            1 <<  bitindex;
-39         }
-40       return id;
-41   }
+1 	int  findPoisonedBottle(ArrayList<Bottle> bottles, ArrayList<TestStrip> strips) {
+2 		runTests(bottles,  strips);
+3 		Arraylist<Integer> positive  =  getPositiveOnDay(strips,  7);
+4 		return setBits(positive);
+5 	}
+6	
+7 	/*  Add  bottle  contents to  test strips */
+8 	void  runTests(Arraylist<Bottle> bottles,   ArrayList<TestStrip> testStrips) {
+9 		for  (Bottle bottle  :   bottles) {
+10			int id =    bottle.getid();
+11			int bitindex =  0;
+12			while  (id > 0) {
+13				if ((id &   1) ==   1)  {
+14					testStrips.get(bitindex).addDropOnDay(0,  bottle);
+15				}
+16				bitindex++;
+17				id  » =   1;
+18			}
+19		}
+20	}
+21	
+22	/*  Get test strips that are  positive on a  particular day.  */
+23	Arraylist<Integer>  getPositiveOnDay(Arraylist<TestStrip> testStrips, int day)  {
+24		Arraylist<Integer> positive  =  new Arraylist<Integer>();
+25		for  (TestStrip testStrip  :    testStrips) {
+26			int id =    testStrip.getid();
+27			if (testStrip.isPositiveOnDay(day))  {
+28				positive.add(id);
+29			}
+30		}
+31		return positive;
+32	}
+33	
+34	/*  Create  number by setting bits with  indices specified in  positive. */
+35	int  setBits(ArrayList<Integer> positive)  {
+36		int id =    0;
+37		for  (Integer  bitindex  :   positive) {
+38			id  I =            1 <<  bitindex;
+39		}
+40		return id;
+41	}
 ```
 
 This approach will work as long as 2ᵀ >= B, where T is the number of test strips and B is the number of bottles.

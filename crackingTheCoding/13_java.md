@@ -25,8 +25,8 @@ Your interviewer may be equally-or more-impressed if you can derive the  answer 
 Overloading is a term used to describe when two  methods have the  same name but differ in the  type or number of arguments.
 
 ```
-1      public  double computeArea(Circle c)   {   .•• }
-2      public   double  computeArea(Square s)  {  •••  }
+1      public  double computeArea(Circle c)  { ... }
+2      public  double computeArea(Square s)  { ... }
 ```
 
 Overriding, however, occurs when a method shares the  same name and  function signature as another method in its super class.
@@ -129,65 +129,6 @@ Interview Questions
 
 Please note that because virtually all the solutions in this book are implemented with Java, we have selected only a small number of questions for this chapter. Moreover, most of these questions deal with the"trivia" of the languages, since the rest of the book is filled with Java programming questions.
 
-13.1      Private Constructor: In terms of inheritance, what is the effect of keeping a constructor private?
-
-Hints:#404
-
-
-13.2     Return from Finally:  In Java, does the finally block get executed if we insert a return state­
-ment inside the try block of a try-catch-finally?
-
-Hints:#409 
-
-
-13.3    Final, etc.: What is the difference between final, finally, and finalize?
-
-Hints:#412
-
-
-13.4    Generics vs. Templates: Explain the difference between templates in C++ and generics in Java.
-
-Hints:#416, #425
-
-
-13.5    TreeMap, HashMap, LinkedHashMap: Explain the differences between TreeMap, HashMap, and
-LinkedHashMap. Provide an example of when each one would be best.
-
-Hints:#420, #424, #430, #454
-
-
- 
-13.6     Object Reflection: Explain what object reflection is in Java and why it is useful.
-
-Hints:#435
- 
-13.7 		Lambda Expressions: There is a class Country that  has methods  getContinent()   and getPopulation(). Write a function int  getPopulation(List<Country> countries, String  continent) that computes the total population of a given continent, given a list of all countries and the name of a continent.
-
-Hints:#448, #467, #464
-
-13.8 		Lambda   Random:    Using   Lambda   expressions,   write   a    function    List<Integer> getRandomSubset(List<Integer>   list) that returns a random subset of arbitrary size. All subsets (including the empty set) should be equally likely to be chosen.
-
-Hints:#443, #450, #457....                 pa 439
-
-Additional Questions: Arrays and Strings (#1.3), Object-Oriented Design (#7.12), Threads and Locks (#15.3) 
-
-Hints start on page 676.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 **13.1     Private Constructor:** In terms of inheritance, what is the effect of keeping a constructor private?
@@ -244,37 +185,37 @@ There is an  optional finally block  after  the  try block  or after  the  catch
 Watch how thisplays out in the  example below.
 
 ```java
-1      public static  String lem() {
-2           System.out.println("lem");
-3           return "return from   lem";
-4       }
-5
-6      public static  String foo() {
-7           int X        0j
-8           int y  =   5;
-9           try {
-10               System.out.println("start  try");
-11               int b  =   y  / x;
-12               System.out.println("end try");
-13               return  "returned  from try";
-14         }  catch (Exception ex)  {
-15               System.out.println("catch");
-16               return lem() +  "  I     returned  from catch";
-17         }  finally {
-18               System.out.println("finally");
-19         }
-20    }
-21
-22    public static  void bar()  {
-23         System.out.println("start  bar");
-24         String v  =   foo();
-25         System.out.println(v);
-26         System.out.println("end  bar");
-27    }
-28
-29    public static  void main(String[] args) {
-30         bar();
-31    }
+1 	public static  String lem() {
+2 		System.out.println("lem");
+3 		return "return from   lem";
+4 	}
+5	
+6 	public static  String foo() {
+7 		int X =   0;
+8 		int y  =   5;
+9 		try {
+10			System.out.println("start  try");
+11			int b  =   y  / x;
+12			System.out.println("end try");
+13			return  "returned  from try";
+14		}  catch (Exception ex)  {
+15			System.out.println("catch");
+16			return lem() +  " |     returned  from catch";
+17		}  finally {
+18			System.out.println("finally");
+19		}
+20	}
+21	
+22	public static  void bar()  {
+23		System.out.println("start  bar");
+24		String v  =   foo();
+25		System.out.println(v);
+26		System.out.println("end  bar");
+27	}
+28	
+29	public static  void main(String[] args) {
+30		bar();
+31	}
 ```
 
 The output for this code is the following:
@@ -283,7 +224,7 @@ The output for this code is the following:
 2      start try
 3      catch
 4      lem
-5     finally
+5      finally
 6      return from   lem   \  returned from catch
 7      end   bar
 ```
@@ -313,13 +254,13 @@ The  implementation of Java  generics is rooted in an idea  of"type erasure:'Thi
 For example, suppose you have the Java code below:
 ```
 1     Vector<String>  vector  =  new Vector<String>();
-2      vector.add(new String("hello"));
+2     vector.add(new String("hello"));
 3     String str  =  vector.get(0);
 ```
 During compilation, this code is re-written into:
 ```
-1      Vector vector  = new  Vector();
-2      vector.add(new String("hello"));
+1     Vector vector  = new  Vector();
+2     vector.add(new String("hello"));
 3     String  str  =  (String) vector.get(0);
 ```
 The use of Java generics didn't really change much about our capabilities; it just made things a bit prettier. For this reason, Java generics are sometimes called"syntactic sugar:'
@@ -328,31 +269,31 @@ This is quite different from  C++. In C++, templates are essentially a glorified
 
 To illustrate this, consider the  code below:
 
-```java
-1      /*** MyClass.h  ***/
-2     template<class T> class MyClass   {
-3        public:
-4           static int val;
-5           MyClass(int v) {  val     v;}
-6       };
-7
-8    /*** MyClass.cpp ***/
-9    template<typename T>
-10  int MyClass<T>::bar;
-11
-12  template class  MyClass<Foo>;
-13  template class  MyClass<Bar>;
-14
-15   /*** main.cpp ***/ 
-16  MyClass<Foo> * fool = new MyClass<Foo>(10);
-17  MyClass<Foo> * foo2 = new MyClass<Foo>(15);
-18  MyClass<Bar> * barl = new MyClass<Bar>(20);
-19  MyClass<Bar> * bar2 = new MyClass<Bar>(35); 
-20
-21  int  fl  fool->val;  //  will equal 15
-22  int f2     foo2->val; //  will equal 15
-23  int bl     barl->val;  //  will equal 35
-24  int b2    bar2->val; //  will equal 35
+```c
+1 	/*** MyClass.h  ***/
+2 	template<class T> class MyClass   {
+3 	public:
+4 		static int val;
+5 		MyClass(int v) {  val     v;}
+6 	};
+7	
+8 	/*** MyClass.cpp ***/
+9 	template<typename T>
+10	int MyClass<T>::bar;
+11	
+12	template class  MyClass<Foo>;
+13	template class  MyClass<Bar>;
+14	
+15	/*** main.cpp ***/
+16	MyClass<Foo> * fool = new MyClass<Foo>(10);
+17	MyClass<Foo> * foo2 = new MyClass<Foo>(15);
+18	MyClass<Bar> * barl = new MyClass<Bar>(20);
+19	MyClass<Bar> * bar2 = new MyClass<Bar>(35);
+20	
+21	int fl =  fool->val;  //  will equal 15
+22	int f2 =  foo2->val; //  will equal 15
+23	int bl =  barl->val;  //  will equal 35
+24	int b2 =  bar2->val; //  will equal 35
 ```
 
 In Java, static variables are shared across instances of MyClass, regardless of the different type parameters. Java generics and C++ templates have a number of other differences. These include:
@@ -382,16 +323,16 @@ All offer a key->value map and a way to iterate through the keys. The most impor
 Imagine you passed an empty TreeMap, HashMap, and LinkedHashMap into the following function:
 
 ```java
-1     void  insertAndPrint(AbstractMap<Integer,   String> map) {
-2          int[]  array= {1,   -1,   0};
-3         for (int x  :   array) {
-4               map.put(x,  Integer.toString(x));
-5             }
-6
-7          for (int k:  map.keySet()) {
-8               System.out.print(k + ",   ");
-9           }
-10    }
+1 	void  insertAndPrint(AbstractMap<Integer,   String> map) {
+2 		int[]  array = {1,   -1,   0};
+3 		for (int x  :   array) {
+4 			map.put(x,  Integer.toString(x));
+5 		}
+6	
+7 		for (int k :  map.keySet()) {
+8 			System.out.print(k + ",   ");
+9 		}
+10	}
 ```
 
 The output for each will look like the results below.
@@ -431,30 +372,30 @@ Object Reflection is a feature in Java that provides a way to get reflective inf
 The code below offers an example of object reflection.
 
 ```java
-1     /*Parameters */
-2     Object[]  doubleArgs   =  new Object[]  { 4.2,  3.9  };
-3
-4     /*  Get  class */
-5     Class   rectangleDefinition     Class.forName("MyProj.Rectangle");
-6
-7      /*  Equivalent: Rectangle rectangle  =  new  Rectangle(4.2, 3.9);  */
-8      Class[]  doubleArgsClass =  new Clas s[] {double.clas s,  double.class};
-9     Constructor doubleArgsConstructor =
-10         rectangleDefinition.getConstructor(doubleArgsClass);
-11    Rectangle rectangle  =  (Rectangle) doubleArgsConstructor.newlnstance(doubleArgs);
-12
-13    /*  Equivalent:  Double area  =  rectangle.area();  */
-14   Method  m  =  rectangleDefinition.getDeclaredMethod("area");
-15    Double area  =  (Double) m.invoke(rectangle); 
+1 	/*Parameters */
+2 	Object[]  doubleArgs   =  new Object[]  { 4.2,  3.9  };
+3	
+4 	/*  Get  class */
+5 	Class   rectangleDefinition     Class.forName("MyProj.Rectangle");
+6	
+7 	/*  Equivalent: Rectangle rectangle  =  new  Rectangle(4.2, 3.9);  */
+8 	Class[]  doubleArgsClass =  new Clas s[] {double.clas s,  double.class};
+9 	Constructor doubleArgsConstructor =
+10	rectangleDefinition.getConstructor(doubleArgsClass);
+11	Rectangle rectangle  =  (Rectangle) doubleArgsConstructor.newlnstance(doubleArgs);
+12	
+13	/*  Equivalent:  Double area  =  rectangle.area();  */
+14	Method  m  =  rectangleDefinition.getDeclaredMethod("area");
+15	Double area  =  (Double) m.invoke(rectangle);
 ```
 This code does the equivalent of:
 
-```
+```java
 1      Rectangle rectangle  =  new Rectangle(4.2, 3.9);
 2      Double area  =  rectangle.area();
 ```
 
-##### Why Is Object Reflection Useful?
+**Why Is Object Reflection Useful?**
 
 Of course, it doesn't seem very useful in the above example, but reflection can be very useful in some cases. Three main  reasons are:
 
@@ -475,15 +416,15 @@ This question really comes in two  parts. First, we need to generate a list of t
 Without lambda expressions, this is fairly straightforward to do.
 
 ```java
-1      int  getPopulation(List<Country> countries,   String  continent)  {
-2           int sum  =  0;
-3           for  (Country c   :   countries)  {
-4                 if (c.getContinent().equals(continent))  {
-5                       sum  +=  c.getPopulation();
-6                   }
-7            }
-8           return sum;
-9       }
+1	int  getPopulation(List<Country> countries,   String  continent)  {
+2		int sum  =  0;
+3		for  (Country c   :   countries)  {
+4			if (c.getContinent().equals(continent))  {
+5				sum  +=  c.getPopulation();
+6			}
+7		}
+8		return sum;
+9	}
 ```
 
 To implement this with  lambda expressions, let's break this up into multiple parts.
@@ -502,23 +443,26 @@ Second, we convert this into a list of populations using map.
 3      );
 ```
 Third and finally, we compute the sum using reduce.
+```
+1	int population = populations.reduce(0, (a,  b)   ->  a  + b); 
+```
+This function puts it all together.
 ```java
-1	int population = populations.reduce(0, (a,  b)   ->  a  + b); This function puts it all together.
-1      int  getPopulation(List<Country> countries,  String  continent)  {
-2           /* Filter  countries. */
-3           Stream<Country>  sublist =  countries.stream().filter(
-4                 country  ->  {  return  country.getContinent().equals(continent);}
-5            );
-6
-7           /* Convert to list of populations. */
-8           Stream<Integer> populations  =  sublist.map(
-9                 c  ->  c.getPopulation()
-10        ) ;
-11
-12         /* Sum list. */
-13         int  population =  populations.reduce(0, (a,  b) ->  a  +  b);
-14         return  population;
-15    }
+1 	int  getPopulation(List<Country> countries,  String  continent)  {
+2 		/* Filter  countries. */
+3 		Stream<Country>  sublist =  countries.stream().filter(
+4 			country  ->  {  return  country.getContinent().equals(continent);}
+5 		);
+6	
+7 		/* Convert to list of populations. */
+8 		Stream<Integer> populations  =  sublist.map(
+9 			c  ->  c.getPopulation()
+10		) ;
+11	
+12		/* Sum list. */
+13		int  population =  populations.reduce(0, (a,  b) ->  a  +  b);
+14		return  population;
+15	}
 ```
 
 Alternatively, because of the  nature of this specific  problem, we can  actually remove the  filter entirely. The reduce operation can  have  logic that maps the  population of countries not  in the  right  continent to zero. The sum will effectively  disregard countries not  within continent.
@@ -532,8 +476,7 @@ Alternatively, because of the  nature of this specific  problem, we can  actuall
 Lambda functions were  new  to Java 8, so if you don't recognize them, that's probably why. Now is a great time  to learn  about them, though!
 
 
-**13.8     Lambda    Random:**    Using     Lambda    expressions,    write     a     function    List<Integer>
-getRandomSubset( List<Integer> list) that returns a random subset of arbitrary size. All subsets (including the empty set) should be equally likely to be chosen.
+**13.8     Lambda    Random:** Using Lambda expressions, write a function List<Integer> getRandomSubset( List<Integer> list) that returns a random subset of arbitrary size. All subsets (including the empty set) should be equally likely to be chosen.
  
 SOLUTION
 
@@ -543,8 +486,8 @@ It's tempting to approach this problem by picking a subset size from 0 to N and 
 
 That creates two  issues:
 
-1.  We'd have  to weight those probabilities. If N   >  1, there are more subsets of size N/2 than there are of subsets of size N (of which  there is always  only one).
-2.   It's actually more difficult  to  generate a subset of a restricted size (e.g., specifically 1O) than it is to generate a subset of any size.
+1. We'd have  to weight those probabilities. If N   >  1, there are more subsets of size N/2 than there are of subsets of size N (of which  there is always  only one).
+2. It's actually more difficult  to  generate a subset of a restricted size (e.g., specifically 1O) than it is to generate a subset of any size.
 
 Instead, rather than generating  a subset based on sizes, let's think about it based on elements. (The fact that we're told to use lambda expressions is also a hint that we should think about some sort of iteration or processing through the elements.)
 
@@ -568,39 +511,39 @@ This means that we can generate  a random subset by iterating through the list a
 
 Without lambda expressions, we can write something like this:
 ```java
-1     List<Integer>  getRandomSubset(List<Integer> list) {
-2          List<Integer> subset =  new ArrayList<Integer>();
-3         Random  random =  new Random();
-4          for (int item   :   list) {
-5               /* Flip   coin.   */
-6               if (random.nextBoolean())  {
-7                            subset.add(item);
-8                }
-9           }
-10       return  subset;
-11   }
+1 	List<Integer>  getRandomSubset(List<Integer> list) {
+2 		List<Integer> subset =  new ArrayList<Integer>();
+3 		Random  random =  new Random();
+4 		for (int item   :   list) {
+5 			/* Flip   coin.   */
+6 			if (random.nextBoolean())  {
+7 				subset.add(item);
+8 			}
+9 		}
+10		return  subset;
+11	}
 ```
 To implement this approach using lambda expressions, we can do the following:
 ```java
-1     List<Integer>  getRandomSubset(List<Integer> list) {
-2          Random  random =  new Random();
-3         List<Integer> subset=  list.stream().filter(
-4               k  ->  {  return  random.nextBoolean(); /*  Flip  coin.  */
-5          }).collect(Collectors.tolist());
-6          return  subset;
-7     }
+1	List<Integer>  getRandomSubset(List<Integer> list) {
+2		Random  random =  new Random();
+3		List<Integer> subset =  list.stream().filter(
+4			k  ->  { return  random.nextBoolean(); /*  Flip  coin.  */
+5		}).collect(Collectors.tolist());
+6		return  subset;
+7	}
 ```
 Or, we can use a predicate (defined within the class or within the function):
 ```java
-1     Random  random =  new Random();
-2     Predicate<Object> flipCoin  =  o  ->  {
-3         return random.nextBoolean();
-4    };
-5
-6     List<Integer>  getRandomSubset(List<Integer> list) {
-7          List<Integer> subset=  list.stream().filter(flipCoin).
-8               collect(Collectors.tolist());
-9         return subset;
-10    }
+1 	Random  random =  new Random();
+2 	Predicate<Object> flipCoin  =  o  ->  {
+3 		return random.nextBoolean();
+4 	};
+5	
+6 	List<Integer>  getRandomSubset(List<Integer> list) {
+7 		List<Integer> subset =  list.stream().filter(flipCoin).
+8 		collect(Collectors.tolist());
+9 		return subset;
+10	}
 ```
 The nice thing about this implementation is that now we can apply the flipCoin predicate in other places.
