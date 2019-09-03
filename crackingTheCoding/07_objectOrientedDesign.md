@@ -96,7 +96,9 @@ The Factory Method offers an interface for creating an instance of a class, with
 ```
 
 ---
+
 Interview Questions
+
 ---
 
 **7.1   Deck of Cards:**  Design the data structures for a generic deck of cards. Explain how you would subclass the data structures to implement blackjack.

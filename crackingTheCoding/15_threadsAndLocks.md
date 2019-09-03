@@ -293,7 +293,9 @@ quishing their current resources.
 Deadlock prevention entails removing any of the above conditions, but it gets tricky because many of these conditions are difficult to satisfy. For instance, removing #1  is difficult because many resources can only be used by one process at a time (e.g., printers). Most deadlock prevention  algorithms focus on avoiding condition #4: circular wait.
 
 ---
+
 Interview Questions
+
 ---
  
 

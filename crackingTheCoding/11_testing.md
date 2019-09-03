@@ -173,7 +173,9 @@ At some point in this process, something  fails and it causes the browser to cra
 Each of the above components should have realistic instructions-things that you can ask the user to do, or things that you can do yourself (such as replicating steps on your own machine). In the real world, you will be dealing with customers, and you can't give them instructions that they can't or won't do.
 
 ---
+
 Interview Questions
+
 ---
 
 **11.1      Mistake:** Find the mistake(s) in the following code:

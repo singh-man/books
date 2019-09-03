@@ -271,7 +271,9 @@ In the final step, the initial machine would do an intersection  on the results 
 ![](media/IX_09_01.JPG)
 
 ---
+
 Interview Questions
+
 ---
 
 These questions are designed to mirror a real interview, so they will not always be well defined. Think about what questions  you would ask your interviewer and then make reasonable  assumptions. You may make different assumptions than us, and that will lead you to a very different design. That's okay!

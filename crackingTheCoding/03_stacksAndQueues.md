@@ -130,7 +130,9 @@ One place where queues are often used is in breadth-first search or in implement
 In breadth-first search, for example, we used a queue to store a list of the nodes that we need to process. Each time we process a node, we add its adjacent nodes to the back of the queue. This allows us to process nodes in the order in which they are viewed.
 
 ---
+
 Interview Questions
+
 ---
 
 **3.1  Three in One:** Describe how you could use a single array to implement three stacks.

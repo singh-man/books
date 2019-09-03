@@ -107,7 +107,9 @@ A good exercise to practice strings,arrays,and general data structures is to imp
 **Additional Reading:** HashTable Collision Resolution (pg 636), Rabin-Karp Substring Search (pg 636).
 
 ---
+
 Interview Questions
+
 ---
 
 **1.1 Is Unique:** Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures?

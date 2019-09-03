@@ -171,7 +171,9 @@ Note that although the concept is fairly simple, getting all the details right i
 Potential ways to search a data structure extend beyond binary search, and you would do best not to limit yourself tojust this option. You might, for example, search for a node by leveraging a binary tree, or by using a hash table. Think beyond binary search!
 
 ---
+
 Interview Questions
+
 ---
 
 

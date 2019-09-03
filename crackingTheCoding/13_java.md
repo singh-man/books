@@ -124,7 +124,9 @@ HashMap:The HashMap collection is widely used, both in interviews and in the rea
 Before your interview, make sure you're very comfortable with the above syntax. You'll need it.
 
 ---
+
 Interview Questions
+
 ---
 
 Please note that because virtually all the solutions in this book are implemented with Java, we have selected only a small number of questions for this chapter. Moreover, most of these questions deal with the"trivia" of the languages, since the rest of the book is filled with Java programming questions.

@@ -161,7 +161,9 @@ Finally, we fill in the details. Walk through the common actions that will be ta
 When designing a large, scalable database, joins (which are required in the above examples) are generally very slow. Thus, you must denormalize your data. Think carefully about how data will be used-you'll prob­ ably need to duplicate the data in multiple tables.
 
 ---
+
 Interview Questions
+
 ---
 
 Questions 1  through 3 refer to the following database schema:
