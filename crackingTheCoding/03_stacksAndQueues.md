@@ -641,43 +641,43 @@ In this approach,  stackNewest has the  newest  elements  on top  and stackOldes
 The code below implements this algorithm.
 
 ```java
-1      public class MyQueue<T>   {
-2           Stack<T> stackNewest, stackOldest;
+1   public class MyQueue<T>   {
+2        Stack<T> stackNewest, stackOldest;
 3
-4           public MyQueue() {
-5                stackNewest =  new Stack<T>();
-6                stackOldest = new Stack<T>();
-7           }
+4        public MyQueue() {
+5             stackNewest =  new Stack<T>();
+6             stackOldest = new Stack<T>();
+7        }
 8 
-9           public int size()  {
-19              return stackNewest.size() + stackOldest.size();
-11          }
+9        public int size()  {
+19           return stackNewest.size() + stackOldest.size();
+11       }
 12 
-13         public void  add(T  value)  {
-14    	   /* Push onto stackNewest,  which  always  has  the   newest  elements on  top   */
-15              stackNewest.push(value);
-16         }
+13      public void  add(T  value)  {
+14  	   /* Push onto stackNewest,  which  always  has  the   newest  elements on  top   */
+15           stackNewest.push(value);
+16      }
 17  
-18     /* Move elements from stackNewest into stackOldest. This is usually done so  that
-19           * we can  do  operations on stackOldest. */
-20 			private  void shiftStacks()  {
-21 				if  (stackOldest.isEmpty()) {
-22 					while (!stackNewest.isEmpty())  {
-23 						stackOldest.push(stackNewest.pop());
-24 					}
-25 				}
-26 			}
-27 			
-28 			public T  peek() {
-29 				shiftStacks();  // Ensure stackOldest  has the  current  elements 
-30 				return  stackOldest.peek(); // retrieve the oldest item.
-31 			}
-32 			
-33 			public T  remove()  {
-34 				shiftStacks(); // Ensure stackOldest  has   the  current  elements 
-35 				return  stackOldest.pop(); // pop  the oldest item.
-36 			}
-37     }
+18  /* Move elements from stackNewest into stackOldest. This is usually done so  that
+19        * we can  do  operations on stackOldest. */
+20 		private  void shiftStacks()  {
+21 			if  (stackOldest.isEmpty()) {
+22 				while (!stackNewest.isEmpty())  {
+23 					stackOldest.push(stackNewest.pop());
+24 				}
+25 			}
+26 		}
+27 		
+28 		public T  peek() {
+29 			shiftStacks();  // Ensure stackOldest  has the  current  elements 
+30 			return  stackOldest.peek(); // retrieve the oldest item.
+31 		}
+32 		
+33 		public T  remove()  {
+34 			shiftStacks(); // Ensure stackOldest  has   the  current  elements 
+35 			return  stackOldest.pop(); // pop  the oldest item.
+36 		}
+37  }
 ```
 
 During  your actual interview, you may find that you forget the  exact API calls. Don't stress too  much if that happens to  you.  Most  interviewers are  okay  with  your  asking for them to  refresh your  memory on  little details. They're much more concerned with your big picture understanding.
@@ -823,3 +823,5 @@ If we wanted, order could be a true timestamp with the actual  date and time. Th
 the same timestamp, then  (by definition)  we don't have an older animal and we could  return either one.
 
 Additional Questions:  Linked Lists (#2.6), Moderate  Problems (#16.26), Hard Problems (#17.9). Hints start on page 653.
+
+

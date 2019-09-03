@@ -391,110 +391,110 @@ Alternatively, I  could do what's called a bidirectional breadth-first search. T
 In the implementation, we'll use two classes to help us. BFSData holds the data we need for a breadth-first search, such as the isVisited hash table and the toVisit queue. PathNode will represent the path as we're searching it, storing each P erson and the previousNode we visited in this path.
 
 ```java
-1  		Linkedlist<Person> findPathBiBFS(HashMap<Integer,  Person> people,   int source,
-2  		int destination) {
-3  			BFSData  sourceData  = new BFSData(people.get(source));
-4  			BFSData  destData   =  new BFSData(people.get(destination));
-5		
-6  			while  (!sourceData.isFinished() &&    !destData.isFinished()) {
-7  				/*Search  out  from source.*/
-8  				Person  collision =  searchlevel(people,  sourceData,   destData);
-9  				if (collision != null) {
-10 					return  mergePaths(sourceData, destData,  collision.getID());
-11 				}
-12		
-13 				/*Search  out  from destination.*/
-14 				collision =  searchlevel(people,  destData,  sourceData);
-15 				if (collision != null) {
-16 					return  mergePaths(sourceData, destData,  collision.getID());
-17 				}
-18 			}
-19 			return null;
-20 		}
-21		
-22 		/*Search   one level and return collision, if any.*/
-23 		Person  searchLevel(HashMap<Integer,  Person> people,   BFSData  primary,
-24 							BFSData secondary) {
-25 			/*We  only  want to  search  one level at a time. Count how  many  nodes  are
-26 			* currently  in  the  primary's level and only  do that many  nodes.  We'll  continue
-27 			* to  add nodes to  the  end. */
-28 			int count  = primary.toVisit.size();
-29 			for  (int i =  0;  i < count;   i++)  {
-30 				/*Pull out  first node.*/
-31 				PathNode pathNode =  primary.toVisit.poll();
-32 				int  personld = pathNode.getPerson().getID();
-33		
-34 				/* Check if it's already been visited. */
-35 				if (secondary.visited.containsKey(personid)) {
-36 					return  pathNode.getPerson();
-37 				}
-38		
-39 				/*   Add friends to  queue.  */
-40 				Person  person  =  pathNode.getPerson();
-41 				Arraylist<Integer> friends = person.getFriends();
-42 				for  (int friendid :   friends) {
-43 					if (!primary.visited.containsKey(friendid)) {
-44 						Person  friend =  people.get(friendld);
-45 						PathNode next  =  new PathNode(friend,  pathNode);
-46 						primary.visited.put(friendld, next);
-47 						primary.toVisit.add(next);
-48 					}
-49 				}
-50 			}
-51 			return null;
-52 		}
-53		
-54 		/* Merge paths  where searches met at connection. */
-55 		Linkedlist<Person> mergePaths(BFSData bfsl, BFSData bfs2,   int  connection) {
-56 			PathNode endl  = bfsl.visited.get(connection); // endl  -> source
-57 			PathNode end2 = bfs2.visited.get(connection);  // end2 -> dest
-58 			Linkedlist<Person> pathOne =  endl.collapse(false);
-59 			Linkedlist<Person> pathTwo =  end2.collapse(true);  // reverse
-60 			pathTwo.removeFirst();  // remove connection
-61 			pathOne.addAll(pathTwo);  // add second  path
-62 			return pathOne;
-63 		}
-64		
-65 		class PathNode {
-66 			private Person  person  =  null;
-67 			private PathNode previousNode  =  null;
-68 			public PathNode(Person  p,  PathNode previous) {
-69 				person  =  p;
-70 				previousNode = previous;
-71 			}
-72			
-73 			public Person  getPerson() {  return person;  }
-74			
-75 			public  Linkedlist<Person> collapse(boolean  startsWithRoot) {
-76 				Linkedlist<Person> path =  new Linkedlist<Person>();
-77 				PathNode node = this;
-78 				while  (node  != null) {
-79 					if (startsWithRoot) {
-80 						path.addlast(node.person);
-81 					}  else {
-82 						path.addFirst(node.person);
-83 					}
-84 					node = node.previousNode;
-85 				}
-86 				return path;
-87 			}
-88 		}
-89		
-90 		class BFSData   {
-91 			public Queue<PathNode> toVisit =  new Linkedlist<PathNode>();
-92 			public HashMap<Integer, PathNode> visited = 
-93 					new HashMap<Integer,  PathNode>();
-94			
-95 			public BFSData(Person root) {
-96 				PathNode sourcePath =  new PathNode(root,  null);
-97 				toVisit.add(sourcePath);
-98 				visited.put(root.getID(),   sourcePath);
-99 			}
-100			
-101			public boolean  isFinished() {
-102				return toVisit.isEmpty();
-103			}
-104		}
+1  	Linkedlist<Person> findPathBiBFS(HashMap<Integer,  Person> people,   int source,
+2  	int destination) {
+3  		BFSData  sourceData  = new BFSData(people.get(source));
+4  		BFSData  destData   =  new BFSData(people.get(destination));
+5	
+6  		while  (!sourceData.isFinished() &&    !destData.isFinished()) {
+7  			/*Search  out  from source.*/
+8  			Person  collision =  searchlevel(people,  sourceData,   destData);
+9  			if (collision != null) {
+10 				return  mergePaths(sourceData, destData,  collision.getID());
+11 			}
+12	
+13 			/*Search  out  from destination.*/
+14 			collision =  searchlevel(people,  destData,  sourceData);
+15 			if (collision != null) {
+16 				return  mergePaths(sourceData, destData,  collision.getID());
+17 			}
+18 		}
+19 		return null;
+20 	}
+21	
+22 	/*Search   one level and return collision, if any.*/
+23 	Person  searchLevel(HashMap<Integer,  Person> people,   BFSData  primary,
+24 						BFSData secondary) {
+25 		/*We  only  want to  search  one level at a time. Count how  many  nodes  are
+26 		* currently  in  the  primary's level and only  do that many  nodes.  We'll  continue
+27 		* to  add nodes to  the  end. */
+28 		int count  = primary.toVisit.size();
+29 		for  (int i =  0;  i < count;   i++)  {
+30 			/*Pull out  first node.*/
+31 			PathNode pathNode =  primary.toVisit.poll();
+32 			int  personld = pathNode.getPerson().getID();
+33	
+34 			/* Check if it's already been visited. */
+35 			if (secondary.visited.containsKey(personid)) {
+36 				return  pathNode.getPerson();
+37 			}
+38	
+39 			/*   Add friends to  queue.  */
+40 			Person  person  =  pathNode.getPerson();
+41 			Arraylist<Integer> friends = person.getFriends();
+42 			for  (int friendid :   friends) {
+43 				if (!primary.visited.containsKey(friendid)) {
+44 					Person  friend =  people.get(friendld);
+45 					PathNode next  =  new PathNode(friend,  pathNode);
+46 					primary.visited.put(friendld, next);
+47 					primary.toVisit.add(next);
+48 				}
+49 			}
+50 		}
+51 		return null;
+52 	}
+53	
+54 	/* Merge paths  where searches met at connection. */
+55 	Linkedlist<Person> mergePaths(BFSData bfsl, BFSData bfs2,   int  connection) {
+56 		PathNode endl  = bfsl.visited.get(connection); // endl  -> source
+57 		PathNode end2 = bfs2.visited.get(connection);  // end2 -> dest
+58 		Linkedlist<Person> pathOne =  endl.collapse(false);
+59 		Linkedlist<Person> pathTwo =  end2.collapse(true);  // reverse
+60 		pathTwo.removeFirst();  // remove connection
+61 		pathOne.addAll(pathTwo);  // add second  path
+62 		return pathOne;
+63 	}
+64	
+65 	class PathNode {
+66 		private Person  person  =  null;
+67 		private PathNode previousNode  =  null;
+68 		public PathNode(Person  p,  PathNode previous) {
+69 			person  =  p;
+70 			previousNode = previous;
+71 		}
+72		
+73 		public Person  getPerson() {  return person;  }
+74		
+75 		public  Linkedlist<Person> collapse(boolean  startsWithRoot) {
+76 			Linkedlist<Person> path =  new Linkedlist<Person>();
+77 			PathNode node = this;
+78 			while  (node  != null) {
+79 				if (startsWithRoot) {
+80 					path.addlast(node.person);
+81 				}  else {
+82 					path.addFirst(node.person);
+83 				}
+84 				node = node.previousNode;
+85 			}
+86 			return path;
+87 		}
+88 	}
+89	
+90 	class BFSData   {
+91 		public Queue<PathNode> toVisit =  new Linkedlist<PathNode>();
+92 		public HashMap<Integer, PathNode> visited = 
+93 				new HashMap<Integer,  PathNode>();
+94		
+95 		public BFSData(Person root) {
+96 			PathNode sourcePath =  new PathNode(root,  null);
+97 			toVisit.add(sourcePath);
+98 			visited.put(root.getID(),   sourcePath);
+99 		}
+100		
+101		public boolean  isFinished() {
+102			return toVisit.isEmpty();
+103		}
+104	}
 ```
 
 Many people are surprised that this is faster. Some quick math can explain why.
@@ -1228,3 +1228,5 @@ As the stats are not listed on the regular pages and would generally be of less 
 - How would you support user accounts?
 - How would you add a new piece of analytics (e.g., referral source) to the stats page? 
 - How would your design change if the stats were shown with each document?
+
+

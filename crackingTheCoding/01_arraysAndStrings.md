@@ -1,6 +1,4 @@
-## 1
-
-### Arrays and Strings
+## 1 Arrays and Strings
 
 
 Hopefully, all readers of this book are familiar with arrays and strings, so we won't .bore you with such details. Instead, we'll focus on some of the more common techniques and issues with these data struc­
@@ -409,40 +407,40 @@ is that there is no overlap between the numbers (as opposed to say 00101000, whi
 This leads us to our final implementation.
 
 ```java
-1 		boolean  isPermutationOfPalindrome(String phrase)  {
-2 			int  bitVector =  createBitVector(phrase);
-3 			return  bitVector == 0  ||   checkExactlyOneBitSet(bitVector);
-4 		}
-5		
-6 		/* Create a bit vector for the string. For  each letter with value i, toggle the
-7 		 * ith bit.*/
-8 		int createBitVector(String phrase) {
-9 			int  bitVector = 0;
-10			for (char c : phrase.toCharArray())  {
-11				int x = getCharNumber(c);
-12				bitVector = toggle(bitVector,  x);
-13			}
-14			return bitVector;
-15		}
-16		
-17		/* Toggle the ith bit in the integer.*/
-18		int toggle(int bitVector, int index) {
-19			if  (index <   0)  return bitVector;
-20		
-21			int mask =  1  << index;
-22			if  ((bitVector &  mask) == 0) {}
+1 	boolean  isPermutationOfPalindrome(String phrase)  {
+2 		int  bitVector =  createBitVector(phrase);
+3 		return  bitVector == 0  ||   checkExactlyOneBitSet(bitVector);
+4 	}
+5	
+6 	/* Create a bit vector for the string. For  each letter with value i, toggle the
+7 	 * ith bit.*/
+8 	int createBitVector(String phrase) {
+9 		int  bitVector = 0;
+10		for (char c : phrase.toCharArray())  {
+11			int x = getCharNumber(c);
+12			bitVector = toggle(bitVector,  x);
+13		}
+14		return bitVector;
+15	}
+16	
+17	/* Toggle the ith bit in the integer.*/
+18	int toggle(int bitVector, int index) {
+19		if  (index <   0)  return bitVector;
+20	
+21		int mask =  1  << index;
+22		if  ((bitVector &  mask) == 0) {
 23			bitVector  |= mask;
 24		}  else {
 25			bitVector &= ~mask;
 26		}
 27		return  bitVector;
-28		}
-29		
-30		/* Check that exactly one bit is set by subtracting one from the integer and
-31		 * ANDing it with  the original integer.*/
-32		boolean   checkExactlyOneBitSet(int bitVector)  {
-33			return  (bitVector &  (bitVector  -  1)) ==  0;
-34		}
+28	}
+29	
+30	/* Check that exactly one bit is set by subtracting one from the integer and
+31	 * ANDing it with  the original integer.*/
+32	boolean   checkExactlyOneBitSet(int bitVector)  {
+33		return  (bitVector &  (bitVector  -  1)) ==  0;
+34	}
 ```
 
 Like the other solutions, this is O(N).
@@ -887,3 +885,5 @@ And this is precisely how we solve the problem: simply do isSubstring(slsl,  s2)
 ```
 
 The runtime of this varies based on the runtime of isSubstring. But if you assume that isSubstring runs inO(A+B) time (on strings of length A and B), then the runtime of isRotation is O(N).
+
+

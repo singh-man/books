@@ -10,7 +10,8 @@ We'll go through some common approaches for tackling these questions, as well as
 ### Prime Numbers
 
 As you probably know, every positive integer can be decomposed into a product of primes. For example:
-84  =   2²  * 3¹ * 5⁰ * 7¹ * 11⁰ * 13⁰ * 17⁰ * ... 
+
+	84  =   2²  * 3¹ * 5⁰ * 7¹ * 11⁰ * 13⁰ * 17⁰ * ... 
 
 Note that many of these primes have an exponent of zero.
 
@@ -193,8 +194,7 @@ indicates nothing about B.
 
 ###### Mutual Exclusivity
 
-If A and B are mutually exclusive (that is, if one happens, then the other cannot happen), then P(A   or B) = P(A)+  P(B).This is because P(A  and   B) = 0, so this term is removed from the earlier P(A  or
-B) equation.
+If A and B are mutually exclusive (that is, if one happens, then the other cannot happen), then P(A or B) = P(A) + P(B).This is because P(A  and   B) = 0, so this term is removed from the earlier P(A or B) equation.
 
 Many people,  strangely,  mix up  the  concepts of independence and mutual  exclusivity. They are entirely different.  In fact,two events  cannot be both  independent and  mutually  exclusive (provided  both  have probabilities  greater than  0). Why? Because mutual  exclusivity means  that  if one  happens then  the other cannot. Independence, however, says that one event happening means absolutely nothing about the other event.Thus, as long as two events  have non-zero probabilities,they will never be both  mutually  exclusive and independent.
 
@@ -721,7 +721,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 14			new ArrayList<ArrayList<Bottle>>();
 15		private int id;
 16	
-17		public   TestStrip(int id) {this.id      id;}
+17		public   TestStrip(int id) {this.id  =  id;}
 18		public   int getid() {return  id;}
 19	
 20		/*  Resize  list of  days/drops to  be large enough. */
@@ -759,7 +759,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 52		/*  Checks for  poisoned  bottles since   before  DAYS_FOR_RESULT */
 53		public   boolean  isPositiveOnDay(int day)  {
 54			int testDay  =  day  -  DAYS_FOR_RESULT;
-55			if (testDay <  0 ||     testDay  >= dropsByDay.size()) {
+55			if (testDay <  0 ||  testDay  >= dropsByDay.size()) {
 56				return false;
 57			}
 58			for  (int d =  0;  d <=  testDay;   d++) {
@@ -779,7 +779,7 @@ This is just one way of simulating the behavior of the bottles and test strips, 
 1 	int  findPoisonedBottle(ArrayList<Bottle> bottles, ArrayList<TestStrip>    strips) {
 2 		int today = 0;
 3	
-4 		while  (bottles.size()    1 &&   strips.size()    0)  {
+4 		while  (bottles.size() >   1 &&   strips.size()  >  0)  {
 5 			/*  Run tests. */
 5 			runTestSet(bottles, strips,  today);
 7	
@@ -910,11 +910,11 @@ Implementing this requires some careful work to prevent bugs.
 27		*  in cremented  by 1. */
 28		if (digits[2] ==   -1) {
 29			if (digits[3] ==    -1)  {/*    Day 3 didn't give  new result*/
-30				/*    Digit 2 equals digit  0 or  digit 1.  But,  digit 2,  when incremented  also
-31				*   matches digit 0 or  digit 1. This  means that digit 0 incremented  matches
-32				*   digit 1,  or  the  other   way  around. */
+30				/* igit 2 equals digit  0 or  digit 1.  But,  digit 2,  when incremented  also
+31				* matches digit 0 or  digit 1. This  means that digit 0 incremented  matches
+32				* digit 1,  or  the  other   way  around. */
 33				digits[2]  =  ((digits[0] + 1) %  nTestStrips) ==  digits[l]  ?
-34				digits[0] :   digits[l];
+34							digits[0] :   digits[l];
 35			}  else   {
 36				digits[2] =    (digits[3] -  1 +  nTestStrips) % nTestStrips;
 37			}
@@ -1016,3 +1016,5 @@ We wait seven days, and then read the results.  If test strip i is positive, the
 ```
 
 This approach will work as long as 2ᵀ >= B, where T is the number of test strips and B is the number of bottles.
+
+

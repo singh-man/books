@@ -270,10 +270,10 @@ The code below implements this algorithm. We've implemented the discarding aspec
 19		}
 20		if (zeroBits.size() <=  oneBits.size()) {
 21			int v =  findMissing(zeroBits,  column +  1);
-22			return (v  << 1)  I      0;
+22			return (v  << 1)  | 0;
 23		}  else {
 24			int v =  findMissing(oneBits,  column +  1);
-25			return (v  << 1)  I     1;
+25			return (v  << 1)  | 1;
 26		}
 27	}
 ```
@@ -309,7 +309,7 @@ We can make one small optimization to this. We can start with the longest subarr
 4 	char[]  findLongestSubarray(char[]  array)  {
 5 		for  (int len = array.length; len  >   1; len--)  {
 6 			for  (int i = 0; i <=  array.length -  len;  i++) {
-7 				if (hasEquallettersNumbers(array,  i,  i +  len  - 1)) {
+7 				if (hasEquallettersNumbers(array, i,  i +  len  - 1)) {
 8 					return extractSubarray(array, i,  i +  len  - 1);
 9 				}
 10			}
@@ -388,7 +388,7 @@ To do so, we use a hash table to store the first time we see a particular differ
 7	
 8 		/* Return  the subarray. Note  that it starts one  *after* the   initial occurence  of
 9 		* this delta. */
-10		return extract(array,  match[0]   + 1,  match[l]);
+10		return extract(array,  match[0]  + 1,  match[l]);
 11	}
 12	
 13	/*   Compute  the  difference between the  number of  letters and numbers between the
@@ -749,7 +749,7 @@ s   	connectEdges(graph,  synonyms);
 23  /*  Connect synonymous spellings. */
 24  void  connectEdges(Graph  graph,  String[][] synonyms) {
 25  	for  (String[]  entry :   synonyms) {
-26  		String namel = entry[0);
+26  		String namel = entry[0];
 27  		String name2 =  entry[l];
 28  		graph.addEdge(name1,    name2);
 29  	}
@@ -859,7 +859,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 39		}  else if (seq2  == null) {
 40			return seql;
 41		}
-42		return seql.size()  >   seq2.size()  ?  seql      seq2;
+42		return seql.size()  >   seq2.size()  ?  seql   :   seq2;
 43	}
 44	
 45	public   class Htwt implements Comparable<HtWt>  {
@@ -959,10 +959,10 @@ Let's first understand what this problem is asking for. It's asking for the kth 
 
 **Brute Force**
 
-We know that biggest this kth number could be is 3^k * 5^k * 7^k. So, the "stupid" way of doing this is to compute 3^a * 5^b * 7^c for all values of a, b, and c between 0 and k. We can throw them all into a list, sort the list, and then pick the kth smallest value.
+We know that biggest this kth number could be is 3ᵏ * 5ᵏ * 7ᵏ. So, the "stupid" way of doing this is to compute 3^a * 5^b * 7^c for all values of a, b, and c between 0 and k. We can throw them all into a list, sort the list, and then pick the kth smallest value.
 ```java
 1   int getKthMagicNumber(int k)  {
-2   	Arraylist<Integer> possibilities    allPossibleKFactors(k);
+2   	Arraylist<Integer> possibilities  =  allPossibleKFactors(k);
 3   	Collections.sort(possibilities);
 4   	return possibilities.get(k);
 5   }
@@ -1109,8 +1109,8 @@ To put this another way, if we pull an element from Q7, it will look like 7  * s
 Let's walk through this with an example to make it really clear. 
 
 	initialize:
-		Q3 =  3
-		Q5 =  5
+		Q3 = 3
+		Q5 = 5
 		Q7 = 7
 	remove min =  3. insert 3*3 in Q3,  5*3 into Q5, 7*3 into Q7.
 		Q3 = 3*3
@@ -1460,7 +1460,7 @@ We can implement this algorithm as shown below.
 ```java
 1 	LocationPair findClosest(String  wordl,   String word2,
 2 	                     HashMaplist<String, Integer>  locations) {
-3 		Arraylist<Integer> locationsl  =  locations.get(wordl);
+3 		Arraylist<Integer> locationsl =  locations.get(wordl);
 4 		Arraylist<Integer> locations2 =  locations.get(word2);
 5 		return findMinDistancePair(locationsl, locations2);
 6 	}
@@ -1480,7 +1480,7 @@ We can implement this algorithm as shown below.
 20		while  (indexl <  arrayl.size() &&   index2  <  array2.size()) {
 21			current.setlocations(arrayl.get(indexl),  array2.get(index2));
 22			best.updateWithMin(current);  // If shorter, update  values
-23			if (current.location! <  current.locatioN²) {
+23			if (current.location! <  current.location2) {
 24				indexl++;
 25			}  else {
 26				index2++;
@@ -1560,7 +1560,7 @@ The code below implements this approach.
 11		if (root ==  null) return null;
 
 12
-13		NodePair  partl  = convert(root.nodel);
+13		NodePair  partl  = convert(root.node1);
 14		NodePair  part2  = convert(root.node2);
 15
 16		if (partl != null) {
@@ -1576,8 +1576,8 @@ The code below implements this approach.
 26	}
 27
 28	public static  void  concat(BiNode  x,  BiNode y)  {
-29		x.node2      y;
-30		y.nodel  =  x;
+29		x.node2  =   y;
+30		y.node1  =  x;
 31	}
 ```
 The above code still converts the BiNode data structure in place. We're just using NodePair as a way to return additional data. We could have alternatively used a two-element BiNode array to fulfill the same purposes, but it looks a bit messier (and we like clean code, especially in an interview).
@@ -4926,3 +4926,5 @@ We will use an Element class to group together documents and words. When we sort
 The first step of this algorithm is slower than that of the prior algorithm, since it has to sort rather than just add to a list. The second step is essentially equivalent.
 
 Both will run much faster than the original naive algorithm.
+
+

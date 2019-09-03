@@ -383,3 +383,5 @@ However, you will need to make some assumptions, or you'd drive yourself crazy. 
 Remember, additionally, that there's a trade-off between flexibility and complexity. Creating a system in which a course can have multiple professors does increase the database's flexibility, but it also increases its complexity. If we tried to make our database  flexible to every possible situation, we'd wind up with some­ thing hopelessly complex.
 
 Make your design reasonably flexible, and state any other assumptions or constraints. This goes for not just database design, but object-oriented design and programming in general.
+
+

@@ -396,7 +396,6 @@ We will implement this in C.
 6 				++end;
 7 			}
 8			--end; /* set one   char back, since last  char is  null  */
-
 9	
 10			/* swap  characters from   start  of string with the end   of the string, until the
 11			*  pointers meet   in middle. */
@@ -495,7 +494,7 @@ An example of shallow and  deep copy is below.
 
 ```c
 1 	struct  Test {
-2 		char *  ptr;
+2 		char * ptr;
 3 	};
 4	
 5 	void  shallow_copy(Test &  src,  Test &  dest) {
@@ -656,7 +655,7 @@ In terms of the approach, we need a reference count variable that is incremented
 2		/*    The smart  pointer class needs  pointers to  both  the  object itself and to  the
 3		*   ref count.   These must be  pointers, rather than  the  actual object or  ref count
 4		*   value,   since  the  goal  of  a  smart  pointer is that the  reference count  is
-5		*   tracked across  multiple smart  pointers to  one object. * /
+5		*   tracked across  multiple smart  pointers to  one object. */
 6		T*   obj;
 7		unsigned*   ref_count;
 8	}
@@ -873,3 +872,6 @@ You should carefully  observe what is happening on lines 11 through 13. lf there
 Then,  when we  actually call array[l][3], the  computer looks  up  array[l], which is a  pointer to another spot in memory-specifically, a pointer to array[5]. This element is treated as its own array, and we then get  the  third  (zero-indexed) element from it.
 
 Constructing the  array  in a single call to malloc has the  added benefit of allowing disposal of the  array with a single free call rather than using a special function to free the  remaining data blocks.
+
+
+

@@ -37,7 +37,6 @@ For example:
 ```java
 1   public class  RunnableThreadExample  implements   Runnable  {
 2       public int  count  =  0;
-
 3   
 4       public void run()  {
 5           System.out.println("RunnableThread  starting.");
@@ -639,9 +638,9 @@ The code below provides further details. For simplicity, we assume that all lock
     
             /*add  nodes to  graph*/
             int index = 1;
-            touchedNodes.put(resourcesinOrder[0), false);
+            touchedNodes.put(resourcesinOrder[0], false);
             for (index = 1; index < resourcesinOrder.length; index++) {
-                LockNode prev = locks[resourcesinOrder[index - 1)];
+                LockNode prev = locks[resourcesinOrder[index - 1]];
                 LockNode curr = locks[resourcesinOrder[index]];
                 prev.joinTo(curr);
                 touchedNodes.put(resourcesinOrder[index], false);
@@ -881,7 +880,7 @@ Although this problem (in the single threaded version) shouldn't be hard, a lot 
 In actuality, the best way to do it, considering readability and efficiency, is just the straightforward way.
 ```java
 1   void  fizzbuzz(int n)  {
-2       for (inti =  1;   i <=  n;  i++)  {
+2       for (int i =  1;   i <=  n;  i++)  {
 3           if (i %   3  ==    0  &&   i %   5  ==  0) {
 4               System.out.println("FizzBuzz");
 5           }  else if  (i %   3  ==  0)  {
@@ -906,15 +905,15 @@ To do this multithreaded, we want a structure that looks something like this:
 
 The code for this will look something like:
 ```java
-1      while (true)  {
-2           if(current>  max)   {
-3                 return;
-4            }
-5           if(/*  divisibility test */) {
-6                 System.out.println(/* print something*/);
-7                 current++;
-8           }
-9       }
+1   while (true)  {
+2        if(current>  max)   {
+3              return;
+4         }
+5        if(/*  divisibility test */) {
+6              System.out.println(/* print something*/);
+7              current++;
+8        }
+9   }
 ```
 We'll need to  add some synchronization in the  loop.  Otherwise, the  value  of current could change between lines 2 - 4 and lines 5 - 8, and we can inadvertently exceed the  intended bounds of the  loop. Addi­ tionally, incrementing is not  thread-safe.
 
@@ -966,7 +965,7 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 32                  }
 33  
 34                  if ((current %   3  ==  0) == div3  &&
-35                  (current %  5   ==  0) == divs) {
+35                  	(current %  5   ==  0) == divs) {
 36                      print();
 37                      current++;
 38                  }
@@ -1032,3 +1031,5 @@ Alternatively, if we're working in a language which supports this (Java 8 and ma
 ```
 
 There are ofcourse many other ways of implementing this as well.
+
+

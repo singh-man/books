@@ -41,7 +41,7 @@ Overriding, however, occurs when a method shares the  same name and  function si
 7	
 8 	public   class Circle extends  Shape {
 9 		private double  rad =  5;
-10		public   void  printMe()   {
+10		public void printMe()   {
 11			System.out.println("I am  a  circle.");
 12		}
 13	
@@ -434,15 +434,15 @@ To implement this with  lambda expressions, let's break this up into multiple pa
 First, we use filter to get a list of the countries in the specified continent.
 
 ```java
-1      Stream<Country> northAmerica  =  countries.stream().filter(
-2           country  ->  {  return country.getContinent().equals(continent);}
-3      );
+1   Stream<Country> northAmerica  =  countries.stream().filter(
+2        country  ->  {  return country.getContinent().equals(continent);}
+3   );
 ```
 Second, we convert this into a list of populations using map.
 ```java
-1      Stream<Integer> populations  =  northAmerica.map(
-2           c ->   c.getPopulation()
-3      );
+1   Stream<Integer> populations  =  northAmerica.map(
+2        c ->   c.getPopulation()
+3   );
 ```
 Third and finally, we compute the sum using reduce.
 ```
@@ -469,11 +469,11 @@ This function puts it all together.
 
 Alternatively, because of the  nature of this specific  problem, we can  actually remove the  filter entirely. The reduce operation can  have  logic that maps the  population of countries not  in the  right  continent to zero. The sum will effectively  disregard countries not  within continent.
 ```java
-1     int  getPopulation(List<Country> countries,  String  continent)  {
-2           Stream<Integer> populations  =  countries.stream().map(
-3                 c  ->  c.getContinent().equals(continent)  ?  c.getPopulation()     0);
-4           return populations.reduce(0, (a,  b) ->  a  +  b);
-5       }
+1  int  getPopulation(List<Country> countries,  String  continent)  {
+2        Stream<Integer> populations  =  countries.stream().map(
+3              c  ->  c.getContinent().equals(continent)  ?  c.getPopulation()  :  0);
+4        return populations.reduce(0, (a,  b) ->  a  +  b);
+5  }
 ```
 Lambda functions were  new  to Java 8, so if you don't recognize them, that's probably why. Now is a great time  to learn  about them, though!
 
@@ -549,3 +549,6 @@ Or, we can use a predicate (defined within the class or within the function):
 10	}
 ```
 The nice thing about this implementation is that now we can apply the flipCoin predicate in other places.
+
+
+

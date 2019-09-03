@@ -159,12 +159,12 @@ Now that you understand the details of the scenario, you want to break down the 
 
 1. Go to Windows Start menu.
 2. Click on Chrome icon.
-3.  Browser instance starts.
-4.  Browser loads settings.
-5.  Browser issues HTIP request for homepage.
-6.  Browser gets HTIP response.
-7.  Browser parses webpage.
-8.  Browser displays content.
+3. Browser instance starts.
+4. Browser loads settings.
+5. Browser issues HTIP request for homepage.
+6. Browser gets HTIP response.
+7. Browser parses webpage.
+8. Browser displays content.
 
 At some point in this process, something  fails and it causes the browser to crash. A strong tester would iterate through the elements of this scenario to diagnose the problem.
 
@@ -371,3 +371,6 @@ Manual testing would involve going through the steps above, making sure to check
 Automated testing is a bit more complex. We'll want to automate all the standard scenarios, as shown above, and we also want to look for some very specific issues, such as race conditions.  Ideally, we would  be able to set up a closed system with fake accounts and ensure that, even if someone withdraws and deposits money rapidly from different locations, he never gets money or loses money that he shouldn't.
 
 Above all, we need to prioritize security and reliability. People's accounts must always be protected, and we must make sure that money is always properly accounted for. No one wants to unexpectedly lose money! A good tester understands the system priorities.
+
+
+

@@ -442,23 +442,23 @@ Why couldn't the magic index be on the left side? Observe that when we move from
 We continue to apply this recursive algorithm, developing code that looks very much like binary search.
 
 ```java
-1     int  magicFast(int[]  array)  {
-2       return  magicFast(array, 0,  array.length -  1);
-3     }
+1   int  magicFast(int[]  array)  {
+2     return  magicFast(array, 0,  array.length -  1);
+3   }
 4   
-5     int  magicFast(int[] array, int start, int end)  {
-6       if (end <  start) {
-7         return -1;
-8       }
-9       int mid =  (start + end) /  2;
-10      if (array[mid] ==   mid)  {
-11        return mid;
-12      }  else if (array[mid]  >   mid) {
-13        return  magicFast(array,  start,  mid  -  1);
-14      }  else {
-15        return magicFast(array, mid +  1,  end);
-16      }
-17    }
+5   int  magicFast(int[] array, int start, int end)  {
+6     if (end <  start) {
+7       return -1;
+8     }
+9     int mid =  (start + end) /  2;
+10    if (array[mid] ==   mid)  {
+11      return mid;
+12    }  else if (array[mid]  >   mid) {
+13      return  magicFast(array,  start,  mid  -  1);
+14    }  else {
+15      return magicFast(array, mid +  1,  end);
+16    }
+17  }
 ```
 
 **Follow Up: What if the elements are not  distinct?**
@@ -612,27 +612,27 @@ This gives us 2ⁿ possible subsets. How can we iterate through all possible seq
 Generating all subsets, then, really just comes down to generating all binary numbers (that is, all integers). We iterate through  all numbers from 0 to 2ⁿ (exclusive) and translate the binary representation  of the numbers into a set. Easy!
 
 ```java
-1     Arraylist<Arraylist<Integer>>  getSubsets2(ArrayList<Integer> set)  {
-2       ArrayList<ArrayList<Integer>> allsubsets =  new Arraylist<Arraylist<Integer>>();
-3       int max =  1 << set.size(); /* Compute 2^n */
-4       for (int k  = 0;  k < max; k++   ) {
-5         ArrayList<Integer> subset =  convertintToSet(k  , set);
-6         allsubsets.add(subset);
-7       }
-8       return allsubsets;
-9     }
+1   Arraylist<Arraylist<Integer>>  getSubsets2(ArrayList<Integer> set)  {
+2     ArrayList<ArrayList<Integer>> allsubsets =  new Arraylist<Arraylist<Integer>>();
+3     int max =  1 << set.size(); /* Compute 2^n */
+4     for (int k  = 0;  k < max; k++   ) {
+5       ArrayList<Integer> subset =  convertintToSet(k  , set);
+6       allsubsets.add(subset);
+7     }
+8     return allsubsets;
+9   }
 10  
-11    Arraylist<Integer> convertlntToSet(int x, Arraylist<Integer> set) {
-12      Arraylist<Integer> subset =  new  Arraylist<Integer>();
-13      int  index =  0;
-14      for  (int  k  = x; k  > 0;   k  >>= 1) {
-15        if ((k & 1) ==   1) {
-16          subs et.add(set.get(index));
-17        }
-18        index++;
-19      }
-20      return subset;
-21    }
+11  Arraylist<Integer> convertlntToSet(int x, Arraylist<Integer> set) {
+12    Arraylist<Integer> subset =  new  Arraylist<Integer>();
+13    int  index =  0;
+14    for  (int  k  = x; k  > 0;   k  >>= 1) {
+15      if ((k & 1) ==   1) {
+16        subs et.add(set.get(index));
+17      }
+18      index++;
+19    }
+20    return subset;
+21  }
 ```
 
 There's nothing  substantially better or worse about this solution compared  to the first one.
@@ -663,29 +663,29 @@ Alternatively, we could count half the squares and then double  it (by adding th
 Of course, this "doubling" only works if the number is in fact even. When it's not even, we need to do the counting/summing from scratch.
 
 ```java
-1     int  minProduct(int a, int  b) {
-2       int  bigger =  a <  b ? b : a;
-3       int smaller = a < b ? a : b;
-4       return  minProductHelper(smaller, bigger);
-5     }
+1   int  minProduct(int a, int  b) {
+2     int  bigger =  a <  b ? b : a;
+3     int smaller = a < b ? a : b;
+4     return  minProductHelper(smaller, bigger);
+5   }
 6 
-7     int  minProductHelper(int smaller,  int  bigger)  {
-8       if  (smaller ==  0) { //  0 x bigger  = 0
-9         return 0;
-10      }  else   if  (smaller ==  1)  {  // 1 x bigger      bigger
-11        return  bigger;
-12      }
+7   int  minProductHelper(int smaller,  int  bigger)  {
+8     if  (smaller ==  0) { //  0 x bigger  = 0
+9       return 0;
+10    }  else   if  (smaller ==  1)  {  // 1 x bigger      bigger
+11      return  bigger;
+12    }
 13  
-14      /*  Compute  half. If uneven, compute other half. If  even,  double it. */
-15      int s  = smaller  >>  1; // Divide  by 2
-16      int sidel = minProduct(s,  bigger);
-17      int side2  = sidel;
-18      if  (smaller % 2  == 1) {
-19        side2  = minProductHelper(smaller  -  s,  bigger);
-20      }
+14    /*  Compute  half. If uneven, compute other half. If  even,  double it. */
+15    int s  = smaller  >>  1; // Divide  by 2
+16    int sidel = minProduct(s,  bigger);
+17    int side2  = sidel;
+18    if  (smaller % 2  == 1) {
+19      side2  = minProductHelper(smaller  -  s,  bigger);
+20    }
 21  
-22      return sidel +  side2;
-23    }
+22    return sidel +  side2;
+23  }
 ```
 
 Can we do better? Yes.
@@ -707,35 +707,35 @@ minProduct(17,  23)
 The second call to minProduct (4,   23) is unaware of the prior call, and so it repeats the same work. We shouldcache these results.
 
 ```java
-1     int  minProduct(int a,  int b)  {
-2       int bigger    =  a < b ? b :  a;
-3       int  smaller = a <  b ? a : b;
+1   int  minProduct(int a,  int b)  {
+2     int bigger    =  a < b ? b :  a;
+3     int  smaller = a <  b ? a : b;
 4 
-5       int memo[] =  new  int[smaller + 1];
-6       return  minProduct(smaller, bigger,  memo);
-7     }
+5     int memo[] =  new  int[smaller + 1];
+6     return  minProduct(smaller, bigger,  memo);
+7   }
 8 
-9     int  minProduct(int smaller,  int  bigger, int[]   memo)  {
-10      if  (smaller == 0)  {
-11        return 0;
-12      }  else  if (smaller == 1)  {
-13        return bigger;
-14      }  else  if (memo[smaller]  >  0)  {
-15        return memo[smaller];
-16      }
+9   int  minProduct(int smaller,  int  bigger, int[]   memo)  {
+10    if  (smaller == 0)  {
+11      return 0;
+12    }  else  if (smaller == 1)  {
+13      return bigger;
+14    }  else  if (memo[smaller]  >  0)  {
+15      return memo[smaller];
+16    }
 17  
-18      /*  Compute  half. If uneven, compute other half. If even,  double  it.  */
-19      int s = smaller  >>  1;   // Divide  by  2
-20      int sidel  = minProduct(s,   bigger,  memo);  // Compute half
-21      int  side2  = sidel;
-22      if (smaller % 2  == 1) {
-23        side2 = minProduct(smaller - s,  bigger, memo);
-24      }
+18    /*  Compute  half. If uneven, compute other half. If even,  double  it.  */
+19    int s = smaller  >>  1;   // Divide  by  2
+20    int sidel  = minProduct(s,   bigger,  memo);  // Compute half
+21    int  side2  = sidel;
+22    if (smaller % 2  == 1) {
+23      side2 = minProduct(smaller - s,  bigger, memo);
+24    }
 25  
-26      /* Sum and  cache. */
-27      memo[smaller]  =  sidel +  side2;
-28      return memo[smaller];
-29    }
+26    /* Sum and  cache. */
+27    memo[smaller]  =  sidel +  side2;
+28    return memo[smaller];
+29  }
 ```
 
 We can still make  this a bit faster.
@@ -755,25 +755,25 @@ The logic in this final solution is that, on even numbers, we just dividesmaller
 In doing so, we have  an unexpected "win:'  Our minProduct function just recurses straight downwards, with increasingly small  numbers each time.  It will never  repeat the  same call, so there's no need to cache any information.
 
 ```java
-1     int  minProduct(int a,  int  b)   {
-2       int  bigger = a < b ? b :  a;
-3       int  smaller  = a <   b ? a   :   b;
-4       return  minProductHelper(smaller, bigger);
-5     }
+1   int  minProduct(int a,  int  b)   {
+2     int  bigger = a < b ? b :  a;
+3     int  smaller  = a <   b ? a   :   b;
+4     return  minProductHelper(smaller, bigger);
+5   }
 6 
-7     int  minProductHelper(int smaller,  int  bigger) {
-8       if (smaller == 0)  return  0;
-9       else if (smaller  == 1)  return  bigger;
+7   int  minProductHelper(int smaller,  int  bigger) {
+8     if (smaller == 0)  return  0;
+9     else if (smaller  == 1)  return  bigger;
 10  
-11      int s     = smaller  >>  1;   // Divide by  2
-12      int halfProd  = minProductHelper(s,   bigger);
+11    int s     = smaller  >>  1;   // Divide by  2
+12    int halfProd  = minProductHelper(s,   bigger);
 13  
-14      if  (smaller % 2     == 0)  {
-15        return  halfProd +  halfProd;
-16      }  else {
-17        return  halfProd +  halfProd +  bigger;
-18      }
-19    }
+14    if  (smaller % 2     == 0)  {
+15      return  halfProd +  halfProd;
+16    }  else {
+17      return  halfProd +  halfProd +  bigger;
+18    }
+19  }
 ```
 
 This algorithm will run in O(log s) time,  wheres is the smaller of the  two numbers.
@@ -848,70 +848,70 @@ Remember that the labels of Tower 2 and Tower 3 aren't important. They're equiva
 This approach leadsto a natural recursive algorithm. In each part, we are doing the following steps, outlined below with pseudocode:
 
 ```java
-1     moveDisks(int  n,  Tower origin,  Tower destination,  Tower buffer) {
-2       /*  Base case  */
-3       if (n  <=  0)  return;
+1   moveDisks(int  n,  Tower origin,  Tower destination,  Tower buffer) {
+2     /*  Base case  */
+3     if (n  <=  0)  return;
 4 
-5       /*  move  top  n - 1 disks from origin to buffer, using  destination as  a  buffer.  */
-6       moveDisks(n -  1,  origin, buffer, destination);
+5     /*  move  top  n - 1 disks from origin to buffer, using  destination as  a  buffer.  */
+6     moveDisks(n -  1,  origin, buffer, destination);
 7 
-8       /*  move  top  from origin to  destination*/
-9       moveTop(origin,  destination);
+8     /*  move  top  from origin to  destination*/
+9     moveTop(origin,  destination);
 10  
-11      /*  move  top  n  -  1  disks from buffer to  destination, using  origin as  a buffer. */
-12      moveDisks(n -  1,  buffer, destination, origin);
-13    }
+11    /*  move  top  n  -  1  disks from buffer to  destination, using  origin as  a buffer. */
+12    moveDisks(n -  1,  buffer, destination, origin);
+13  }
 ```
 
 The following code provides a more detailed implementation of this algorithm, using concepts of object­ oriented design.
 
 ```java
-1     void  main(String[] args) {
-2       int n =  3;
-3       Tower[]  towers  =  new Tower[n];
-4       for  (int i = 0;  i < 3;  i++)  {
-5         towers[i] =  new Tower(i);
-6       }
+1   void  main(String[] args) {
+2     int n =  3;
+3     Tower[]  towers  =  new Tower[n];
+4     for  (int i = 0;  i < 3;  i++)  {
+5       towers[i] =  new Tower(i);
+6     }
 7 
-8       for  (int i = n - 1;  i >=  0;  i--) {
-9         towers[0].add(i);
-10      }
-11      towers[0].moveDisks(n, towers[2],  towers[l]);
-12    }
+8     for  (int i = n - 1;  i >=  0;  i--) {
+9       towers[0].add(i);
+10    }
+11    towers[0].moveDisks(n, towers[2],  towers[l]);
+12  }
 13  
-14    class Tower {
-1S      private  Stack<Integer> disks;
-16      private int index;
-17      public  Tower(int  i) {
-18        disks =   new Stack<Integer>();
-19        index  =  i;
-20      }
+14  class Tower {
+15    private  Stack<Integer> disks;
+16    private int index;
+17    public  Tower(int  i) {
+18      disks =   new Stack<Integer>();
+19      index  =  i;
+20    }
 21  
-22      public   int index() {
-23        return  index;
-24      }
+22    public   int index() {
+23      return  index;
+24    }
 25  
-26      public   void  add(int d)  {
-27        if (!disks.isEmpty() &&   disks.peek() <=  d)  {
-28          System.out.println("Error  placing disk" + d);
-29        }  else {
-30          disks.push(d);
-31        }
-32      }
+26    public   void  add(int d)  {
+27      if (!disks.isEmpty() &&   disks.peek() <=  d)  {
+28        System.out.println("Error  placing disk" + d);
+29      }  else {
+30        disks.push(d);
+31      }
+32    }
 33  
-34      public   void  moveTopTo(Tower  t) {
-35        int top =  disks.pop();
-36        t.add(top);
-37      }
+34    public   void  moveTopTo(Tower  t) {
+35      int top =  disks.pop();
+36      t.add(top);
+37    }
 38  
-39      public  void  moveDisks(int  n,  Tower destination,  Tower buffer) {
-40        if (n  >  0)  {
-41          moveDisks(n  -  1,  buffer,  destination);
-42          moveTopTo(destination);
-43          buffer.moveDisks(n  - 1,  destination,  this);
-44        }
-45      }
-46    }
+39    public  void  moveDisks(int  n,  Tower destination,  Tower buffer) {
+40      if (n  >  0)  {
+41        moveDisks(n  -  1,  buffer,  destination);
+42        moveTopTo(destination);
+43        buffer.moveDisks(n  - 1,  destination,  this);
+44      }
+45    }
+46  }
 ```
 
 Implementing the towers as their own objects is not strictly necessary, but it does help to make the code cleaner in some respects.
@@ -962,33 +962,33 @@ a₃a₂a₁ -> a₄a₃a₂a₁, a₃a₄a₂a₁ ,a₃a₂a₄a₁, a₃a₂a�
 We can now implement this algorithm recursively.
 
 ```java
-1     Arraylist<String>  getPerms(String str) {
-2       if (str == null) return null;
+1   Arraylist<String>  getPerms(String str) {
+2     if (str == null) return null;
 3 
-4       Arraylist<String>   permutations    new ArrayList<String>();
-5       if (str.length() == 0)  {//base  case
-6         permutations. add('"');
-7         return  permutations;
-8       }
+4     Arraylist<String>   permutations    new ArrayList<String>();
+5     if (str.length() == 0)  {//base  case
+6       permutations. add('"');
+7       return  permutations;
+8     }
 9   
-10      char  first = str.charAt(0); // get  the   first char
-11      String remainder =  str.substring(l); // remove the   first char
-12      Arraylist<String> words =  getPerms(remainder);
-13      for (String word :   words)   {
-14        for (int    =  0;       <= word.length();   ++)  {
-15          String s =  insertCharAt(word, first, j);
-16          permutations.add(s);
-17        }
-18      }
-19      return permutations;
-20    }
+10    char  first = str.charAt(0); // get  the   first char
+11    String remainder =  str.substring(l); // remove the   first char
+12    Arraylist<String> words =  getPerms(remainder);
+13    for (String word :   words)   {
+14      for (int    =  0;       <= word.length();   ++)  {
+15        String s =  insertCharAt(word, first, j);
+16        permutations.add(s);
+17      }
+18    }
+19    return permutations;
+20  }
 21  
-22    /* Insert char   c  at  index i in word. */
-23    String insertCharAt(String word,   char   c,   int i) {
-24      String start =  word.substring(0,  i);
-25      String end =  word.substring(i);
-26      return start + c  +  end;
-27    }
+22  /* Insert char   c  at  index i in word. */
+23  String insertCharAt(String word,   char   c,   int i) {
+24    String start =  word.substring(0,  i);
+25    String end =  word.substring(i);
+26    return start + c  +  end;
+27  }
 ```
 
 ##### Approach 2: Building from permutations of all n-1 character substrings.
@@ -1117,42 +1117,42 @@ Eventually, we'll get down to no more characters remaining.
 The code below implements this algorithm.
 
 ```java
-1     Arraylist<String> printPerms(String s) {
-2       Arraylist<String> result  = new Arraylist<String>();
-3       HashMap<Character,   Integer> map  =  buildFreqTable(s);
-4       printPerms(map, "",  s.length(), result);
-5       return  result;
-6     }
+1   Arraylist<String> printPerms(String s) {
+2     Arraylist<String> result  = new Arraylist<String>();
+3     HashMap<Character,   Integer> map  =  buildFreqTable(s);
+4     printPerms(map, "",  s.length(), result);
+5     return  result;
+6   }
 7   
-8     HashMap<Character,   Integer> buildFreqTable(String s) {
-9       HashMap<Character,   Integer> map =  new HashMap<Character,   Integer>();
-10      for  (char c  :   s.toCharArray()) {
-11        if (!map.containsKey(c)) {
-12          map.put(c, 0);
-13        }
-14        map.put(c, map.get(c) +  1);
-15      }
-16      return  map;
-17    }
-18    
-19    void printPerms(HashMap<Character,  Integer> map,  String  prefix, int remaining,
-20    ArrayList<String>  result) {
-21      /* Base case. Permutation has been completed. */
-22      if (remaining == 0) {
-23        result.add(prefix);
-24        return;
-25      }
-26    
-27      /* Try remaining letters for  next char,  and generate remaining permutations. */
-28      for  (Character c   :   map.keySet()) {
-29        int count =  map.get(c);
-39        if  (count >  0) {
-31          map.put(c,   count - 1);
-32          printPerms(map, prefix  +  c,  remaining - 1,   result);
-33          map.put(c,    count);
-34        }
-35      }
-36    }
+8   HashMap<Character,   Integer> buildFreqTable(String s) {
+9     HashMap<Character,   Integer> map =  new HashMap<Character,   Integer>();
+10    for  (char c  :   s.toCharArray()) {
+11      if (!map.containsKey(c)) {
+12        map.put(c, 0);
+13      }
+14      map.put(c, map.get(c) +  1);
+15    }
+16    return  map;
+17  }
+18  
+19  void printPerms(HashMap<Character,  Integer> map,  String  prefix, int remaining,
+20  ArrayList<String>  result) {
+21    /* Base case. Permutation has been completed. */
+22    if (remaining == 0) {
+23      result.add(prefix);
+24      return;
+25    }
+26  
+27    /* Try remaining letters for  next char,  and generate remaining permutations. */
+28    for  (Character c   :   map.keySet()) {
+29      int count =  map.get(c);
+39      if  (count >  0) {
+31        map.put(c,   count - 1);
+32        printPerms(map, prefix  +  c,  remaining - 1,   result);
+33        map.put(c,    count);
+34      }
+35    }
+36  }
 ```
 
 In situations where the  string has many duplicates, this algorithm will run a lot faster  than the  earlier  algo­rithm.
@@ -1240,27 +1240,27 @@ On each recursive call, we have the index for a particular character in the stri
 So, we simply keep track of the number of left and right parentheses allowed. If there are left parens remaining,  we'll insert a left paren and recurse. If there are more right parens remaining than left (i.e., if there are more left parens in use than right parens), then we'll insert a right paren and recurse.
 
 ```java
-1     void  addParen(Arraylist<String> list, int leftRem,  int rightRem,  char[] str,
-2     int index)   {
-3       if (leftRem  < 0  ||    rightRem < leftRem)  return;//invalid  state
+1   void  addParen(Arraylist<String> list, int leftRem,  int rightRem,  char[] str,
+2   int index)   {
+3     if (leftRem  < 0  ||    rightRem < leftRem)  return;//invalid  state
 4   
-5       if (leftRem  == 0 &&  rightRem ==  0)  {/*Out  of  left and right  parentheses  */
-6         list.add(String.copyValueOf(str));
-7       }  else {
-8         str[index] =  '(';//Add  left and recurse
-9         addParen(list,  leftRem  -  1,  rightRem,  str, index  + 1);
-10    
-11        str[index] =  ')';//Add  right and recurse
-12        addParen(list,  leftRem,   rightRem  -  1,  str, index  + 1);
-13      }
-14    }
-15    
-16    ArrayList<String> generateParens(int  count)  {
-17      char[] str  =  new char[count * 2];
-18      Arraylist<String> list =  new Arraylist<String>();
-19      addParen(list,  count,   count,   str, 0);
-20      return list;
-21    }
+5     if (leftRem  == 0 &&  rightRem ==  0)  {/*Out  of  left and right  parentheses  */
+6       list.add(String.copyValueOf(str));
+7     }  else {
+8       str[index] =  '(';//Add  left and recurse
+9       addParen(list,  leftRem  -  1,  rightRem,  str, index  + 1);
+10  
+11      str[index] =  ')';//Add  right and recurse
+12      addParen(list,  leftRem,   rightRem  -  1,  str, index  + 1);
+13    }
+14  }
+15  
+16  ArrayList<String> generateParens(int  count)  {
+17    char[] str  =  new char[count * 2];
+18    Arraylist<String> list =  new Arraylist<String>();
+19    addParen(list,  count,   count,   str, 0);
+20    return list;
+21  }
 ```
 
 Because we insert left and right parentheses at each index in the string, and we never repeat an index, each string is guaranteed to be unique.
@@ -1279,27 +1279,27 @@ First, let's visualize how this method  works. When we call paintFill (i.e., "cl
 We can implement this algorithm recursively:
 
 ```java
-1     enum Color  {   Black,   White,   Red,  Yellow,  Green}
+1   enum Color  {   Black,   White,   Red,  Yellow,  Green}
 2   
-3     boolean   PaintFill(Color[][] screen, int  r,  int  c,  Color  ncolor) {
-4       if (screen[r][c] == ncolor) return false;
-5       return PaintFill(screen, r,  c,  screen[r][c],  ncolor);
-6     }
+3   boolean   PaintFill(Color[][] screen, int  r,  int  c,  Color  ncolor) {
+4     if (screen[r][c] == ncolor) return false;
+5     return PaintFill(screen, r,  c,  screen[r][c],  ncolor);
+6   }
 7   
-8     boolean   PaintFill(Color[][] screen, int r,  int  c,  Color  ocolor,  Color  ncolor) {
-9       if (r <   0  I I  r >=  screen.length  ||  c  <   0 || c  >=  screen[0].length) {
-10        return false;
-11      }
-12    
-13      if (screen[r][c] == ocolor) {
-14        screen[r][c] = ncolor;
-15        PaintFill(screen, r - 1, c,  ocolor, ncolor); // up
-16        PaintFill(screen, r + 1, c,  ocolor, ncolor); // down
-17        PaintFill(screen, r, c - 1,  ocolor, ncolor); // left
-18        PaintFill(screen, r, c + 1,  ocolor, ncolor); // right
-19      }
-20      return true;
-21    }
+8   boolean   PaintFill(Color[][] screen, int r,  int  c,  Color  ocolor,  Color  ncolor) {
+9     if (r <   0  I I  r >=  screen.length  ||  c  <   0 || c  >=  screen[0].length) {
+10      return false;
+11    }
+12  
+13    if (screen[r][c] == ocolor) {
+14      screen[r][c] = ncolor;
+15      PaintFill(screen, r - 1, c,  ocolor, ncolor); // up
+16      PaintFill(screen, r + 1, c,  ocolor, ncolor); // down
+17      PaintFill(screen, r, c - 1,  ocolor, ncolor); // left
+18      PaintFill(screen, r, c + 1,  ocolor, ncolor); // right
+19    }
+20    return true;
+21  }
 ```
 
 If you used the variable names x and y to implement this, be careful about the ordering of the variables in screen [y][x]. Because x represents the horizontal axis (that is, it's left to right), it actually corresponds to the column number, not the row number. The value of y equals the number of rows. This is a very easy place to make a mistake in an interview, as well as in your daily coding. It's typically clearer to userow and column  instead, as we've done here.
@@ -1612,32 +1612,32 @@ Then, we choose whether or not to put box 1 in the stack. Take one recursive pat
 We will again use memoization to cache the height of the tallest stack with a particular bottom.
 
 ```java
-1     int  createStack(ArrayList<Box> boxes)   {
-2       Collections.sort(boxes,  new BoxComparator());
-3       int[] stackMap =   new int[boxes.size()];
-4       return createStack(boxes, null,  0,   stackMap);
-5     }
-6     
-7     int  createStack(ArrayList<Box> boxes,   Box bottom,   int offset, int[]  stackMap)   {
-8       if (offset >= boxes.size()) return 0;  // Base case
+1   int  createStack(ArrayList<Box> boxes)   {
+2     Collections.sort(boxes,  new BoxComparator());
+3     int[] stackMap =   new int[boxes.size()];
+4     return createStack(boxes, null,  0,   stackMap);
+5   }
+6   
+7   int  createStack(ArrayList<Box> boxes,   Box bottom,   int offset, int[]  stackMap)   {
+8     if (offset >= boxes.size()) return 0;  // Base case
 9   
-10      /*height with  this bottom*/
-11      Box newBottom =  boxes.get(offset);
-12      int heightWithBottom = 0;
-13      if (bottom ==    null  ||   newBottom .canBeAbove(bottom))  {
-14        if (stackMap[offset] == 0)  {
-15          stackMap[offset] =    createStack(boxes,  newBottom,  offset + 1,   stackMap);
-16          stackMap[offset] += newBottom.height;
-17        }
-18        heightWithBottom =  stackMap[offset];
-19      }
-20    
-21      /*without this  bottom*/
-22      int  heightWithoutBottom createStack(boxes, bottom,   offset + 1,   stackMap);
-23    
-24      /* Return  better of  two  options. */
-25      return Math.max(heightWithBottom,  heightWithoutBottom);
-26    }
+10    /*height with  this bottom*/
+11    Box newBottom =  boxes.get(offset);
+12    int heightWithBottom = 0;
+13    if (bottom ==    null  ||   newBottom .canBeAbove(bottom))  {
+14      if (stackMap[offset] == 0)  {
+15        stackMap[offset] =    createStack(boxes,  newBottom,  offset + 1,   stackMap);
+16        stackMap[offset] += newBottom.height;
+17      }
+18      heightWithBottom =  stackMap[offset];
+19    }
+20  
+21    /*without this  bottom*/
+22    int  heightWithoutBottom createStack(boxes, bottom,   offset + 1,   stackMap);
+23  
+24    /* Return  better of  two  options. */
+25    return Math.max(heightWithBottom,  heightWithoutBottom);
+26  }
 ```
 
 Again, pay close attention to when you recall and insert values into the hash table. It's typically best if these are symmetric, as they are in lines 15 and 16-18.
@@ -1718,43 +1718,43 @@ countEval(expression,  false) = totalEval(expression)  -  countEval(expression, 
 This makes the code a bit more concise.
 
 ```java
-1     int  countEval(String s,  boolean  result) {
-2       if (s.length()   0)  return  0;
-3       if  (s.length() == 1)  return  stringToBool(s) == result ? 1 : 0;
+1   int  countEval(String s,  boolean  result) {
+2     if (s.length()   0)  return  0;
+3     if  (s.length() == 1)  return  stringToBool(s) == result ? 1 : 0;
 4   
-5       int ways =  0;
-6       for   (int i = 1;  i <   s.length();  i +=    2)  {
-7         char  c =    s.charAt(i);
-8         String left =    s.substring(0,  i);
-9         String right = s.substring(i +    1,  s.length());
-10    
-11        /* Evaluate  each side  for   each result. */
-12        int leftTrue =    countEval(left,  true);
-13        int leftFalse    countEval(left, false);
-14        int rightTrue =  countEval(right,  true);
-15        int  rightFalse =   countEval(right,  false);
-16        int total =  (leftTrue + leftFalse) *  (rightTrue + rightFalse);
-17    
-18        int  totalTrue =  0;
-19        if (c  == '^')  { // required: one true  and one false
-20          totalTrue = leftTrue *  rightFalse + leftFalse * rightTrue;
-21        }  else  if (c  == '&') {//required:  both true
-22          totalTrue  =   leftTrue *  rightTrue;
-23        }  else  if (c  ==   '|') {  // required: anything  but  both  false
-24          totalTrue  = leftTrue * rightTrue + leftFalse * rightTrue +
-25          leftTrue *  rightFalse;
-26        }
-27    
-28        int subways =  result ?  totalTrue   total  -  totalTrue;
-29        ways +=  subways;
-30      }
-31    
-32      return ways;
-33    }
-34    
-35    boolean stringToBool(String  c)  {
-36      return c.equals("l")  ?   true :  false;
-37    }
+5     int ways =  0;
+6     for   (int i = 1;  i <   s.length();  i +=    2)  {
+7       char  c =    s.charAt(i);
+8       String left =    s.substring(0,  i);
+9       String right = s.substring(i +    1,  s.length());
+10  
+11      /* Evaluate  each side  for   each result. */
+12      int leftTrue =    countEval(left,  true);
+13      int leftFalse    countEval(left, false);
+14      int rightTrue =  countEval(right,  true);
+15      int  rightFalse =   countEval(right,  false);
+16      int total =  (leftTrue + leftFalse) *  (rightTrue + rightFalse);
+17  
+18      int  totalTrue =  0;
+19      if (c  == '^')  { // required: one true  and one false
+20        totalTrue = leftTrue *  rightFalse + leftFalse * rightTrue;
+21      }  else  if (c  == '&') {//required:  both true
+22        totalTrue  =   leftTrue *  rightTrue;
+23      }  else  if (c  ==   '|') {  // required: anything  but  both  false
+24        totalTrue  = leftTrue * rightTrue + leftFalse * rightTrue +
+25        leftTrue *  rightFalse;
+26      }
+27  
+28      int subways =  result ?  totalTrue   total  -  totalTrue;
+29      ways +=  subways;
+30    }
+31  
+32    return ways;
+33  }
+34  
+35  boolean stringToBool(String  c)  {
+36    return c.equals("l")  ?   true :  false;
+37  }
 ```
 
 Note that the tradeoff of computing the false results from the true ones, and of computing the {leftTrue,  rightTrue,  leftFalse,  and  rightFalse} values upfront, is a small amount of extra work in some cases. For example, if we're looking for the ways that an AND (&) can result in true, we never would have needed the leftFa1se and rightFa1se results. Likewise, if we're looking for the ways that an OR (|) can result in false, we never would have needed the leftTrue and rightTrue results.
@@ -1779,40 +1779,40 @@ Although these two expressions are different, they have a similar component: (0^
 We can do  this  by  using memoization,  or  a hash table. We just  need to  store the  result of countEval (expression, result) for each expression and result. If we see an expression that we've calculated before, wejust return it from the cache.
 
 ```java
-1     int  countEval(String s,  boolean result,  HashMap<String, Integer>  memo)  {
-2       if (s.length() == 0)  return  0;
-3       if (s.length() == 1)  return  stringToBool(s) == result ?  1   :   0;
-4       if ( memo.containsKey(result  + s))  return memo.get(result   +   s);
-5     
-6       int ways = 0;
-7     
-8       for  (inti = 1;  1  <  s.length();  i +=   2) {
-9         char c  =  s.charAt(i);
-10        String left =   s.substring(0,  i);
-11        String right  =  s.substring(i  +  1,  s.length());
-12        int  leftTrue =  countEval(left,   true,  memo);
-13        int   leftFalse =  countEval(left, false,  memo);
-14        int  rightTrue =  countEval(right, true,  memo);
-15        int  rightFalse =  countEval(right, false,   memo);
-16        int total =   (leftTrue +  leftFalse) *   (rightTrue +  rightFalse);
-17    
-18        int  totalTrue =  0;
-19        if ( C    ==   '^' ) {
-20          totalTrue =  leftTrue *  rightFalse +  leftFalse *  rightTrue;
-21        } else if  (c ==   '&')  {
-22          totalTrue  =  leftTrue * rightTrue;
-23        } else   if (c   ==   '|') {
-24          totalTrue =   leftTrue * right True   +  leftFalse *  rightTrue  +
-25                        leftTrue  * rightFalse;
-26        }
-27    
-28        int subways  =  result  ?  totalTrue    total  -  totalTrue;
-29        ways  +=   subways;
-30      }
-31    
-32      memo.put(result   +   s,  ways);
-33      return ways;
-34    }
+1   int  countEval(String s,  boolean result,  HashMap<String, Integer>  memo)  {
+2     if (s.length() == 0)  return  0;
+3     if (s.length() == 1)  return  stringToBool(s) == result ?  1   :   0;
+4     if (memo.containsKey(result  + s))  return memo.get(result   +   s);
+5   
+6     int ways = 0;
+7   
+8     for  (int i = 1;  i  <  s.length();  i +=   2) {
+9       char c  =  s.charAt(i);
+10      String left      =  s.substring(0,  i);
+11      String right     =  s.substring(i  +  1,  s.length());
+12      int   leftTrue   =  countEval(left,   true,  memo);
+13      int   leftFalse  =  countEval(left, false,  memo);
+14      int   rightTrue  =  countEval(right, true,  memo);
+15      int   rightFalse =  countEval(right, false,   memo);
+16      int total =   (leftTrue +  leftFalse) *   (rightTrue +  rightFalse);
+17  
+18      int  totalTrue =  0;
+19      if ( c    ==   '^' ) {
+20        totalTrue =  leftTrue *  rightFalse +  leftFalse *  rightTrue;
+21      } else if  (c ==   '&')  {
+22        totalTrue  =  leftTrue * rightTrue;
+23      } else   if (c   ==   '|') {
+24        totalTrue =   leftTrue * rightTrue   +  leftFalse *  rightTrue  +
+25                      leftTrue * rightFalse;
+26      }
+27  
+28      int subways  =  result  ?  totalTrue :   total  -  totalTrue;
+29      ways  +=   subways;
+30    }
+31  
+32    memo.put(result   +   s,  ways);
+33    return ways;
+34  }
 ```
 
 The added benefit of this is that we could actually end  up with the same substring in multiple parts of the expression. For example, an expression like 0"1"0&0"1"0 has  two instances of 0"1"0. By caching the result of the  substring  value  in a memoization table,  we'll get  to reuse the  result  for the  right part of the expression after computing it for the left.
@@ -1826,3 +1826,5 @@ Cₙ =    (2n)!
 ```
 
 We could  use  this to compute the  total ways of evaluating the  expression. Then,  rather  than  computing leftTrue and  leftFalse, we just  compute one of those and  calculate the  other  using  the  Catalan numbers.  We would do the same thing for the right side.
+
+

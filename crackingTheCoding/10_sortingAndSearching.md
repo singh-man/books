@@ -540,7 +540,7 @@ The following code demonstrates  our algorithm.
 9           /* Finds   the   corresponding number in the   bitfield by using  the   OR  operator to
 10           *  set  the   nth  bit of  a  byte   (e.g., 10  would  correspond to  the   2nd bit of
 11           *  index   2 in the  byte   array). */
-12          bitfield [n  / 8]   I = 1  << (n  %  8);
+12          bitfield [n  / 8]   |= 1  << (n  %  8);
 13      }
 14  
 15      for (int i =  0;  i <   bitfield.length;  i++)   {
@@ -651,7 +651,7 @@ The below code provides one implementation for this algorithm.
 58          if  (startRange <=     value  &&   value  < endRange) {
 59              int offset =  value  -  startRange;
 60              int mask  =  (1  << (offset %  Byte.SIZE));
-61              bitVector[offset / Byte.SIZE)  |= mask;
+61              bitVector[offset / Byte.SIZE]  |= mask;
 62          }
 63      }
 64      in.close();
@@ -698,38 +698,38 @@ Using this bit vector, we can then iterate through the array, flagging  each ele
 
 When we come across a duplicate element, we print it.
 ```java
-1       void checkDuplicates(int[]   array)  {
-2           BitSet  bs = new   BitSet(32000);
-3           for  (int i = 0; i <  array.length;   i++) {
-4               int num =   array[i];
-5               int  num0  = num  -  1;   //bitset starts  at 0, numbers  start  at 1
-6               if (bs.get(num0)) {
-7                   System.out.println(num);
-8               }  else  {
-9                   bs.sgt(num0);
-10              }
-11          }
-12      }
-13      
-14      class  BitSet {
-15          int[] bitset;
-16      
-17          public BitSet(int  size)  {
-18              bitset =  new  int[(size >>  5)   +  1); // divide by  32
-19          }
-20      
-21          boolean get(int  pos) {
-22              int wordNumber  =  (pos >>  5);  // divide by  32
-23              int bitNumber =  (pos &  0x1F);  // mod 32
-24              return (bitset[wordNumber]  &   (1 <<  bitNumber))  !=  0;
-25          }
-26      
-27          void set(int  pos)  {
-28              int wordNumber  =  (pos >>  5);  // divide by  32
-29              int bitNumber =  (pos &  0x1F);  // mod 32
-30              bitset[wordNumber]   |=  1  <<  bitNumber;
-31          }
-32      }
+1   void checkDuplicates(int[]   array)  {
+2       BitSet  bs = new   BitSet(32000);
+3       for  (int i = 0; i <  array.length;   i++) {
+4           int num  = array[i];
+5           int num0 = num  -  1;   //bitset starts  at 0, numbers  start  at 1
+6           if (bs.get(num0)) {
+7               System.out.println(num);
+8           }  else  {
+9               bs.sgt(num0);
+10          }
+11      }
+12  }
+13  
+14  class  BitSet {
+15      int[] bitset;
+16  
+17      public BitSet(int  size)  {
+18          bitset =  new  int[(size >>  5)   +  1); // divide by  32
+19      }
+20  
+21      boolean get(int  pos) {
+22          int wordNumber  =  (pos >>  5);  // divide by  32
+23          int bitNumber =  (pos &  0x1F);  // mod 32
+24          return (bitset[wordNumber]  &   (1 <<  bitNumber))  !=  0;
+25      }
+26  
+27      void set(int  pos)  {
+28          int wordNumber  =  (pos >>  5);  // divide by  32
+29          int bitNumber =  (pos &  0x1F);  // mod 32
+30          bitset[wordNumber]   |=  1  <<  bitNumber;
+31      }
+32  }
 ```
 
 Note that while this isn't an especially difficult problem, it's important to implement this cleanly. This is why we defined our own bit vector class to hold a large  bit vector. If our interviewer lets us (she may or may not), we could have of course used Java's  built in BitSet class.
@@ -992,11 +992,11 @@ Finally, we find 24 and we return c ounter: 6.
 
 Recursively, the algorithm is the following:
 ```java
-1     int getRank(Node  node,  int x)  {
-2         if x is  node.data, return node.leftSize()
-3         if x is  on  left of  node,   return  getRank(node.left,  x)
-4         if x is  on  right of  node,   return node.leftSize() + 1 + getRank(node.right,  x)
-5      }
+1   int getRank(Node  node,  int x)  {
+2       if x is  node.data, return node.leftSize()
+3       if x is  on  left of  node,   return  getRank(node.left,  x)
+4       if x is  on  right of  node,   return node.leftSize() + 1 + getRank(node.right,  x)
+5   }
 ```
 The full code for this is below.
 ```java
@@ -1182,3 +1182,6 @@ The code to implement this is below.
 ```
 
 This algorithm takes O(n) time.
+
+
+
