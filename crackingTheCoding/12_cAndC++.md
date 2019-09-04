@@ -50,17 +50,17 @@ The constructor of a class  is automatically called  upon an object's creation. 
 If you just need to initialize primitive types,  a simple way to do it is this:
 
 ```C
-1      Person(int a) {
-2           id =  a;
-3      }
+1   Person(int a) {
+2        id =  a;
+3   }
 ```
 
 This works for primitive types,  but  you might instead want to do this:
 
 ```C
-1      Person(int a)  :   id(a) {
-2      ...
-3      }
+1   Person(int a)  :   id(a) {
+2   ...
+3   }
 ```
 
 The  data member id  is assigned before the  actual object is created and  before the  remainder of the constructor code is called. This approach is necessary when the  fields are constant or class types.
@@ -68,9 +68,9 @@ The  data member id  is assigned before the  actual object is created and  befor
 The destructor cleans up upon object deletion and  is automatically called  when an object is destroyed. It cannot take  an argument as we don't explicitly call a destructor.
 
 ```C
-1     ~Person() {
-2          delete  obj;   //  free  any  memory   allocated  within  class 
-3     }
+1   ~Person() {
+2        delete  obj;   //  free  any  memory   allocated  within  class 
+3   }
 ```
 
 
@@ -212,7 +212,7 @@ Functions can specify default values, as shown below. Note that all default para
 
 ```c
 1	int func(int a, int b =  3) {
-2		X  =  a;
+2		X =  a;
 3		y =  b;
 4		return  a +  b;
 5	}
@@ -652,10 +652,10 @@ In terms of the approach, we need a reference count variable that is incremented
 
 ```c
 1	template   <class  T>  class SmartPointer {
-2		/*    The smart  pointer class needs  pointers to  both  the  object itself and to  the
-3		*   ref count.   These must be  pointers, rather than  the  actual object or  ref count
-4		*   value,   since  the  goal  of  a  smart  pointer is that the  reference count  is
-5		*   tracked across  multiple smart  pointers to  one object. */
+2		/* The smart  pointer class needs  pointers to  both  the  object itself and to  the
+3		*  ref count.   These must be  pointers, rather than  the  actual object or  ref count
+4		*  value,   since  the  goal  of  a  smart  pointer is that the  reference count  is
+5		*  tracked across  multiple smart  pointers to  one object. */
 6		T*   obj;
 7		unsigned*   ref_count;
 8	}
@@ -706,19 +706,19 @@ Getting just the approach, even without filling in the complicated C++ syntax, w
 15				/* Override  the  equal  operator,  so  that when you set one smart  pointer equal  to
 16				 * another   the  old  smart  pointer has  its  reference count  decremented  and the  new
 17				 * smart  pointer has  its  reference count  incrememented. */
-18				SmartPointer<T> &  operator=(SmartPointer<T>  &   sptr) {
-19				if (this == &sptr)  return *this;
+18				SmartPointer<T> &  operator=(SmartPointer<T>  & sptr) {
+19					if (this == &sptr)  return *this;
 20		
-21				/*  If already assigned to  an object,  remove one reference. */
-22				if (*ref_count  >   0)  {
-23					remove();
-24				}
+21					/*  If already assigned to  an object,  remove one reference. */
+22					if (*ref_count  >   0)  {
+23						remove();
+24					}
 25		
-26				ref = sptr.ref;
-27				ref_count =  sptr.ref_count;
-28				++(*ref_count);
-29				return *this;
-30			}
+26					ref = sptr.ref;
+27					ref_count =  sptr.ref_count;
+28					++(*ref_count);
+29					return *this;
+30				}
 31		
 32			~SmartPointer() {
 33				remove();//  Remove  one reference to  object.
@@ -785,7 +785,7 @@ Therefore, to guarantee both an aligned address and space for this pointer, we w
 The code below implements this approach.
 ```c
 1 	void*  aligned_malloc(size_t required_bytes, size  t alignment)  {
-2 		void*  pl;//  initial block
+2 		void*  pl;  //  initial block
 3 		void*  p2;  // aligned block  inside initial  block
 4 		int offset =  alignment -  1  + sizeof(void*);
 5 		if ((pl = (void*)malloc(required_bytes  + offset))      NULL)  {

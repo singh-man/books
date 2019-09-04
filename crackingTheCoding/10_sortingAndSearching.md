@@ -193,17 +193,17 @@ The code below does just that. It works from the back of A and B, moving the lar
 ```java
 1   void  merge(int[]  a,   int[] b,  int  lastA, int lastB) {
 2       int indexA  = lastA - 1; /*   Index  of  last  element in array a*/
-3       int indexB  =  lastB - 1; /*   Index  of  last element in  array b*/
+3       int indexB  = lastB - 1; /*   Index  of  last element in  array b*/
 4       int indexMerged  = lastB + lastA - 1; /*   end  of  merged array*/
 5   
 6       /*   Merge a  and  b,  starting from  the  last element in each*/
-7       while   (indexB   >=  0)  {
+7       while   (indexB  >=  0)  {
 8           /*   end  of  a  is >  than  end  of  b*/
 9           if (indexA  >=  0 &&   a[indexA]  >   b[indexB])  {
 10              a[indexMerged] = a[indexA];//    copy  element
 11              indexA - -;
 12          }  else {
-13              a[indexMerged]     b[indexB]; //  copy  element
+13              a[indexMerged] = b[indexB]; //  copy  element
 14              indexB--;
 15          }
 16          indexMerged--; //  move indices
@@ -238,8 +238,8 @@ The code below implements the comparator.
 5           return new String(content);
 6       }
 7   
-8       public  int  compare(String sl,  String s2)   {
-9           return sortChars(sl).compareTo(sortChars(s2));
+8       public  int  compare(String s1,  String s2)   {
+9           return sortChars(s1).compareTo(sortChars(s2));
 10      }
 11  }
 ```
@@ -256,7 +256,7 @@ The code below implements this algorithm.
 
 ```java
 1   void  sort(String[]  array) {
-2       HashMaplist<String, String>  m aplist      new HashMaplist<String,  String>();
+2       HashMaplist<String, String>  m aplist =  new HashMaplist<String,  String>();
 3   
 4       /*  Group words by   anagram  */
 5       for  (String s  :   array) {
@@ -365,8 +365,7 @@ This code will run in O(log  n) if all the elements are unique. However, with ma
 Note that while this problem is not conceptually very complex, it is actually very difficult to implement flaw­ lessly. Don't feel bad if you had trouble implementing it without a few bugs. Because of the ease of making off-by-one and other minor errors, you should make sure to test your code very thoroughly.
 
 
-**10.4  Sorted Search, No Size:**  You are given an array-like data structure Listy which lacks a size method. It does, however, have an elementAt(i) method that returns the element at index i in O(1)  time. If i is beyond the bounds of the data structure,  it returns -1. (For this reason, the data
-structure only supports positive integers.) Given a Listy which contains sorted, positive integers, find the index at which an element x occurs. If x occurs multiple times, you may return any index.
+**10.4  Sorted Search, No Size:**  You are given an array-like data structure Listy which lacks a size method. It does, however, have an elementAt(i) method that returns the element at index i in O(1)  time. If i is beyond the bounds of the data structure,  it returns -1. (For this reason, the data structure only supports positive integers.) Given a Listy which contains sorted, positive integers, find the index at which an element x occurs. If x occurs multiple times, you may return any index.
 
 
 SOLUTION
@@ -394,7 +393,7 @@ There's one more little tweak. Recall that the way we figure out the length is b
 ```java
 1   int  search(Listy list, int value)   {
 2       int index =  1;
-3       while  (list.elementAt(index)  !=         -1 &&   list.elementAt(index)  <   value)   {
+3       while  (list.elementAt(index)  != -1 &&   list.elementAt(index)  <   value)   {
 4           index  *= 2;
 5       }
 6       return  binarySearch(list, value,   index / 2,  index);
@@ -406,7 +405,7 @@ There's one more little tweak. Recall that the way we figure out the length is b
 12      while  (low <= high)   {
 13          mid =  (low + high) /  2;
 14          int middle  =  list.elementAt(mid);
-15          if (middle  >   value  ||    middle  ==   -1)  {
+15          if (middle  >   value  ||  middle  ==   -1)  {
 16              high  =  mid - 1;
 17          }  else if (middle  <   value)   {
 18              low =  mid +  1;
@@ -452,10 +451,10 @@ The recursive code below to solve this problem can easily be modified to be iter
 10          while  (true) {
 11              if (left < first &&   right > last) {
 12                  return -1;
-13              }  else if (right <= last &&    !strings[right].isEmpty()) {
+13              }  else if (right <= last &&  !strings[right].isEmpty()) {
 14                  mid =  right;
 15                  break;
-16              }  else if (left >= first &&    !strings[left].isEmpty()) {
+16              }  else if (left >= first &&  !strings[left].isEmpty()) {
 17                  mid =  left;
 18                  break;
 19              }
@@ -475,7 +474,7 @@ The recursive code below to solve this problem can easily be modified to be iter
 33  }
 34  
 35  int  search(String[] strings,  String str)  {
-36      if (strings == null  ||     str == null  || str == "") {
+36      if (strings == null  ||  str == null  || str == "") {
 37          return -1;
 38      }
 39      return search(strings, str,  0,  strings.length -  1);
@@ -533,7 +532,7 @@ The following code demonstrates  our algorithm.
 2   byte[] bitfield  = new byte   [(int) (numberOfints / 8)];
 3   String  filename = .....
 4   
-5   void  findOpenNumber()  throws   FileNotFoundException  {
+5   void  findOpenNumber() throws FileNotFoundException  {
 6       Scanner  in =  new Scanner(new  FileReader(filename));
 7       while  (in.hasNextint()) {
 8           int n  =  in.nextlnt ();
@@ -567,7 +566,7 @@ In the second pass, we'll actually look for which number  in that range is missi
 The question, now, is what is the appropriate block size? Let's define some variables as follows: 
 
 - Let rangeSize be the size of the ranges that each block in the first pass represents. 
-- Let arrayS1ze represent the number of blocks in the first pass. Note that arraySize = 2^31/rangesize since there are 2^31 non-negative integers.
+- Let arrayS1ze represent the number of blocks in the first pass. Note that arraySize = 2³¹/rangesize since there are 2³¹ non-negative integers.
 
 We need to select a value for rangeSize such that the memory from the first pass (the array) and the second pass (the bit vector) fit.
 
@@ -618,7 +617,7 @@ The below code provides one implementation for this algorithm.
 25      int arraySize =  Integer.MAX_VALUE  / rangeSize + 1;
 26      int[] blocks  =  new int[arraySize];
 27  
-28      Scanner  in    =  new Scanner  (new FileReader(filename));
+28      Scanner in =  new Scanner  (new FileReader(filename));
 29      while  (in.hasNextint()) {
 30          int value    =   in.nextint();
 31          blocks[value / rangeSize]++;
@@ -692,7 +691,7 @@ SOLUTION
 
 ---
 
-We have 4 kilobytes of memory which means we can address up to 8 *  4 * 2^10 bits. Note that 32 * 2^10 bits is greater than 32000. We can create a bit vector with 32000 bits, where each bit represents one integer.
+We have 4 kilobytes of memory which means we can address up to 8 *  4 * 2¹⁰ bits. Note that 32 * 2¹⁰ bits is greater than 32000. We can create a bit vector with 32000 bits, where each bit represents one integer.
 
 Using this bit vector, we can then iterate through the array, flagging  each element  v by setting bit v to 1.
 
@@ -819,7 +818,7 @@ Let's again look at a simple example.
 
 We want to be able to leverage the sorting  property  to more efficiently  find an element. So, we might ask ourselves, what does the unique ordering property of this matrix imply about where an element might be located?
 
-We are told that every row and column is sorted. This means that element a [ i] [ j] will be greater than the elements in row i between columns O and j -  1 and the elements in column j between rows O and i - 1.
+We are told that every row and column is sorted. This means that element a[i][j] will be greater than the elements in row i between columns O and j -  1 and the elements in column j between rows O and i - 1.
 
 Or, in other words:
 ```
@@ -858,7 +857,7 @@ Observe that since the diagonal is sorted, we can efficiently search it using bi
 The code below implements this algorithm.
 
 ```java
-1   Coordinate   findElement(int[][]  matrix, Coordinate  or1g1n,  Coordinate  dest, int x) {
+1   Coordinate   findElement(int[][]  matrix, Coordinate  origin,  Coordinate  dest, int x) {
 2       if  (!origin. inbounds(matrix) ||  ! dest.inbounds(matrix))  {
 3           return null;
 4       }
@@ -1108,7 +1107,7 @@ The code to implement this is below.
 ```java
 1   void  sortValleyPeak(int[] array) {
 2       Arrays.sort(array);
-3       for (int i = 1;  i <   array.length;  i += 2)  {
+3       for (int i = 1;  i <  array.length;  i += 2)  {
 4           swap(array,  i -  1,   i);
 5       }
 6   }
@@ -1160,7 +1159,7 @@ As we noted before, if we make sure the peaks are in the right place then we kno
 The code to implement this is below.
 ```java
 1   void  sortValleyPeak(int[] array) {
-2       for (int i =    1;  i <   array.length;  i +=         2)  {
+2       for (int i =    1;  i <   array.length;  i += 2)  {
 3           int  biggestindex = maxindex(array,  i -  1,   i, i + 1);
 4           if (i != biggestindex) {
 5               swap(array,  i,  biggestindex);

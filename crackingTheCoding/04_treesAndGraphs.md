@@ -21,18 +21,18 @@ The tree cannot contain cycles. The nodes may or may not be in a particular orde
 A very simple class definition for Node is:
 
 ```java
-1     class  Node {
-2          publi c String  name;
-3          public  Node[] children;
-4     }
+1   class  Node {
+2        publi c String  name;
+3        public  Node[] children;
+4   }
 ```
 
 You might also have a Tree class to wrap this node. For the purposes of interview questions, we typically do not use a Tree class. You can if you feel it makes your code simpler or better, but it rarely does.
 
 ```java
-1     class  Tree {
-2       public  Node root;
-3     }
+1   class  Tree {
+2     public  Node root;
+3   }
 ```
 
 Tree and graph questions are rife with ambiguous details and incorrect assumptions. Be sure to watch out for the following issues and seek clarification when necessary.
@@ -101,7 +101,7 @@ Note that perfect trees are rare in interviews and in real life, as a perfect tr
 
 Prior to your  interview, you  should be  comfortable implementing in-order, post-order, and pre-order traversal. The most common of these is in-order traversal.
 
-In-Order Traversal
+**In-Order Traversal**
 
 In-order traversal means to "visit" (often,  print)  the left branch, then the current node, and  finally, the right branch.
 
@@ -118,7 +118,7 @@ In-order traversal means to "visit" (often,  print)  the left branch, then the c
 When performed on a binary  search tree, it visits the nodes in ascending order (hence the name"in-order").
 
 
-Pre-Order Traversal
+**Pre-Order Traversal**
 
 Pre-order traversal visits the current node before its child nodes (hence the name "pre-order").
 
@@ -135,7 +135,7 @@ Pre-order traversal visits the current node before its child nodes (hence the na
 In a pre-order traversal, the root is always the first node visited.
 
 
-Post-Order Traversal
+**Post-Order Traversal**
 
 Post-order traversal visits the current node after  its child nodes (hence the name"post-order").
 
@@ -262,7 +262,7 @@ This is a bit more compact, but it isn't quite as clean. We tend to use node cla
 
 ##### Adjacency Matrices
 
-An adjacency matrix  is an NxN boolean matrix  (where N is the  number of nodes), where a true value  at matrix[i][j] indicates an edge from node i to node j. (You can also use an integer matrix with Os and
+An adjacency matrix  is an NxN boolean matrix (where N is the  number of nodes), where a true value  at matrix[i][j] indicates an edge from node i to node j. (You can also use an integer matrix with Os and
 1 s.)
 
 In an undirected graph, an adjacency matrix will be symmetric. In a directed graph, it will not  (necessarily) be.
@@ -288,8 +288,7 @@ Breadth-first search and depth-first search tend to be used in different scenari
 
 However,  if we want to find the shortest path (or just any path) between two nodes, BFS is generally better. Consider representing all the friendships in the entire world in a graph and trying to find a path of friend­ ships between Ash andVanessa.
 
-In depth-first search, we could take a path like Ash  ->  Brian  ->    Carleton   ->   Davis   ->   Eric
-->  Farah  ->  Gayle   ->  Harry  ->  Isabella ->  John·->  Kari... and thenfind ourselves very far away. We could go through most of the world without realizing that, in fact,Vanessa is Ash's friend. We will still eventually find the path, but it may take a long time. It also won't find us the shortest path.
+In depth-first search, we could take a path like Ash  ->  Brian  ->    Carleton   ->   Davis   ->   Eric ->  Farah  ->  Gayle   ->  Harry  ->  Isabella ->  John ->  Kari... and thenfind ourselves very far away. We could go through most of the world without realizing that, in fact,Vanessa is Ash's friend. We will still eventually find the path, but it may take a long time. It also won't find us the shortest path.
 
 In breadth-first search, we would stay close to Ash for as long as possible. We might iterate through many of Ash's friends, but we wouldn't go to his more distant connections until absolutely necessary. lfVanessa is Ash's friend, or his friend-of-a-friend, we'll find this out relatively quickly.
 
@@ -322,20 +321,20 @@ In BFS, node a visits each of a's neighbors before visiting any of their neighbo
 
 ```java
 1   void  search(Node  root) {
-2   	Queue queue  =  new Queue();
-3   	root.marked =  true;
-4   	queue.enqueue(root);  // Add to the   end  of  queue
+2       Queue queue  =  new Queue();
+3       root.marked =  true;
+4       queue.enqueue(root);  // Add to the   end  of  queue
 5  
-6   	while   (!queue.isEmpty())  {
-7   		Node r =    queue.dequeue(); // Remove  from the   front of  the   queue
-8   		visit(r);
-9   		foreach (Node n in r.adjacent) {
-10  			if (n.marked == false) {
-11  				n.marked = true;
-12  				queue.enqueue(n);
-13  			}
-14  		}
-15  	}
+6       while (!queue.isEmpty())  {
+7           Node r =    queue.dequeue(); // Remove  from the   front of  the   queue
+8           visit(r);
+9           foreach (Node n in r.adjacent) {
+10              if (n.marked == false) {
+11                  n.marked = true;
+12                  queue.enqueue(n);
+13              }
+14          }
+15      }
 16  }
 ```
 
@@ -365,7 +364,7 @@ Interview Questions
 
 ---
 
-**4.1 	Route Between Nodes:** Given a directed graph, design an algorithm to find out whether there is a route between two nodes. 
+**4.1   Route Between Nodes:** Given a directed graph, design an algorithm to find out whether there is a route between two nodes. 
 
 
 
@@ -381,41 +380,41 @@ The code below provides an iterative implementation of breadth-first search.
 1   enum  State {  Unvisited, Visited,  Visiting;  }
 2  
 3   boolean  search(Graph g,  Node   start, Node   end) {
-4   	if (start ==  end) return true;
+4       if (start ==  end) return true;
 5  
-6   	// operates  as Queue
-7   	LinkedList<Node>  q   =  new   Linkedlist<Node>();
+6       // operates  as Queue
+7       LinkedList<Node>  q   =  new   Linkedlist<Node>();
 8  
-9   	for  (Node u   :  g.getNodes())  {
-10  		u.state =  State.Unvisited;
-11  	}
-12  	start.state =  State.Visiting;
-13  	q.add(start);
-14  	Node   u;
-15  	while (!q.isEmpty())  {
-16  		u  =  q.removeFirst();  || i.e., dequeue()
-17  		if (u !=   null) {
-18  			for  (Node v   :   u.getAdjacent()) {
-19  				if (v.state ==  State.Unvisited) {
-20  					if (v ==  end)  {
-21  						return true;
-22  					}  else {
-23  						v.state =  State.Visiting;
-24  						q.add(v);
-25  					}
-26  				}
-27  			}
-28  			u.state     State.Visited;
-29  		}
-30  	}
-31  	return false;
+9       for  (Node u :  g.getNodes())  {
+10          u.state =  State.Unvisited;
+11      }
+12      start.state =  State.Visiting;
+13      q.add(start);
+14      Node   u;
+15      while (!q.isEmpty())  {
+16          u  =  q.removeFirst();  // i.e., dequeue()
+17          if (u !=   null) {
+18              for  (Node v   :   u.getAdjacent()) {
+19                  if (v.state ==  State.Unvisited) {
+20                      if (v ==  end)  {
+21                          return true;
+22                      }  else {
+23                          v.state =  State.Visiting;
+24                          q.add(v);
+25                      }
+26                  }
+27              }
+28              u.state     State.Visited;
+29          }
+30      }
+31      return false;
 32  }
 ```
 
 It may be worth discussing with your interviewer the tradeoffs between breadth-first search and depth-first search for this and other problems. For example, depth-first search is a bit simpler to implement since it can be done with simple recursion. Breadth-first search can also be useful to find the shortest path, whereas depth-first search may traverse one adjacent node very deeply before ever going onto the immediate neighbors.
 
 
-**4.2 	Minimal  Tree:**  Given a sorted (increasing order) array with unique  integer elements, write an algorithm to create a binary search tree with minimal height.
+**4.2   Minimal  Tree:**  Given a sorted (increasing order) array with unique  integer elements, write an algorithm to create a binary search tree with minimal height.
 
 SOLUTION
 
@@ -439,26 +438,26 @@ The algorithm is as follows:
 The code below implements this algorithm.
 
 ```java
-1   TreeNode   createMinimalBST(int array[])  {
-2   	return createMinimalBST(array,  0, array.length -  1);
+1   TreeNode createMinimalBST(int array[])  {
+2       return createMinimalBST(array,  0, array.length -  1);
 3   }
 4  
 5   TreeNode   createMinimalBST(int arr[],  int  start,  int  end) {
-6   	if (end < start)  {
-7   		return null;
-8   	}
-9   	int  mid = (start + end) /  2;
-10  	TreeNode n = new   TreeNode(arr[mid]);
-11  	n.left =  createMinimalBST(arr,  start,  mid -  1);
-12  	n.right  =  createMinimalBST(arr,  mid +  1, end);
-13  	return n;
+6       if (end < start)  {
+7           return null;
+8       }
+9       int  mid = (start + end) /  2;
+10      TreeNode n = new   TreeNode(arr[mid]);
+11      n.left =  createMinimalBST(arr,  start,  mid -  1);
+12      n.right  =  createMinimalBST(arr,  mid +  1, end);
+13      return n;
 14  }
 ```
 
 Although this code does not seem especially complex, it can be very easy to make little off-by-one errors. Be sure to test these parts of the code very thoroughly.
 
 
-**4.3 	List of Depths:** Given a binary tree, design an algorithm which creates a linked list of all the nodes at each depth (e.g., if you have a tree with depth D, you'll have D linked lists).
+**4.3   List of Depths:** Given a binary tree, design an algorithm which creates a linked list of all the nodes at each depth (e.g., if you have a tree with depth D, you'll have D linked lists).
 
 
 SOLUTION
@@ -473,27 +472,27 @@ We can implement a simple modification of the pre-order traversal algorithm, whe
 ```java
 1   void  createLevelLinkedList(TreeNode root,   ArrayList<LinkedList<TreeNode>>  lists,
 2   int level) {
-3   	if (root ==    null) return; // base  case
+3       if (root == null) return; // base  case
 4  
-5   	LinkedList<TreeNode> list = null;
-6   	if (lists.size() ==    level) { // Level  not  contained in  list
-7   		list =  new LinkedList<TreeNode>();
-8   		/* Levels  are  always traversed in  order. So,  if this is the  first time  we've
-9   		*  visited level i,  we  must have seen  levels 0 through  i -  1.  We   can
-10  		*  therefore safely add the  level at the  end. */
-11  		lists.add(list);
-12  	}  else {
-13  		list = lists.get(level);
-14  	}
-15  	list.add(root);
-16  	createLevelLinkedList(root.left,  lists,  level + 1);
-17  	createlevelLinkedList(root.right,  lists,  level + 1);
+5       LinkedList<TreeNode> list = null;
+6       if (lists.size() ==    level) { // Level  not  contained in  list
+7           list =  new LinkedList<TreeNode>();
+8           /* Levels  are  always traversed in  order. So,  if this is the  first time  we've
+9           *  visited level i,  we  must have seen  levels 0 through  i -  1.  We   can
+10          *  therefore safely add the  level at the  end. */
+11          lists.add(list);
+12      }  else {
+13          list = lists.get(level);
+14      }
+15      list.add(root);
+16      createLevelLinkedList(root.left,  lists,  level + 1);
+17      createlevelLinkedList(root.right, lists,  level + 1);
 18  }
 19  
 20  ArrayList<LinkedList<TreeNode>>  createLevelLinkedList(TreeNode root)  {
-21  	ArrayList<Linkedlist<TreeNode>>  lists = new ArrayList<LinkedList<TreeNode>>();
-22  	createlevellinkedlist(root,  lists, 0);
-23  	return lists;
+21      ArrayList<Linkedlist<TreeNode>>  lists = new ArrayList<LinkedList<TreeNode>>();
+22      createlevellinkedlist(root,  lists, 0);
+23      return lists;
 24  }
 ```
 
@@ -505,28 +504,28 @@ The code below implements this algorithm.
 
 ```java
 1   ArrayList<LinkedList<TreeNode>>  createLevelLinkedlist(TreeNode root)  {
-2   	ArrayList<LinkedList<TreeNode>>  result = new ArrayList<Linkedlist<TreeNode>>();
-3   	/*  "Visit" the  root   */
-4   	LinkedList<TreeNode> current =    new LinkedList<TreeNode>();
-5   	if (root != null) {
-6   		current.add(root);
-7   	}
+2       ArrayList<LinkedList<TreeNode>>  result = new ArrayList<Linkedlist<TreeNode>>();
+3       /*  "Visit" the  root   */
+4       LinkedList<TreeNode> current = new LinkedList<TreeNode>();
+5       if (root != null) {
+6           current.add(root);
+7       }
 8  
-9   	while   (current.size() > 0)  {
-10  		result.add(current);//    Add previous level
-11  		Linkedlist<TreeNode> parents  =   current;//Go  to next  level
-12  		current =  new LinkedList<TreeNode>();
-13  		for (TreeNode  parent  :   parents) {
-14  			/*   Visit the   children*/
-15  			if (parent.left !=  null)  {
-16  				current.add(parent.left);
-17  			}
-18  			if (parent.right != null) {
-19  				current.add(parent.right);
-20  			}
-21  		}
-22  	}
-23  	return result;
+9       while   (current.size() > 0)  {
+10          result.add(current);//    Add previous level
+11          Linkedlist<TreeNode> parents  =   current;//Go  to next  level
+12          current =  new LinkedList<TreeNode>();
+13          for (TreeNode  parent  :   parents) {
+14              /*   Visit the   children*/
+15              if (parent.left !=  null)  {
+16                  current.add(parent.left);
+17              }
+18              if (parent.right != null) {
+19                  current.add(parent.right);
+20              }
+21          }
+22      }
+23      return result;
 24  }
 ```
  
@@ -538,7 +537,7 @@ In a sense, that's correct. The first solution uses 0(log N) recursive calls (in
 However, both solutions require returning O(N) data. The extra 0(log N) space usage from the recursive implementation is dwarfed by the O(N) data that must be returned. So while the first solution may actually use more data, they are equally efficient when it comes to "big O:'
 
 
-**4.4 	Check Balanced:** Implement a function to check if a binary tree is balanced. For the purposes of this question, a balanced tree is defined to be a tree such that the heights of the two subtrees of any node never differ by more than one.
+**4.4   Check Balanced:** Implement a function to check if a binary tree is balanced. For the purposes of this question, a balanced tree is defined to be a tree such that the heights of the two subtrees of any node never differ by more than one.
 pg 7 70
 
 SOLUTION
@@ -549,19 +548,19 @@ In this question, we've been fortunate enough to be told exactly what balanced m
 
 ```java
 1   int  getHeight(TreeNode root) {
-2   	if (root == null) return -1;//    Base  case
-3   	return  Math.max(getHeight(root.left), getHeight(root.right)) + 1;
+2       if (root == null) return -1;//    Base  case
+3       return  Math.max(getHeight(root.left), getHeight(root.right)) + 1;
 4   }
 5  
 6   boolean   isBalanced(TreeNode  root) {
-7   	if (root == null) return true;//    Base  case
+7       if (root == null) return true;//    Base  case
 8  
-9   	int heightDiff =   getHeight(root.left)  -  getHeight(root.right);
-10  	if (Math.abs(heightDiff) >   1)  {
-11  		return false;
-12  	} else {//Recurse
-13  		return isBalanced(root.left) &&  isBalanced(root.right);
-14  	}
+9       int heightDiff =   getHeight(root.left)  -  getHeight(root.right);
+10      if (Math.abs(heightDiff) >   1)  {
+11          return false;
+12      } else {//Recurse
+13          return isBalanced(root.left) &&  isBalanced(root.right);
+14      }
 15  }
 ```
 
@@ -581,24 +580,24 @@ The code below implements this algorithm.
 
 ```java
 1   int checkHeight(TreeNode root)   {
-2   	if (root == null)  return -1;
+2       if (root == null)  return -1;
 3  
-4   	int  leftHeight = checkHeight(root.left);
-5   	if (leftHeight == Integer.MIN_VALUE)  return Integer.MIN_VALUE;  // Pass  error  up
+4       int  leftHeight = checkHeight(root.left);
+5       if (leftHeight == Integer.MIN_VALUE)  return Integer.MIN_VALUE;  // Pass  error  up
 6  
-7   	int rightHeight = checkHeight(root.right);
-8   	if (rightHeight == Integer.MIN_VALUE)  return Integer.MIN_VALUE;  // Pass  error  up
+7       int rightHeight = checkHeight(root.right);
+8       if (rightHeight == Integer.MIN_VALUE)  return Integer.MIN_VALUE;  // Pass  error  up
 9  
-10  	int  heightDiff =  leftHeight -  rightHeight;
-11  	if (Math.abs(heightDiff)  >   1)  {
-12  		return Integer.MIN_VALUE; // Found error -> pass  it back
-13  	} else {
-14  		return  Math.max(leftHeight, rightHeight)  + 1;
-15  	}
+10      int  heightDiff =  leftHeight -  rightHeight;
+11      if (Math.abs(heightDiff)  >   1)  {
+12          return Integer.MIN_VALUE; // Found error -> pass  it back
+13      } else {
+14          return  Math.max(leftHeight, rightHeight)  + 1;
+15      }
 16  }
 17  
 18  boolean   isBalanced(TreeNode root)   {
-19  	return  checkHeight(root) !=  Integer.MIN_VALUE;
+19      return  checkHeight(root) !=  Integer.MIN_VALUE;
 20  }
 ```
 
@@ -627,20 +626,20 @@ However, if we assume that the tree cannot have duplicate values, then this appr
 ```java
 1   int   index =  0;
 2   void copyBST(TreeNode  root,   int[] array)   {
-3   	if  (root ==  null)  return;
-4   	copyBST(root.left,   array);
-5   	array[index]   =  root.data;
-6   	index++;
-7   	copyBST(root.right,  array);
+3       if  (root ==  null)  return;
+4       copyBST(root.left,   array);
+5       array[index]   =  root.data;
+6       index++;
+7       copyBST(root.right,  array);
 8   }
 9  
 10  boolean checkBST(TreeNode  root) {
-11  	int[] array =  new  int[root.size];
-12  	copyBST(root,  array);
-13  	for  (int i =   1;  i <  array.length; i++)  {
-14  		if (array[i] <= array[i -  1])   return  false;
-15  	}
-16  	return  true;
+11      int[] array =  new  int[root.size];
+12      copyBST(root,  array);
+13      for  (int i =   1;  i <  array.length; i++)  {
+14          if (array[i] <= array[i -  1])   return  false;
+15      }
+16      return  true;
 17  }
 ```
 
@@ -653,21 +652,21 @@ The code below implements this algorithm.
 ```java
 1   Integer   last_printed =  null;
 2   boolean checkBST(TreeNode  n)  {
-3   	if (n ==    null) return  true;
+3       if (n ==    null) return  true;
 4  
-5   	// Check I recurse  left
-6   	if (!checkBST(n.left)) return  false;
+5       // Check I recurse  left
+6       if (!checkBST(n.left)) return  false;
 7  
-8   	// Check current
-9   	if  (last_printed !=  null  &&   n.data  <=        last_printed) {
-10  		return  false;
-11  	}
-12  	last_printed = n.data;
+8       // Check current
+9       if  (last_printed !=  null  &&   n.data  <=        last_printed) {
+10          return  false;
+11      }
+12      last_printed = n.data;
 13  
-14  	// Check / recurse  right
-15  	if (!checkBST(n.right)) return false;
+14      // Check / recurse  right
+15      if (!checkBST(n.right)) return false;
 16  
-17  	return true;// All   good!
+17      return true;// All   good!
 18  }
 ```
 
@@ -712,27 +711,27 @@ N) recursive calls on the stack since we may recurse up to the depth of the tree
 The recursive code for this is as follows:
 ```java
 1   boolean  checkBST(TreeNode  n)  {
-2   	return checkBST(n, null, null);
+2       return checkBST(n, null, null);
 3   }
 4  
 5   boolean  checkBST(TreeNode  n,  Integer min,  Integer max) {
-6   	if (n  == null) {
-7   		return true;
-8   	}
-9   	if ((min  != null &&   n.data <=  min)  I  I      (max != null &&   n.data >   max)) {
-10  		return false;
-11  	}
+6       if (n  == null) {
+7           return true;
+8       }
+9       if ((min  != null &&   n.data <=  min) ||  (max != null &&   n.data >   max)) {
+10          return false;
+11      }
 12  
-13  	if (!checkBST(n.left,  min,  n.data)  I  I      !checkBST(n.right, n.data,  max)) {
-14  		return false;
-15  	}
-16  	return true;
+13      if (!checkBST(n.left,  min,  n.data)  ||  !checkBST(n.right, n.data,  max)) {
+14          return false;
+15      }
+16      return true;
 17  }
 ```
 Remember that in recursive algorithms, you should always make sure that your base cases, as well as your null cases, are well handled.
 
 
-**4.6 	Successor:** Write an algorithm to find the "next" node (i.e., in-order successor) of a given node in a binary search tree. You may assume that each node has a link to its parent.
+**4.6   Successor:** Write an algorithm to find the "next" node (i.e., in-order successor) of a given node in a binary search tree. You may assume that each node has a link to its parent.
 
 SOLUTION
 
@@ -754,16 +753,16 @@ If n was to the left of q, then the next node we should traverse should be q (ag
 If n were to the right of q, then we have fully traversed q's subtree as well. We need to traverse upwards from q until we find a node x that we have not fully traversed.  How do we know that we have not fully traversed a node x? We know we have hit this case when we move from a left node to its parent.The left node is fully traversed, but its parent is not.
 
 The pseudocode looks like this:
-```java
+```
 1   Node inorderSucc(Node  n)  {
-2   	if (n  has  a right subtree) {
-3   		return leftmost child of  right subtree
-4   	}  else {
-5   		while  (n  is a right child of  n.parent) {
-6   			n =  n.parent; // Go  up
-7   		}
-8   		return n.parent;  // Parent  has  not  been  traversed
-9   	}
+2       if (n  has  a right subtree) {
+3           return leftmost child of  right subtree
+4       }  else {
+5           while  (n  is a right child of  n.parent) {
+6               n =  n.parent; // Go  up
+7           }
+8           return n.parent;  // Parent  has  not  been  traversed
+9       }
 10  }
 ```
 But wait-what if we traverse all the way up the tree before finding a left child?This will happen only when we hit the very end of the in-order traversal. That is, if we're already on the far right of the tree, then there is no in-order successor. We should return null.
@@ -772,45 +771,45 @@ The code below implements this algorithm (and properly handles the null case).
 
 ```java
 1   TreeNode inorderSucc(TreeNode  n)  {
-2   	if (n  ==  null) return null;
+2       if (n  ==  null) return null;
 3  
-4   	/*  Found right children -> return leftmost node of  right subtree. */
-5   	if (n.right != null) {
-6   		return leftMostChild(n.right);
-7   	}  else {
-8   		TreeNode q = n;
-9   		TreeNode x =  q.parent;
-10  		// Go  up until we're  on left  instead of  right
-11  		while  (x  != null &&   x.left != q)  {
-12  			q =  x;
-13  			x =  x.parent;
-14  		}
-15  		return x;
-16  	}
+4       /*  Found right children -> return leftmost node of  right subtree. */
+5       if (n.right != null) {
+6           return leftMostChild(n.right);
+7       }  else {
+8           TreeNode q = n;
+9           TreeNode x =  q.parent;
+10          // Go  up until we're  on left  instead of  right
+11          while  (x  != null &&   x.left != q)  {
+12              q =  x;
+13              x =  x.parent;
+14          }
+15          return x;
+16      }
 17  }
 18  
 19  TreeNode leftMostChild(TreeNode n)  {
-20  	if (n  ==  null) {
-21  		return null;
-22  	}
-23  	while  (n.left != null) {
-24  		n = n.left;
-25  	}
-26  	return  n;
+20      if (n  ==  null) {
+21          return null;
+22      }
+23      while  (n.left != null) {
+24          n = n.left;
+25      }
+26      return  n;
 27  }
 ```
 
 This is not the most algorithmically complex problem in the world, but it can be tricky to code perfectly. In a problem like this, it's useful to sketch out pseudocode to carefully outline the different cases.
 
 
-**4.7 	Build Order:** You are given a list of projects and a list of dependencies (which is a list of pairs of projects, where the secondproject is dependent on the first project). All of a project's dependencies must be built before the project is. Find a build order that will allow the projects to be built. If there is no valid build order, return an error.
+**4.7   Build Order:** You are given a list of projects and a list of dependencies (which is a list of pairs of projects, where the secondproject is dependent on the first project). All of a project's dependencies must be built before the project is. Find a build order that will allow the projects to be built. If there is no valid build order, return an error.
 
 EXAMPLE 
 
 ```
 Input:
-	projects:  a, b,   c,  d,   e, f
-	dependencies: (a,  d),  (f,  b),  (b,   d),  (f,  a),  (d,   c) 
+    projects:  a, b,   c,  d,   e, f
+    dependencies: (a,  d),  (f,  b),  (b,   d),  (f,  a),  (d,   c) 
 
 Output: f,  e, a, b,   d,   c
 ```
@@ -881,12 +880,12 @@ Repeat until toBeProcessed is at the end of the buildOrder:
 
 1.  Read node at toBeProcessed.
 
-	- If node is null, then all remaining nodes have a dependency and we have detected a cycle.
+    - If node is null, then all remaining nodes have a dependency and we have detected a cycle.
 
 2.  For each child of node:
 
-	- Decrement child. dependencies (the number of incoming edges).
-	- If child. dependencies is zero, add child to end of buildOrder.
+    - Decrement child. dependencies (the number of incoming edges).
+    - If child. dependencies is zero, add child to end of buildOrder.
 
 3.  Increment  toBeProcessed.
 
@@ -895,122 +894,116 @@ The code below implements this algorithm.
 ```java
 1    /*  Find a correct build   order. */
 2    Project[]  findBuildOrder(String[] projects, String[][] dependencies)  {
-3    	Graph graph = buildGraph(projects,  dependencies);
-4    	return orderProjects(graph.getNodes());
+3       Graph graph = buildGraph(projects,  dependencies);
+4       return orderProjects(graph.getNodes());
 5    }
 6  
 7    /*  Build  the  graph,  adding  the  edge (a,   b)  if b is dependent  on a. Assumes  a  pair
 8    * is listed in  "build order". The pair (a,   b)  in  dependencies  indicates that b
-9    * depends on a  and a must be built before  b. * /
+9    * depends on a  and a must be built before  b. */
 10   Graph buildGraph(String[] projects, String[][] dependencies) {
-11   Graph graph = new Graph();
-12   for  (String project  :   projects) {
-13   graph.createNode(project);
-14   }
-15  
-16   for  (String[] dependency  :   dependencies)  {
-17   String first = dependency[0];
-18   String second =  dependency[l];
-19   graph.addEdge(first,  second);
-20   }
-21  
-22   return  graph;
+11      Graph graph = new Graph();
+12      for  (String project  :   projects) {
+13          graph.createNode(project);
+14      }
+15      
+16      for  (String[] dependency  :   dependencies)  {
+17          String first = dependency[0];
+18          String second =  dependency[l];
+19          graph.addEdge(first,  second);
+20      }
+21      
+22      return  graph;
 23   }
 24  
-25   /*  Return  a list of  the  projects a correct build   order.*/
+25   /*  Return  a list of  the  projects a correct build   order. */
 26   Project[]  orderProjects(Arraylist<Project> projects)  {
-27   	Project[] order  =  new Project[projects.size()];
-
+27      Project[] order  =  new Project[projects.size()];
 28  
-29   	/*  Add  "roots" to  the  build   order  first.*/
-30   	int endOfList = addNonDependent(order,  projects,  0);
-
+29      /*  Add  "roots" to  the  build   order  first.*/
+30      int endOfList = addNonDependent(order,  projects,  0);
 31  
-32   	int toBeProcessed = 0;
-33   	while  (toBeProcessed <  order.length) {
-34   		Project current = order[toBeProcessed];
-
+32      int toBeProcessed = 0;
+33      while  (toBeProcessed <  order.length) {
+34          Project current = order[toBeProcessed];
 35  
-36   		/*  We  have a circular dependency since   there are  no remaining  projects with
-37   		*  zero  dependencies. * /
-38   		if  (current == null) {
-39   		return null;
-40   	}
-
+36          /*  We  have a circular dependency since   there are  no remaining  projects with
+37          *  zero  dependencies. */
+38          if  (current == null) {
+39              return null;
+40          }
 41  
-42   		/*  Remove  myself  as  a  dependency.  */
-43   		Arraylist<Project> children = current.getChildren();
-44   		for  (Project child :   children) {
-45	  			child.decrementDependencies();
-46   		}
-
+42          /*  Remove  myself  as  a  dependency.  */
+43          Arraylist<Project> children = current.getChildren();
+44          for  (Project child :   children) {
+45              child.decrementDependencies();
+46          }
 47  
-48   		/*  Add children that have no one depending  on them.  */
-49   		endOfList =  addNonDependent(order,  children,  endOfList);
-50   		toBeProcessed++;
-51   	}
-
+48          /*  Add children that have no one depending  on them.  */
+49          endOfList =  addNonDependent(order,  children,  endOfList);
+50          toBeProcessed++;
+51      }
 52  
-53   	return order;
+53      return order;
 54   }
 55  
 56   /*  A  helper  function to  insert projects with  zero  dependencies  into the  order
 57   *  array, starting at index  offset. */
 58   int addNonDependent(Project[]   order, Arraylist<Project> projects,  int  offset)  {
-59   	for  (Project project :  projects) {
-60   		if (project.getNumberDependencies() == 0)  {
-61   			order[offset]  =  project;
-62   			offset++;
-63   			}
-64   		}
-65   	return offset;
+59      for  (Project project :  projects) {
+60          if (project.getNumberDependencies() == 0)  {
+61              order[offset]  =  project;
+62              offset++;
+63              }
+64          }
+65      return offset;
 66   }
 67  
 68   public class Graph {
-69 		private Arraylist<Project> nodes =  new Arraylist<Project>();
-70 		private HashMap<String, Project> map  =  new HashMap<String, Project>();
-71 		
-72 		public   Project  getOrCreateNode(String name) {
-73 			if (!map.containsKey(name)) {
-74 				Project node =  new Project(name);
-75 				nodes.add(node);
-76 				map.put(name,  node);
-77 			}
-78 			
-79 			return map.get(name);
-80 		}
-81 		
-82 		public   void  addEdge(String startName,   String endName)   {
-83 			Project start  = getOrCreateNode(startName);
-84 			Project end =  getOrCreateNode(endName);
-85 			start.addNeighbor(end);
-86 		}
-87 		
-88 		public Arraylist<Project> getNodes()   {  return nodes;  }
+69      private Arraylist<Project> nodes =  new Arraylist<Project>();
+70      private HashMap<String, Project> map  =  new HashMap<String, Project>();
+71      
+72      public   Project  getOrCreateNode(String name) {
+73          if (!map.containsKey(name)) {
+74              Project node =  new Project(name);
+75              nodes.add(node);
+76              map.put(name,  node);
+77          }
+78          
+79          return map.get(name);
+80      }
+81      
+82      public   void  addEdge(String startName,   String endName)   {
+83          Project start  = getOrCreateNode(startName);
+84          Project end =  getOrCreateNode(endName);
+85          start.addNeighbor(end);
+86      }
+87      
+88      public Arraylist<Project> getNodes()   {  return nodes;  }
 89   }
 90  
 91   public  class Project {
-92 		private Arraylist<Project> children = new Arraylist<Project>();
-93 		private HashMap<String, Project> map =  new HashMap<String, Project>();
-94 		private  String name;
-95 		private int dependencies = 0;
-96 		
-97 		public   Project(String n)  {  name =  n;  }
-98 		
-99 		public  void addNeighbor(Project node) {
-100			if (!map.containsKey(node.getName()))  {
-101				children.add(node);
-102				map.put(node.getName(),  node);
-103				node.incrementDependencies();
-104			}
-105		}
-106		
-107		public  void incrementDependencies()  {  dependencies++;  }
-108		public  void decrementDependencies() {  dependencies--;  }
-109		
-110		public String  getName()  {  return name;   }
-111		public Arraylist<Project> getChildren()  {  return  children; }
-112		public int  getNumberDependencies()  {  return  dependencies; }
+92      private Arraylist<Project> children = new Arraylist<Project>();
+93      private HashMap<String, Project> map =  new HashMap<String, Project>();
+94      private String name;
+95      private int dependencies = 0;
+96      
+97      public   Project(String n)  {  name =  n;  }
+98      
+99      public  void addNeighbor(Project node) {
+100         if (!map.containsKey(node.getName()))  {
+101             children.add(node);
+102             map.put(node.getName(),  node);
+103             node.incrementDependencies();
+104         }
+105     }
+106     
+107     public  void incrementDependencies()  {  dependencies++;  }
+108     public  void decrementDependencies() {  dependencies--;  }
+109     
+110     public String  getName()  {  return name;   }
+111     public Arraylist<Project> getChildren()  {  return  children; }
+112     public int  getNumberDependencies()  {  return  dependencies; }
 113  }
 ```
 
@@ -1030,14 +1023,14 @@ Alternatively, we can use depth-first search (DFS) to find the build  path.
 Suppose we picked an arbitrary node (say b) and  performed a depth-first search on it. When  we get  to the end of a path and  can't  go  any  further (which will happen at h and  e), we know  that those terminating
 nodes can be the  last projects to be built.  No projects depend on them.
 ```
-DFS(b)			// Step  1
-	DFS(h)		// Step  2
-		build order	= ... ,	h	// Step  3
-	DFS(a)			// Step  4
-		DFS(e)			// Step 5
-			build  order     ... , e, h          // Step  6
-		...				// Step 7+
-	...
+DFS(b)                              // Step  1
+    DFS(h)                          // Step  2
+        build order = ... , h       // Step  3
+    DFS(a)                          // Step  4
+        DFS(e)                      // Step 5
+            build  order... , e, h  // Step  6
+        ...                         // Step 7+
+    ...
 ```
 
 Now, consider what happens at node a when we return from  the  DFS of e. We know  a's children need to appear after  a in the  build  order.  So, once we return from searching a's children (and  therefore they have been added), we can choose to add  a to the  front of the  build order.
@@ -1046,15 +1039,15 @@ Now, consider what happens at node a when we return from  the  DFS of e. We know
 Once we return from a, and complete the DFS of b's other children, then everything that must appear after b is in the list. Add b to the front.
 
 ```
-DFS(b) 					// Step  1
-	DFS(h)					// Step  2
-		build order = ... ,  h  // Step  3
-	DFS(a)					// Step  4
-		DFS(e)					// Step  5
-			build order =   ..., e,  h  // Step  6
-		build order =  ... , a,   e,   h  // Step  7
-	DFS(e)  -> return					// Step  8
-	build order =  ...,   b,   a,   e,   h  // Step  9
+DFS(b)                                  // Step  1
+    DFS(h)                              // Step  2
+        build order = ... ,  h          // Step  3
+    DFS(a)                              // Step  4
+        DFS(e)                          // Step  5
+            build order =   ..., e, h   // Step  6
+        build order =  ... , a,   e, h  // Step  7
+    DFS(e)  -> return                   // Step  8
+    build order =  ...,   b, a, e, h    // Step  9
 ```
 
 Let's mark these nodes as having been built too, just in case someone else needs to build them.
@@ -1066,13 +1059,13 @@ Let's mark these nodes as having been built too, just in case someone else needs
 Now what? We can start with any old node again, doing a DFS on it and then adding the node to the front of the build queue when the DFS is completed.
 ```
 DFS(d) 
-	DFS(g)
-		build  order =  ...,   g,  b,   a,   e,   h 
-	build order =  ...,   d,   g,  b,   a,   e,   h
+    DFS(g)
+        build  order =  ...,   g,  b,   a,   e,   h 
+    build order =  ...,   d,   g,  b,   a,   e,   h
 DFS(f) 
-	DFS(c)
-		build order =  ...,   c,   d,   g,  b,   a,   e,   h 
-		build order= f,  c,   d,   g,  b,   a,   e,   h
+    DFS(c)
+        build order =  ...,   c,   d,   g,  b,   a,   e,   h 
+        build order = f,  c,   d,   g,  b,   a,   e,   h
 ```
 In an algorithm like this, we should think about the issue of cycles. There is no possible build order if there is a cycle. But still, we don't want to get stuck in an infinite loop just because there's no possible solution.
 
@@ -1086,39 +1079,39 @@ The code below implements this algorithm.
 
 ```java
 1   Stack<Project> findBuildOrder(String[]  projects, String[][]  dependencies) {
-2   	Graph  graph =  buildGraph(projects,  dependencies);
-3   	return orderProjects(graph.getNodes());
+2       Graph  graph =  buildGraph(projects,  dependencies);
+3       return orderProjects(graph.getNodes());
 4   }
 5  
 6   Stack<Project> orderProjects(ArrayList<Project>  projects) {
-7   	Stack<Project> stack   =  new Stack<Project>();
-8   	for  (Project project :  projects) {
-9   		if  (project.getState() ==  Project.State.BLANK) {
-10  			if (!doDFS(project,  stack)) {
-11  				return null;
-12  			}
-13  		}
-14  	}
-15  	return stack;
+7       Stack<Project> stack =  new Stack<Project>();
+8       for  (Project project :  projects) {
+9           if  (project.getState() ==  Project.State.BLANK) {
+10              if (!doDFS(project,  stack)) {
+11                  return null;
+12              }
+13          }
+14      }
+15      return stack;
 16  }
 17  
 18  boolean  doDFS(Project  project,   Stack<Project> stack) {
-19  	if (project.getState() ==  Project.State.PARTIAL) {
-20  		return false; //  Cycle
-21  	}
+19      if (project.getState() ==  Project.State.PARTIAL) {
+20          return false; //  Cycle
+21      }
 22  
-23  	if  (project.getState() ==  Project.State.BLANK) {
-24  		project.setState(Project.State.PARTIAL);
-25  		ArrayList<Project> children  =   project.getChildren();
-26  		for  (Project child :   children) {
-27  			if (!doDFS(child,  stack)) {
-28  				return false;
-29  			}
-30  		}
-31  		project.setState(Project.State.COMPLETE);
-32  		stack.push(project);
-33  	}
-34  	return true;
+23      if  (project.getState() ==  Project.State.BLANK) {
+24          project.setState(Project.State.PARTIAL);
+25          ArrayList<Project> children  =   project.getChildren();
+26          for  (Project child :   children) {
+27              if (!doDFS(child,  stack)) {
+28                  return false;
+29              }
+30          }
+31          project.setState(Project.State.COMPLETE);
+32          stack.push(project);
+33      }
+34      return true;
 35  }
 36  
 37  /*    Same  as  before*/
@@ -1128,11 +1121,11 @@ The code below implements this algorithm.
 41  /*    Essentially equivalent to earlier  solution,  with  state info  added and
 42  *   dependency count  removed. */
 43  public class Project {
-44  	public enum  State {COMPLETE,  PARTIAL,   BLANK};
-45  	private State state  =  State.BLANK;
-46  	public  State getState() {  return state;  }
-47  	public void  setState(State st) {  state =   st; }
-48  	/*    Duplicate code removed for  brevity*/
+44      public enum  State {COMPLETE,  PARTIAL,   BLANK};
+45      private State state  =  State.BLANK;
+46      public  State getState() {  return state;  }
+47      public void  setState(State st) {  state =   st; }
+48      /*    Duplicate code removed for  brevity*/
 49  }
 ```
 
@@ -1140,7 +1133,7 @@ Like the earlier algorithm, this solution is O (P+D) time, where P is the number
 
 By the way, this problem is called **topological sort:**  linearly ordering the vertices in a graph such that for every edge (a,  b), a appears before b in the linear order.
 
-**4.8		First Common Ancestor:** Design an algorithm and write code to find the first common ancestor of two nodes in a binary tree. Avoid storing additional nodes in a data structure. NOTE: This is not
+**4.8       First Common Ancestor:** Design an algorithm and write code to find the first common ancestor of two nodes in a binary tree. Avoid storing additional nodes in a data structure. NOTE: This is not
 necessarily a binary search tree.
 
 SOLUTION
@@ -1151,46 +1144,46 @@ If this were a binary search tree, we could modify the find operation for the tw
 
 Let's assume we're looking for the common ancestor of nodes p and q. One question to ask here is if each node in our tree has a link to its parents.
 
-##### Solution #1: With Links to Parents
+**Solution #1: With Links to Parents**
 
 If each node has a link to its parent, we could trace p and q's paths up until theyintersect.This is essentially the same problem as question 2.7 which find the intersection of two linked lists. The "linked list" in this case is the path from each node up to the root. (Review this solution on page 221.)
 
 ```java
 1   TreeNode commonAncestor(TreeNode  p,  TreeNode q)  {
-2   	int delta =  depth(p) - depth(q); // get   difference in depths
-3   	TreeNode first = delta >   0 ? q  :   p; // get   shallower node
-4   	TreeNode second =  delta  >  0 ? p  :   q; // get   deeper   node
-5   	second =    goUpBy(second,  Math.abs(delta)); // move  deeper   node  up
+2       int delta =  depth(p) - depth(q); // get   difference in depths
+3       TreeNode first = delta >   0 ? q  :   p; // get   shallower node
+4       TreeNode second =  delta  >  0 ? p  :   q; // get   deeper   node
+5       second = goUpBy(second,  Math.abs(delta)); // move  deeper   node  up
 6  
-7   	/* Find  where  paths intersect. */
-8   	while  (first != second  &&   first != null &&   second   != null) {
-9   		first =    first.parent;
-10  		second =  second.parent;
-11  	}
-12  	return first ==    null  ||     second null ?  null   : first;
+7       /* Find  where  paths intersect. */
+8       while  (first != second  &&   first != null &&   second   != null) {
+9           first =    first.parent;
+10          second =  second.parent;
+11      }
+12      return first == null  || second null ?  null   : first;
 13  }
 14  
 15  TreeNode goUpBy(TreeNode node,  int delta) {
-16  	while   (delta >  0 &&   node  != null) {
-17  		node =    node.parent;
-18  		delta--;
-19  	}
-20  	return node;
+16      while   (delta >  0 &&   node  != null) {
+17          node = node.parent;
+18          delta--;
+19      }
+20      return node;
 21  }
 22  
 23  int   depth(TreeNode node)  {
-24  	int depth =  0;
-25  	while   (node   != null) {
-26  		node  =  node.parent;
-27  		depth++;
-28  	}
-29  	return depth;
+24      int depth =  0;
+25      while   (node   != null) {
+26          node  =  node.parent;
+27          depth++;
+28      }
+29      return depth;
 30  }
 ```
 
 This approach will take O(d)  time, where d is the depth of the deeper node.
 
-##### Solution #2: With Links to Parents (Better Worst-Case Runtime)
+**Solution #2: With Links to Parents (Better Worst-Case Runtime)**
 
 Similar to the  earlier approach, we could trace p's path  upwards and check if any of the nodes cover  q. The first node that covers q (we already know that every node on this path will cover p) must be the first common ancestor.
 
@@ -1207,85 +1200,85 @@ voila-there it is.
 To implement this, we can just traverse upwards from p, storing the parent and the sibling node in a variable. (The sibling node is always a child of parent and refers to the newly uncovered  subtree.) At each iteration, sibling gets set to the old parent's sibling node and parent gets set to parent. parent.
 
 ```java
-1     TreeNode  commonAncestor(TreeNode root, TreeNode p,  TreeNode q)  {
-2          /* Check if either node  is not  in  the   tree, or  if one  covers the   other. */
-3          if  (!covers(root, p)   ||  !covers(root, q)) {
-4               return null;
-5          }  else if  (covers(p, q)) {
-6               return  p;
-7          } else if  (covers(q, p)) {
-8               return  q;
-9          }
-10
-11       /*  Traverse upwards  until you find a  node  that  covers q. */
-12        TreeNode sibling=    getSibling(p);
-13        TreeNode parent=    p.parent;
-14        while   (!covers(sibling, q)) {
-15             sibling=    getSibling(parent);
-16             parent=    parent.parent;
-17        }
-18        return parent;
-19   }
-20
-21   boolean   covers(TreeNode root,   TreeNode p)  {
-22        if (root==    null) return false;
-23        if (root ==         p)  return true;
-24        return covers(root.left,  p)  ||   covers(root.right,  p);
-25   }
-26
-27   TreeNode getSibling(TreeNode node)  {
-28        if (node==    null ||  node.parent == null) {
-29             return null;
+1   TreeNode  commonAncestor(TreeNode root, TreeNode p,  TreeNode q)  {
+2       /* Check if either node  is not  in  the   tree, or  if one  covers the   other. */
+3       if  (!covers(root, p)   ||  !covers(root, q)) {
+4           return null;
+5       }  else if  (covers(p, q)) {
+6           return  p;
+7       } else if  (covers(q, p)) {
+8           return  q;
+9       }
+10  
+11      /*  Traverse upwards  until you find a  node  that  covers q. */
+12      TreeNode sibling =    getSibling(p);
+13      TreeNode parent =    p.parent;
+14      while   (!covers(sibling, q)) {
+15          sibling = getSibling(parent);
+16          parent = parent.parent;
+17      }
+18      return parent;
+19  }
+20  
+21  boolean   covers(TreeNode root,   TreeNode p)  {
+22      if (root ==    null) return false;
+23      if (root ==         p)  return true;
+24      return covers(root.left,  p)  ||   covers(root.right,  p);
+25  }
+26  
+27  TreeNode getSibling(TreeNode node)  {
+28      if (node ==    null ||  node.parent == null) {
+29          return null;
 30      }
-31
-32       TreeNode parent     node.parent;
-33        return parent.left==  node?  parent.right  :   parent.left;
-34   }
+31  
+32      TreeNode parent     node.parent;
+33      return parent.left ==  node ?  parent.right  :   parent.left;
+34  }
 ```
 
 This algorithm takes O(t) time, wheretis the size of the subtree for the first common ancestor. In the worst case, this will be O(n), where n is the number of nodes in the tree. We can derive this runtime by noticing that each node in that subtree is searched once.
 
-##### Solution #3: Without Links to Parents
+**Solution #3: Without Links to Parents**
 
 Alternatively, you could follow a chain in which p and q are on the same side. That is, if p and q are both on the left of the node, branch left to look for the common ancestor. If they are both on the right, branch right to look for the common ancestor. When p and q are no longer on the same side, you must have found the first common ancestor.
 
 The code below implements this approach.
 
 ```java
-1 	TreeNode  commonAncestor(TreeNode root,  TreeNode p,  TreeNode q)  {
-2 		/*  Error check  -  one  node  is not  in the   tree. */
-3 		if  (!covers(root, p)  ||   covers(root,   q))   {
-4 			return null;
-5 		}
-6 		return  ancestorHelper(root, p,  q);
-7 	}
-8	
-9 	TreeNode ancestorHelper(TreeNode root,   TreeNode p,  TreeNode q)  {
-10		if (root == null || root ==    p  ||   root == q)  {
-11			return root;
-12		}
-13	
-14		boolean  plsOnleft =    covers(root.left, p);
-15		boolean   qlsOnLeft =     covers(root.left,  q);
-16		if (plsOnLeft !=          qlsOnLeft)  {//Nodes  are   on  different side
-17			return root;
-18		}
-19		TreeNode  childSide =    pisOnLeft ?  root.left    root.right;
-20		return  ancestorHelper(childSide, p,  q);
-21	}
-22	
-23	boolean   covers(TreeNode root,   TreeNode p)  {
-24		if (root ==    null) return false;
-25		if (root ==    p)  return true;
-26		return covers(root.left,  p)  ||   covers(root.right,   p);
-27	}
+1   TreeNode  commonAncestor(TreeNode root,  TreeNode p,  TreeNode q)  {
+2       /*  Error check  -  one  node  is not  in the   tree. */
+3       if  (!covers(root, p)  ||   covers(root,   q))   {
+4           return null;
+5       }
+6       return  ancestorHelper(root, p,  q);
+7   }
+8   
+9   TreeNode ancestorHelper(TreeNode root,   TreeNode p,  TreeNode q)  {
+10      if (root == null || root == p  || root == q)  {
+11          return root;
+12      }
+13  
+14      boolean  pIsOnleft = covers(root.left, p);
+15      boolean   qIsOnLeft = covers(root.left,  q);
+16      if (pIsOnLeft != qIsOnLeft)  {//Nodes  are   on  different side
+17          return root;
+18      }
+19      TreeNode  childSide =    pIsOnLeft ?  root.left  :root.right;
+20      return  ancestorHelper(childSide, p,  q);
+21  }
+22  
+23  boolean   covers(TreeNode root,   TreeNode p)  {
+24      if (root ==  null) return false;
+25      if (root ==  p)  return true;
+26      return covers(root.left,  p)  ||   covers(root.right,   p);
+27  }
 ```
 
 This algorithm runs in O(n) time on a balanced tree. This is because covers is called on 2n nodes in the first call (n nodes for the left side, and n nodes for the right side). After that the algorithm branches left or right, at which point c overs will be called on  2n/2  nodes, then  2n/4, and so on. This results in a runtime of O(n).
 
 We know at this point that we cannot do better than that in terms of the asymptotic runtime since we need to potentially look at every node in the tree. However, we may be able to improve it by a constant multiple.
 
-##### Solution #4: Optimized
+**Solution #4: Optimized**
 
 Although Solution #3 is optimal in its runtime, we may recognize that there is still some inefficiency in how it operates. Specifically, covers searches all nodes under root for p and q, including the nodes in each subtree (root. left and root.right). Then, it picks one of those subtrees and searches all of its nodes. Each subtree is searched over and over again.
 
@@ -1305,26 +1298,26 @@ The code below offers an initial solution, but it has a bug. Can you find it?
 ```java
 1   /* The below code has a bug. */
 2   TreeNode commonAncestor(TreeNode root,  TreeNode p, TreeNode q) {
-3   	if (root  ==  null) return  null;
-4   	if (root  ==  p &&  root  ==  q) return  root;
+3       if (root  ==  null) return  null;
+4       if (root  ==  p &&  root  ==  q) return  root;
 5  
-6   	TreeNode x  =  commonAncestor(root.left,  p, q);
-7   	if (x  != null  &&   x  !=  p &&   x  != q) {   // Already found ancestor
-8   		return  x;
-9   	}
+6       TreeNode x  =  commonAncestor(root.left,  p, q);
+7       if (x  != null  &&   x  !=  p &&   x  != q) {   // Already found ancestor
+8           return  x;
+9       }
 10  
-11  	TreeNode y =  commonAncestor(root.right, p, q);
-12  	if (y  !=  null  &&   y !=  p &&   y !=  q) {   // Already found ancestor
-13  		return  y;
-14  	}
+11      TreeNode y =  commonAncestor(root.right, p, q);
+12      if (y  !=  null  &&   y !=  p &&   y !=  q) {   // Already found ancestor
+13          return  y;
+14      }
 15  
-16  	if (x !=  null  &&   y !=  null) {   // p and q  found in  diff. subtrees
-17  		return  root;  // This  is the common  ancestor
-18  	}  else  if (root  ==  p ||     root  ==  q) {
-19  		return  root;
-20  	}  else  {
-21  		return  x  == null ?  y    x;  /* return  the non-null  value  */
-22  	}
+16      if (x !=  null  &&   y !=  null) {   // p and q  found in  diff. subtrees
+17          return  root;  // This  is the common  ancestor
+18      }  else  if (root  ==  p ||     root  ==  q) {
+19          return  root;
+20      }  else  {
+21          return  x  == null ?  y    x;  /* return  the non-null  value  */
+22      }
 23  }
 ```
 
@@ -1338,8 +1331,8 @@ Suppose we call commonAncestor(node  3,  node  5,  node 7).0f course,node 7does 
 ```
 1    commonAnc(node  3, node 5, node 7)                      //-->  s
 2        calls commonAnc(node  1, node 5, node 7)         //-->  null
-3			calls commonAnc(node  5,  node 5,  node 7)	// -->  5
-4				calls commonAnc(node  8,  node 5,  node 7)	// -->  null
+3           calls commonAnc(node  5,  node 5,  node 7)  // -->  5
+4               calls commonAnc(node  8,  node 5,  node 7)  // -->  null
 ```
 
 In other words, when we call c ommonAncestor on the right subtree, the code will return node 5, just as it should. The problem is that in finding the common ancestor of pand q, the calling function can't distin­ guish between the two cases:
@@ -1353,64 +1346,64 @@ We somehow need to distinguish between these two cases, and this is what the cod
 
 ```java
 1   class Result   {
-2   	public TreeNode node;
-3   	public boolean  isAncestor;
-4   	public Result(TreeNode  n,  boolean  isAnc)  {
-5   		node =  n;
-6   		isAncestor =  isAnc;
-7   	}
+2       public TreeNode node;
+3       public boolean  isAncestor;
+4       public Result(TreeNode  n,  boolean  isAnc)  {
+5           node =  n;
+6           isAncestor =  isAnc;
+7       }
 8   }
 9  
 10  TreeNode commonAncestor(TreeNode  root,  TreeNode p,  TreeNode q)  {
-11  	Result  r =  commonAncestorHelper(root,  p,  q);
-12  	if  (r.isAncestor) {
-13  		return r.node;
-14  	}
-15  	return null;
+11      Result  r =  commonAncestorHelper(root,  p,  q);
+12      if  (r.isAncestor) {
+13          return r.node;
+14      }
+15      return null;
 16  }
 17  
 18  Result   commonAncHelper(TreeNode  root,  TreeNode p,  TreeNode q)  {
-19  	if (root ==  null) return new Result(null,  false);
+19      if (root ==  null) return new Result(null,  false);
 20  
-21  	if (root ==   p &&   root == q)  {
-22  		return new Result(root, true);
-23  	}
+21      if (root ==   p &&   root == q)  {
+22          return new Result(root, true);
+23      }
 24  
-25  	Result  rx  =  commonAncHelper(root.left,  p,  q);
-26  	if  (rx.isAncestor) {//Found  common  ancestor
-27  		return rx;
-28  	}
+25      Result  rx  =  commonAncHelper(root.left,  p,  q);
+26      if  (rx.isAncestor) {//Found  common  ancestor
+27          return rx;
+28      }
 29  
-30  	Result  ry  =  commonAncHelper(root.right,  p,  q);
-31  	if  (ry.isAncestor) {//Found  common  ancestor
-32  		return ry;
-33  	}
+30      Result  ry  =  commonAncHelper(root.right,  p,  q);
+31      if  (ry.isAncestor) {//Found  common  ancestor
+32          return ry;
+33      }
 34  
-35  	if (rx.node != null &&   ry.node   != null) {
-36  		return new Result(root, true);  // This  is the  common  ancestor
-37  	}  else if (root == p  ||      root  ==  q)  {
-38  		/*  If we're  currently at  p or  q,  and we  also  found one of  those  nodes in  a
-39  		* subtree,  then  this is truly an ancestor and the  flag   should  be  true. */
-40  		boolean  isAncestor = rx.node != null || ry.node   != null;
-41  		return new  Result(root,  isAncestor);
-42  	} else {
-43  		return new  Result(rx.node != null ? rx.node : ry.node,  false);
-44  	}
+35      if (rx.node != null &&   ry.node   != null) {
+36          return new Result(root, true);  // This  is the  common  ancestor
+37      }  else if (root == p  ||      root  ==  q)  {
+38          /*  If we're  currently at  p or  q,  and we  also  found one of  those  nodes in  a
+39          * subtree,  then  this is truly an ancestor and the  flag   should  be  true. */
+40          boolean  isAncestor = rx.node != null || ry.node   != null;
+41          return new  Result(root,  isAncestor);
+42      } else {
+43          return new  Result(rx.node != null ? rx.node : ry.node,  false);
+44      }
 45  }
 ```
  
 Of course, as this issue only comes up when p or q is not actually in the tree, an alternative solution would be to first search through the  entire tree  to make sure  that both nodes exist.
 
-**4.9	BST Sequences:** A binary  search tree  was created by traversing through an array from left to right and inserting each element. Given  a binary  search tree  with  distinct elements, print  all possible arrays that could have  led to this tree.
+**4.9   BST Sequences:** A binary  search tree  was created by traversing through an array from left to right and inserting each element. Given  a binary  search tree  with  distinct elements, print  all possible arrays that could have  led to this tree.
 
 EXAMPLE
 
 ```
 Input:
-			2
+            2
 
-		  /   \
-		1		3
+          /   \
+        1       3
 
 Output: {2,   1,   3}, {2,  3,  1}
 ```
@@ -1422,13 +1415,13 @@ SOLUTION
 It's useful to kick off this question with a good example.
 
 ```
-			50
-		   /  \
-		20		60
-	   /  \    /  \
-     10		25		70
+            50
+          /    \
+        20      60
+       /  \    /  \
+     10     25      70
    /   \   /   \   /   \
-  5		15		65		80
+  5     15      65      80
 ```
 
 We should also think  about the  ordering of items in a binary  search tree.  Given a node, all nodes on its left must be  less than all nodes on  its right.  Once  we reach a place  without a node, we insert the  new  value there.
@@ -1446,7 +1439,7 @@ Here's what we mean by weaving. We are merging two arrays in all possible ways, 
 arrayl: {l,  2}
 array2: {3,   4}
 weaved: {l, 2,   3,  4},  {l, 3,  2,  4},  {1,   3,  4,  2},
-		{3, 1,   2,  4},  {3, 1,  4,  2},  {3,   4,  1,  2}
+        {3, 1,   2,  4},  {3, 1,  4,  2},  {3,   4,  1,  2}
 ```
 Note that, as long as there  aren't any duplicates in the original array sets, we won't have to worry that weaving will create duplicates.
 
@@ -1460,24 +1453,24 @@ To implement this, we'll store each as linked lists. This will make it easy to a
 
 It works something like this:
 ```
-	weave(first,  second,   prefix):
-		weave({l,   2},  {3,   4},  {})
-			weave({2},   {3,   4},   {1})
-				weave({},   {3,   4},   {l, 2})
-					{1,   2,   3,  4}
-				weave({2},   {4},  {1,   3})
-					weave({},   {4},   {l,   3,  2})
-						{l,   3,  2,  4}
-					weave({2},   {},   {l, 3,  4})
-						{l, 3,  4,   2}
-			weave({l,  2},  {4},   {3})
-				weave({2},  {4},   {3,   1})
-					weave({},   {4},   {3,   1,   2})
-						{3,   1,   2,  4}
-					weave({2},   {},   {3,   1,   4})
-						{3,   1,  4,   2}
-				weave({l,  2},  {},   {3,   4})
-					{3,   4,   1,   2}
+    weave(first,  second,   prefix):
+        weave({l,   2},  {3,   4},  {})
+            weave({2},   {3,   4},   {1})
+                weave({},   {3,   4},   {l, 2})
+                    {1,   2,   3,  4}
+                weave({2},   {4},  {1,   3})
+                    weave({},   {4},   {l,   3,  2})
+                        {l,   3,  2,  4}
+                    weave({2},   {},   {l, 3,  4})
+                        {l, 3,  4,   2}
+            weave({l,  2},  {4},   {3})
+                weave({2},  {4},   {3,   1})
+                    weave({},   {4},   {3,   1,   2})
+                        {3,   1,   2,  4}
+                    weave({2},   {},   {3,   1,   4})
+                        {3,   1,  4,   2}
+                weave({l,  2},  {},   {3,   4})
+                    {3,   4,   1,   2}
 ```
 
 Now, let's think through the implementation of removing, say,1 from{1,   2}and recursing. We need to be careful about modifying this list, since a later recursive call (e .g., weave({1,   2},   {4},   {3})) might need the 1  still in{1,  2}.
@@ -1487,62 +1480,62 @@ We could clone the list when we recurse, so that we only modify the recursive ca
 We've chosen to implement it the latter way. Since we're keeping the same reference to first, second, and prefix the entire way down the recursive call stack, then we'll need to clone prefix just before we store the complete result.
 
 ```java
-1 	ArrayList<LinkedList<Integer>> allSequences(TreeNocte  node)  {
-2 		Arraylist<Linkedlist<Integer>> result = new Arraylist<Linkedlist<Integer>>();
-3	
-4 		if (node  == null)  {
-5 			result.add(new Linkedlist<Integer>());
-6 			return result;
-7 		}
-8	
-9 		Linkedlist<Integer> prefix =  new Linkedlist<Integer>();
-10		prefix.add(node.data);
-11	
-12		/*   Recurse  on left and right subtrees. */
-13		Arraylist<Linkedlist<Integer>> leftSeq  =  al1Sequences(node.left);
-14		ArrayList<LinkedList<Integer>> rightSeq  =  al1Sequences(node.right);
-15	
-16		/*  Weave  together each  list from the  left and right sides. */
-17		for  (Linkedlist<Integer> left :   leftSeq) {
-18			for  (LinkedList<Integer> right   :   rightSeq) {
-19				ArrayList<LinkedList<Integer>>  weaved =
-20					new Arraylist<Linkedlist<Integer>>();
-21				weavelists(left, right,  weaved, prefix);
-22				result.addAll(weaved);
-23			}
-24		}
-25		return result;
-26	}
-27	
-28	/*  Weave  lists together in  all possible ways. This  algorithm works by removing the
-29	* head from one list, recursing,  and then  doing  the  same thing   with  the  other
-30	* list.  */
-31	void  weaveLists(LinkedList<Integer> first, LinkedList<Integer>  second,
-32		ArrayList<LinkedList<Integer>> results, LinkedList<Integer> prefix)  {
-33		/*  One list is empty.  Add  remainder  to  [a  cloned]   prefix and store result.  */
-34		if (first.size() ==    0 || second.size() ==  0)  {
-35			Linkedlist<Integer> result  =  (Linkedlist<Integer>) prefix.clone();
-36			result.addAll(first);
-37			result.addAll(second);
-38			results.add(result);
-39			return;
-40		}
-41		
-42		/*  Recurse with head of  first added to  the  prefix. Removing the  head will  damage
-43		* first, so  we'll need to  put  it back where we  found it afterwards. */
-44		int headfirst =  first.removeFirst();
-45		prefix.addLast(headFirst);
-46		weavelists(first, second,   results,  prefix);
-47		prefix.removelast();
-48		first.addFirst(headFirst);
-49		
-50		/*  Do  the  same thing with  second,  damaging and then  restoring the  list.*/
-51		int headSecond =  second.removeFirst();
-52		prefix.addLast(headSecond);
-53		weavelists(first, second,  results,  prefix);
-54		prefix.removelast();
-55		second.addFirst(headSecond);
-56	}
+1   ArrayList<LinkedList<Integer>> allSequences(TreeNocte  node)  {
+2       Arraylist<Linkedlist<Integer>> result = new Arraylist<Linkedlist<Integer>>();
+3   
+4       if (node  == null)  {
+5           result.add(new Linkedlist<Integer>());
+6           return result;
+7       }
+8   
+9       Linkedlist<Integer> prefix =  new Linkedlist<Integer>();
+10      prefix.add(node.data);
+11  
+12      /*   Recurse  on left and right subtrees. */
+13      Arraylist<Linkedlist<Integer>> leftSeq  =  al1Sequences(node.left);
+14      ArrayList<LinkedList<Integer>> rightSeq  =  al1Sequences(node.right);
+15  
+16      /*  Weave  together each  list from the  left and right sides. */
+17      for  (Linkedlist<Integer> left :   leftSeq) {
+18          for  (LinkedList<Integer> right   :   rightSeq) {
+19              ArrayList<LinkedList<Integer>>  weaved =
+20                  new Arraylist<Linkedlist<Integer>>();
+21              weavelists(left, right,  weaved, prefix);
+22              result.addAll(weaved);
+23          }
+24      }
+25      return result;
+26  }
+27  
+28  /*  Weave  lists together in  all possible ways. This  algorithm works by removing the
+29  * head from one list, recursing,  and then  doing  the  same thing   with  the  other
+30  * list.  */
+31  void  weaveLists(LinkedList<Integer> first, LinkedList<Integer>  second,
+32      ArrayList<LinkedList<Integer>> results, LinkedList<Integer> prefix)  {
+33      /*  One list is empty.  Add  remainder  to  [a  cloned]   prefix and store result.  */
+34      if (first.size() ==    0 || second.size() ==  0)  {
+35          Linkedlist<Integer> result  =  (Linkedlist<Integer>) prefix.clone();
+36          result.addAll(first);
+37          result.addAll(second);
+38          results.add(result);
+39          return;
+40      }
+41      
+42      /*  Recurse with head of  first added to  the  prefix. Removing the  head will  damage
+43      * first, so  we'll need to  put  it back where we  found it afterwards. */
+44      int headfirst =  first.removeFirst();
+45      prefix.addLast(headFirst);
+46      weavelists(first, second,   results,  prefix);
+47      prefix.removelast();
+48      first.addFirst(headFirst);
+49      
+50      /*  Do  the  same thing with  second,  damaging and then  restoring the  list.*/
+51      int headSecond =  second.removeFirst();
+52      prefix.addLast(headSecond);
+53      weavelists(first, second,  results,  prefix);
+54      prefix.removelast();
+55      second.addFirst(headSecond);
+56  }
 ```
 
 Some people struggle with this problem because there are two different recursive algorithms that must be designed and implemented. They get confused with how the algorithms should interact with each other and they try to juggle both in their heads.
@@ -1567,7 +1560,7 @@ SOLUTION
 
 In problems like this, it's useful to attempt to solve the problem assuming that there is just a small amount of data. This will give us a basic idea of an approach that might work.
 
-###### The Simple Approach
+**The Simple Approach**
 
 In this smaller, simpler problem, we could consider comparing string representations of traversals of each tree. lfT2 is a subtree ofTl, thenT2's traversal should be a substring ofTl. ls the reverse true? If so,  should we use an in-order traversal or a pre-order traversal?
 
@@ -1578,9 +1571,9 @@ What about a pre-order traversal?This  is a bit more promising.  At least in thi
 Unfortunately, trees with different structures could still have the same pre-order traversal.
 
 ```
-		3		 3
-	   /		  \
-	  4				4
+        3        3
+       /          \
+      4             4
 ```
 There's a simple  fix though.We can store NULL nodes in the pre-order traversal string as a special character, like an 'X'. (We'll  assume that the binary trees contain only integers.)The left tree would have the traversal { 3,   4,   X} and the right tree will have the traversal { 3,   X,  4}.
 
@@ -1591,13 +1584,13 @@ To see this, consider reconstructing a tree from its pre-order  traversal (with 
 The root is 1, and its left node, 2, follows it. 2.left must be 4. 4 must have two NULL nodes (since it is followed by two Xs). 4 is complete, so we move back up to its parent, 2. 2.right is another X (NULL). 1's left subtree is now complete, so we move to 1's right child. We place a 3 with two NULL children there.The tree is now complete.
 
 ```
-			  1
-		    /    \
-		2			3
-	  /   \       /   \
-	4		x 	x 		x
+             1
+          /     \
+        2         3
+      /   \     /   \
+    4       x  x     x
    /  \
- x 		x
+ x      x
 ```
 
 This whole process was deterministic, as it will be on any other tree. A pre-order traversal always starts at the root and, from there, the path we take is entirely defined by the traversal.Therefore, two trees are iden­ tical if they have the same pre-order traversal.
@@ -1608,29 +1601,29 @@ Implementing this is quite straightforward. Wejust need to construct and compare
 
 ```java
 1   boolean  containsTree(TreeNode t1, TreeNode t2) {
-2   	StringBuilder string1  = new StringBuilder();
-3   	StringBuilder string2  = new StringBuilder();
+2       StringBuilder string1  = new StringBuilder();
+3       StringBuilder string2  = new StringBuilder();
 4  
-5   	getOrderString(t1,  stringl);
-6   	getOrderString(t2,  string2);
+5       getOrderString(t1,  stringl);
+6       getOrderString(t2,  string2);
 7  
-8   	return stringl.indexOf(string2.toString())  != -1;
+8       return stringl.indexOf(string2.toString())  != -1;
 9   }
 10  
 11  void  getOrderString(TreeNode node,   StringBuilder sb)   {
-12  	if (node  == null) {
-13  		sb. append("X");                            // Add null indicator
-14  		return;
-15  	}
-16  	sb.append(node.data  +  "   ");  // Add root
-17  	getOrderString(node.left, sb);   // Add left
-18  	getOrderString(node.right, sb);  // Add right
+12      if (node  == null) {
+13          sb. append("X");                            // Add null indicator
+14          return;
+15      }
+16      sb.append(node.data  +  "   ");  // Add root
+17      getOrderString(node.left, sb);   // Add left
+18      getOrderString(node.right, sb);  // Add right
 19  }
 ```
 
 This approach takes O(n  +  m) time and O(n  +  m) space, where n and mare the number of nodes inTl and T2, respectively. Given millions of nodes, we might want to reduce the space complexity.
 
-##### The Alternative Approach
+**The Alternative Approach**
 
 An alternative approach is to search through the larger tree, Tl. Each time a node in Tl matches the root ofT2, call matchTree.The matchTree method will compare the two subtrees to see if they are identical.
 
@@ -1644,29 +1637,29 @@ The code below implements this algorithm.
 
 ```java
 1   boolean containsTree(TreeNode  tl, TreeNode  t2)  {
-2   	if (t2  ==   null) return  true;   //  The empty  tree  is always a  subtree
-3   	return  subTree(tl,   t2);
+2       if (t2  ==   null) return  true;   //  The empty  tree  is always a  subtree
+3       return  subTree(tl,   t2);
 4   }
 5  
 6   boolean  subTree(TreeNode   rl, TreeNode  r2)  {
-7   	if (rl ==   null)  {
-8   		return  false;   // big  tree  empty   &  subtree still not found.
-9   	}  else if (rl.data ==   r2.data  &&  matchTree(rl,  r2))  {
-10  		return  true;
-11  	}
-12  	return  subTree(rl.left,  r2)   ||  subTree(rl.right,  r2);
+7       if (rl ==   null)  {
+8           return  false;   // big  tree  empty   &  subtree still not found.
+9       }  else if (rl.data ==   r2.data  &&  matchTree(rl,  r2))  {
+10          return  true;
+11      }
+12      return  subTree(rl.left,  r2)   ||  subTree(rl.right,  r2);
 13  }
 14  
 15  boolean  matchTree(TreeNode   rl, TreeNode  r2)  {
-16  	if (rl == null  &&  r2 ==  null) {
-17  		return  true;   II nothing left in  the  subtree
-18  	}  else if (rl == null   ||  r2  ==  null) {
-19  		return  false;   // exactly tree  is empty, therefore  trees  don't  match
-20  	}  else if (rl.data  != r2.data)   {
-21  		return  false;    // data doesn't  match
-22  	}  else {
-23  		return  matchTree(rl.left,  r2.left) &&  matchTree(rl.right,  r2.right);
-24  	}
+16      if (rl == null  &&  r2 ==  null) {
+17          return  true;   II nothing left in  the  subtree
+18      }  else if (rl == null   ||  r2  ==  null) {
+19          return  false;   // exactly tree  is empty, therefore  trees  don't  match
+20      }  else if (rl.data  != r2.data)   {
+21          return  false;    // data doesn't  match
+22      }  else {
+23          return  matchTree(rl.left,  r2.left) &&  matchTree(rl.right,  r2.right);
+24      }
 25  }
 ```
 
@@ -1684,7 +1677,7 @@ say p =  1000, n =  1000000 and m =  100. We would  do somewhere  around  l,100,
 In summary, the alternative approach is certainly more optimal in terms of space and is likely more optimal in terms of time  as well. It all depends on what assumptions you make and whether you prioritize reducing
  the average case runtime at the expense of the worst case runtime. This is an excellent point to make to your interviewer.
 
-**4.11 	Random Node:** You are implementing a binary search tree class from scratch, which, in addition to insert, find, and delete, has a method getRandomNode()  which returns a random node from the tree. All nodes should be equally likely to be chosen. Design and implement an algorithm for getRandomNode,  and explain how you would implement the rest of the methods.
+**4.11  Random Node:** You are implementing a binary search tree class from scratch, which, in addition to insert, find, and delete, has a method getRandomNode()  which returns a random node from the tree. All nodes should be equally likely to be chosen. Design and implement an algorithm for getRandomNode,  and explain how you would implement the rest of the methods.
 
 SOLUTION
 
@@ -1692,20 +1685,20 @@ SOLUTION
 
 Let's draw an example.
 ```
-			20
-		   /   \
-		10		30
- 	  /    \
-	5		15
-   /  \	   /   \
-3		7		17
+            20
+           /   \
+        10      30
+      /    \
+    5       15
+   /  \    /   \
+3       7       17
 ```
 
 We're going to explore many solutions until we get to an optimal one that works.
 
 One thing we should realize here is that the question was phrased in a very interesting way. The interviewer did not simply say, "Design an algorithm to return a random node from a binary tree:'We were told that this is a class that we're building from scratch. There is a reason the question was phrased that way.We probably need access to some part of the internals of the data structure.
 
-##### Option #1  [Slow & Working]
+**Option #1  [Slow & Working]**
 
 One solution is to copy all the nodes to an array and return a random element in the array. This solution will take O(N)  time and O(N)  space, where N is the number of nodes in the tree.
 
@@ -1713,17 +1706,17 @@ We can guess our interviewer is probably looking for something more optimal, sin
 
 We should keep in mind as we develop this solution that we probably need to know something about the internals of the tree. Otherwise, the question probably wouldn't specify that we're developing the tree class from scratch.
 
-##### Option #2  [Slow & Working)
+**Option #2  [Slow & Working)**
 
 Returning  to our original  solution  of copying  the nodes to an array, we can explore  a solution  where  we maintain  an array at all times that lists all the nodes in the tree. The problem  is that we'll need to remove nodes from this array as we delete them from the tree, and that will take O(N) time.
 
-##### Option #3  [Slow & Working]
+**Option #3  [Slow & Working]**
 
 We could label all the nodes with an index from 1  to N and label them in binary search tree order (that is, according to its inorder traversal). Then, when we call getRandomNode,  we generate a random index between 1  and N. If we apply the label correctly, we can use a binary search tree search to find this index.
 
 However, this leads to a similar issue as earlier solutions. When we insert a node or a delete a node, all of the indices might need to be updated. This can take O(N) time.
 
-##### Option #4 [Fast & Not Working]
+**Option #4 [Fast & Not Working]**
 
 What if we knew the depth of the tree? (Since we're building  our own class, we can ensure that we know this. It's an easy enough piece of data to track.)
 
@@ -1733,7 +1726,7 @@ First, the tree doesn't necessarily have an equal number of nodes at each level.
 
 Second, the random path we take might end up terminating before we get to the desired level. Then what? We could just return the last node we find, but that would mean unequal probabilities at each node.
 
-##### Option #5 [Fast & Not Working]
+**Option #5 [Fast & Not Working]**
 
 We could try just a simple approach: traverse randomly down the tree. At each node:
 
@@ -1743,7 +1736,7 @@ We could try just a simple approach: traverse randomly down the tree. At each no
 
 This solution, like some of the others, does not distribute the probabilities evenly across the nodes. The root has a X probability of being selected-the same as all the nodes in the left put together.
 
-##### Option #6 [Fast & Working]
+**Option #6 [Fast & Working]**
 
 Rather than just continuing to brainstorm new solutions, let's see if we can fix some of the issues in the previous solutions. To do so, we must diagnose-deeply-the root problem in a solution.
 
@@ -1760,59 +1753,59 @@ This means that each node must know the size of the nodes on the left and the si
 
 ```java
 1   class TreeNode {
-2   	private int data;
-3   	public  TreeNode left;
-4   	public  TreeNode right;
-5   	private int size =  0;
+2       private int data;
+3       public  TreeNode left;
+4       public  TreeNode right;
+5       private int size =  0;
 6  
-7   	public  TreeNode(int  d)  {
-8   		data =  d;
-9   		size =  1;
-10  	}
+7       public  TreeNode(int  d)  {
+8           data =  d;
+9           size =  1;
+10      }
 11  
-12  	public  TreeNode getRandomNode()   {
-13  		int leftSize  = left    == null ?  0  :   left.size();
-14  		Random  random  =  new Random();
-15  		int index  =  random.nextint(size);
-16  		if (index   <  leftSize) {
-17  			return  left.getRandomNode();
-18  		} else if (index    ==    leftSize) {
-19  			return this;
-20  		} else {
-21  			return  right.getRandomNode();
-22  		}
-23  	}
+12      public  TreeNode getRandomNode()   {
+13          int leftSize  = left    == null ?  0  :   left.size();
+14          Random  random  =  new Random();
+15          int index  =  random.nextint(size);
+16          if (index  <  leftSize) {
+17              return  left.getRandomNode();
+18          } else if (index == leftSize) {
+19              return this;
+20          } else {
+21              return  right.getRandomNode();
+22          }
+23      }
 24  
-25  	public   void  insertinOrder(int d)  {
-26  		if (d  <=  data) {
-27  			if (left == null) {
-28  				left = new TreeNode(d);
-29  			} else {
-30  				left.insertlnOrder(d);
-31  			}
-32  		} else {
-33  			if (right == null) {
-34  				right = new  TreeNode(d);
-35  			} else {
-36  				right.insertinOrder(d);
-37  			}
-38  		}
-39  		size++;
-40  	}
+25      public   void  insertinOrder(int d)  {
+26          if (d  <=  data) {
+27              if (left == null) {
+28                  left = new TreeNode(d);
+29              } else {
+30                  left.insertlnOrder(d);
+31              }
+32          } else {
+33              if (right == null) {
+34                  right = new  TreeNode(d);
+35              } else {
+36                  right.insertinOrder(d);
+37              }
+38          }
+39          size++;
+40      }
 41  
-42  	public  int size() {  return size;}
-43  	public  int data() {  return data;}
+42      public  int size() {  return size;}
+43      public  int data() {  return data;}
 44  
-45  	public   TreeNode find(int d)  {
-46  		if (d  == data)  {
-47  			return this;
-48  		} else if (d  <=  data) {
-49  			return left  != null ?  left.find(d) :   null;
-50  		} else if (d  >  data) {
-51  			return right  != null ?  right.find(d) :  null;
-52  		}
-53  		return null;
-54  	}
+45      public   TreeNode find(int d)  {
+46          if (d  == data)  {
+47              return this;
+48          } else if (d  <=  data) {
+49              return left  != null ?  left.find(d) :   null;
+50          } else if (d  >  data) {
+51              return right  != null ?  right.find(d) :  null;
+52          }
+53          return null;
+54      }
 55  }
 ```
 
@@ -1825,13 +1818,13 @@ Random number calls can be expensive.  If we'd like, we can reduce the number of
 *Imagine* we called getRandomNode on the tree below, and then traversed left.
 
 ```
-			20
-		   /   \
-		10		30
- 	  /    \	   \
-	5		15		35
-   /  \	   /   \
-3		7		17
+          20
+        /    \
+      10      30
+     /   \      \
+    5    15      35
+   / \  /  \
+  3   7     17
 ```
 
 We traversed left because we picked a number between O and 5 (inclusive). When we traverse left, we again pick a random number between O and 5. Why re-pick? The first number will workjust fine.
@@ -1842,44 +1835,44 @@ Another way to think about what we're doing is that the initial random number ca
 
 ```java
 1   class  Tree {
-2   	TreeNode root =   null;
+2       TreeNode root =   null;
 3   
-4   	public int size() { return  root == null ?  0 :  root.size(); }
+4       public int size() { return  root == null ?  0 :  root.size(); }
 5  
-6   	public  TreeNode getRandomNode() {
-7   		if (root  ==  null) return  null;
+6       public  TreeNode getRandomNode() {
+7           if (root  ==  null) return  null;
 8  
-9   		Random random  =  new Random();
-10  		int i =   random.nextlnt(size());
-11  		return  root.getlthNode(i);
-12  	}
+9           Random random  =  new Random();
+10          int i =   random.nextlnt(size());
+11          return  root.getlthNode(i);
+12      }
 13  
-14  	public  void insertinOrder(int value) {
-15  		if (root ==  null) {
-16  			root  = new   TreeNode(value);
-17  		}  else  {
-18  			root.insertlnOrder(value);
-19  		}
-20  	}
+14      public  void insertinOrder(int value) {
+15          if (root ==  null) {
+16              root = new   TreeNode(value);
+17          }  else  {
+18              root.insertlnOrder(value);
+19          }
+20      }
 21  }
 22  
 23  class  TreeNode {
-24  	/* construc tor  and variables are the same. */
+24      /* construc tor  and variables are the same. */
 25  
-26  	public  TreeNode  getlthNode(int i) {
-27  		int leftSize = left ==   null ?  0 : left.size();
-28  		if (i <   leftSize) {
-29  			return  left.getithNode(i);
-30  		}  else  if (i ==  leftSize) {
-31  			return  this;
-32  		}  else  {
-33  			/*  Skipping over leftSize +  1  nodes, so subtract  them. */
-34  			return right.getlthNode(i -  (leftSize +  1));
-35  		}
-36  	}
-37  	public void insertlnOrder(int  d) {/* same  */}
-38  	public int size() { return size; }
-39  	public  TreeNode find(int d) {/* same   */}
+26      public  TreeNode  getlthNode(int i) {
+27          int leftSize = left ==   null ?  0 : left.size();
+28          if (i <   leftSize) {
+29              return  left.getithNode(i);
+30          }  else  if (i ==  leftSize) {
+31              return  this;
+32          }  else  {
+33              /*  Skipping over leftSize +  1  nodes, so subtract  them. */
+34              return right.getlthNode(i -  (leftSize +  1));
+35          }
+36      }
+37      public void insertlnOrder(int  d) {/* same  */}
+38      public int size() { return size; }
+39      public  TreeNode find(int d) {/* same   */}
 40  
 41  }
 ```
@@ -1888,7 +1881,7 @@ Another way to think about what we're doing is that the initial random number ca
 Like the  previous algorithm, this algorithm takes  O( log  N) time  in a balanced tree. We can also describe the  runtime as O(D), whereDis the max depth of the  tree.  Note that O(D) is an accurate description of the runtime whether the  tree  is balanced or not.
 
 
-**4.12 	Paths  with Sum:** You are given  a binary  tree  in which  each node contains an integer value (which might be  positive or negative). Design  an algorithm to count the  number of paths that sum  to a given  value. The path does not  need to start  or end at the  root  or a leaf, but  it must go downwards
+**4.12  Paths  with Sum:** You are given  a binary  tree  in which  each node contains an integer value (which might be  positive or negative). Design  an algorithm to count the  number of paths that sum  to a given  value. The path does not  need to start  or end at the  root  or a leaf, but  it must go downwards
 (traveling only from parent nodes to child nodes).
 
 SOLUTION
@@ -1898,13 +1891,13 @@ SOLUTION
 Let's pick a potential sum-say, 8-and then draw  a binary  tree  based on this. This tree  intentionally has a number of paths with this sum.
 
 ```
-			10
-		  /    \
-		5		-3
- 	  /    \	   \
-	3		2		11
-   /  \	   /  \
-  3	    -2		1
+            10
+          /    \
+        5      -3
+      /    \     \
+    3       2     11
+   /  \    /  \
+  3     -2      1
 ```
 
 ##### Solution #1: Brute  Force
@@ -1913,32 +1906,32 @@ In the  brute force approach, we just  look at all possible paths. To do this, w
 
 ```java
 1   int countPathsWithSum(TreeNode  root,  int  targetSum) {
-2   	if (root ==  null)  return  0;
+2       if (root ==  null)  return  0;
 3  
-4   	/*  Count paths with sum  starting from the root.   */
-5   	int pathsFromRoot =  countPathsWithSumFromNode(root, targetSum,   0);
+4       /*  Count paths with sum  starting from the root.   */
+5       int pathsFromRoot =  countPathsWithSumFromNode(root, targetSum,   0);
 6   
-7   	/* Try   the  nodes on  the left  and  right. */
-8   	int  pathsOnleft =  countPathsWithSum(root.left,  targetSum);
-9   	int  pathsOnRight =  countPathsWithSum(root.right,  targetSum);
+7       /* Try   the  nodes on  the left  and  right. */
+8       int  pathsOnleft =  countPathsWithSum(root.left,  targetSum);
+9       int  pathsOnRight =  countPathsWithSum(root.right,  targetSum);
 10  
-11  	return pathsFromRoot +  pathsOnLeft +  pathsOnRight;
+11      return pathsFromRoot +  pathsOnLeft +  pathsOnRight;
 12  }
 13  
 14  /*  Returns the  number of  paths  with this sum  starting from this  node. */
 15  int countPathsWithSumFromNode(TreeNode  node, int targetSum,  int currentSum) {
-16  	if (node == null)  return 0;
+16      if (node == null)  return 0;
 17  
-18  	currentSum += node.data;
+18      currentSum += node.data;
 19  
-20  	int  totalPaths = 0;
-21  	if (currentSum ==  targetSum) {  // Found a path from the  root
-22  		totalPaths++;
-23  	}
+20      int  totalPaths = 0;
+21      if (currentSum ==  targetSum) {  // Found a path from the  root
+22          totalPaths++;
+23      }
 24  
-25  	totalPaths += countPathsWithSumFromNode(node.left,   targetSum,  currentSum);
-26  	totalPaths += countPathsWithSumFromNode(node.right,   targetSum,  currentSum);
-27  	return totalPaths;
+25      totalPaths += countPathsWithSumFromNode(node.left,   targetSum,  currentSum);
+26      totalPaths += countPathsWithSumFromNode(node.right,   targetSum,  currentSum);
+27      return totalPaths;
 28  }
 ```
 
@@ -1976,13 +1969,13 @@ In an unbalanced tree, the runtime could be much worse. Consider a tree that is 
 In analyzing the last solution, we may realize that we repeat some work. For a path such as 10  ->  5   -> 3  ->   -2, we traverse this path (or parts of it) repeatedly. We do it when we start with node  10, then when we go to node 5 (looking at 5, then 3, then  -2), then  when  we go to node  3, and then  finally  when  we go to node -2. Ideally, we'd like to reuse this work.
 
 ```
-			10
-		  /    \
-		5		-3
- 	  /    \	   \
-	3		1		11
-   /  \	   /  \
-  3	    -2	   2
+            10
+          /    \
+        5       -3
+      /    \       \
+     3       1       11
+   /  \    /  \
+  3     -2     2
 ```
 
 
@@ -2027,40 +2020,40 @@ Despite the complexity of deriving this algorithm, the code to implement this is
 
 ```java
 1   int countPathsWithSum(TreeNode root, int targetSum)   {
-2   	return  countPathsWithSum(root, targetSum,   0,  new HashMap<Integer, Integer>());
+2       return  countPathsWithSum(root, targetSum,   0,  new HashMap<Integer, Integer>());
 3   }
 4  
 5   int countPathsWithSum(TreeNode  node,  int targetSum,   int runningSum,
 6   HashMap<Integer, Integer> pathCount)  {
-7   	if (node  ==  null) return 0;  // Base case
+7       if (node  ==  null) return 0;  // Base case
 8  
-9   	/*  Count paths   with  sum ending  at the  current node.  */
-10  	runningSum +=  node.data;
-11  	int sum =  runningSum -  targetSum;
-12  	int totalPaths =  pathCount.getOrDefault(sum,  0);
+9       /*  Count paths   with  sum ending  at the  current node.  */
+10      runningSum +=  node.data;
+11      int sum =  runningSum -  targetSum;
+12      int totalPaths =  pathCount.getOrDefault(sum,  0);
 13  
-14  	/*  If runningSum equals   targetSum,   then  one additional path  starts at root.
-15  	* Add   in  this path. */
-16  	if (runningSum == targetSum)  {
-17  		totalPaths++;
-18  	}
+14      /*  If runningSum equals   targetSum,   then  one additional path  starts at root.
+15      * Add   in  this path. */
+16      if (runningSum == targetSum)  {
+17          totalPaths++;
+18      }
 19  
-20  	/*  Increment  pathCount,  recurse,  then  decrement  pathCount. */
-21  	incrementHashTable(pathCount,  runningSum,  1);  // Increment  pathCount
-22  	totalPaths += countPathsWithSum(node.left,  targetSum,   runningSum, pathCount);
-23  	totalPaths +=  countPathsWithSum(node.right,  targetSum,   runningSum, pathCount);
-24  	incrementHashTable(pathCount,  runningSum, -1);   // Decrement pathCount
+20      /*  Increment  pathCount,  recurse,  then  decrement  pathCount. */
+21      incrementHashTable(pathCount,  runningSum,  1);  // Increment  pathCount
+22      totalPaths += countPathsWithSum(node.left,  targetSum,   runningSum, pathCount);
+23      totalPaths +=  countPathsWithSum(node.right,  targetSum,   runningSum, pathCount);
+24      incrementHashTable(pathCount,  runningSum, -1);   // Decrement pathCount
 25  
-26  	return totalPaths;
+26      return totalPaths;
 27  }
 28  
 29  void  incrementHashTable(HashMap<Integer,  Integer> hashTable,   int key,  int delta) {
-30  	int newCount   =  hashTable.getOrDefault(key,  0)  +  delta;
-31  	if (newCount == 0)  {//Remove  when zero  to  reduce  space  usage
-32  		hashTable.remove(key);
-33  	}  else   {
-34  		hashTable.put(key,  newCount);
-35  	}
+30      int newCount   =  hashTable.getOrDefault(key,  0)  +  delta;
+31      if (newCount == 0)  {//Remove  when zero  to  reduce  space  usage
+32          hashTable.remove(key);
+33      }  else   {
+34          hashTable.put(key,  newCount);
+35      }
 36  }
 ```
 

@@ -393,7 +393,7 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 ```java
 1  	Linkedlist<Person> findPathBiBFS(HashMap<Integer,  Person> people,   int source,
 2  	int destination) {
-3  		BFSData  sourceData  = new BFSData(people.get(source));
+3  		BFSData  sourceData =  new BFSData(people.get(source));
 4  		BFSData  destData   =  new BFSData(people.get(destination));
 5	
 6  		while  (!sourceData.isFinished() &&    !destData.isFinished()) {
@@ -445,10 +445,10 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 52 	}
 53	
 54 	/* Merge paths  where searches met at connection. */
-55 	Linkedlist<Person> mergePaths(BFSData bfsl, BFSData bfs2,   int  connection) {
-56 		PathNode endl  = bfsl.visited.get(connection); // endl  -> source
+55 	Linkedlist<Person> mergePaths(BFSData bfs1, BFSData bfs2,   int  connection) {
+56 		PathNode end1 = bfs1.visited.get(connection); // endl  -> source
 57 		PathNode end2 = bfs2.visited.get(connection);  // end2 -> dest
-58 		Linkedlist<Person> pathOne =  endl.collapse(false);
+58 		Linkedlist<Person> pathOne =  end1.collapse(false);
 59 		Linkedlist<Person> pathTwo =  end2.collapse(true);  // reverse
 60 		pathTwo.removeFirst();  // remove connection
 61 		pathOne.addAll(pathTwo);  // add second  path
@@ -520,7 +520,7 @@ When we deal with a service the size of Linkedln or Facebook, we cannot possibly
 
 1. For each friend  ID: int machine  index =  getMachineIDForUser(personID);
 
-2.  Go to machine #machine_index
+2. Go to machine #machine_index
 
 3. On that machine, do: Person  friend =  getPersonWithID(person_id);
 
@@ -944,8 +944,7 @@ To get the best-selling products within each category, we just need to sort each
 - We could treat the general category as just another directory, and write every purchase to that directory. That would mean a lot of files in this directory.
 - Or, since we'll already have the products sorted by sales volume order for each category, we can also do an N-way merge to get the overall rank.
 
-Alternatively, we can take advantage of the fact that the data doesn't need (as we assumed earlier) to be
-100% up-to-date. We just need the most popular items to be up-to-date.
+Alternatively, we can take advantage of the fact that the data doesn't need (as we assumed earlier) to be 100% up-to-date. We just need the most popular items to be up-to-date.
 
 We can merge the most popular items from each category in a pairwise fashion. So, two categories get paired together and we merge the most popular items (the first 100 or so). After we have 100 items in this sorted order, we stop merging this pair and move onto the next pair.
 
@@ -1020,14 +1019,14 @@ The most naive system would be one that pulls bank data on each login, categoriz
       |                          |
       |                          |
 +-----v----+                +----v--------+
-| frontend +---------------^+categorized  |
+| frontend +<-------------->+categorized  |
 +-----^----+                |transactions |
-      | |    <----------------------------+
-      | |
-      | |
-      | |
-+-------v----+              +----------+
-| budget data| <------------+budget    |
+      |                     --------------+
+      | 
+      | 
+      | 
++-----V------+              +----------+
+| budget data|<-------------+budget    |
 +------------+              |analyzer  |
                             +----------+
 ```

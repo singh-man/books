@@ -99,7 +99,7 @@ ArrayList: An ArrayList is a dynamically resizing array, which grows as you inse
 Vector: A vector is very similar to an Arraylist except that it is synchronized.  Its syntax is almost identical as well.
 
 ```java
-1	Vector<String>  myVect	new	Vector<String>();
+1	Vector<String>  myVect	= new	Vector<String>();
 2	myVect.add("one");		
 3	myVect.add("two");		
 4   system.out.printin(myVect.get(0));
@@ -116,7 +116,7 @@ LinkedList: Linkedlist is, of course, Java's built-in Linkedlist class. Though i
 ```
 HashMap:The HashMap collection is widely used, both in interviews and in the real world. We've provided a snippet of the syntax below.
 ```java
-1     HashMap<String,   String> map=  new HashMap<String,  String>();
+1     HashMap<String,   String> map =  new HashMap<String,  String>();
 2     map.put("one", "uno");
 3     map.put("two",  "dos");
 4     System .  out. println(map. get("one"));
@@ -184,17 +184,17 @@ The final statement has a different meaning depending on its context.
 
 There is an  optional finally block  after  the  try block  or after  the  catch block.  Statements in the finally block will always be executed, even if an exception is thrown (except if Java Virtual Machine exits from the try block). The finally block  is often used to write the  clean-up code.  It will be executed after the try and catch blocks, but  before control transfers back to its origin.
 
-Watch how thisplays out in the  example below.
+Watch how this plays out in the  example below.
 
 ```java
 1 	public static  String lem() {
 2 		System.out.println("lem");
-3 		return "return from   lem";
+3 		return "return from lem";
 4 	}
 5	
 6 	public static  String foo() {
 7 		int X =   0;
-8 		int y  =   5;
+8 		int y =   5;
 9 		try {
 10			System.out.println("start  try");
 11			int b  =   y  / x;
@@ -237,9 +237,9 @@ Look carefully  at lines 3 to 5 in the  output. The catch block is fully execute
 
 The automatic garbage collector calls the finalize () methodjust before actually destroying the  object. A class can therefore override the  finalize () method from the  Object class in order to define custom behavior during garbage collection.
 ```
-1      protected  void  finalize() throws  Throwable {
-2           /* Close open   files,  release resources, etc */
-3       }
+1   protected  void  finalize() throws  Throwable {
+2        /* Close open   files,  release resources, etc */
+3    }
 ```
 
 **13.4     Generics vs. Templates:** Explain the  difference between templates in C++ and generics in Java.
@@ -276,7 +276,7 @@ To illustrate this, consider the  code below:
 2 	template<class T> class MyClass   {
 3 	public:
 4 		static int val;
-5 		MyClass(int v) {  val     v;}
+5 		MyClass(int v) {  val  = v;}
 6 	};
 7	
 8 	/*** MyClass.cpp ***/
@@ -309,8 +309,7 @@ In Java, static variables are shared across instances of MyClass, regardless of 
 Remember: Although Java generics and C++ templates look the same in many ways, they are very different.
 
 
-**13.5      TreeMap, HashMap, LinkedHashMap:** Explain the differences between TreeMap, HashMap, and
-LinkedHashMap. Provide an example of when each one would be best.
+**13.5      TreeMap, HashMap, LinkedHashMap:** Explain the differences between TreeMap, HashMap, and LinkedHashMap. Provide an example of when each one would be best.
 
 SOLUTION
 
@@ -365,11 +364,11 @@ SOLUTION
 
 Object Reflection is a feature in Java that provides a way to get reflective information about Java classes and objects, and perform operations such as:
 
-1.   Getting information about the methods and fields present inside the class at runtime.
+1. Getting information about the methods and fields present inside the class at runtime.
 
-2.  Creating a new instance of a class.
+2. Creating a new instance of a class.
 
-3.  Getting and setting the object fields directly by getting field reference, regardless of what the access modifier is.
+3. Getting and setting the object fields directly by getting field reference, regardless of what the access modifier is.
 
 The code below offers an example of object reflection.
 
@@ -378,12 +377,12 @@ The code below offers an example of object reflection.
 2 	Object[]  doubleArgs   =  new Object[]  { 4.2,  3.9  };
 3	
 4 	/*  Get  class */
-5 	Class   rectangleDefinition     Class.forName("MyProj.Rectangle");
+5 	Class   rectangleDefinition  =  Class.forName("MyProj.Rectangle");
 6	
 7 	/*  Equivalent: Rectangle rectangle  =  new  Rectangle(4.2, 3.9);  */
 8 	Class[]  doubleArgsClass =  new Clas s[] {double.clas s,  double.class};
 9 	Constructor doubleArgsConstructor =
-10	rectangleDefinition.getConstructor(doubleArgsClass);
+10			rectangleDefinition.getConstructor(doubleArgsClass);
 11	Rectangle rectangle  =  (Rectangle) doubleArgsConstructor.newlnstance(doubleArgs);
 12	
 13	/*  Equivalent:  Double area  =  rectangle.area();  */
@@ -393,8 +392,8 @@ The code below offers an example of object reflection.
 This code does the equivalent of:
 
 ```java
-1      Rectangle rectangle  =  new Rectangle(4.2, 3.9);
-2      Double area  =  rectangle.area();
+1   Rectangle rectangle  =  new Rectangle(4.2, 3.9);
+2   Double area  =  rectangle.area();
 ```
 
 **Why Is Object Reflection Useful?**

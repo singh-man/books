@@ -231,7 +231,7 @@ We described earlier that the issue was that we couldn't simultaneously return a
 11		if  (head == null) {
 12			return null;
 13		}
-14		LinkedListNode  node      kthToLast(head.next,  k,   idx);
+14		LinkedListNode  node  =  kthToLast(head.next,  k,   idx);
 15		idx.value =  idx.value + 1;
 16		if  (idx.value == k)  {
 17			return  head;
@@ -292,7 +292,7 @@ The code below implements this algorithm.
 
 ```java
 1	boolean  deleteNode(LinkedListNode  n)  {
-2		if (n  ==  null  ||     n.next ==  null)  {
+2		if (n  ==  null  || n.next ==  null)  {
 3			return false;  // Failure
 4		}
 5		LinkedlistNode next  =  n.next;
@@ -635,7 +635,7 @@ Now, we simply iterate through the rest of the linked list. At each iteration, w
 2 		LinkedListNode fast = head;
 3 		LinkedListNode slow =  head;
 4	
-5 		Stack<Integer> stack =     new Stack<Integer>();
+5 		Stack<Integer> stack = new Stack<Integer>();
 6	
 7 		/* Push elements from  first  half of  linked list onto   stack. When  fast  runner
 8 		* (which is moving at 2x speed) reaches the end of the linked list, then we
@@ -675,13 +675,13 @@ Now, like many linked list problems, you can approach this problem recursively. 
 In order to apply this approach, we first need to know when we've reached the middle element, as this will form our base case. We can do this by passing in length  -  2 for the length each time. When the length equals 0 or 1, we're at the center of the linked list. This is because the length is reduced by 2 each time. Once we've recursed  Yi times, length will be down to 0.
 
 ```java
-1     recurse(Node n,  int length) {
-2          if  (length == 0  || length == 1)  {
-3               return  [something]; // At  middle
-4          }
-5          recurse(n.next,  length -  2);
-6		 ...
-7      }
+1  recurse(Node n,  int length) {
+2       if  (length == 0  || length == 1)  {
+3            return  [something]; // At  middle
+4       }
+5       recurse(n.next,  length -  2);
+6	 ...
+7  }
 ```
 
 This method will form the outline of the isPalindrome method. The "meat" of the algorithm though is comparing node i to node n  -  i to check if the linked list is a palindrome. How do we do that?
@@ -720,10 +720,10 @@ But wait, you might ask, sometimes we said we'll return a boolean value, and som
 It's both. We create a simple class with two members, a boolean and a node, and return an instance of that class.
 
 ```java
-1      class   Result  {
-2         public   LinkedlistNode  node;
-3         public   boolean  result;
-4     }
+1  class   Result  {
+2      public   LinkedlistNode  node;
+3      public   boolean  result;
+4  }
 ```
 
 The example below illustrates the parameters and return values from this sample list.
@@ -788,9 +788,9 @@ Some of you might be wondering why we went through all this effort to create a s
 However, if we were implementing this in C or C++, we could have passed in a double pointer.
 
 ```c++
-1     bool  isPalindromeRecurse(Node  head,  int length, Node** next)   {
+1   bool  isPalindromeRecurse(Node  head,  int length, Node** next)   {
 2		...
-3     }
+3   }
 ```
 
 It's ugly, but it works.

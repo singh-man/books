@@ -143,7 +143,7 @@ To clarify the last point, consider the following code:
 4   
 5       public  MyClass(MyObject obj,  String  n) {
 6           name   =  n;
-7           myObj   = obj;
+7           myObj  =  obj;
 8       }
 9   
 10      public void  run() {
@@ -167,17 +167,17 @@ Can two instances of MyClass call foo at the same time? It d epends. If they hav
 MyObject, then no. But, if they hold different references, then the a nswer is yes.
 ```java
 1    /*   Difference references  -  both  threads can  call  MyObject.foo() */
-2   MyObject objl =  new MyObject();
+2   MyObject objl  =  new MyObject();
 3   MyObject obj2  =  new MyObject();
-4   MyClass thread!    new MyClass(obj1,   "1");
-5   MyClass thread2      new MyClass(obj2,  "2");
+4   MyClass thread! =  new MyClass(obj1,  "1");
+5   MyClass thread2 =  new MyClass(obj2,  "2");
 6   threadl.start();
 7   thread2.start()
 8
 9   /* Same  reference to obj. Only one will be  allowed  to call foo,
 10   *    and the  other will be forced to wait.   */
-11  MyObject obj=  new MyObject();
-12  MyClass thread!     new MyClass(obj,   "1");
+11  MyObject obj =  new MyObject();
+12  MyClass thread1 =  new MyClass(obj,  "1");
 13  MyClass thread2 =  new MyClass(obj,  "2");
 14  threadl.start()
 15  thread2.start()
@@ -189,13 +189,13 @@ Static methods synchronize on the class lock. The two threads above could not si
 1   public class MyClass extends Thread   {
 2       ...
 3       public void  run() {
-4           if (name.equals("!"))  MyObject.foo(name);
+4           if (name.equals("1"))  MyObject.foo(name);
 5           else if (name.equals("2")) MyObject.bar(name);
 6       }
 7   }
 8   
 9   public class MyObject {
-10      public static  synchronized void  foo(String name) {/* same  as  before */}
+10      public static  synchronized void foo(String name) {/* same  as  before */}
 11      public static  synchronized void bar(String name) {/* same as  foo  */}
 12  }
 ```
@@ -332,8 +332,7 @@ P₁ is executing and P₂ is waiting for execution. At some point, the operatin
 
 The tricky part is this: how do we know when this swapping occurs? We cannot, of course, record the time­ stamp of every instruction in the process.
 
-Another issue is that  swapping  is governed  by the scheduling algorithm of the operating  system and there may be many kernel level threads which are also doing context switches. Other processes could be contending  for the CPU or the kernel handling interrupts. The user does not have any control over these
-extraneous context switches. For instance, if at time t₁,ₙ the kernel decides to handle an interrupt, then the context switch time would be overstated. 
+Another issue is that  swapping  is governed  by the scheduling algorithm of the operating  system and there may be many kernel level threads which are also doing context switches. Other processes could be contending  for the CPU or the kernel handling interrupts. The user does not have any control over these extraneous context switches. For instance, if at time t₁,ₙ the kernel decides to handle an interrupt, then the context switch time would be overstated.
 
 In order to overcome these obstacles, we must first construct an environment such that after P₁ executes, the task scheduler immediately selects P₂ to run. This may be accomplished by constructing a data channel, such as a pipe, between  P₁ and P₂ and having the two processes play a game of ping-pong  with a data token.
 
@@ -399,7 +398,7 @@ First, let's implement a simple simulation of the dining philosophers problem in
 19      private  Chopstick left, right;
 20  
 21      public  Philosopher(Chopstick left, Chopstick right)  {
-22          this.left =  left;
+22          this.left  = left;
 23          this.right = right;
 24      }
 25  
@@ -478,7 +477,7 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N    -  1.
 ```java
 1   public class  Philosopher  extends Thread {
 2       private int bites =  10;
-3       private  Chopstick lower, higher;
+3       private Chopstick lower, higher;
 4       private int index;
 5       public Philosopher(int  i, Chopstick left, Chopstick right) {
 6           index =  i;
@@ -688,7 +687,7 @@ The code below provides further details. For simplicity, we assume that all lock
         public enum VisitState {FRESH, VISITING, VISITED};
     
         private ArrayList<LockNode> children;
-        private int lockid;
+        private int lockId;
         private Lock lock;
         private int maxLocks;
     
@@ -709,22 +708,22 @@ The code below provides further details. For simplicity, we assume that all lock
     
         private boolean hasCycle(VisitState[] visited,
                                  HashMap<Integer, Boolean> touchedNodes) {
-            if (touchedNodes.containsKey(lockid)) {
-                touchedNodes.put(lockid, true);
+            if (touchedNodes.containsKey(lockId)) {
+                touchedNodes.put(lockId, true);
             }
     
-            if (visited[lockid] == VisitState.VISITING) {
-                /*  We  looped  back to  this node while  still visiting it,  so  we  know  there's
+            if (visited[lockId] == VisitState.VISITING) {
+                /* We  looped  back to  this node while  still visiting it,  so  we  know  there's
                  * a  cycle. */
                 return true;
-            } else if (visited[lockid] == VisitState.FRESH) {
-                visited[lockid] = VisitState.VISITING;
+            } else if (visited[lockId] == VisitState.FRESH) {
+                visited[lockId] = VisitState.VISITING;
                 for (LockNode n : children) {
                     if (n.hasCycle(visited, touchedNodes)) {
                         return true;
                     }
                 }
-                visited[lockid] VisitState.VISITED;
+                visited[lockId] VisitState.VISITED;
             }
             return false;
         }
@@ -734,7 +733,7 @@ The code below provides further details. For simplicity, we assume that all lock
             return lock;
         }
     
-        public int getld() { return lockld; }
+        public int getld() { return lockId; }
     } 
 ```
 
@@ -767,7 +766,7 @@ What about using a lock to do something like the below code?
 4   
 5       public  FooBad() {
 6           try {
-7               lockl =  new Reentrantlock();
+7               lockl = new Reentrantlock();
 8               lock2 = new Reentrantlock();
 9   
 10              lockl.lock();
@@ -812,7 +811,7 @@ Instead, we can replicate this behavior with semaphores. The logic is identical.
 3   
 4       public Foo()  {
 5           try {
-6               seml  =  new  Semaphore(l);
+6               seml  = new  Semaphore(l);
 7               sem2  = new  Semaphore(l);
 8               
 9               seml.acquire();
@@ -853,8 +852,7 @@ SOLUTION
 
 ---
 
-By applying the word synchronized to a method, we ensure that two threads cannot execute synchro­
-nized methods on the same object instance at the same time.
+By applying the word synchronized to a method, we ensure that two threads cannot execute synchro­nized methods on the same object instance at the same time.
 
 So, the answer to the first part really depends. If the two threads have the same instance of the object, then no, they cannot simultaneously execute method A. However,  if they have different instances of the object, then they can.
 Conceptually, you can see this by considering  locks. A synchronized method applies a "lock" on all synchro­ nized methods in that instance of the object. This blocks other threads from executing synchronized methods within that instance.
@@ -946,10 +944,10 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 13      private boolean  div3,  div5;
 14      private String toPrint;
 15  
-16      public  FizzBuzzThread(boolean div3,   boolean  divs, int max, String toPrint)  {
+16      public  FizzBuzzThread(boolean div3,   boolean  div5, int max, String toPrint)  {
 17          this.div3 =  div3;
-18          this.divs =  divs;
-19          this.max =  max;
+18          this.div5 =  div5;
+19          this.max  =  max;
 20          this.toPrint =  toPrint;
 21      }
 22  
@@ -965,7 +963,7 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 32                  }
 33  
 34                  if ((current %   3  ==  0) == div3  &&
-35                  	(current %  5   ==  0) == divs) {
+35                  	(current %  5   ==  0) == div5) {
 36                      print();
 37                      current++;
 38                  }
@@ -976,7 +974,7 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 43  
 44  public class NumberThread  extends  FizzBuzzThread  {
 45      public   NumberThread(boolean div3,   boolean  div5,   int max) {
-46          super(div3, divs,  max, null);
+46          super(div3, div5,  max, null);
 47      }
 48  
 49      public   void  print() {

@@ -49,11 +49,11 @@ In either case, the sum is n(n+1)/2.
 
 This reasoning comes up a lot in nested loops. For example, consider the following code:
 ```java
-1      for  (inti=  0;  i <   n;  i++)  {
-2           for  (int j =  i +  1;  j <   n;  j++)  {
-3                  System.out.println(i + j);
-4           }
-5      }
+1   for  (inti=  0;  i <   n;  i++)  {
+2        for  (int j =  i +  1;  j <   n;  j++)  {
+3               System.out.println(i + j);
+4        }
+5   }
 ```
 On the first iteration of the outer for loop, the inner for loop iterates n - 1  times. On the second iteration of the outer for loop, the inner for loop iterates n -2 times. Next, n   -   3, then n   -   4, and so on. There are n(n-1)/2 total iterations of the inner for loop. Therefore, this code takes O(n²) time. 
 
@@ -294,14 +294,13 @@ The Rabin-Karp algorithm optimizes this with a little trick: if two strings are 
 Therefore, if we efficiently precompute a hash value for each sequence of s characters within B, we can  find the locations of S inO(b) time. We thenjust need to validate that those locations really do match S.
 
 For example, imagine  our hash function was simply the sum of each character (where space= 0, a= 1, b =
-2, and so on). If S is ear and B = doe  are  hearing me, we'd then just be looking for sequences where the sum is 24 (e +a+ r).This happens three times. For each of those locations,  we'd check if the string really is ear.
+2, and so on). If S is ear and B = doe  are  hearing me, we'd then just be looking for sequences where the sum is 24 (e + a + r). This happens three times. For each of those locations,  we'd check if the string really is ear.
 
 ![](media/XI_05.JPG)
 
 If we computed these sums by doing hash('doe'), then hash ('oe'), then hash('e a'), and soon, we would still be at O(s(b-s)) time.
 
-Instead, we compute the hash values by recognizing that hash ('oe') = hash('doe') - code('d')
-+  code('   '). This takes O(b) time to compute all the hashes.
+Instead, we compute the hash values by recognizing that hash ('oe') = hash('doe') - code('d') +  code('   '). This takes O(b) time to compute all the hashes.
 
 You might argue that, still, in the worst case this will take O(s(b-s)) time since many of the hash values could match. That's absolutely true-for this hash function.
 
@@ -327,7 +326,7 @@ An AVL tree is one of two common ways to implement tree balancing. We will only 
 
 An AVL tree stores in each node the height of the subtrees rooted at this node. Then, for any node, we can check if it is height balanced: that the height of the left subtree and the height of the right subtree differ by no more than one. This prevents situations where the tree gets too lopsided.
 
-	balance(n) =  n.left.height - n.right.height
+	balance(n) = n.left.height - n.right.height
 				-1 <=  balance(n)  <=  1
 
 **Inserts**
@@ -341,7 +340,7 @@ Rotations can be either left or right rotations. The right rotation is an invers
 Depending on the balance and where the imbalance occurs, we fix it in a different way.
 
 - *Case 7: Balance is 2.*
-	In this case, the left's height is two bigger than the right's height. If the left side is larger, the left subtree's extra nodes must be hanging to the left (as in LEFT LEFT SHAPE)  or hanging to the right (as in LEFT RIGHT SHAPE).  If it looks like the LEFT RIGHT SHAPE,  transform it with the rotations below into the LEFT LEFT SHAPE then into BALANCED. If it looks like the LEFT LEFT SHAPE already, just transform it into BALANCED. 
+    In this case, the left's height is two bigger than the right's height. If the left side is larger, the left subtree's extra nodes must be hanging to the left (as in LEFT LEFT SHAPE)  or hanging to the right (as in LEFT RIGHT SHAPE).  If it looks like the LEFT RIGHT SHAPE,  transform it with the rotations below into the LEFT LEFT SHAPE then into BALANCED. If it looks like the LEFT LEFT SHAPE already, just transform it into BALANCED. 
 
 ![](media/XI_07.JPG)
 
@@ -414,10 +413,10 @@ In the special case that where the root is red, we can always just turn it black
 
 Otherwise, if there's a red violation, then this means that we have a red node under another red node. Oops! 
 
-Let's call N the current node.Pis N's parent. G is N's grandparent.  U is N's uncle  andP's sibling. We know that:
+Let's call N the current node. P is N's parent. G is N's grandparent.  U is N's uncle  andP's sibling. We know that:
 
-- N is red andPis red, since we have a red violation.
-- G is definitely black, since we didn't previously have a red violation. 
+- N is red and Pis red, since we have a red violation.
+- G is definitely black, since we didn't *previously* have a red violation. 
 
 The unknown parts are:
 
@@ -452,8 +451,7 @@ Further, the below rotations maintain the exact number of black nodes in each pa
 
 *Case A: N and Pare both left children.*
 
-We resolve the red violation with the rotation of N, P, and G and the associated recoloring shown below. If you picture the in-order traversal, you can see the rotation maintains the node ordering (a  < =  N   < = b  <=  P  <=  c  <=   G   <= U). The tree maintains the same, equal number of black nodes in the path
-down to each subtree a, b, c, and U (which may all be NULL).
+We resolve the red violation with the rotation of N, P, and G and the associated recoloring shown below. If you picture the in-order traversal, you can see the rotation maintains the node ordering (a  < =  N   < = b  <=  P  <=  c  <=   G   <= U). The tree maintains the same, equal number of black nodes in the path down to each subtree a, b, c, and U (which may all be NULL).
 
 
 ![](media/XI_11.JPG)
@@ -493,8 +491,8 @@ MapReduce is used widely in system design to process large amounts of data. As i
 MapReduce program requires you to write a Map step and a Reduce step. The rest is handled by the system.
 
 1. The system splits up the data across different machines.
-2.  Each machine starts running the user-provided Map program.
-3.  The Map program takes some data and emits a <key, value> pair.
+2. Each machine starts running the user-provided Map program.
+3. The Map program takes some data and emits a <key, value> pair.
 4. The system-provided Shuffle process  reorganizes  the data so that all <key, value> pairs associated with a given key go to the same machine, to be processed by Reduc e.
 5. The user-provided Reduce  program takes a key and a set of associated values and "reduces"them in some way, emitting a new key and value. The results of this might be fed back into the Reduce program for more reducing.
 
@@ -519,16 +517,16 @@ The diagram below shows how this might work on this example.
 
 ![](media/XI_15.JPG)
 
-Here's another example: You have a list of data in the form {City, Temperature, Date}. Calculate the average temperature in each city every year. For example {(2012, Philadelphia, 58.2), (2011, Philadelphia, 56.6), (2012,Seattle,45.1)}.
+Here's another example: You have a list of data in the form {City, Temperature, Date}. Calculate the average temperature in each city every year. For example {(2012, Philadelphia, 58.2), (2011, Philadelphia, 56.6), (2012, Seattle,45.1)}.
 
-- **Map:** The Map step  outputs  a key value pair where the  key is City_Year and  the  value is (Temperature,   1). The '1' reflects that this is the average temperature out of one data point.This will be important for the Reduce step.
+- **Map:** The Map step  outputs  a key value pair where the  key is City_Year and the value is (Temperature, 1). The '1' reflects that this is the average temperature out of one data point.This will be important for the Reduce step.
 - **Reduce:** The Reduce step will be given a list of temperatures that correspond with a particular city and year. It must use these to compute the average temperature for this input.You cannot simply add up the temperatures and divide by the number of values.
 
 To see this, imagine we have five data points for a particular city and year: 25,100,75,85, 50. The Reduce step might only get some of this data at once. If you averaged {75, 85} you would get 80. This might end up being input for another Reduce step with 50, and it would be a mistake tojust naively average 80 and 50. The 80 has more weight.
 
-Therefore,our Reduce step instead takes in {(80, 2),(SO,1}}, then sums the weighted temperatures. So it does 80 * 2 + 50 * 1 and then divides by (2 + 1) to get an average temperature of 70. It then emits (70, 3).
+Therefore,our Reduce step instead takes in {(80, 2),(5O,1}}, then sums the weighted temperatures. So it does 80 * 2 + 50 * 1 and then divides by (2 + 1) to get an average temperature of 70. It then emits (70, 3).
 
-Another Reduce step might reduce {(25, 1 ),(100,1)} to get (62.5,2). If we reduce this with (70, 3) we get the final answer: (67, 5). In other words, the average temperature in this city for this year was 67 degrees.
+Another Reduce step might reduce {(25, 1 ),(100, 1)} to get (62.5, 2). If we reduce this with (70, 3) we get the final answer: (67, 5). In other words, the average temperature in this city for this year was 67 degrees.
 
 We could do this in other ways, too. We could have just the city as the key, and the value be (Year,Tempera­ture, Count). The Reduce step would do essentially the same thing, but would have to group by Year itself.
 
@@ -590,11 +588,11 @@ For example, we might want a data structure that maps from an integer to a list 
 ```
 Now, we can just write this:
 ```java
-1     HashMaplist<Integer, String> maplist     new HashMapList<Integer,  String>();
-2     for (String s :   strings) {
-3          int key=  computeValue(s);
-4          maplist.put(key,  s);
-5     }
+1  HashMaplist<Integer, String> maplist = new HashMapList<Integer,  String>();
+2  for (String s :   strings) {
+3       int key =  computeValue(s);
+4       maplist.put(key,  s);
+5  }
 ```
 It's not a big change, but it makes our code a bit simpler.
 ```java
@@ -644,7 +642,6 @@ It's not a big change, but it makes our code a bit simpler.
 ```
 
 
-
 ### TreeNode (Binary Search Tree)
 
 While it's perfectly fine-even good-to use the built-in binary tree class when possible, it's not always
@@ -654,61 +651,61 @@ The TreeNode  class supports a variety of functionality, much of which we wouldn
 
 For simplicity, we'd implemented this tree as storing integers for data.
 ```java
-1   public   class TreeNode {
-2   public   int data;
-3   public   TreeNode left,  right, parent;
-4   private int size =  0;
-5  
-6   public   TreeNode(int  d)  {
-7   	data       d;
-8   	size =  1;
-9   }
-10  
-11  public void  insertinOrder(int d)  {
-12  	if (d  <=  data) {
-13  		if (left ==  null) {
-14  			setLeftChild(new  TreeNode(d));
-15  		}  else {
-16  			left.insertinOrder(d);
-17  		}
-18  	}  else {
-19  		if (right == null) {
-20  			setRightChild(new  TreeNode(d));
-21  		}  else {
-22  			right.insertlnOrder(d);
-23  		}
-24  	}
-25  	size++;
-26  }
-27  
-28  public   int size() {
-29  	return size;
-30  }
-31  
-32  public TreeNode find(int d)  {
-33  	if (d  ==  data) {
-34  		return this;
-35  	}  else if (d  <=  data) {
-36  		return left  != null ? left.find(d) :   null;
-37  	}  else if (d  >   data) {
-38  		return right  != null ?  right.find(d) :   null;
-39  	}
-40  	return null;
-41  }
-42  
-43  public   void  setLeftChild(TreeNode left) {
-44  	this.left =  left;
-45  	if (left !=  null) {
-46  		left.parent =  this;
-47  	}
-48  }
-49  
-50  public   void  setRightChild(TreeNode right) {
-51  	this.right =  right;
-52  	if (right != null) {
-53  		right.parent = this;
-54  	}
-55  }
+1   public  class TreeNode {
+2 		public  int data;
+3 		public  TreeNode left,  right, parent;
+4 		private int size =  0;
+5 		
+6 		public   TreeNode(int  d)  {
+7 			data =  d;
+8 			size =  1;
+9 		}
+10		
+11		public void  insertinOrder(int d)  {
+12			if (d  <=  data) {
+13				if (left ==  null) {
+14					setLeftChild(new  TreeNode(d));
+15				}  else {
+16					left.insertinOrder(d);
+17				}
+18			}  else {
+19				if (right == null) {
+20					setRightChild(new  TreeNode(d));
+21				}  else {
+22					right.insertlnOrder(d);
+23				}
+24			}
+25			size++;
+26		}
+27		
+28		public   int size() {
+29			return size;
+30		}
+31		
+32		public TreeNode find(int d)  {
+33			if (d  ==  data) {
+34				return this;
+35			}  else if (d  <=  data) {
+36				return left  != null ? left.find(d) :   null;
+37			}  else if (d  >   data) {
+38				return right  != null ?  right.find(d) :   null;
+39			}
+40			return null;
+41		}
+42		
+43		public   void  setLeftChild(TreeNode left) {
+44			this.left =  left;
+45			if (left !=  null) {
+46				left.parent =  this;
+47			}
+48		}
+49		
+50		public   void  setRightChild(TreeNode right) {
+51			this.right =  right;
+52			if (right != null) {
+53				right.parent = this;
+54			}
+55		}
 56  
 57  }
 ```
@@ -720,47 +717,47 @@ This tree is implemented to be a binary search tree. However, you can use it for
 
 Like the  TreeNode class, we often needed access to the  internals of a linked  list in a way that the  built-in linked  list class  wouldn't support. For this  reason, we  implemented our  own  class  and used it for many problems.
 ```java
-1   public  class  LinkedListNode {
-2   public   LinkedListNode next,   prev,   last;
-3  public int  data;
-4  public  LinkedlistNode(int  d,  LinkedlistNode n,  LinkedListNode  p) {
-5  	data =  d;
-6  	setNext(n);
-7  	setPrevious(p);
-8  }
-9  
-10  public  LinkedListNode(int d) {
-11  	data =  d;
-12  }
-13  
-14  public  LinkedListNode() {}
-15  
-16  public  void setNext(LinkedListNode n) {
-17  	next =  n;
-18  	if (this ==  last) {
-19  		last =  n;
-20  	}
-21  	if (n !=  null &&   n.prev  !=  this) {
-22  		n.setPrevious(this);
-23  	}
-24  }
-25  
-26  public  void setPrevious(LinkedListNode p) {
-27  	prev =  p;
-28  	if (p !=  null &&   p.next  !=  this) {
-29  		p.setNext(this);
-30  	}
-31  }
-32  
-33  public  LinkedListNode clone() {
-34  	LinkedListNode next2 =  null;
-35  	if (next !=  null) {
-36  		next2 =  next.clone();
-37  	}
-38  	LinkedlistNode  head2   =  new  LinkedListNode(data, next2,  null);
-39  	return head2;
-40  }
-41  }
+1 	public class  LinkedListNode {
+2 		public LinkedListNode next,   prev,   last;
+3 		public int  data;
+4 		public  LinkedlistNode(int  d,  LinkedlistNode n,  LinkedListNode  p) {
+5 			data =  d;
+6 			setNext(n);
+7 			setPrevious(p);
+8 		}
+9 		
+10		public  LinkedListNode(int d) {
+11			data =  d;
+12		}
+13		
+14		public  LinkedListNode() {}
+15		
+16		public  void setNext(LinkedListNode n) {
+17			next =  n;
+18			if (this ==  last) {
+19				last =  n;
+20			}
+21			if (n !=  null &&   n.prev  !=  this) {
+22				n.setPrevious(this);
+23			}
+24		}
+25		
+26		public  void setPrevious(LinkedListNode p) {
+27			prev =  p;
+28			if (p !=  null &&   p.next  !=  this) {
+29				p.setNext(this);
+30			}
+31		}
+32		
+33		public  LinkedListNode clone() {
+34			LinkedListNode next2 =  null;
+35			if (next !=  null) {
+36				next2 =  next.clone();
+37			}
+38			LinkedlistNode  head2   =  new  LinkedListNode(data, next2,  null);
+39			return head2;
+40		}
+41	}
 ```
 
 Again, we've  kept the  methods and variables public  because we often needed this access. This would allow the  user  to "destroy" the  linked list, but we actually needed this sort of functionality for our purposes.

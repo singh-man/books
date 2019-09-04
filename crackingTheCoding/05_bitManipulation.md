@@ -47,7 +47,7 @@ To understand these expressions, recall that these operations occur bit-by-bit, 
 
 ### Two's Complement and Negative Numbers
 
-Computers typically store integers in two's complement representation. A positive number is represented as itself while a negative number is represented as the two's complement of its absolute value (with a 1 in its sign bit to indicate that a negative value). The two's complement of an N-bit number (where N is the number of bits used for the number, excluding the sign bit) is the complement of the number with respect to 2^N.
+Computers typically store integers in two's complement representation. A positive number is represented as itself while a negative number is represented as the two's complement of its absolute value (with a 1 in its sign bit to indicate that a negative value). The two's complement of an N-bit number (where N is the number of bits used for the number, excluding the sign bit) is the complement of the number with respect to 2ᴺ.
 
 Let's look at the 4-bit integer -3 as an example. If it's a 4-bit number, we have one bit for the sign and three bits for the value. We want the complement with respect to 2³,  which is 8. The complement of 3 (the abso­ lute value of -3) with respect to 8 is 5. 5 in binary is 101. Therefore, -3 in binary as a 4-bit number  is 1101, with the first bit being the sign bit.
 
@@ -70,7 +70,7 @@ In a logical right shift, we shift the bits and put a 0 in the most significant 
 
 ![](media/IX_05_02.JPG)
 
-In an arithmetic right shift, we shift values to the right but fill in the new bits with the value of the sign bit. This has the effect  of(roughly) dividing by two. It is indicated by a > > operator.
+In an arithmetic right shift, we shift values to the right but fill in the new bits with the value of the sign bit. This has the effect  of(roughly) dividing by two. It is indicated by a >> operator.
 
 ![](media/IX_05_03.JPG)
 
@@ -107,9 +107,9 @@ The following operations are very important to know, but do not simply memorize 
 This method shifts 1 over by i bits, creating a value that looks like 00010000. By performing an AND with num, we clear all bits other  than the  bit at bit i. Finally, we compare that to 0. If that new value is not zero, then  bit i must have a 1. Otherwise,  biti is a 0.
 
 ```java
-1      boolean  getBit(int num, inti) {
-2            return (( num &  (1 << i)) != 0);
-3      }
+1   boolean  getBit(int num, inti) {
+2         return (( num &  (1 << i)) != 0);
+3   }
 ```
 
 ###### Set Bit
@@ -189,11 +189,10 @@ SOLUTION
 This problem can be approached in three key steps:
 
 1.  Clear the bits j through i in N
-2.  Shift Mso that  it lines up with  bits j through i
+2.  Shift M so that  it lines up with  bits j through i
 3.  Merge M and N.
 
-The trickiest part is Step  1. How do we clear the  bits in N? We can do this with a mask. This mask will have all
-1 s, except for Os in the  bits j through i. We create this mask  by creating the  left half of the  mask first, and then the  right half.
+The trickiest part is Step  1. How do we clear the  bits in N? We can do this with a mask. This mask will have all 1s, except for Os in the  bits j through i. We create this mask  by creating the  left half of the  mask first, and then the  right half.
 ```java
 1 	int  updateBits(int n, int  m,  int i, int j) {
 2 		/* Create a mask to clear bits i through j in n. EXAMPLE: i = 2, j = 4.  Result
@@ -353,7 +352,7 @@ Once we have this, we just walk through the array. At each Os sequence, then we 
 32	int  findlongestSequence(ArrayList<Integer> seq)  {
 33		int maxSeq =  1;
 34		
-35		for  (int i   0;  i <  seq.size(); i += 2)   {
+35		for  (int i = 0;  i <  seq.size(); i += 2)   {
 36			int zerosSeq  =  seq.get(i);
 37			int onesSeqRight  =  i -  1 >=  0 ? seq.get(i - 1)  : 0;
 38			int onesSeqLeft  = i +  1 <  seq.size() ?   seq.get(i +  1) : 0;
@@ -398,7 +397,7 @@ Update max Length  as we go.
 4	
 5 		int  currentlength =   0;
 6 		int previouslength =  0;
-7 		int maxlength =   1;  //  We   can always have  a sequence of  at least one  1
+7 		int maxLength =   1;  //  We   can always have  a sequence of  at least one  1
 8 		while  (a !=  0)  {
 9 			if ((a  &   1) ==  1)  {  //  Current  bit is a 1
 10				currentLength++;
@@ -407,10 +406,10 @@ Update max Length  as we go.
 13				previouslength =  (a  &   2) == 0 ? 0  :   currentlength;
 14				currentLength =  0;
 15			}
-16			maxlength =    Math.max(previouslength +  currentlength +  1,  maxlength);
+16			maxLength =    Math.max(previouslength +  currentlength +  1,  maxLength);
 17			a >>>=  1;
 18		}
-19		return maxlength;
+19		return maxLength;
 20	}
 ```
 The runtime of this algorithm is still O(b), but we use only O(1) additional memory.
@@ -500,32 +499,31 @@ We have now arrived at the smallest number  bigger than n with the same number  
 The code for getNext is below.
 ```java
 1 	int  getNext(int n)  {
-2 		/* Compute  c0 and  cl  */
+2 		/* Compute  c0 and  c1  */
 3 		int c  = n;
 4 		int c0  = 0;
-5 		int cl = 0;
+5 		int c1 = 0;
 6 		while  (((c  &   1) ==   0)  &&   (c  != 0))  {
 7 			c0  ++;
-8 			C   >>= l;
+8 			c  >>= l;
 9 		}
-
 10	
 11		while  ((c  &  1) == 1)   {
-12			cl++;
-13			C   >>= 1;
+12			c1++;
+13			c >>= 1;
 14		}
 15	
 16		/* Error:  if n ==  11..1100...00,  then there  is  no  bigger number  with  the same
 17		* number  of ls. */
-18		if (c0 + cl ==  31   ||     c0    + cl ==  0)  {
+18		if (c0 + c1 ==  31   ||     c0    + c1 ==  0)  {
 19			return  -1;
 20		}
 21	
-22		int p =  c0  + cl; II  position  of  rightmost  non - trailing  zero
+22		int p =  c0  + c1; //  position  of  rightmost  non - trailing  zero
 23	
-24		n |=         (1 <<  p);  //  Flip  rightmost  non-trailing zero
-25		n &=  ~((1 <<  p) - 1);  //  Clear all bits  to  the right of  p
-26		n |= (1 <<   (cl   -  1))  - 1;  //  Insert   (cl-1) ones on the right.
+24		n |= (1 <<  p);  //  Flip  rightmost  non-trailing zero
+25		n &=  ~((1 <<  p) - 1);  //  c1ear all bits  to  the right of  p
+26		n |= (1 <<   (c1   -  1))  - 1;  //  Insert   (c1-1) ones on the right.
 27		return n;
 28	}
 ```
@@ -534,16 +532,16 @@ The code for getNext is below.
 
 To implement getPrev, we follow a very similar approach.
 
-1. Compute c0 and cl. Note that cl is the number of trailing ones, and c0 is the size of the block of zeros immediately to the left of the trailing ones.
-2.  Flip the rightmost non-trailing one to a zero. This will be at position p   =  cl + c0.
+1. Compute c0 and c1. Note that c1 is the number of trailing ones, and c0 is the size of the block of zeros immediately to the left of the trailing ones.
+2.  Flip the rightmost non-trailing one to a zero. This will be at position p   =  c1 + c0.
 3.  Clear all bits to the right of bit p.
-4.  Insert cl + 1 ones immediatelyto the right of position p.
+4.  Insert c1 + 1 ones immediatelyto the right of position p.
 
 Note that Step 2 setsbit p to a zero and Step 3 sets bits 0 through p-1 to azero. We can merge these steps.
 
 Let's walk through this with an example.
 
-*Step 1: Initial Number.  p  =  7.    cl =  2.   c0  =  5.*
+*Step 1: Initial Number.  p  =  7.    c1 =  2.   c0  =  5.*
 
 ![](media/05_4_5.JPG)
 
@@ -563,12 +561,12 @@ n  &= b;		           // Clears bits  0 through p.
 
 ![](media/05_4_7.JPG)
 
-Note that since p = cl + c0, the (cl + l) ones will be followed by (c0 - l) zeros. 
+Note that since p = c1 + c0, the (c1 + l) ones will be followed by (c0 - l) zeros. 
 
 We can do this as follows:
 ```
-int a =  1<<   (cl T 1);    // 0S with 1  at position (cl +  1)
-int b =  a  -  1;           // 0s  followed by cl + 1 ones
+int a =  1<<   (c1 T 1);    // 0S with 1  at position (c1 +  1)
+int b =  a  -  1;           // 0s  followed by c1 + 1 ones
 int c =  b<<   (c0  -  1);  // c1+1 ones  followed  by  c0-1  zeros.
 n    |=  c;
 ```
@@ -576,7 +574,7 @@ The code to implement this is below.
 ```java
 1 	int getPrev(int n)  {
 2 		int  temp = n;
-3 		int c0  =  0;
+3 		int c0 =  0;
 4 		int c1 =  0;
 5 		while (temp & 1 == 1) {
 6 			c1++;
@@ -602,11 +600,11 @@ The code to implement this is below.
 
 **Arithmetic Approach to Get Next Number**
 
-If c0 is the  number of trailing  zeros, cl is the  size of the  one  block immediately following, and p = c0  + cl, we can word  our solution from earlier as follows:
+If c0 is the  number of trailing  zeros, c1 is the  size of the  one  block immediately following, and p = c0  + c1, we can word  our solution from earlier as follows:
 
 1.  Set the pth bit to 1.
 2.  Set all bits following p to 0.
-3.  Set bits 0 through cl -   2 to 1. This will be  cl -   1 total bits.
+3.  Set bits 0 through c1 -   2 to 1. This will be  c1 -   1 total bits.
 
 A quick and dirty way to perform steps 1  and  2 is to set the trailing zeros  to 1 (giving us p trailing ones),  and then add 1. Adding  one  will flip all trailing ones, so we wind up with a 1 at bit p followed by p zeros. We can perform this arithmetically. 
 
@@ -617,7 +615,7 @@ n  +=  1;		// Flips first  p  1s to 0s, and  puts a  1  at bit  p.
 
 Now, to perform Step  3 arithmetically, we just  do:
 ```
-n  +=  2ᶜ¹  - 1   -  1;   // Sets trailing  cl -  1  zeros to ones.
+n  +=  2ᶜ¹  - 1   -  1;   // Sets trailing  c1 -  1  zeros to ones.
 ```
 This math reduces to:
 ```
@@ -626,10 +624,10 @@ next =  n  +  (2ᶜ⁰ - 1) + 1 + (2ᶜ¹⁻¹ - 1)
 ```
 The best part  is that,  using a little bit manipulation, it's simple to code.
 ```java
-1      int  getNextArith(int n) {
-2           /* ... same   calculation for c0  and   cl  as before       */
-3           return n  +  (1 <<  c0) +  (1 <<  (cl -  1))  -  1;
-4      }
+1   int  getNextArith(int n) {
+2        /* ... same   calculation for c0  and   c1  as before       */
+3        return n  +  (1 <<  c0) +  (1 <<  (c1 -  1))  -  1;
+4   }
 ```
 
 **Arithmetic Approach to Get Previous Number**
@@ -656,8 +654,8 @@ next =  n  -  (2ᶜ¹  -  1)   -  1  -  (2ᶜ⁰⁻¹    -  1).
 Again, this is very easy to implement.
 ```java
 1     int getPrevArith(int n)  {
-2         /* ... same calculation for c0  and  cl as  before ... */
-3         return n  -  (1  << cl) -  (1  << ( c0  -  1)) + 1;
+2         /* ... same calculation for c0  and  c1 as  before ... */
+3         return n  -  (1  << c1) -  (1  << ( c0  -  1)) + 1;
 4    }
 ```
 Whew! Don't worry, you wouldn't be expected to get all this in an interview-at least not without a lot of help from the interviewer.
@@ -698,7 +696,7 @@ then  n-1  =  abcde0111
 
 n and n -1 must have no ls in common. Given that they look like this:
 ```
-if      n  =  abcde1000
+if     n   =  abcde1000
 then n-1   =  abcde0111
 ```
 abcde must be all 0s, which means that n must look like this: 00001000. The value n is therefore a power of two.

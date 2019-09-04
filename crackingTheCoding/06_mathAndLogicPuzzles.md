@@ -16,7 +16,7 @@ As you probably know, every positive integer can be decomposed into a product of
 Note that many of these primes have an exponent of zero.
 
 
-###### Divisibility
+**Divisibility**
 
 The prime number law stated above means that, in order for a numberx to divide a number y (written x\y, or mod (y, x)  =  0), all primes inx's prime factorization must be in y's prime factorization. Or, more specifically:
 
@@ -45,7 +45,7 @@ gcd * lcm = 2ᵐⁱⁿ⁽ʲ⁰, ᵏ⁰⁾ * 2ᵐᵃˣ⁽ʲ⁰, ᵏ⁰⁾ * 3ᵐ�
           = xy
 ```
 
-###### Checking for Primality
+**Checking for Primality**
 
 This question is so common that we feel the need to specifically cover it. The naive way is to simply iterate from 2 through n-1,  checking for divisibility on each iteration.
 
@@ -54,7 +54,7 @@ This question is so common that we feel the need to specifically cover it. The n
 2 		if (n < 2) {
 3 			return false;
 4 		}
-5 		for   (int i =    2;  i <    n;  i++)  {
+5 		for   (int i = 2;  i < n;  i++)  {
 6 			if (n  %  i ==    0) {
 7 				return false;
 8 			}
@@ -72,7 +72,7 @@ A small but important improvement is to iterate only up through the square root 
 4 		}
 5 		int sqrt =  (int) Math.sqrt(n);
 6 		for   (int i = 2;   i <=  sqrt;  i++)  {
-7 			if (n  %  i ==    0)  return false;
+7 			if (n  %  i == 0)  return false;
 8 		}
 9 		return true;
 10	}
@@ -83,7 +83,7 @@ The √n is sufficient because, for every number a which divides n evenly, there
 Of course, in reality, all we really need to do is to check if n is divisible by a prime number. This is where the Sieve of Eratosthenes comes in.
 
 
-###### Generating a List of Primes: The Sieve of Eratosthenes
+**Generating a List of Primes: The Sieve of Eratosthenes**
 
 The Sieve of Eratosthenes is a highly efficient way to generate a list of primes. It works by recognizing that all non-prime numbers are divisible by a prime number.
 
@@ -142,7 +142,7 @@ Let's look at a Venn diagram to visualize two eventsA and B. The areas of the tw
 ![](media/IX_06_02.JPG)
 
 
-###### Probability of A and  B
+**Probability of A and  B**
 
 Imagine you were throwing a dart at this Venn diagram. What is the probability that you would land in the intersection between A and B?  If you knew the odds of landing in A, and you also knew the percent of A that's also in B (that is, the odds of being in B given that you were in A), then you could express the prob­ability as:
 
@@ -164,7 +164,7 @@ P(A given B) = P(B given A) P(A) / P(B)
 The above equation is called Bayes' Theorem.
 
 
-###### Probability of A or B
+**Probability of A or B**
  
 Now, imagine  you wanted to know what the probability  of landing  in A or B is. If you knew the  odds  of landing  in each individually,and you also knew the odds  of landing  in their intersection,then you could express the probability as:
 
@@ -186,13 +186,12 @@ P(x is  even or x  <=5)
 From here,getting the special case rules for independent events and for mutually  exclusive events is easy.
 
 
-###### Independence
+**Independence**
 
-If A and B are independent (that is, one happening tells you nothing about the other happening), then P(A and   B)   = P(A) P(B). This rule simply comes from recognizing thatP(B given  A)   = P(B), since A
-indicates nothing about B.
+If A and B are independent (that is, one happening tells you nothing about the other happening), then P(A and B) = P(A) P(B). This rule simply comes from recognizing that P(B given  A) = P(B), since A indicates nothing about B.
 
 
-###### Mutual Exclusivity
+**Mutual Exclusivity**
 
 If A and B are mutually exclusive (that is, if one happens, then the other cannot happen), then P(A or B) = P(A) + P(B).This is because P(A  and   B) = 0, so this term is removed from the earlier P(A or B) equation.
 
@@ -360,7 +359,7 @@ p  < .5
 ```
 So, we should play Game 1 if 0 < p < .5 and  Game  2 if .5   <   p  <   1.
 
-lf p  =  0,0.5,or 1, then P(Game  1)  = P(Game 2), so it doesn't matterwhichgame we play.
+If p  =  0, 0.5, or 1, then P(Game  1)  = P(Game 2), so it doesn't matter which game we play.
 
 
 **6.3       Dominos:** There is an 8x8 chessboard in which two diagonally opposite corners have been cut off. You are given 31 dominos,  and a single domino can cover exactly two squares. Can you use the 31 dominos to cover the entire board? Prove your answer (by providing an example or showing why it's impossible).
@@ -455,7 +454,7 @@ The two blue-eyed people see each other, but are unsure whether c is 1  or 2. Th
 
 **Case c > 2: The  General Case.**
 
-As we increase  c, we can see that this logic continues to apply. If c = 3, then those three people will imme­ diately know that there are either 2 or 3 people with blue eyes.  If there were two people, then those two people would have left on the second night. So, when the others are still around after that night, each person would conclude that c = 3 and that they, therefore, have blue eyes too. They would leave that night.
+As we increase c, we can see that this logic continues to apply. If c = 3, then those three people will imme­ diately know that there are either 2 or 3 people with blue eyes.  If there were two people, then those two people would have left on the second night. So, when the others are still around after that night, each person would conclude that c = 3 and that they, therefore, have blue eyes too. They would leave that night.
 
 This same pattern extends up through any value of c.Therefore, if c men have blue eyes, it will take c nights for the blue-eyed men to leave. All will leave on the same night.
 
@@ -493,11 +492,11 @@ We know  that every family has exactly one girl. How many  boys does each family
 | BBBBBG   | 5              | 1/64         | 5/64                          |
 | BBBBBBG  | 6              | 1/128        | 6/128                         |
 
-Or in other words,  this is the sum of i to infinity of i divided  by 2^i.
+Or in other words,  this is the sum of i to infinity of i divided  by 2ⁱ.
 
 Σ(i/2ⁱ, i=0, ∞)
 
-You probably won't know this off the top of your head, but we can try to estimate it. Let's try converting the above values to a common denominator of 128 (2^6). 
+You probably won't know this off the top of your head, but we can try to estimate it. Let's try converting the above values to a common denominator of 128 (2⁶). 
 
 ```
 1/4 = 32/128			4/32 = 16/128
@@ -509,7 +508,7 @@ You probably won't know this off the top of your head, but we can try to estimat
            128				 128
 ```
 
-This looks like it's going  to inch closer to 12X28  (which  is of course  1). This "looks like" intuition is valuable, but it's not exactly a mathematical concept. It's a clue though and we can turn to logic here. Should it be 1?
+This looks like it's going  to inch closer to 128/128  (which  is of course  1). This "looks like" intuition is valuable, but it's not exactly a mathematical concept. It's a clue though and we can turn to logic here. Should it be 1?
 
 
 **Logically**

@@ -202,8 +202,8 @@ Now, let's say we're building a blackjack game, so we need to know the value of 
 
 22  
 23      public boolean  busted()  { return score() >  21;  }
-24      public boolean   is21() {  return s core() ==    21;  }
-25      public boolean   isBlackJack() { ... }
+24      public boolean  is21() {  return s core() ==    21;  }
+25      public boolean  isBlackJack() { ... }
 26  }
 27  
 28  public  class  BlackJackCard extends   Card  {
@@ -229,7 +229,7 @@ Now, let's say we're building a blackjack game, so we need to know the value of 
 48      }
 49      
 50      public boolean   isFaceCard()  {
-51          return  faceValue >=         11  &&   faceValue  <= 13;
+51          return  faceValue >= 11  &&   faceValue  <= 13;
 52      }
 53 }
 ```
@@ -458,7 +458,7 @@ Like a real CD player, the CDP layer class supports storing just one CD at a tim
 3       private CD  c;
 4   
 5       /*Constructors.*/
-6       public CDPlayer(CD c,   Playlist p)  {  ...}
+6       public CDPlayer(CD c,   Playlist p)  {...}
 7       public CDPlayer(Playlist p)  {  this.p =  p;}
 8       public CDPlayer(CD c)  {  this.c =  c;}
 9   
@@ -467,7 +467,7 @@ Like a real CD player, the CDP layer class supports storing just one CD at a tim
 12  
 13      /*Getters and  setters*/
 14      public Playlist  getPlaylist()  {  return p;}
-15      public void  setPlaylist(Playlist p)  {  this.p    p;}
+15      public void  setPlaylist(Playlist p)  {  this.p =  p;}
 16  
 17      public CD   getCD()  {  return c; }
 18      public void   setCD(CD c)  { this.c =  c; }
@@ -502,7 +502,7 @@ The classes  for CD, Song, and  User are all fairly straightforward. They consis
 5   public  class  User {
 6       private  String  name;
 7       public String  getName() { return name;}
-8       public  void setName(String name)   {   this.name  name;}
+8       public  void setName(String name)   {   this.name = name;}
 9       public long getID() { return ID;}
 10      public  void setID(long  iD) {ID = iD;}
 11      private  long ID;
@@ -608,19 +608,19 @@ The ParkingLot class is essentially a wrapper class for an array of Levels. By i
 15      private int  availableSpots =  0; // number of  free  spots
 16      private static  final int SPOTS_PER_ROW  =   10;
 17  
-18      public Level(int flr,  int  numberSpots)  {  ... }
+18      public Level(int flr,  int  numberSpots)  { ... }
 19  
 20      public int availableSpots() {  return availableSpots;  }
 21  
 22      /*  Find a  place   to  park  this vehicle. Return  false if  failed. */
-23      public boolean  parkVehicle(Vehicle vehicle)  {  ... }
+23      public boolean  parkVehicle(Vehicle vehicle)  { ... }
 24  
 25      /*  Park  a  vehicle starting at the  spot  spotNumber, and continuing until
 26      *  vehicle.spotsNeeded. */
-27      private boolean  parkStartingAtSpot(int  num, Vehicle  v)  {  ... }
+27      private boolean  parkStartingAtSpot(int  num, Vehicle  v)  { ... }
 28  
 29      /*  Find  a  spot  to  park  this vehicle. Return  index  of  spot,  or  -1 on failure. */
-30      private  int  findAvailableSpots(Vehicle vehicle)  {  ... }
+30      private  int  findAvailableSpots(Vehicle vehicle)  { ... }
 31  
 32      /*  When  a  car  was removed from the  spot,  increment  availableSpots */
 33      public void  spotFreed() {  availableSpots++; }
@@ -679,12 +679,12 @@ The class OnlineReaderSystem represents the body of our program. We could implem
 
 ```java
 1   public  class  OnlineReaderSystem {
-2       private  Library library;
+2       private Library library;
 3       private UserManager userManager;
-4       private  Display display;
+4       private Display display;
 5   
 6       private Book  activeBook;
-7       private  User activeUser;
+7       private User activeUser;
 8   
 9       public  OnlineReaderSystem() {
 10          userManager  =  new  UserManager();
@@ -791,10 +791,10 @@ We then implement separate classes to handle the user manager, the library, and 
 76          refreshPage();
 77      }
 78  
-79      public   void  refreshUsername()  {/* updates  username display*/}
+79      public void  refreshUsername()  {/* updates  username display*/}
 80      public void  refreshTitle() {/*  updates  title display*/}
-81      public   void refreshDetails() {/*  updates  details  display*/ }
-82      public  void  refreshPage() {/*  updated  page display*/}
+81      public void  refreshDetails() {/*  updates  details  display*/ }
+82      public void  refreshPage() {/*  updated  page display*/}
 83  }
 ```
 
@@ -810,10 +810,10 @@ The classes for User and Book simply hold data and provide little true functiona
 7           details =  det;
 8       }
 9   
-10      public   int  getID() {return  bookld;}
-11      public   void  setID(int id) {  bookld  = id;}
-12      public   String getDetails()  {  return details;  }
-13      public   void  setDetails(String d)  {details  =  d};
+10      public  int  getID() {return  bookld;}
+11      public  void  setID(int id) {  bookld  = id;}
+12      public  String getDetails()  {  return details;  }
+13      public  void  setDetails(String d)  {details  =  d};
 14  }
 15  
 16  public class User   {
@@ -915,7 +915,7 @@ A potential object-oriented design looks like the following:
 34  
 35      /*  Put  piece  into the  solution,  turn  it appropriately,  and remove from list. */
 36      private void  setEdgeinSolution(LinkedList<Piece> pieces,  Edge edge,  int row,
-37      	int column, Orientation orientation)  {
+37      		int column, Orientation orientation)  {
 38          Piece  piece  =  edge.getParentPiece();
 39          piece.setEdgeAsOrientation(edge,  orientation);
 40          pieces.remove(piece);
@@ -1031,7 +1031,7 @@ This is also something to discuss with your interviewer, but here are some ideas
 - Creating private and group chats.
 - Adding new messages to private and group chats.
 
-This is just a partial list.  If you have more time, you can add more actions.
+This is just a partial list. If you have more time, you can add more actions.
 
 
 **What can we learn  about these requirements?**
@@ -1072,7 +1072,7 @@ The key objects of the  system will be a concept of users, conversations, and st
 15      }
 16  
 17      public  void addUser(User fromUser, String  toAccountName)  {  ... }
-18      public void  approveAddRequest(AddRequest req) {  ... }
+18      public  void approveAddRequest(AddRequest req) {  ... }
 19      public  void rejectAddRequest(AddRequest req)  {   ... }
 20      public  void userSignedOn(String accountName)  {  ... }
 21      public  void userSignedOff(String  accountName)  {  ... }
@@ -1136,7 +1136,7 @@ The Conversation class is implemented  as an abstract class, since all Conversat
 
 ```java
 1   public abstract  class  Conversation {
-2       protected  Arraylist<User> participants;
+2       protected Arraylist<User> participants;
 3       protected int id;
 4       protected Arraylist<Message>   messages;
 5   
@@ -1147,7 +1147,7 @@ The Conversation class is implemented  as an abstract class, since all Conversat
 10  
 11  public class GroupChat extends  Conversation {
 12      public void  removeParticipant(User user)  {  ... }
-13      public   void  addParticipant(User user)   {  ... }
+13      public void  addParticipant(User user)   {  ... }
 14  }
 15  
 16  public class  PrivateChat extends  Conversation   {
@@ -1156,10 +1156,10 @@ The Conversation class is implemented  as an abstract class, since all Conversat
 19  }
 20  
 21  public   class Message {
-22      private  String content;
+22      private String content;
 23      private Date date;
 24      public  Message(String content,  Date date) {  ... }
-25      public String  getContent() {  ... }
+25      public  String  getContent() {  ... }
 26      public  Date getDate()  {  ... }
 27  }
 ```
@@ -1170,11 +1170,11 @@ AddRequest and UserStatus are simple classes with little functionality. Their ma
 1   public class AddRequest  {
 2       private  User fromUser;
 3       private  User toUser;
-4       private Date date;
+4       private  Date date;
 5       RequestStatus status;
 6   
 7       public  AddRequest(User from,  User to,   Date date)   {  ... }
-8       public RequestStatus getStatus()  {  ... }
+8       public  RequestStatus getStatus()  {  ... }
 9       public  User getFromUser() {  ... }
 10      public  User getToUser()  {  ... }
 11      public  Date getDate()  {  ... }
@@ -1322,7 +1322,7 @@ The Board class manages the actual pieces themselves.  It does not handle much o
 18      }
 19
 20      /*  Flips  pieces   starting at (row,  column) and proceeding  in  direction d. */
-21      private int flipSection(int row,  int column,  Color  color,  Direction d)  {            }
+21      private int flipSection(int row,  int column,  Color  color,  Direction d)  { ...  }
 22
 23      public  int  getScoreForColor(Color c)  {
 24          if (c  ==  Color.Black) return  blackCount;
@@ -1331,7 +1331,7 @@ The Board class manages the actual pieces themselves.  It does not handle much o
 27
 28      /* Update board  with  additional newPieces pieces   of  color   newColor. Decrease
 29       * score  of  opposite color.  */
-30      public void  updateScore(Color  newColor,  int newPieces)  {  ... }
+30      public void  updateScore(Color  newColor,  int newPieces)  { ... }
 31  }
 ``` 
 
@@ -1358,9 +1358,9 @@ The Player holds only a very limited amount of information. It does not even hol
 2   
 3       public  Player(Color c)  {  color =  c;}
 4   
-5       public   int  getScore() {   ...  }
+5       public  int  getScore() {   ...  }
 6   
-7       public boolean   playPiece(int r,  int  c)  {
+7       public boolean  playPiece(int r,  int  c)  {
 8           return  Game.getlnstance().getBoard().placeColor(r, c,   color);
 9       }
 10  
@@ -1519,7 +1519,7 @@ We also need to store state for whether the cell is exposed or not. We probably 
 It's better to just have a boolean flag for isExposed. We'll do a similar thing for isGuess.
 
 ```java
-1   public   class Cell  {
+1   public class Cell  {
 2       private int row;
 3       private int column;
 4       private boolean  isBomb;
@@ -1615,8 +1615,8 @@ The Game class will store references to the  board and hold the game state.  It 
 10      public Game(int  r, int c,  int b)  {  ... }
 11  
 12      public  boolean initialize() {  ... }
-13      public  boolean s tart()  {   ... }
-14      private  boolean playGame()  { ... } // Loops until game is over.
+13      public  boolean start()  {   ... }
+14      private boolean playGame()  { ... } // Loops until game is over.
 15  }
 ```
 
@@ -1775,7 +1775,7 @@ A file system, in its most simplistic version, consists  of Files and Directorie
 28      /*  Getters and setters.  */
 29      public long  getcreationTime()  {  return created; }
 30      public long  getLastUpdatedTime()  { return lastUpdated;}
-31      public long getLastAccessedTime() { return lastAccessed; }
+31      public long  getLastAccessedTime() { return lastAccessed; }
 32      public void  changeName(String n)  {name  =  n;}
 33      public String getName() {return  name;}
 34  }
@@ -1850,11 +1850,11 @@ Suppose we are implementing a hash table that looks like Hash<K,   V>. That is, 
 At first, we might think our data structure would look something like this:
 
 ```java
-1     class Hash<K, V>  {
-2          Linkedlist<V>[]  items;
-3          public void  put(K  key,   V  value) { ... }
-4          public V  get(K  key)  { ... }
-5     }
+1   class Hash<K, V>  {
+2        Linkedlist<V>[]  items;
+3        public void  put(K  key,   V  value) { ... }
+4        public V  get(K  key)  { ... }
+5   }
 ```
 
 Note that iterns is an array of linked lists, where iterns[ i] is a linked list of all objects with keys that map to index i (that is, all the objects that collided at i).
@@ -1862,9 +1862,9 @@ Note that iterns is an array of linked lists, where iterns[ i] is a linked list 
 This would seem to work until we think more deeply about collisions. Suppose we have a very simple hash function that uses the string length.
 
 ```java
-1     int hashCodeOfKey(K key)  {
-2         return key.to5tring().length()  %  items.length;
-3     }
+1    int hashCodeOfKey(K key)  {
+2        return key.to5tring().length()  %  items.length;
+3    }
 ```
 
 The keys jim and bob will map to the same index in the array, even though they are different keys. We need to search through the linked list to find the actual object that corresponds to these keys. But how would we do that? All we've stored in the linked list is the value, not the original key.

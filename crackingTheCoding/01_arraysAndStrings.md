@@ -132,7 +132,7 @@ The code below implements this algorithm.
 2 		if (str.length() >   128) return false;
 3	
 4 		boolean[]   char_set =  new boolean[128];
-5 		for   (int i = 0;  i <  str.length(); i++)  {
+5 		for (int i = 0;  i <  str.length(); i++)  {
 6 			int val =  str.charAt(i);
 7 			if  (char_set[val]) {//Already  found  this char  in  string
 8 				return false;
@@ -262,7 +262,7 @@ The code below implements this algorithm.
 5 				spaceCount++;
 6 			}
 7 		}
-g 		index  =  truelength +  spaceCount  *  2;
+8 		index  =  truelength +  spaceCount  *  2;
 9 		if (truelength < str.length)  str[trueLength] = '\0';  // End  array
 10		for (i =  truelength -  1;   i >= 0;   i-- )  {
 11			if (str[i] ==  ' ') {
@@ -331,7 +331,7 @@ Implementing this algorithm is fairly straightforward. We use a hash table to co
 18	}
 19	
 20	/*  Map  each character to  a number. a  -> 0,   b  -> 1,   c  -> 2,  etc.
-21	* This  is case  insensitive.  Non-letter characters map  to   -1.*/
+21	 * This  is case  insensitive.  Non-letter characters map  to   -1. */
 22	int getCharNumber(Character c)  {
 23		int a  = Character.getNumericValue('a');
 24		int z  =  Character.getNumericValue('z');
@@ -481,7 +481,7 @@ Observe that you don't need to check the strings for insertion, removal, and rep
 
 ```java
 1 	boolean   oneEditAway(String  first, String  second) {
-2 		if (first.length() ==    second.length()) {
+2 		if (first.length() == second.length()) {
 3 			return oneEditReplace(first, second);
 4 		}  else if (first.length() +  1 ==  second.length()) {
 5 			return oneEditinsert(first,  second);
@@ -491,10 +491,10 @@ Observe that you don't need to check the strings for insertion, removal, and rep
 9 		return false;
 10	}
 11	
-12	boolean oneEditReplace(String sl,  String s2)   {
+12	boolean oneEditReplace(String s1,  String s2)   {
 13		boolean   foundDifference  =  false;
-14		for (int i = 0; i < sl.length();  i++)   {
-15			if (sl.charAt(i) != s2.charAt(i)) {
+14		for (int i = 0; i < s1.length();  i++)   {
+15			if (s1.charAt(i) != s2.charAt(i)) {
 16				if (foundDifference)  {
 17					return false;
 18				}
@@ -505,12 +505,12 @@ Observe that you don't need to check the strings for insertion, removal, and rep
 23		return true;
 24	}
 25	
-26	/* Check if you  can  insert a  character into sl to make s2.*/
-27	boolean oneEditinsert(String  sl,  String s2)   {
+26	/* Check if you  can  insert a  character into s1 to make s2.*/
+27	boolean oneEditinsert(String  s1,  String s2)   {
 28		int index1 =  0;
-29		int index2   =  0;
-30		while  (index2 <  s2.length() &&   index1 <  sl.length()) {
-31			if (sl.charAt(index1)  !=  s2.charAt(index2)) {
+29		int index2 =  0;
+30		while  (index2 <  s2.length() &&   index1 <  s1.length()) {
+31			if (s1.charAt(index1)  !=  s2.charAt(index2)) {
 32				if  (index1 != index2) {
 33					return false;
 34				}
@@ -544,20 +544,20 @@ To do this, observe  that both methods follow similar logic: compare each charac
 8 		String sl = first.length() <  second.length() ?  first :   second;
 9 		String s2 = first.length() < second.length()  ?  second   :   first;
 10		
-11		int indexl  = 0;
+11		int index1  = 0;
 12		int index2  = 0;
 13		boolean foundDifference  =  false;
-14		while  (index2 <  s2.length() &&   indexl <  sl.length()) {
-15			if  (sl.charAt(indexl) != s2.charAt(index2)) {
+14		while  (index2 <  s2.length() &&   index1 <  sl.length()) {
+15			if  (sl.charAt(index1) != s2.charAt(index2)) {
 16				/*Ensure that  this  is  the first difference found.*/
 17				if (foundDifference)  return false;
 18				foundDifference =  true;
 19		
 20				if (sl.length() == s2.length()) {//On replace, move shorter pointer
-21					indexl++;
+21					index1++;
 22				}
 23			}  else {
-24				indexl++;  // If matching,  move  shorter pointer
+24				index1++;  // If matching,  move  shorter pointer
 25			}
 26			index2++;  // Always   move  pointer for longer string
 27		}
@@ -797,15 +797,15 @@ This code is below:
 3 		boolean  colHasZero  = false;
 4		
 5 		// Check   if first row  has a  zero
-6 		for (int j =    0;   j <   matrix[0].length;  j++) {
-7 			if  (matrix[0][j] ==         0) {
+6 		for (int j = 0;   j <   matrix[0].length;  j++) {
+7 			if  (matrix[0][j] == 0) {
 8 				rowHasZero  = true;
 9 				break;
 10			}
 11		}
 12		
 13		// Check   if first column   has a  zero
-14		for (int i =     0;   i <   matrix.length;   i++) {
+14		for (int i = 0;   i <   matrix.length;   i++) {
 15			if (matrix[i][0] ==    0) {
 16				colHasZero = true;
 17				break;
@@ -814,7 +814,7 @@ This code is below:
 20		
 21		// Check   for zeros in the rest  of the array
 22		for (int i =  1;   i <   matrix.length;  i++) {
-23			for (int j =  1;   j <   matrix[0].length; j++) {
+23			for (int j =  1;   j < matrix[0].length; j++) {
 24				if  (matrix[iJ[jJ ==  0) {
 25					matrix[i][0] =  0;
 26					matrix[0J[j] =  0;
@@ -823,14 +823,14 @@ This code is below:
 29		}
 30		
 31		// Nullify rows   based  on  values in  first column
-32		for (int i =   1;   i <   matrix.length; i++) {
+32		for (int i = 1;   i <   matrix.length; i++) {
 33			if  (matrix[i][0] == 0) {
 34				nullifyRow(matrix,  i);
 35			}
 36		}
 37		
 38		// Nullify  columns based on  values in  first row
-39		for (int j =    1;   j <   matrix[0].length;   j++) {
+39		for (int j = 1;   j < matrix[0].length;   j++) {
 40			if (matrix[0][j] ==    0) {
 41				nullifyColumn(matrix,  j);
 42			}

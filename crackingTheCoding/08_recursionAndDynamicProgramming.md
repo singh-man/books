@@ -50,8 +50,7 @@ Although people make a big deal about how scary dynamic programming  problems ar
 
 Dynamic programming is mostly just a matter of taking a recursive algorithm and finding the overlapping subproblems (that is, the repeated calls). You then cache those results for future recursive calls.
 
-Alternatively, you can study the pattern of the recursive calls and implement something iterative. You still
-"cache" previous work.
+Alternatively, you can study the pattern of the recursive calls and implement something iterative. You still "cache" previous work.
 
 > A note on terminology: Some people call top-down dynamic programming "memoization" and only use "dynamic programming" to refer to bottom-up work. We do not make such a distinction here. We call both dynamic programming.
 
@@ -69,9 +68,9 @@ We will start with a recursive implementation. Sounds simple, right?
 
 ```java
 1 int  fibonacci(int i) {
-2   if (i ==    0) return 0;
-3   if (i ==    1) return 1;
-4   return fibonacci(i -  1) +  fibonacci(i -  2);
+2   if (i == 0) return 0;
+3   if (i == 1) return 1;
+4   return fibonacci(i -  1) +  fibonacci(i - 2);
 5 }
 ```
 
@@ -102,10 +101,10 @@ The total number of nodes in the tree will represent the runtime, since each cal
 
 How many nodes are in the tree? Until we get down to the base cases (leaves), each node has two children. Each node branches out twice.
 
-The root node has two children. Each of those children has two children (so four children total in the "grand­ children" level). Each of those grandchildren has two children, and so on. If we do this n times, we'll have roughly O(2") nodes. This gives us a runtime of roughly 0(2").
+The root node has two children. Each of those children has two children (so four children total in the "grand­ children" level). Each of those grandchildren has two children, and so on. If we do this n times, we'll have roughly O(2ⁿ) nodes. This gives us a runtime of roughly O(2ⁿ).
 
 
-> Actually, it's slightly better thanO(2^n). If you look at the subtree, you might notice that (excluding the leaf nodes and those immediately above it) the right subtree of any node is always smaller than the left subtree. If they were the same size, we'd have an O(2^n) runtime. But since the right and left subtrees are not the same size, the true runtime is closer toO(1. 6^n). SayingO( 2^n") is still technically correct though as it describes an upper bound on the runtime (see "Big O, Big Theta, and Big Omega" on page 39). Either way, we still have an exponential runtime.
+> Actually, it's slightly better thanO(2ⁿ). If you look at the subtree, you might notice that (excluding the leaf nodes and those immediately above it) the right subtree of any node is always smaller than the left subtree. If they were the same size, we'd have an O(2ⁿ) runtime. But since the right and left subtrees are not the same size, the true runtime is closer toO(1.6ⁿ). Saying O(2ⁿ) is still technically correct though as it describes an upper bound on the runtime (see "Big O, Big Theta, and Big Omega" on page 39). Either way, we still have an exponential runtime.
 
 
 Indeed,  if we implemented this on a computer, we'd see the number of seconds increase exponentially.
@@ -260,7 +259,7 @@ A simple implementation of this code is below.
 9   }
 ```
 
-Like the  Fibonacci problem, the  runtime of this  algorithm is exponential (roughly O ( 3^n) ), since  each call branches out to three more calls.
+Like the  Fibonacci problem, the  runtime of this  algorithm is exponential (roughly O(3ⁿ)), since  each call branches out to three more calls.
 
 
 ##### Memoization Solution
@@ -317,7 +316,7 @@ So then, to find a path from the origin, we just work backwards like this. Start
 
 ```java
 1   Arraylist<Point> getPath(boolean[][] maze) {
-2     if (maze ==  null  I   I     maze.length     == 0) return null;
+2     if (maze ==  null  ||    maze.length     == 0) return null;
 3     ArrayList<Point> path  =  new Arraylist<Point>();
 4     if (getPath(maze,  maze.length  -  1,  maze[0].length  -  1,  path)) {
 5       return path;
@@ -327,15 +326,15 @@ So then, to find a path from the origin, we just work backwards like this. Start
 9 
 10  boolean  getPath(boolean[][] maze, int row,  int col,   Arraylist<Point> path)  {
 11    /*  If out  of  bounds or  not  available,  return.*/
-12    if (col  < 0 11 row < 0 11   !maze[row][col]) {
+12    if (col  < 0 || row < 0 ||  !maze[row][col]) {
 13      return false;
 14    }
 15  
 16    boolean  isAtOrigin   = (row  == 0)  &&   (col     == 0);
 17  
 18    /*  If there's a path  from the  start to  here,   add my  location. */
-19    if (isAtOrigin  I   I      getPath(maze,   row,  col  -  1,  path)  I   I
-20    getPath(maze,   row -  1,  col,   path)) {
+19    if (isAtOrigin  ||  getPath(maze,   row,  col  -  1,  path)  ||
+20        getPath(maze,   row -  1,  col,   path)) {
 21      Point  p =  new Point(row,   col);
 22      path.add(p);
 23      return true;
@@ -345,7 +344,7 @@ So then, to find a path from the origin, we just work backwards like this. Start
 27  }
 ```
 
-This solution is O ( 2^(r+c)), since each path has r+c steps and there are two choices we can make at each step.
+This solution is O ( 2⁽ʳ⁺ᶜ⁾), since each path has r+c steps and there are two choices we can make at each step.
 
 We should look for a faster way.
 
@@ -491,22 +490,22 @@ The code  below implements this algorithm.
 5   int  magicFast(int[] array, int start,  int end) {
 6     if (end <   start)  return -1;
 7 
-8     int  midindex = (start +  end) / 2;
-9     int midValue    =   array[midindex];
-10    if (midValue    == midindex)  {
+8     int midindex = (start +  end) / 2;
+9     int midValue =   array[midindex];
+10    if (midValue == midindex)  {
 11      return midindex;
 12    }
 13  
 14    /* Search  left */
-15    int leftindex =  Math.min(midindex  -  1,  midValue);
-16    int left   = magicFast(array,  start, leftindex);
+15    int leftIndex =  Math.min(midindex  -  1,  midValue);
+16    int left   = magicFast(array,  start, leftIndex);
 17    if (left >=  0) {
 18      return left;
 19    }
 20  
 21    /*  Search right */
-22    int rightindex =   Math.max(midindex  +  1,  midValue);
-23    int right =   magicFast(array, rightlndex,  end);
+22    int rightIndex =   Math.max(midindex  +  1,  midValue);
+23    int right =   magicFast(array, rightIndex,  end);
 24  
 25    return right;
 26  }
@@ -579,11 +578,11 @@ The following code implements this algorithm:
 ```java
 1     Arraylist<Arraylist<Integer>> getSubsets(Arraylist<Integer> set,  int  index) {
 2       Arraylist<Arraylist<Integer>> allsubsets;
-3       if (set.size() ==    index) { //Base  case   -  add  empty set
+3       if (set.size() ==  index) { //Base  case   -  add  empty set
 4         allsubsets =  new Arraylist<Arraylist<Integer>>();
 5         allsubsets.add(new Arraylist<Integer>());  // Empty set
 6       }  else {
-7         allsubsets =  getSubsets(set,  index +    1);
+7         allsubsets =  getSubsets(set,  index + 1);
 8         int item =  set.get(index);
 9         Arraylist<Arraylist<Integer>> moresubsets
 10        new Arraylist<Arraylist<Integer>>();
@@ -708,8 +707,8 @@ The second call to minProduct (4,   23) is unaware of the prior call, and so it 
 
 ```java
 1   int  minProduct(int a,  int b)  {
-2     int bigger    =  a < b ? b :  a;
-3     int  smaller = a <  b ? a : b;
+2     int bigger  = a < b ? b : a;
+3     int smaller = a < b ? a : b;
 4 
 5     int memo[] =  new  int[smaller + 1];
 6     return  minProduct(smaller, bigger,  memo);
@@ -757,7 +756,7 @@ In doing so, we have  an unexpected "win:'  Our minProduct function just recurse
 ```java
 1   int  minProduct(int a,  int  b)   {
 2     int  bigger = a < b ? b :  a;
-3     int  smaller  = a <   b ? a   :   b;
+3     int  smaller = a <   b ? a : b;
 4     return  minProductHelper(smaller, bigger);
 5   }
 6 
@@ -765,7 +764,7 @@ In doing so, we have  an unexpected "win:'  Our minProduct function just recurse
 8     if (smaller == 0)  return  0;
 9     else if (smaller  == 1)  return  bigger;
 10  
-11    int s     = smaller  >>  1;   // Divide by  2
+11    int s = smaller  >>  1;   // Divide by  2
 12    int halfProd  = minProductHelper(s,   bigger);
 13  
 14    if  (smaller % 2     == 0)  {
@@ -947,10 +946,9 @@ This is the first interesting case. How can we generate permutations of a₁ a�
 
 Each permutation of a₁ a₂ a₃ a₄ represents an ordering of a₁ a₂ a₃ . For example, a₂ a₄ a₁ a₃ represents the order a₂ a₁ a₃ .
 
-Therefore, if we took all the permutations of a 1 a 2 a 3 and added a 4 into all possible locations, we would get all permutations of a 1 a 2 a 3 a 4 .
+Therefore, if we took all the permutations of a₁ a₂ a₃ and added a₄ into all possible locations, we would get all permutations of a₁ a₂ a₃ a₄ .
 
 ```
-
 a₁a₂a₃ -> a₄a₁a₂a₃, a₁a₄a₂a₃ ,a₁a₂a₄a₃, a₁a₂a₃a₄
 a₁a₃a₂ -> a₄a₁a₃a₂, a₁a₄a₃a₂ ,a₁a₃a₄a₂, a₁a₃a₂a₄
 a₃a₁a₂ -> a₄a₃a₁a₂, a₃a₄a₁a₂ ,a₃a₁a₄a₂, a₃a₁a₂a₄
@@ -1012,14 +1010,14 @@ Here is where the cases get more interesting.  How can we generate all permutati
 
 Well, in essence, we just need to "try" each character as the first character and then append the permuta­tions.
 ```
-P(a₁a₂a₃ ) =  {a₁   +  P(a₂a₃ )}  +  a₂   +  P(a₁a₃)}   +  {a₃    +  P(a₁a₂ )}
+P(a₁a₂a₃ ) =  {a₁   +  P(a₂a₃ )}  +  {a₂   +  P(a₁a₃)}   +  {a₃    +  P(a₁a₂ )}
 	{a₁   +  P(a₂a₃)} -> a₁a₂a₃, a₁a₃a₂
 	{a₂    + P(a₁a₃)} -> a₂a₁a₃, a₂a₃a₁
 	{a₃   +  P(a₁a₂)} -> a₃a₁a₂, a₃a₂a₁
 ```
 Now that we can generate all permutations of three-character strings, we can use this to generate permuta­tions of four-character strings.
 ```
-P(a₁a₂a₃a₄) = {a₁+ P(a₂a₃a₄)} + {a₂+ P(a₁a₃a₄)}    +  {a₃ +  P(a₁₂a₄)}+ {a₄   +  P(a₁a₂a₃)} 
+P(a₁a₂a₃a₄) = {a₁+ P(a₂a₃a₄)} + {a₂+ P(a₁a₃a₄)}  +  {a₃ +  P(a₁a₂a₄)}+ {a₄ +  P(a₁a₂a₃)} 
 ```
 This is now a fairly straightforward algorithm to implement.
 
@@ -1029,13 +1027,13 @@ This is now a fairly straightforward algorithm to implement.
 3     Arraylist<String> result = new ArrayList<Str1ng>();
 4 
 5     /* Base case.   */
-6     if (len ==    0)  {
+6     if (len == 0)  {
 7       result.add(""); // Be  sure  to  return empty string!
 8       return result;
 9     }
 10  
 11  
-12    for   (int i =    0;  i < len;   i++)  {
+12    for   (int i = 0;  i < len;   i++)  {
 13      /*  Remove  char  i and find  permutations of  remaining  chars.*/
 14      String before =  remainder.substring(0,  i);
 15      String after  =  remainder.substring(i + 1,  len);
@@ -1287,7 +1285,7 @@ We can implement this algorithm recursively:
 6   }
 7   
 8   boolean   PaintFill(Color[][] screen, int r,  int  c,  Color  ocolor,  Color  ncolor) {
-9     if (r <   0  I I  r >=  screen.length  ||  c  <   0 || c  >=  screen[0].length) {
+9     if (r <   0  || r >=  screen.length  ||  c  <   0 || c  >=  screen[0].length) {
 10      return false;
 11    }
 12  
@@ -1345,7 +1343,7 @@ dimes.
 Our approach for quarters applies to dimes as well, but we apply this for each of the four of five parts of the above statement. So, for the first part, we get the following statements:
 ```
 makeChange(100 using 0  quarters) = makeChange(100 using 0  quarters,  0 dimes)+ 
-								                    makeChange(l00  using 0  quarters,  1  dime) + 
+								                    makeChange(l00 using 0  quarters,  1  dime) + 
 								                    makeChange(100 using 0  quarters,  2 dimes) +
 								                    ...
 								                    makeChange(l00  using 0  quarters,  10 dimes)
@@ -1360,11 +1358,11 @@ makeChange(50 using 0  quarters) = makeChange(50 using 0  quarters,  0 dimes)  +
 								                   makeChange(50 using 0  quarters,  1 dime)   + 
 								                   makeChange(50 using 0  quarters,  2  dimes) + 
 								                   ...
-								                   makeChange(50  using  0 quarters,  5 dimes)
+								                   makeChange(50 using 0  quarters,  5 dimes)
 
-make(hange(25 using  0 quarters) = makeChange(25  using  0 quarters,  0 dimes) + 
-								                   makeChange(25  using  0 quarters,  1 dime)  + 
-								                   makeChange(25  using  0 quarters,  2 dimes)
+make(hange(25 using  0 quarters) = makeChange(25 using 0  quarters,  0 dimes) + 
+								                   makeChange(25 using 0  quarters,  1 dime)  + 
+								                   makeChange(25 using 0  quarters,  2 dimes)
 ```
 
 Each one of these, in turn, expands out once we start applying nickels. We end up with a tree-like recursive structure where each call expands out to four or more calls.
@@ -1729,8 +1727,8 @@ This makes the code a bit more concise.
 9       String right = s.substring(i +    1,  s.length());
 10  
 11      /* Evaluate  each side  for   each result. */
-12      int leftTrue =    countEval(left,  true);
-13      int leftFalse    countEval(left, false);
+12      int leftTrue =   countEval(left,  true);
+13      int leftFalse =  countEval(left, false);
 14      int rightTrue =  countEval(right,  true);
 15      int  rightFalse =   countEval(right,  false);
 16      int total =  (leftTrue + leftFalse) *  (rightTrue + rightFalse);
@@ -1742,7 +1740,7 @@ This makes the code a bit more concise.
 22        totalTrue  =   leftTrue *  rightTrue;
 23      }  else  if (c  ==   '|') {  // required: anything  but  both  false
 24        totalTrue  = leftTrue * rightTrue + leftFalse * rightTrue +
-25        leftTrue *  rightFalse;
+25          leftTrue *  rightFalse;
 26      }
 27  
 28      int subways =  result ?  totalTrue   total  -  totalTrue;
@@ -1753,7 +1751,7 @@ This makes the code a bit more concise.
 33  }
 34  
 35  boolean stringToBool(String  c)  {
-36    return c.equals("l")  ?   true :  false;
+36    return c.equals("1")  ?   true :  false;
 37  }
 ```
 

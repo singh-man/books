@@ -42,11 +42,10 @@ We have provided simple sample code to implement a stack. Note that a stack can 
 18		}
 19	
 20		public void  push(T  item) {
-21			StackNode<T> t =    new StackNode<T>(item);
-22			t.next =    top;
+21			StackNode<T> t = new StackNode<T>(item);
+22			t.next = top;
 23			top =  t;
 24		}
-
 25	
 26		public T  peek()  {
 27			if (top ==    null) throw  new EmptyStackException();
@@ -73,8 +72,8 @@ It uses the operations:
 
 - add(itern): Add an item to the end of the list. 
 - remove(): Remove the first item in the list. 
-- peek ( ) : Return the top of the queue.
-- is Empty(): Return true if and only if the queue is empty.
+- peek(): Return the top of the queue.
+- isEmpty(): Return true if and only if the queue is empty.
 
 A queue can also be implemented  with a linked list. In fact, they are essentially the same thing, as long as items are added and removed from opposite sides.
 
@@ -94,12 +93,12 @@ A queue can also be implemented  with a linked list. In fact, they are essential
 13	
 14		public void  add(T  item) {
 15			QueueNode<T>  t =  new QueueNode<T>(item);
-16			if (last !=          null) {
+16			if (last !=  null) {
 17				last.next =  t;
 18			}
 19			last = t;
 20			if (first == null) {
-21				first =    last;
+21				first = last;
 22			}
 23		}
 24	
@@ -152,13 +151,13 @@ We can divide the array in three equal parts and allow the individual stack to g
 
 - For stack 1, we will use [0,  n/3).
 - For stack 2, we will use [n/3,  2n/3).
-- For stack 3, we will use [2n/3 ,  n) .
+- For stack 3, we will use [2n/3,  n) .
 
 The code for this solution is below.
 
 ```java
 1	class  FixedMultiStack {
-2		private int numberOfStacks =	3;
+2		private int numberOfStacks = 3;
 3		private int stackCapacity;
 4		private int[] values;
 5		private int[] sizes;
@@ -170,7 +169,7 @@ The code for this solution is below.
 11		}
 12	
 13		/* Push  value onto  stack.  */
-14		public void  pus h(int stackNum,  int value) throws   FullStackException  {
+14		public void  push(int stackNum,  int value) throws   FullStackException  {
 15			/* Check that we have  space  for  the next  element */
 16			if (isFull(stackNum)) {
 17				throw  new FullStackException();
@@ -464,7 +463,7 @@ We can (maybe) do a bit better than this by using an additional stack which keep
 12		}
 13	
 14		public Integer pop() {
-15			int  value =  super.pop();
+15			int value =  super.pop();
 16			if (value  ==  min())  {
 17				s2.pop();
 18			}
@@ -612,10 +611,10 @@ You could make an argument  that, rather than "rolling over;' we should be okay 
 71		}
 72	
 73		public int removeBottom() {
-74			Node b   =  bottom;
-75			bottom  =  bottom.above;
+74			Node b =  bottom;
+75			bottom =  bottom.above;
 76			if (bottom  != null)  bottom.below = null;
-77			size - -;
+77			size--;
 78			return b.value;
 79		}
 80	}
@@ -726,7 +725,7 @@ Note that 8 and 12 are still in sl-and that's okay!We just repeat the same steps
 10		}
 11	
 12		/*   Copy the   elements   from r back  into s. */
-13		while   (!r.isEmpty()) {
+13		while (!r.isEmpty()) {
 14			s.push(r.pop());
 15		}
 16	}
@@ -772,7 +771,7 @@ An alternative approach that is simple,  clean  and efficient is to simply  use 
 17		private int order =  0;   // acts  as  timestamp
 18	
 19		public  void  enqueue(Animal a)  {
-20	/* Order is used as a  sort  of timestamp, so   that we  can   compare the  insertion
+20			/* Order is used as a  sort  of timestamp, so   that we  can   compare the  insertion
 21			*  order of a  dog  to a  cat. */
 22			a.setOrder(order);
 23			order++;

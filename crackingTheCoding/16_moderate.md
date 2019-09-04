@@ -98,7 +98,7 @@ If we're doing the operation repeatedly, then we can probably afford to take som
 ```java
 1 	HashMap<String,   Integer> setupDictionary(String[]   book)  {
 2 		HashMap<String,  Integer> table  =
-3 		new HashMap<String,   Integer>();
+3 				new HashMap<String,   Integer>();
 4 		for (String word  :   book)  {
 5 			word =   word.toLowerCase();
 6 			if (word.trim() !=    "") {
@@ -112,7 +112,7 @@ If we're doing the operation repeatedly, then we can probably afford to take som
 14	}
 15	
 16	int getFrequency(HashMap<String, Integer>  table,  String word)  {
-17		if (table ==    null  I   I     word ==   null)  return  -1;
+17		if (table ==    null  ||    word ==   null)  return  -1;
 18		word =  word.tolowerCase();
 19		if (table.containsKey(word))  {
 20			return table.get(word);
@@ -152,30 +152,30 @@ What if the two segments represent the same infinite line? In this case, we have
 	Assume:
 		start1.x <   start2.x &&   start1.x < end1.x   &&   start2.x < end2.x
 	Then intersection  occurs if:
-		start2 is between  startl and  endl
+		start2 is between  start1 and  end1
 ```
 We can now go ahead and implement this algorithm.
 
 ```java
-1 	Point  intersection(Point startl, Point  endl,   Point  start2, Point  end2)  {
+1 	Point  intersection(Point start1, Point  end1,   Point  start2, Point  end2)  {
 2 		/* Rearranging  these so  that, in  order  of  x values: start  is before   end and
 3 		 * point   1  is before   point   2.  This  will make some of  the  later  logic simpler. */
-4 		if (startl.x >  endl.x) swap(startl,  endl);
-5 		if (start2.x >   end2.x)  swap(start2,  end2);
-6 		if (startl.x >   start2.x) {
-7 		 	swap(startl, start2);
-8 		  	swap(endl,   end2);
+4 		if (start1.x >  end1.x) swap(start1,  end1);
+5 		if (start2.x >  end2.x) swap(start2,  end2);
+6 		if (start1.x >  start2.x) {
+7 		 	swap(start1, start2);
+8 		  	swap(end1,   end2);
 9 		}
 10	
 11		/*  Compute  lines (including slope  and y-intercept). */
-12		Line linel    new Line(startl,  endl);
+12		Line linel    new Line(start1,  end1);
 13		Line line2  = new Line(start2,   end2);
 14	
 15		/* If the  lines are  parallel, they  intercept only  if they  have the  same y
 16		 * intercept and start 2 is on line 1. */
 17		if (linel.slope == line2.slope) {
 18			if (linel.yintercept == line2.yintercept &&
-19					isBetween(startl, start2,  endl)) {
+19					isBetween(start1, start2,  end1)) {
 20				return start2;
 21			}
 22			return null;
@@ -187,7 +187,7 @@ We can now go ahead and implement this algorithm.
 28		Point  intersection = new Point(x,  y);
 29	
 30		/*  Check if within  line segment range. */
-31		if  (isBetween(startl, intersection, endl) &&
+31		if  (isBetween(start1, intersection, end1) &&
 32		isBetween(start2, intersection,  end2))  {
 33			return intersection;
 34		}
@@ -495,7 +495,7 @@ One way that we can reuse the code better is to just pass in the values to anoth
 26		Arraylist<Check> instructions =  new Arraylist<Check>();
 27		for  (int i = 0;  i <  board.length;  i++)  {
 28			instructions.add(new Check(0,  i, 1,  0));
-29			instructions.add(new Check(i,   0,  0,  1));
+29			instructions.add(new Check(i,  0, 0,  1));
 30		}
 31		instructions.add(new Check(0,  0,  1,  1));
 32		instructions.add(new Check(0,  size -  1,  1,   -1));
@@ -561,33 +561,33 @@ Another way of doing it is, of course,  to actually build an iterator.
 32	}
 33
 34	class Positioniterator implements Iterator<Position>  {
-35		private int rowincrement,   co1Increment,   size;
+35		private int rowincrement,   colIncrement,   size;
 36		private Position current;
 37
 38		public   Positioniterator(Position p,  int rowincrement,
-39		int co1Increment,   int size) {
+39				int colIncrement,   int size) {
 40			this.rowincrement  =   rowincrement;
 41			this.colIncrement = colIncrement;
 42			this.size = size;
-43			current = new Position(p.row - rowIncrement, p.column  -  co1Increment);
+43			current = new Position(p.row - rowIncrement, p.column  -  colIncrement);
 44		}
 45
 46		@Override
 47		public   boolean  hasNext()   {
 48			return current.row +  rowincrement  <   size &&
-49			current.column +  co1Increment  <   size;
+49			current.column +  colIncrement  <   size;
 50		}
 51
 52		@Override
 53		public   Position next() {
 54			current =  new Position(current.row + rowincrement,
-55			current.column +  co1Increment);
+55			current.column +  colIncrement);
 56			return current;
 57		}
 58	}
 59
 60	public   class Position {
-61		public   int row,  column;
+61		public  int row,  column;
 62		public  Position(int row,  int column) {
 63			this.row = row;
 64			this.column =  column;
@@ -635,8 +635,8 @@ The first way is to iterate through all the numbers from 2 through n, counting t
 10	 }
 11
 12	 int  countFactZeros(int num) {
-13	 	int count =    0;
-14	 	for (int i =    2;  i <=  num; i +   +)  {
+13	 	int count =   0;
+14	 	for (int i =  2;  i <=  num; i +   +)  {
 15	 		count   +=    factorsOfS(i);
 16	 	}
 17	 	return  count;
@@ -919,7 +919,7 @@ How can we phrase subtraction in terms of addition? This one is pretty straightf
 1 	/*  Flip  a positive  sign  to negative  or  negative sign  to pos.  */
 2 	int negate(int  a)  {
 3 		int neg =  0;
-4 		int newSign = a < 0 ? 1     - 1;
+4 		int newSign = a < 0 ? 1 : - 1;
 5 		while  (a != 0)  {
 6 			neg +=  newSign;
 7 			a  = +  newSign;
@@ -2963,7 +2963,7 @@ Unfortunately, the above code will not generate the values with equal probabilit
 Each individual row has a 1  in 25 chance of occurring, since there are two calls to rand5() and each distrib­utes its results with 1/5th probability. If you count up the number of times each number occurs, you'll note that this rand7() function will return 4 with 5/25th probability but return O with just 3/25th probability.
 This means that our function has failed; the results do not have probability 1/7th.
 
-Now, imagine we modify our function to add an if-statement, to change the constant multiplier, or to insert a new call to rand5(). We will still wind up with a similar looking table, and the probability of getting any one of those rows will be 1/(5^k), where k is the number of calls to rand5() in that row. Different rows may have different number of calls.
+Now, imagine we modify our function to add an if-statement, to change the constant multiplier, or to insert a new call to rand5(). We will still wind up with a similar looking table, and the probability of getting any one of those rows will be 1/(5ᵏ), where k is the number of calls to rand5() in that row. Different rows may have different number of calls.
 
 The probability of winding up with the result of the rand7() function being, say, 6 would be the sum of the probabilities  of all rows that result in 6. That is:
 
