@@ -41,7 +41,7 @@ For example:
 4       public void run()  {
 5           System.out.println("RunnableThread  starting.");
 6           try {
-7               while   (count <  5)  {
+7               while (count <  5)  {
 8                   Thread.sleep(500);
 9                   count++;
 10              }
@@ -78,10 +78,10 @@ Alternatively, we can create a thread by extending the Thread class. This will a
 The below code provides an example of this.
 
 ```java
-1   public   class ThreadExample extends   Thread {
+1   public class ThreadExample extends Thread {
 2       int count  =  0;
 3   
-4       public   void  run()   {
+4       public void  run()   {
 5           System.out.println("Thread  starting.");
 6           try  {
 7               while  (count <  5)  {
@@ -239,7 +239,7 @@ A common use case for locks is when a resource is accessed from multiple places,
 
 ```java
 1   public  class LockedATM   {
-2       private  Lock lock;
+2       private Lock lock;
 3       private int  balance =  100;
 4   
 5       public  LockedATM() {
@@ -395,7 +395,7 @@ First, let's implement a simple simulation of the dining philosophers problem in
 16  
 17  class  Philosopher extends Thread  {
 18      private int bites =  10;
-19      private  Chopstick left, right;
+19      private Chopstick left, right;
 20  
 21      public  Philosopher(Chopstick left, Chopstick right)  {
 22          this.left  = left;
@@ -467,13 +467,13 @@ To prevent deadlocks, we can implement a strategy where a philosopher will put d
 30  }
 ```
 
-In the above code,  we need to be sure to release the  left chopstick if we can't  pick up the right one-and to not  call putDown () on the  chopsticks if we never had them in the  first place.
+In the above code,  we need to be sure to release the  left chopstick if we can't  pick up the right one-and to not  call putDown() on the  chopsticks if we never had them in the  first place.
 
 One issue  with  this is that if all the  philosophers were  perfectly synchronized, they  could simultaneously pick up their left chopstick, be unable to pick up the  right one, and then put back down the  left one-only to have the process repeated again.
 
 **Solution #2: Prioritized Chopsticks**
 
-Alternatively, we can label  the  chopsticks with a number from  0 to N    -  1. Each philosopher attempts to pick up the  lower numbered chopstick first.This essentially means that each philosopher goes for the  left chopstick before right one  (assuming that's the  way you labeled it), except for the  last philosopher who does this in reverse. This will break the cycle.
+Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Each philosopher attempts to pick up the  lower numbered chopstick first.This essentially means that each philosopher goes for the  left chopstick before right one  (assuming that's the  way you labeled it), except for the  last philosopher who does this in reverse. This will break the cycle.
 ```java
 1   public class  Philosopher  extends Thread {
 2       private int bites =  10;
@@ -484,7 +484,7 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N    -  1.
 7           if (left.getNumber() <   right.getNumber()) {
 8               this.lower = left;
 9               this.higher =  right;
-10          }  else {
+10          } else {
 11              this.lower =  right;
 12              this.higher =  left;
 13          }
@@ -516,7 +516,7 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N    -  1.
 39  }
 40  
 41  public  class  Chopstick {
-42      private  Lock lock;
+42      private Lock lock;
 43      private int  number;
 44  
 45      public Chopstick(int  n)  {
@@ -561,7 +561,7 @@ A locks 2,  waits on  3
 B locks 3,  waits on  5
 C locks 5,  waits on  2
 ```
-We can think about this as a graph, where 2 is connected  to 3, 3 is connected  to 5, and 5 is connected to 2. A deadlock is represented  by a cycle. An edge  (w,    v) exists in the graph if a process declares that it will request lock v immediately after lock w. For the earlier example, the following edges would exist in the graph: (1, 2),  (2, 3),  (3, 4),  (1, 3),  (3, 5),  (7, 5),  (5, 9),  (9,  2).The"owner" of the edge does not matter.
+We can think about this as a graph, where 2 is connected  to 3, 3 is connected  to 5, and 5 is connected to 2. A deadlock is represented  by a cycle. An edge  (w, v) exists in the graph if a process declares that it will request lock v immediately after lock w. For the earlier example, the following edges would exist in the graph: (1, 2),  (2, 3),  (3, 4),  (1, 3),  (3, 5),  (7, 5),  (5, 9),  (9,  2).The"owner" of the edge does not matter.
 
 This class will need a declare method, which threads and processes will use to declare what order they will request resources in. This declare method  will iterate through the declare order, adding each contig­ uous pair of elements (v, w) to the graph. Afterwards, it will check to see if any cycles have been created. If any cycles have been created, it will backtrack, removing these edges from the graph, and then exit.
 
@@ -629,8 +629,8 @@ The code below provides further details. For simplicity, we assume that all lock
             return false;
         }
     
-        /*To prevent  deadlocks,   force  the  processes to  declare  upfront what order  they
-         * will  need the  locks  in.   Verify  that this order  does  not  create a  deadlock  (a
+        /*To prevent  deadlocks, force  the  processes to  declare  upfront what order  they
+         * will  need the  locks  in. Verify  that this order  does  not  create a  deadlock  (a
          * cycle  in  a  directed graph) */
         public boolean declare(int ownerid, int[] resourcesinOrder) {
             HashMap<Integer, Boolean> touchedNodes = new HashMap<Integer, Boolean>();
@@ -762,14 +762,14 @@ What about using a lock to do something like the below code?
 ```java
 1   public  class  FooBad   {
 2       public  int  pauseTime =  1000;
-3       public  Reentrantlock lockl,  lock2;
+3       public  Reentrantlock lock1,  lock2;
 4   
 5       public  FooBad() {
 6           try {
-7               lockl = new Reentrantlock();
+7               lock1 = new Reentrantlock();
 8               lock2 = new Reentrantlock();
 9   
-10              lockl.lock();
+10              lock1.lock();
 11              lock2.lock();
 12          }  catch (...) {  ... }
 13      }
@@ -777,14 +777,14 @@ What about using a lock to do something like the below code?
 15      public void first() {
 16          try  {
 17              ...
-18              lockl.unlock();  //  mark finished  with first()
+18              lock1.unlock();  //  mark finished  with first()
 19          }  catch ( ...) {   . . . }
 20      }
 21  
 22      public   void  second()  {
 23          try {
-24              lockl.lock();  // wait  until finished with  first()
-25              lockl.unlock();
+24              lock1.lock();  // wait  until finished with  first()
+25              lock1.unlock();
 26              ...
 27  
 28              lock2.unlock();  // mark finished with  second()
@@ -807,14 +807,14 @@ This code won't actually quite work due to the concept of lock ownership. One th
 Instead, we can replicate this behavior with semaphores. The logic is identical.
 ```java
 1   public class Foo {
-2       public Semaphore seml,  sem2;
+2       public Semaphore sem1,  sem2;
 3   
 4       public Foo()  {
 5           try {
-6               seml  = new  Semaphore(l);
+6               sem1  = new  Semaphore(l);
 7               sem2  = new  Semaphore(l);
 8               
-9               seml.acquire();
+9               sem1.acquire();
 10              sem2.acquire();
 11          } catch  (...)  {  ... }
 12      }
@@ -822,14 +822,14 @@ Instead, we can replicate this behavior with semaphores. The logic is identical.
 14      public   void  first() {
 15          try {
 16              ...
-17              seml.release();
+17              sem1.release();
 18          }  catch  (...)  {  ... }
 19      }
 20  
 21      public void  second() {
 22          try {
-23              semi.acquire();
-24              semi.release();
+23              sem1.acquire();
+24              sem1.release();
 25              ...
 26              sem2.release();
 27          }  catch  (...)  {  ... }
@@ -879,9 +879,9 @@ In actuality, the best way to do it, considering readability and efficiency, is 
 ```java
 1   void  fizzbuzz(int n)  {
 2       for (int i =  1;   i <=  n;  i++)  {
-3           if (i %   3  ==    0  &&   i %   5  ==  0) {
+3           if (i % 3  == 0  && i % 5  ==  0) {
 4               System.out.println("FizzBuzz");
-5           }  else if  (i %   3  ==  0)  {
+5           }  else if (i %   3  ==  0)  {
 6               System.out.println("Fizz");
 7           }  else if (i  %   5  ==  0) {
 8               System.out.println("Buzz");
@@ -903,15 +903,15 @@ To do this multithreaded, we want a structure that looks something like this:
 
 The code for this will look something like:
 ```java
-1   while (true)  {
-2        if(current>  max)   {
-3              return;
-4         }
-5        if(/*  divisibility test */) {
-6              System.out.println(/* print something*/);
-7              current++;
-8        }
-9   }
+1	while (true)  {
+2		if (current >  max)   {
+3			return;
+4		}
+5		if (/*  divisibility test */) {
+6			System.out.println(/* print something*/);
+7			current++;
+8		}
+9	}
 ```
 We'll need to  add some synchronization in the  loop.  Otherwise, the  value  of current could change between lines 2 - 4 and lines 5 - 8, and we can inadvertently exceed the  intended bounds of the  loop. Addi­ tionally, incrementing is not  thread-safe.
 
@@ -939,12 +939,12 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 8   
 9   public class FizzBuzzThread extends  Thread {
 10      private static Object  lock  =  new Object();
-11      protected static  int current =  1;
+11      protected static int current =  1;
 12      private int max;
 13      private boolean  div3,  div5;
 14      private String toPrint;
 15  
-16      public  FizzBuzzThread(boolean div3,   boolean  div5, int max, String toPrint)  {
+16      public  FizzBuzzThread(boolean div3, boolean  div5, int max, String toPrint)  {
 17          this.div3 =  div3;
 18          this.div5 =  div5;
 19          this.max  =  max;
@@ -962,8 +962,8 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 31                      return;
 32                  }
 33  
-34                  if ((current %   3  ==  0) == div3  &&
-35                  	(current %  5   ==  0) == div5) {
+34                  if ((current %  3  ==  0) == div3  &&
+35                  	(current %  5  ==  0) == div5) {
 36                      print();
 37                      current++;
 38                  }
@@ -992,7 +992,7 @@ Alternatively, if we're working in a language which supports this (Java 8 and ma
 3       new FBThread(i -> i %  3 == 0 && i % 5 == 0, i -> "FizzBuzz",   n),
 4       new FBThread(i -> i %  3 == 0 && i % 5 != 0, i -> "Fizz",  n),
 5       new FBThread(i -> i %  3 != 0 && i % 5 == 0, i -> "Buzz",  n),
-6       new FBThread(i  -> i %  3   != 0 &&   i %  5   != 0, i -> Integer.toString(i), n)};
+6       new FBThread(i -> i %  3 != 0 && i % 5 != 0, i -> Integer.toString(i), n)};
 7   for  (Thread  thread : threads) {
 8       thread.start();
 9   }

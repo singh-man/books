@@ -10,7 +10,7 @@ To add 759 + 674, I  would usually add digit [0] from each number, carry the one
 
 Can we make this a little easier? Yes! Imagine I decided to split apart the "addition" and "carry" steps. That is, I do the following:
 
-1. Add 759 + 674, but"forget"  to carry. I then get 323.
+1. Add 759 + 674, but "forget"  to carry. I then get 323.
 
 2. Add 759 + 674 but only do the carrying, rather than the addition of each digit. I then get 1110.
 
@@ -57,7 +57,7 @@ This is a very well known interview question, and a well known algorithm. If you
 
 Let's imagine our n-element array. Suppose it looks like this: 
 
-	[l] [2]  [3]  [4]  [5]
+	[1] [2]  [3]  [4]  [5]
 
 Using our BaseCase and Buildapproach,wecan askthisquestion:suppose we had a method shuffle ( ...) that worked on n  -   1 elements. Could we use this to shuffle n elements?
 
@@ -249,17 +249,17 @@ This process will compute that, for the example above, v  =  00011.
 The code below implements this algorithm. We've implemented the discarding aspect by partitioning the array by bit value as we go.
 
 ```java
-1 	int  findMissing(Arraylist<Bitinteger> array) {
+1 	int  findMissing(ArrayList<Bitinteger> array) {
 2 		/*  Start from the  least significant bit,  and work our  way  up */
 3 		return  findMissing(array, 0);
 4 	}
 5	
-6 	int  findMissing(Arraylist<Bitinteger> input,  int  column) {
+6 	int  findMissing(ArrayList<Bitinteger> input,  int  column) {
 7 		if (column >=  Bitinteger.INTEGER_SIZE) {//We're  done!
 8 			return 0;
 9 		}
-10		Arraylist<Bitlnteger> oneBits   =  new  Arraylist<Bitlnteger>(input.size() / 2);
-11		Arraylist<Bitlnteger> zeroBits  =  new  ArrayList<Bitlnteger>(input.size() / 2);
+10		ArrayList<Bitlnteger> oneBits   =  new  ArrayList<Bitlnteger>(input.size() / 2);
+11		ArrayList<Bitlnteger> zeroBits  =  new  ArrayList<Bitlnteger>(input.size() / 2);
 12	
 13		for  (Bitinteger t :   input) {
 14			if (t.fetch(column) ==  0)  {
@@ -388,7 +388,7 @@ To do so, we use a hash table to store the first time we see a particular differ
 7	
 8 		/* Return  the subarray. Note  that it starts one  *after* the   initial occurence  of
 9 		* this delta. */
-10		return extract(array,  match[0]  + 1,  match[l]);
+10		return extract(array,  match[0]  + 1,  match[1]);
 11	}
 12	
 13	/*   Compute  the  difference between the  number of  letters and numbers between the
@@ -419,9 +419,9 @@ To do so, we use a hash table to store the first time we see a particular differ
 38				} else {
 39					int match =  map.get(deltas[i]);
 40					int distance =  i -  match;
-41					int longest =  max[l]  - max[0];
+41					int longest =  max[1]  - max[0];
 42				if  (distance >  longest) {
-43					max[l]  =  i;
+43					max[1]  =  i;
 44					max[0] =  match;
 45				}
 46			}
@@ -432,7 +432,7 @@ To do so, we use a hash table to store the first time we see a particular differ
 51	char[] extract(char[] array, int start,  int end)  {/* same */}
 ```
 
-This solution takes 0(N) time, where N is size of the array.
+This solution takes O(N) time, where N is size of the array.
 
  
 **17.6    Count  of 2s:** Write a method to count the  number of 2s that appear in all the  numbers between O and  n (inclusive). 
@@ -626,14 +626,14 @@ In the last step above, we iterated through all items in S et2 and updated the r
 15	 * the  first set. */
 16	void  mergeClasses(HashMap<String,  NameSet>  groups,  String[][] synonyms) {
 17		for  (String[] entry :  synonyms) {
-18			String namel =  entry[e];
-19			String name2 = entry[l];
-20			NameSet  setl =   groups.get(namel);
-21			NameSet set2 =  groups.get(name2);
+18			String name1 = entry[e];
+19			String name2 = entry[1];
+20			NameSet setl = groups.get(name1);
+21			NameSet set2 = groups.get(name2);
 22			if (setl != set2) {
 23				/*  Always merge the  smaller set into the  bigger  one.  */
-24				NameSet  smaller =  set2.size() <  setl.size() ?  set2 :   setl;
-25				NameSet bigger   =  set2.size() <  setl.size() ?  setl :   set2;
+24				NameSet smaller =  set2.size() <  setl.size() ?  set2 :   setl;
+25				NameSet bigger  =  set2.size() <  setl.size() ?  setl :   set2;
 26				
 27				/*  Merge lists*/
 28				Set<String> otherNames =  smaller.getNames();
@@ -749,8 +749,8 @@ s   	connectEdges(graph,  synonyms);
 23  /*  Connect synonymous spellings. */
 24  void  connectEdges(Graph  graph,  String[][] synonyms) {
 25  	for  (String[]  entry :   synonyms) {
-26  		String namel = entry[0];
-27  		String name2 =  entry[l];
+26  		String name1 = entry[0];
+27  		String name2 = entry[1];
 28  		graph.addEdge(name1,    name2);
 29  	}
 30  }
@@ -790,7 +790,7 @@ To analyze the efficiency, we can think about the efficiency of each part of the
 - Reading in the data is linear with respect to the size of the data, so it takesO(B  + P) time, where B is the number of baby names and P is the number of pairs of synonyms. This is because we only do a constant amount of work per piece of input data.
 - To compute the frequencies, each edge gets "touched" exactly once across all of the graph searches and each node gets touched exactly once to check if it's been visited. The time of this part is O(B   +  P).
 
-Therefore, the total time of the algorithm is 0(B   +  P). We know we cannot do better than this since we must at least read in the B  +  P pieces of data.
+Therefore, the total time of the algorithm is O(B   +  P). We know we cannot do better than this since we must at least read in the B  +  P pieces of data.
 
 
 **17.8	Circus Tower:** A circus is designing a tower routine consisting of people standing atop one another's shoulders. For practical and aesthetic reasons, each person must be both shorter and lighter than the person below him or her. Given the heights and weights of each person in the circus, write a method to compute the largest possible number of people in such a tower.
@@ -818,18 +818,18 @@ By sorting the items by height, we have a relative order the items must appear i
 
 One approach is to essentially try all possibilities. After sorting by height, we iterate through the array. At each element, we branch into two choices: add this element to the subsequence (if it's valid)  or do not.
 ```java
-1 	Arraylist<Htwt> longestincreasingSeq(ArrayList<Htwt> items)  {
+1 	ArrayList<Htwt> longestincreasingSeq(ArrayList<Htwt> items)  {
 2 		Collections.sort(items);
-3 		return  bestSeqAtindex(items, new Arraylist<Htwt>(), 0);
+3 		return  bestSeqAtindex(items, new ArrayList<Htwt>(), 0);
 4 	}
 5	
-6 	Arraylist<Htwt> bestSeqAtindex(ArrayList<Htwt> array, Arraylist<Htwt> sequence,
+6 	ArrayList<Htwt> bestSeqAtindex(ArrayList<Htwt> array, ArrayList<Htwt> sequence,
 7 	int index) {
 8 		if  (index >=  array.size())  return sequence;
 9	
 10		HtWt value   = array.get(index);
 11	
-12		Arraylist<Htwt>   bestWith  =  null;
+12		ArrayList<Htwt>   bestWith  =  null;
 13		if (canAppend(sequence,  value))  {
 14			ArrayList<HtWt> sequenceWith = (ArrayList<HtWt>) sequence.clone();
 15			sequenceWitn.add(value);
@@ -853,7 +853,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 33		return last.isBefore(value);
 34	}
 35	
-36	Arraylist<HtWt>  max(ArrayList<HtWt> seql,  ArrayList<Htwt>  seq2)  {
+36	ArrayList<HtWt>  max(ArrayList<HtWt> seql,  ArrayList<Htwt>  seq2)  {
 37		if (seql == null) {
 38			return  seq2;
 39		}  else if (seq2  == null) {
@@ -897,26 +897,26 @@ There's a cleaner way to do this though.
 Imagine we had the longest subsequence that terminates with each element, A[ 0] through A[3]. Could we use this to find the longest subsequence that terminates with A[4]?
 
 	Array:  13,  14,  10,  11,  12
-	Longest(ending  with  A[0]):   13
-	Longest(ending with  A[l]):  13,   14
-	Longest(ending  with  A[2]):   10
-	Longest(ending with  A[3]):   10,  11
-	Longest(ending  with  A[4]):   10,  11,  12
+	Longest(ending with  A[0]):  13
+	Longest(ending with  A[1]):  13,  14
+	Longest(ending with  A[2]):  10
+	Longest(ending with  A[3]):  10,  11
+	Longest(ending with  A[4]):  10,  11,  12
 
 Sure. We just append A[4] on to the longest subsequence that it can be appended to. 
 
 This is now fairly straightforward to implement.
 ```java
-1 	Arraylist<Htwt> longestincreasingSeq(Arraylist<Htwt> array)  {
+1 	ArrayList<Htwt> longestincreasingSeq(ArrayList<Htwt> array)  {
 2 		Collections.sort(array);
 3 	
-4 		Arraylist<Arraylist<HtWt>> solutions = new Arraylist<Arraylist<Htwt>>();
-5 		Arraylist<Htwt> bestSequence =  null;
+4 		ArrayList<ArrayList<HtWt>> solutions = new ArrayList<ArrayList<Htwt>>();
+5 		ArrayList<Htwt> bestSequence =  null;
 6	
 7 		/*  Find the  longest subsequence  that terminates with  each  element. Track the
 8 		* longest overall subsequence  as  we  go. */
 9 		for  (int i = 0;  i <  array.size(); i++)  {
-10			Arraylist<HtWt>  longestAtindex =  bestSeqAtindex(array, solutions,  i);
+10			ArrayList<HtWt>  longestAtindex =  bestSeqAtindex(array, solutions,  i);
 11			solutions.add(i,  longestAtindex);
 12			bestSequence  =  max(bestSequence,  longestAtindex);
 13		}
@@ -925,22 +925,22 @@ This is now fairly straightforward to implement.
 16	}
 17	
 18	/*  Find the  longest subsequence  which terminates with  this element.   */
-19	Arraylist<Htwt> bestSeqAtindex(ArrayList<HtWt>  array,
-20	Arraylist<Arraylist<Htwt>> solutions, int index) {
+19	ArrayList<Htwt> bestSeqAtindex(ArrayList<HtWt>  array,
+20	ArrayList<ArrayList<Htwt>> solutions, int index) {
 21		HtWt  value  =  array.get(index);
 22	
-23		Arraylist<Htwt> bestSequence  =  new Arraylist<HtWt>();
+23		ArrayList<Htwt> bestSequence  =  new ArrayList<HtWt>();
 24	
 25		/*  Find the  longest subsequence  that we  can  append this element  to. */
 26		for  (int i = 0;  i <  index;  i++)  {
-27			Arraylist<HtWt>  solution =  solutions.get(i);
+27			ArrayList<HtWt>  solution =  solutions.get(i);
 28			if (canAppend(solution, value))  {
 29				bestSequence  =  max(solution,  bestSequence);
 30			}
 31		}
 32	
 33		/*  Append  element. */
-34		ArrayList<HtWt> best = (Arraylist<Htwt>) bestSequence.clone();
+34		ArrayList<HtWt> best = (ArrayList<Htwt>) bestSequence.clone();
 35		best.add(value);
 36	
 37		return best;
@@ -962,13 +962,13 @@ Let's first understand what this problem is asking for. It's asking for the kth 
 We know that biggest this kth number could be is 3ᵏ * 5ᵏ * 7ᵏ. So, the "stupid" way of doing this is to compute 3ᵃ * 5ᵇ * 7ᶜ for all values of a, b, and c between 0 and k. We can throw them all into a list, sort the list, and then pick the kth smallest value.
 ```java
 1   int getKthMagicNumber(int k)  {
-2   	Arraylist<Integer> possibilities  =  allPossibleKFactors(k);
+2   	ArrayList<Integer> possibilities  =  allPossibleKFactors(k);
 3   	Collections.sort(possibilities);
 4   	return possibilities.get(k);
 5   }
 6  
 7   ArrayList<Integer> allPossibleKFactors(int   k)  {
-8   	Arraylist<Integer> values   =  new Arraylist<Integer>();
+8   	ArrayList<Integer> values   =  new ArrayList<Integer>();
 9   	for  (int a  =  0;  a <=  k;  a++)  {//loop  3
 10  		int powA  = (int) Math.pow(3,   a);
 11  		for  (int b = 0;  b <= k;  b++) {//loop  5
@@ -1460,28 +1460,28 @@ We can implement this algorithm as shown below.
 ```java
 1 	LocationPair findClosest(String  wordl,   String word2,
 2 	                     HashMaplist<String, Integer>  locations) {
-3 		Arraylist<Integer> locationsl =  locations.get(wordl);
-4 		Arraylist<Integer> locations2 =  locations.get(word2);
+3 		ArrayList<Integer> locationsl =  locations.get(wordl);
+4 		ArrayList<Integer> locations2 =  locations.get(word2);
 5 		return findMinDistancePair(locationsl, locations2);
 6 	}
 7
-8 	LocationPair findMinDistancePair(Arraylist<Integer>  arrayl,
-9 	Arraylist<Integer> array2) {
-10		if (arrayl ==  null  ||    array2  ==  null  ||     arrayl.size() ==  0 ||
+8 	LocationPair findMinDistancePair(ArrayList<Integer>  array1,
+9 					ArrayList<Integer> array2) {
+10		if (array1 ==  null  ||    array2  ==  null  ||     array1.size() ==  0 ||
 11		array2.size() ==  0)  {
 12			return null;
 13		}
 14
-15		int indexl =  0;
+15		int index1 =  0;
 16		int index2  =  0;
 17		LocationPair  best  =  new  LocationPair(array1.get(0),  array2.get(0));
-18		LocationPair current  =  new  LocationPair(arrayl.get(0), array2.get(0));
+18		LocationPair current  =  new  LocationPair(array1.get(0), array2.get(0));
 19
-20		while  (indexl <  arrayl.size() &&   index2  <  array2.size()) {
-21			current.setlocations(arrayl.get(indexl),  array2.get(index2));
+20		while  (index1 <  array1.size() &&   index2  <  array2.size()) {
+21			current.setlocations(array1.get(index1),  array2.get(index2));
 22			best.updateWithMin(current);  // If shorter, update  values
 23			if (current.location! <  current.location2) {
-24				indexl++;
+24				index1++;
 25			}  else {
 26				index2++;
 27			}
@@ -1500,7 +1500,7 @@ We can implement this algorithm as shown below.
 40	}
 41
 42	/*  HashMaplist<String, Integer> is  a  HashMap  that maps from Strings to
-43	* Arraylist<Integer>.  See appendix  for  implementation.  * /
+43	* ArrayList<Integer>.  See appendix  for  implementation.  * /
 ```
 
 The precomputation step of this algorithm will take O(N) time, where N is the number of words in the string.
@@ -1592,18 +1592,18 @@ Instead of returning the head and tail of the linked list with NodePair, we can 
 1 	BiNode convert(BiNode  root) {
 2 		if (root ==    null) return null;
 3 
-4 		BiNode partl = convert(root.nodel);
+4 		BiNode part1 = convert(root.node1);
 5 		BiNode part2 = convert(root.node2);
 6
-7 		if (partl != null) {
-8 			concat(getTail(partl),  root);
+7 		if (part1 != null) {
+8 			concat(getTail(part1),  root);
 9 		}
 10
 11		if (part2 != null) {
 12			concat(root,  part2);
 13		}
 14
-15		return partl == null ?  root  :  partl;
+15		return part1 == null ?  root  :  part1;
 16	}
 17
 18	public   static BiNode getTail(BiNode   node)  {
@@ -1614,7 +1614,7 @@ Instead of returning the head and tail of the linked list with NodePair, we can 
 23		return node;
 24	}
 ```
-Other than a call to getTail, this code is almost identical to the first solution.  It is not, however, very effi­ cient. A leaf node at depth d will be "touched" by the getTail method d times (one for each node above it), leading to an 0( N² ) overall runtime, where N is the number of nodes in the tree.
+Other than a call to getTail, this code is almost identical to the first solution.  It is not, however, very effi­ cient. A leaf node at depth d will be "touched" by the getTail method d times (one for each node above it), leading to an O(N²) overall runtime, where N is the number of nodes in the tree.
 
 
 **Solution #3: Building a Circular Linked List**
@@ -1626,10 +1626,10 @@ This approach requires returning the head and tail of the linked list with BiNod
 1 	BiNode convertToCircular(BiNode root)  {
 2 		if (root ==  null) return null;
 3 
-4 		BiNode partl = convertToCircular(root.node1);
+4 		BiNode part1 = convertToCircular(root.node1);
 5 		BiNode part3 = convertToCircular(root.node2);
 6
-7 		if (partl ==  null &&   part3  == null) {
+7 		if (part1 ==  null &&   part3  == null) {
 8 			root.node1 =  root;
 9 			root.node2 =  root;
 10			return root;
@@ -1637,25 +1637,25 @@ This approach requires returning the head and tail of the linked list with BiNod
 12		BiNode tail3 =  (part3 null) ?  null  : part3.node1;
 13
 14		/*join  left to  root*/
-15		if (partl ==  null) {
+15		if (part1 ==  null) {
 16			concat(part3.node1,  root);
 17		}  else  {
-18			concat(partl.node1,  root);
+18			concat(part1.node1,  root);
 19		}
 20
 21		/*join right to  root*/
 22		if (part3 ==  null) {
-23			concat(root,  partl);
+23			concat(root,  part1);
 24		}  else   {
 25			concat(root,  part3);
 26		}
 27
 28		/*join right to  left*/
-29		if (partl != null &&   part3   != null) {
-30			concat(tail3,  partl);
+29		if (part1 != null &&   part3   != null) {
+30			concat(tail3,  part1);
 31		}
 32
-33		return partl  ==  null ?  root  :  partl;
+33		return part1  ==  null ?  root  :  part1;
 34	}
 35
 36	/*Convert   list to  a circular linked   list, then  break  the  circular connection.*/
@@ -1945,7 +1945,7 @@ Java's uses the PriorityQueue class to offer heap-like functionality. By default
 
 Selection Rank is a well-known algorithm in computer science to find the ith smallest (or largest) element in an array in linear time.
 
-If the elements are unique, you can find the ith smallest element in expected 0(n) time. The basic algo­
+If the elements are unique, you can find the ith smallest element in expected O(n) time. The basic algo­
 rithm operates like this:
 
 1.  Pick a random element in the array and use it as a "pivot:' Partition elements around the pivot, keeping track of the number of elements on the left side of the partition.
@@ -2459,8 +2459,8 @@ The naive solution is reasonably straightforward. Just search through the bigger
 9 	}
 10
 11	/*  Find  all  locations of  the  smaller string  within the  bigger  string. */
-12	Arraylist<Integer> search(String big,   String small)  {
-13		Arraylist<Integer> locations =  new Arraylist<Integer>();
+12	ArrayList<Integer> search(String big,   String small)  {
+13		ArrayList<Integer> locations =  new ArrayList<Integer>();
 14		for  (int i = 0;  i <  big.length() -  small.length() +  1;  i++)  {
 15			if (isSubstringAtLocation(big,  small,   i)) {
 16				locations.add(i);
@@ -2480,11 +2480,11 @@ The naive solution is reasonably straightforward. Just search through the bigger
 30	}
 31
 32	/*  HashMaplist<String, Integer>  is a  HashMap  that maps from Strings to
-33	*  Arraylist<Integer>. See  appendix for   implementation.  * /
+33	*  ArrayList<Integer>. See  appendix for   implementation.  * /
 ```
 We could have also used a substring and equals function, instead of writing isAtLocation. This is slightly faster (though not in terms of big 0) because it doesn't require creating a bunch of substrings.
 
-This will take 0( kbt) time, where k is the length of the longest string in T, b is the length of the bigger string, and t is the number of smaller strings within T.
+This will take O(kbt) time, where k is the length of the longest string in T, b is the length of the bigger string, and t is the number of smaller strings within T.
 
 **Solution #2**
 
@@ -2503,7 +2503,7 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 3  		Trie tree  =  createTrieFromString(big);
 4  		for   (String s  :  smalls) {
 5  			/* Get  terminating location  of  each  occurrence.*/
-6  			Arraylist<Integer> locations =  tree.search(s);
+6  			ArrayList<Integer> locations =  tree.search(s);
 7
 8  			/* Adjust  to  starting  location.  */
 9  			subtractValue(locations,  s.length());
@@ -2535,7 +2535,7 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 36 		public Trie(String s) {  insertString(s, 0);   }
 37 		public Trie() {}
 38
-39 		public   Arraylist<Integer> search(String s)  {
+39 		public   ArrayList<Integer> search(String s)  {
 40 			return root.search(s);
 41 		}
 42
@@ -2550,12 +2550,12 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 51
 52 	public class TrieNode {
 53 		private HashMap<Character, TrieNode> children;
-54 		private  Arraylist<Integer> indexes;
+54 		private  ArrayList<Integer> indexes;
 55 		private char  value;
 56
 57 		public  TrieNode()  {
 58 			children =  new HashMap<Character, TrieNode>();
-59 			indexes  =  new Arraylist<Integer>();
+59 			indexes  =  new ArrayList<Integer>();
 60 		}
 61
 62 		public void  insertString(String s,  int index)   {
@@ -2576,7 +2576,7 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 77			}
 78		}
 79
-80 		public   Arraylist<Integer> search(String s)  {
+80 		public   ArrayList<Integer> search(String s)  {
 81 			if (s ==  null  ||  s.length() ==  0)  {
 82 				return  indexes;
 83			}  else {
@@ -2599,7 +2599,7 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 100	}
 101
 102	/*  HashMapList<String,   Integer>   is a HashMap  that maps from Strings to
-103	* Arraylist<Integer>. See appendix  for  implementation. * /
+103	* ArrayList<Integer>. See appendix  for  implementation. * /
 ```
 It takes O(b²) time to create the tree and O(kt) time to search for the locations.
 
@@ -2639,7 +2639,7 @@ Each time we find a complete "small" word, we add it to a list along with the lo
 4 		TrieNode root   =  createTreeFromStrings(smalls,  maxLen).getRoot();
 5 
 6 		for  (inti = 0;  i <   big.length(); i++)  {
-7 			Arraylist<String> strings  =  findStringsAtloc(root,  big,   i);
+7 			ArrayList<String> strings  =  findStringsAtloc(root,  big,   i);
 8 			insertintoHashMap(strings,  lookup,  i);
 9 		}
 10
@@ -2658,8 +2658,8 @@ Each time we find a complete "small" word, we add it to a list along with the lo
 23	}
 24
 25	/* Find strings in  trie that start at index  "start" within   big.   */
-26	Arraylist<String>  findStringsAtLoc(TrieNode root,  String  big,   int start) {
-27		Arraylist<String> strings = new Arraylist<String>();
+26	ArrayList<String>  findStringsAtLoc(TrieNode root,  String  big,   int start) {
+27		ArrayList<String> strings = new ArrayList<String>();
 28		int index = start;
 29		while  (index  < big.length()) {
 30			root =  root.getChild(big.charAt(index));
@@ -2673,7 +2673,7 @@ Each time we find a complete "small" word, we add it to a list along with the lo
 38	}
 39
 40	/*  HashMapList<String,  Integer> is  a  HashMap  that maps from Strings to
-41	* Arraylist<Integer>. See appendix  for  implementation. */
+41	* ArrayList<Integer>. See appendix  for  implementation. */
 ```
 This algorithm  takes O(kt) time to create the trie and O( bk) time to search for all the strings.
 
@@ -2869,7 +2869,7 @@ Now, all we have to do is to find the minimum distance in this table.
 66		return new Range(bestStart,  bestEnd);
 67	}
 ```
-This algorithm  will potentially take O(SB) time, where Bis the length of bigString andSis the length of smal1String. This is because we doSsweeps through the array to build up the next occurrences table and each sweep takes 0(B) time.
+This algorithm  will potentially take O(SB) time, where Bis the length of bigString andSis the length of smal1String. This is because we doSsweeps through the array to build up the next occurrences table and each sweep takes O(B) time.
 
 It uses O(SB) space.
 
@@ -2982,14 +2982,14 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 
 ```java
 1 	Range shortestSupersequence(int[]  array,  int[]   elements) {
-2 		Arraylist<Queue<Integer>>  locations =  getLocationsForElements(array,  elements);
+2 		ArrayList<Queue<Integer>>  locations =  getLocationsForElements(array,  elements);
 3 		if (locations ==  null) return  null;
 4 		return  getShortestClosure(locations);
 5 	}
 6
 7 	/* Get list of  queues (linked  lists) storing  the indices  at which each element in
 8 	*  smallArray appears in  bigArray. */
-9 	Arraylist<Queue<Integer>> getlocationsForElements(int[]  big,  int[] small)  {
+9 	ArrayList<Queue<Integer>> getlocationsForElements(int[]  big,  int[] small)  {
 10		/* Initialize hash map  from item value to  locations. */
 11		HashMap<Integer,   Queue<Integer>> itemlocations =
 12				new HashMap<Integer,  Queue<Integer>>();
@@ -3006,7 +3006,7 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 23			}
 24		}
 25
-26		Arraylist<Queue<Integer>> alllocations =  new Arraylist<Queue<Integer>>();
+26		ArrayList<Queue<Integer>> alllocations =  new ArrayList<Queue<Integer>>();
 27		allLocations.addAll(itemLocations.values());
 28		return alllocations;
 29	}
@@ -3203,11 +3203,11 @@ Implementing this is now somewhat straightforward.
 28		int  b = -2  *  rl;
 29		int  C = rl * rl - r2;
 30
-31		double  partl =  -1  *  b;
+31		double  part1 =  -1  *  b;
 32		double  part2 =  Math.sqrt(b * b - 4  *  a  *  c);
 33		double  part3 =  2 *  a;
 34
-35		int  solutionX =  (int) ((partl + part2) / part3);
+35		int  solutionX =  (int) ((part1 + part2) / part3);
 36		int  solutionY =  rl -  solutionX;
 37
 38		int[] solution =  {solutionX,  solutionY};
@@ -3242,7 +3242,7 @@ Recall that b = -2r₁. Now,we wind up with this equation:
 	=  [-b + sqrt(b² - 4ac)]/2a
 ```
 
-Therefore, if we use x = (partl +  part2) / part3, then we'll get (partl  - part2) / part3 for the value for y.
+Therefore, if we use x = (part1 +  part2) / part3, then we'll get (part1  - part2) / part3 for the value for y.
 
 We don't carewhich one we callx and which one we cally, so we can use either one. It'll work out the same in the end.
 
@@ -3514,7 +3514,7 @@ We've chosen to use a HistogramData object to store this extra information, but 
 ```
  
 
-This algorithm takes 0( N) time. Since we have to look at every bar, we cannot do better than this.
+This algorithm takes O(N) time. Since we have to look at every bar, we cannot do better than this.
 
 Solution #3 (Optimized & Simplified)
 
@@ -3650,8 +3650,8 @@ If we wanted to find the shortest path, we would want to use breadth-first searc
 36		return null;
 37	}
 38
-39	Arraylist<String> wordsOneAway(String  word)  {
-40		Arraylist<String> words  =  new Arraylist<String>();
+39	ArrayList<String> wordsOneAway(String  word)  {
+40		ArrayList<String> words  =  new ArrayList<String>();
 41		for (int i  =  0;  i < word.length();  i++)  {
 42			for (char c  =   'a'; c  <= 'z'; c++)  {
 43				String w  =  word.substring(0,  i) + c  +  word.substring(i +  1);
@@ -3709,7 +3709,7 @@ The algorithm is otherwise essentially the same.
 17		}
 18
 19		visited.add(start);
-20		Arraylist<String> words  =  getValidLinkedWords(start,  wildcardToWordlist);
+20		ArrayList<String> words  =  getValidLinkedWords(start,  wildcardToWordlist);
 21	
 22		for  (String word :  words)  {
 23			Linkedlist<String> path =  transform(visited,  word,  stop,   wildcardToWordList);
@@ -3726,7 +3726,7 @@ The algorithm is otherwise essentially the same.
 34	HashMapList<String,  String>   createWildcardToWordMap(String[]   words)  {
 35		HashMapList<String,  String>  wildcardToWords = new HashMaplist<String,  String>();
 36		for  (String word :   words)  {
-37			Arraylist<String> linked =  getWildcardRoots(word);
+37			ArrayList<String> linked =  getWildcardRoots(word);
 38			for  (String linkedWord  :   linked) {
 39				wildcardToWords.put(linkedWord,  word);
 40			}
@@ -3736,7 +3736,7 @@ The algorithm is otherwise essentially the same.
 44
 45	/*  Get  list of  wildcards associated  with  word.  */
 46	ArrayList<String> getWildcardRoots(String  w) {
-47		ArrayList<String>  words =  new Arraylist<String>();
+47		ArrayList<String>  words =  new ArrayList<String>();
 48		for   (inti = 0;  i <   w.length();  i++)   {
 49			String word =  w.substring(0,  i) + "_"  + w.substring(i + 1);
 50			words.add(word);
@@ -3745,10 +3745,10 @@ S2		return words;
 53	}
 54
 55	/* Return  words that are  one  edit away.  */
-56	Arraylist<String>  getValidLinkedWords(String  word,
+56	ArrayList<String>  getValidLinkedWords(String  word,
 57			HashMaplist<String,   String>  wildcardToWords)  {
 58		ArrayList<String> wildcards =  getWildcardRoots(word);
-59		Arraylist<String> linkedWords  =  new Arraylist<String>();
+59		ArrayList<String> linkedWords  =  new ArrayList<String>();
 60		for (String  wildcard :   wildcards)  {
 61			ArrayList<String> words  =  wildcardToWords.get(wildcard);
 62			for   (String linkedWord   :   words)  {
@@ -3761,7 +3761,7 @@ S2		return words;
 69	}
 70
 71	/*  HashMaplist<String, String> is a  HashMap  that maps from  Strings to
-72	* Arraylist<String>. See appendix   for  implementation. * /
+72	* ArrayList<String>. See appendix   for  implementation. * /
 ```
 This will work, but we can still make it faster.
 
@@ -3829,7 +3829,7 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 39 			}
 40 
 41 			/*  Add friends to  queue.  */
-42 			Arraylist<String> words =  getValidLinkedWords(word,  wildcardToWordList);
+42 			ArrayList<String> words =  getValidLinkedWords(word,  wildcardToWordList);
 43 			for  (String w   :   words)  {
 44 				if (!primary.visited.containsKey(w))  {
 45 					PathNode next =  new PathNode(w, pathNode);
@@ -3898,9 +3898,9 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 108 }
 109 
 110 /* HashMaplist<String, Integer> is a  HashMap  that maps from  Strings to
-111 * Arraylist<Integer>.  See  appendix  for  implementation. * /
+111 * ArrayList<Integer>.  See  appendix  for  implementation. * /
 ```
-This algorithm's runtime is a bit harder to describe since it depends on what the language looks like, as well as the actual source and destination words. One way of expressing it is that if each word has E words that are one edit away and the source and destination are distance D, the runtime is 0( E012). This is how much work each breadth-first search does.
+This algorithm's runtime is a bit harder to describe since it depends on what the language looks like, as well as the actual source and destination words. One way of expressing it is that if each word has E words that are one edit away and the source and destination are distance D, the runtime is O(E⁰\²). This is how much work each breadth-first search does.
 
 Of course, this is a lot of code to implement  in an interview. It just wouldn't be possible.   More real­ istically, you'd leave out a lot of the details. You might write just the skeleton code of transform and searchLevel, but leave out the rest.
 
@@ -4486,11 +4486,11 @@ The lists in WordGroup are created through a static method called createWordGrou
 ```java
 1 	public   class WordGroup   {
 2 		private HashMap<String, Boolean> lookup =  new HashMap<String, Boolean>();
-3 		private Arraylist<String> group =   new Arraylist<String>();
+3 		private ArrayList<String> group =   new ArrayList<String>();
 4 		public  boolean  containsWord(String s)  {  return  lookup.containsKey(s); }
 5 		public  int length() {  return group.size();  }
 6 		public  String getWord(int  i) {  return group.get(i);  }
-7 		public  Arraylist<String> getWords()  {  return group;  }
+7 		public  ArrayList<String> getWords()  {  return group;  }
 8
 9 		public   void  addWord  (String s) {
 10			group.add(s);
@@ -4613,20 +4613,20 @@ We'll need to return a list of document  pairs and their similarities.  We'll us
 It will also be useful to have a class that represents the documents.
 ```java
 1  	public class  Document {
-2  		private Arraylist<Integer> words;
+2  		private ArrayList<Integer> words;
 3  		private int  docid;
 4
-5  		public  Document(int id,  Arraylist<Integer> w) {
+5  		public  Document(int id,  ArrayList<Integer> w) {
 6  			docid  =  id;
 7  			words  =  w;
 8  		}
 9
-10 		public  Arraylist<Integer>   getWords() {  return words;}
+10 		public  ArrayList<Integer>   getWords() {  return words;}
 11 		public int getid()  { return docid;  }
 12 		public int size()  {  return  words == null  ?  0 : words.size();  }
 13 	}
 ```
-Strictly speaking, we don't need any of this. However,  readability is important, and it's a lot easier to read ArrayList<Document>than Arraylist<Arraylist<Integer>>.
+Strictly speaking, we don't need any of this. However,  readability is important, and it's a lot easier to read ArrayList<Document>than ArrayList<ArrayList<Integer>>.
 
 Doing this sort  of thing not only shows good coding style, it also makes your life in an interview a lot easier. You have to write a lot less. (You probably would not define the entire Document class, unless you had  extra time  or your interviewer asked you to.)
 ```java
@@ -4721,7 +4721,7 @@ If there are P pairs with similarity > 0, and each document has W words, then th
 
 Let's think about our previous algorithm. Is there any way we can make it more optimal?
 
-If we consider the runtime -O(PW +  DW)- we probably can't get rid of the O(DW) factor. We have to touch each word at least once, and there areO(DW) words. Therefore, if there's an optimization to be made, it's probably in the 0( PW) term.
+If we consider the runtime -O(PW +  DW)- we probably can't get rid of the O(DW) factor. We have to touch each word at least once, and there areO(DW) words. Therefore, if there's an optimization to be made, it's probably in the O(PW) term.
 
 It would be difficult to eliminate the P part in O(PW) because we have to at least print all P pairs (which takesO(P) time). The best place to focus, then, is on the W part. ls there some way we can do less thanO(W) work for each pair of similar documents?
 
@@ -4773,7 +4773,7 @@ Comparing this runtime to the previous one is a bit tricky. One way we can look 
 11		HashMapList<Integer,  Integer> wordToDocs =  new HashMapList<Integer,  Integer>();
 12
 13		for  (Document doc  :   documents.values()) {
-14			Arraylist<Integer> words =  doc.getWords();
+14			ArrayList<Integer> words =  doc.getWords();
 15			for  (int word :  words)  {
 16				wordToDocs.put(word,  doc.getid());
 17			}
@@ -4789,7 +4789,7 @@ Comparing this runtime to the previous one is a bit tricky. One way we can look 
 27		HashMap<DocPair,  Double> similarities =  new HashMap<DocPair,  Double>();
 28		Set<Integer> words =  wordToDocs.keySet();
 29		for  (int word :   words)  {
-30			Arraylist<Integer> docs =  wordToDocs.get(word);
+30			ArrayList<Integer> docs =  wordToDocs.get(word);
 31			Collections.sort(docs);
 32			for  (int i = 0;  i <  docs.size();  i++)  {
 33				for  (int j =  i + 1;  j <   docs.size();  j++)  {
@@ -4825,7 +4825,7 @@ Comparing this runtime to the previous one is a bit tricky. One way we can look 
 63	}
 64
 65	/*  HashMapList<Integer,   Integer> is  a HashMap  that maps from Integer to
-66	* Arraylist<Integer>. See appendix for  implementation. * /
+66	* ArrayList<Integer>. See appendix for  implementation. * /
 ```
 For a set of documents with sparse similarity, this will run much faster than the original naive algorithm, which compares all pairs of documents directly.
 
@@ -4862,17 +4862,17 @@ We will use an Element class to group together documents and words. When we sort
 16
 17	HashMap<DocPair,  Double> computeSimilarities(
 18			HashMap<Integer, Document>  documents)  {
-19		Arraylist<Element>  elements =    sortWords(documents);
+19		ArrayList<Element>  elements =    sortWords(documents);
 20		HashMap<DocPair,  Double> similarities =  computeintersections(elements);
 21		adjustToSimilarities(documents,  similarities);
 22		return similarities;
 23	}
 24
 25	/*  Throw all words into one list,  sorting by the  word and then  the  document. */
-26	Arraylist<Element>  sortWords(HashMap<Integer,  Document>  docs)  {
-27		Arraylist<Element> elements  =  new Arraylist<Element>();
+26	ArrayList<Element>  sortWords(HashMap<Integer,  Document>  docs)  {
+27		ArrayList<Element> elements  =  new ArrayList<Element>();
 28		for  (Document doc  :   docs.values()) {
-29			Arraylist<Integer> words =  doc.getWords();
+29			ArrayList<Integer> words =  doc.getWords();
 30			for  (int word :   words)  {
 31				elements.add(new   Element(word,  doc.get!d()));
 32			}

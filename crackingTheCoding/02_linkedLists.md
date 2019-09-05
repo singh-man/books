@@ -195,7 +195,7 @@ Of course, this is only a valid solution if the interviewer says it is valid.
 A second way to solve this is to use C++ and to pass values by reference. This allows us to return the node value, but also update the counter by passing a pointer to it.
 
 ```c++
-1 	node*  nthToLast(node*  head,   int k,  int&  i) {
+1 	node*  nthToLast(node*  head, int k, int&  i) {
 2 		if (head ==    NULL)  {
 3 			return NULL;
 4 		}
@@ -224,7 +224,7 @@ We described earlier that the issue was that we couldn't simultaneously return a
 4	
 5 	LinkedListNode  kthTolast(LinkedlistNode  head,   int k)  {
 6 		Index  idx  = new Index();
-7 		return  kthToLast(head, k,   idx);
+7 		return kthToLast(head, k,   idx);
 8 	}
 9	
 10	LinkedListNode kthToLast(LinkedListNode head, int k, Index  idx) {
@@ -461,7 +461,7 @@ The code below implements this algorithm.
 
 ```java
 l 	LinkedListNode addlists(LinkedListNode l1, LinkedListNode l2, int  carry) {
-2 		if (l1 == ·null &&  l2 ==    null  &&   carry ==   0) {
+2 		if (l1 == null &&  l2 ==    null  &&   carry ==   0) {
 3 			return null;
 4 		}
 5	
@@ -721,8 +721,8 @@ It's both. We create a simple class with two members, a boolean and a node, and 
 
 ```java
 1  class   Result  {
-2      public   LinkedlistNode  node;
-3      public   boolean  result;
+2      public LinkedlistNode  node;
+3      public boolean  result;
 4  }
 ```
 
@@ -819,7 +819,7 @@ We should be careful here to not inadvertently draw a special case by making the
 
 Let's first ask how we would determine if two linked lists intersect.
 
-##### Determining if there's an intersection.
+**Determining if there's an intersection.**
 
 How would we detect if two linked lists intersect? One approach  would be to use a hash table and just throw all the linked lists nodes into there. We would need to be careful to reference the linked lists by their memory location, not by their value.
 
@@ -827,7 +827,7 @@ There's an easier way though. Observe that two intersecting linked lists will al
 
 How do we find where the intersection is, though?
 
-##### Finding  the intersecting node.
+**Finding  the intersecting node.**
 
 One thought is that we could traverse backwards through each linked list. When the linked lists "split"; that's the intersection. Of course, you can't really traverse backwards through a singly linked list.
 
@@ -842,7 +842,7 @@ How can we do this? Well, if we know the lengths of the two linked lists, then t
 
 We can get the lengths at the same time as we get the tails of the linked lists (which we used in the first step to determine if there's an intersection).
 
-##### Putting it all together.
+**Putting it all together.**
 
 We now have a multistep process.
 
@@ -853,24 +853,24 @@ We now have a multistep process.
 5. Now, traverse on each linked  list until the  pointers are the  same. The implementation for this is below.
 
 ```java
-1 	LinkedlistNode findintersection(LinkedListNode  listl, LinkedListNode list2) {
-2 		if (listl ==  null  ||    list2 == null) return null;
+1 	LinkedlistNode findintersection(LinkedListNode  list1, LinkedListNode list2) {
+2 		if (list1 ==  null  ||    list2 == null) return null;
 3 	
 4		/* Get   tail and  sizes. */
-5		Result resultl  =  getTailAndSize(listl);
+5		Result result1  =  getTailAndSize(list1);
 6		Result result2  = getTailAndSize(list2);
 7	
 8		/* If different tail  nodes, then  there's no  intersection. */
-9		if (resultl.tail !=  result2.tail) {
+9		if (result1.tail !=  result2.tail) {
 10			return null;
 11		}
 12	
 13		/* Set pointers to the start  of  each linked  list. */
-14		LinkedlistNode shorter =  resultl.size <   result2.size ?  list1 :   list2;
-15		LinkedlistNode longer  =  resultl.size <   result2.size ?  list2 :    list1;
+14		LinkedlistNode shorter =  result1.size <   result2.size ?  list1 :   list2;
+15		LinkedlistNode longer  =  result1.size <   result2.size ?  list2 :    list1;
 16	
 17		/* Advance the pointer for the longer linked list by difference in lengths. */
-18		longer = getKthNode(longer,  Math.abs(resultl.size -  result2.size));
+18		longer = getKthNode(longer,  Math.abs(result1.size -  result2.size));
 19	
 20		/* Move both pointers until  you  have  a  collision. */
 21		while (shorter  !=  longer) {
@@ -933,13 +933,13 @@ SOLUTION
  
 This is a modification of a classic interview problem: detect if a linked list has a loop. Let's apply the Pattern Matching approach.
 
-##### Part  1 : Detect If Linked List Has A Loop
+**Part  1 : Detect If Linked List Has A Loop**
 
 An easy way to detect  if a linked list has a loop is through  the FastRunner / SlowRunner  approach. FastRunner moves two steps at a time, while SlowRunner moves one step. Much like two cars racing around a track at different steps, they must eventually meet.
 
 An astute reader  may  wonder   if FastRunner might  "hop  over"  SlowRunner completely,   without ever  colliding. That's  not  possible.  Suppose that  FastRunner did hop  over  SlowRunner, such  that SlowRunner is at spot  i and  FastRunner is at spot  i +   1. In the previous step, SlowRunner would be at spot i -   1 and FastRunner would at spot  ( ( i +  1)  -   2),  or spot i -   1. That is, they would have collided.
 
-##### Part 2: When Do They Collide?
+**Part 2: When Do They Collide?**
 
 Let's assume  that the linked list has a "non-looped"part of size k.
 
@@ -963,7 +963,7 @@ So, when  do they  meet?  Well, if FastRunner is LOOP_SIZE           K  steps  b
 ![](media/02_8_1.JPG)
 
 
-##### Part 3: How Do You Find The Start of the Loop?
+**Part 3: How Do You Find The Start of the Loop?**
 
 We now know that CollisionSpot is K nodes before the start of the loop. Because K  =  mod (k,  LOOP_ SIZE) (or, in other  words, k =  K   +  M    *  LOOP_SIZE, for any integer M), it is also correct to say that it is k nodes from the loop start. For example, if node N is 2 nodes into a 5 node loop, it is also correct to say that it is 7, 12, or even 397 nodes into the loop.
 
@@ -971,7 +971,7 @@ Therefore, both  CollisionSpot and LinkedlistHead are k nodes from the start of 
 
 Now, if we keep one pointer at CollisionSpot and move the other one to LinkedListHead, they will each be k nodes from LoopStart. Moving the two pointers at the same speed will cause them to collide again-this time after k steps, at which point they will both be at LoopStart. All we have to do is return this node.
 
-##### Part 4: Putting It All Together
+**Part 4: Putting It All Together**
 
 To summarize, we move  FastPointer twice as fast as SlowPointer. When SlowPointer enters the  loop, after k nodes,  FastPointer is k nodes into the loop. This means that  FastPointer and SlowPointer are LOOP_SIZE  -  k nodes away from each other.
 
@@ -1023,6 +1023,5 @@ The code below implements this algorithm.
 
 Additional Questions:Trees and Graphs (#4.3),  Object-Oriented Design (#7.12),  System Design and Scal­ability (#9.5), Moderate Problems (#16.25), Hard Problems (#17.12).
 
-Hints start on page 653.
 
 

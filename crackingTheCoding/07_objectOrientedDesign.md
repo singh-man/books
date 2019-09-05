@@ -157,7 +157,7 @@ Let's assume that your interviewer clarifies that the deck is a standard 52-card
 43  }
 44  
 45  public   class Hand <T  extends  Card> {
-46      protected  Arraylist<T> cards  =  new Arraylist<T>();
+46      protected  ArrayList<T> cards  =  new ArrayList<T>();
 47  
 48      public   int score() {
 49          int score  =  0;
@@ -183,7 +183,7 @@ Now, let's say we're building a blackjack game, so we need to know the value of 
 3       * multiple values.  Return  the  highest possible score  that's under  21,  or  the
 4       * lowest  score  that's  over. */
 5       public   int score() {
-6           Arraylist<Integer> scores =  possibleScores();
+6           ArrayList<Integer> scores =  possibleScores();
 7           int maxUnder  =   Integer.MIN_VALUE;
 8           int minOver =   Integer.MAX_VALUE;
 9           for  (int score   :   scores) {
@@ -198,7 +198,7 @@ Now, let's say we're building a blackjack game, so we need to know the value of 
 18  
 19      /* return a  list of  all poss ible  scores   this hand could  have  (evaluating each
 20      *  ace  as  both  1  and  11 */
-21      private  Arraylist<Integer> possibleScores() { ... }
+21      private  ArrayList<Integer> possibleScores() { ... }
 
 22  
 23      public boolean  busted()  { return score() >  21;  }
@@ -270,7 +270,7 @@ CallHandler represents the body of the program, and all calls are funneled first
 9   
 10      /* List of  employees,  by level.
 11       * employeeLevels[0] = respondents
-12       * employeeLevels[l] = managers
+12       * employeeLevels[1] = managers
 13       * employeeLevels[2] = directors
 14       */
 15      List<List<Employee>> employeeLevels;
@@ -1136,11 +1136,11 @@ The Conversation class is implemented  as an abstract class, since all Conversat
 
 ```java
 1   public abstract  class  Conversation {
-2       protected Arraylist<User> participants;
+2       protected ArrayList<User> participants;
 3       protected int id;
-4       protected Arraylist<Message>   messages;
+4       protected ArrayList<Message>   messages;
 5   
-6       public Arraylist<Message>   getMessages()  {  ... }
+6       public ArrayList<Message>   getMessages()  {  ... }
 7       public boolean  addMessage(Message m)  {  ... }
 8       public int getid() {  ... }
 9   }
@@ -1285,7 +1285,7 @@ One possible design for Othello is below.
 17          board =   new Board(ROWS,   COLUMNS);
 18          players =   new Player[2];
 19          players[0] =   new  Player(Color.Black);
-20          players[l] =   new Player(Color.White);
+20          players[1] =   new  Player(Color.White);
 21      }
 22 
 23      public  static  Game  getinstance() {
@@ -1640,24 +1640,24 @@ To shuffle a grid, we do a very similar thing, just converting the index into a 
 1   void  shuffleBoard()  {
 2       int nCells   =  nRows *  nColumns ;
 3       Random  random =  new  Random();
-4       for (int indexl =  0;  index1 <   nCells;  index1++) {
-5           int index2   =  indexl + random.nextint(nCells  -  index1);
+4       for (int index1 =  0;  index1 <   nCells;  index1++) {
+5           int index2   =  index1 + random.nextint(nCells  -  index1);
 6           if (index1 != index2)  {
-7               /* Get  cell at  indexl.  */
-8               int rowl  =  indexl / nColumns;
-9               int columnl  =  (indexl -  rowl  *  nColumns)  %  nColumns;
+7               /* Get  cell at  index1.  */
+8               int rowl  =  index1 / nColumns;
+9               int column1  =  (index1 -  rowl  *  nColumns)  %  nColumns;
 10              Cell   celll =  cells[row1][column1];
 11  
 12              /* Get  cell at  index2. */
 13              int row2 =  index2   / nColumns;
-14              int columN2 =  (index2 -  row2 *  nColumns)  %  nColumns;
-15              Cell cell2 =  cells[row2][columN2] ;
+14              int column2 =  (index2 -  row2 *  nColumns)  %  nColumns;
+15              Cell cell2 =  cells[row2][column2] ;
 16  
 17              /* Swap.  */
-18              cells[rowl][columnl] =  cell2;
+18              cells[rowl][column1] =  cell2;
 19              cell2.setRowAndColumn(row1,   column1);
-20              cells[row2][columN2]   =  celll;
-21              cell1.setRowAndColumn(row2,   columN2);
+20              cells[row2][column2]   =  celll;
+21              cell1.setRowAndColumn(row2,   column2);
 22          }
 23      }
 24  }
@@ -1714,7 +1714,7 @@ cells to a queue, to flip their neighboring cells.
 13  
 14          for  (int[]  delta :   deltas) {
 15              int r =  current.getRow() +  delta[0];
-16              int c =  current.getColumn()  + delta[l];
+16              int c =  current.getColumn()  + delta[1];
 17  
 18              if (inBounds(r,  c))   {
 19                  Cell  neighbor  =  cells[r][c];
@@ -1795,11 +1795,11 @@ A file system, in its most simplistic version, consists  of Files and Directorie
 48  }
 49  
 50  public class  Directory extends  Entry  {
-51      protected Arraylist<Entry> contents;
+51      protected ArrayList<Entry> contents;
 52  
 53      public Directory(String n,  Directory p)  {
 54          super(n,  p);
-55          contents =  new Arraylist<Entry>();
+55          contents =  new ArrayList<Entry>();
 56      }
 57  
 58      public int size() {

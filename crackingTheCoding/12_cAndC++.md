@@ -274,7 +274,7 @@ One  will often see programmers perform addition on a pointer, such  as what you
 ```
 1      int *  p  =  new  int[2];
 2      p[0] =   0;
-3      p[l] =  1;
+3      p[1] =  1;
 4      p++;
 5      cout <<  *p;  // Outputs  1
 ```
@@ -869,7 +869,7 @@ To implement this solution, we do the following.
 ```
 You should carefully  observe what is happening on lines 11 through 13. lf there are five rows of six columns each,  array[0] will point to array[S], array[1] will point to array[11], and  so on.
 
-Then,  when we  actually call array[l][3], the  computer looks  up  array[l], which is a  pointer to another spot in memory-specifically, a pointer to array[5]. This element is treated as its own array, and we then get  the  third  (zero-indexed) element from it.
+Then,  when we  actually call array[1][3], the  computer looks  up  array[1], which is a  pointer to another spot in memory-specifically, a pointer to array[5]. This element is treated as its own array, and we then get  the  third  (zero-indexed) element from it.
 
 Constructing the  array  in a single call to malloc has the  added benefit of allowing disposal of the  array with a single free call rather than using a special function to free the  remaining data blocks.
 

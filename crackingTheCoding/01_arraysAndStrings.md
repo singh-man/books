@@ -1,10 +1,9 @@
 ## 1 Arrays and Strings
 
 
-Hopefully, all readers of this book are familiar with arrays and strings, so we won't .bore you with such details. Instead, we'll focus on some of the more common techniques and issues with these data struc­
-tures.
+Hopefully, all readers of this book are familiar with arrays and strings, so we won't .bore you with such details. Instead, we'll focus on some of the more common techniques and issues with these data struc­tures.
 
-Please note that array questions and string questions are often interchangeable.That is, a question that this book states using an array may be asked instead as a string question, and vice versa.
+Please note that array questions and string questions are often interchangeable. That is, a question that this book states using an array may be asked instead as a string question, and vice versa.
 
 
 ### Hash Tables
@@ -29,15 +28,15 @@ If the number of collisions is very high, the worst case runtime is O(N), where 
 Alternatively, we can implement the hash table with a balanced binary search tree. This gives us an O(log N) lookup time. The advantage of this is potentially using less space, since we no longer allocate a large array. We can also iterate through the keys in order, which can be useful sometimes.
 
 
-### Arraylist & Resizable Arrays
+### ArrayList & Resizable Arrays
 
 In some languages, arrays (often called lists in this case) are automatically resizable. The array or list will grow as you append items. In other languages, like Java, arrays are fixed length. The size is defined when you create the array.
 
-When you need an array-like data structure that offers dynamic resizing, you would usually use an Arraylist. An Arraylist is an array that resizes itself as needed while still providing O(1) access. A typical implementa­ tion is that when the array is full, the array doubles in size. Each doubling takes 0(n) time, but happens so rarely that its amortized insertion time is still O(1).
+When you need an array-like data structure that offers dynamic resizing, you would usually use an ArrayList. An ArrayList is an array that resizes itself as needed while still providing O(1) access. A typical implementa­ tion is that when the array is full, the array doubles in size. Each doubling takes O(n) time, but happens so rarely that its amortized insertion time is still O(1).
 
 ```java
-1	Arraylist<String>  merge(String[]  words,   String[] more)  {
-2		Arraylist<String> sentence =  new Arraylist<String>();
+1	ArrayList<String>  merge(String[]  words,   String[] more)  {
+2		ArrayList<String> sentence =  new ArrayList<String>();
 3		for (String w : words)  sentence.add(w);
 4		for (String w : more)  sentence.add(w);
 5		return sentence;
@@ -84,7 +83,7 @@ Imagine you were concatenating a list of strings, as shown below. What would the
 7	}
 ```
 
-On each concatenation,a new copy of the string is created, and the two strings are copied over,character by character. The first iteration requires us to copy x characters. The second iteration requires copying 2x characters.T he third iteration requires 3x,and so on.The total time therefore isO(x + 2x + . . . + nx). This reduces toO(xN²).
+On each concatenation,a new copy of the string is created, and the two strings are copied over,character by character. The first iteration requires us to copy x characters. The second iteration requires copying 2x characters. The third iteration requires 3x, and so on.The total time therefore is O(x + 2x + . . . + nx). This reduces to O(xn²).
 
 > Why is it O(xn²)? Because 1 + 2 + ... + n equals n(n+1)/2, or O(n²).
 
@@ -92,7 +91,7 @@ StringBuilder can help you avoid.this problem. StringBuilder simply creates a re
 
 ```java
 1	String  joinWords(String[]  words) {
-2		StringBuilder  sentence    new  StringBuilder();
+2		StringBuilder  sentence = new  StringBuilder();
 3		for (String w   :   words)  {
 4			sentence.append(w);
 5		}
@@ -143,14 +142,14 @@ The code below implements this algorithm.
 13	}
 ```
 
-The time complexity for this code isO(n), where n is the length of the string. The space complexity isO(l). (You could also argue the time complexity is O(1), since the for loop will never iterate through more than 128 characters.) If you didn't want to assume the character set is fixed, you could express the complexity as O(c) space and O(min (c, n)) or O(c) time, where c is the size of the character set.
+The time complexity for this code is O(n), where n is the length of the string. The space complexity is O(1). (You could also argue the time complexity is O(1), since the for loop will never iterate through more than 128 characters.) If you didn't want to assume the character set is fixed, you could express the complexity as O(c) space and O(min (c, n)) or O(c) time, where c is the size of the character set.
 
 
 We can reduce our space usage by a factor of eight by using a bit vector. We will assume, in the below code, that the string only uses the lowercase letters a through z. This will allow us to use just a single int.
 
 ```java
 1 	boolean   isUniqueChars(String str)  {
-2 		int  checker =  0;
+2 		int  checker = 0;
 3 		for  (int  i = 0;  i < str.length(); i++) {
 4 			int  val =  str.charAt(i) -   'a';
 5 			if ((checker & (1 << val))  >   0) {
@@ -164,7 +163,7 @@ We can reduce our space usage by a factor of eight by using a bit vector. We wil
 
 If we can't use additional data structures, we can do the following:
 
-1. Compare every character of the string to every other character of the string. This will take 0(N²) time and O(1) space.
+1. Compare every character of the string to every other character of the string. This will take O(N²) time and O(1) space.
 2. If we are allowed to modify the input string, we could sort the string in O(n log(n)) time and then linearly check the string for neighboring characters that are identical. Careful, though: many sorting algorithms take up extra space.
 
 These solutions are not as optimal in some respects, but might be better depending on the constraints of the problem.
@@ -218,7 +217,7 @@ We can also use the definition of a permutation-two words with the same characte
 6 		int[] letters = new  int[128]; // Assumption
 7 	
 8 		char[]  s_array =  s.toCharArray();
-9 		for  (char c  :    s_array) {  // count number of  each char in  s.
+9 		for  (char c  : s_array) {  // count number of  each char in  s.
 10			letters[c]++;
 11		}
 12	
@@ -743,7 +742,7 @@ The code below implements this algorithm. We use two arrays to keep track of all
 ```java
 1 	void setZeros(int[][] matrix)  {
 2 		boolean[]  row = new  boolean[matrix .length];
-3 		boolean[]   column  = new  boolean[matrix[0].length];
+3 		boolean[]  column  = new  boolean[matrix[0].length];
 4		
 5 		// Store  the  row and column  index with value  0
 6 		for  (int i =  0; i < matrix.length; i++)   {
@@ -794,7 +793,7 @@ This code is below:
 ```java
 1 	void  setzeros(int[][] matrix) {
 2 		boolean  rowHasZero = false;
-3 		boolean  colHasZero  = false;
+3 		boolean  colHasZero = false;
 4		
 5 		// Check   if first row  has a  zero
 6 		for (int j = 0;   j <   matrix[0].length;  j++) {
@@ -873,7 +872,7 @@ And this is precisely how we solve the problem: simply do isSubstring(slsl,  s2)
 
 ```java
 1 	boolean  isRotation(String sl,  String s2)  {
-2 		int len  =  sl.length();
+2 		int len =  sl.length();
 3 		/*  Check that sl and s2 are  equal  length and not  empty*/
 4 		if (len == s2.length() &&   len   >   0)  {
 5 			/*  Concatenate  sl and sl within new  buffer  */
@@ -884,6 +883,6 @@ And this is precisely how we solve the problem: simply do isSubstring(slsl,  s2)
 10	}
 ```
 
-The runtime of this varies based on the runtime of isSubstring. But if you assume that isSubstring runs inO(A+B) time (on strings of length A and B), then the runtime of isRotation is O(N).
+The runtime of this varies based on the runtime of isSubstring. But if you assume that isSubstring runs in O(A+B) time (on strings of length A and B), then the runtime of isRotation is O(N).
 
 

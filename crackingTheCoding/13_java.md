@@ -64,7 +64,7 @@ Overriding, however, occurs when a method shares the  same name and  function si
 30			Ambiguous  ambiguous =  new Ambiguous();
 31	
 32			shapes[0] = circle;
-33			shapes[l] = ambiguous;
+33			shapes[1] = ambiguous;
 34	
 35			for  (Shape  s  :   shapes)   {
 36				s.printMe();
@@ -91,12 +91,12 @@ Java's collection framework is incredibly useful, and you will see it used throu
 
 ArrayList: An ArrayList is a dynamically resizing array, which grows as you insert elements.
 ```java
-1    Arraylist<String> myArr =  new Arraylist<String>();
+1    ArrayList<String> myArr =  new ArrayList<String>();
 2    myArr.add("one");
 3    myArr.add("two");
 4    System.out.println(myArr.get(0));  /* prints <one> */
 ```
-Vector: A vector is very similar to an Arraylist except that it is synchronized.  Its syntax is almost identical as well.
+Vector: A vector is very similar to an ArrayList except that it is synchronized.  Its syntax is almost identical as well.
 
 ```java
 1	Vector<String>  myVect	= new	Vector<String>();

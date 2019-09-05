@@ -56,41 +56,41 @@ This has three problems:
 
 Fixing these issues gets us to this query:
 ```sql
-1     /* Solution 1:  Wrap with another query*/
-2     SELECT  StudentName,   Students.StudentID,  Cnt
-3     FROM  (
-4       SELECT Students.StudentID, count(StudentCourses.CourseID) as [Cnt]
-5       FROM  Students LEFT JOIN StudentCourses
-6       ON Students.StudentID =  StudentCourses.StudentID
-7       GROUP BY  Students.StudentID
-8     ) T INNER  JOIN Students on T.studentID =  Students.StudentID
+1   /* Solution 1:  Wrap with another query*/
+2   SELECT  StudentName,   Students.StudentID,  Cnt
+3   FROM  (
+4     SELECT Students.StudentID, count(StudentCourses.CourseID) as [Cnt]
+5     FROM  Students LEFT JOIN StudentCourses
+6     ON Students.StudentID =  StudentCourses.StudentID
+7     GROUP BY  Students.StudentID
+8   ) T INNER  JOIN Students on T.studentID =  Students.StudentID
 ```
 Looking at this code, one might ask why we don't just select the student name on line 3 to avoid having to wrap lines 3 through 6 with another query. This (incorrect) solution is shown below.
 ```sql
-1     /* Incorrect Code */
-1     SELECTStudentName, Students.StudentID, count(StudentCourses.CourseID)  as [Cnt]
-2     FROM Students LEFTJOIN StudentCourses
-3     ON  Students.StudentID =  StudentCourses.StudentID
-4     GROUP BY  Students.StudentID
+1  /* Incorrect Code */
+1  SELECTStudentName, Students.StudentID, count(StudentCourses.CourseID)  as [Cnt]
+2  FROM Students LEFTJOIN StudentCourses
+3  ON  Students.StudentID =  StudentCourses.StudentID
+4  GROUP BY  Students.StudentID
 ```
 The answer is that we can't do that - at least not exactly as shown. We can only select values that are in an aggregate function or in the GROUP BY clause.
 
 Alternatively, we could resolve the above issues with either of the following statements:
 ```sql
-1     /* Solution 2:  Add StudentName  to GROUP BY  clause. */
-2     SELECT  StudentName,   Students.StudentID,  count(StudentCourses.CourseID)  as [Cnt]
-3     FROM  Students LEFT JOIN StudentCourses
-4     ON  Students.StudentID =  StudentCourses.StudentID
-5     GROUP  BY  Students.StudentID, Students.StudentName
+1  /* Solution 2:  Add StudentName  to GROUP BY  clause. */
+2  SELECT  StudentName,   Students.StudentID,  count(StudentCourses.CourseID)  as [Cnt]
+3  FROM  Students LEFT JOIN StudentCourses
+4  ON  Students.StudentID =  StudentCourses.StudentID
+5  GROUP  BY  Students.StudentID, Students.StudentName
 ```
 OR
 ```sql
-1     /* Solution 3:  Wrap with   aggregate function.  */
-2     SELECT max(StudentName)   as  [StudentName],   Students.StudentID,
-3                count(StudentCourses.CourseID)  as   [Count]
-4     FROM Students LEFT  JOIN StudentCourses
-5     ON Students.StudentID = StudentCourses.StudentID
-6     GROUP BY  Students.StudentID
+1  /* Solution 3:  Wrap with   aggregate function.  */
+2  SELECT max(StudentName)   as  [StudentName],   Students.StudentID,
+3             count(StudentCourses.CourseID)  as   [Count]
+4  FROM Students LEFT  JOIN StudentCourses
+5  ON Students.StudentID = StudentCourses.StudentID
+6  GROUP BY  Students.StudentID
 ```
 *Query 2: Teacher Class Size*
 
@@ -98,21 +98,21 @@ Implement a query to get a list ofall teachers and how many students they each t
 
 We can construct this query step by step. First, let's get a list of TeacherIDs and how many students are associated with each TeacherID. This is very similar to the earlier query.
 ```
-1     SELECT  TeacherID,   count(StudentCourses.CourseID)  AS  [Number]
-2     FROM  Courses   INNER   JOIN StudentCourses
-3     ON   Courses.CourseID = StudentCourses.CourseID
-4     GROUP   BY  Courses.TeacherID
+1  SELECT  TeacherID,   count(StudentCourses.CourseID)  AS  [Number]
+2  FROM  Courses   INNER   JOIN StudentCourses
+3  ON   Courses.CourseID = StudentCourses.CourseID
+4  GROUP   BY  Courses.TeacherID
 ```
 Note that this INNER  JOIN will not select teachers who aren't teaching classes. We'll handle that in the below query when we join it with the list of all teachers.
 ```sql
-1     SELECT  TeacherName,  isnull(StudentSize.Number,  0)
-2     FROM   Teachers  LEFT  JOIN
-3               (SELECT  TeacherID,   count(StudentCourses.CourseID)  AS  [Number]
-4                 FROM  Courses   INNER  JOIN StudentCourses
-5                 ON  Courses.CourseID =  StudentCourses.CourseID
-6                 GROUP   BY  Courses.TeacherID)  StudentSize
-7     ON  Teachers.TeacherID =  StudentSize.TeacherID
-8     ORDER   BY  StudentSize.Number DESC
+1  SELECT  TeacherName,  isnull(StudentSize.Number,  0)
+2  FROM   Teachers  LEFT  JOIN
+3            (SELECT  TeacherID,   count(StudentCourses.CourseID)  AS  [Number]
+4              FROM  Courses   INNER  JOIN StudentCourses
+5              ON  Courses.CourseID =  StudentCourses.CourseID
+6              GROUP   BY  Courses.TeacherID)  StudentSize
+7  ON  Teachers.TeacherID =  StudentSize.TeacherID
+8  ORDER   BY  StudentSize.Number DESC
 ```
 Note how we handled the NULL values in the SELECT statement to convert the NULL values to zeros.
 
@@ -182,11 +182,11 @@ SOLUTION
 To implement this, we can use the HAVING and GROUP   BY clauses and then perform an INNER  JOIN with
 Tenants.
 ```sql
-1     SELECT  TenantName
-2     FROM   Tenants
-3     INNER  JOIN
-4           (SELECT  TenantID  FROM  AptTenants  GROUP   BY  TenantID  HAVING  count(*)   >   1)  C
-5     ON   Tenants.TenantID = C.TenantID
+1  SELECT  TenantName
+2  FROM   Tenants
+3  INNER  JOIN
+4        (SELECT  TenantID  FROM  AptTenants  GROUP   BY  TenantID  HAVING  count(*)   >   1)  C
+5  ON   Tenants.TenantID = C.TenantID
 ```
 
 Whenever  you write a GROUP BY clause in an interview  (or in real life), make sure that  anything in the SELECT clause is either an aggregate function or contained within the GROUP BY clause.
@@ -202,15 +202,15 @@ SOLUTION
  
 This problem uses a straightforward join of Requests and Apartments to get a list of building IDs and the number of open requests. Once we have this list, we join it again with the Buildings table.
 ```sql
-1     SELECT  BuildingName,   ISNULL(Count,  0)  as  'Count'
-2     FROM  Buildings
-3       LEFT  JOIN
-4          (SELECT  Apartments.BuildingID,  count(*)  as   'Count'
-5            FROM  Requests   INNER  JOIN Apartments
-6            ON  Requests.AptID  =  Apartments.AptID
-7            WHERE  Requests.Status  =   'Open'
-8            GROUP  BY  Apartments.BuildingID)  ReqCounts
-9     ON  ReqCounts.BuildingID =  Buildings.BuildingID
+1  SELECT  BuildingName,   ISNULL(Count,  0)  as  'Count'
+2  FROM  Buildings
+3    LEFT  JOIN
+4       (SELECT  Apartments.BuildingID,  count(*)  as   'Count'
+5         FROM  Requests   INNER  JOIN Apartments
+6         ON  Requests.AptID  =  Apartments.AptID
+7         WHERE  Requests.Status  =   'Open'
+8         GROUP  BY  Apartments.BuildingID)  ReqCounts
+9  ON  ReqCounts.BuildingID =  Buildings.BuildingID
 ```
 Queries like this that utilize sub-queries should be thoroughly tested, even when coding by hand. It may be useful to test the inner part of the query first, and then test the outer part.
 
@@ -224,9 +224,9 @@ SOLUTION
  
 UPDATE queries, like SELECT queries, can have WHERE clauses. To implement this query, we get a list of all apartment IDs within building #11 and the list of update requests from those apartments.
 ```sql
-1     UPDATE  Requests
-2     SET  Status =   'Closed'
-3     WHERE  AptID  IN (SELECT  AptID  FROM   Apartments   WHERE  BuildingID =  11)
+1  UPDATE  Requests
+2  SET  Status =   'Closed'
+3  WHERE  AptID  IN (SELECT  AptID  FROM   Apartments   WHERE  BuildingID =  11)
 ```
 
 
@@ -350,31 +350,31 @@ This database could get arbitrarily more complicated if we wanted to add in prof
 
 Using the Microsoft SQL Server TOP ..... PERCENT function, we might (incorrectly) first try a query like this:
 ```sql
-1     SELECT   TOP  10 PERCENT  AVG(CourseEnrollment.Grade) AS  GPA,
-2                       CourseEnrollment.StudentID
-3     FROM  CourseEnrollment
-4     GROUP   BY  CourseEnrollment.StudentID
-5     ORDER   BY  AVG(CourseEnrollment.Grade)
+1  SELECT   TOP  10 PERCENT  AVG(CourseEnrollment.Grade) AS  GPA,
+2                    CourseEnrollment.StudentID
+3  FROM  CourseEnrollment
+4  GROUP   BY  CourseEnrollment.StudentID
+5  ORDER   BY  AVG(CourseEnrollment.Grade)
 ```
 The problem with the above code is that it will return literally the top 10% of rows, when sorted by GPA. Imagine a scenario in which there are 100 students, and the top 15 students all have 4.0 GPAs. The above function will only return 1O of those students, which is not really what we want. In case of a tie, we want to include the students who tied for the top 10% -- even if this means that our honor roll includes more than 10% of the class.
 
 To correct this issue, we can build something similar to this query, but instead first get the GPA cut off.
 ```sql
-1     DECLARE  @GPACutOff  float;
-2     SET @GPACutOff  = (SELECT  min(GPA) as  'GPAMin' FROM  (
-3                   SELECT   TOP  10 PERCENT  AVG(CourseEnrollment.Grade) AS  GPA
-4               FROM  CourseEnrollment
-5               GROUP   BY  CourseEnrollment.StudentID
-6               ORDER  BY  GPA   desc)  Grades);
+1  DECLARE  @GPACutOff  float;
+2  SET @GPACutOff  = (SELECT  min(GPA) as  'GPAMin' FROM  (
+3                SELECT   TOP  10 PERCENT  AVG(CourseEnrollment.Grade) AS  GPA
+4            FROM  CourseEnrollment
+5            GROUP   BY  CourseEnrollment.StudentID
+6            ORDER  BY  GPA   desc)  Grades);
 ```
 Then, once we have @GPACutOff defined, selecting the students  with at least this GPA is reasonably straightforward.
 ```sql
-1     SELECT  StudentName,  GPA
-2     FROM (SELECT   AVG(CourseEnrollment.Grade) AS  GPA,   CourseEnrollment.StudentID
-3                 FROM  CourseEnrollment
-4                 GROUP   BY  CourseEnrollment.StudentID
-5                 HAVING  AVG(CourseEnrollment.Grade)  >= @GPACutOff)   Honors
-6     INNER  JOIN Students  ON   Honors.StudentID  =  Student.StudentID
+1  SELECT  StudentName,  GPA
+2  FROM (SELECT   AVG(CourseEnrollment.Grade) AS  GPA,   CourseEnrollment.StudentID
+3              FROM  CourseEnrollment
+4              GROUP   BY  CourseEnrollment.StudentID
+5              HAVING  AVG(CourseEnrollment.Grade)  >= @GPACutOff)   Honors
+6  INNER  JOIN Students  ON   Honors.StudentID  =  Student.StudentID
 ```
 Be very careful about what implicit assumptions you make. If you look at the above database description, what potentially incorrect assumption  do you see? One is that each course can only be taught  by one professor. At some schools, courses may be taught by multiple professors.
 

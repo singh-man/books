@@ -87,8 +87,7 @@ Of course, in reality, all we really need to do is to check if n is divisible by
 
 The Sieve of Eratosthenes is a highly efficient way to generate a list of primes. It works by recognizing that all non-prime numbers are divisible by a prime number.
 
-We start with a list of all the numbers up through some value max. First, we cross off all numbers divisible by
-2. Then, we look for the next prime (the next non-crossed off number) and cross off all numbers divisible by it. By crossing off all numbers divisible by 2, 3, 5, 7, 11, and so on, we wind up with a list of prime numbers from 2 through max.
+We start with a list of all the numbers up through some value max. First, we cross off all numbers divisible by 2. Then, we look for the next prime (the next non-crossed off number) and cross off all numbers divisible by it. By crossing off all numbers divisible by 2, 3, 5, 7, 11, and so on, we wind up with a list of prime numbers from 2 through max.
 
 The code below implements the Sieve of Eratosthenes.
 
@@ -100,7 +99,7 @@ The code below implements the Sieve of Eratosthenes.
 5 		init(flags); // Set   all flags to  true other than  0  and 1
 6 		int prime  =  2;
 7	
-8 		while  (prime <=    Math.sqrt(max))  {
+8 		while  (prime <= Math.sqrt(max))  {
 9 			/* Cross  off  remaining multiples  of  prime  */
 10			crossOff(flags,  prime);
 11	
@@ -146,7 +145,7 @@ Let's look at a Venn diagram to visualize two eventsA and B. The areas of the tw
 
 Imagine you were throwing a dart at this Venn diagram. What is the probability that you would land in the intersection between A and B?  If you knew the odds of landing in A, and you also knew the percent of A that's also in B (that is, the odds of being in B given that you were in A), then you could express the prob­ability as:
 
-P(A  and  B)  =  P(B given A)   P(A)
+	P(A  and  B)  =  P(B given A)   P(A)
 
 For example, imagine we were picking a number between  1 and 10 (inclusive). What's the probability of picking an even number and a number between  1 and 5? The odds of picking a numberbetween 1  and 5 is 50%, and the odds of a number between  1 and 5 being even is 40%. So, the odds of doing both are: 
 
@@ -159,7 +158,7 @@ For example, imagine we were picking a number between  1 and 10 (inclusive). Wha
 
 Observe that  since P(A  and   B)   =  P(B given A)  P(A) = P(A  given  B)  P(B), you can express the probability of A given B in terms of the reverse:
 
-P(A given B) = P(B given A) P(A) / P(B) 
+	P(A given B) = P(B given A) P(A) / P(B) 
 
 The above equation is called Bayes' Theorem.
 
@@ -168,7 +167,7 @@ The above equation is called Bayes' Theorem.
  
 Now, imagine  you wanted to know what the probability  of landing  in A or B is. If you knew the  odds  of landing  in each individually,and you also knew the odds  of landing  in their intersection,then you could express the probability as:
 
-P(A or B)   = P(A)+ P(B)  -  P(A  and   B)
+	P(A or B) = P(A) + P(B)  -  P(A  and   B)
 
 Logically, this makes sense. If we simply added their sizes, we would have double-counted their intersec­tion.We need to subtract this out.We can again visualize this through a Venn diagram:
 
@@ -541,7 +540,7 @@ We'll write this in a simple way that directly corresponds to the problem.
 4 		for (int i =  0;  i <   n;  i++)   {
 5 			int[] genders   = runOneFamily();
 6 			girls += genders[0];
-7 			boys  += genders[l];
+7 			boys  += genders[1];
 8 		}
 9 		return girls / (double) (boys  +  girls);
 10	}
@@ -716,7 +715,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 10	
 11	class TestStrip {
 12		public   static int DAYS_FOR_RESULT =  7;
-13		private  Arraylist<Arraylist<Bottle>> dropsByDay = 
+13		private  ArrayList<ArrayList<Bottle>> dropsByDay = 
 14			new ArrayList<ArrayList<Bottle>>();
 15		private int id;
 16	
@@ -748,7 +747,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 42		}
 43	
 44		/*  Gets  bottles used in  the  test DAYS_FOR_RESULT  days ago. */
-45		public   Arraylist<Bottle> getlastWeeksBottles(int  day)  {
+45		public   ArrayList<Bottle> getlastWeeksBottles(int  day)  {
 46			if (day  <  DAYS_FOR_RESULT) {
 47				return null;
 48			}
@@ -762,7 +761,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 56				return false;
 57			}
 58			for  (int d =  0;  d <=  testDay;   d++) {
-59				Arraylist<Bottle> bottles  =  dropsByDay.get(d);
+59				ArrayList<Bottle> bottles  =  dropsByDay.get(d);
 60				if (hasPoison(bottles)) {
 61					return true;
 62				}
@@ -830,7 +829,7 @@ Dividing the bottles in a different way can reveal the second or third digit. We
 |         | Day 0 -> 7 | Day 1 -> 8 | Day 2 -> 9 |
 | --      | --         | --         | --         |
 | Strip 0 | 0xx        | x0x        | xx0        |
-| Strip 1 | 1xx        | xlx        | xxl        |
+| Strip 1 | 1xx        | x1x        | xx1        |
 | Strip 2 | 2xx        | x2x        | xx2        |
 | Strip 3 | 3xx        | x3x        | xx3        |
 | Strip 4 | 4xx        | x4x        | xx4        |
@@ -854,7 +853,7 @@ We will need to run one additional test. We could run this at the end to clear u
 |         | Day 0 -> 7 | Day 1 -> 8 | Day 2 -> 9 | Day 3 -> 10 |
 | --      | --         | --         | --         | --          |
 | Strip 0 | 0xx        | x0x        | xx0        | xx9         |
-| Strip 1 | 1xx        | xlx        | xxl        | xx0         |
+| Strip 1 | 1xx        | x1x        | xx1        | xx0         |
 | Strip 2 | 2xx        | x2x        | xx2        | xx1         |
 | Strip 3 | 3xx        | x3x        | xx3        | xx2         |
 | Strip 4 | 4xx        | x4x        | xx4        | xx3         |
@@ -900,9 +899,9 @@ Implementing this requires some careful work to prevent bugs.
 18			previousResults.add(digits[day]);
 19		}
 20	
-21		/*  If day l's  results matched day 0's,  update the digit. */
-22		if (digits[l] == -1)  {
-23			digits[l]  = digits[0];
+21		/*  If day 1's  results matched day 0's,  update the digit. */
+22		if (digits[1] == -1)  {
+23			digits[1]  = digits[0];
 24		}
 25	
 25		/* If day 2 matched  day 0 or day 1,  check day 3. Day 3 is  the  s ame  as day 2, but
@@ -912,8 +911,8 @@ Implementing this requires some careful work to prevent bugs.
 30				/* igit 2 equals digit  0 or  digit 1.  But,  digit 2,  when incremented  also
 31				* matches digit 0 or  digit 1. This  means that digit 0 incremented  matches
 32				* digit 1,  or  the  other   way  around. */
-33				digits[2]  =  ((digits[0] + 1) %  nTestStrips) ==  digits[l]  ?
-34							digits[0] :   digits[l];
+33				digits[2]  =  ((digits[0] + 1) %  nTestStrips) ==  digits[1]  ?
+34							digits[0] :   digits[1];
 35			}  else   {
 36				digits[2] =    (digits[3] -  1 +  nTestStrips) % nTestStrips;
 37			}
@@ -923,7 +922,7 @@ Implementing this requires some careful work to prevent bugs.
 41	}
 42	
 43	/*    Run set of  tests for  this day. */
-44	void  runTestSet(Arraylist<Bottle> bottles,   ArrayList<TestStrip>  strips, int day)  {
+44	void  runTestSet(ArrayList<Bottle> bottles,   ArrayList<TestStrip>  strips, int day)  {
 45		if (day  >   3)  return;//    only  works for   3 days  (digits)+one  extra
 46	
 47		for  (Bottle bottle :  bottles) {
@@ -973,12 +972,12 @@ We wait seven days, and then read the results.  If test strip i is positive, the
 ```java
 1 	int  findPoisonedBottle(ArrayList<Bottle> bottles, ArrayList<TestStrip> strips) {
 2 		runTests(bottles,  strips);
-3 		Arraylist<Integer> positive  =  getPositiveOnDay(strips,  7);
+3 		ArrayList<Integer> positive  =  getPositiveOnDay(strips,  7);
 4 		return setBits(positive);
 5 	}
 6	
 7 	/*  Add  bottle  contents to  test strips */
-8 	void  runTests(Arraylist<Bottle> bottles,   ArrayList<TestStrip> testStrips) {
+8 	void  runTests(ArrayList<Bottle> bottles,   ArrayList<TestStrip> testStrips) {
 9 		for  (Bottle bottle  :   bottles) {
 10			int id =    bottle.getid();
 11			int bitindex =  0;
@@ -993,8 +992,8 @@ We wait seven days, and then read the results.  If test strip i is positive, the
 20	}
 21	
 22	/*  Get test strips that are  positive on a  particular day.  */
-23	Arraylist<Integer>  getPositiveOnDay(Arraylist<TestStrip> testStrips, int day)  {
-24		Arraylist<Integer> positive  =  new Arraylist<Integer>();
+23	ArrayList<Integer>  getPositiveOnDay(ArrayList<TestStrip> testStrips, int day)  {
+24		ArrayList<Integer> positive  =  new ArrayList<Integer>();
 25		for  (TestStrip testStrip  :    testStrips) {
 26			int id =    testStrip.getid();
 27			if (testStrip.isPositiveOnDay(day))  {

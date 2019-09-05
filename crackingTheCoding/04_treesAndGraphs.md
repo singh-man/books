@@ -38,7 +38,7 @@ You might also have a Tree class to wrap this node. For the purposes of intervie
 Tree and graph questions are rife with ambiguous details and incorrect assumptions. Be sure to watch out for the following issues and seek clarification when necessary.
 
 
-##### Trees vs. Binary Trees
+**Trees vs. Binary Trees**
 
 A binary tree is a tree in which each node has up to two children. Not all trees are binary trees. For example, this tree is not a binary tree. You could call it a ternary tree.
 
@@ -49,7 +49,7 @@ There are occasions when you might have a tree that is not a binary tree. For ex
 A node is called a"leaf" node if it has no children.
 
 
-##### Binary Tree vs. Binary Search Tree
+**Binary Tree vs. Binary Search Tree**
 
 A binary search tree is a binary tree in which every node fits a specific ordering property: all left descendents  <= n < all right descendents. This must be true for each node n.
 
@@ -63,30 +63,30 @@ Note that this inequality must be true for all of a node's descendents, not just
 
 When given a tree question, many candidates assume the interviewer means a binary search  tree. Be sure to ask. A binary search tree imposes the condition  that, for each node, its left descendents are less than or equal to the current node, which is less than the right descendents.
 
-##### Balanced vs. Unbalanced
+**Balanced vs. Unbalanced**
 
 While many trees are balanced, not all are. Ask your interviewer for clarification here. Note that balancing a tree does not mean the left and right subtrees are exactly the same size (like you see under"perfect binary trees" in the following diagram).
 
-One way to think about it is that a "balanced" tree really means something more like "not terribly imbal­ anced:' It's balanced enough to ensure 0( log   n) times for insert and find, but it's not necessarily as balanced as it could be.
+One way to think about it is that a "balanced" tree really means something more like "not terribly imbal­ anced:' It's balanced enough to ensure O(log n) times for insert and find, but it's not necessarily as balanced as it could be.
 
 Two common types of balanced trees are red-black trees (pg 639) and AVL  trees (pg 637). These are discussed in more detail in the Advanced Topics section.
 
 
-##### Complete Binary Trees
+**Complete Binary Trees**
 
 A complete binary tree is a binary tree in which every level of the tree is fully filled, except for perhaps the last level. To the extent that the last level is filled, it is filled left to right.
 
 ![](media/IX_04_03.JPG)
 
 
-##### Full Binary Trees
+**Full Binary Trees**
 
 A full binary tree is a binary tree in which every node has either zero or two children. That  is, no nodes have only one child.
 
 ![](media/IX_04_04.JPG)
 
 
-##### Perfect Binary Trees
+**Perfect Binary Trees**
 
 A perfect binary tree is one that is both full and complete. All leaf  nodes will be at the same level, and this level has the maximum number of nodes.
 
@@ -183,7 +183,7 @@ Do we swap it with the left child or the right child? That depends  on their val
  
 ![](media/IX_04_08.JPG)
 
-This algorithm will also take 0( log n)  time.
+This algorithm will also take O(log n)  time.
 
 
 ### Tries (Prefix Trees)
@@ -191,6 +191,7 @@ This algorithm will also take 0( log n)  time.
 A trie (sometimes called a prefix tree) is a funny data structure. It comes up a lot in interview questions, but algorithm textbooks don't spend much time on this data structure.
 
 A trie is a variant of an n-ary tree in which characters are stored at each node. Each path down the tree may represent a word.
+
 The * nodes (sometimes called "null nodes") are often used to indicate complete words. For example, the fact that there is a * node under MANY indicates that MANY is a complete word. The existence of the MA path indicates there are words that start with MA.
 
 The actual implementation of these * nodes might be a special type of child (such as a TerminatingTrieNode, which  inherits  from  TrieNode).  Or, we  could  use  just  a  boolean  flag terminates within the "parent" node.
@@ -227,7 +228,7 @@ Visually, you could draw  a graph like this:
 In terms of programming, there are two common ways to represent a graph.
 
 
-##### Adjacency List
+**Adjacency List**
 
 This is the  most common way to represent a graph. Every vertex  (or node) stores a list of adjacent vertices. In an undirected graph, an edge like (a,  b) would be stored twice: once in a's adjacent vertices and once in b's adjacent vertices.
 
@@ -260,7 +261,7 @@ You don't necessarily need any  additional classes to  represent a graph. An arr
 
 This is a bit more compact, but it isn't quite as clean. We tend to use node classes unless there's a compelling reason not  to.
 
-##### Adjacency Matrices
+**Adjacency Matrices**
 
 An adjacency matrix  is an NxN boolean matrix (where N is the  number of nodes), where a true value  at matrix[i][j] indicates an edge from node i to node j. (You can also use an integer matrix with Os and
 1 s.)
@@ -349,7 +350,7 @@ Bidirectional search is used to find the shortest path between  a source and des
 
 To see why this is faster, consider  a graph  where every node has at most  k adjacent nodes and the shortest path from node s to nodet has length d.
 
-- In traditional breadth-first search, we would  search up to k nodes in the first "level" of the search. In the second level, we would  search up to k nodes for each of those first k nodes, so k2 nodes total (thus far). We would do this d times, so that's 0( kd) nodes.
+- In traditional breadth-first search, we would  search up to k nodes in the first "level" of the search. In the second level, we would  search up to k nodes for each of those first k nodes, so k2 nodes total (thus far). We would do this d times, so that's O(kd) nodes.
 - In bidirectional search, we have two searches that collide after approximately d/2 levels (the midpoint of the path). The search from s visits approximately k⁽ᵈ/²⁾ , as does the search fromt.That's approximately 2 k⁽ᵈ/²⁾, or O(k⁽ᵈ/²⁾), nodes total.
 
 This might seem like a minor  difference,  but it's not. It's huge. Recall that tional search is actually faster by a factor of kd12.
@@ -532,9 +533,9 @@ The code below implements this algorithm.
 
 One might ask which of these solutions is more efficient. Both run in O(N) time, but what about the space efficiency? At first, we might want to claim that the second solution is more space efficient.
 
-In a sense, that's correct. The first solution uses 0(log N) recursive calls (in a balanced tree), each of which adds a new level to the stack. The second solution, which is iterative, does not require this extra space.
+In a sense, that's correct. The first solution uses O(log N) recursive calls (in a balanced tree), each of which adds a new level to the stack. The second solution, which is iterative, does not require this extra space.
 
-However, both solutions require returning O(N) data. The extra 0(log N) space usage from the recursive implementation is dwarfed by the O(N) data that must be returned. So while the first solution may actually use more data, they are equally efficient when it comes to "big O:'
+However, both solutions require returning O(N) data. The extra O(log N) space usage from the recursive implementation is dwarfed by the O(N) data that must be returned. So while the first solution may actually use more data, they are equally efficient when it comes to "big O:'
 
 
 **4.4   Check Balanced:** Implement a function to check if a binary tree is balanced. For the purposes of this question, a balanced tree is defined to be a tree such that the heights of the two subtrees of any node never differ by more than one.
@@ -613,7 +614,7 @@ SOLUTION
 We can implement this solution in two different ways. The first leverages the in-order traversal, and the second builds off the property that left <=  c urrent  <  right.
 
 
-##### Solution #1:  In-Order Traversal
+**Solution #1:  In-Order Traversal**
 
 Our first thought might be to do an in-order traversal, copy the elements to an array, and then check  to see if the array is sorted. This solution takes up a bit of extra memory, but it works-mostly.
 
@@ -673,14 +674,14 @@ The code below implements this algorithm.
 We've used an Integer instead of int so that we can know when last_printed has been set to a value.
 
 If you don't  like the  use of static  variables, then  you can tweak  this code  to use a wrapper  class for the integer, as shown below.
-```
+```java
 1     class  WrapInt {
 2          public int  value;
 3     }
 ```
 Or, if you're implementing this in C++ or another language that  supports passing  integers by reference, then  you can simply do that.
 
-##### Solution #2: The Min / Max Solution
+**Solution #2: The Min / Max Solution**
 
 In the second solution, we leverage the definition of the binary search tree.
 
@@ -808,10 +809,10 @@ EXAMPLE
 
 ```
 Input:
-    projects:  a, b,   c,  d,   e, f
+    projects:  a, b, c,  d, e, f
     dependencies: (a,  d),  (f,  b),  (b,   d),  (f,  a),  (d,   c) 
 
-Output: f,  e, a, b,   d,   c
+Output: f, e, a, b, d, c
 ```
 
 SOLUTION
@@ -834,7 +835,7 @@ In drawing this example (which is not the example from the problem description),
 
 Now that we have a good example, let's get started with an algorithm.
 
-##### Solution#l
+**Solution#l**
 
 Where do we start? Are there any nodes that we can definitely compile immediately?
 
@@ -842,21 +843,21 @@ Yes. Nodes with no incoming edges can be built immediately since they don't depe
 
 Once we've done that, it's irrelevant that some nodes are dependent on d and f since d and f have already been built. We can reflect this new state by removing d and f's outgoing edges.
 
-build   order: f,  d
+	build   order: f,  d
 
 ![](media/04_7_2.JPG)
 
 
 Next, we know that c, b, and g are free to build since they have no incoming edges. Let's build those and then remove their outgoing edges.
 
-build  order: f,  d,  c,  b,  g
+	build  order: f,  d,  c,  b,  g
 
 ![](media/04_7_3.JPG)
 
 
 Project a can be built next, so let's do that and remove its outgoing edges. This leaves just e. We build that next, giving us a complete build order.
 
-build  order:   f, d,  c,  b,  g,  a,  e
+	build  order:   f, d,  c,  b,  g,  a,  e
 
 Did this algorithm work, or did we just get lucky? Let's think about the logic.
 
@@ -872,7 +873,6 @@ Initialization and setup:
 
 1.  Build a graph where each project is a node and its outgoing edges represent the projects that depend
 on it. That is, if A has an edge to B (A-> B), it means B has a dependency  on A and therefore A must be built before B. Each node also tracks the number of incoming edges.
-
 2.  Initialize a buildOrder array. Once we determine a project's build order, we add it to the array. We also continue to iterate through the array, using a toBeProcessed pointer to point to the next node to be fully processed.
 3.   Find all the  nodes  with zero incoming edges  and  add  those  to  a  buildOrder array. Set a toBeProcessed pointer to the beginning of the array.
 
@@ -908,8 +908,8 @@ The code below implements this algorithm.
 14      }
 15      
 16      for  (String[] dependency  :   dependencies)  {
-17          String first = dependency[0];
-18          String second =  dependency[l];
+17          String first  = dependency[0];
+18          String second = dependency[1];
 19          graph.addEdge(first,  second);
 20      }
 21      
@@ -917,7 +917,7 @@ The code below implements this algorithm.
 23   }
 24  
 25   /*  Return  a list of  the  projects a correct build   order. */
-26   Project[]  orderProjects(Arraylist<Project> projects)  {
+26   Project[]  orderProjects(ArrayList<Project> projects)  {
 27      Project[] order  =  new Project[projects.size()];
 28  
 29      /*  Add  "roots" to  the  build   order  first.*/
@@ -934,7 +934,7 @@ The code below implements this algorithm.
 40          }
 41  
 42          /*  Remove  myself  as  a  dependency.  */
-43          Arraylist<Project> children = current.getChildren();
+43          ArrayList<Project> children = current.getChildren();
 44          for  (Project child :   children) {
 45              child.decrementDependencies();
 46          }
@@ -949,7 +949,7 @@ The code below implements this algorithm.
 55  
 56   /*  A  helper  function to  insert projects with  zero  dependencies  into the  order
 57   *  array, starting at index  offset. */
-58   int addNonDependent(Project[]   order, Arraylist<Project> projects,  int  offset)  {
+58   int addNonDependent(Project[]   order, ArrayList<Project> projects,  int  offset)  {
 59      for  (Project project :  projects) {
 60          if (project.getNumberDependencies() == 0)  {
 61              order[offset]  =  project;
@@ -960,7 +960,7 @@ The code below implements this algorithm.
 66   }
 67  
 68   public class Graph {
-69      private Arraylist<Project> nodes =  new Arraylist<Project>();
+69      private ArrayList<Project> nodes =  new ArrayList<Project>();
 70      private HashMap<String, Project> map  =  new HashMap<String, Project>();
 71      
 72      public   Project  getOrCreateNode(String name) {
@@ -979,11 +979,11 @@ The code below implements this algorithm.
 85          start.addNeighbor(end);
 86      }
 87      
-88      public Arraylist<Project> getNodes()   {  return nodes;  }
+88      public ArrayList<Project> getNodes()   {  return nodes;  }
 89   }
 90  
 91   public  class Project {
-92      private Arraylist<Project> children = new Arraylist<Project>();
+92      private ArrayList<Project> children = new ArrayList<Project>();
 93      private HashMap<String, Project> map =  new HashMap<String, Project>();
 94      private String name;
 95      private int dependencies = 0;
@@ -1002,7 +1002,7 @@ The code below implements this algorithm.
 108     public  void decrementDependencies() {  dependencies--;  }
 109     
 110     public String  getName()  {  return name;   }
-111     public Arraylist<Project> getChildren()  {  return  children; }
+111     public ArrayList<Project> getChildren()  {  return  children; }
 112     public int  getNumberDependencies()  {  return  dependencies; }
 113  }
 ```
@@ -1013,7 +1013,7 @@ This solution takes O ( P  +  D) time, where P is the number of projects and  D 
 > Note:  You might recognize this as the  topological sort algorithm on page 632. We've rederived this from scratch. Most people won't  know  this algorithm and  it's reasonable for an interviewer to expect you to be able to derive it.
 
 
-##### Solution #2
+**Solution #2**
 
 Alternatively, we can use depth-first search (DFS) to find the build  path.
 
@@ -1027,9 +1027,9 @@ DFS(b)                              // Step  1
     DFS(h)                          // Step  2
         build order = ... , h       // Step  3
     DFS(a)                          // Step  4
-        DFS(e)                      // Step 5
+        DFS(e)                      // Step  5
             build  order... , e, h  // Step  6
-        ...                         // Step 7+
+        ...                         // Step  7+
     ...
 ```
 
@@ -1069,11 +1069,11 @@ DFS(f)
 ```
 In an algorithm like this, we should think about the issue of cycles. There is no possible build order if there is a cycle. But still, we don't want to get stuck in an infinite loop just because there's no possible solution.
 
-A cycle will happen if, while doing a DFS on a node, we run back into the same path.What we need there­fore is a signal that indicates"I'm still processing this node, so if you see the node again, we have a problem:'
+A cycle will happen if, while doing a DFS on a node, we run back into the same path.What we need there­fore is a signal that indicates "I'm still processing this node, so if you see the node again, we have a problem."
 
-What we can do for this is to mark each node as a"partial"(or"is visiting") state just before we start the DFS on it. If we see any node whose state is partial, then we know we have a problem. When we're done with this node's DFS, we need to update the state.
+What we can do for this is to mark each node as a "partial" (or "is visiting") state just before we start the DFS on it. If we see any node whose state is partial, then we know we have a problem. When we're done with this node's DFS, we need to update the state.
 
-We also need a state to indicate"I've already processed/built this node" so we don't re-build the node. Our state therefore can have three options: COMPLETED, PARTIAL, and BLANK.
+We also need a state to indicate "I've already processed/built this node" so we don't re-build the node. Our state therefore can have three options: COMPLETED, PARTIAL, and BLANK.
 
 The code below implements this algorithm.
 
@@ -1157,14 +1157,14 @@ If each node has a link to its parent, we could trace p and q's paths up until t
 6  
 7       /* Find  where  paths intersect. */
 8       while  (first != second  &&   first != null &&   second   != null) {
-9           first =    first.parent;
-10          second =  second.parent;
+9           first =  first.parent;
+10          second = second.parent;
 11      }
-12      return first == null  || second null ?  null   : first;
+12      return first == null  || second null ?  null : first;
 13  }
 14  
 15  TreeNode goUpBy(TreeNode node,  int delta) {
-16      while   (delta >  0 &&   node  != null) {
+16      while   (delta >  0 && node  != null) {
 17          node = node.parent;
 18          delta--;
 19      }
@@ -1189,10 +1189,9 @@ Similar to the  earlier approach, we could trace p's path  upwards and check if 
 
 Observe that we don't need to re-check the entire subtree. As we move from a node x to its parent y, all the nodes under x have already been checked for q. Therefore, we only need to check the new nodes "uncov­ ered'; which will be the nodes under x's sibling.
 
-For example, suppose we're looking for the first common ancestor of node   p  =  7 and node   q  =  17. When we go to p.parent  (5), we uncover the subtree  rooted at 3. We therefore need  to search this subtree for q.
+For example, suppose we're looking for the first common ancestor of node p = 7 and node  q = 17. When we go to p.parent(5), we uncover the subtree  rooted at 3. We therefore need  to search this subtree for q.
 
-Next, we go to node 10, uncovering the subtree rooted at 15. We check this subtree  for node 17 and­
-voila-there it is.
+Next, we go to node 10, uncovering the subtree rooted at 15. We check this subtree  for node 17 and­ voila-there it is.
 
 ![](media/04_7_6.JPG)
 
@@ -1202,7 +1201,7 @@ To implement this, we can just traverse upwards from p, storing the parent and t
 ```java
 1   TreeNode  commonAncestor(TreeNode root, TreeNode p,  TreeNode q)  {
 2       /* Check if either node  is not  in  the   tree, or  if one  covers the   other. */
-3       if  (!covers(root, p)   ||  !covers(root, q)) {
+3       if  (!covers(root, p)  ||  !covers(root, q)) {
 4           return null;
 5       }  else if  (covers(p, q)) {
 6           return  p;
@@ -1211,8 +1210,8 @@ To implement this, we can just traverse upwards from p, storing the parent and t
 9       }
 10  
 11      /*  Traverse upwards  until you find a  node  that  covers q. */
-12      TreeNode sibling =    getSibling(p);
-13      TreeNode parent =    p.parent;
+12      TreeNode sibling =  getSibling(p);
+13      TreeNode parent =   p.parent;
 14      while   (!covers(sibling, q)) {
 15          sibling = getSibling(parent);
 16          parent = parent.parent;
@@ -1221,17 +1220,17 @@ To implement this, we can just traverse upwards from p, storing the parent and t
 19  }
 20  
 21  boolean   covers(TreeNode root,   TreeNode p)  {
-22      if (root ==    null) return false;
-23      if (root ==         p)  return true;
-24      return covers(root.left,  p)  ||   covers(root.right,  p);
+22      if (root ==  null) return false;
+23      if (root ==  p)  return true;
+24      return covers(root.left,  p)  ||  covers(root.right,  p);
 25  }
 26  
 27  TreeNode getSibling(TreeNode node)  {
-28      if (node ==    null ||  node.parent == null) {
+28      if (node ==  null || node.parent == null) {
 29          return null;
 30      }
 31  
-32      TreeNode parent     node.parent;
+32      TreeNode parent  =  node.parent;
 33      return parent.left ==  node ?  parent.right  :   parent.left;
 34  }
 ```
@@ -1263,11 +1262,11 @@ The code below implements this approach.
 16      if (pIsOnLeft != qIsOnLeft)  {//Nodes  are   on  different side
 17          return root;
 18      }
-19      TreeNode  childSide =    pIsOnLeft ?  root.left  :root.right;
+19      TreeNode  childSide = pIsOnLeft ?  root.left : root.right;
 20      return  ancestorHelper(childSide, p,  q);
 21  }
 22  
-23  boolean   covers(TreeNode root,   TreeNode p)  {
+23  boolean   covers(TreeNode root, TreeNode p)  {
 24      if (root ==  null) return false;
 25      if (root ==  p)  return true;
 26      return covers(root.left,  p)  ||   covers(root.right,   p);
@@ -1284,14 +1283,14 @@ Although Solution #3 is optimal in its runtime, we may recognize that there is s
 
 We may recognize that we should only need to search the entire tree once to find p and q.We should then be able to "bubble up" the findings to earlier nodes in the stack. The basic logic is the same as the earlier solution.
 
-We recurse through the entire tree with a function called commonAncestor(TreeNode    root, TreeNode  p,  TreeNode  q).This function returns values as follows:
+We recurse through the entire tree with a function called commonAncestor(TreeNode root, TreeNode p, TreeNode q). This function returns values as follows:
 
 - Returns p, if root's subtree includes p (and not q). 
 - Returns q, if root's subtree includes q (and not p). 
 - Returns null, if neither p nor q are in root's subtree. 
 - Else, returns the common ancestor of p and q.
 
-Finding the common ancestor of p and q in the final case is easy.When commonAncestor(n. left, p, q) and commonAncestor(n. right, p,  q) both return non-null values (indicating that p and q were found in different subtrees),then n will be the common ancestor.
+Finding the common ancestor of p and q in the final case is easy.When commonAncestor(n. left, p, q) and commonAncestor(n. right, p,  q) both return non-null values (indicating that p and q were found in different subtrees), then n will be the common ancestor.
 
 The code below offers an initial solution, but it has a bug. Can you find it?
 
@@ -1313,7 +1312,7 @@ The code below offers an initial solution, but it has a bug. Can you find it?
 15  
 16      if (x !=  null  &&   y !=  null) {   // p and q  found in  diff. subtrees
 17          return  root;  // This  is the common  ancestor
-18      }  else  if (root  ==  p ||     root  ==  q) {
+18      }  else  if (root  ==  p ||  root  ==  q) {
 19          return  root;
 20      }  else  {
 21          return  x  == null ?  y    x;  /* return  the non-null  value  */
@@ -1326,13 +1325,13 @@ The problem with this code occurs in the case where a node is not contained in t
 ![](media/04_7_7.JPG)
 
 
-Suppose we call commonAncestor(node  3,  node  5,  node 7).0f course,node 7does not exist­ and that's where the issue will come in. The calling order looks like:
+Suppose we call commonAncestor(node  3,  node  5,  node 7). Of course, node 7 does not exist­ and that's where the issue will come in. The calling order looks like:
 
 ```
-1    commonAnc(node  3, node 5, node 7)                      //-->  s
-2        calls commonAnc(node  1, node 5, node 7)         //-->  null
-3           calls commonAnc(node  5,  node 5,  node 7)  // -->  5
-4               calls commonAnc(node  8,  node 5,  node 7)  // -->  null
+1    commonAnc(node  3, node 5, node 7)                     //-->  5
+2        calls commonAnc(node  1, node 5, node 7)           //-->  null
+3           calls commonAnc(node  5,  node 5,  node 7)      //--> 5
+4               calls commonAnc(node  8,  node 5,  node 7)  //--> null
 ```
 
 In other words, when we call c ommonAncestor on the right subtree, the code will return node 5, just as it should. The problem is that in finding the common ancestor of pand q, the calling function can't distin­ guish between the two cases:
@@ -1340,7 +1339,7 @@ In other words, when we call c ommonAncestor on the right subtree, the code will
 - Case 1: p is a child of q (or, q is a child of p)
 - Case 2: p is in the tree and q is not (or, q is in the tree and pis not)
 
-In either ofthese cases, c ommonAncestor will return p. In the firstcase, this is the correct return value, but in the second case, the return value should be null.
+In either of these cases, c ommonAncestor will return p. In the first case, this is the correct return value, but in the second case, the return value should be null.
 
 We somehow need to distinguish between these two cases, and this is what the code below does. This code solves the problem by returning two values: the node itself and a flag indicating whether this node is actually the common ancestor.
 
@@ -1379,9 +1378,9 @@ We somehow need to distinguish between these two cases, and this is what the cod
 32          return ry;
 33      }
 34  
-35      if (rx.node != null &&   ry.node   != null) {
+35      if (rx.node != null &&   ry.node != null) {
 36          return new Result(root, true);  // This  is the  common  ancestor
-37      }  else if (root == p  ||      root  ==  q)  {
+37      }  else if (root == p  ||  root  ==  q)  {
 38          /*  If we're  currently at  p or  q,  and we  also  found one of  those  nodes in  a
 39          * subtree,  then  this is truly an ancestor and the  flag   should  be  true. */
 40          boolean  isAncestor = rx.node != null || ry.node   != null;
@@ -1432,48 +1431,47 @@ What  else  can  we say? Some  people jump to the  conclusion that everything on
 
 Once  the  50 is inserted, all items less than 50 will be routed to the  left and all items greater than 50 will be routed to the  right. The 60 or the  20 could be inserted first, and it wouldn't matter.
 
-Let's think  about this problem recursively.  If we had all arrays  that could have  created the  subtree rooted at  20  (call this  arraySet20),  and all arrays  that could have  created the  subtree rooted at  60  (call this array5et60), how would that give us the full answer? We couldjust"weave"each array from array5et20 with each array from arraySet60-and then prepend each array with a 50.
+Let's think  about this problem recursively.  If we had all arrays  that could have  created the  subtree rooted at  20  (call this  arraySet20),  and all arrays  that could have  created the  subtree rooted at 60 (call this array5et60), how would that give us the full answer? We couldjust "weave" each array from array5et20 with each array from arraySet60-and then prepend each array with a 50.
 
 Here's what we mean by weaving. We are merging two arrays in all possible ways, while keeping the elements within each array in the same relative order.
 ```
-arrayl: {l,  2}
-array2: {3,   4}
-weaved: {l, 2,   3,  4},  {l, 3,  2,  4},  {1,   3,  4,  2},
-        {3, 1,   2,  4},  {3, 1,  4,  2},  {3,   4,  1,  2}
+arrayl: {1,  2}
+array2: {3,  4}
+weaved: {1, 2, 3,  4},  {1, 3,  2,  4},  {1,   3,  4,  2},
+        {3, 1, 2,  4},  {3, 1,  4,  2},  {3,   4,  1,  2}
 ```
 Note that, as long as there  aren't any duplicates in the original array sets, we won't have to worry that weaving will create duplicates.
 
-The last piece to talk about here is how the weaving works Let's think recursively about how to weave{1,
-2,   3} and {4, S,  6}. What are the subproblems?
+The last piece to talk about here is how the weaving works Let's think recursively about how to weave {1, 2, 3} and {4, 5,  6}. What are the subproblems?
 
-- Prepend al to all weaves of{2,  3}and{4,  5,   6}. 
-- Prepend a4 to all weaves of{l,  2,   3}and{S,   6}.
+- Prepend a 1 to all weaves of {2,  3} and {4,  5,   6}. 
+- Prepend a 4 to all weaves of {l,  2,  3} and {5,   6}.
 
 To implement this, we'll store each as linked lists. This will make it easy to add and remove elements. When we recurse, we'll push the prefixed elements down the recursion When first or second are empty, we add the remainder to prefix and store the result.
 
 It works something like this:
 ```
     weave(first,  second,   prefix):
-        weave({l,   2},  {3,   4},  {})
+        weave({1,   2},  {3,   4},  {})
             weave({2},   {3,   4},   {1})
-                weave({},   {3,   4},   {l, 2})
+                weave({},   {3,   4},   {1, 2})
                     {1,   2,   3,  4}
                 weave({2},   {4},  {1,   3})
-                    weave({},   {4},   {l,   3,  2})
-                        {l,   3,  2,  4}
-                    weave({2},   {},   {l, 3,  4})
-                        {l, 3,  4,   2}
+                    weave({},   {4},   {1,   3,  2})
+                        {1,   3,  2,  4}
+                    weave({2},   {},   {1, 3,  4})
+                        {1, 3,  4,   2}
             weave({l,  2},  {4},   {3})
                 weave({2},  {4},   {3,   1})
                     weave({},   {4},   {3,   1,   2})
                         {3,   1,   2,  4}
                     weave({2},   {},   {3,   1,   4})
                         {3,   1,  4,   2}
-                weave({l,  2},  {},   {3,   4})
+                weave({1,  2},  {},   {3,   4})
                     {3,   4,   1,   2}
 ```
 
-Now, let's think through the implementation of removing, say,1 from{1,   2}and recursing. We need to be careful about modifying this list, since a later recursive call (e .g., weave({1,   2},   {4},   {3})) might need the 1  still in{1,  2}.
+Now, let's think through the implementation of removing, say, 1 from {1,   2} and recursing. We need to be careful about modifying this list, since a later recursive call (e.g., weave({1, 2}, {4}, {3})) might need the 1 still in {1,  2}.
 
 We could clone the list when we recurse, so that we only modify the recursive calls. Or, we could modify the list but then"revert"the changes after we're done with recursing.
 
@@ -1481,7 +1479,7 @@ We've chosen to implement it the latter way. Since we're keeping the same refere
 
 ```java
 1   ArrayList<LinkedList<Integer>> allSequences(TreeNocte  node)  {
-2       Arraylist<Linkedlist<Integer>> result = new Arraylist<Linkedlist<Integer>>();
+2       ArrayList<Linkedlist<Integer>> result = new ArrayList<Linkedlist<Integer>>();
 3   
 4       if (node  == null)  {
 5           result.add(new Linkedlist<Integer>());
@@ -1492,14 +1490,14 @@ We've chosen to implement it the latter way. Since we're keeping the same refere
 10      prefix.add(node.data);
 11  
 12      /*   Recurse  on left and right subtrees. */
-13      Arraylist<Linkedlist<Integer>> leftSeq  =  al1Sequences(node.left);
-14      ArrayList<LinkedList<Integer>> rightSeq  =  al1Sequences(node.right);
+13      ArrayList<Linkedlist<Integer>> leftSeq   =  allSequences(node.left);
+14      ArrayList<LinkedList<Integer>> rightSeq  =  allSequences(node.right);
 15  
 16      /*  Weave  together each  list from the  left and right sides. */
 17      for  (Linkedlist<Integer> left :   leftSeq) {
 18          for  (LinkedList<Integer> right   :   rightSeq) {
 19              ArrayList<LinkedList<Integer>>  weaved =
-20                  new Arraylist<Linkedlist<Integer>>();
+20                 		new ArrayList<Linkedlist<Integer>>();
 21              weavelists(left, right,  weaved, prefix);
 22              result.addAll(weaved);
 23          }
@@ -1549,9 +1547,9 @@ As you're implementing allSequences (whether you do this before or after weaveli
 In fact, this is good advice in general when you're confused during whiteboard coding. Have a good under­ standing of what a particular function should do ("okay, this function is going to return a list of \__"). You should verify that it's really doing what you think. But when you're not dealing with that function, focus on the one you are dealing with and trust that the others do the right thing. It's often too much to keep the implementations of multiple algorithms straight in your head.
 
 
-**4.1O      Check Subtree:** Tl and T2 are two very large binary trees, withTl much bigger thanT2. Create an algorithm to determine ifT2 is a subtree ofTl.
+**4.1O      Check Subtree:** T1 and T2 are two very large binary trees, with T1 much bigger than T2. Create an algorithm to determine if T2 is a subtree of T1.
 
-A tree T2 is a subtree of Tl  if there exists a node n in Tl  such that the subtree of n is identical to T2.
+A tree T2 is a subtree of T1  if there exists a node n in T1  such that the subtree of n is identical to T2.
 That is, if you cut off the tree at node n, the two trees would be identical.
 
 SOLUTION
@@ -1562,7 +1560,7 @@ In problems like this, it's useful to attempt to solve the problem assuming that
 
 **The Simple Approach**
 
-In this smaller, simpler problem, we could consider comparing string representations of traversals of each tree. lfT2 is a subtree ofTl, thenT2's traversal should be a substring ofTl. ls the reverse true? If so,  should we use an in-order traversal or a pre-order traversal?
+In this smaller, simpler problem, we could consider comparing string representations of traversals of each tree. lfT2 is a subtree of T1, thenT2's traversal should be a substring of T1. ls the reverse true? If so,  should we use an in-order traversal or a pre-order traversal?
 
 An in-order traversal will definitely not work. After all, consider a scenario in which we were using binary search  trees. A binary search tree's in-order traversal always prints out the values in sorted order.Therefore, two binary search trees with the same values will always have the same in-order traversals, even if their structure is different.
 
@@ -1595,7 +1593,7 @@ The root is 1, and its left node, 2, follows it. 2.left must be 4. 4 must have t
 
 This whole process was deterministic, as it will be on any other tree. A pre-order traversal always starts at the root and, from there, the path we take is entirely defined by the traversal.Therefore, two trees are iden­ tical if they have the same pre-order traversal.
 
-Now consider the subtree problem. lfT2's pre-order traversal is a substring of Tl's pre-order traversal, then T2's root element must be found inTl. If we do a pre-order traversal from this element in Tl, we will follow an identical path toT2's traversal. Therefore, T2 is a subtree of Tl.
+Now consider the subtree problem. lf T2's pre-order traversal is a substring of T1's pre-order traversal, then T2's root element must be found in T1. If we do a pre-order traversal from this element in T1, we will follow an identical path toT2's traversal. Therefore, T2 is a subtree of T1.
 
 Implementing this is quite straightforward. Wejust need to construct and compare the pre-order traversaIs.
 
@@ -1621,44 +1619,44 @@ Implementing this is quite straightforward. Wejust need to construct and compare
 19  }
 ```
 
-This approach takes O(n  +  m) time and O(n  +  m) space, where n and mare the number of nodes inTl and T2, respectively. Given millions of nodes, we might want to reduce the space complexity.
+This approach takes O(n  +  m) time and O(n  +  m) space, where n and mare the number of nodes in T1 and T2, respectively. Given millions of nodes, we might want to reduce the space complexity.
 
 **The Alternative Approach**
 
-An alternative approach is to search through the larger tree, Tl. Each time a node in Tl matches the root ofT2, call matchTree.The matchTree method will compare the two subtrees to see if they are identical.
+An alternative approach is to search through the larger tree, T1. Each time a node in T1 matches the root of T2, call matchTree.The matchTree method will compare the two subtrees to see if they are identical.
 
-Analyzing the runtime is somewhat complex. A naive answer would be to say that it is O(nm) time, where n is the number of nodes in Tl and mis the number of nodes in T2. While this is technically correct, a little more thought can produce a tighter bound.
+Analyzing the runtime is somewhat complex. A naive answer would be to say that it is O(nm) time, where n is the number of nodes in T1 and mis the number of nodes in T2. While this is technically correct, a little more thought can produce a tighter bound.
 
-We do not actually call matchTree on every node in Tl. Rather, we call it k times, where k is the number of occurrences ofT2's root inTl.The runtime is closer too(n   +  km).
+We do not actually call matchTree on every node in T1. Rather, we call it k times, where k is the number of occurrences of T2's root in T1. The runtime is closer to O(n + km).
 
-In fact, even that overstates the runtime.  Even if the root were identical, we exit matchTree when we find a difference betweenTl andT2. We therefore probably do not actually look at m nodes  on each call of matchTree.
+In fact, even that overstates the runtime.  Even if the root were identical, we exit matchTree when we find a difference between T1 andT2. We therefore probably do not actually look at m nodes  on each call of matchTree.
 
 The code below implements this algorithm.
 
 ```java
-1   boolean containsTree(TreeNode  tl, TreeNode  t2)  {
+1   boolean containsTree(TreeNode  t1, TreeNode  t2)  {
 2       if (t2  ==   null) return  true;   //  The empty  tree  is always a  subtree
-3       return  subTree(tl,   t2);
+3       return  subTree(t1,   t2);
 4   }
 5  
-6   boolean  subTree(TreeNode   rl, TreeNode  r2)  {
-7       if (rl ==   null)  {
+6   boolean  subTree(TreeNode   r1, TreeNode  r2)  {
+7       if (r1 ==   null)  {
 8           return  false;   // big  tree  empty   &  subtree still not found.
-9       }  else if (rl.data ==   r2.data  &&  matchTree(rl,  r2))  {
+9       }  else if (r1.data ==   r2.data  &&  matchTree(r1,  r2))  {
 10          return  true;
 11      }
-12      return  subTree(rl.left,  r2)   ||  subTree(rl.right,  r2);
+12      return  subTree(r1.left,  r2)   ||  subTree(r1.right,  r2);
 13  }
 14  
-15  boolean  matchTree(TreeNode   rl, TreeNode  r2)  {
-16      if (rl == null  &&  r2 ==  null) {
-17          return  true;   II nothing left in  the  subtree
-18      }  else if (rl == null   ||  r2  ==  null) {
+15  boolean  matchTree(TreeNode   r1, TreeNode  r2)  {
+16      if (r1 == null  &&  r2 ==  null) {
+17          return  true;   // nothing left in  the  subtree
+18      }  else if (r1 == null   ||  r2  ==  null) {
 19          return  false;   // exactly tree  is empty, therefore  trees  don't  match
-20      }  else if (rl.data  != r2.data)   {
+20      }  else if (r1.data  != r2.data)   {
 21          return  false;    // data doesn't  match
 22      }  else {
-23          return  matchTree(rl.left,  r2.left) &&  matchTree(rl.right,  r2.right);
+23          return  matchTree(r1.left,  r2.left) &&  matchTree(r1.right,  r2.right);
 24      }
 25  }
 ```
@@ -1667,15 +1665,11 @@ When might the simple solution be better, and when might the alternative approac
 
 1.  The simple solution  takes O(n + m) memory. The alternative solution takes O(log(n)  + log(m))
 memory. Remember: memory usage can be a very big deal when it comes to scalability.
-2.  The simple solution  is O(n   +  m) time and the alternative  solution  has a worst case time of O(nm).
-However, the worst  case time can be deceiving; we need to look deeper than that.
-3. A slightly tighter bound on the runtime, as explained  earlier, is O(n  +  km), where k is the number of occurrences ofT2's root inTl. Let's suppose the node data forTl andT2 were random numbers picked
-between O and p.The value of k would be approximately n/p. Why? Because each of n nodes in Tl has a  1/p chance of equaling the root, so approximately  n/p nodes in Tl should equal T2. root. So, let's
-say p =  1000, n =  1000000 and m =  100. We would  do somewhere  around  l,100,000 node checks (1100000 = 1000000 + (100 * 1000000)/100).
+2.  The simple solution  is O(n +  m) time and the alternative  solution  has a worst case time of O(nm). However, the worst  case time can be deceiving; we need to look deeper than that.
+3. A slightly tighter bound on the runtime, as explained  earlier, is O(n  +  km), where k is the number of occurrences of T2's root in T1. Let's suppose the node data for T1 and T2 were random numbers picked between O and p.The value of k would be approximately n/p. Why? Because each of n nodes in T1 has a  1/p chance of equaling the root, so approximately  n/p nodes in T1 should equal T2. root. So, let's say p =  1000, n =  1000000 and m =  100. We would  do somewhere  around 1,100,000 node checks (1100000 = 1000000 + (100 * 1000000)/100).
 4.  More complex mathematics and assumptions could get us an even tighter  bound. We assumed in #3 above that if we call matchTree, we would end up traversing  all m nodes of T2. It's far more likely, though,  that we will find a difference  very early on in the tree and will then exit early.
 
-In summary, the alternative approach is certainly more optimal in terms of space and is likely more optimal in terms of time  as well. It all depends on what assumptions you make and whether you prioritize reducing
- the average case runtime at the expense of the worst case runtime. This is an excellent point to make to your interviewer.
+In summary, the alternative approach is certainly more optimal in terms of space and is likely more optimal in terms of time  as well. It all depends on what assumptions you make and whether you prioritize reducing the average case runtime at the expense of the worst case runtime. This is an excellent point to make to your interviewer.
 
 **4.11  Random Node:** You are implementing a binary search tree class from scratch, which, in addition to insert, find, and delete, has a method getRandomNode()  which returns a random node from the tree. All nodes should be equally likely to be chosen. Design and implement an algorithm for getRandomNode,  and explain how you would implement the rest of the methods.
 
@@ -1685,13 +1679,13 @@ SOLUTION
 
 Let's draw an example.
 ```
-            20
-           /   \
-        10      30
+           20
+         /   \
+       10    30
       /    \
-    5       15
-   /  \    /   \
-3       7       17
+     5      15
+   /  \   /   \
+  3     7      17
 ```
 
 We're going to explore many solutions until we get to an optimal one that works.
@@ -1700,7 +1694,7 @@ One thing we should realize here is that the question was phrased in a very inte
 
 **Option #1  [Slow & Working]**
 
-One solution is to copy all the nodes to an array and return a random element in the array. This solution will take O(N)  time and O(N)  space, where N is the number of nodes in the tree.
+One solution is to copy all the nodes to an array and return a random element in the array. This solution will take O(N)  time and O(N) space, where N is the number of nodes in the tree.
 
 We can guess our interviewer is probably looking for something more optimal, since this is a little too straightforward  (and should make us wonder why the interviewer gave us a binary tree, since we don't need that information).
 
@@ -1747,7 +1741,8 @@ We can start with the root. With what probability should we return the root? Sin
 We've resolved the issue with the root. Now what about the rest of the problem? With what probability should we traverse left versus right? It's not  50/50.  Even in a balanced tree, the number of nodes on each side might not be equal.  If we have more nodes on the left than the right, then we need to go left more often.
 
 One way to think about it is that the odds of picking something-anything-from the left must be the sum of each individual probability. Since each node must have probability 1/N, the odds of picking something from the left must have probability LEFT_SIZE  *  1/N. This should therefore be the odds of going left.
-Likewise, the odds of going right should be RIGHT_SIZE *   1/N.
+
+Likewise, the odds of going right should be RIGHT_SIZE * 1/N.
 
 This means that each node must know the size of the nodes on the left and the size of the nodes on the right. Fortunately, our interviewer has told us that we're building  this tree class from scratch. It's easy to keep track of this size information on inserts and deletes. We can just store a size variable in each node. Increment size on inserts and decrement it on deletes.
 
@@ -1765,7 +1760,7 @@ This means that each node must know the size of the nodes on the left and the si
 11  
 12      public  TreeNode getRandomNode()   {
 13          int leftSize  = left    == null ?  0  :   left.size();
-14          Random  random  =  new Random();
+14          Random random =  new Random();
 15          int index  =  random.nextint(size);
 16          if (index  <  leftSize) {
 17              return  left.getRandomNode();
@@ -1811,7 +1806,7 @@ This means that each node must know the size of the nodes on the left and the si
 
 In a balanced tree, this algorithm will be O(log N), where N is the number of nodes.
 
-##### Option #7 [Fast & Working]
+**Option #7 [Fast & Working]**
 
 Random number calls can be expensive.  If we'd like, we can reduce the number of random number calls substantially.
 
@@ -1831,7 +1826,7 @@ We traversed left because we picked a number between O and 5 (inclusive). When w
 
 But what if we went right instead? We have a number between 7 and 8 (inclusive) but we would need a number between O and 1  (inclusive). That's easy to fix:just subtract out LEFT_SIZE  +  1.
 
-Another way to think about what we're doing is that the initial random number call indicates which node (i) to return, and then we're locating the ith node in an in-order traversal. Subtracting LEFT_SIZE  +  1 from i reflects that, when we go right, we skip over LEFT_SIZE  + 1 nodes in the in-order traversal.
+Another way to think about what we're doing is that the initial random number call indicates which node(i) to return, and then we're locating the ith node in an in-order traversal. Subtracting LEFT_SIZE  +  1 from i reflects that, when we go right, we skip over LEFT_SIZE  + 1 nodes in the in-order traversal.
 
 ```java
 1   class  Tree {
@@ -1878,11 +1873,10 @@ Another way to think about what we're doing is that the initial random number ca
 ```
  
 
-Like the  previous algorithm, this algorithm takes  O( log  N) time  in a balanced tree. We can also describe the  runtime as O(D), whereDis the max depth of the  tree.  Note that O(D) is an accurate description of the runtime whether the  tree  is balanced or not.
+Like the  previous algorithm, this algorithm takes  O(log N) time  in a balanced tree. We can also describe the  runtime as O(D), whereDis the max depth of the  tree.  Note that O(D) is an accurate description of the runtime whether the  tree  is balanced or not.
 
 
-**4.12  Paths  with Sum:** You are given  a binary  tree  in which  each node contains an integer value (which might be  positive or negative). Design  an algorithm to count the  number of paths that sum  to a given  value. The path does not  need to start  or end at the  root  or a leaf, but  it must go downwards
-(traveling only from parent nodes to child nodes).
+**4.12  Paths  with Sum:** You are given  a binary  tree  in which  each node contains an integer value (which might be  positive or negative). Design  an algorithm to count the  number of paths that sum  to a given  value. The path does not  need to start  or end at the  root  or a leaf, but  it must go downwards (traveling only from parent nodes to child nodes).
 
 SOLUTION
 
@@ -1900,7 +1894,7 @@ Let's pick a potential sum-say, 8-and then draw  a binary  tree  based on this. 
   3     -2      1
 ```
 
-##### Solution #1: Brute  Force
+**Solution #1: Brute  Force**
 
 In the  brute force approach, we just  look at all possible paths. To do this, we traverse to each node.  At each node,  we recursively try all paths downwards, tracking the  sum  as we go. As soon  as we hit our target sum, we increment the  total.
 
@@ -1962,7 +1956,7 @@ If the value of the sum of powers of two from 1 through N isn't obvious to you, 
 ```
 Therefore, the runtime  is O(N log N) in a balanced tree.
 
-In an unbalanced tree, the runtime could be much worse. Consider a tree that is just a straight line down. At the root, we traverse to N  -  1 nodes. At the next level (withjust  a single node), we traverse to N -  2 nodes. At the third level, we traverse to N   -   3 nodes, and so on. This leads us to the sum of numbers between 1 and N, which is 0(N² ).
+In an unbalanced tree, the runtime could be much worse. Consider a tree that is just a straight line down. At the root, we traverse to N  -  1 nodes. At the next level (withjust  a single node), we traverse to N -  2 nodes. At the third level, we traverse to N   -   3 nodes, and so on. This leads us to the sum of numbers between 1 and N, which is O(N²).
 
 ##### Solution #2: Optimized
 
@@ -1981,7 +1975,7 @@ In analyzing the last solution, we may realize that we repeat some work. For a p
 
 Let's isolate a given path and treat it as just an array. Consider a (hypothetical, extended) path like:
 ```
-10 -> 5   -> 1  -> 2  ->  -1  ->  -1  -> 7  -> 1  -> 2
+10 -> 5   -> 1  -> 2  ->  -1  ->  -1  -> 7  -> 1  ->  2
 ```
 What we're really saying then is: How many contiguous subsequences in this array sum to a target sum such as 8? In other words, for each y, we're trying to find the x values  below.  (Or, more accurately, the number of x values below.)
 
@@ -2000,21 +1994,20 @@ For example:
 index:   0       1         2          3            4         5         6       7       8 
 ------------------------------------------------------------------------------------------
 value:   10 ->   5  -> 1  -> 2 -> -1  ->  -1  -> 7  ->  1  ->  2 
-sum:       10     15     16     18       17       16     23        24     26
+sum:     10     15    16    18    17      16    23     24     26
 ```
-The value of runningSum7 is 24. lf targetSum is 8, then we'd look up 16 in the hash table.This would have a value of 2 (originating from index 2 and index 5). As we can see above, indexes 3 through 7 and indexes
-6 through 7 have sums of 8.
+The value of runningSum7 is 24. lf targetSum is 8, then we'd look up 16 in the hash table.This would have a value of 2 (originating from index 2 and index 5). As we can see above, indexes 3 through 7 and indexes 6 through 7 have sums of 8.
 
 Now that we've settled the algorithm for an array, let's review this on a tree. We take a similar approach.
 
 We traverse through the tree using depth-first search. As we visit each node:
 
-1.  Track its runningSum. We'll take this in as a parameter and immediately increment it by node. value.
-2.  Look up runningSum  -  targetSum in the hash table. The value there indicates the total number. Set totalPaths to this value.
-3.   If runningSum  ==  targetSum, then there's one additional path that starts at the root. Increment totalPaths.
-4.   Add runningSum to the hash table (incrementing the value if it's already  there).
-5.   Recurse left and right, counting the number of paths with sum targetSum.
-6.   After we're done recursing left and right, decrement the value of runningSum in the hash table. This is essentially backing out of our work; it reverses the changes to the hash table so that other nodes don't use it (since we're now done with node).
+1. Track its runningSum. We'll take this in as a parameter and immediately increment it by node. value.
+2. Look up runningSum - targetSum in the hash table. The value there indicates the total number. Set totalPaths to this value.
+3. If runningSum  ==  targetSum, then there's one additional path that starts at the root. Increment totalPaths.
+4. Add runningSum to the hash table (incrementing the value if it's already  there).
+5. Recurse left and right, counting the number of paths with sum targetSum.
+6. After we're done recursing left and right, decrement the value of runningSum in the hash table. This is essentially backing out of our work; it reverses the changes to the hash table so that other nodes don't use it (since we're now done with node).
 
 Despite the complexity of deriving this algorithm, the code to implement this is relatively simple.
 

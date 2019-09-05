@@ -9,7 +9,7 @@ We're given two interesting bits of knowledge here:
 1.  It's a large array, so efficiency is very important.
 2.  We are sorting based on ages, so we know the values are in a small range.
 
-By scanning  through the various sorting algorithms, we might notice that bucket sort (or radix sort) would be a perfect candidate for this algorithm.  In fact, we can make the buckets small ( just 1   year each) and get 0(n) running time.
+By scanning  through the various sorting algorithms, we might notice that bucket sort (or radix sort) would be a perfect candidate for this algorithm.  In fact, we can make the buckets small ( just 1   year each) and get O(n) running time.
 
 
 ### Common Sorting Algorithms
@@ -267,7 +267,7 @@ The code below implements this algorithm.
 10      /*Convert hash table  to array*/
 11      int  index =  0;
 12      for (String key :   maplist.keySet()) {
-13          Arraylist<String> list = maplist.get(key);
+13          ArrayList<String> list = maplist.get(key);
 14          for (String t :  list) {
 15              array[index] =  t;
 16              index++;
@@ -282,7 +282,7 @@ The code below implements this algorithm.
 25  }
 26  
 27  /*HashMapList<String, Integer>  is  a  HashMap  that maps  from  Strings to
-28  * Arraylist<Integer>.  See   appendix for  implementation. * /
+28  * ArrayList<Integer>.  See   appendix for  implementation. * /
 ```
 
 You may notice that the  algorithm above is a modification of bucket sort.
@@ -383,7 +383,7 @@ But how much bigger? If we just went through the list linearly-1, then 2, then 3
 It's better to back off exponentially. Try 1, then 2, then 4, then 8, then 16, and so on. This ensures that, if the list has length n, we'll find the length in at most O(log  n) time.
 
 
-> Why O(log  n)? Imagine we start with pointer q at q   =  1. At each iteration, this pointer q doubles, until q is bigger than the length n. How many times can q double in size before it's bigger than n?Or, in other words, for what value of k does 2   = n?This expression is equal when k  = log n, as this is precisely what log means. Therefore, it will take 0(log n) steps to find the length.
+> Why O(log  n)? Imagine we start with pointer q at q   =  1. At each iteration, this pointer q doubles, until q is bigger than the length n. How many times can q double in size before it's bigger than n?Or, in other words, for what value of k does 2   = n?This expression is equal when k  = log n, as this is precisely what log means. Therefore, it will take O(log n) steps to find the length.
 
 
 Once we find the length, we just perform a (mostly) normal binary search. I say "mostly" because we need to make one small tweak. If the mid point is -1, we need to treat this as a "too big" value and search left. This is on line 16 below.
@@ -417,7 +417,7 @@ There's one more little tweak. Recall that the way we figure out the length is b
 24  }
 ```
 
-It turns out that not knowing the length didn't impact the runtime of the search algorithm. We find the length in O(log n) time and then do the search in 0(log n) time. Ouroverall runtime isO(log n),just as it would be in a normal array.
+It turns out that not knowing the length didn't impact the runtime of the search algorithm. We find the length in O(log n) time and then do the search in O(log n) time. Ouroverall runtime is O(log n),just as it would be in a normal array.
 
 
 **10.5  Sparse Search:** Given a sorted  array of strings that is interspersed  with empty  strings, write a method to find the location of a given string.
@@ -822,8 +822,8 @@ We are told that every row and column is sorted. This means that element a[i][j]
 
 Or, in other words:
 ```
-a[i][0]  <=  a[i][l]  <=  ... <=  a[i][j-1]  <=  a[i][j]
-a[0][j]  <=  a[l][j]  <=  ... <=  a[i-l][j]  <=  a[i][j]
+a[i][0]  <=  a[i][1]  <=  ... <=  a[i][j-1]  <=  a[i][j]
+a[0][j]  <=  a[1][j]  <=  ... <=  a[i-l][j]  <=  a[i][j]
 ```
 Looking at this visually, the dark gray element below is bigger than all the light gray elements.
 

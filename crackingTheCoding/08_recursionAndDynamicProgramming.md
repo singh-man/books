@@ -124,7 +124,7 @@ In fact, when we call fib( n), we shouldn't have to do much more thanO(n) calls,
 
 This is exactly what memoization is.
 
-With just a small modification, we can tweak this function to run in 0(n) time. We simply cache the results offibonacci(i) between calls.
+With just a small modification, we can tweak this function to run in O(n) time. We simply cache the results offibonacci(i) between calls.
 
 ```java
 1   int  fibonacci(int n)  {
@@ -171,7 +171,7 @@ First, we compute fib(1) and fib(0), which are already known from the base cases
 4 
 5     int[] memo  =  new   int[n];
 6     memo[0] =  0;
-7     memo[l] =  1;
+7     memo[1] =  1;
 8     for  (int i = 2;  i <   n;  i++)  {
 9       memo[i] =  memo[i -  1]  +  memo[i -   2];
 10    }
@@ -315,16 +315,16 @@ How do we find a path to those spots? To find a path to ( r-1, c) or ( r, c-1), 
 So then, to find a path from the origin, we just work backwards like this. Starting from the last cell, we try to find a path to each of its adjacent cells. The recursive code below implements this algorithm.
 
 ```java
-1   Arraylist<Point> getPath(boolean[][] maze) {
+1   ArrayList<Point> getPath(boolean[][] maze) {
 2     if (maze ==  null  ||    maze.length     == 0) return null;
-3     ArrayList<Point> path  =  new Arraylist<Point>();
+3     ArrayList<Point> path  =  new ArrayList<Point>();
 4     if (getPath(maze,  maze.length  -  1,  maze[0].length  -  1,  path)) {
 5       return path;
 6     }
 7     return null;
 8   }
 9 
-10  boolean  getPath(boolean[][] maze, int row,  int col,   Arraylist<Point> path)  {
+10  boolean  getPath(boolean[][] maze, int row,  int col,   ArrayList<Point> path)  {
 11    /*  If out  of  bounds or  not  available,  return.*/
 12    if (col  < 0 || row < 0 ||  !maze[row][col]) {
 13      return false;
@@ -357,9 +357,9 @@ How does our current algorithm work? To find a path to (r, c),  we look for a pa
 This is what the dynamic programming algorithm below does.
 
 ```java
-1   Arraylist<Point> getPath(boolean[][]  maze)  {
+1   ArrayList<Point> getPath(boolean[][]  maze)  {
 2     if (maze  == null  ||    maze.length ==  0)  return null;
-3     Arraylist<Point>  path = new  Arraylist<Point>();
+3     ArrayList<Point>  path = new  ArrayList<Point>();
 4     HashSet<Point> failedPoints =  new HashSet<Point>();
 5     if (getPath(maze,  maze.length  -  1,   maze[0].length  -  1,   path, failedPoints))  {
 6       return path;
@@ -367,7 +367,7 @@ This is what the dynamic programming algorithm below does.
 8     return null;
 9   }
 10  
-11  boolean  getPath(boolean[][] maze,  int row,  int  col,  Arraylist<Point> path,
+11  boolean  getPath(boolean[][] maze,  int row,  int  col,  ArrayList<Point> path,
 12                HashSet<Point>  failedPoints) {
 13    /* If out  of  bounds  or  not   available,  return.*/
 14    if (col < 0  ||  row < 0 ||  !maze[row][col])  {
@@ -576,18 +576,18 @@ Generating P(n)  for the general case is just a simple generalization of the abo
 The following code implements this algorithm:
 
 ```java
-1     Arraylist<Arraylist<Integer>> getSubsets(Arraylist<Integer> set,  int  index) {
-2       Arraylist<Arraylist<Integer>> allsubsets;
+1     ArrayList<ArrayList<Integer>> getSubsets(ArrayList<Integer> set,  int  index) {
+2       ArrayList<ArrayList<Integer>> allsubsets;
 3       if (set.size() ==  index) { //Base  case   -  add  empty set
-4         allsubsets =  new Arraylist<Arraylist<Integer>>();
-5         allsubsets.add(new Arraylist<Integer>());  // Empty set
+4         allsubsets =  new ArrayList<ArrayList<Integer>>();
+5         allsubsets.add(new ArrayList<Integer>());  // Empty set
 6       }  else {
 7         allsubsets =  getSubsets(set,  index + 1);
 8         int item =  set.get(index);
-9         Arraylist<Arraylist<Integer>> moresubsets
-10        new Arraylist<Arraylist<Integer>>();
-11        for (Arraylist<Integer> subset :   allsubsets) {
-12          Arraylist<Integer>  newsubset =  new Arraylist<Integer>();
+9         ArrayList<ArrayList<Integer>> moresubsets
+10        new ArrayList<ArrayList<Integer>>();
+11        for (ArrayList<Integer> subset :   allsubsets) {
+12          ArrayList<Integer>  newsubset =  new ArrayList<Integer>();
 13          newsubset.addAll(subset);  //
 14          newsubset.add(item);
 15          moresubsets.add(newsubset);
@@ -611,8 +611,8 @@ This gives us 2ⁿ possible subsets. How can we iterate through all possible seq
 Generating all subsets, then, really just comes down to generating all binary numbers (that is, all integers). We iterate through  all numbers from 0 to 2ⁿ (exclusive) and translate the binary representation  of the numbers into a set. Easy!
 
 ```java
-1   Arraylist<Arraylist<Integer>>  getSubsets2(ArrayList<Integer> set)  {
-2     ArrayList<ArrayList<Integer>> allsubsets =  new Arraylist<Arraylist<Integer>>();
+1   ArrayList<ArrayList<Integer>>  getSubsets2(ArrayList<Integer> set)  {
+2     ArrayList<ArrayList<Integer>> allsubsets =  new ArrayList<ArrayList<Integer>>();
 3     int max =  1 << set.size(); /* Compute 2^n */
 4     for (int k  = 0;  k < max; k++   ) {
 5       ArrayList<Integer> subset =  convertintToSet(k  , set);
@@ -621,8 +621,8 @@ Generating all subsets, then, really just comes down to generating all binary nu
 8     return allsubsets;
 9   }
 10  
-11  Arraylist<Integer> convertlntToSet(int x, Arraylist<Integer> set) {
-12    Arraylist<Integer> subset =  new  Arraylist<Integer>();
+11  ArrayList<Integer> convertlntToSet(int x, ArrayList<Integer> set) {
+12    ArrayList<Integer> subset =  new  ArrayList<Integer>();
 13    int  index =  0;
 14    for  (int  k  = x; k  > 0;   k  >>= 1) {
 15      if ((k & 1) ==   1) {
@@ -875,7 +875,7 @@ The following code provides a more detailed implementation of this algorithm, us
 8     for  (int i = n - 1;  i >=  0;  i--) {
 9       towers[0].add(i);
 10    }
-11    towers[0].moveDisks(n, towers[2],  towers[l]);
+11    towers[0].moveDisks(n, towers[2],  towers[1]);
 12  }
 13  
 14  class Tower {
@@ -960,10 +960,10 @@ a₃a₂a₁ -> a₄a₃a₂a₁, a₃a₄a₂a₁ ,a₃a₂a₄a₁, a₃a₂a�
 We can now implement this algorithm recursively.
 
 ```java
-1   Arraylist<String>  getPerms(String str) {
+1   ArrayList<String>  getPerms(String str) {
 2     if (str == null) return null;
 3 
-4     Arraylist<String>   permutations    new ArrayList<String>();
+4     ArrayList<String>   permutations =  new ArrayList<String>();
 5     if (str.length() == 0)  {//base  case
 6       permutations. add('"');
 7       return  permutations;
@@ -971,9 +971,9 @@ We can now implement this algorithm recursively.
 9   
 10    char  first = str.charAt(0); // get  the   first char
 11    String remainder =  str.substring(l); // remove the   first char
-12    Arraylist<String> words =  getPerms(remainder);
+12    ArrayList<String> words =  getPerms(remainder);
 13    for (String word :   words)   {
-14      for (int    =  0;       <= word.length();   ++)  {
+14      for (int =  0; <= word.length();   ++)  {
 15        String s =  insertCharAt(word, first, j);
 16        permutations.add(s);
 17      }
@@ -1022,9 +1022,9 @@ P(a₁a₂a₃a₄) = {a₁+ P(a₂a₃a₄)} + {a₂+ P(a₁a₃a₄)}  +  {a�
 This is now a fairly straightforward algorithm to implement.
 
 ```java
-1   Arraylist<String>  getPerms(String  remainder)  {
+1   ArrayList<String>  getPerms(String  remainder)  {
 2     int len = remainder.length();
-3     Arraylist<String> result = new ArrayList<Str1ng>();
+3     ArrayList<String> result = new ArrayList<Str1ng>();
 4 
 5     /* Base case.   */
 6     if (len == 0)  {
@@ -1037,7 +1037,7 @@ This is now a fairly straightforward algorithm to implement.
 13      /*  Remove  char  i and find  permutations of  remaining  chars.*/
 14      String before =  remainder.substring(0,  i);
 15      String after  =  remainder.substring(i + 1,  len);
-16      Arraylist<String> partials =  getPerms(before +  after);
+16      ArrayList<String> partials =  getPerms(before +  after);
 17  
 18      /*  Prepend  char  i to  each  permutation.*/
 19      for  (String s  :   partials) {
@@ -1052,13 +1052,13 @@ This is now a fairly straightforward algorithm to implement.
 Alternatively, instead of passing the permutations back up the stack, we can push the prefix down the stack. When we get to the bottom (base case), prefix holds a full permutation.
 
 ```java
-1   Arraylist<String>  getPerms(String str) {
-2     Arraylist<String> result  =  new Arraylist<String>();
+1   ArrayList<String>  getPerms(String str) {
+2     ArrayList<String> result  =  new ArrayList<String>();
 3     getPerms("",  str, result);
 4     return result;
 5   }
 6 
-7   void  getPerms(String prefix,  String remainder,   Arraylist<String> result) {
+7   void  getPerms(String prefix,  String remainder,   ArrayList<String> result) {
 8     if (remainder.length() ==    0)  result.add(prefix);
 9 
 10    int len  =  remainder.length();
@@ -1115,8 +1115,8 @@ Eventually, we'll get down to no more characters remaining.
 The code below implements this algorithm.
 
 ```java
-1   Arraylist<String> printPerms(String s) {
-2     Arraylist<String> result  = new Arraylist<String>();
+1   ArrayList<String> printPerms(String s) {
+2     ArrayList<String> result  = new ArrayList<String>();
 3     HashMap<Character,   Integer> map  =  buildFreqTable(s);
 4     printPerms(map, "",  s.length(), result);
 5     return  result;
@@ -1238,7 +1238,7 @@ On each recursive call, we have the index for a particular character in the stri
 So, we simply keep track of the number of left and right parentheses allowed. If there are left parens remaining,  we'll insert a left paren and recurse. If there are more right parens remaining than left (i.e., if there are more left parens in use than right parens), then we'll insert a right paren and recurse.
 
 ```java
-1   void  addParen(Arraylist<String> list, int leftRem,  int rightRem,  char[] str,
+1   void  addParen(ArrayList<String> list, int leftRem,  int rightRem,  char[] str,
 2   int index)   {
 3     if (leftRem  < 0  ||    rightRem < leftRem)  return;//invalid  state
 4   
@@ -1255,7 +1255,7 @@ So, we simply keep track of the number of left and right parentheses allowed. If
 15  
 16  ArrayList<String> generateParens(int  count)  {
 17    char[] str  =  new char[count * 2];
-18    Arraylist<String> list =  new Arraylist<String>();
+18    ArrayList<String> list =  new ArrayList<String>();
 19    addParen(list,  count,   count,   str, 0);
 20    return list;
 21  }
@@ -1462,7 +1462,7 @@ Implementing this is now reasonably straightforward.
 ```java
 1   int GRID_SIZE   =  8;
 2 
-3   void  placeQueens(int row,  Integer[] columns,  Arraylist<Integer[]> results)  {
+3   void  placeQueens(int row,  Integer[] columns,  ArrayList<Integer[]> results)  {
 4     if (row == GRID_SIZE)  {//Found  valid placement
 5       results.add(columns.clone());
 6     }  else {
@@ -1475,14 +1475,14 @@ Implementing this is now reasonably straightforward.
 13    }
 14  }
 15  
-16  /* Check if (rowl,   column!)  is a  valid spot  for  a queen by checking  if  there is a
+16  /* Check if (row1,   column1)  is a  valid spot  for  a queen by checking  if  there is a
 17  * queen in  the  same column or  diagonal. We  don't need to  check it for  queens in
 18  * the  same row because  the  calling placeQueen only  attempts to  place  one queen at
 19  * a  time.   We  know this row is empty. */
-20  boolean  checkValid(Integer[]  columns,  int rowl,   int column1) {
-21    for  (int row2 =  0;  row2 <   rowl;  row2++) {
+20  boolean  checkValid(Integer[]  columns,  int row1,   int column1) {
+21    for  (int row2 =  0;  row2 <   row1;  row2++) {
 22      int column2 =  columns[row2];
-23      /*  Check if (row2,  columN²) invalidates (rowl,   columnl)  as  a
+23      /*  Check if (row2,  column2) invalidates (row1,   column1)  as  a
 24      * queen spot. */
 25      
 26      /*  Check if rows have a  queen in  the  same column */
@@ -1494,8 +1494,8 @@ Implementing this is now reasonably straightforward.
 32      * between the  rows,  then  they're in  the  same diagonal. */
 33      int columnDistance  =  Math.abs(column2  -  column1);
 34      
-35      /*  rowl  >   row2,  so  no need  for  abs  */
-36      int rowDistance  =  rowl  -  row2;
+35      /*  row1  >   row2,  so  no need  for  abs  */
+36      int rowDistance  =  row1  -  row2;
 37      if (columnDistance  ==  rowDistance)   {
 38        return false;
 39      }
@@ -1504,10 +1504,9 @@ Implementing this is now reasonably straightforward.
 42  }
 ```
 
-Observe that since each row can only have one queen, we don't need to store our board as a full 8x8 matrix. We only need a single array where column [ r]  =  c indicates that row r has a queen at column c.
+Observe that since each row can only have one queen, we don't need to store our board as a full 8x8 matrix. We only need a single array where column[r]  =  c indicates that row r has a queen at column c.
 
-**8.13 	Stack of Boxes:** You have a stack of n boxes, with widths w1, heights hi, and depths di. The boxes cannot be rotated and can only be stacked on top of one another if each box in the stack is strictly larger than the box above it in width, height, and depth. Implement a method to compute the
-height of the tallest possible stack. The height of a stack is the sum of the heights of each box.
+**8.13 	Stack of Boxes:** You have a stack of n boxes, with widths w1, heights hi, and depths di. The boxes cannot be rotated and can only be stacked on top of one another if each box in the stack is strictly larger than the box above it in width, height, and depth. Implement a method to compute the height of the tallest possible stack. The height of a stack is the sum of the heights of each box.
 
 SOLUTION
 

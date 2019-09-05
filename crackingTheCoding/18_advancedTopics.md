@@ -571,17 +571,17 @@ All code for the book can be downloaded from CrackingTheCodinglnterview.com.
 
 ### HashMaplist<T, E>
 
-The HashMapList class is essentially shorthand for HashMap<T,   Arraylist<E». It allows us to map from an item of type ofT to an ArrayList of type E.
+The HashMapList class is essentially shorthand for HashMap<T,   ArrayList<E». It allows us to map from an item of type ofT to an ArrayList of type E.
 
 For example, we might want a data structure that maps from an integer to a list of strings. Ordinarily, we'd have to write something like this:
 
 ```java
-1	HashMap<Integer,   Arraylist<String>> maplist =
-2		new HashMap<Integer,   Arraylist<String>>();
+1	HashMap<Integer,   ArrayList<String>> maplist =
+2		new HashMap<Integer,   ArrayList<String>>();
 3	for (String s  :   strings) {
 4		int key =  computeValue(s);
 5		if (!maplist.containsKey(key)) {
-6			maplist.put(key, new Arraylist<String>());
+6			maplist.put(key, new ArrayList<String>());
 7		}
 8		maplist.get(key).add(s);
 9	}
@@ -597,23 +597,23 @@ Now, we can just write this:
 It's not a big change, but it makes our code a bit simpler.
 ```java
 1   public class HashMapList<T,  E>  {
-2   private HashMap<T,  Arraylist<E>> map =  new HashMap<T,  Arraylist<E>>();
+2   private HashMap<T,  ArrayList<E>> map =  new HashMap<T,  ArrayList<E>>();
 3  
 4   /*   Insert item  into list  at key.   */
 5   public void  put(T   key,   E   item)   {
 6   	if (!map.containsKey(key)) {
-7   		map.put(key,  new Arraylist<E>());
+7   		map.put(key,  new ArrayList<E>());
 8   	}
 9   	map.get(key).add(item);
 10  }
 11  
 12  /*  Insert list of  items  at key.  */
-13  public   void  put(T  key,  Arraylist<E> items)  {
+13  public   void  put(T  key,  ArrayList<E> items)  {
 14  	map.put(key,   items);
 15  }
 16  
 17  /*  Get list of  items  at key.  */
-18  public   Arraylist<E>  get(T  key)  {
+18  public   ArrayList<E>  get(T  key)  {
 19  	return  map.get(key);
 20  }
 21  
@@ -624,7 +624,7 @@ It's not a big change, but it makes our code a bit simpler.
 26  
 27  /*  Check if list at key contains value. */
 28  public   boolean  containsKeyValue(T  key,  E   value)   {
-29  	Arraylist<E>  list =  get(key);
+29  	ArrayList<E>  list =  get(key);
 30  	if (list ==  null) return false;
 31  	return list.contains(value);
 32  }
@@ -774,7 +774,7 @@ The trie data structure is used in a few problems to make  it easier to look up 
 4 		
 5 		/* Takes a list of  strings as  an argument,  and constructs a trie that stores
 6 		* these strings.  */
-7 		public Trie(Arraylist<String> list) {
+7 		public Trie(ArrayList<String> list) {
 8 			root   =  new  TrieNode();
 9 			for   (String word :   list) {
 10				root.addWord(word);
@@ -1195,7 +1195,7 @@ Break this down into subproblems. Use recursion. If you had all possible sequenc
 
 You can use two pointers, one moving twice as fast as the other. If there is a cycle, the two pointers will collide. They will land at the same location at the same time. Where do they land? Why there?
 
-There is one solution that is 0(N  log N) time. Another solution uses some space, but isO(N) time.
+There is one solution that is O(N  log N) time. Another solution uses some space, but isO(N) time.
 
 Once you decide to build a node, its outgoing edge can be deleted. After you've done this, can you find other nodes that are free and clear to build?
 
@@ -1447,7 +1447,7 @@ trary node. What is the relationship between  this depth-first search and a vali
 #133.	4.7	Pick an arbitrary node and do a depth-first search on it. Once we get to the end of a path,
 		we know that this node can be the last one built, since no nodes depend  on it. What
 		does this mean about the nodes right before it?
-#134.	1.4	Have you tried a hash table? You should be able to get this down to 0(N) time.
+#134.	1.4	Have you tried a hash table? You should be able to get this down to O(N) time.
 #135.	4.3	You should be able to come up with an algorithm involving both depth-first search and
 		breadth-first search.
 #136.	1.4	Can you reduce the space usage by using a bit vector?
@@ -2296,7 +2296,7 @@ CrackingTheCodinglnterview.com I  6th Edition        673
 #388.	8.2	Think again about the efficiency of your algorithm. Can you optimize it?
 #389.	7.9	The rotate () method should be able to run in O(1) time.
 #390.	5.4	Get Previous: Once you've solved Get Next, try to invert the logic for Get Previous.
-#391.		Does your code handle the case when xl and x2 are in the same byte?
+#391.		Does your code handle the case when x1 and x2 are in the same byte?
 #392.	10.10	Consider a binary search tree where each node stores some additional data.
 674          Cracking the Coding Interview, 6th Edition 
 11   I    Hints for Concepts and Algorithms
@@ -2793,7 +2793,7 @@ Picture the array as alternating sequences of positive and negative numbers. Obs
 
 16.1O     Solution 2: Try creating a sorted list of births and a sorted list of deaths. Can you iterate through both, tracking the number of people alive at any one time?
 
-16.22    Option #2:Think about how anArraylist works. Can you use anArraylist for this?
+16.22    Option #2:Think about how an ArrayList works. Can you use an ArrayList for this?
 
 17.26	Solution  1: To understand the relationship between the union and the intersection of two sets, consider a Venn diagram (a diagram where one circle overlaps another circle).
 
@@ -2807,7 +2807,7 @@ Picture the array as alternating sequences of positive and negative numbers. Obs
 
 17.24	What if you precomputed the sum of the submatrix starting at the top left corner and continuing to each cell? How long would it take you to compute this? If you did this, could you then get the sum of an arbitrary submatrix in O(1) time?
 
-16.22	Option #2: It's not impossible to use anArraylist, but it would be tedious. Perhaps it would be easier to build your own, but specialized for matrices.
+16.22	Option #2: It's not impossible to use an ArrayList, but it would be tedious. Perhaps it would be easier to build your own, but specialized for matrices.
 
 16.10	Solution 3: Each birth adds one person and each death removes a person. Try writing  an example of a list of people (with birth and death years) and then re-formatting this into a list of each year and a +1 for a birth and a -1 for a death. 
 
@@ -2894,11 +2894,11 @@ IV I     Hints for Additional Review  Problems
 #563.	16.14	Have you tried using a hash table?
 #564.	16.21	If you swap two values, a and  b, then the  sum  of A becomes sumA   -  a  +   band the
 		sum  of B becomes sumB   -  b   +  a. These sums need to be equal.
-#565.	17.24	If you can precompute the  sum  from the  top left corner to each cell, you can use this to compute the sum of an arbitrary submatrix in 0( 1) time. Picture a particular submatrix.
+#565.	17.24	If you can precompute the  sum  from the  top left corner to each cell, you can use this to compute the sum of an arbitrary submatrix in O( 1) time. Picture a particular submatrix.
 		The  full, precomputed sum  will include this  submatrix, an  array immediately above it
 		(C), and  array to the  left (B), and  an area to the  top and  left (A). How can you compute
 		the  sum of just D?
-xl        x2
+x1        x2
 
 
 
@@ -3038,7 +3038,7 @@ tively by working backwards.
 #588.	16.8	Have  you  considered negative  numbers? Does  your  solution  work  for  values  like
 100,030,000?
 #589.	17.15	When  you get  recursive  algorithms that  are  very inefficient try looking  for repeated subproblems.
-#590.	17.19	Part 1: If you have to find the missing number in 0( 1) space and 0( N) time, then  you can do a only constant number of passes  through the array and  can store only a few
+#590.	17.19	Part 1: If you have to find the missing number in O( 1) space and O( N) time, then  you can do a only constant number of passes  through the array and  can store only a few
 		variables.
 #591.	17.9	Look at the list of all values for 3•  *  Sb   *  7c, Observe that each value in the list will be
 		3*(some previous value). S*(some previous value), or ?*(some previous value).
@@ -3098,7 +3098,7 @@ similarity directly from the hash table?
 		(for each number), and so on.
 #613.	16.9	Multiply: it's easy enough to implement multiply using add. But how do you handle
 		negative numbers?
-#614.	16.17	You can solve this in O(N) time and 0( 1) space.
+#614.	16.17	You can solve this in O(N) time and O( 1) space.
 #615.	17.24	Suppose this was just a single array. How could we compute  the subarray with the
 		largest sum? See 16.17 for a solution to this.
 #616.	16.22	Option #3: All you actually need is some way of looking up if a cell is white or black (and
@@ -3351,7 +3351,7 @@ IV I      Hints for Additional Review Problems
 		the values 3x, Sx, and 7x to be used later.
 #661.	17.14	Think about the previous hint some more, particularly in the context of quicksort.
 #662.	17.21	How can you make the process of finding the next tallest bar on each side faster?
-#663.	16.18	Be careful with how you analyze the runtime. If you iterate through 0( N²) substrings and each one does an 0(n) string comparison, then the total runtime is O( n3).
+#663.	16.18	Be careful with how you analyze the runtime. If you iterate through O( N²) substrings and each one does an O(n) string comparison, then the total runtime is O( n3).
 #664.	17.1	Now focus on the carrying.  In what cases will values carry? How do you apply the carry
 		to the number?
 #665.	16.26	Consider thinking about it as, when you get to a multiplication or division sign, jumping
@@ -3683,7 +3683,7 @@ How?
 
 17.19 	Part 2: You might need the quadratic formula. It's not a big deal if you don't remember it. Most people  won't. Remember that there is such a thing as good enough.
 
-16.18	Since the value of a determines the value of b (and vice versa) and either a or b must start at the beginning  of the value, you should have only 0(n) possibilities for how to split up the pattern.
+16.18	Since the value of a determines the value of b (and vice versa) and either a or b must start at the beginning  of the value, you should have only O(n) possibilities for how to split up the pattern.
 
 17.12		You could return both the start and end of a linked list in multiple ways. You could return a two-element array. You could define a new data structure to hold the start and end. You could re-use the BiNode data  structure.  If you're working in a language that supports this (like Python), you could just return multiple  values. You could solve the problem  as a circular linked list, with the start's previous pointer  pointing  to the end (and then break the circular list in a wrapper method). Explore these solutions. Which one do you like most and why?
 

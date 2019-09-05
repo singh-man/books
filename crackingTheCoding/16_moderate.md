@@ -361,22 +361,22 @@ The code below checks each row, column, and diagonal to see if there is a winner
 1 	Piece  hasWon(Piece[][]  board)  {
 2 		for  (int i = 0;  i <   board.length;  i++)  {
 3 			/*  Check Rows  */
-4 			if (hasWinner(board[i][0],  board[i][l],  board[i][2])) {
+4 			if (hasWinner(board[i][0],  board[i][1],  board[i][2])) {
 5 				return board[i][0];
 6
 7
 8				/*  Check Columns */
-9				if (hasWinner(board[0][i], board[l][i], board[2][i])) {
+9				if (hasWinner(board[0][i], board[1][i], board[2][i])) {
 10					return board[0][i];
 11				}
 12			}
 13
 14			/*  Check Diagonal  */
-15			if (hasWinner(board[0][0],  board[l][l],  board[2][2])) {
+15			if (hasWinner(board[0][0],  board[1][1],  board[2][2])) {
 16				return board[0][0];
 17			}
 18
-19			if (hasWinner(board[0][2],  board[l][l],  board[2][0])) {
+19			if (hasWinner(board[0][2],  board[1][1],  board[2][0])) {
 26				return board[0][2];
 21			}
 22
@@ -492,7 +492,7 @@ One way that we can reuse the code better is to just pass in the values to anoth
 23		int size =  board.length;
 24
 25		/*  Create  list of  things to  check.  */
-26		Arraylist<Check> instructions =  new Arraylist<Check>();
+26		ArrayList<Check> instructions =  new ArrayList<Check>();
 27		for  (int i = 0;  i <  board.length;  i++)  {
 28			instructions.add(new Check(0,  i, 1,  0));
 29			instructions.add(new Check(i,  0, 0,  1));
@@ -531,7 +531,7 @@ Another way of doing it is, of course,  to actually build an iterator.
 2 		if (board.length != board[0].length)  return  Piece.Empty;
 3 		int size =  board.length;
 4
-5 		Arraylist<Positionlterator> instructions =  new Arraylist<Positionlterator>();
+5 		ArrayList<Positionlterator> instructions =  new ArrayList<Positionlterator>();
 6 		for  (int i = 0;  i <  board.length;  i++)  {
 7 			instructions.add(new Positionlterator(new  Position(0,  i), 1,  0,  size));
 8 			instructions.add(new Positionlterator(new Position(i,  0),   0,  1,  size));
@@ -678,14 +678,14 @@ Let's start first with a brute force solution.
 
 The simple brute force way is to just iterate through all pairs, compute the difference, and compare it to the current minimum difference.
 ```java
-1 	int  findSmallestDifference(int[] arrayl,  int[]  array2) {
-2 		if  (arrayl.length == 0 ||   array2.length ==  0)  return  -1;
+1 	int  findSmallestDifference(int[] array1,  int[]  array2) {
+2 		if  (array1.length == 0 ||   array2.length ==  0)  return  -1;
 3
 4 		int min = Integer.MAX_VALUE;
-5 		for   (inti =   0;  i <   arrayl.length; i++)  {
+5 		for   (inti =   0;  i <   array1.length; i++)  {
 6 			for   (int j = 0;  j <   array2.length;  j++)   {
-7 				if  (Math.abs(arrayl[i] -  array2[j]) <   min)  {
-8 					min = Math.abs(arrayl[i]  -  array2[j]);
+7 				if  (Math.abs(array1[i] -  array2[j]) <   min)  {
+8 					min = Math.abs(array1[i]  -  array2[j]);
 9 				}
 10			}
 11		}
@@ -718,19 +718,19 @@ Try the following approach:
 
 And so on.
 ```java
-1 	int  findSmallestDifference(int[] arrayl,  int[]  array2) {
-2 		Arrays.sort(arrayl);
+1 	int  findSmallestDifference(int[] array1,  int[]  array2) {
+2 		Arrays.sort(array1);
 3 		Arrays.sort(array2);
 4 		int a  =  0;
 5 		int b  =  0;
 6 		int difference =  Integer.MAX_VALUE;
-7 		while  (a  <   arrayl.length &&   b <   array2.length) {
-8 			if (Math.abs(arrayl[a]  -  array2[b]) <   difference) {
-9 				difference =  Math.abs(arrayl[a]  -  array2[b]);
+7 		while  (a  <   array1.length &&   b <   array2.length) {
+8 			if (Math.abs(array1[a]  -  array2[b]) <   difference) {
+9 				difference =  Math.abs(array1[a]  -  array2[b]);
 10			}
 11
 12			/*  Move  smaller value. */
-13			if (arrayl[a) <   array2[b]) {
+13			if (array1[a] <   array2[b]) {
 14				a++;
 15			} else {
 16				b++;
@@ -990,7 +990,7 @@ l. O(log  a + log(a/2)  +  log(a/4) + ...)
 
 Therefore, the runtime is O((log a)²).
 
-This math is considerably more complicated than most people would be able to do (or expected to do) in an interview. You could make a simplification: You do O(log a) rounds and the longest round takes O(log a) work. Therefore, as an upper bound, negate takes 0((log a)²) time. In this case, the upper bound happens to be the true time.
+This math is considerably more complicated than most people would be able to do (or expected to do) in an interview. You could make a simplification: You do O(log a) rounds and the longest round takes O(log a) work. Therefore, as an upper bound, negate takes O((log a)²) time. In this case, the upper bound happens to be the true time.
 
 There are some faster solutions too. For example, rather than resetting delta to 1  at each round, we could change delta to its previous value. This would have the effect of delta "counting up" by multiples of two, and then "counting down" by multiples of two. The runtime of this approach would be O(log  a). However, this implementation would require a stack, division, or bit shifting-any of which might violate the spirit of the problem. You could certainly discuss those implementations  with your interviewer though.
 
@@ -1412,7 +1412,7 @@ This can be done in just a simple for loop. At each"sequence'; we just compute t
 8		return lengths;
 9	}
 ```
-We've used a HashSet here for consistency with the prior solutions.This isn't really necessary though, since we shouldn't get any duplicates. We could instead use an Arraylist. If we do this, though, wejust need to handle an edge case where the two types of planks are the same length. In this case, we would just return an Arraylist of size 1.
+We've used a HashSet here for consistency with the prior solutions.This isn't really necessary though, since we shouldn't get any duplicates. We could instead use an ArrayList. If we do this, though, wejust need to handle an edge case where the two types of planks are the same length. In this case, we would just return an ArrayList of size 1.
 
 
 **16.12  XML Encoding:** Since XML is very verbose, you are given a way of encoding it where each tag gets mapped to a pre-defined integer value. The language/grammar is as follows:
@@ -1965,7 +1965,7 @@ As always, we can start with a simple brute force approach.
 
 A brute force algorithm is to just try all possible values for a and b and then check if this works.
 
-We could do this by iterating through all substrings for a and all possible substrings for b. There are 0(N² ) substrings in a string of length n, so this will actually take O(n4 ) time. But then, for each value of a and b, we need to build the new string of this length and compare it for equality. This building/comparison step takes O(n)  time, giving an overall runtime of O(n5 ).
+We could do this by iterating through all substrings for a and all possible substrings for b. There are O(N²) substrings in a string of length n, so this will actually take O(n4 ) time. But then, for each value of a and b, we need to build the new string of this length and compare it for equality. This building/comparison step takes O(n)  time, giving an overall runtime of O(n5 ).
 ```java
 1     for each  possible  substring  a
 2          for each  possible substring b
@@ -2159,8 +2159,8 @@ Given a water cell, how can we compute the  amount of water nearby? If the  cell
 
 For each cell, we need to check  eight adjacent cells. We could do this by writing in lines to check up, down, left, right, and  each of the  four diagonal cells. It's even easier,  though, to do this with a loop.
 ```java
-1    Arraylist<Integer>  computePondSizes(int[][]   land) {
-2        Arraylist<Integer>  pondSizes =  new  Arraylist<Integer>();
+1    ArrayList<Integer>  computePondSizes(int[][]   land) {
+2        ArrayList<Integer>  pondSizes =  new  ArrayList<Integer>();
 3        for (int r =  0;   r <   land.length;   r++) {
 4            for (int  c  =  0;   c  <   land[r].length;  c++)   {
 5                if  (land[r][c] ==  0) {//Optional.   Would  return anyway.
@@ -2194,9 +2194,9 @@ You might also  notice that the  for loop iterates through nine  cells, not  eig
 
 If you don't like modifying the  input matrix, you can create a secondary visited matrix.
 ```java
-1     Arraylist<Integer>  computePondSizes(int[][] land)  {
+1     ArrayList<Integer>  computePondSizes(int[][] land)  {
 2         boolean[][] visited =  new  boolean[land.length][land[0].length];
-3         Arraylist<Integer>  pondSizes =  new  Arraylist<Integer>();
+3         ArrayList<Integer>  pondSizes =  new  ArrayList<Integer>();
 4         for (int r =  0;   r <  land.length;  r++) {
 5             for (int  c  =  0;   c  <  land[r].length;  c++)   {
 6                 int size =  computeSize(land,  visited, r,  c);
@@ -2226,9 +2226,9 @@ If you don't like modifying the  input matrix, you can create a secondary visite
 ```
 Both implementations are O(WH), whereWis the  width of the  matrix  and  His the  height.
  
-> Note:  Many people say "O(N)" or "O(N²)'; as though Nhas some inherent meaning. It doesn't. Suppose this were  a square matrix. You could describe the  runtime as 0(N) or 0(N²). Both are correct, depending on what you mean by N. The runtime is O(N²), where N is the length of one side. Or, if N is the  number of cells, it is 0(N). Be careful  by what you mean by N. In fact, it might be safer to just  not  use  Nat all when there's any ambiguity as to what it could mean.
+> Note:  Many people say "O(N)" or "O(N²)'; as though Nhas some inherent meaning. It doesn't. Suppose this were  a square matrix. You could describe the  runtime as O(N) or O(N²). Both are correct, depending on what you mean by N. The runtime is O(N²), where N is the length of one side. Or, if N is the  number of cells, it is O(N). Be careful  by what you mean by N. In fact, it might be safer to just  not  use  Nat all when there's any ambiguity as to what it could mean.
 
-Some people will miscompute the runtime to be 0(N4), reasoning that the computeSize method could take as long as O(N²) time and you might call it as much as O(N²) times (and apparently assuming an NxN matrix, too). While those are both basically correct statements, you can't just multiply them together. That's because as a single call to computeSize gets more expensive, the number of times it is called goes down.
+Some people will miscompute the runtime to be O(N⁴), reasoning that the computeSize method could take as long as O(N²) time and you might call it as much as O(N²) times (and apparently assuming an NxN matrix, too). While those are both basically correct statements, you can't just multiply them together. That's because as a single call to computeSize gets more expensive, the number of times it is called goes down.
 
 For example, suppose the very first call to computeSize goes through the entire matrix. That might take
 O(N²) time, but then we never call computeSize again.
@@ -2264,13 +2264,13 @@ This is exactly what we do algorithmically. We take the first digit and run thro
 We will assume the list of words is passed in as a HashSet. A HashSet operates similarly to a hash table, but rather than offering key->value lookups, it can tell us if a word is contained  in the set in O(1) time.
 ```java
 1     ArrayList<String> getValidT9Words(String number, HashSet<String>  wordList) {
-2         ArrayList<String> results  =  new   Arraylist<String>();
+2         ArrayList<String> results  =  new   ArrayList<String>();
 3         getValidWords(number,  0, "",  wordList, results);
 4         return results;
 5     }
 6
 7     void  getValidWords(String number,  int index,   String prefix,
-8           HashSet<String>  wordSet,   Arraylist<String>  results) {
+8           HashSet<String>  wordSet,   ArrayList<String>  results) {
 9         /* If it's  a  complete   word,  print it. */
 10        if (index == number.length() &&   wordSet.contains(prefix)) {
 11            results.add(prefix);
@@ -2318,14 +2318,14 @@ Ideally, we'd like our program to make the same sort of optimization: stop recur
 
 The Trie data structure  (see "Tries (Prefix Trees)" on page  105) can do this for us. Whenever we reach a string which is not a valid prefix, we exit.
 ```java
-1     Arraylist<String> getValidT9Words(String  number,  Trie   trie) {
-2         Arraylist<String> results  =  new Arraylist<String>();
+1     ArrayList<String> getValidT9Words(String  number,  Trie   trie) {
+2         ArrayList<String> results  =  new ArrayList<String>();
 3         getValidWords(number,  0,  "", trie.getRoot(),  results);
 4         return results;
 5     }
 6
 7     void  getValidWords(String number,  int  index, String prefix, TrieNode  trieNode,
-8           Arraylist<String> results)  {
+8           ArrayList<String> results)  {
 9         /*If  it's a  complete  word,  print it.  */
 10        if (index ==  number.length()) {
 11            if (trieNode.terminates()) {//Is complete   word
@@ -2428,7 +2428,7 @@ That's it!
 52    char[][] t9Letters =/*  Same as  before   */
 53
 54    /*  HashMaplist<String,  Integer>  is a HashMap  that maps from Strings to
-55    *  Arraylist<Integer>.  See appendix for  implementation.  */
+55    *  ArrayList<Integer>.  See appendix for  implementation.  */
 ```
 Getting the wordsthatmap to this number will run inO(N) time, whereN is the number of digits. TheO(N) comes in during the hash table look up (we need to convert the number to a hash table). If you know the words are never longer than a certain max size, then you could also describe the runtime as O(1).
 
@@ -2473,11 +2473,11 @@ A brute force  algorithm is simple enough. We just  iterate through the  arrays 
 Naive approach:
 
 ```java
-1    int[] findSwapValues(int[] arrayl,  int[]  array2) {
-2        int suml  =  sum(arrayl);
+1    int[] findSwapValues(int[] array1,  int[]  array2) {
+2        int suml  =  sum(array1);
 3        int sum2  =  sum(array2);
 4 
-5        for (int one   :   arrayl) {
+5        for (int one   :   array1) {
 6            for (int two   :   array2) {
 7                int newsuml   =  suml   -   one   +  two;
 8                int newSum2 =  sum2  -  two  +  one;
@@ -2495,11 +2495,11 @@ Naive approach:
 Target approach:
 
 ```java
-1    int[] findSwapValues(int[] arrayl,  int[]  array2) {
-2        Integer target  =  getTarget(arrayl,  array2);
+1    int[] findSwapValues(int[] array1,  int[]  array2) {
+2        Integer target  =  getTarget(array1,  array2);
 3        if (target ==    null) return null;
 4
-5        for (int one  :   arrayl) {
+5        for (int one  :   array1) {
 6            for (int two  :   array2) {
 7                if (one  -  two ==   target) {
 8                    int[] values =    {one,  two};
@@ -2511,8 +2511,8 @@ Target approach:
 14       return null;
 15   }
 16
-17   Integer getTarget(int[] arrayl, int[]  array2) {
-18       int suml =  sum(arrayl);
+17   Integer getTarget(int[] array1, int[]  array2) {
+18       int suml =  sum(array1);
 19       int sum2 =  sum(array2);
 20
 21       if ((suml  -  sum2) %   2   != 0)  return null;
@@ -2538,16 +2538,16 @@ one   -  target.
 
 We can do this very quickly with a hash table. We just throw all the elements in B into a hash table. Then, iterate through A and look for the appropriate element in B.
 ```java
-1    int[] findSwapValues(int[]  arrayl, int[]  array2) {
-2        Integer target =    getTarget(arrayl,  array2);
+1    int[] findSwapValues(int[]  array1, int[]  array2) {
+2        Integer target =    getTarget(array1,  array2);
 3        if (target ==    null) return null;
-4        return  findDifference(arrayl,  array2,  target);
+4        return  findDifference(array1,  array2,  target);
 5    }
 6
 7    /* Find  a  pair of  values with  a  specific  difference.  */
-8    int[]  findDifference(int[] arrayl,  int[]  array2, int  target)  {
+8    int[]  findDifference(int[] array1,  int[]  array2, int  target)  {
 9        HashSet<Integer> contents2  =  getContents(array2);
-10       for (int one  :   arrayl) {
+10       for (int one  :   array1) {
 11           int two =   one  -  target;
 12           if (contents2.contains(two)) {
 13               int[]  values =  {one,  two};
@@ -2573,24 +2573,24 @@ This solution will take O(A+B)  time. This is the Best Conceivable Runtime (BCR)
 
 If the arrays are sorted, we can iterate through them to find an appropriate pair. This will require less space.
 ```java
-1   int[] findSwapValues(int[] arrayl,  int[]  array2) {
-2       Integer target  =  getTarget(arrayl,  array2);
+1   int[] findSwapValues(int[] array1,  int[]  array2) {
+2       Integer target  =  getTarget(array1,  array2);
 3       if (target ==  null) return null;
-4       return  findDifference(arrayl,  array2, target);
+4       return  findDifference(array1,  array2, target);
 5   }
 6
-7   int[]  findDifference(int[] arrayl,  int[]  array2, int  target) {
+7   int[]  findDifference(int[] array1,  int[]  array2, int  target) {
 8       int a =  0;
 9       int b =  0;
 10
-11      while  (a  <   arrayl.length &&   b <   array2.length) {
-12          int  difference =  arrayl[a] -  array2[b];
+11      while  (a  <   array1.length &&   b <   array2.length) {
+12          int  difference =  array1[a] -  array2[b];
 13          /*  Compare  difference to  target.  If difference is too  small,   then  make it
 14          *   bigger  by moving a  to  a  bigger  value. If it is too  big,   then  make it
 15          * smaller by moving b to  a  bigger  value.   If it's just right, return this
 16          * pair. */
 17          if  (difference ==  target) {
-18              int[] values  = {arrayl[a],  array2[b]};
+18              int[] values  = {array1[a],  array2[b]};
 19              return  values;
 20          } else if (difference <   target) {
 21              a++;
@@ -2630,9 +2630,9 @@ Additionally, this solution wastes a good amount of space. The max might be K mo
 
 **Solution #2: Resizable Array**
 
-One thought is to use a resizable array, such as Java's ArrayList class. This allows us to grow an array as necessary, while still offering 0( 1) amortized insertion.
+One thought is to use a resizable array, such as Java's ArrayList class. This allows us to grow an array as necessary, while still offering O(1) amortized insertion.
 
-The problem is that our grid needs to grow in two dimensions, but the Arraylist is only a single array. Additionally, we need to grow "backward" into negative values. The ArrayList class doesn't support this.
+The problem is that our grid needs to grow in two dimensions, but the ArrayList is only a single array. Additionally, we need to grow "backward" into negative values. The ArrayList class doesn't support this.
 
 However, we take a similar approach by building our own resizable grid. Each time the ant hits an edge, we double the size of the grid in that dimension.
 
@@ -2649,7 +2649,7 @@ This relabeling will not impact the big O time since we have to create a new mat
 3       private Ant ant =  new Ant();
 4
 5       public   Grid()   {
-6           grid =  new boolean[l][l];
+6           grid =  new boolean[1][1];
 7       }
 8
 9       /*  Copy old  values   into new array,  with  an offset/shift applied to  the  row and
@@ -3032,8 +3032,8 @@ Let's start with a definition. If we're trying to find a pair of numbers that su
 
 A brute force solution is to just iterate through all pairs and print the pair if its sum matches the target sum.
 ```java
-1    Arraylist<Pair> printPairSums(int[] array,  int sum) {
-2        ArrayList<Pair>  result =   new Arraylist<Pair>();
+1    ArrayList<Pair> printPairSums(int[] array,  int sum) {
+2        ArrayList<Pair>  result =   new ArrayList<Pair>();
 3        for  (int  i =   0 ; i <  array.length; i++) {
 4            for  (int j =  i +  1; j <  array.length;  j++) {
 5                if (array[i] +  array[j] ==   sum) {
@@ -3050,8 +3050,8 @@ If there are duplicates in the array (e.g., { 5,  6,  5}), it might print the sa
 
 We can optimize this with a hash map, where the value in the hash map reflects the number of"unpaired" instances of a key. We walk through  the array. At each element x, check how many unpaired instances of x's complement preceded it in the array. If the count is at least one, then there is an unpaired instance of x's complement. We add this pair and decrement x's complement to signify that this element has been paired. If the count is zero, then increment the value of x in the hash table to signify that x is unpaired.
 ```java
-1   Arraylist<Pair> printPairSums(int[] array,  int sum) {
-2       Arraylist<Pair> result =   new Arraylist<Pair>();
+1   ArrayList<Pair> printPairSums(int[] array,  int sum) {
+2       ArrayList<Pair> result =   new ArrayList<Pair>();
 3       HashMap<Integer,   Integer> unpairedCount =  new HashMap<Integer,   Integer>();
 4       for  (int  x :    array)  {
 5           int complement = sum   - x;
@@ -3307,7 +3307,7 @@ The code below implements this algorithm.
 2    *    right and applying   each term  to  a result. When  we see  a multiplication  or
 3    *  division,  we  instead   apply  this sequence to  a temporary  variable. */
 4    double  compute(String sequence) {
-5        Arraylist<Term>  terms  =   Term.parseTermSequen ce(sequen ce);
+5        ArrayList<Term>  terms  =   Term.parseTermSequen ce(sequen ce);
 6        if (terms  ==  null) return  Integer.MIN_VALUE;
 7 
 8        double  result =  0;

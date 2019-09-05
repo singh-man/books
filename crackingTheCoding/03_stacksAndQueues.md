@@ -104,8 +104,8 @@ A queue can also be implemented  with a linked list. In fact, they are essential
 24	
 25		public T remove()   {
 26			if (first ==    null) throw  new NoSuchElementException();
-27			T data =    first.data;
-28			first =    first.next;
+27			T data =  first.data;
+28			first =   first.next;
 29			if (first == null) {
 30				last =    null;
 31			}
@@ -126,6 +126,7 @@ A queue can also be implemented  with a linked list. In fact, they are essential
 It is especially easy to mess up the updating of the first and last nodes in a queue. Be sure to double check this.
 
 One place where queues are often used is in breadth-first search or in implementing a cache.
+
 In breadth-first search, for example, we used a queue to store a list of the nodes that we need to process. Each time we process a node, we add its adjacent nodes to the back of the queue. This allows us to process nodes in the order in which they are viewed.
 
 ---
@@ -145,7 +146,7 @@ Like many problems, this one somewhat  depends  on how well we'd like to support
 
 Alternatively, we can be flexible in our space allocation, but this significantly increases the complexity of the problem.
 
-Approach 1: Fixed  Division
+**Approach 1: Fixed  Division**
 
 We can divide the array in three equal parts and allow the individual stack to grow in that limited space. Note: We will use the notation "[" to mean inclusive of an end point and "(" to mean exclusive of an end point.
 
@@ -220,9 +221,9 @@ The code for this solution is below.
 62	}
 ```
 
-If we had additional information about the expected usages of the stacks, then we could modify this algo­ rithm accordingly.  For example,  if we expected Stack  1  to have many more elements than Stack 2, we could allocate more space to Stack 1  and lessspace to Stack 2.
+If we had additional information about the expected usages of the stacks, then we could modify this algo­rithm accordingly.  For example,  if we expected Stack  1  to have many more elements than Stack 2, we could allocate more space to Stack 1  and lessspace to Stack 2.
 
-##### Approach 2: Flexible Divisions
+**Approach 2: Flexible Divisions**
 
 A second approach is to allow the stack blocks to be flexible in size. When one stack exceeds its initial capacity, we grow the allowable capacity and shift elements as necessary.
 
@@ -464,7 +465,7 @@ We can (maybe) do a bit better than this by using an additional stack which keep
 13	
 14		public Integer pop() {
 15			int value =  super.pop();
-16			if (value  ==  min())  {
+16			if (value ==  min())  {
 17				s2.pop();
 18			}
 19			return  value;
@@ -497,7 +498,7 @@ In this problem, we've been told what our data structure should look like:
 
 ```java
 1	class  SetOfStacks {
-2		Arraylist<Stack>  stacks  =   new Arraylist<Stack>();
+2		ArrayList<Stack>  stacks  =   new ArrayList<Stack>();
 3		public  void    push(int  v)   {  ... }
 4		public int  pop() {...  }
 5	}
@@ -644,7 +645,7 @@ The code below implements this algorithm.
 2        Stack<T> stackNewest, stackOldest;
 3
 4        public MyQueue() {
-5             stackNewest =  new Stack<T>();
+5             stackNewest = new Stack<T>();
 6             stackOldest = new Stack<T>();
 7        }
 8 
@@ -789,8 +790,8 @@ An alternative approach that is simple,  clean  and efficient is to simply  use 
 35				return dequeueDogs();
 36			}
 37	
-38			Dog dog =   dogs.peek();
-39			Cat   cat =  cats.peek();
+38			Dog dog =  dogs.peek();
+39			Cat cat =  cats.peek();
 40			if (dog.isOlderThan(cat))  {
 41				return  dequeueDogs();
 42			} else {

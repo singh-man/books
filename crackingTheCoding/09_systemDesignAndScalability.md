@@ -431,7 +431,7 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 38	
 39 			/*   Add friends to  queue.  */
 40 			Person  person  =  pathNode.getPerson();
-41 			Arraylist<Integer> friends = person.getFriends();
+41 			ArrayList<Integer> friends = person.getFriends();
 42 			for  (int friendid :   friends) {
 43 				if (!primary.visited.containsKey(friendid)) {
 44 					Person  friend =  people.get(friendld);
@@ -507,7 +507,7 @@ Suppose every person has k friends, and node S and node D have a friend C in com
 Generalizing this to a path of length q, we have this:
 
 - BFS: O(k^q )
-- Bidirectional BFS: O(k^q/2   +  k^q/2), which is just 0( k^q/2)
+- Bidirectional BFS: O(k^q/2   +  k^q/2), which is just O(k^q/2)
 
 If you imagine a path like A -> B -> C -> D -> E where each person has 100 friends, this is a big difference. BFS will require looking at 100 million (1004) nodes. A bidirectional BFS will require looking at only 20,000 nodes (2  x  100²).
 
@@ -552,14 +552,14 @@ The code below outlines this process. We've defined a class Server, which holds 
 23	}
 24	
 25	class  Person {
-26		private Arraylist<Integer> friends =  new Arraylist<Integer>();
+26		private ArrayList<Integer> friends =  new ArrayList<Integer>();
 27		private int personID;
 28		private String info;
 29	
 30		public Person(int id)  { this.personID = id;}
 31		public String getinfo()  {  return  info;  }
 32		public  void  setinfo(String info) {this.info  =  info;}
-33		public Arraylist<Integer>  getFriends()  {return  friends;}
+33		public ArrayList<Integer>  getFriends()  {return  friends;}
 34		public int  getID() {return  personID;}
 35		public  void   addFriend(int id)  {friends.add(id); }
 36	}
