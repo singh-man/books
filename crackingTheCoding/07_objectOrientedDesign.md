@@ -11,7 +11,7 @@ These questions are not so much about regurgitating design patterns as they are 
 Regardless of whether the object is a physical item or a technical task, object-oriented design questions can be tackled in similar ways. The following approach will work well for many problems.
 
 
-##### Step  1: Handle  Ambiguity
+**Step  1: Handle  Ambiguity**
 
 Object-oriented design (OOD) questions are often intentionally vague in order to test whether you'll make assumptions or if you'll ask clarifying questions.  After all, a developer who just codes something without understanding what she is expected to create wastes the company's time and money, and may create much more serious issues.
 
@@ -22,12 +22,12 @@ For example,  suppose you were asked to describe the object-oriented design for 
 Your coffee maker might be an industrial machine designed to be used in a massive restaurant servicing hundreds of customers per hour and making ten different kinds of coffee products. Or it might be a very simple machine, designed to be used by the elderly for just simple black coffee. These use cases will signifi­ cantly impact your design.
 
 
-##### Step 2: Define the Core Objects
+**Step 2: Define the Core Objects**
 
 Now that we understand what we're designing, we should consider what the "core objects" in a system are. For example, suppose we are asked to do the object-oriented design for a restaurant. Our core objects might be things like Table, Guest, Party, Order, Meal, Employee, Server, and Host.
 
 
-##### Step 3: Analyze Relationships
+**Step 3: Analyze Relationships**
 
 Having more or less decided on our core objects, we now want to analyze the relationships between the objects. Which objects are members of which other objects? Do any objects inherit from any others? Are relationships many-to-many or one-to-many?
 
@@ -41,7 +41,7 @@ For example, in the restaurant question, we may come up with the following desig
 Be very careful here-you can often make incorrect assumptions. For example, a single Table may have multiple Parties (as is common in the trendy "communal tables" at some restaurants). You should talk to your interviewer about how general purpose your design should be.
 
 
-##### Step 4: Investigate Actions
+**Step 4: Investigate Actions**
 
 At this point, you should have the basic outline of your object-oriented design. What remains is to consider the key actions that the objects will take and how they relate to each other. You may find that you have forgotten some objects, and you will need to update your design.
 
@@ -58,16 +58,16 @@ ware engineering skills is to pick up a book that focuses on this area specifica
 Be careful  you don't fall into a trap of constantly trying to find the "right" design pattern for a particular problem.  You should create the design that works for that problem. In some cases it might be an estab­ lished pattern, but in many other cases it is not.
 
 
-###### Singleton Class
+ **Singleton Class**
 
 The Singleton pattern ensures that a class has only one instance and ensures access to the instance through the application.  It can be useful in cases where you have a "global" object with exactly one instance. For example, we may want to implement Restaurant such that it has exactly one instance of Restaurant.
 
 ```java
-1   public   class   Restaurant  {
-2       private  static   Restaurant _instance =  null;
+1   public class Restaurant  {
+2       private static Restaurant _instance =  null;
 3       protected Restaurant()  {  ... }
-4       public   static Restaurant  getlnstance()  {
-5           if  (_instance ==  null) {
+4       public static Restaurant  getlnstance()  {
+5           if (_instance ==  null) {
 6               _instance =  new Restaurant();
 7           }
 8           return _instance;
@@ -78,7 +78,7 @@ The Singleton pattern ensures that a class has only one instance and ensures acc
 It should be noted that many people dislike the Singleton design pattern, even calling it an "anti-pattern". One reason for this is that it can interfere with unit testing.
 
 
-###### Factory Method
+**Factory Method**
 
 The Factory Method offers an interface for creating an instance of a class, with its subclasses deciding which class to instantiate. You might want to implement this with the creator class being abstract and not providing an implementation for the Factory method. Or, you could have the Creator class be a concrete class that provides an implementation for the Factory method. In this case, the Factory method would take a parameter representing which class to instantiate.
 
@@ -113,10 +113,10 @@ Let's assume that your interviewer clarifies that the deck is a standard 52-card
 
 ```java
 1   public   enum Suit   {
-2       Club (0),  Diamond  (1),  Heart  (2), Spade (3);
+2       Club (0),  Diamond  (1),  Heart (2), Spade (3);
 3       private int value;
-4       private Suit(int v)  {value  =  v;}
-5       public  int  getValue() {return  value;  }
+4       private Suit(int v)  { value  =  v; }
+5       public  int  getValue() { return  value; }
 6       public  static Suit  getSuitFromValue(int value)  {... }
 7   }
 8   
@@ -124,25 +124,25 @@ Let's assume that your interviewer clarifies that the deck is a standard 52-card
 10      private ArrayList<T>  cards;//   all cards,   dealt or  not
 11      private int  dealtlndex =  0;  // marks first undealt card
 12  
-13      public   void  setDeckOfCards(ArrayList<T>  deckOfCards) {... }
+13      public void setDeckOfCards(ArrayList<T>  deckOfCards) {... }
 14  
-15      public   void  shuffle() {... }
-16      public   int  remainingCards() {
+15      public void shuffle() {... }
+16      public int remainingCards() {
 17          return cards.size()  -  dealtlndex;
 18      }
-19      public   T[]  dealHand(int  number) {... }
+19      public T[]  dealHand(int  number) {... }
 20      public T  dealCard()  {... }
 21  }
 22  
-23  public   abstract class Card {
+23  public abstract class Card {
 24      private boolean  available =  true;
 25  
 26      /* number or  face  that's on card  -  a number 2 through  10,  or  11 for  Jack,   12 for
 27       * Queen,  13 for   King,  or  1 for  Ace */
 28      protected int faceValue;
-29      protected Suit  suit;
+29      protected Suit suit;
 30  
-31      public   Card(int c,  Suit  s) {
+31      public Card(int c,  Suit  s) {
 32          faceValue  =  c;
 33          suit =  s;
 34      }
@@ -151,15 +151,15 @@ Let's assume that your interviewer clarifies that the deck is a standard 52-card
 37      public   Suit  suit() {return  suit;}
 38  
 39      /*  Checks if the  card  is available to  be given  out  to  someone */
-40      public  boolean  isAvailable() {return  available;  }
-41      public   void  markUnavailable() {available  =  false; }
-42      public   void  markAvailable()  {available  =   true; }
+40      public boolean  isAvailable() {return  available;  }
+41      public void  markUnavailable() {available  =  false; }
+42      public void  markAvailable()  {available  =   true; }
 43  }
 44  
-45  public   class Hand <T  extends  Card> {
+45  public class Hand <T  extends  Card> {
 46      protected  ArrayList<T> cards  =  new ArrayList<T>();
 47  
-48      public   int score() {
+48      public int score() {
 49          int score  =  0;
 50          for  (T  card   :   cards) {
 51              score  += card.value();
@@ -167,7 +167,7 @@ Let's assume that your interviewer clarifies that the deck is a standard 52-card
 53          return score;
 54      }
 55  
-56      public   void  addCard(T card)   {
+56      public void  addCard(T card)   {
 57          cards.add(card);
 58      }
 59  }
@@ -178,13 +178,13 @@ In the above code, we have implemented Deck with generics but restricted the typ
 Now, let's say we're building a blackjack game, so we need to know the value of the cards. Face cards are 10 and an ace is 11 (most of the time, but that's the job of the Hand class, not the following class).
 
 ```java
-1   public   class BlackJackHand extends  Hand<BlackJackCard>  {
+1   public class BlackJackHand extends  Hand<BlackJackCard>  {
 2       /* There are  multiple possible  scores for  a  blackjack hand,  since   aces  have
 3       * multiple values.  Return  the  highest possible score  that's under  21,  or  the
 4       * lowest  score  that's  over. */
-5       public   int score() {
+5       public int score() {
 6           ArrayList<Integer> scores =  possibleScores();
-7           int maxUnder  =   Integer.MIN_VALUE;
+7           int maxUnder =  Integer.MIN_VALUE;
 8           int minOver =   Integer.MAX_VALUE;
 9           for  (int score   :   scores) {
 10              if (score > 21 &&   score  < minOver) {
@@ -207,7 +207,7 @@ Now, let's say we're building a blackjack game, so we need to know the value of 
 26  }
 27  
 28  public  class  BlackJackCard extends   Card  {
-29      public  BlackJackCard(int c,   Suit s)  {  super(c,   s);}
+29      public BlackJackCard(int c,   Suit s)  {  super(c,   s);}
 30      public int  value()  {
 31          if (isAce()) return 1;
 32          else if (faceValue >= 11  &&   faceValue  <=  13)  return 10;
@@ -224,11 +224,11 @@ Now, let's say we're building a blackjack game, so we need to know the value of 
 43          else return value();
 44      }
 45      
-46      public boolean   isAce() {
+46      public boolean isAce() {
 47          return  faceValue == 1;
 48      }
 49      
-50      public boolean   isFaceCard()  {
+50      public boolean isFaceCard()  {
 51          return  faceValue >= 11  &&   faceValue  <= 13;
 52      }
 53 }
@@ -332,11 +332,11 @@ Call represents a call from a user. A call has a minimum rank and is assigned to
 16      /*Set employee who  is handling  call.*/
 17      public void  setHandler(Employee  e)  {handler      e; }
 18  
-19      public void  reply(String message)  {... }
+19      public void reply(String message)  {... }
 20      public Rank getRank()  {return  rank;}
-21      public void  setRank(Rank r)   {rank  =  r; }
+21      public void setRank(Rank r)   {rank  =  r; }
 22      public Rank incrementRank()  {... }
-23      public void  disconnect()  {  ... }
+23      public void disconnect()  {  ... }
 24  }
 ```
 
@@ -347,23 +347,23 @@ Employee is a super class for the Director, Manager, and Respondent classes. It 
 2       private Call  currentCall =  null;
 3       protected Rank rank;
 4   
-5       public  Employee(CallHandler  handler)   { ... }
+5       public Employee(CallHandler  handler)   { ... }
 6   
 7       /*Start the  conversation*/
-8       public void  receiveCall(Call call)  {  ... }
+8       public void receiveCall(Call call)  {  ... }
 9   
 10      /*the issue is  resolved, finish the  call*/
-11      public void  callCompleted()  {  ... }
+11      public void callCompleted()  {  ... }
 12  
 13      /*The issue has  not  been resolved. Escalate the  call, and assign a new call to
 14      * the  employee. */
 15      public void  escalateAndReassign()  {    }
 16  
 17      /*Assign  a new call to  an employee,  if the  employee is free.*/
-18      public  boolean  assignNewCall()   {  ... }
+18      public boolean assignNewCall()   {  ... }
 19  
 20      /*Returns  whether  or  not  the  employee is free.*/
-21      public boolean  isFree()  { return currentCall ==  null;  }
+21      public boolean isFree()  { return currentCall ==  null;  }
 22  
 23      public Rank getRank()  {  return rank;}
 24  }
@@ -440,7 +440,7 @@ The Jukebox class represents the body of the problem. Many of the interactions b
 2       private CDPlayer  cdPlayer;
 3       private User  user;
 4       private Set<CD> cdCollection;
-5       private  SongSelector ts;
+5       private SongSelector ts;
 6   
 7       public Jukebox(CDPlayer  cdPlayer,  User  user,  Set<CD>  cdCollection,
 8                   SongSelector ts) {  ....   }
@@ -466,11 +466,11 @@ Like a real CD player, the CDP layer class supports storing just one CD at a tim
 11      public void  playSong(Song s)  {  ... }
 12  
 13      /*Getters and  setters*/
-14      public Playlist  getPlaylist()  {  return p;}
+14      public Playlist  getPlaylist()  { return p;}
 15      public void  setPlaylist(Playlist p)  {  this.p =  p;}
 16  
 17      public CD   getCD()  {  return c; }
-18      public void   setCD(CD c)  { this.c =  c; }
+18      public void setCD(CD c)  { this.c =  c; }
 19  }
 ```
 
@@ -479,11 +479,11 @@ The Playlist manages the current and next songs to play. It is essentially a wra
 ```java
 1   public class Playlist  {
 2       private Song  song;
-3       private Queue<Song>   queue;
+3       private Queue<Song> queue;
 4       public  Playlist(Song  song, Queue<Song>   queue) {
 5   
 6       }
-7       public Song   getNextSToPlay()  {
+7       public Song getNextSToPlay()  {
 8           return  queue.peek();
 9       }
 10      public  void queueUpSong(Song  s) {
@@ -500,12 +500,12 @@ The classes  for CD, Song, and  User are all fairly straightforward. They consis
 3   public  class Song   {/*  data for id,  CD  (could be  null), title,  length,  etc  */}
 4   
 5   public  class  User {
-6       private  String  name;
+6       private String  name;
 7       public String  getName() { return name;}
-8       public  void setName(String name)   {   this.name = name;}
+8       public void setName(String name)   {   this.name = name;}
 9       public long getID() { return ID;}
-10      public  void setID(long  iD) {ID = iD;}
-11      private  long ID;
+10      public void setID(long  iD) {ID = iD;}
+11      private long ID;
 12      public User(String name,   long iD) {  ... }
 13      public User getUser() { return this;}
 14      public static  User addUser(String  name,   long iD) {  ... }
@@ -538,24 +538,24 @@ In the below implementation, we have created an abstract class Vehicle, from whi
 ```java
 1   public enum  VehicleSize {  Motorcycle,   Compact, Large }
 2   
-3   public abstract  class Vehicle  {
-4       protected  ArrayList<ParkingSpot> parkingSpots  = new ArrayList<ParkingSpot>();
+3   public abstract class Vehicle  {
+4       protected ArrayList<ParkingSpot> parkingSpots  = new ArrayList<ParkingSpot>();
 5       protected String licensePlate;
-6       protected int  spotsNeeded;
-7       protected  VehicleSize size;
+6       protected int spotsNeeded;
+7       protected VehicleSize size;
 8   
-9       public  int  getSpotsNeeded() {  return spotsNeeded;   }
+9       public int getSpotsNeeded() {  return spotsNeeded;   }
 10      public VehicleSize getSize()  {  return size;  }
 11  
 12      /*  Park  vehicle in  this spot  (among others, potentially) */
-13      public void  parkinSpot(ParkingSpot s)  {  parkingSpots.add(s);  }
+13      public void parkinSpot(ParkingSpot s)  {  parkingSpots.add(s);  }
 14  
 15      /*  Remove  car  from spot,  and notify spot  that it's gone */
-16      public void  clearSpots() {  ... }
+16      public void clearSpots() {  ... }
 17  
 18      /* Checks if the  spot  is big  enough for  the  vehicle (and  is  available). This
 19      * compares the  SIZE only. It does  not  check if it has  enough spots. */
-20      public abstract boolean  canFitinSpot(ParkingSpot spot);
+20      public abstract boolean canFitInSpot(ParkingSpot spot);
 21  }
 22  
 23      public class  Bus extends  Vehicle  {
@@ -565,7 +565,7 @@ In the below implementation, we have created an abstract class Vehicle, from whi
 27      }
 28  
 29      /*  Checks if the  spot  is a  Large.  Doesn't  check num  of  spots  */
-30      public boolean  canFitinSpot(ParkingSpot spot)  {             }
+30      public boolean  canFitInSpot(ParkingSpot spot)  {             }
 31  }
 32  
 33  public class Car extends  Vehicle  {
@@ -575,7 +575,7 @@ In the below implementation, we have created an abstract class Vehicle, from whi
 37      }
 38  
 39      /*  Checks if the  spot  is a Compact  or  a Large.  */
-40      public boolean  canFitinSpot(ParkingSpot spot)  {  ... }
+40      public boolean  canFitInSpot(ParkingSpot spot)  {  ... }
 41  }
 42  
 43  public class Motorcycle  extends  Vehicle  {
@@ -584,7 +584,7 @@ In the below implementation, we have created an abstract class Vehicle, from whi
 46          size =  VehicleSize.Motorcycle;
 47      }
 48  
-49      public   boolean  canFitinSpot(ParkingSpot spot)  {  ... }
+49      public   boolean  canFitInSpot(ParkingSpot spot)  {  ... }
 50  }
 ```
 
@@ -642,10 +642,10 @@ The ParkingSpot is implemented by having just a variable which represents the si
 10      public boolean  isAvailable() {  return  vehicle == null; }
 11  
 12      /* Check   if the spot is b ig  enough  and   is available */
-13      public  boolean c anFitVehicle(Vehicle vehicle)  {  ... }
+13      public boolean c anFitVehicle(Vehicle vehicle)  {  ... }
 14  
 15      /* Park vehicle in this  spot. */
-16      public  boolean park(Vehicle  v)   {           }
+16      public boolean park(Vehicle  v)   {           }
 17  
 18      public int  getRow()  {  return row;   }
 19      public int  getSpotNumber()  {  return spotNumber;  }
@@ -683,7 +683,7 @@ The class OnlineReaderSystem represents the body of our program. We could implem
 3       private UserManager userManager;
 4       private Display display;
 5   
-6       private Book  activeBook;
+6       private Book activeBook;
 7       private User activeUser;
 8   
 9       public  OnlineReaderSystem() {
@@ -697,7 +697,7 @@ The class OnlineReaderSystem represents the body of our program. We could implem
 17      public Display  getDisplay() { return display; }
 18  
 19      public Book getActiveBook() {  return  activeBook; }
-20      public void  setActiveBook(Book book)  {
+20      public void setActiveBook(Book book)  {
 21          activeBook =  book;
 22          display.displayBook(book);
 23      }
@@ -819,7 +819,7 @@ The classes for User and Book simply hold data and provide little true functiona
 16  public class User   {
 17      private int userid;
 18      private String details;
-19      private int  accountType;
+19      private int accountType;
 20  
 21      public  void renewMembership()  {  }
 22  
@@ -830,8 +830,8 @@ The classes for User and Book simply hold data and provide little true functiona
 27      }
 28  
 29      /* Getters and  setters */
-30      public int getID() {  return userid;}
-31      public void setID(int  id)  {  userid = id;}
+30      public int getID() {  return userid; }
+31      public void setID(int  id)  { userid = id; }
 32      public String getDetails()  {
 33          return details;
 34      }
@@ -839,7 +839,7 @@ The classes for User and Book simply hold data and provide little true functiona
 36      public void setDetails(String  details)  {
 37          this.details =  details;
 38      }
-39      public int getAccountType()  {  return accountType;}
+39      public int getAccountType()  {  return accountType }
 40      public  void setAccountType(int t) {  accountType  = t; }
 41  }
 ```
@@ -1220,8 +1220,7 @@ While we designed out chat server without worrying-too much- about scalability, 
 Clients can push data to us-what if they try to DOS (denial of service) us? How do we prevent that?
 
 
-**7.8        Othello:** Othello is played as follows: Each Othello piece is white on one side and black on the other.
-When a piece is surrounded by its opponents on both the left and right sides, or both the top and bottom, it is said to be captured and its color is flipped. On your turn, you must capture at least one of your opponent's pieces. The game ends when either user has no more valid moves. The win is assigned to the person with the most pieces. Implement the object-oriented design for Othello.
+**7.8        Othello:** Othello is played as follows: Each Othello piece is white on one side and black on the other. When a piece is surrounded by its opponents on both the left and right sides, or both the top and bottom, it is said to be captured and its color is flipped. On your turn, you must capture at least one of your opponent's pieces. The game ends when either user has no more valid moves. The win is assigned to the person with the most pieces. Implement the object-oriented design for Othello.
 
 SOLUTION
 
@@ -1229,9 +1228,8 @@ SOLUTION
 
 Let's start with an example. Suppose we have the following moves in an Othello game:
 
-1.  Initialize the board with two black and two white pieces in the center. The black pieces are placed at the upper left hand and lower right hand corners.
-2.  Play a black piece at (row 6, column 4). This flips the piece at (row 5, column 4) from white to black.
-
+1. Initialize the board with two black and two white pieces in the center. The black pieces are placed at the upper left hand and lower right hand corners.
+2. Play a black piece at (row 6, column 4). This flips the piece at (row 5, column 4) from white to black.
 3. Play a white piece at (row 4, column 3). This flips the piece at (row 4, column 4) from black to white. 
 
 This sequence of moves leads to the board below.
@@ -1283,7 +1281,7 @@ One possible design for Othello is below.
 15 
 15      private Game()   {
 17          board =   new Board(ROWS,   COLUMNS);
-18          players =   new Player[2];
+18          players = new Player[2];
 19          players[0] =   new  Player(Color.Black);
 20          players[1] =   new  Player(Color.White);
 21      }
@@ -1344,7 +1342,7 @@ As described earlier, we implement the black and white pieces with the Piece cla
 4   
 5       public void  flip() {
 6           if (color ==  Color.Black) color  =  Color.White;
-7           else color   =  Color.Black;
+7           else color =  Color.Black;
 8       }
 9   
 10      public Color  getColor() {  return color; }
@@ -1411,7 +1409,7 @@ The code below implements this approach.
 18      }
 19  
 20      public T  get(int i) {
-21          if (i <   0  ||   i >=  items.length)  {
+21          if (i < 0  ||   i >=  items.length)  {
 22              throw  new java.lang.IndexOutOfBoundsException("  ...");
 23          }
 24          return items[convert(i)];
@@ -1460,8 +1458,8 @@ In the code below, we have removed the aspects of CircularArray which were ident
 7       private class CircularArrayiterator<TI> implements   Iterator<TI> {
 8           /* current reflects  the   offset from  the  rotated head,   not   from  the   actual
 9            * start of  the   raw  array.  */
-10          private int   current =   -1;
-11          private TI[]   _items;
+10          private int current =   -1;
+11          private TI[] _items;
 12  
 13          public  CircularArrayiterator(CircularArray<TI>  array) {
 14              items   =  array.items;
@@ -1506,7 +1504,7 @@ Let's start with what the classes are. We certainly want a Cell class as well as
  
 > We could potentially merge Board  and Game together, but it's probably best to keep them separate. Err towards more organization, not less. Board can hold the list of Ce11 objects and do some basic moves with flipping over cells. Game will hold the game state and handle user input.
 
-##### Design: Cell
+**Design: Cell**
 
 Cell will need to have knowledge of whether it's a bomb, a number, or a blank. We could potentially subclass Cell to hold this data, but I'm not sure that offers us much benefit.
 
@@ -1575,12 +1573,12 @@ The basic skeleton of this class might  look something like this:
 6       private Cell[]  bombs;
 7       private int numUnexposedRemaining;
 8   
-9       public Board(int r,  int  c,  int  b)   {        }
+9       public Board(int r,  int  c,  int  b)   { ... }
 10  
 11      private void initializeBoard()   {  ...}
-12      private  boolean flipCell(Cell cell)  { ... }
-13      public  void expandBlank(Cell cell)  { ... }
-14      public UserPlayResult playFlip(UserPlay play)  {  ...}
+12      private boolean flipCell(Cell cell)  { ... }
+13      public void expandBlank(Cell cell)  { ... }
+14      public UserPlayResult playFlip(UserPlay play)  { ...}
 15      public int  getNumRemaining()   {  return numUnexposedRemaining;   }
 16  }
 17  
@@ -1895,7 +1893,7 @@ The code below uses this implementation.
 17      public Hasher(int capacity) {
 18          /*  Create  list of  linked   lists at a  particular size. Fill list  with  null
 19           * values,  as  it's the  only  way to  make  the  array the  desired size. */
-20          arr = newArrayList < LinkedListNode < K, V >> ();
+20          arr = newArrayList < LinkedListNode <K, V>> ();
 21          arr.ensureCapacity(capacity);  // Optional  optimization
 22          for (int i = 0; i < capacity; i++) {
 23              arr.add(null);

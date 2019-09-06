@@ -392,7 +392,7 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 
 ```java
 1  	LinkedList<Person> findPathBiBFS(HashMap<Integer,  Person> people,   int source,
-2  	int destination) {
+2  									int destination) {
 3  		BFSData  sourceData =  new BFSData(people.get(source));
 4  		BFSData  destData   =  new BFSData(people.get(destination));
 5	
@@ -432,7 +432,7 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 39 			/*   Add friends to  queue.  */
 40 			Person  person  =  pathNode.getPerson();
 41 			ArrayList<Integer> friends = person.getFriends();
-42 			for  (int friendid :   friends) {
+42 			for  (int friendid : friends) {
 43 				if (!primary.visited.containsKey(friendid)) {
 44 					Person  friend =  people.get(friendld);
 45 					PathNode next  =  new PathNode(friend,  pathNode);
@@ -483,7 +483,7 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 90 	class BFSData   {
 91 		public Queue<PathNode> toVisit =  new LinkedList<PathNode>();
 92 		public HashMap<Integer, PathNode> visited = 
-93 				new HashMap<Integer,  PathNode>();
+93 						new HashMap<Integer,  PathNode>();
 94		
 95 		public BFSData(Person root) {
 96 			PathNode sourcePath =  new PathNode(root,  null);
@@ -507,9 +507,9 @@ Suppose every person has k friends, and node S and node D have a friend C in com
 Generalizing this to a path of length q, we have this:
 
 - BFS: O(k^q )
-- Bidirectional BFS: O(k^q/2   +  k^q/2), which is just O(k^q/2)
+- Bidirectional BFS: O(k^q/2 + k^q/2), which is just O(k^q/2)
 
-If you imagine a path like A -> B -> C -> D -> E where each person has 100 friends, this is a big difference. BFS will require looking at 100 million (1004) nodes. A bidirectional BFS will require looking at only 20,000 nodes (2  x  100²).
+If you imagine a path like A -> B -> C -> D -> E where each person has 100 friends, this is a big difference. BFS will require looking at 100 million (100⁴) nodes. A bidirectional BFS will require looking at only 20,000 nodes (2  x  100²).
 
 A bidirectional  BFS will generally be faster than the traditional  BFS. However, it requires actually having access to both the source node and the destination nodes, which is not always the case.
 
@@ -518,18 +518,18 @@ A bidirectional  BFS will generally be faster than the traditional  BFS. However
 
 When we deal with a service the size of Linkedln or Facebook, we cannot possibly keep all of our data on one machine. That means that our simple Person  data structure from above doesn't quite work-our friends may not live on the same machine as we do. Instead, we can replace our list of friends with a list of their IDs, and traverse as follows:
 
-1. For each friend  ID: int machine  index =  getMachineIDForUser(personID);
+1. For each friend  ID: int machine_index =  getMachineIDForUser(personID);
 
 2. Go to machine #machine_index
 
-3. On that machine, do: Person  friend =  getPersonWithID(person_id);
+3. On that machine, do: Person friend =  getPersonWithID(person_id);
 
 The code below outlines this process. We've defined a class Server, which holds a list of all the machines, and a class Machine, which represents a single machine. Both classes have hash tables to efficiently lookup data.
 
 ```java
 1 	class  Server {
-2 		HashMap<Integer,   Machine>  machines =  new HashMap<Integer,   Machine>();
-3 		HashMap<Integer,   Integer> personToMachineMap =  new HashMap<Integer,   Integer>();
+2 		HashMap<Integer, Machine>  machines =  new HashMap<Integer,   Machine>();
+3 		HashMap<Integer, Integer> personToMachineMap =  new HashMap<Integer,   Integer>();
 4	
 5 		public  Machine getMachineWithid(int machineID) {
 6 			return  machines.get(machineID);
@@ -608,7 +608,7 @@ We can crawl the web using breadth-first search. Each time we visit a page, we g
 
 This is great-but what does it mean to visit page v? Is page v defined based on its content or its URL?
 
-If it's defined based  on its URL,  we must recognize that  URL parameters  might indicate a completely different page. For example, the  page www.careercup.com/page?pid=microsoft-interview­ questions is totally different from the page www.careercup.c om/page ?pid=google-interview­ questions. But, we can also append  URL parameters  arbitrarily to any URL without truly changing the page, provided it's not a parameter  that the web application recognizes and handles. The  page www. careercup.com?foobar=hello is the same as www.careercup.com.
+If it's defined based  on its URL,  we must recognize that  URL parameters  might indicate a completely different page. For example, the  page www.careercup.com/page?pid=microsoft-interview­ questions is totally different from the page www.careercup.com/page?pid=google-interview­ questions. But, we can also append  URL parameters  arbitrarily to any URL without truly changing the page, provided it's not a parameter  that the web application recognizes and handles. The  page www. careercup.com?foobar=hello is the same as www.careercup.com.
 
 "Okay, then", you might say, "let's define it based on its content". That sounds good too, at first, but it also doesn't quite work. Suppose I have some randomly generated content on the careercup.com home page. Is it a different page each time you visit it? Not really.
 
@@ -653,9 +653,11 @@ In the second pass, we would essentially implement the simple solution we came u
 **Solution #2: Multiple  Machines**
 
 The other solution is to perform essentially the same procedure, but to use multiple machines. In this solu­
-tion, rather than storing the data in file<x>. txt, we would send the URL to machine x. Using multiple machines has pros and cons.
-The main pro is that we can parallelize the operation, such that all 4000 chunks are processed simultane­
-ously. For large amounts of data, this might result in a faster solution.
+tion, rather than storing the data in file<x>. txt, we would send the URL to machine x. 
+
+Using multiple machines has pros and cons.
+
+The main pro is that we can parallelize the operation, such that all 4000 chunks are processed simultane­ ously. For large amounts of data, this might result in a faster solution.
 
 The disadvantage though is that we are now relying on 4000 different machines to operate perfectly. That may not be realistic (particularly with more data and more machines), and we'll need to start considering how to handle failure. Additionally, we have increased the complexity of the system simply by involving so many machines.
 
@@ -696,7 +698,10 @@ A good way to approach this problem is to start by designing it for a single mac
 
 - A linked list would allow easy purging of old data, by moving "fresh" items to the front. We could imple­
 ment it to remove the last element of the linked list when the list exceeds a certain size.
-- A hash table allows efficient lookups of data, but it wouldn't ordinarily allow easy data purging. How can we get the best of both worlds? By merging the two data structures. Here's how this works:
+- A hash table allows efficient lookups of data, but it wouldn't ordinarily allow easy data purging. 
+
+How can we get the best of both worlds? By merging the two data structures. Here's how this works:
+
 Just as before, we create a linked list where a node is moved to the front every time it's accessed. This way, the end of the linked list will always contain the stalest information.
 
 In addition, we have a hash table that maps from a query to the corresponding node in the linked list. This allows us to not only efficiently return the cached results, but also to move the appropriate node to the front of the list, thereby updating its "freshness."
@@ -705,21 +710,21 @@ For illustrative  purposes, abbreviated code for the cache is below. The code at
 
 ```java
 1 	public  class   Cache {
-2 		public   static int MAX   SIZE =  10;
-3 		public   Node head,  tail;
-4 		public   HashMap<String, Node>  map;
-5 		public   int size =  0;
+2 		public static int MAX   SIZE =  10;
+3 		public Node head,  tail;
+4 		public HashMap<String, Node>  map;
+5 		public int size =  0;
 6	
 7 		public   Cache()  {
 8 			map =  new HashMap<String, Node>();
 9 		}
 10	
 11		/*Moves node to  front of  linked   list  */
-12		public   void  moveToFront(Node node)  {...  }
-13		public   void  moveToFront(String  query)  {...   }
+12		public void  moveToFront(Node node)  {...  }
+13		public void  moveToFront(String  query)  {...   }
 14	
 15		/*Removes node from linked list  */
-16		public   void  removeFromlinkedlist(Node node)  {...  }
+16		public void  removeFromlinkedlist(Node node)  {...  }
 17	
 18		/*   Gets  results from cache,  and updates  linked list  */
 19		public String[]  getResults(String query)  {
@@ -731,7 +736,7 @@ For illustrative  purposes, abbreviated code for the cache is below. The code at
 25		}
 26	
 27		/* Inserts results  into linked list and hash   */
-28		public   void  insertResults(String query,   String[] results)  {
+28		public void insertResults(String query, String[] results)  {
 29			if (map.containsKey(query))  {//update  values
 30				Node node =  map.get(query);
 31				node.results =  results;

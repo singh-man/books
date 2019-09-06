@@ -54,7 +54,7 @@ This question is so common that we feel the need to specifically cover it. The n
 2 		if (n < 2) {
 3 			return false;
 4 		}
-5 		for   (int i = 2;  i < n;  i++)  {
+5 		for (int i = 2;  i < n;  i++)  {
 6 			if (n  %  i ==    0) {
 7 				return false;
 8 			}
@@ -66,12 +66,12 @@ This question is so common that we feel the need to specifically cover it. The n
 A small but important improvement is to iterate only up through the square root of n.
 
 ```java
-1 	boolean   primeSlightlyBetter(int n) {
+1 	boolean primeSlightlyBetter(int n) {
 2 		if (n < 2) {
 3 			return false;
 4 		}
 5 		int sqrt =  (int) Math.sqrt(n);
-6 		for   (int i = 2;   i <=  sqrt;  i++)  {
+6 		for (int i = 2;   i <=  sqrt;  i++)  {
 7 			if (n  %  i == 0)  return false;
 8 		}
 9 		return true;
@@ -99,7 +99,7 @@ The code below implements the Sieve of Eratosthenes.
 5 		init(flags); // Set   all flags to  true other than  0  and 1
 6 		int prime  =  2;
 7	
-8 		while  (prime <= Math.sqrt(max))  {
+8 		while (prime <= Math.sqrt(max))  {
 9 			/* Cross  off  remaining multiples  of  prime  */
 10			crossOff(flags,  prime);
 11	
@@ -110,7 +110,7 @@ The code below implements the Sieve of Eratosthenes.
 16		return flags;
 17	}
 18	
-19	void   crossOff(boolean[] flags,  int  prime)   {
+19	void crossOff(boolean[] flags,  int  prime)   {
 20		/* Cross  off  remaining multiples  of  prime. We   can  start with  (prime*prime),
 21		*  because  if we have  a  k  * prime,   where  k  <   prime,   this value  would  have
 22		*  already been  crossed off in a  prior iteration.  */
@@ -119,9 +119,9 @@ The code below implements the Sieve of Eratosthenes.
 25		}
 26	}
 27	
-28	int  getNextPrime(boolean[] flags, int prime)   {
+28	int getNextPrime(boolean[] flags, int prime)   {
 29		int next  = prime  + 1;
-30		while   (next <  flags.length &&    !flags[next]) {
+30		while (next <  flags.length &&    !flags[next]) {
 31			next++;
 32		}
 33		return  next;
@@ -326,9 +326,9 @@ s(3,3) = p³
 The probability of making exactly two shots is: 
 
 ```
-P(making 1 and  2,  and missing 3)
-	  +  P(making 1  and   3, and missing 2)
-	  +  P(missing 1,  and making 2 and 3)
+P(making 1 and  2, and missing 3)
+	  +  P(making 1 and 3, and missing 2)
+	  +  P(missing 1, and making 2 and 3)
    = p *  p *  (1 - p)  +  p  *  (1 - p)  *  p +   (1 - p)  *  p *  P
    = 3 (1 - p) p²
 ```
@@ -507,7 +507,7 @@ You probably won't know this off the top of your head, but we can try to estimat
            128				 128
 ```
 
-This looks like it's going  to inch closer to 128/128  (which  is of course  1). This "looks like" intuition is valuable, but it's not exactly a mathematical concept. It's a clue though and we can turn to logic here. Should it be 1?
+This looks like it's going  to inch closer to 128/128  (which is of course 1). This "looks like" intuition is valuable, but it's not exactly a mathematical concept. It's a clue though and we can turn to logic here. Should it be 1?
 
 
 **Logically**
@@ -556,7 +556,7 @@ We'll write this in a simple way that directly corresponds to the problem.
 20				boys  += 1;
 21			}
 22		}
-23		int[] genders   =  {girls,  boys};
+23		int[] genders = {girls,  boys};
 24		return genders;
 25	}
 ```
@@ -608,7 +608,7 @@ As in many other maximizing/minimizing problems, the key in this problem is "wor
 The following code simulates this approach.
 
 ```java
-1 	int  breakingPoint =  ...,
+1 	int breakingPoint =  ...,
 2 	int countDrops =  0;
 3	
 4 	boolean  drop(int floor) {
@@ -640,7 +640,8 @@ The following code simulates this approach.
 ```
 
 If we want to generalize this code for more building sizes, then we can solve for x in:
-x(x+l)/2  =  number of floors
+
+	x(x+l)/2  =  number of floors
 
 This will involve the quadratic formula.
 
@@ -707,38 +708,38 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 2 		private boolean  poisoned =  false;
 3 		private int id;
 4	
-5 		public   Bottle(int id)   {this.id = id;}
-6 		public   int get!d() {return  id;}
-7 		public   void  setAsPoisoned() {poisoned =  true;}
-8 		public   boolean  isPoisoned() {return  poisoned;}
+5 		public  Bottle(int id)   {this.id = id;}
+6 		public  int get!d() {return  id;}
+7 		public  void  setAsPoisoned() {poisoned =  true;}
+8 		public  boolean  isPoisoned() {return  poisoned;}
 9 	}
 10	
 11	class TestStrip {
-12		public   static int DAYS_FOR_RESULT =  7;
-13		private  ArrayList<ArrayList<Bottle>> dropsByDay = 
-14			new ArrayList<ArrayList<Bottle>>();
+12		public static int DAYS_FOR_RESULT =  7;
+13		private ArrayList<ArrayList<Bottle>> dropsByDay = 
+14						new ArrayList<ArrayList<Bottle>>();
 15		private int id;
 16	
-17		public   TestStrip(int id) {this.id  =  id;}
-18		public   int getid() {return  id;}
+17		public  TestStrip(int id) {this.id  =  id;}
+18		public  int getid() {return  id;}
 19	
 20		/*  Resize  list of  days/drops to  be large enough. */
-21		private void  sizeDropsForDay(int day)  {
+21		private void sizeDropsForDay(int day)  {
 22			while  (dropsByDay.size()  <=  day)  {
 23				dropsByDay.add(new ArrayList<Bottle>());
 24			}
 25		}
 26	
 27		/*  Add  drop  from bottle on specific day.  */
-28		public   void  addDropOnDay(int day,  Bottle bottle)  {
+28		public void addDropOnDay(int day,  Bottle bottle)  {
 29			sizeDropsForDay(day);
 30			ArrayList<Bottle> drops  =  dropsByDay.get(day);
 31			drops.add(bottle);
 32		}
 33	
 34		/*  Checks if any of  the  bottles in  the  set are  poisoned. */
-35		private boolean  hasPoison(ArrayList<Bottle> bottles) {
-36			for  (Bottle b  :   bottles) {
+35		private boolean hasPoison(ArrayList<Bottle> bottles) {
+36			for  (Bottle b : bottles) {
 37				if (b.isPoisoned()) {
 38					return true;
 39				}
@@ -747,7 +748,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 42		}
 43	
 44		/*  Gets  bottles used in  the  test DAYS_FOR_RESULT  days ago. */
-45		public   ArrayList<Bottle> getlastWeeksBottles(int  day)  {
+45		public ArrayList<Bottle> getlastWeeksBottles(int  day)  {
 46			if (day  <  DAYS_FOR_RESULT) {
 47				return null;
 48			}
@@ -755,7 +756,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 50		}
 51	
 52		/*  Checks for  poisoned  bottles since   before  DAYS_FOR_RESULT */
-53		public   boolean  isPositiveOnDay(int day)  {
+53		public boolean isPositiveOnDay(int day)  {
 54			int testDay  =  day  -  DAYS_FOR_RESULT;
 55			if (testDay <  0 ||  testDay  >= dropsByDay.size()) {
 56				return false;
@@ -774,10 +775,10 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 This is just one way of simulating the behavior of the bottles and test strips, and each has its pros and cons. With this infrastructure built, we can now implement code to test our approach.
 
 ```java
-1 	int  findPoisonedBottle(ArrayList<Bottle> bottles, ArrayList<TestStrip>    strips) {
+1 	int  findPoisonedBottle(ArrayList<Bottle> bottles, ArrayList<TestStrip>  strips) {
 2 		int today = 0;
 3	
-4 		while  (bottles.size() >   1 &&   strips.size()  >  0)  {
+4 		while  (bottles.size() > 1 &&   strips.size() >  0)  {
 5 			/*  Run tests. */
 5 			runTestSet(bottles, strips,  today);
 7	
@@ -785,7 +786,7 @@ This is just one way of simulating the behavior of the bottles and test strips, 
 9 			today +=  TestStrip.DAYS_FOR_RESULT;
 10	
 11			/*  Check results. */
-12			for  (TestStrip strip  :   strips) {
+12			for  (TestStrip strip : strips) {
 13				if (strip.isPositiveOnDay(today)) {
 14					bottles =  strip.getLastWeeksBottles(today);
 15					strips.remove(strip);
@@ -880,10 +881,10 @@ Implementing this requires some careful work to prevent bugs.
 
 ```java
 1 	int  findPoisonedBottle(ArrayList<Bottle> bottles,  ArrayList<TestStrip>  strips) {
-2 		if (bottles.size() >  1000 ||    strips.size() <  10) return  -1;
+2 		if (bottles.size() >  1000 || strips.size() <  10) return  -1;
 3	
 4 		int  tests  =  4; // three  digits, plus  one extra
-5 		int nTestStrips    = strips.size();
+5 		int nTestStrips = strips.size();
 6	
 7 		/* Run tests. */
 8 		for  (int day = 0; day < tests;   day++)   {
@@ -891,39 +892,39 @@ Implementing this requires some careful work to prevent bugs.
 16		}
 11	
 12		/* Get results. */
-13		HashSet<Integer> previousResults    = new  HashSet<Integer>();
+13		HashSet<Integer> previousResults = new  HashSet<Integer>();
 14		int[] digits  = new  int[tests];
 15		for  (int day = 0; day < tests;   day++)   {
-16			int resultDay   = day + TestStrip.DAYS_FOR_RESULT;
-17			digits[day] =  getPositi veOnDay(strips,  resultDay,  previousResults);
+16			int resultDay = day + TestStrip.DAYS_FOR_RESULT;
+17			digits[day] =  getPositiveOnDay(strips,  resultDay,  previousResults);
 18			previousResults.add(digits[day]);
 19		}
 20	
 21		/*  If day 1's  results matched day 0's,  update the digit. */
 22		if (digits[1] == -1)  {
-23			digits[1]  = digits[0];
+23			digits[1] = digits[0];
 24		}
 25	
 25		/* If day 2 matched  day 0 or day 1,  check day 3. Day 3 is  the  s ame  as day 2, but
 27		*  in cremented  by 1. */
-28		if (digits[2] ==   -1) {
-29			if (digits[3] ==    -1)  {/*    Day 3 didn't give  new result*/
+28		if (digits[2] == -1) {
+29			if (digits[3] == -1)  {/*    Day 3 didn't give  new result*/
 30				/* igit 2 equals digit  0 or  digit 1.  But,  digit 2,  when incremented  also
 31				* matches digit 0 or  digit 1. This  means that digit 0 incremented  matches
 32				* digit 1,  or  the  other   way  around. */
-33				digits[2]  =  ((digits[0] + 1) %  nTestStrips) ==  digits[1]  ?
+33				digits[2] = ((digits[0] + 1) %  nTestStrips) ==  digits[1]  ?
 34							digits[0] :   digits[1];
 35			}  else   {
-36				digits[2] =    (digits[3] -  1 +  nTestStrips) % nTestStrips;
+36				digits[2] = (digits[3] -  1 +  nTestStrips) % nTestStrips;
 37			}
 38		}
 39	
-40		return digits[0] * 100 + digits[!] *    10 + digits[2];
+40		return digits[0] * 100 + digits[1] * 10 + digits[2];
 41	}
 42	
 43	/*    Run set of  tests for  this day. */
-44	void  runTestSet(ArrayList<Bottle> bottles,   ArrayList<TestStrip>  strips, int day)  {
-45		if (day  >   3)  return;//    only  works for   3 days  (digits)+one  extra
+44	void  runTestSet(ArrayList<Bottle> bottles, ArrayList<TestStrip>  strips, int day)  {
+45		if (day > 3)  return;//    only  works for 3 days  (digits)+one  extra
 46	
 47		for  (Bottle bottle :  bottles) {
 48			int index  =  getTestStripindexForDay(bottle,  day,  strips.size());
@@ -946,7 +947,7 @@ Implementing this requires some careful work to prevent bugs.
 65	
 66	/*    Get results that are  positive for  a  particular day,  excluding   prior results. */
 67	int getPositiveOnDay(ArrayList<TestStrip>  testStrips,  int  day,
-68	HashSet<Integer>  previousResults)  {
+68									HashSet<Integer>  previousResults)  {
 69		for  (TestStrip testStrip  :   testStrips) {
 70			int id  =  testStrip.getid();
 71			if (testStrip.isPositiveOnDay(day)  &&    !previousResults.contains(id))  {
@@ -978,8 +979,8 @@ We wait seven days, and then read the results.  If test strip i is positive, the
 6	
 7 	/*  Add  bottle  contents to  test strips */
 8 	void  runTests(ArrayList<Bottle> bottles,   ArrayList<TestStrip> testStrips) {
-9 		for  (Bottle bottle  :   bottles) {
-10			int id =    bottle.getid();
+9 		for  (Bottle bottle : bottles) {
+10			int id = bottle.getid();
 11			int bitindex =  0;
 12			while  (id > 0) {
 13				if ((id &   1) ==   1)  {
@@ -994,8 +995,8 @@ We wait seven days, and then read the results.  If test strip i is positive, the
 22	/*  Get test strips that are  positive on a  particular day.  */
 23	ArrayList<Integer>  getPositiveOnDay(ArrayList<TestStrip> testStrips, int day)  {
 24		ArrayList<Integer> positive  =  new ArrayList<Integer>();
-25		for  (TestStrip testStrip  :    testStrips) {
-26			int id =    testStrip.getid();
+25		for  (TestStrip testStrip : testStrips) {
+26			int id = testStrip.getid();
 27			if (testStrip.isPositiveOnDay(day))  {
 28				positive.add(id);
 29			}
@@ -1005,9 +1006,9 @@ We wait seven days, and then read the results.  If test strip i is positive, the
 33	
 34	/*  Create  number by setting bits with  indices specified in  positive. */
 35	int  setBits(ArrayList<Integer> positive)  {
-36		int id =    0;
+36		int id = 0;
 37		for  (Integer  bitindex  :   positive) {
-38			id  I =            1 <<  bitindex;
+38			id  |= 1 <<  bitindex;
 39		}
 40		return id;
 41	}

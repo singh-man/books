@@ -78,7 +78,7 @@ What do you think these functions would do on parameters x = -93242 and count = 
 
 ```java
 1 	int repeatedArith  meticShift(int  x, int count) {
-2 		for (inti =   0; i <  count; i++) {
+2 		for (inti = 0; i <  count; i++) {
 3 			x >>= 1; // Arith  metic   shift by1
 4 		}
 5 		return x;
@@ -205,7 +205,7 @@ The trickiest part is Step  1. How do we clear the  bits in N? We can do this wi
 10		int right =  ((1 <<  i) -   1);
 11	
 12		//All 1s,  except for 0s   between i and  j. mask       11100011
-13		int mask  =    left | right;
+13		int mask = left | right;
 14	
 15		/* Clear bits  j through i then put min there  */
 16		int  n_cleared =  n  &  mask; //  Clear bits j through i.
@@ -272,8 +272,8 @@ Alternatively, rather than multiplying the number  by two and comparing it to 1,
 3 			return "ERROR";
 4 		}
 5	
-6 		StringBuilder  binary  = new StringBuilder();
-7 		double  frac = 0.5;
+6 		StringBuilder binary  = new StringBuilder();
+7 		double frac = 0.5;
 8 		binary.append(".");
 9 		while  (num >  0)  {
 10			/* Setting a  limit on  length:  32 characters */
@@ -349,12 +349,12 @@ Once we have this, we just walk through the array. At each 0s sequence, then we 
 30	/* Given the  lengths of  alternating sequences  of  0s  and ls, find  the  longest one
 31	* we  can build.  */
 32	int  findlongestSequence(ArrayList<Integer> seq)  {
-33		int maxSeq =  1;
+33		int maxSeq = 1;
 34		
 35		for  (int i = 0;  i <  seq.size(); i += 2)   {
 36			int zerosSeq  =  seq.get(i);
-37			int onesSeqRight  =  i -  1 >=  0 ? seq.get(i - 1)  : 0;
-38			int onesSeqLeft  = i +  1 <  seq.size() ?   seq.get(i +  1) : 0;
+37			int onesSeqRight =  i -  1 >=  0 ? seq.get(i - 1)  : 0;
+38			int onesSeqLeft = i +  1 <  seq.size() ?   seq.get(i +  1) : 0;
 39			
 40			int thisSeq =  0;
 41			if (zerosSeq == 1)  {//Can  merge
@@ -364,7 +364,7 @@ Once we have this, we just walk through the array. At each 0s sequence, then we 
 45			} else if (zerosSeq == 0) {//No zero, but take either side
 46				thisSeq = Math.max(onesSeqRight, onesSeqLeft);
 47			}
-48			maxSeq   =  Math.max(thisSeq,   maxSeq);
+48			maxSeq =  Math.max(thisSeq,   maxSeq);
 49		}
 50		
 51		return maxSeq;
@@ -397,15 +397,15 @@ Update max Length  as we go.
 5 		int currentlength =   0;
 6 		int previouslength =  0;
 7 		int maxLength =   1;  //  We   can always have  a sequence of  at least one  1
-8 		while  (a !=  0)  {
+8 		while (a !=  0)  {
 9 			if ((a  &   1) ==  1)  {  //  Current  bit is a 1
 10				currentLength++;
-11			}  else   if ((a  &   1)  == 0)  {  //  Current  bit is a 0
+11			}  else if ((a  &   1)  == 0)  {  //  Current  bit is a 0
 12				/* Update to  0 (if next  bit is  0)  or  currentlength (if  next  bit is 1). */
-13				previouslength =  (a  &   2) == 0 ? 0  :   currentlength;
+13				previouslength =  (a & 2) == 0 ? 0  : currentlength;
 14				currentLength =  0;
 15			}
-16			maxLength = Math.max(previouslength +  currentlength +  1,  maxLength);
+16			maxLength = Math.max(previouslength + currentlength + 1,  maxLength);
 17			a >>>=  1;
 18		}
 19		return maxLength;
@@ -500,21 +500,21 @@ The code for getNext is below.
 1 	int  getNext(int n)  {
 2 		/* Compute  c0 and  c1  */
 3 		int c  = n;
-4 		int c0  = 0;
+4 		int c0 = 0;
 5 		int c1 = 0;
-6 		while  (((c  &   1) ==   0)  &&   (c  != 0))  {
+6 		while  (((c & 1) ==   0)  &&   (c != 0))  {
 7 			c0  ++;
 8 			c  >>= l;
 9 		}
 10	
-11		while  ((c  &  1) == 1)   {
+11		while  ((c & 1) == 1)   {
 12			c1++;
 13			c >>= 1;
 14		}
 15	
 16		/* Error:  if n ==  11..1100...00,  then there  is  no  bigger number  with  the same
 17		* number  of ls. */
-18		if (c0 + c1 ==  31   ||     c0    + c1 ==  0)  {
+18		if (c0 + c1 ==  31 || c0 + c1 ==  0)  {
 19			return  -1;
 20		}
 21	
@@ -522,7 +522,7 @@ The code for getNext is below.
 23	
 24		n |= (1 <<  p);  //  Flip  rightmost  non-trailing zero
 25		n &=  ~((1 <<  p) - 1);  //  c1ear all bits  to  the right of  p
-26		n |= (1 <<   (c1   -  1))  - 1;  //  Insert   (c1-1) ones on the right.
+26		n |= (1 << (c1 -  1))  - 1;  //  Insert   (c1-1) ones on the right.
 27		return n;
 28	}
 ```
@@ -582,7 +582,7 @@ The code to implement this is below.
 9	
 10		if (temp ==  0)  return  -1;
 11	
-12		while (((temp &   1) == 0) &&   (temp !=  0)) {
+12		while (((temp & 1) == 0) &&   (temp !=  0)) {
 13			c0++;
 14			temp >>= 1;
 15		}
@@ -722,7 +722,7 @@ Each 1 in the XOR represents a bit that is different between A and B. Therefore,
 ```java
 1	int  bitSwapRequired(int a,  int b)  {
 2		int count  = 0;
-3		for  (int c =  a ^ b;   c  != 0;  c =  c >> 1)  {
+3		for  (int c =  a ^ b; c != 0;  c =  c >> 1)  {
 4			count += c &  1;
 5		}
 6		return  count;
@@ -734,7 +734,7 @@ The code below utilizes this approach.
 ```java
 1 	int  bitSwapRequired(int a,  int b)  {
 2 		int count  = 0;
-3 		for  (int c = a ^ b;   c  != 0;  c =  c &   (c - 1))  {
+3 		for  (int c = a ^ b; c  != 0;  c =  c & (c - 1))  {
 4 			count++;
 5 		}
 6 		return  count;
@@ -757,7 +757,7 @@ We can approach this as operating on the odds bits first, and then the even bits
 This takes a total of five instructions. The code below implements this approach.
 ```java
 1  int swapOddEvenBits(int  x)  {
-2     return ( ((x  &  0xaaaaaaaa)  >>> 1) |  ((x  &  0x55555555) <<  1)  );
+2     return ( ((x  &  0xaaaaaaaa)  >>> 1) | ((x  &  0x55555555) <<  1)  );
 3  }
 ```
 Note that we use the logical right shift, instead of the arithmetic right shift. This is because we want the sign bit to be filled with a zero.
