@@ -18,17 +18,17 @@ Recursive solutions, by definition, are built off of solutions to subproblems. M
 There are many ways you might divide a problem into subproblems. Three of the most common approaches to develop an algorithm are bottom-up, top-down, and half-and-half.
 
 
-###### Bottom-Up Approach
+**Bottom-Up Approach**
 
 The bottom-up approach is often the most intuitive. We start with knowing how to solve the problem for a simple case, like a list with only one element. Then we figure out how to solve the problem  for two elements, then for three elements, and so on. The key here is to think about how you can build the solution for one case off of the previous case (or multiple previous cases).
 
-###### Top-Down  Approach
+**Top-Down  Approach**
 
 The top-down  approach  can be more complex since it's less concrete. But sometimes, it's the best way to think about the problem.
 
 In these problems, we think about how we can divide the problem for case N into subproblems. Be careful of overlap between the cases.
 
-###### Half-and-Half Approach
+**Half-and-Half Approach**
 
 In addition to top-down and bottom-up approaches, it's often effective to divide the data set in half.
 
@@ -39,7 +39,7 @@ Merge sort is also a "half-and-half" approach. We sort each half of the array an
 
 ### Recursive vs. Iterative Solutions
 
-Recursive algorithms can be very space inefficient. Each recursive call adds a new layer to the stack, which means that if your algorithm recurses to a depth of n, it uses at least O ( n) memory.
+Recursive algorithms can be very space inefficient. Each recursive call adds a new layer to the stack, which means that if your algorithm recurses to a depth of n, it uses at least O(n) memory.
 
 For this reason, it's often better to implement  a recursive algorithm iteratively. All recursive algorithms can be implemented iteratively, although  sometimes the code to do so is much more complex. Before diving into recursive code, ask yourself how hard it would be to implement  it iteratively, and discuss the tradeoffs with your interviewer.
 
@@ -58,7 +58,7 @@ Alternatively, you can study the pattern of the recursive calls and implement so
 One of the simplest examples of dynamic programming is computing the nth Fibonacci number. A good way to approach such a problem is often to implement it as a normal recursive solution, and then add the caching part.
 
 
-###### Fibonacci Numbers
+**Fibonacci Numbers**
 
 Let's walk through an approach to compute the nth Fibonacci number.
 
@@ -104,7 +104,7 @@ How many nodes are in the tree? Until we get down to the base cases (leaves), ea
 The root node has two children. Each of those children has two children (so four children total in the "grand­ children" level). Each of those grandchildren has two children, and so on. If we do this n times, we'll have roughly O(2ⁿ) nodes. This gives us a runtime of roughly O(2ⁿ).
 
 
-> Actually, it's slightly better thanO(2ⁿ). If you look at the subtree, you might notice that (excluding the leaf nodes and those immediately above it) the right subtree of any node is always smaller than the left subtree. If they were the same size, we'd have an O(2ⁿ) runtime. But since the right and left subtrees are not the same size, the true runtime is closer toO(1.6ⁿ). Saying O(2ⁿ) is still technically correct though as it describes an upper bound on the runtime (see "Big O, Big Theta, and Big Omega" on page 39). Either way, we still have an exponential runtime.
+> Actually, it's slightly better than O(2ⁿ). If you look at the subtree, you might notice that (excluding the leaf nodes and those immediately above it) the right subtree of any node is always smaller than the left subtree. If they were the same size, we'd have an O(2ⁿ) runtime. But since the right and left subtrees are not the same size, the true runtime is closer to O(1.6ⁿ). Saying O(2ⁿ) is still technically correct though as it describes an upper bound on the runtime (see "Big O, Big Theta, and Big Omega" on page 39). Either way, we still have an exponential runtime.
 
 
 Indeed,  if we implemented this on a computer, we'd see the number of seconds increase exponentially.
@@ -120,7 +120,7 @@ Study the recursion tree. Where do you see identical nodes?
 
 There are lots of identical nodes. For example, fib(3) appears twice and fib(2) appears three times. Why should we recompute  these from scratch each time?
 
-In fact, when we call fib( n), we shouldn't have to do much more thanO(n) calls, since there's onlyO(n) possible values we can throw at fib. Each time we compute fib(i), we should just cache this result and use it later.
+In fact, when we call fib( n), we shouldn't have to do much more than O(n) calls, since there's only O(n) possible values we can throw at fib. Each time we compute fib(i), we should just cache this result and use it later.
 
 This is exactly what memoization is.
 
@@ -141,7 +141,7 @@ With just a small modification, we can tweak this function to run in O(n) time. 
 12  }
 ```
 
-While the first recursive function may take over a minute to generate  the 50th Fibonacci number  on a typical computer, the dynamic programming method  can generate the 1 O,OOOth Fibonacci number in just fractions of a millisecond. (Of course, with this exact code, the int would have overflowed very early on.)
+While the first recursive function may take over a minute to generate  the 50th Fibonacci number  on a typical computer, the dynamic programming method  can generate the 10,000th Fibonacci number in just fractions of a millisecond. (Of course, with this exact code, the int would have overflowed very early on.)
 
 Now, if we draw the recursion tree, it looks something like this (the black boxes represent cached calls that returned immediately): 
 
@@ -149,7 +149,7 @@ Now, if we draw the recursion tree, it looks something like this (the black boxe
 ![](media/IX_06_07.JPG)
 
 
-How many nodes are in this tree now? We might notice that the tree now just shoots straight down, to a depth of roughly n. Each node of those nodes has one other child, resulting in roughly 2n children in the tree. This gives us a runtime ofO(n).
+How many nodes are in this tree now? We might notice that the tree now just shoots straight down, to a depth of roughly n. Each node of those nodes has one other child, resulting in roughly 2n children in the tree. This gives us a runtime of O(n).
 
 Often it can be useful to picture the recursion tree as something like this: 
 
@@ -179,7 +179,7 @@ First, we compute fib(1) and fib(0), which are already known from the base cases
 12  }
 ```
 
-If you really think about how this works, you only use memo[ i] for memo[i+l] and memo[ i+2]. You don't need it after that. Therefore, we can get rid of the memo table and just store a few variables.
+If you really think about how this works, you only use memo[i] for memo[i+l] and memo[i+2]. You don't need it after that. Therefore, we can get rid of the memo table and just store a few variables.
 
 ```java
 1   int  fibonacci(int n)  {
@@ -237,13 +237,13 @@ This is a fairly straightforward algorithm to implement recursively. We just nee
 ```
 countWays(n-1)   + countWays(n-2)   + countWays(n-3)
 ```
-The one tricky bit is defining the base case. If we haveO steps to go (we're currently standing on the step), are there zero paths to that step or one path?
+The one tricky bit is defining the base case. If we have 0 steps to go (we're currently standing on the step), are there zero paths to that step or one path?
 
-That is, what is countWays(0)? Is it 1  orO?
+That is, what is countWays(0)? Is it 1  or 0?
 
-You could define it either way. There is no"right" answer here.
+You could define it either way. There is no "right" answer here.
 
-However, it's a lot easier to define it as 1. If you defined it as 0, then you would need some additional base cases (or else you'd just wind up with a series ofOs getting added).
+However, it's a lot easier to define it as 1. If you defined it as 0, then you would need some additional base cases (or else you'd just wind up with a series of 0s getting added).
 
 A simple implementation of this code is below.
 
@@ -306,7 +306,7 @@ SOLUTION
 
 If we picture this grid, the only way to move to spot ( r, c) is by moving to one of the adjacent spots: ( r-1, c) or ( r, c-1). So, we need to find a path to either ( r-1, c) or ( r, c-1).
 
-How do we find a path to those spots? To find a path to ( r-1, c) or ( r, c-1), we need to move to one of its adjacent cells. So, we need to find a path to a spot adjacent to ( r-1, c),  which are coordinates ( r-2, c) and ( r-1, c-1). or a spot adjacent to ( r, c -1).  which are soots ( r- L c -1) and ( r. c-2). Observe that we list the point ( r-1,c-1) twice; we'll discuss that issue later.
+How do we find a path to those spots? To find a path to ( r-1, c) or ( r, c-1), we need to move to one of its adjacent cells. So, we need to find a path to a spot adjacent to ( r-1, c),  which are coordinates ( r-2, c) and ( r-1, c-1). or a spot adjacent to ( r, c -1).  which are soots ( r- L c -1) and ( r. c-2). Observe that we list the point ( r-1, c-1) twice; we'll discuss that issue later.
 
 
 > Tip: A lot of people use the variable namesxandy when dealing with two-dimensional arrays. This can actually cause some bugs. People tend to think aboutx as the first coordinate in the matrix andy as the second coordinate (e.g., matrix[x][y]). But, this isn't really correct. The first coordinate is usually thought of as the row number,  which is in fact they value (it goes verti­ cally!). You should write matrix[y][x].  Or, just make your life easier by using r (row) and c (column) instead.
@@ -344,7 +344,7 @@ So then, to find a path from the origin, we just work backwards like this. Start
 27  }
 ```
 
-This solution is O ( 2⁽ʳ⁺ᶜ⁾), since each path has r+c steps and there are two choices we can make at each step.
+This solution is O(2⁽ʳ⁺ᶜ⁾), since each path has r+c steps and there are two choices we can make at each step.
 
 We should look for a faster way.
 
@@ -511,7 +511,7 @@ The code  below implements this algorithm.
 26  }
 ```
 
-Note that in the above code,if the elements are all distinct,the method operates almost identically to the first solution.
+Note that in the above code, if the elements are all distinct, the method operates almost identically to the first solution.
 
  
 **8.4       Power Set:** Write a method to return all subsets of a set.
@@ -751,7 +751,7 @@ After all, since 31   =   2\*15+1, then 31x35  =  2\*15\*35+35.
 
 The logic in this final solution is that, on even numbers, we just dividesmaller by 2 and double the result of the recursive call. On odd  numbers, we do the same,  but  then we also add  b igger to this result.
 
-In doing so, we have  an unexpected "win:'  Our minProduct function just recurses straight downwards, with increasingly small  numbers each time.  It will never  repeat the  same call, so there's no need to cache any information.
+In doing so, we have  an unexpected "win". Our minProduct function just recurses straight downwards, with increasingly small  numbers each time.  It will never  repeat the  same call, so there's no need to cache any information.
 
 ```java
 1   int  minProduct(int a,  int  b)   {
@@ -1094,7 +1094,7 @@ We can start with computing the count of each letter (easy enough to get this-ju
 ```
 a->2 |   b->4 |   c->1
 ```
-Let's imagine generating a permutation of this string (now represented as a hash table). The first choice we make is whether to use an a, b, or c as the first character. After that, we have a subproblem to solve: find all permutations of the remaining characters, and append those to the already picked "prefix:'
+Let's imagine generating a permutation of this string (now represented as a hash table). The first choice we make is whether to use an a, b, or c as the first character. After that, we have a subproblem to solve: find all permutations of the remaining characters, and append those to the already picked "prefix".
 
 ```
 P(a->2 |  b->4 |  c->1) ={a +  P(a->1 |  b->4 |  c->1)} +
@@ -1272,7 +1272,7 @@ SOLUTION
 
 ---
 
-First, let's visualize how this method  works. When we call paintFill (i.e., "click" paint fill in the image editing application) on, say, a green pixel, we want to"bleed" outwards. Pixel by pixel, we expand outwards by calling paintFill on the surrounding pixel. When we hit a pixel that is not green, we stop.
+First, let's visualize how this method  works. When we call paintFill (i.e., "click" paint fill in the image editing application) on, say, a green pixel, we want to "bleed" outwards. Pixel by pixel, we expand outwards by calling paintFill on the surrounding pixel. When we hit a pixel that is not green, we stop.
 
 We can implement this algorithm recursively:
 
@@ -1300,13 +1300,13 @@ We can implement this algorithm recursively:
 21  }
 ```
 
-If you used the variable names x and y to implement this, be careful about the ordering of the variables in screen [y][x]. Because x represents the horizontal axis (that is, it's left to right), it actually corresponds to the column number, not the row number. The value of y equals the number of rows. This is a very easy place to make a mistake in an interview, as well as in your daily coding. It's typically clearer to userow and column  instead, as we've done here.
+If you used the variable names x and y to implement this, be careful about the ordering of the variables in screen[y][x]. Because x represents the horizontal axis (that is, it's left to right), it actually corresponds to the column number, not the row number. The value of y equals the number of rows. This is a very easy place to make a mistake in an interview, as well as in your daily coding. It's typically clearer to userow and column  instead, as we've done here.
 
 Does this algorithm seem familiar? It should! This is essentially depth-first search on a graph. At each pixel. we are searching outwards to each surrounding pixel. We stop once we've fully traversed all the surrounding pixels of this color.
 
 We could alternatively implement this using breadth-first search.
 
-**8.11 	Coins:** Given an infinite number  of quarters  (25 cents), dimes (1O  cents), nickels (5 cents), and pennies (1 cent), write code to calculate the number of ways of representing n cents.
+**8.11 	Coins:** Given an infinite number  of quarters  (25 cents), dimes (10  cents), nickels (5 cents), and pennies (1 cent), write code to calculate the number of ways of representing n cents.
 
 SOLUTION
 
@@ -1324,9 +1324,9 @@ makeChange(100) = makeChange(100 using 0  quarters)+
 				          makeChange(100 using 3 quarters)+ 
 				          makeChange(100 using 4  quarters)
 ```
-Inspecting this further, we can see that some of these problems reduce. For example, makeChange(100 using 1  quarter) will equalmakeChange(75 using 0  quarters). This is because,if we must use exactly one quarter to make change for 100 cents, then our only remaining choices involve making change for the remaining 75 cents.
+Inspecting this further, we can see that some of these problems reduce. For example, makeChange(100 using 1  quarter) will equalmakeChange(75 using 0  quarters). This is because, if we must use exactly one quarter to make change for 100 cents, then our only remaining choices involve making change for the remaining 75 cents.
 
-We can apply thesame logic tomakeChange(100 using  2  quarters),makeChange(100  using 3  quarters) andmakeChange(100 using  4  quarters). We have thus reduced the above state­ment to the following.
+We can apply thesame logic tomakeChange(100 using  2  quarters), makeChange(100  using 3  quarters) andmakeChange(100 using  4  quarters). We have thus reduced the above state­ment to the following.
 ```
 makeChange(100) =  makeChange(100 using 0  quarters)+ 
 				           makeChange(75 using 0  quarters)+ 
@@ -1335,7 +1335,7 @@ makeChange(100) =  makeChange(100 using 0  quarters)+
                    1
 ```
 
-Note that the final statement from above,makeChange(100  using 4   quarters), equals 1. We call this "fully reduced:'
+Note that the final statement from above, makeChange(100  using 4   quarters), equals 1. We call this "fully reduced".
 
 Now what? We've used up all our quarters, so now we can start applying our next biggest denomination:
 dimes.
@@ -1592,7 +1592,7 @@ The problem in this code is that it gets very inefficient. We try to find the be
 28  }
 ```
 
-Because we're only mapping from an index to a height, we canjust use an integer array for our "hash table:'
+Because we're only mapping from an index to a height, we can just use an integer array for our "hash table".
 
 Be very careful here with what each spot in the hash table represents. In this code, stackMap[i] repre­ sents the tallest stack with box i at the bottom. Before pulling the value from the hash table, you have to ensure that box i can be placed on top of the current bottom.
 
@@ -1640,7 +1640,7 @@ We will again use memoization to cache the height of the tallest stack with a pa
 Again, pay close attention to when you recall and insert values into the hash table. It's typically best if these are symmetric, as they are in lines 15 and 16-18.
 
 
-**8.14 	Boolean Evaluation:** Given a boolean expression consisting  of the symbols 0 (false), 1 (true), & (AND),  I    (OR), and /\ (XOR), and a desired boolean result value result, implement a function to count the number of ways of parenthesizing the expression such that it evaluates to result. The expressionshouldbe fully parenthesized (e.g., ( 0)^( 1)) but not extraneously (e.g., ( ( ( 0))^( 1))).
+**8.14 	Boolean Evaluation:** Given a boolean expression consisting  of the symbols 0 (false), 1 (true), & (AND),  I    (OR), and ^ (XOR), and a desired boolean result value result, implement a function to count the number of ways of parenthesizing the expression such that it evaluates to result. The expressionshouldbe fully parenthesized (e.g., ( 0)^( 1)) but not extraneously (e.g., ( ( ( 0))^( 1))).
 
 EXAMPLE
 ```

@@ -1,6 +1,6 @@
 ## 11 Testing
 
-Before you flip past this chapter saying, "but I'm not a tester;' stop and think. Testing is an important task for a software engineer, and for this reason, testing questions may come up during your interview. Of course, if you are applying for Testing roles (or Software Engineer in Test), then that's all the more reason why you need to pay attention.
+Before you flip past this chapter saying, "but I'm not a tester", stop and think. Testing is an important task for a software engineer, and for this reason, testing questions may come up during your interview. Of course, if you are applying for Testing roles (or Software Engineer in Test), then that's all the more reason why you need to pay attention.
 
 Testing problems  usually fall under  one of four categories: (1) Test a real world object (like a pen); (2) Test a piece of software; (3) Write test code for a function; (4) Troubleshoot an existing issue. We'll cover approaches for each of these four types.
 
@@ -29,7 +29,7 @@ Question: How would you test a paperclip?
 
 **Step 1: Who will use it? And why?**
 
-You need to discuss with your interviewer who is using the product and for what purpose. The answer may not be what you think. The answer could be"by teachers, to hold papers together;' or it could be"by artists, to bend into the shape of animal:' Or, it could be both. The answer to this question will shape how you handle the remaining questions.
+You need to discuss with your interviewer who is using the product and for what purpose. The answer may not be what you think. The answer could be "by teachers, to hold papers together", or it could be "by artists, to bend into the shape of animal". Or, it could be both. The answer to this question will shape how you handle the remaining questions.
 
 **Step 2: What are the use cases?**
 
@@ -51,7 +51,7 @@ For example, if you were testing a laundry machine, you might decide that the ma
 
 **Step 5: How would you perform the testing?**
 
-In some cases, it might also be relevant to discuss the details of performing the testing. For example, if you need to make sure a chair can withstand normal usage for five years, you probably can't actually place it in a home and wait five years. Instead, you'd need to define what"normal" usage is (How many "sits" per year on the seat? What about the armrest?). Then, in addition to doing some manual testing, you would likely want a machine to automate some of the usage.
+In some cases, it might also be relevant to discuss the details of performing the testing. For example, if you need to make sure a chair can withstand normal usage for five years, you probably can't actually place it in a home and wait five years. Instead, you'd need to define what "normal" usage is (How many "sits" per year on the seat? What about the armrest?). Then, in addition to doing some manual testing, you would likely want a machine to automate some of the usage.
 
 
 ### Testing a Piece of Software
@@ -80,7 +80,7 @@ In the software blocking scenario, the use cases of the parents include installi
 Remember that it's not up to you to just magically decide the use cases. This is a conversation to have with your interviewer.
 **###### Step 4: What are  the bounds of use?**
 
-Now that we have the vague use cases defined, we need to figure out what exactly this means. What does it mean for a website to be blocked? Should just the "illegal" page be blocked, or the entire website? Is the application supposed to"learn" what is bad content, or is it based on a white list or black list? If it's supposed to learn what inappropriate content is, what degree of false positives or false negatives is acceptable?
+Now that we have the vague use cases defined, we need to figure out what exactly this means. What does it mean for a website to be blocked? Should just the "illegal" page be blocked, or the entire website? Is the application supposed to "learn" what is bad content, or is it based on a white list or black list? If it's supposed to learn what inappropriate content is, what degree of false positives or false negatives is acceptable?
 
 **Step 5: What are the stress conditions/ failure conditions?**
 
@@ -103,7 +103,7 @@ In many ways, testing a function  is the easiest type of testing. The conversati
 
 However, don't overlook the value of some conversation with your interviewer. You should discuss any assumptions with your interviewer, particularly with respect to how to handle specific situations.
 
-Suppose you were asked to write code to test sort (int [] array), which sorts an array of integers. You might proceed as follows.
+Suppose you were asked to write code to test sort (int[] array), which sorts an array of integers. You might proceed as follows.
 
 **Step  1: Define the test cases**
 
@@ -137,7 +137,7 @@ Once you have the test cases and results defined, writing the code to implement 
 
 ### Troubleshooting Questions
 
-A final type of question is explaining how you would debug or troubleshoot an existing issue. Many candi­ dates balk at a question like this, giving unrealistic answers like "reinstall the software:'You can approach these questions in a structured manner, like anything else.
+A final type of question is explaining how you would debug or troubleshoot an existing issue. Many candi­ dates balk at a question like this, giving unrealistic answers like "reinstall the software". You can approach these questions in a structured manner, like anything else.
 
 Let's walk through this problem with an example: You're working on the Google Chrome team when you receive a bug report: Chrome crashes on launch. What would you do?
 
@@ -349,8 +349,8 @@ SOLUTION
 
 The first thing to do on this question is to clarify assumptions. Ask the following questions:
 
-- Who is going to use the ATM? Answers might be "anyone;' or it might be "blind people;' or any number of other answers.
-- What are they going  to use it for? Answers might be "withdrawing  money;' "transferring money;' "checking their balance;' or many other answers.
+- Who is going to use the ATM? Answers might be "anyone", or it might be "blind people", or any number of other answers.
+- What are they going  to use it for? Answers might be "withdrawing  money", "transferring money", "checking their balance", or many other answers.
 - What tools do we have to test? Do we have access to the code, or just to the ATM? 
 
 Remember: a good tester makes sure she knows what she's testing!

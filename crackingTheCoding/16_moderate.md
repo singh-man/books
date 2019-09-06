@@ -49,7 +49,7 @@ x's original value.
 
 Otherwise, if x == y, then we do y =  0  ^ {original y} and the value of y does notchange. 
 
-Either way,y will be equal to the original value ofx.
+Either way, y will be equal to the original value of x.
 
 3.   X  =   X  ^   Y
 ```
@@ -77,7 +77,7 @@ Let's start with the simple case.
 
 **Solution: Single Query**
 
-In this case, we simply go through the book, word by word,and count the number of times that a word appears. This will take O ( n) time. We know we can't do better than that since we must look at every word in the book.
+In this case, we simply go through the book, word by word, and count the number of times that a word appears. This will take O(n) time. We know we can't do better than that since we must look at every word in the book.
 ```java
 1 	int  getFrequency(String[] book,  String word)  {
 2 		word =  word.trim().tolowerCase();
@@ -94,7 +94,7 @@ We have also converted the string to lowercase and trimmed it. You can discuss w
 
 **Solution: Repetitive Queries**
 
-If we're doing the operation repeatedly, then we can probably afford to take some time and extra memory to do pre-processing on the book. We can create a hash table which maps from a word to its frequency. The frequency of any word can be easily looked up in O ( 1) time. The code for this is below.
+If we're doing the operation repeatedly, then we can probably afford to take some time and extra memory to do pre-processing on the book. We can create a hash table which maps from a word to its frequency. The frequency of any word can be easily looked up in O(1) time. The code for this is below.
 ```java
 1 	HashMap<String,   Integer> setupDictionary(String[]   book)  {
 2 		HashMap<String,  Integer> table  =
@@ -249,7 +249,7 @@ SOLUTION
  
 ---
 
-At first glance, this problem seems really straightforward. We're just checking a tic-tac-toe board; how hard could it be? It turns out that the problem is a bit more complex, and there is no single"perfect"answer. The optimal solution depends on your preferences.
+At first glance, this problem seems really straightforward. We're just checking a tic-tac-toe board; how hard could it be? It turns out that the problem is a bit more complex, and there is no single "perfect" answer. The optimal solution depends on your preferences.
 
 There are a few major design decisions to consider:
 
@@ -267,8 +267,7 @@ There are only 39   or about 20,000, tic-tac-toe boards (assuming a 3x3 board). 
 2       return  winnerHashtable[board];
 3   }
 ```
-To convert a board (represented by a char array) to an int, we can use what is essentially a "base 3" repre­
-sentation. Each board is represented as 3°v₀ + 3¹v₁ + 3²v₂ + . . .  + 3⁸v₈ , where v₁ is a 0 if the space is empty, a 1 if it's a "blue spot" and a 2 if it's a "red spot:'
+To convert a board (represented by a char array) to an int, we can use what is essentially a "base 3" repre­sentation. Each board is represented as 3°v₀ + 3¹v₁ + 3²v₂ + . . .  + 3⁸v₈ , where v₁ is a 0 if the space is empty, a 1 if it's a "blue spot" and a 2 if it's a "red spot".
 ```java
 1 	enum Piece   {  Empty,  Red,  Blue};
 2	
@@ -637,7 +636,7 @@ The first way is to iterate through all the numbers from 2 through n, counting t
 12	 int  countFactZeros(int num) {
 13	 	int count =   0;
 14	 	for (int i =  2;  i <=  num; i +   +)  {
-15	 		count   +=    factorsOfS(i);
+15	 		count += factorsOfS(i);
 16	 	}
 17	 	return  count;
 18	 }
@@ -696,7 +695,7 @@ One minor optimization we could perform from here is to return immediately if we
 
 This will only be faster if there's a pair with difference zero early in the list of pairs. But to add this optimiza­ tion, we need to execute an additional line of code each time. There's a tradeoff here; it's faster for some inputs and slower for others. Given that it adds complexity in reading the code, it may be best to leave it out.
 
-With or without this "optimization;' the algorithm will take O(AB) time.
+With or without this "optimization", the algorithm will take O(AB) time.
 
 
 **Optimal**
@@ -848,7 +847,7 @@ The code below implements this algorithm.
 14			return negative + " " +  convert( -1 *  num);
 15		}
 16
-17		Linkedlist<String> parts = new  Linkedlist<String>();
+17		LinkedList<String> parts = new  LinkedList<String>();
 18		int chunkCount = 0;
 19
 20		while  (num >  0) {
@@ -864,7 +863,7 @@ The code below implements this algorithm.
 30	}
 31
 32	String  convertChunk(int number) {
-33		Linkedlist<String> parts  =  new   Linkedlist<String>();
+33		LinkedList<String> parts  =  new LinkedList<String>();
 34
 35		/*  Convert  hundreds  place  */
 36		if (number >= 100)  {
@@ -961,7 +960,7 @@ The code below implements this algorithm.
 ```
 Figuring out the runtime here takes a bit of calculation.
 
-Observe that reducinga by half takesO(log a)work. Why? For each round of"reduce a by half'; the abso­lute values of a and delta always add up to the same number.The values of delta anda will converge at a/2. Since de1ta is being doubled each time, it will takeO(log a)steps to reach half of a.
+Observe that reducing a by half takes O(log a)work. Why? For each round of "reduce a by half", the abso­lute values of a and delta always add up to the same number.The values of delta anda will converge at a/2. Since de1ta is being doubled each time, it will take O(log a)steps to reach half of a.
 
 We do O(log a) rounds.
 
@@ -969,9 +968,9 @@ We do O(log a) rounds.
 2.  Reducing a/2 to a/4 takes O(log a/2) time.
 3.  Reducing a/4 to a/8 takes O(log  a/4 ) time.
 
-... As so on ,for O(log a) rounds.
+... As so on , for O(log a) rounds.
 
-The runtime therefore is O(log a+ log(a/2) +log(a/4)+ ... ),withO(log a)terms in the expression.
+The runtime therefore is O(log a+ log(a/2) +log(a/4)+ ... ), with O(log a) terms in the expression.
 
 Recall two rules of logs:
 
@@ -1248,7 +1247,7 @@ When we see a birth and death from the same year, we want to include the birth b
 
 We also need to be careful about where we put the updating of maxAlive and maxAliveYear. It needs to be after the currentAlive++, so that it takes into account the updated total. But it needs to be before birthIndex++, or we won't have the right year.
 
-This algorithm will take O ( P  log P) time, where P is the number of people.
+This algorithm will take O(P log P) time, where P is the number of people.
 
 **More Optimal (Maybe)**
 
@@ -1272,7 +1271,7 @@ This logic is reasonably good, but we should think about it more. Does it really
 
 One edge case we should consider is when a person dies the same year that they're born. The increment and decrement  operations will cancel out to give O population change. According to the wording of the problem, this person should be counted as living in that year.
 
-In fact, the"bug" in our algorithm is broader than that. This same issue applies to all people. People who die in 1908 shouldn't be removed from the population count until 1909.
+In fact, the "bug" in our algorithm is broader than that. This same issue applies to all people. People who die in 1908 shouldn't be removed from the population count until 1909.
 
 There's a simple fix:  instead  of decrementing  array[deathYear], we should decrement array[deathYear +  1].
 ```java
@@ -1400,7 +1399,7 @@ If you re-read the prior paragraph, you might notice something interesting. Ther
 We don't actually need to go through all arrangements of planks. Wejust need to go through all unique sets of K planks (sets, not orders!). There are only K ways of picking K planks if we only have two possible types:
 {O of type A, K of type B}, {1 of type A, K-1 of type B}, {2 of type A, K-2 of type B}, ...
 
-This can be done in just a simple for loop. At each"sequence'; we just compute the sum.
+This can be done in just a simple for loop. At each "sequence", we just compute the sum.
 ```java
 1	HashSet<Integer>  alllengths(int k,  int  shorter, int longer) {
 2		HashSet<Integer> lengths  = new HashSet<Integer>();
@@ -1487,7 +1486,7 @@ SOLUTION
 
 ---
 
-Before we start, we should think about what exactly this problem means by a "line:' Is a line defined by a slope and a y-intercept? Or by any two points on the line? Or, should the line be really a line segment, which starts and ends at the edges of the squares?
+Before we start, we should think about what exactly this problem means by a "line". Is a line defined by a slope and a y-intercept? Or by any two points on the line? Or, should the line be really a line segment, which starts and ends at the edges of the squares?
 
 We will assume, since it makes the problem a bit more interesting, that we mean the third option: that the line should end at the edges of the squares. In an interview situation, you should discuss this with your interviewer.
 
@@ -1578,7 +1577,7 @@ SOLUTION
 
 This solution seems quite straightforward at first. And it is-sort of.
 
-We just"draw" an infinite line (that is, not a line segment) between every two points and, using a hash table, track which line is the most common. This will take O(N²) time, since there are N² line segments.
+We just "draw" an infinite line (that is, not a line segment) between every two points and, using a hash table, track which line is the most common. This will take O(N²) time, since there are N² line segments.
 
 We will represent a line as a slope and y-intercept (as opposed to a pair of points), which allows us to easily check to see if the line from  ( x1,  y1) to ( x2, y2) is equivalent to the line from ( x3, y3) to ( x4, y4).
 
@@ -1703,7 +1702,7 @@ The computer has four slots, and each slot will contain a ball that is red (R), 
 
 You, the user, are trying to guess the solution. You might, for example, guess YRGB.
 
-When you guess the correct color for the correct slot, you get a "hit:' If you guess a color that exists but is in the wrong slot, you get a "pseudo-hit:' Note that a slot that is a hit can never count as a pseudo-hit.
+When you guess the correct color for the correct slot, you get a "hit". If you guess a color that exists but is in the wrong slot, you get a "pseudo-hit". Note that a slot that is a hit can never count as a pseudo-hit.
 
 For example, if the actual solution is RGBY and you guess GGRR, you have one hit and one pseudo­-hit
 
@@ -1716,7 +1715,7 @@ SOLUTION
 
 This problem is straightforward, but it's surprisingly easy to make little mistakes. You should check your code extremely thoroughly, on a variety of test cases.
 
-We'll implement this code by first creating a frequency array which stores how many times each character occurs in solution, excluding times when the slot is a "hit:'Then, we iterate through guess to count the number of pseudo-hits.
+We'll implement this code by first creating a frequency array which stores how many times each character occurs in solution, excluding times when the slot is a "hit". Then, we iterate through guess to count the number of pseudo-hits.
 
 The code below implements this algorithm.
 ```java
@@ -1919,7 +1918,7 @@ When would we want negative numbers included in a subsequence? Only if it allows
 
 We can approach this in a step-wise manner, starting with the first element in the array.
 
-When we look at 5, this is the biggest sum we've seen so far. We set maxSum to 5, and sum to 5. Then, we consider-9. If we added it to sum, we'd get a negative value.There's no sense in extending the subsequence from 5 to -9 (which "reduces"to a sequence of just -4), so we just reset the value of sum.
+When we look at 5, this is the biggest sum we've seen so far. We set maxSum to 5, and sum to 5. Then, we consider-9. If we added it to sum, we'd get a negative value.There's no sense in extending the subsequence from 5 to -9 (which "reduces" to a sequence of just -4), so we just reset the value of sum.
 
 Now, we consider 6. This subsequence is greater than 5, so we update both maxSum and sum.
 
@@ -2133,7 +2132,7 @@ the pattern (given those values for a andb), we walk through value, comparing ea
 52      return true;
 53   }
 ```
-This algorithm will still take  O ( N² ) time,  but the  benefit is that it can short circuit when matches fail early (which they  usually  will). The previous algorithm must go through all the  work to build  the string  before it can learn that it has failed.
+This algorithm will still take  O(N²) time,  but the  benefit is that it can short circuit when matches fail early (which they  usually  will). The previous algorithm must go through all the  work to build  the string  before it can learn that it has failed.
 
 
 **16.19   Pond Sizes:** You have an integer matrix representing a plot of land, where the value at that location represents the  height above sea  level. A value  of zero  indicates water.  A pond is a region of water connected vertically,  horizontally, or  diagonally. The  size  of  the   pond is the   total number of connected water cells. Write a method to compute the sizes of all ponds in the  matrix.
@@ -2190,7 +2189,7 @@ For each cell, we need to check  eight adjacent cells. We could do this by writi
 ```
 In this  case,  we  marked a cell as  visited  by  setting its  value  to  -1. This allows  us  to  check,  in one line (land[row][col] != 0), if the  value  is valid dry land  or visited. In either case, the  value will be zero.
 
-You might also  notice that the  for loop iterates through nine  cells, not  eight. It includes the  current cell. We could add  a line in there to not  recurse if dr  ==  0 and de    ==  0. This really doesn't save  us much. We'll execute this if-statement in eight cells unnecessarily,just to avoid one recursive call. The recursive call returns immediately since the  cell is marked as visited.
+You might also  notice that the  for loop iterates through nine  cells, not  eight. It includes the  current cell. We could add  a line in there to not  recurse if dr == 0 and dc ==  0. This really doesn't save  us much. We'll execute this if-statement in eight cells unnecessarily, just to avoid one recursive call. The recursive call returns immediately since the  cell is marked as visited.
 
 If you don't like modifying the  input matrix, you can create a secondary visited matrix.
 ```java
@@ -2430,9 +2429,9 @@ That's it!
 54    /*  HashMaplist<String,  Integer>  is a HashMap  that maps from Strings to
 55    *  ArrayList<Integer>.  See appendix for  implementation.  */
 ```
-Getting the wordsthatmap to this number will run inO(N) time, whereN is the number of digits. TheO(N) comes in during the hash table look up (we need to convert the number to a hash table). If you know the words are never longer than a certain max size, then you could also describe the runtime as O(1).
+Getting the wordsthatmap to this number will run in O(N) time, whereN is the number of digits. The O(N) comes in during the hash table look up (we need to convert the number to a hash table). If you know the words are never longer than a certain max size, then you could also describe the runtime as O(1).
 
-Note that it's easy to think, "Oh, linear-that's not that fast:' But it depends what it's linear on. Linear on the length of the word is extremely fast. Linear on the length of the dictionary is not so fast.
+Note that it's easy to think, "Oh, linear-that's not that fast". But it depends what it's linear on. Linear on the length of the word is extremely fast. Linear on the length of the dictionary is not so fast.
 
 **16.21   Sum Swap:** Given two  arrays of integers, find a pair of values (one value  from  each array) that you can swap to give the  two arrays the  same sum.
 
@@ -2520,7 +2519,7 @@ Target approach:
 23   }
 ```
 
-We've used an Integer (a boxed data type) as the return value for getTarget. This allows us to distin- guish an"error" case.
+We've used an Integer (a boxed data type) as the return value for getTarget. This allows us to distin- guish an "error" case.
 
 This algorithm takes O(AB) time.
 
@@ -2528,7 +2527,7 @@ This algorithm takes O(AB) time.
 
 This problem reduces to finding a pair of values that have a particular difference. With that in mind, let's revisit what the brute force does.
 
-In the brute force, we're looping through A and then, for each element, looking for an element in B which gives us the"right" difference. If the value in A is 5 and the target is 3, then we must be looking for the value 2. That's the only value that could fulfill the goal. 
+In the brute force, we're looping through A and then, for each element, looking for an element in B which gives us the "right" difference. If the value in A is 5 and the target is 3, then we must be looking for the value 2. That's the only value that could fulfill the goal. 
 
 That is, rather than writing one   -   two   ==  target, we could have written two
 How can we more quickly find an element in B that equals one   -  target?
@@ -2808,7 +2807,7 @@ This works, but it's actually more complicated than is necessary.
 
 **Solution #3: HashSet**
 
-Although it may seem "obvious"that we would  use a matrix to represent a grid, it's actually easier not to do that.  All we actually need is a list of the white squares (as well as the ant's location and  orientation).
+Although it may seem "obvious" that we would  use a matrix to represent a grid, it's actually easier not to do that.  All we actually need is a list of the white squares (as well as the ant's location and  orientation).
 
 We can  do this by using a HashSet of the  white squares. If a position is in the  hash set, then the  square is white.  Otherwise, it is black.
 
@@ -3048,7 +3047,7 @@ If there are duplicates in the array (e.g., { 5,  6,  5}), it might print the sa
 
 **Optimized Solution**
 
-We can optimize this with a hash map, where the value in the hash map reflects the number of"unpaired" instances of a key. We walk through  the array. At each element x, check how many unpaired instances of x's complement preceded it in the array. If the count is at least one, then there is an unpaired instance of x's complement. We add this pair and decrement x's complement to signify that this element has been paired. If the count is zero, then increment the value of x in the hash table to signify that x is unpaired.
+We can optimize this with a hash map, where the value in the hash map reflects the number of "unpaired" instances of a key. We walk through  the array. At each element x, check how many unpaired instances of x's complement preceded it in the array. If the count is at least one, then there is an unpaired instance of x's complement. We add this pair and decrement x's complement to signify that this element has been paired. If the count is zero, then increment the value of x in the hash table to signify that x is unpaired.
 ```java
 1   ArrayList<Pair> printPairSums(int[] array,  int sum) {
 2       ArrayList<Pair> result =   new ArrayList<Pair>();
@@ -3107,7 +3106,7 @@ This algorithm takes O(N log N) time to sort and O(N) time to find the pairs.
 Note that since the array is presumably unsorted, it would be equally fast in terms of big Oto  just do a binary search at each element for its complement. This would give us a two-step algorithm, where each step is O(N  log  N).
 
 
-**16.25  LRU Cache:** Design and build a"least recently used"cache, which evicts the least recently used item. The cache should map from keys to values (allowing you to insert and retrieve a value associated with a particular key) and be initialized with a max size. When it is full, it should evict the least recently used item. You can assume the keys are integers and the values are strings. 
+**16.25  LRU Cache:** Design and build a "least recently used" cache, which evicts the least recently used item. The cache should map from keys to values (allowing you to insert and retrieve a value associated with a particular key) and be initialized with a max size. When it is full, it should evict the least recently used item. You can assume the keys are integers and the values are strings. 
 
 
 **SOLUTION**
@@ -3119,14 +3118,14 @@ We should start off by defining the scope of the problem. What exactly do we nee
 - **Inserting Key, Value Pair:** We need to be able to insert a (key, value) pair.
 - **Retrieving Value by Key:** We need to be able to retrieve the value using the key.
 - **Finding Least  Recently  Used:** We need to know the least recently used item (and, likely, the usage ordering of all items).
-- **Updating Most Recently Used:** When we retrieve a value by key,we need to update the order to be the most recently used item.
+- **Updating Most Recently Used:** When we retrieve a value by key, we need to update the order to be the most recently used item.
 - **Eviction:** The cache should have a max capacity and should remove the least recently used item when it hits capacity.
 
 The (key, value) mapping suggests a hash table. This would make it easy to look up the value associated with a particular key.
 
 ![](media/16_25_1.JPG)
 
-Unfortunately,a hash table usually would not offer a quick way to remove the most recently used item. We could mark each item with a timestamp and iterate through the hash table to remove the item with the lowest timestamp, but that can get quite slow (O(N) for insertions).
+Unfortunately, a hash table usually would not offer a quick way to remove the most recently used item. We could mark each item with a timestamp and iterate through the hash table to remove the item with the lowest timestamp, but that can get quite slow (O(N) for insertions).
 
 Instead, we could use a linked list, ordered by the most recently used. This would make it easy to mark an item as the most recently used (just put it in the front of the list) or to remove the least recently used item (remove the end).
 
@@ -3134,7 +3133,7 @@ Instead, we could use a linked list, ordered by the most recently used. This wou
 
 Unfortunately, this does not offer a quick way to look up an item by its key. We could iterate through the linked list and find the item by key. But this could get very slow (O(N) for retrieval).
 
-Each approach does half of the problem (different halves) very well,but neither approach does both parts well.
+Each approach does half of the problem (different halves) very well, but neither approach does both parts well.
 
 Can we get the best parts of each? Yes. By using both!
 
@@ -3153,7 +3152,7 @@ The algorithms now operate as follows:
 1  public  class Cache  {
 2      private  int maxCacheSize;
 3      private  HashMap < Integer,  LinkedListNode>  map
-4                 new HashMap < Integer,   LinkedlistNode>();
+4                 new HashMap < Integer,   LinkedListNode>();
 5      private  LinkedListNode listHead  =  nullf
 6      public  LinkedListNode listTail =  null;
 7
@@ -3175,7 +3174,7 @@ The algorithms now operate as follows:
 23     }
 24
 25     /* Remove node  from linked  list. */
-26     private  void  removeFromLinkedlist(LinkedListNode  node) {
+26     private  void  removeFromLinkedList(LinkedListNode  node) {
 27         if (node == null)  return;
 28
 29         if (node.prev != null) node.prev.nextl =  node.next;
@@ -3199,7 +3198,7 @@ The algorithms now operate as follows:
 47     /* Remove  key/value pair  from cache, deleting  from hashtable and linked  list. */
 48     public  boolean removeKey(int  key) {
 49         LinkedListNode  node   =  map.get(key);
-50         removeFromLinkedlist(node);
+50         removeFromLinkedList(node);
 51         map.remove(key);
 52         return true;
 53     }
@@ -3388,7 +3387,7 @@ Alternatively, we can solve this problem using two stacks: one for numbers and o
 The processing works as follows:
 
 - Each time we see a number, it gets pushed onto numberStack.
-- Operators get pushed onto operatorStack-as long as the operator has higher priority than the current top of the stack. If priority(currentOperator)    <=   priority(operatorStack. top()), then we"collapse"the top of the stacks:
+- Operators get pushed onto operatorStack-as long as the operator has higher priority than the current top of the stack. If priority(currentOperator) <= priority(operatorStack. top()), then we "collapse" the top of the stacks:
   - Collapsing:  pop two elements off numberStack, pop an operator off operatorStack, apply the operator, and push the result onto numberStack.
   - Priority: addition  and subtraction have equal priority, which is lower than the priority of multipli­cation and division (also equal priority).
 
@@ -3509,7 +3508,7 @@ This code also takes O(N) time, where N is the length of the string.
 
 This solution involves a lot of annoying string parsing code. Remember that getting all these details out is not that important in an interview.  In fact, your interviewer might even let you assume the expression is passed in pre-parsed into some sort of data structure.
 
-Focus on modularizing your code from the beginning and"farming out" tedious or less interesting parts of
+Focus on modularizing your code from the beginning and "farming out" tedious or less interesting parts of
 the code to other functions. You want  to focus on getting the core compute function working. The rest of
 the details can wait!
 

@@ -38,7 +38,7 @@ For example, in the restaurant question, we may come up with the following desig
 - Each Table has one Party, but each Party may have multiple Tables. 
 - There is one Host for the Restaurant.
 
-Be very careful here-you can often make incorrect assumptions. For example, a single Table may have multiple Parties (as is common in the trendy"communal tables" at some restaurants). You should talk to your interviewer about how general purpose your design should be.
+Be very careful here-you can often make incorrect assumptions. For example, a single Table may have multiple Parties (as is common in the trendy "communal tables" at some restaurants). You should talk to your interviewer about how general purpose your design should be.
 
 
 ##### Step 4: Investigate Actions
@@ -75,7 +75,7 @@ The Singleton pattern ensures that a class has only one instance and ensures acc
 10  }
 ```
 
-It should be noted that many people dislike the Singleton design pattern, even calling it an "anti-pattern:' One reason for this is that it can interfere with unit testing.
+It should be noted that many people dislike the Singleton design pattern, even calling it an "anti-pattern". One reason for this is that it can interfere with unit testing.
 
 
 ###### Factory Method
@@ -863,8 +863,8 @@ We have  a traditional jigsaw puzzle. The puzzle is grid-like, with rows and col
 
 As we solve the jigsaw puzzle (manually or algorithmically), we'll need to store the position of each piece. We could think about the position as absolute or relative:
 
-- *Absolute Position:* "This piece is located at position (12, 23):'
-- *Relative Position:* "I don't know where this piece is actually located, but I know it is next to this other piece:'
+- *Absolute Position:* "This piece is located at position (12, 23)".
+- *Relative Position:* "I don't know where this piece is actually located, but I know it is next to this other piece".
 
 For our solution, we will use the absolute position.
 
@@ -906,11 +906,11 @@ A potential object-oriented design looks like the following:
 25  }
 26  
 27  public   class Puzzle  {
-28      private  Linkedlist<Piece> pieces;  /*  Remaining pieces to  put  away. */
+28      private  LinkedList<Piece> pieces;  /*  Remaining pieces to  put  away. */
 29      private Piece[][] solution;
 30      private int size;
 31  
-32      public   Puzzle(int  size,   Linkedlist<Piece> pieces)  {  ... }
+32      public   Puzzle(int  size,   LinkedList<Piece> pieces)  {  ... }
 33  
 34  
 35      /*  Put  piece  into the  solution,  turn  it appropriately,  and remove from list. */
@@ -985,16 +985,16 @@ The code below outlines this algorithm.
 25  
 26  boolean  solve() {
 27      /*Group pieces.   */
-28      Linkedlist<Piece> cornerPieces = new  Linkedlist<Piece>();
-29      Linkedlist<Piece> borderPieces = new  Linkedlist<Piece>();
-30      Linkedlist<Piece> insidePieces = new  Linkedlist<Piece>();
+28      LinkedList<Piece> cornerPieces = new  LinkedList<Piece>();
+29      LinkedList<Piece> borderPieces = new  LinkedList<Piece>();
+30      LinkedList<Piece> insidePieces = new  LinkedList<Piece>();
 31      groupPieces(cornerPieces,  borderPieces,  insidePieces);
 32  
 33      /*Walk through  puzzle,   finding the  piece   that joins the  previous one.    */
 34      solution = new  Piece[size][size];
 35      for  (int row =  0;  row <  size;  row++) {
 36          for  (int column =  0;  column <  size; column++) {
-37              Linkedlist<Piece> piecesToSearch  =  getPieceListToSearch(cornerPieces,
+37              LinkedList<Piece> piecesToSearch  =  getPieceListToSearch(cornerPieces,
 38                  borderPieces, insidePieces,  row,  column);
 39              if (!fitNextEdge(piecesToSearch,  row,  column))  {
 40                  return false;
@@ -1083,13 +1083,13 @@ The  method receivedAddRequest,  in  the   User class,   notifies User  B that U
 
 The method sentAddRequest in the  User class  is called by UserManager to add an AddRequest to User A's list of requests. So the flow is:
 
-1.  User A clicks"add user" on the client and it gets sent to the server.
+1.  User A clicks "add user" on the client and it gets sent to the server.
 2.  User A calls requestAddUser(User B).
 3.  This method calls UserManager. addUser.
 4.  UserManager calls both User  A. sentAddRequest and
     User B.receivedAddRequest.
 
-Again, this isjustone way ofdesigning these interactions. It is not the only way, oreven the only"good"way.
+Again, this is just one way of designing these interactions. It is not the only way, or even the only "good" way.
 
 ```java
 1   public  class  User {
@@ -1209,7 +1209,7 @@ While we would like users to tell us when they  sign off, we can' t know for sur
 
 *Q2: How do we deal with conflicting information?*
 
-We have some information stored in the  computer's memory and some in the  database. What happens if they get  out of sync?  Which one is"right"?
+We have some information stored in the  computer's memory and some in the  database. What happens if they get  out of sync?  Which one is "right"?
 
 *Q3: How do we make our server scale?*
 
@@ -1278,8 +1278,8 @@ One possible design for Othello is below.
 10      private Player[] players;
 11      private static  Game  ins tance;
 12      private Board board;
-13      private final int  ROWS =  10;
-14      private final int  COLUMNS =    10;
+13      private final int  ROWS = 10;
+14      private final int  COLUMNS = 10;
 15 
 15      private Game()   {
 17          board =   new Board(ROWS,   COLUMNS);
@@ -1425,9 +1425,9 @@ The code below implements this approach.
 
 There are a number of things here which are easy to make mistakes on, such as:
 
-- In Java, we cannot create an array of the generic type. Instead,we must either cast the array or define iterns to be of type List<T>. For simplicity, we have done the former.
+- In Java, we cannot create an array of the generic type. Instead, we must either cast the array or define iterns to be of type List<T>. For simplicity, we have done the former.
 - The % operator will return a negative value when we do negValue %  posVal. For example, -8  % 3 is -2. This is different from how mathematicians  would define the modulus function. We must add iterns.length to a negative index to get the correct positive result.
-- We need to be sure to consistently convert the raw index to the rotated index. For this reason,we have implemented a convert function that is used by other methods.  Even the rotate function uses convert. This is a good example of code reuse.
+- We need to be sure to consistently convert the raw index to the rotated index. For this reason, we have implemented a convert function that is used by other methods.  Even the rotate function uses convert. This is a good example of code reuse.
 
 Now that we have the basic code for CircularArray out of the way, we can focus on implementing an iterator.
 
@@ -1444,9 +1444,9 @@ Implementing this requires implementing  the Iterator interface. The details of 
 To implement the Iterator interface, we need to do the following:
 
 - Modify the CircularArray<T> definition to add implements Iterable<T>. This will also require us to add an iterator() method to CircularArray<T>.
-- Create a CircularArrayiterator<T> which implements  Iterator<T>. This will also require us to implement,in the CircularArrayiterator,the methods hasNext(),next(),and remove ().
+- Create a CircularArrayiterator<T> which implements  Iterator<T>. This will also require us to implement, in the CircularArrayiterator, the methods hasNext(), next(), and remove ().
 
-Once we've done the above items,the for loop will "magically"work.
+Once we've done the above items, the for loop will "magically" work.
 
 In the code below, we have removed the aspects of CircularArray which were identical to the earlier implementation.
 
@@ -1706,7 +1706,7 @@ cells to a queue, to flip their neighboring cells.
 5           { 1,  -1},  { 1,  0},  {  1,  1}
 6       };
 7   
-8       Queue<Cell> toExplore  =  new Linkedlist<Cell>();
+8       Queue<Cell> toExplore  =  new LinkedList<Cell>();
 9       toExplore.add(cell);
 10  
 11      while  (!toExplore.isEmpty()) {
@@ -1851,13 +1851,13 @@ At first, we might think our data structure would look something like this:
 
 ```java
 1   class Hash<K, V>  {
-2        Linkedlist<V>[]  items;
+2        LinkedList<V>[]  items;
 3        public void  put(K  key,   V  value) { ... }
 4        public V  get(K  key)  { ... }
 5   }
 ```
 
-Note that iterns is an array of linked lists, where iterns[ i] is a linked list of all objects with keys that map to index i (that is, all the objects that collided at i).
+Note that iterns is an array of linked lists, where iterns[i] is a linked list of all objects with keys that map to index i (that is, all the objects that collided at i).
 
 This would seem to work until we think more deeply about collisions. Suppose we have a very simple hash function that uses the string length.
 
@@ -1879,7 +1879,7 @@ The code below uses this implementation.
 1   public class Hasher<K, V> {
 2       /* Linked  list node  class. Used only  within hash  table. No  one  else  should get
 3        *  access to  this. Implemented  as  doubly  linked list. */
-4       private static class LinkedlistNode<K, V> {
+4       private static class LinkedListNode<K, V> {
 5           public LinkedListNode<K, V> next;
 6           public LinkedListNode<K, V> prev;
 7           public K key;

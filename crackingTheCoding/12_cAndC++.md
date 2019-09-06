@@ -383,7 +383,7 @@ SOLUTION
 
 ---
 
-This is a classic interview question. The only"gotcha" is to try to do it in place,  and to be careful for the  null character.
+This is a classic interview question. The only "gotcha" is to try to do it in place,  and to be careful for the  null character.
 
 We will implement this in C.
 
@@ -420,7 +420,7 @@ SOLUTION
 
 In a hash  table, a value  is stored by calling  a hash  function on a key. Values are not  stored in sorted order. Additionally, since  hash tables use  the  key to find  the  index that will store the  value,  an insert  or lookup can be done in amortized O(1) time (assuming few collisions  in the  hash table).  In a hash table, one must also handle potential collisions. This is often done by chaining, which means to create a linked list of all the values  whose keys map  to a particular index.
 
-An STL map inserts the key/value pairs into a binary search tree based on the keys. There is no need to handle collisions, and, since the tree is balanced,the insert andlookup time is guaranteed to be O(log N).
+An STL map inserts the key/value pairs into a binary search tree based on the keys. There is no need to handle collisions, and, since the tree is balanced, the insert andlookup time is guaranteed to be O(log N).
 
 **How is a hash table implemented?**
 
@@ -438,7 +438,7 @@ To summarize, the hash table will be implemented with an array of linked lists, 
 
 **What  can be used instead of a hash table, if the number of inputs  is small?**
 
-You can use an STL map or a binary tree. Although this takes O ( log (n)) time, the number of inputs may be small enough to make this time negligible.
+You can use an STL map or a binary tree. Although this takes O(log (n)) time, the number of inputs may be small enough to make this time negligible.
 
  
 **12.4    Virtual Functions:** How do virtual functions work in C++?
@@ -447,7 +447,7 @@ SOLUTION
 
 ---
 
-A virtual function depends on a "vtable" or "Virtual Table:' If any function of a class is declared to be virtual, a vtable is constructed which stores addresses of the virtual functions of this class. The compiler also adds a hidden vptr variable in all such classes which points to the vtable of that class. If a virtual function is not overridden in the derived class, the vtable of the derived class stores the address of the function in its parent class. The vtable is used to resolve the address of the function when the virtual function is called. Dynamic binding in C++ is performed through the vtable mechanism.
+A virtual function depends on a "vtable" or "Virtual Table". If any function of a class is declared to be virtual, a vtable is constructed which stores addresses of the virtual functions of this class. The compiler also adds a hidden vptr variable in all such classes which points to the vtable of that class. If a virtual function is not overridden in the derived class, the vtable of the derived class stores the address of the function in its parent class. The vtable is used to resolve the address of the function when the virtual function is called. Dynamic binding in C++ is performed through the vtable mechanism.
 
 Thus, when we assign the derived class object to the base class pointer, the vptr variable points to the vtable of the derived class. This assignment ensures that the most derived virtual function gets called.
 
@@ -746,7 +746,7 @@ Getting just the approach, even without filling in the complicated C++ syntax, w
 The code for this problem is complicated, and you probably wouldn't be expected to complete it flawlessly.
 
 
-**12.1O   Malloc:** Write an aligned malloc and free function that supports allocating memory such that the memory address returned is divisible by a specific power of two.
+**12.10   Malloc:** Write an aligned malloc and free function that supports allocating memory such that the memory address returned is divisible by a specific power of two.
 ```
 EXAMPLE
 align_malloc(1000, 128) will return a memory address that is a multiple of 128 and that points to memory of size 1000 bytes.

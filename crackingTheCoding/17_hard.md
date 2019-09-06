@@ -6,7 +6,7 @@ Our next thought should be to deeply understand how addition works. We can walk 
 
 So let's do just that-let's walk through an addition problem. We'll work in base 10 so that it's easier to see. 
 
-To add 759 + 674, I  would usually add digit [0] from each number, carry the one, add digit [1] from each number, carry the one, and so on. You could take the same approach in binary: add each digit, and carry the one as necessary.
+To add 759 + 674, I  would usually add digit[0] from each number, carry the one, add digit[1] from each number, carry the one, and so on. You could take the same approach in binary: add each digit, and carry the one as necessary.
 
 Can we make this a little easier? Yes! Imagine I decided to split apart the "addition" and "carry" steps. That is, I do the following:
 
@@ -59,9 +59,9 @@ Let's imagine our n-element array. Suppose it looks like this:
 
 	[1] [2]  [3]  [4]  [5]
 
-Using our BaseCase and Buildapproach,wecan askthisquestion:suppose we had a method shuffle ( ...) that worked on n  -   1 elements. Could we use this to shuffle n elements?
+Using our Base Case and Build approach, we can ask this question: suppose we had a method shuffle ( ...) that worked on n  -   1 elements. Could we use this to shuffle n elements?
 
-Sure. In fact, that's quite easy. We would first shuffle the first n - 1   elements. Then, we would take the nth element and randomly swap it with an element in the array. That's it!
+Sure. In fact, that's quite easy. We would first shuffle the first n - 1 elements. Then, we would take the nth element and randomly swap it with an element in the array. That's it!
 
 Recursively, that algorithm looks like this:
 ```java
@@ -112,7 +112,7 @@ Like the  prior problem which was similar, (problem 17.2 on page 531), we can  l
 
 Suppose we have an algorithm that can pull a random set of m elements from an array of size n - 1. How can we use this algorithm to pull a random set of m elements from  an array of size n?
 
-We can  first pull a random set  of size m from  the  first n    -   1 elements. Then,  we just need to decide if array[ n] should be inserted into  our subset (which  would require pulling out  a random element from it). An easy way to do this is to pick a random number k from 0 through n. If k  <  m, then insert array[ n] into  subset[ k]. This will both "fairly" (i.e., with proportional probability) insert  array[n] into the  subset and "fairly" remove a random element from the  subset.
+We can  first pull a random set  of size m from  the  first n    -   1 elements. Then,  we just need to decide if array[n] should be inserted into  our subset (which  would require pulling out  a random element from it). An easy way to do this is to pick a random number k from 0 through n. If k  <  m, then insert array[n] into  subset[k]. This will both "fairly" (i.e., with proportional probability) insert  array[n] into the  subset and "fairly" remove a random element from the  subset.
 
 The pseudocode for this recursive algorithm would look like this:
 ```java
@@ -130,7 +130,7 @@ The pseudocode for this recursive algorithm would look like this:
 12		return null;
 13	}
 ```
-This is even cleaner to  write  iteratively. In this  approach, we  initialize  an  array  subset to  be  the  first m elements in original. Then,  we iterate through the  array, starting at element m, inserting array[ i] into the subset at (random) position k whenever k   <  m.
+This is even cleaner to  write  iteratively. In this  approach, we  initialize  an  array  subset to  be  the  first m elements in original. Then,  we iterate through the  array, starting at element m, inserting array[i] into the subset at (random) position k whenever k   <  m.
 ```java
 1    int[] pickMiteratively(int[] original,  int  m)  {
 2    	int[]  subset =  new  int[m];
@@ -177,39 +177,39 @@ We can actually use a similar approach, but leverage the bit values more directl
 00010	00110	01010	
 -----	00111	01011	
 ```
-Removing the number above creates an imbalance of ls and Os in the least significant bit, which we'll call LSB₁. In a list of numbers from Oto n, we would expect there to be the same number of Os as 1 s (if n is odd), or an additional O if n is even. That is:
+Removing the number above creates an imbalance of 1s and Os in the least significant bit, which we'll call LSB₁. In a list of numbers from Oto n, we would expect there to be the same number of Os as 1 s (if n is odd), or an additional O if n is even. That is:
 
 	if n %   2 == 1 then  count(0s)  =  count(1s)
 	if n %   2 == 0 then  count(0s)  =  1 + count(1s)
 
 Note that this means that count(0s) is always greater than or equal to count (1s).
 
-When we remove  a valuevfrom the  list,we'll know immediately  ifvis even or odd just by looking at the least significant bits of all the other  values in the list.
+When we remove  a valuevfrom the  list, we'll know immediately  ifvis even or odd just by looking at the least significant bits of all the other  values in the list.
 
 ![](media/17_04_1.JPG)
 
-So,if c ount(0s) <=  c ount(1s),thenvis even. If count(0s) > count(1s), then v is odd. 
+So, if count(0s) <=  count(1s), then v is even. If count(0s) > count(1s), then v is odd. 
 
-We can now remove all the evens and focus on the odds,or remove all the odds  and focus on the evens.
+We can now remove all the evens and focus on the odds, or remove all the odds  and focus on the evens.
 
-Okay, but how do we figure out what the next bit in v is? If v were contained in our (now smaller) list,then we should expect to find the following (where c ount2 indicates  the number of Os or 1 s in the second least significant bit):
+Okay, but how do we figure out what the next bit in v is? If v were contained in our (now smaller) list, then we should expect to find the following (where count₂ indicates  the number of 0s or 1 s in the second least significant bit):
 
-	count₂(0s)  = count₂(ls)  OR count₂(0s) =  1 + count₂(1s)
+	count₂(0s)  = count₂(1s)  OR count₂(0s) =  1 + count₂(1s)
 
-As in the earlier example,we can deduce the value of the second least significant bit (LSB₂) of v.
+As in the earlier example, we can deduce the value of the second least significant bit (LSB₂) of v.
 
 ![](media/17_04_2.JPG)
 
 Again, we have the same conclusion:
 
 - If count₂(0s)  <=  count₂(1s), then LSB₂(v) = 0. 
-- If count₂(0s)  > count₂(1s), then LSB₂(v) = 1.
+- If count₂(0s)  >   count₂(1s), then LSB₂(v) = 1.
 
-We can repeat this process for each bit. On each iteration,we count the number of Osand 1s in bit i to check if LSBi(v) is O or 1. Then,we discard the numbers where LSBᵢ(x) != LSBᵢ(v). That is, if v is even, we discard the odd numbers, and so on.
+We can repeat this process for each bit. On each iteration, we count the number of Osand 1s in bit i to check if LSBi(v) is O or 1. Then, we discard the numbers where LSBᵢ(x) != LSBᵢ(v). That is, if v is even, we discard the odd numbers, and so on.
 
 By the end of this process, we will have computed all bits inv.In each successive iteration, we look at n, then n/2, then n/4, and so on, bits. This results in a runtime of O(N).
 
-If it helps,we can also move through this more visually. In the first iteration, we start with all the numbers:
+If it helps, we can also move through this more visually. In the first iteration, we start with all the numbers:
 ```
 00000	00100	01000	01100
 00001	00101	01001	01101
@@ -480,13 +480,13 @@ Rather than looking at the problem by ranges of numbers, we can look at the prob
 ```
 We know that roughly one tenth of the time, the last digit will be a 2 since it happens once in any sequence of ten numbers. In fact, any digit is a 2 roughly one tenth of the time.
 
-We say "roughly" because there are (very common) boundary conditions. For example, between 1 and 100, the 1O's digit is a 2 exactly 1/10ᵗʰ of the time. However, between  1   and 37, the 1O's digit is a 2 much more than 1/10ᵗʰ of the time.
+We say "roughly" because there are (very common) boundary conditions. For example, between 1 and 100, the 10's digit is a 2 exactly 1/10ᵗʰ of the time. However, between  1   and 37, the 10's digit is a 2 much more than 1/10ᵗʰ of the time.
 
 We can work out what exactly the ratio is by looking at the three cases individually: digit < 2, digit =  2, and digit >   2.
 
 *Case digit< 2*
 
-Consider the value x  =  61523  and d  =  3, and observe that x [ d]   =  1 (that is, the dth digit of x is 1 ). There are 2s at the 3rd digit in the ranges 2000   -  2999, 12000  -  12999, 22000  -  22999, 32000  - 32999, 42000  -  42999,  and 52000  -  52999. We will not yet have hit the range 62000  -  62999, so there are 6000 2s total in the 3rd digit. This is the same amount as if we were just counting all the 2s in the 3rd digit between  1  and 60000.
+Consider the value x  =  61523  and d  =  3, and observe that x[d] = 1 (that is, the dth digit of x is 1 ). There are 2s at the 3rd digit in the ranges 2000   -  2999, 12000  -  12999, 22000  -  22999, 32000  - 32999, 42000  -  42999,  and 52000  -  52999. We will not yet have hit the range 62000  -  62999, so there are 6000 2s total in the 3rd digit. This is the same amount as if we were just counting all the 2s in the 3rd digit between  1  and 60000.
 
 In other words, we can round down to the nearest 10ᵈ⁺¹, and then divide by 10, to compute the number of 2s in the dth digit.
 
@@ -589,7 +589,7 @@ If we later find that John is equivalent to, say, Jonny, we'll need to look up t
 
 This will work, but it's unnecessarily complicated to keep track of these two lists.
 
-Instead, we can think of these names as"equivalenceclasses:'When we find a pair (Jonathan, John), we put these in the same set (or equivalence classes). Each name maps to its equivalence  class. All items in the set map to the same instance of the set.
+Instead, we can think of these names as "equivalenceclasses". When we find a pair (Jonathan, John), we put these in the same set (or equivalence classes). Each name maps to its equivalence  class. All items in the set map to the same instance of the set.
 
 If we need to merge two sets, then we copy one set into the other and update the hash table to point to the new set.
 	
@@ -787,10 +787,10 @@ s   	connectEdges(graph,  synonyms);
 ```
 To analyze the efficiency, we can think about the efficiency of each part of the algorithm.
 
-- Reading in the data is linear with respect to the size of the data, so it takesO(B  + P) time, where B is the number of baby names and P is the number of pairs of synonyms. This is because we only do a constant amount of work per piece of input data.
-- To compute the frequencies, each edge gets "touched" exactly once across all of the graph searches and each node gets touched exactly once to check if it's been visited. The time of this part is O(B   +  P).
+- Reading in the data is linear with respect to the size of the data, so it takes O(B + P) time, where B is the number of baby names and P is the number of pairs of synonyms. This is because we only do a constant amount of work per piece of input data.
+- To compute the frequencies, each edge gets "touched" exactly once across all of the graph searches and each node gets touched exactly once to check if it's been visited. The time of this part is O(B + P).
 
-Therefore, the total time of the algorithm is O(B   +  P). We know we cannot do better than this since we must at least read in the B  +  P pieces of data.
+Therefore, the total time of the algorithm is O(B + P). We know we cannot do better than this since we must at least read in the B + P pieces of data.
 
 
 **17.8	Circus Tower:** A circus is designing a tower routine consisting of people standing atop one another's shoulders. For practical and aesthetic reasons, each person must be both shorter and lighter than the person below him or her. Given the heights and weights of each person in the circus, write a method to compute the largest possible number of people in such a tower.
@@ -894,7 +894,7 @@ There's a cleaner way to do this though.
 
 **Solution #2: Iterative**
 
-Imagine we had the longest subsequence that terminates with each element, A[ 0] through A[3]. Could we use this to find the longest subsequence that terminates with A[4]?
+Imagine we had the longest subsequence that terminates with each element, A[0] through A[3]. Could we use this to find the longest subsequence that terminates with A[4]?
 
 	Array:  13,  14,  10,  11,  12
 	Longest(ending with  A[0]):  13
@@ -992,10 +992,9 @@ We know that biggest this kth number could be is 3ᵏ * 5ᵏ * 7ᵏ. So, the "st
 ```
 
 
-What is the runtime of this approach? We have nested for loops, each of which runs for k iterations. The runtime of the allPossibleKFactors isO(k3). Then, we sort the k3   results in D(k3   log  (k3)) time (which is equivalent  toO(k3    log   k)  . This gives us a runtime ofO(k3   log   k).
+What is the runtime of this approach? We have nested for loops, each of which runs for k iterations. The runtime of the allPossibleKFactors is O(k³). Then, we sort the k³ results in O(k³ log (k³)) time (which is equivalent  to O(k³ log k)  . This gives us a runtime of O(k³ log k).
 
-There are a number of optimizations you could make to this (and better ways of handling the integer over­
-flow), but honestly this algorithm is fairly slow. We should instead focus on reworking the algorithm.
+There are a number of optimizations you could make to this (and better ways of handling the integer over­flow), but honestly this algorithm is fairly slow. We should instead focus on reworking the algorithm.
 
 
 **Improved**
@@ -1019,16 +1018,16 @@ Let's picture what our results will look like.
 The question is: what is the next value in the list? The next value will be one of these:
 
 - 3 * (some previous number in list)
-- 5 * (some previous  number in list)
+- 5 * (some previous number in list)
 - 7 * (some previous number in list)
 
 If this  doesn't immediately jump out at you, think about it this way: whatever the next value (let's call it nv) is, divide it by 3. Will that number have already appeared? As long as nv has factors of 3 in it. yes. The same can be said for dividing it by 5 and 7.
 
-So, we know Aₖ can be expressed as (3,  5  or  7) * (some value in {A₁,..., Aₖ₋₁). We also know that Aₖ is, by definition, the next number in the list. Therefore, Aᵏ will be the smallest"new" number (a number that it's already in {A₁,   •••, Aₖ₋₁}) that can be formed by multiplying each value in the list by 3, 5 or 7.
+So, we know Aₖ can be expressed as (3,  5  or  7) * (some value in {A₁,..., Aₖ₋₁). We also know that Aₖ is, by definition, the next number in the list. Therefore, Aᵏ will be the smallest "new" number (a number that it's already in {A₁,   •••, Aₖ₋₁}) that can be formed by multiplying each value in the list by 3, 5 or 7.
 
 How would we find Aₖ? Well, we could actually multiply each number in the list by 3, 5, and 7 and find the smallest element that has not yet been added to our list. This solution is O(k²). Not bad, but I think we can do better.
 
-Rather than Aₖ trying to"pull" from a previous element in the list (by multiplying  all of them by 3, 5 and 7), we can think about each previous value in the list as "pushing" out three subsequent values in the list. That is, each number Aᵢ will eventually  be used later in the list in the following forms:
+Rather than Aₖ trying to "pull" from a previous element in the list (by multiplying  all of them by 3, 5 and 7), we can think about each previous value in the list as "pushing" out three subsequent values in the list. That is, each number Aᵢ will eventually  be used later in the list in the following forms:
 
 
 - 3 * Aᵢ
@@ -1053,16 +1052,16 @@ Our code looks like this:
 12	}
 13
 14	void  addProducts(Queue<Integer>  q,  int v)  {
-15		q.add(v *  3);
-16		q.add(v *  5);
-17		q.add(v *  7);
+15		q.add(v * 3);
+16		q.add(v * 5);
+17		q.add(v * 7);
 18	}
 19
 20	int getKthMagicNumber(int   k)  {
 21		if (k  <   0)  return 0;
 22
 23		int val =  l;
-24		Queue<Integer> q  =  new Linkedlist<Integer>();
+24		Queue<Integer> q  =  new LinkedList<Integer>();
 25		addProducts(q,  1);
 26		for   (int i = 0;  i < k;  i++)  {
 27			val = removeMin(q);
@@ -1163,9 +1162,9 @@ The code below implements this algorithm.
 3 			return  0;
 4		}
 5		int val = 0;
-6		Queue<Integer>  queue3 = new Linkedlist<Integer>();
-7		Queue<Integer>  queue5 = new Linkedlist<Integer>();
-8		Queue<Integer>  queue7 = new Linkedlist<Integer>();
+6		Queue<Integer>  queue3 = new LinkedList<Integer>();
+7		Queue<Integer>  queue5 = new LinkedList<Integer>();
+8		Queue<Integer>  queue7 = new LinkedList<Integer>();
 9		queue3.add(l);
 10
 11		/*  Include  0th  through kth  iteration  */
@@ -1335,7 +1334,7 @@ We should pause for a moment to think what this algorithm is doing.
 3.  We move to [1] and expand to [1, 7]. We terminate. Nothing there could be the majority element.
 
 4.  We go to [7] and expand to [7, 3]. We terminate. Nothing there could be the majority element.
-5.  We go to [7] and expand until the end of the array: [ 7,  7,  7]. We have found the majority element
+5.  We go to [7] and expand until the end of the array: [7,  7,  7]. We have found the majority element
 (and now we must validate that).
 
 Each time we terminate the validate step, the subarray has no majority element. This means that there are at least as many non-7s as there are 7s. Although we're essentially removing this subarray from the original array, the majority element will still be found in the rest of the array-and will still have majority status. Therefore, at some point, we will discover the majority element.
@@ -1849,12 +1848,12 @@ split(i) ->  calls:
 	split(n - 1)
 ```
 
-Each of the  recursive calls has already been computed,so they just  return immediately. Doing n  i calls at O(1) time each takes O(n  -   i) time. This means thatsplit(i) takes O(i) time at most.
+Each of the  recursive calls has already been computed, so they just  return immediately. Doing n  i calls at O(1) time each takes O(n  -   i) time. This means thatsplit(i) takes O(i) time at most.
 
-We can  now  apply the  same logic  to split(i    -    1), split(i  -    2), and so on. If we make 1  call to compute split(n  -   1),2calls to compute split(n -   2),3 calls to compute split(n   -  3),...,n calls to compute split(o), how many calls total do we do? This is basically the  sum of the  numbers from
+We can  now  apply the  same logic  to split(i - 1), split(i - 2), and so on. If we make 1  call to compute split(n - 1),2calls to compute split(n - 2),3 calls to compute split(n - 3),...,n calls to compute split(o), how many calls total do we do? This is basically the  sum of the  numbers from
 1  through n, which is O(n²).
 
-Therefore,the runtime of this function is O(n²).
+Therefore, the runtime of this function is O(n²).
 
 
 **17.14  Smallest K:** Design an algorithm to find the smallest K numbers in an array.
@@ -1945,10 +1944,9 @@ Java's uses the PriorityQueue class to offer heap-like functionality. By default
 
 Selection Rank is a well-known algorithm in computer science to find the ith smallest (or largest) element in an array in linear time.
 
-If the elements are unique, you can find the ith smallest element in expected O(n) time. The basic algo­
-rithm operates like this:
+If the elements are unique, you can find the ith smallest element in expected O(n) time. The basic algorithm operates like this:
 
-1.  Pick a random element in the array and use it as a "pivot:' Partition elements around the pivot, keeping track of the number of elements on the left side of the partition.
+1.  Pick a random element in the array and use it as a "pivot". Partition elements around the pivot, keeping track of the number of elements on the left side of the partition.
 
 2.  If there are exactly i elements on the left, then you just return the biggest element on the left.
 
@@ -2144,7 +2142,7 @@ This requires minor tweaks to rankaswell. We now compare the size of left and mi
 90		return new  PartitionResult(left   -  start, right -  left +  1);
 91	}
 ```
-Notice the change made to s mallestK too.We can't simply copy all elements less than orequal tothreshold into the array. Since we have duplicates, there could be many more thank elements that are less than or equal to threshold. (We also can't just  say "okay, only copyk elements over:' We could  inadvertently fill up the array early on with"equal" elements, and not leave enough space for the  smaller ones.)
+Notice the change made to s mallestK too. We can't simply copy all elements less than orequal tothreshold into the array. Since we have duplicates, there could be many more thank elements that are less than or equal to threshold. (We also can't just  say "okay, only copyk elements over". We could  inadvertently fill up the array early on with "equal" elements, and not leave enough space for the  smaller ones.)
 
 The solution for this is fairly simple: only copy over the smaller  elements first, then fill up the  array with equal elements at the end.
 
@@ -2210,7 +2208,7 @@ The code below implements this algorithm:
 15
 16		boolean canBuildWord(String  str,   boolean isOriginalWord,
 17		HashMap<String,   Boolean>  map) {
-18			if (map.containsKey(str)  &&    !isOriginalWord)  {
+18			if (map.containsKey(str) && !isOriginalWord)  {
 19				return map.get(str);
 20			}
 21			for (int i = 1;  i < str.length(); i++)   {
@@ -2225,7 +2223,7 @@ The code below implements this algorithm:
 30			return false;
 31		}
 ```
-Note that  in this solution we have performed a small optimization. We use a dynamic programming/ memoization approach to cache theresultsbetween calls.This way, if we repeatedly need to check if there's any way to build "testingtester;' we'll only have to compute it once.
+Note that  in this solution we have performed a small optimization. We use a dynamic programming/ memoization approach to cache theresultsbetween calls.This way, if we repeatedly need to check if there's any way to build "testingtester", we'll only have to compute it once.
 
 Abooleanflag isOriginalWordisusedto complete theaboveoptimization.Themethod canBuildWord is called for the original word and for each substring, and its first step is to check the cache for a previously calculated result. However, for the original words, we have a problem: map is initialized to true for them, but we don' t want to return true (since a word cannot  be composed solely of itself). Therefore, for the original word, we simply bypass thischeck using the isOriginalWord flag.
 
@@ -2322,11 +2320,11 @@ To determine the runtime, we'll draw the same recursive call tree as before but 
 ![](media/17_16_2.JPG)
 
 
-If we drew a bigger tree,we'd see a similar pattern. The tree looks very linear,with one branch down to the left. This gives us an O(n) runtime and O(n) space. The space usage comes from the recursive call stack as well as from the memo table.
+If we drew a bigger tree, we'd see a similar pattern. The tree looks very linear, with one branch down to the left. This gives us an O(n) runtime and O(n) space. The space usage comes from the recursive call stack as well as from the memo table.
 
 **Solution #3: Iterative**
 
-Can we do better?We certainly can't beat the time complexity since we have to look at each appointment. However,we might be able to beat the space complexity. This would mean not solving the problem recur­ sively.
+Can we do better?We certainly can't beat the time complexity since we have to look at each appointment. However, we might be able to beat the space complexity. This would mean not solving the problem recur­ sively.
 
 Let's look at our first example again.
 
@@ -2336,7 +2334,7 @@ Let's look at our first example again.
 
 As we noted in the problem statement. we cannot take adjacent appointments.
 
-There's another observation,though,that we can make: We should never skip three consecutive appoint­ ments. That is, we might skip r₁  and r₂ if we wanted to take r₀ and r₃.  But we would never skip r₁, r₂, and r₃.   This would be suboptimal since we could always improve our set by grabbing that middle element.
+There's another observation, though, that we can make: We should never skip three consecutive appoint­ ments. That is, we might skip r₁  and r₂ if we wanted to take r₀ and r₃.  But we would never skip r₁, r₂, and r₃.   This would be suboptimal since we could always improve our set by grabbing that middle element.
 
 This means that if we take r₀  we know we'll definitely skip r₁ and definitely take either r₂ or r₃. This substan­tially limits the options we need to evaluate and opens the door to an iterative solution.
 
@@ -2347,7 +2345,7 @@ A useful way to do this is to approach it from the back and move toward the star
 - best(7): What's the best option for {r₇ = 45}? We can get45 min. if we take r₇, so best(7) = 45
 - best(6): What's the best option for {r₆ = 15, ...}? Still 45 min., so best(6) =  45. 
 - best(5): What's the best option for {r₅ = 15, ...}? We can either:
-	- take r₅    =  15 and mergeit with best(7) =  45,or:
+	- take r₅    =  15 and mergeit with best(7) =  45, or:
 	- take best(6) =  45.
 
 The first gives us 60 minutes, best(5)  =  60.
@@ -2358,31 +2356,31 @@ The first gives us 60 minutes, best(5)  =  60.
 
 The first gives us 90 minutes, best(4) =  90.
 
-- best(3): What's the best option for {r3    =  75,    ...}? We can either:
+- best(3): What's the best option for {r₃ =  75, ...}? We can either:
 	- take r₃ =  7S and merge it with best ( 5)   =  60, or:
 	- take best(4) =  90.
 
 The first gives us 135 minutes, best(3)  =  135. 
 
 - best(2):What's the best option for {r₂ =  60,   ...}? We can either: 
-	- take r₂    =  60 and merge it with best(4) =  90, or:
+	- take r₂ =  60 and merge it with best(4) =  90, or:
 	- take best(3) =  135.
 
-Thefirst gives us150minutes,best(2)  =  150. 
+Thefirst gives us 150 minutes, best(2)  =  150. 
 
 - best(1): What's the best option for { r₁ =  15,   ...}? We can either: 
-	- take r₁    =   15 and merge it with best(3) =   135,or:
+	- take r₁ = 15 and merge it with best(3) = 135, or:
 	- take best(2) = 150. 
 
 Either way, best(l)    150.
 
 - best(0):What's the best option for {r₀   =  30,   ...}? We can either:
-	- take r₀   =  30 and merge it with best(2) =  150,or:
+	- take r₀ = 30 and merge it with best(2) =  150,or:
 	- take best(l) =  150.
 
 The first gives us 180minutes, best(0)     180. 
 
-Therefore,we return 180minutes.
+Therefore, we return 180minutes.
 
 The code below implements this algorithm.
 ```java
@@ -2402,11 +2400,11 @@ The code below implements this algorithm.
 ```
 The runtime of this solution is O(n) and the space complexity is also O(n).
 
-It's nice in some ways that it's iterative, but we haven't actually"won" anything here. The recursive solution had the same time and space complexity.
+It's nice in some ways that it's iterative, but we haven't actually "won" anything here. The recursive solution had the same time and space complexity.
 
 **Solution #4: Iterative with Optimal Time and  Space**
 
-In reviewing the last solution,we can recogpize that we only use the values in the memo table for a short amount of time. Once we are several elements past an index, we never use that element's index again.
+In reviewing the last solution, we can recogpize that we only use the values in the memo table for a short amount of time. Once we are several elements past an index, we never use that element's index again.
 
 In fact, at any given index i, we only need to know the best value from i +  1 and i +  2. Therefore, we can get rid of the memo table and just use two integers.
 ```java
@@ -2471,7 +2469,7 @@ The naive solution is reasonably straightforward. Just search through the bigger
 21
 22	/*  Check if small  appears  at index  offset within big. */
 23	boolean  isSubstringAtLocation(String  big,   String small,   int offset) {
-24		for  (inti = 0;  i <   small.length();  i++)  {
+24		for  (inti = 0;  i < small.length();  i++)  {
 25			if (big.charAt(offset +  i)  != small.charAt(i)) {
 26				return  false;
 27			}
@@ -2499,7 +2497,7 @@ The tree for this is below.
 Then, all you need to do is search in the suffix tree for each string in T. Note that if "B" were a word, you would come up with two locations.
 ```java
 1  	HashMaplist<String, Integer>  searchAll(String   big,   String[]  smalls) {
-2  		HashMapList<String, Integer> lookup =  new  HashMapList<String,   Integer>();
+2  		HashMapList<String, Integer> lookup =  new HashMapList<String, Integer>();
 3  		Trie tree  =  createTrieFromString(big);
 4  		for   (String s  :  smalls) {
 5  			/* Get  terminating location  of  each  occurrence.*/
@@ -2550,15 +2548,15 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 51
 52 	public class TrieNode {
 53 		private HashMap<Character, TrieNode> children;
-54 		private  ArrayList<Integer> indexes;
-55 		private char  value;
+54 		private ArrayList<Integer> indexes;
+55 		private char value;
 56
-57 		public  TrieNode()  {
+57 		public TrieNode()  {
 58 			children =  new HashMap<Character, TrieNode>();
 59 			indexes  =  new ArrayList<Integer>();
 60 		}
 61
-62 		public void  insertString(String s,  int index)   {
+62 		public void insertString(String s,  int index)   {
 63 			indexes.add(index);
 64 			if (s != null &&   s.length() > 0)  {
 65 				value  =  s.charAt(0);
@@ -2576,7 +2574,7 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 77			}
 78		}
 79
-80 		public   ArrayList<Integer> search(String s)  {
+80 		public ArrayList<Integer> search(String s)  {
 81 			if (s ==  null  ||  s.length() ==  0)  {
 82 				return  indexes;
 83			}  else {
@@ -2589,11 +2587,11 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 90			return null;
 91		}
 92
-93 		public   boolean  terminates() {
+93 		public boolean terminates() {
 94 			return children.containsKey('\0');
 95 		}
 96
-97 		public  TrieNode getChild(char c)  {
+97 		public TrieNode getChild(char c)  {
 98 			return children.get(c);
 99 		}
 100	}
@@ -2710,7 +2708,7 @@ Let's use the example from the problem to walk through this. We'll call the smal
 
 The slow, "easy" way to do this is to iterate through bigArray and do repeated small passes through it.
 
-At each index in bigArray, scan forward to find the next occurrence of each element in smallArray.The largest of these next occurrences will tell us the shortest subarray that starts at that index. (We'll call this concept"closure:'That is, the closure is the element that "closes" a complete subarray starting at that index. For example, the closure of index 3-which has value 0-in the example is index 9.)
+At each index in bigArray, scan forward to find the next occurrence of each element in smallArray.The largest of these next occurrences will tell us the shortest subarray that starts at that index. (We'll call this concept "closure". That is, the closure is the element that "closes" a complete subarray starting at that index. For example, the closure of index 3-which has value 0-in the example is index 9.)
 
 By finding the closures for each index in the array, we can find the shortest subarray overall.
 ```java
@@ -2994,7 +2992,7 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 11		HashMap<Integer,   Queue<Integer>> itemlocations =
 12				new HashMap<Integer,  Queue<Integer>>();
 13		for  (int s  :   small)   {
-14			Queue<Integer> queue = new Linkedlist<Integer>();
+14			Queue<Integer> queue = new LinkedList<Integer>();
 15			itemlocations.put(s,  queue);
 15		}
 17
@@ -3215,16 +3213,15 @@ Implementing this is now somewhat straightforward.
 40	}
 ```
 
-You might notice that the quadratic formula usually gives us two answers (see the+ or - part),yet in our code,we only use the (+) result. We never checked the (-) answer. Why is that?
+You might notice that the quadratic formula usually gives us two answers (see the+ or - part), yet in our code, we only use the (+) result. We never checked the (-) answer. Why is that?
 
-The existence of the "alternate" solution doesn't mean that one is the correct solution and one is "fake:' It means that there are exactly two values forx which will correctly fulfill our equation: 2x² - 2sx  + (s² -t) = 0.
+The existence of the "alternate" solution doesn't mean that one is the correct solution and one is "fake". It means that there are exactly two values forx which will correctly fulfill our equation: 2x² - 2sx  + (s² -t) = 0.
 
 That's true. There are. What's the other one? The other value is y!
 
-If this doesn't immediately make sense to you,remember thatx and y are interchangeable. Had we solved for y earlier instead ofx,we would have wound up with an identical equation: 2y² - 2sy + (s² - t) = 0. So of course y could fulfillx's equation andx could fulfill y's equation. They have the exact same equa­ tion. Sincex and y are both solutions to equations that look like2 [something]² - 2s [something]  + s² - t =  0, then the other something that fulfills that equation must be y.
+If this doesn't immediately make sense to you, remember thatx and y are interchangeable. Had we solved for y earlier instead of x, we would have wound up with an identical equation: 2y² - 2sy + (s² - t) = 0. So of course y could fulfillx's equation andx could fulfill y's equation. They have the exact same equation. Sincex and y are both solutions to equations that look like2 [something]² - 2s [something]  + s² - t =  0, then the other something that fulfills that equation must be y.
 
-Still notconvinced? Okay,we can do some math. Let's say we tookthe alternate value forx: [ -b  - sqrt(b²
-- 4ac)] / 2a. What's y?
+Still not convinced? Okay, we can do some math. Let's say we took the alternate value for x: [-b  - sqrt(b² - 4ac)] / 2a. What's y?
 ```
 	X  +  y  =  r1
 		  y  =  r1  -  X
@@ -3237,7 +3234,7 @@ Partially plug in values for a and b, but keep the rest of the equation as-is:
 	= [2r₁   + sqrt(b² - 4ac)]/2a
 ```
  
-Recall that b = -2r₁. Now,we wind up with this equation:
+Recall that b = -2r₁. Now, we wind up with this equation:
 ```
 	=  [-b + sqrt(b² - 4ac)]/2a
 ```
@@ -3256,7 +3253,7 @@ SOLUTIONS
  
 One solution is to use two priority heaps: a max heap for the values below the median, and a min heap for the values above the median. This will divide the elements roughly in half, with the middle two elements as the top of the two heaps.This makes it trivial to find the median.
 
-What do we mean by "roughly in half;' though? "Roughly" means that, if we have an odd number of values, one heap will have an extra value. Observe that the following is true:
+What do we mean by "roughly in half", though? "Roughly" means that, if we have an odd number of values, one heap will have an extra value. Observe that the following is true:
 
 - If maxHeap.size()  > minHeap.size(), maxHeap.top() will be the median.
 - If maxHeap.size() == minHeap.size(), then the average of maxHeap.top() and minHeap.top() will be the median.
@@ -3410,9 +3407,9 @@ This algorithm takes O(N²) time in the worst  case, where N is the number of ba
 
 **Solution #2 (Optimized)**
 
-To optimize the previous algorithm, let's think  about the exact cause of the inefficiency of the prior algo­ rithm. The root  cause is the perpetual calls to findindexOfMax. This suggests that it should be our focus for optimizing.
+To optimize the previous algorithm, let's think  about the exact cause of the inefficiency of the prior algo­ rithm. The root  cause is the perpetual calls to findIndexOfMax. This suggests that it should be our focus for optimizing.
 
-One thing we should notice is that we don't pass  in arbitrary ranges into the findindexOfMax function. It's actually  always  finding the max  from  one point to an edge (either the right  edge or the left edge). Is there a quicker way we could know what the max height is from a given point to each edge?
+One thing we should notice is that we don't pass  in arbitrary ranges into the findIndexOfMax function. It's actually  always  finding the max  from  one point to an edge (either the right  edge or the left edge). Is there a quicker way we could know what the max height is from a given point to each edge?
 
 Yes. We could precompute this information in O(N) time.
 
@@ -3528,7 +3525,7 @@ As we've seen, the volume of water in a particular area is determined by the tal
 
 The total volume of water is the volume of water above each histogram bar. Can we efficiently compute how much water is above each histogram bar?
 
-Yes. In Solution #2, we were able to precompute  the height of the tallest bar on the left and right of each index. The minimums of these will indicate the "water level"at a bar. The difference between the water level and the height of this bar will be the volume of water.
+Yes. In Solution #2, we were able to precompute  the height of the tallest bar on the left and right of each index. The minimums of these will indicate the "water level" at a bar. The difference between the water level and the height of this bar will be the volume of water.
 
 
 ![](media/17_21_6.JPG)
@@ -3576,7 +3573,7 @@ In the actual implementation, we don't need to keep so much data around. Steps 2
 31		return sum;
 32	}
 ```
-Yes,this really is the entire code! It is still O(N) time,but it's a lot simpler to read and write.
+Yes, this really is the entire code! It is still O(N) time, but it's a lot simpler to read and write.
 
 
 **17.22  Word  Transformer:** Given two words of equal length that are in a dictionary, write a method  to transform one word into another word by changing only one letter at a time. The new word you get in each step must be in the dictionary.
@@ -3612,7 +3609,7 @@ This is essentially a depth-first  search where there is an "edge" between two w
 If we wanted to find the shortest path, we would want to use breadth-first search.
 
 ```java
-1 	Linkedlist<String> transform(String start,  String stop,   String[] words)  {
+1 	LinkedList<String> transform(String start,  String stop,   String[] words)  {
 2 		HashSet<String>  diet = setupDictionary(words);
 3 		HashSet<String>  visited =  new HashSet<String>();
 4 		return transform(visited, start,  stop,   diet);
@@ -3626,10 +3623,10 @@ If we wanted to find the shortest path, we would want to use breadth-first searc
 12		return  hash;
 13	}
 14
-15	Linkedlist<String>  transform(HashSet<String> visited,  String startWord,
+15	LinkedList<String>  transform(HashSet<String> visited,  String startWord,
 16	String stopWord,   Set<String> dictionary)  {
 17		if (startword.equals(stopWord)) {
-18			Linkedlist<String> path =  new Linkedlist<String>();
+18			LinkedList<String> path =  new LinkedList<String>();
 19			path.add(startWord);
 20			return path;
 21		} else if  (visited.contains(startWord) ||  !dictionary.contains(startWord)) {
@@ -3640,7 +3637,7 @@ If we wanted to find the shortest path, we would want to use breadth-first searc
 26		ArrayList<String> words  =  wordsOneAway(startWord);
 27
 28		for (String word :   words)  {
-29			Linkedlist<String> path =  transform(visited,  word,  stopWord,   dictionary);
+29			LinkedList<String> path =  transform(visited,  word,  stopWord,   dictionary);
 30			if (path != null) {
 31				path.addFirst(startWord);
 32				return path;
@@ -3670,9 +3667,9 @@ Ideally, we want to only go to the ones that are valid.
 
 To travel to only valid words, we clearly need a way of going from each word to a list of all the valid related words.
 
-What makes two words"related" (one edit away)?They are one edit away if all but one character is the same. For example, ball and bill are one edit away, because they are both in the form b_ll. Therefore, one approach  is to group all words that look like b_ll together.
+What makes two words "related" (one edit away)?They are one edit away if all but one character is the same. For example, ball and bill are one edit away, because they are both in the form b_ll. Therefore, one approach  is to group all words that look like b_ll together.
 
-We can do this for the whole dictionary by creating a mapping from a"wildcard word" (like b_ll) to a list of all words in this form. For example, for a very small dictionary like {all, ill,  ail, ape, ale} the mapping might look like this: 
+We can do this for the whole dictionary by creating a mapping from a "wildcard word" (like b_ll) to a list of all words in this form. For example, for a very small dictionary like {all, ill,  ail, ape, ale} the mapping might look like this: 
 
 	il  -> ail 
 	_le -> ale 
@@ -3690,7 +3687,7 @@ Now, when we wantto know the wordsthat are one edit away from a word like ale, w
 
 The algorithm is otherwise essentially the same.
 ```java
-1 	Linkedlist<String> transform(String  start,  String stop,   String[] words)  {
+1 	LinkedList<String> transform(String  start,  String stop,   String[] words)  {
 2 		HashMapList<String,  String>  wildcardToWordList  =  createWildcardToWordMap(words);
 3 		HashSet<String>  visited =  new HashSet<String>();
 4 		return transform(visited, start,  stop, wildcardToWordList);
@@ -3698,10 +3695,10 @@ The algorithm is otherwise essentially the same.
 6
 7 	/* Do  a depth-first search  from startWord  to  stopWord, traveling through  each word
 8 	 * that is one edit away. */
-9 	Linkedlist<String>  transform(HashSet<String> visited,  String start,  String stop,
+9 	LinkedList<String>  transform(HashSet<String> visited,  String start,  String stop,
 10	HashMapList<String,  String>   wildcardToWordList)   {
 11		if (start.equals(stop)) {
-12			Linkedlist<String> path =  new Linkedlist<String>();
+12			LinkedList<String> path =  new LinkedList<String>();
 13			path.add(start);
 14			return path;
 15		}  else if  (visited.contains(start)) {
@@ -3712,7 +3709,7 @@ The algorithm is otherwise essentially the same.
 20		ArrayList<String> words  =  getValidLinkedWords(start,  wildcardToWordlist);
 21	
 22		for  (String word :  words)  {
-23			Linkedlist<String> path =  transform(visited,  word,  stop,   wildcardToWordList);
+23			LinkedList<String> path =  transform(visited,  word,  stop,   wildcardToWordList);
 24			if (path != null) {
 25				path.addFirst(start);
 26				return path;
@@ -3788,7 +3785,7 @@ We will need to track the path that we've travelled at each node.
 To implement this approach, we've used an additional class BFSData. BFSData helps us keep things a bit clearer, and allows us to keep a similar framework for the two simultaneous breadth-first searches. The alternative is to keep passing around a bunch of separate variables.
 
 ```java
-1  	Linkedlist<String> transform(String  startWord, String  stopWord, String[]  words)  {
+1  	LinkedList<String> transform(String  startWord, String  stopWord, String[]  words)  {
 2  		HashMaplist<String,  String>   wildcardToWordList =  getWildcardToWordlist(words);
 3 
 4  		BFSData  sourceData  =  new BFSData(startWord);
@@ -3841,10 +3838,10 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 51 		return null;
 52 }
 53 
-54 Linkedlist<String> mergePaths(BFSData bfsl, BFSData bfs2, String connection) {
+54 LinkedList<String> mergePaths(BFSData bfsl, BFSData bfs2, String connection) {
 55 		PathNode endl = bfsl.visited.get(connection); // endl -> source
 56  	PathNode end2 = bfs2.visited.get(connection); // end2 -> dest
-57  	Linkedlist<String> pathOne =  endl.collapse(false);  // forward
+57  	LinkedList<String> pathOne =  endl.collapse(false);  // forward
 58  	LinkedList<String> pathTwo =  end2.collapse(true);  // reverse
 59  	pathTwo.removeFirst();  // remove connection
 60  	pathOne.addAll(pathTwo);   // add second  path
@@ -3882,8 +3879,8 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 92 	}
 93 
 94 	/*  Traverse  path  and return linked list of  nodes.  */
-95 	public  Linkedlist<String> collapse(boolean startsWithRoot) {
-96 		Linkedlist<String>  path  =  new Linkedlist<String>();
+95 	public  LinkedList<String> collapse(boolean startsWithRoot) {
+96 		LinkedList<String>  path  =  new LinkedList<String>();
 97 		PathNode node = this;
 98 		while  (node  != null) {
 99 			if (startsWithRoot)  {
@@ -3971,7 +3968,7 @@ Our code works as follows:
 
 **Pre-Processing Solution: O(N³)**
 
-A large part of the slowness of the"simple"solution above is due  to the fact we have to do O(N) work each time  we  want to check a potential square. By doing some pre-processing, we can  cut  down the  time  of isSquare to O(1). The time of the  whole algorithm is reduced to O(N³).
+A large part of the slowness of the "simple" solution above is due  to the fact we have to do O(N) work each time  we  want to check a potential square. By doing some pre-processing, we can  cut  down the  time  of isSquare to O(1). The time of the  whole algorithm is reduced to O(N³).
 
 If we analyze what isSquare does,  we  realize  that all it ever  needs to know  is if the  next squareSize items, on the  right  of as well as below particular cells, are zeros. We can pre-compute this data in a straight­ forward, iterative fashion.
 
@@ -4196,7 +4193,7 @@ This algorithm  takes O(N⁴) time, since it goes through each pair of rows and 
 
 Believe it or not, an even more optimal solution exists. If we have R rows and C columns,  we can solve it in O(R²C) time.
 
-Recall the solution to the maximum subarray problem: "Given an array of integers, find the subarray with the largest sum:'We can find the maximum subarray in O(N) time. We will leverage this solution for this problem.
+Recall the solution to the maximum subarray problem: "Given an array of integers, find the subarray with the largest sum". We can find the maximum subarray in O(N) time. We will leverage this solution for this problem.
 
 Every submatrix can be represented by a contiguous sequence of rows and a contiguous sequence of columns. If we were to iterate through every contiguous sequence of rows, we would thenjust need to find, for each of those, the set of columns that gives us the highest sum. That is:
 
@@ -4234,7 +4231,7 @@ We now have pseudocode that looks like the following.
 ```
 The sum in lines 5 and 6 takes  R\*C time to compute  (since it iterates through rowStart through rowEnd), so this gives us a runtime of O(R³C). We're not quite done yet.
 
-In lines 5 and 6, we're basically adding up a [ 0] ••. a [ i] from scratch, even though in the previous itera­tion of the outer for loop, we already added up a[ 0] •••a [ i-1]. Let's cut out this duplicated effort.
+In lines 5 and 6, we're basically adding up a[0] ... a[i] from scratch, even though in the previous itera­tion of the outer for loop, we already added up a[0]...a [i-1]. Let's cut out this duplicated effort.
 ```
 1   maxSum  =  0
 2   foreach  rowStart  in  rows
@@ -4314,7 +4311,7 @@ SOLUTION
 Many problems involving a dictionary can be solved by doing some pre-processing. Where can we do pre­
 processing?
 
-Well, if we're going  to create a rectangle of words, we know that  each  row must be the same length and each column must be the same length. So let's group the words of the dictionary  based  on their sizes. Let's call this grouping D, where D[ i] contains the list of words of length  i.
+Well, if we're going  to create a rectangle of words, we know that  each  row must be the same length and each column must be the same length. So let's group the words of the dictionary  based  on their sizes. Let's call this grouping D, where D[i] contains the list of words of length  i.
 
 Next, observe that  we're looking  for the  largest  rectangle. What  is the  largest  rectangle that  could  be formed? It's length ( largest word)².
 ```java
@@ -4529,7 +4526,7 @@ The full code for this problem, including the code for Trie and T rieNode, can b
 **17.26  Sparse Similarity:** The similarity of two documents (each with distinct words) is defined to be the size of the intersection divided by the size of the union. For example,  if the documents consist of integers, the similarity of {1,   5,   3} and {1,   7,   2,   3} is 0. 4, because the intersection has size
 2 and the union has size 5.
 
-We have a long list of documents (with distinct values and each with an associated ID) where the similarity is believed to be "sparse:'That is, any two arbitrarily selected documents are very likely to have similarity O. Design an algorithm that returns a list of pairs of document IDs and the associated similarity.
+We have a long list of documents (with distinct values and each with an associated ID) where the similarity is believed to be "sparse". That is, any two arbitrarily selected documents are very likely to have similarity O. Design an algorithm that returns a list of pairs of document IDs and the associated similarity.
 Print only the pairs with similarity greater than 0. Empty documents should not be printed at all. For simplicity, you may assume each document is represented as an array of distinct integers.
 
 ```
@@ -4573,7 +4570,7 @@ Alternatively, we can think about it this way. If we did double count elements, 
 
 This means that all we really need to do is compute the intersection. We can derive the union, and therefore similarity, from that immediately.
 
-This gives us an O(AB) algorithm,just to compare two arrays (or documents).
+This gives us an O(AB) algorithm, just to compare two arrays (or documents).
 
 However, we need to do this for all pairs ofD documents. If we assume each document has at most W words then the runtime is O(D²  W² ).
 
@@ -4671,10 +4668,10 @@ If the  documents were  sorted, you  could compute the  intersection between two
 
 This would take O(A   +   B) time. This is the  same time  as our current algorithm, but less space.  Doing this on D documents with W words each would take O(D²  W) time.
 
-Since we don't know that the arrays are sorted, we could first sort them.This would takeO(D  *  W   log W)
-time.Thefullruntimethen is O(D   * W   log W   +  D² W).
+Since we don't know that the arrays are sorted, we could first sort them. This would take O(D * W log W)
+time.The full runtime then is O(D   * W   log W   +  D² W).
 
-We cannot necessarily assume that the second part "dominates" the first one, because it doesn't neces­ sarily. It depends on the relative size of D and log   W. Therefore, we need to keep both terms in our runtime expression.
+We cannot necessarily assume that the second part "dominates" the first one, because it doesn't neces­ sarily. It depends on the relative size of D and log W. Therefore, we need to keep both terms in our runtime expression.
 
 **Optimized (Somewhat)**
 
@@ -4689,7 +4686,7 @@ At first, we might try various techniques that allow us to more quickly eliminat
 
 The problem is that this doesn't really fix our runtime issue. Our best runtime thus far is O(D² W). With this change,  we're still going to be comparing all O(D²)  pairs, but the O(W) part might go to  O(1) sometimes. That O(D²) part is going to be a really big problem when D gets large.
 
-Therefore, let's focus on reducing that O(D²)  factor. That is the"bottleneck" in our solution. Specifically, this means that, given a document docA, we want to find all documents with some similarity-and we want to do this without "talking" to each document.
+Therefore, let's focus on reducing that O(D²)  factor. That is the "bottleneck" in our solution. Specifically, this means that, given a document docA, we want to find all documents with some similarity-and we want to do this without "talking" to each document.
 
 What would make a document similar to docA? That is, what characteristics define the documents with similarity > O?
 
@@ -4714,16 +4711,16 @@ If we build a hash table that maps from a word to all documents that contain tha
 ```
 When we want to know all the documents that overlap with docA, we just look up each of docA's items in this hash table. We'll then get a list of all documents with some overlap. Now, all we have to do is compare docA to each of those documents.
 
-If there are P pairs with similarity > 0, and each document has W words, then this will takeO(PW) time (plus O(DW) time to create and read this hash table). Since we expect P to be much less than D², this is much better than before.
+If there are P pairs with similarity > 0, and each document has W words, then this will take O(PW) time (plus O(DW) time to create and read this hash table). Since we expect P to be much less than D², this is much better than before.
 
 
 **Optimized (Better)**
 
 Let's think about our previous algorithm. Is there any way we can make it more optimal?
 
-If we consider the runtime -O(PW +  DW)- we probably can't get rid of the O(DW) factor. We have to touch each word at least once, and there areO(DW) words. Therefore, if there's an optimization to be made, it's probably in the O(PW) term.
+If we consider the runtime -O(PW +  DW)- we probably can't get rid of the O(DW) factor. We have to touch each word at least once, and there are O(DW) words. Therefore, if there's an optimization to be made, it's probably in the O(PW) term.
 
-It would be difficult to eliminate the P part in O(PW) because we have to at least print all P pairs (which takesO(P) time). The best place to focus, then, is on the W part. ls there some way we can do less thanO(W) work for each pair of similar documents?
+It would be difficult to eliminate the P part in O(PW) because we have to at least print all P pairs (which takes O(P) time). The best place to focus, then, is on the W part. 1s there some way we can do less than O(W) work for each pair of similar documents?
 
 One way to tackle this is to analyze what information the hash table gives us. Consider this list of docu- ments:
 

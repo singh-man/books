@@ -165,7 +165,7 @@ The code for this solution is below.
 6	
 7 		public  FixedMultiStack(int stackSize) {
 8 			stackCapacity  = stackSize;
-9 			values  =  new int[stackSize *  numberOfStacks];
+9 			values =  new int[stackSize *  numberOfStacks];
 10			sizes  =  new int[numberOfStacks];
 11		}
 12	
@@ -417,7 +417,7 @@ Observe how once the stack goes back to a prior state ({ 6, 5}), the minimum als
 
 If we kept track of the minimum at each state, we would be able to easily know the minimum. We can do this by having each node record what the minimum beneath itself is. Then, to find the min, you just look at what the top element thinks is the min.
 
-When you push an element onto the stack, the element is given the current minimum. It sets its "local min"to be the min.
+When you push an element onto the stack, the element is given the current minimum. It sets its "local min" to be the min.
 
 ```java
 1 	public class  StackWithMin extends Stack<NodeWithMin> {
@@ -536,7 +536,7 @@ What should pop() do? It should behave similarly to push () in that it should op
 This is a bit trickier to implement, but we can imagine a "rollover" system. If we pop an element from stack
 1, we need to remove the bottom of stack 2 and push it onto stack 1. We then need to rollover from stack 3 to stack 2, stack 4 to stack 3, etc.
 
-You could make an argument  that, rather than "rolling over;' we should be okay with some stacks not being at full capacity. This would improve the time complexity (by a fair amount, with a large number  of elements), but it might get us into tricky situations later on if someone assumes that all stacks (other than the last) operate at full capacity. There's no "right answer" here; you should discuss this trade-off with your interviewer.
+You could make an argument  that, rather than "rolling over", we should be okay with some stacks not being at full capacity. This would improve the time complexity (by a fair amount, with a large number  of elements), but it might get us into tricky situations later on if someone assumes that all stacks (other than the last) operate at full capacity. There's no "right answer" here; you should discuss this trade-off with your interviewer.
 
 ```java
 1 	public  class  SetOfStacks {
@@ -634,7 +634,7 @@ SOLUTION
 
 Since the major difference between a queue and a stack is the order (first-in first-out vs. last-in first-out), we know that we need to modify peek() and pop() to go in reverse order. We can use our second stack to reverse the order of the elements (by popping sl and pushing the elements on to s2). In such an imple­ mentation, on each peek() and pop() operation, we would pop everything from sl onto s2, perform the peek/pop operation, and then push everything back.
 
-This will work, but if two pop/peeks are performed back-to-back, we're needlessly moving elements. We can implement a"lazy" approach where we let the elements sit in s2 until we absolutely must reverse the elements.
+This will work, but if two pop/peeks are performed back-to-back, we're needlessly moving elements. We can implement a "lazy" approach where we let the elements sit in s2 until we absolutely must reverse the elements.
 
 In this approach,  stackNewest has the  newest  elements  on top  and stackOldest has the  oldest elements on top. When we dequeue  an element, we want to remove the oldest element first, and so we dequeue  from stackOldest. If stackOldest is empty, then  we want to transfer all elements  from stackNewest into this stack in reverse order. To insert an element, we push onto stackNewest, since it has the newest elements on top.
 
@@ -741,7 +741,7 @@ With the mergesort  solution, we would create two extra stacks and divide the st
 With the quicksort solution, we would create two additional stacks and divide the stack into the two stacks based on a pivot element. The two stacks would be recursively sorted, and then merged  back together into the original stack. Like the earlier solution, this one involves creating two additional stacks per level of recursion.
 
 
-**3.6 		Animal Shelter:** An animal  shelter, which holds only dogs andcats, operates on a strictly"first in, first out"basis. People must adopt either the "oldest" (based on arrival time) ofall animals at the  shelter, or they  can  select whether they  would prefer  a dog or a cat  (and  will receive the  oldest animal  of that type). They cannot select which  specific animal  they would  like. Create the  data structures to maintain this system and implement operations such as enqueue, dequeueAny, dequeueDog, and  dequeueCat.You may use the built-in Linkedlist data structure.
+**3.6 		Animal Shelter:** An animal  shelter, which holds only dogs andcats, operates on a strictly "first in, first out" basis. People must adopt either the "oldest" (based on arrival time) ofall animals at the  shelter, or they  can  select whether they  would prefer  a dog or a cat  (and  will receive the  oldest animal  of that type). They cannot select which  specific animal  they would  like. Create the  data structures to maintain this system and implement operations such as enqueue, dequeueAny, dequeueDog, and  dequeueCat.You may use the built-in LinkedList data structure.
 
 
 SOLUTION
@@ -767,8 +767,8 @@ An alternative approach that is simple,  clean  and efficient is to simply  use 
 12	}
 13	
 14	class AnimalQueue  {
-15		Linkedlist<Dog>  dogs =  new  Linkedlist<Dog>();
-16		Linkedlist<Cat> cats  = new  Linkedlist<Cat>();
+15		LinkedList<Dog>  dogs =  new  LinkedList<Dog>();
+16		LinkedList<Cat> cats  = new  LinkedList<Cat>();
 17		private int order =  0;   // acts  as  timestamp
 18	
 19		public  void  enqueue(Animal a)  {

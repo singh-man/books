@@ -104,9 +104,9 @@ Vector: A vector is very similar to an ArrayList except that it is synchronized.
 3	myVect.add("two");		
 4   system.out.printin(myVect.get(0));
 ```
-LinkedList: Linkedlist is, of course, Java's built-in Linkedlist class. Though it rarely comes up in an interview, it's useful to study because it demonstrates some of the syntax for an iterator.
+LinkedList: LinkedList is, of course, Java's built-in LinkedList class. Though it rarely comes up in an interview, it's useful to study because it demonstrates some of the syntax for an iterator.
 ```java
-1     Linkedlist<String> mylinkedlist  = new Linkedlist<String>();
+1     LinkedList<String> mylinkedlist  = new LinkedList<String>();
 2     mylinkedlist.add("two");
 3     myLinkedList.addFirst("one");
 4     Iterator<String> iter  =  mylinkedlist.iterator();
@@ -129,7 +129,7 @@ Interview Questions
 
 ---
 
-Please note that because virtually all the solutions in this book are implemented with Java, we have selected only a small number of questions for this chapter. Moreover, most of these questions deal with the"trivia" of the languages, since the rest of the book is filled with Java programming questions.
+Please note that because virtually all the solutions in this book are implemented with Java, we have selected only a small number of questions for this chapter. Moreover, most of these questions deal with the "trivia" of the languages, since the rest of the book is filled with Java programming questions.
 
 
 
@@ -165,7 +165,7 @@ SOLUTIONS
  
 ---
 
-Despite their similar sounding names, final, finally and finalize have very different purposes. To speak in very general terms, final is used to control whether a variable, method, or class is "change­ able:' The finally keyword is used in a try/ catch block to ensure that a segment of code is always executed. The finalize() method is called by the garbage collector once it determines that no more references exist.
+Despite their similar sounding names, final, finally and finalize have very different purposes. To speak in very general terms, final is used to control whether a variable, method, or class is "change­ able". The finally keyword is used in a try/ catch block to ensure that a segment of code is always executed. The finalize() method is called by the garbage collector once it determines that no more references exist.
 
 Further detail on these keywords and methods is provided below.
 
@@ -251,7 +251,7 @@ SOLUTION
 
 Many programmers consider templates and generics to be essentially equivalent because both allow you to do something like List<String>. But, how each language does this, and why, varies significantly.
 
-The  implementation of Java  generics is rooted in an idea  of"type erasure:'This technique eliminates the parameterized types when source code is translated to the  Java Virtual Machine (JVM) byte code.
+The  implementation of Java  generics is rooted in an idea  of "type erasure". This technique eliminates the parameterized types when source code is translated to the  Java Virtual Machine (JVM) byte code.
 
 For example, suppose you have the Java code below:
 ```
@@ -265,7 +265,7 @@ During compilation, this code is re-written into:
 2     vector.add(new String("hello"));
 3     String  str  =  (String) vector.get(0);
 ```
-The use of Java generics didn't really change much about our capabilities; it just made things a bit prettier. For this reason, Java generics are sometimes called"syntactic sugar:'
+The use of Java generics didn't really change much about our capabilities; it just made things a bit prettier. For this reason, Java generics are sometimes called "syntactic sugar".
 
 This is quite different from  C++. In C++, templates are essentially a glorified macro set, with  the  compiler creating a new  copy  of the  template code for each type.  Proof of this  is in the  fact  that an  instance of MyClass<Foo> will not  share a static variable withMyClass<Bar>. Two instances ofMyClass<Foo>, however, will share a static variable.
 
@@ -348,8 +348,7 @@ Very important: The output  of LinkedHashMap and TreeMap  must look like the abo
 When might you need ordering in real life?
 
 - Suppose you were creating a mapping  of names to Person objects. You might want to periodically output the people in alphabetical order by name. A TreeMap lets you do this.
-- A TreeMap  also offers a way to, given a name, output  the next 10 people. This could be useful for a
-"More"function in many applications.
+- A TreeMap  also offers a way to, given a name, output  the next 10 people. This could be useful for a "More" function in many applications.
 - A LinkedHashMap is useful whenever you need the ordering of keys to match the ordering of inser­
 tion. This might be useful in a caching situation, when you want to delete the oldest item.
 
@@ -488,13 +487,13 @@ It's tempting to approach this problem by picking a subset size from 0 to N and 
 That creates two  issues:
 
 1. We'd have  to weight those probabilities. If N   >  1, there are more subsets of size N/2 than there are of subsets of size N (of which  there is always  only one).
-2. It's actually more difficult  to  generate a subset of a restricted size (e.g., specifically 1O) than it is to generate a subset of any size.
+2. It's actually more difficult  to  generate a subset of a restricted size (e.g., specifically 10) than it is to generate a subset of any size.
 
 Instead, rather than generating  a subset based on sizes, let's think about it based on elements. (The fact that we're told to use lambda expressions is also a hint that we should think about some sort of iteration or processing through the elements.)
 
 Imagine we were iterating through { 1,   2,   3} to generate a subset. Should 1 be in this subset?
 
-We've got two choices: yes or no. We need to weight the probability of"yes"vs."no" based on the percent of subsets that contain 1. So, what percent of elements contain 1?
+We've got two choices: yes or no. We need to weight the probability of "yes" vs. "no" based on the percent of subsets that contain 1. So, what percent of elements contain 1?
 
 For any specific element, there are as many subsets that contain the element as do not contain it. Consider the following: 
 

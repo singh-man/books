@@ -1,6 +1,6 @@
 ## 9 System Design and Scalability
 
-Despite how intimidating they seem, scalabili�y questions can be among the ea:iest questions. There are no "gotchas;' no tricks, and no fancy algorithms-at least not usually. What tnps up many people is that they believe there's something "magic" to these problems-some hidden bit of knowledge.
+Despite how intimidating they seem, scalabili�y questions can be among the ea:iest questions. There are no "gotchas", no tricks, and no fancy algorithms-at least not usually. What tnps up many people is that they believe there's something "magic" to these problems-some hidden bit of knowledge.
 
 It's not like that. These questions are simply designed to see how you would perform in the real world. If you were asked by your manager to design some system, what would you do?
 
@@ -80,7 +80,7 @@ Be open about any limitations in your design. Your interviewer will likely be aw
 
 ### Algorithms that Scale: Step-By-Step
 
-In some cases, you're not being asked to design an entire system. You're just being asked to design a single feature or algorithm, but you have to do it in a scalable way. Or, there might be one algorithm part that is the "real"focus of a broader design question.
+In some cases, you're not being asked to design an entire system. You're just being asked to design a single feature or algorithm, but you have to do it in a scalable way. Or, there might be one algorithm part that is the "real" focus of a broader design question.
 
 In these cases, try the following approach.
 
@@ -194,7 +194,7 @@ MapReduce is often associated with Google, but it's used much more broadly than 
 As its name suggests, a MapReduce program requires you to write a Map step and a Reduce step. The rest is handled by the system.
 
 - Map takes in some data and emits a < key, value > pair.
-- Reduce takes a key and a set of associated values and "reduces"them in some way, emitting a new key and value. The results of this might be fed back into the Reduce program for more reducing.
+- Reduce takes a key and a set of associated values and "reduces" them in some way, emitting a new key and value. The results of this might be fed back into the Reduce program for more reducing.
 
 MapReduce allows us to do a lot of processing in parallel, which makes processing huge amounts of data more scalable.
 
@@ -239,7 +239,7 @@ One way to do this is to pre-process each document and create a hash table index
 "many"   ->  {docl,  doc3,   doc7,   doc8,   doc9}
 ```
 
-To search for"many books;' we would simply do an intersection on the values for"books" and"many'; and return {doc3,  doc8}  as the result.
+To search for "many books", we would simply do an intersection on the values for "books" and "many", and return {doc3,  doc8}  as the result.
 
 
 **Step2**
@@ -256,7 +256,7 @@ These are just three concerns. There may be many others.
 
 **Step3**
 
-In Step 3, we find solutions to each of these issues. One solution is to divide up the words alphabetically by keyword, such that each machine  controls a range of words (e.g., "after"through "apple").
+In Step 3, we find solutions to each of these issues. One solution is to divide up the words alphabetically by keyword, such that each machine  controls a range of words (e.g., "after" through "apple").
 
 We can implement a simple algorithm in which we iterate through the keywords alphabetically, storing as much data as possible on one machine. When that machine  is full, we can move to the next machine.
 
@@ -264,7 +264,7 @@ The advantage of this approach is that the lookup table is small and simple (sin
 
 To find all the documents that match a list of strings, we would first sort the list and then send each machine a lookup request for the strings that the machine  owns. For example,  if our string is "after  builds boat amaze  banana", machine 1  would get a lookup request for {"after",   "amaze"}.
 
-Machine 1  looks up the documents containing "after" and "amaze;' and performs an intersection on these document lists. Machine 3 does the same for{"banana", "boat", "builds"}, and intersects their lists.
+Machine 1  looks up the documents containing "after" and "amaze", and performs an intersection on these document lists. Machine 3 does the same for{"banana", "boat", "builds"}, and intersects their lists.
 
 In the final step, the initial machine would do an intersection  on the results from Machine 1  and Machine 3. The following diagram explains this process.
 
@@ -306,15 +306,15 @@ One option is that we could keep the data in simple text files and let clients d
 
 We could use a standard SQL database,  and let the clients plug directly into that. This would provide the following benefits:
 
-- Facilitates an easy way for the clients to do query processing over the data, in case there are additional features we need to support. For example, we could easily and efficiently perform a query such as"return all stocks having an open price greater than N and a closing price less than M:'
-- Rolling  back, backing up data, and security could be provided using standard  database  features. We don't have to "reinvent the wheel;' so it's easy for us to implement.
+- Facilitates an easy way for the clients to do query processing over the data, in case there are additional features we need to support. For example, we could easily and efficiently perform a query such as "return all stocks having an open price greater than N and a closing price less than M".
+- Rolling  back, backing up data, and security could be provided using standard  database  features. We don't have to "reinvent the wheel", so it's easy for us to implement.
 - Reasonably easy for the clients to integrate  into existing applications. SQL integration  is a standard feature in software development environments.
 
 What are the disadvantages of using a SQL database?
 
 - It's much heavier weight than we really need. We don't necessarily need all the complexity of a SQL backend to support a feed of a few bits of information.
 - It's difficult for humans to be able to read it, so we'll likely need to implement an additional layer to view and maintain the data. This increases our implementation costs.
-- Security:  While a SQL database  offers pretty well defined security levels, we would still need to be very careful to not give clients access that  they shouldn't  have. Additionally, even if clients aren't doing anything "malicious;' they might perform expensive and inefficient queries, and our servers would bear the costs of that.
+- Security:  While a SQL database  offers pretty well defined security levels, we would still need to be very careful to not give clients access that  they shouldn't  have. Additionally, even if clients aren't doing anything "malicious", they might perform expensive and inefficient queries, and our servers would bear the costs of that.
 
 These disadvantages don't mean that we shouldn't provide SQL access. Rather, they mean that we should be aware of the disadvantages.
 
@@ -363,7 +363,7 @@ However-and this is a pro and a con-clients will be limited to grabbing the data
 
 So which one of these would we use? There's no clear answer. The pure text file solution is probably a bad choice, but you can make a compelling argument for the SQL or XML solution, with or without a web service.
 
-The goal of a question like this is not to see if you get the"correct" answer (there is no single correct answer). Rather, it's to see how you design a system, and how you evaluate trade-offs.
+The goal of a question like this is not to see if you get the "correct" answer (there is no single correct answer). Rather, it's to see how you design a system, and how you evaluate trade-offs.
 
 
 **9.2 	Social Network:** How would you design the data structures for a very large social network like Facebook or Linkedln? Describe how you would design an algorithm to show the shortest path between two people (e.g., Me-> Bob-> Susan-> Jason-> You).
@@ -384,14 +384,14 @@ cate that the two users are friends.
 
 If I wanted to find the path between two people, I could start with one person and do a simple breadth-first search.
 
-Why wouldn't a depth-first search work well? First, depth-first search would just find a path. It wouldn't necessarily find the shortest path. Second, even if wejust needed any path, it would be very inefficient.Two users might be only one degree of separation apart, but I  could search millions of nodes in their"subtrees" before finding this relatively immediate connection.
+Why wouldn't a depth-first search work well? First, depth-first search would just find a path. It wouldn't necessarily find the shortest path. Second, even if wejust needed any path, it would be very inefficient.Two users might be only one degree of separation apart, but I  could search millions of nodes in their "subtrees" before finding this relatively immediate connection.
 
 Alternatively, I  could do what's called a bidirectional breadth-first search. This means doing two breadth­ first searches, one from the source and one from the destination. When the searches collide, we know we've found a path.
 
 In the implementation, we'll use two classes to help us. BFSData holds the data we need for a breadth-first search, such as the isVisited hash table and the toVisit queue. PathNode will represent the path as we're searching it, storing each P erson and the previousNode we visited in this path.
 
 ```java
-1  	Linkedlist<Person> findPathBiBFS(HashMap<Integer,  Person> people,   int source,
+1  	LinkedList<Person> findPathBiBFS(HashMap<Integer,  Person> people,   int source,
 2  	int destination) {
 3  		BFSData  sourceData =  new BFSData(people.get(source));
 4  		BFSData  destData   =  new BFSData(people.get(destination));
@@ -445,11 +445,11 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 52 	}
 53	
 54 	/* Merge paths  where searches met at connection. */
-55 	Linkedlist<Person> mergePaths(BFSData bfs1, BFSData bfs2,   int  connection) {
+55 	LinkedList<Person> mergePaths(BFSData bfs1, BFSData bfs2,   int  connection) {
 56 		PathNode end1 = bfs1.visited.get(connection); // endl  -> source
 57 		PathNode end2 = bfs2.visited.get(connection);  // end2 -> dest
-58 		Linkedlist<Person> pathOne =  end1.collapse(false);
-59 		Linkedlist<Person> pathTwo =  end2.collapse(true);  // reverse
+58 		LinkedList<Person> pathOne =  end1.collapse(false);
+59 		LinkedList<Person> pathTwo =  end2.collapse(true);  // reverse
 60 		pathTwo.removeFirst();  // remove connection
 61 		pathOne.addAll(pathTwo);  // add second  path
 62 		return pathOne;
@@ -465,8 +465,8 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 72		
 73 		public Person  getPerson() {  return person;  }
 74		
-75 		public  Linkedlist<Person> collapse(boolean  startsWithRoot) {
-76 			Linkedlist<Person> path =  new Linkedlist<Person>();
+75 		public  LinkedList<Person> collapse(boolean  startsWithRoot) {
+76 			LinkedList<Person> path =  new LinkedList<Person>();
 77 			PathNode node = this;
 78 			while  (node  != null) {
 79 				if (startsWithRoot) {
@@ -481,7 +481,7 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 88 	}
 89	
 90 	class BFSData   {
-91 		public Queue<PathNode> toVisit =  new Linkedlist<PathNode>();
+91 		public Queue<PathNode> toVisit =  new LinkedList<PathNode>();
 92 		public HashMap<Integer, PathNode> visited = 
 93 				new HashMap<Integer,  PathNode>();
 94		
@@ -610,7 +610,7 @@ This is great-but what does it mean to visit page v? Is page v defined based on 
 
 If it's defined based  on its URL,  we must recognize that  URL parameters  might indicate a completely different page. For example, the  page www.careercup.com/page?pid=microsoft-interview­ questions is totally different from the page www.careercup.c om/page ?pid=google-interview­ questions. But, we can also append  URL parameters  arbitrarily to any URL without truly changing the page, provided it's not a parameter  that the web application recognizes and handles. The  page www. careercup.com?foobar=hello is the same as www.careercup.com.
 
-"Okay, then;' you might say, "let's define it based on its content:'That sounds good too, at first, but it also doesn't quite work. Suppose I have some randomly generated content on the careercup.com home page. Is it a different page each time you visit it? Not really.
+"Okay, then", you might say, "let's define it based on its content". That sounds good too, at first, but it also doesn't quite work. Suppose I have some randomly generated content on the careercup.com home page. Is it a different page each time you visit it? Not really.
 
 The reality is that there is probably no perfect way to define a "different" page, and this is where this problem gets tricky.
 
@@ -625,7 +625,7 @@ We have a database which stores a list of items we need to crawl. On each iterat
 3.  If something with this signature has been recently crawled, insert this page back into the database at a low priority.
 4.  If not, crawl the page and insert its links into the database.
 
-Under the above implementation, we never "complete" crawling the web, but we will avoid getting stuck in a loop of pages. If we want to allow for the possibility of "finishing" crawling the web (which would clearly happen only if the "web"were actually a smaller system, like an intranet), then we can set a minimum priority that a page must have to be crawled.
+Under the above implementation, we never "complete" crawling the web, but we will avoid getting stuck in a loop of pages. If we want to allow for the possibility of "finishing" crawling the web (which would clearly happen only if the "web" were actually a smaller system, like an intranet), then we can set a minimum priority that a page must have to be crawled.
 
 This is just one, simplistic solution, and there are many others that are equally valid. A problem like this will more likely resemble a conversation with your interviewer which could take any number of paths. In fact, the discussion of this problem could have taken the path of the very next problem.
 
@@ -636,7 +636,7 @@ SOLUTION
 
 ---
 
-Just how much space do 1 O billion URLs take up? If each URL is an average of 100 characters, and each char­ acter is 4 bytes, then this list of 1O billion URLs will take up about 4 terabytes. We are probably not going to hold that much data in memory.
+Just how much space do 10 billion URLs take up? If each URL is an average of 100 characters, and each char­ acter is 4 bytes, then this list of 10 billion URLs will take up about 4 terabytes. We are probably not going to hold that much data in memory.
 
 But, let's just pretend for a moment that we were miraculously holding this data in memory, since it's useful to first construct a solution for the simple version. Under this version of the problem, we would just create a hash table where each URL maps to true if it's already been found elsewhere in the list. (As an alternative solution, we could sort the list and look for the duplicate values that way. That will take a bunch of extra time and offers few advantages.)
 
@@ -745,7 +745,7 @@ For illustrative  purposes, abbreviated code for the cache is below. The code at
 39	
 40			if (size > MAX_SIZE)  {
 41				map.remove(tail.query);
-42				removeFromLinkedlist(tail);
+42				removeFromLinkedList(tail);
 43			}
 44		}
 45	}
@@ -759,7 +759,7 @@ The first thing we need to decide is to what extent the cache is shared across m
 
 *Option 1: Each machine has its own cache.*
 
-A simple option is to give each machine its own cache. This means that if "foo"is sent to machine 1  twice in a short amount of time, the result would be recalled from the cache on the second time. But, if "foo"is sent first to machine 1  and then to machine 2, it would be treated as a totally fresh query both times.
+A simple option is to give each machine its own cache. This means that if "foo" is sent to machine 1  twice in a short amount of time, the result would be recalled from the cache on the second time. But, if "foo" is sent first to machine 1 and then to machine 2, it would be treated as a totally fresh query both times.
 
 This has the advantage  of being relatively quick, since no machine-to-machine  calls are used. The cache, unfortunately, is somewhat less effective as an optimization tool as many repeat queries would be treated as fresh queries.
 
@@ -830,8 +830,7 @@ First, we need to define what exactly we're building.
 
 - We'll assume that we're only being asked to design the components relevant to this question, and not the entire eCommerce system. In this case, we might touch the design of the frontend and purchase components, but only as it impacts the sales rank.
 - We should also define what the sales rank means. Is it total sales over all time? Sales in the last month? Last week? Or some more complicated function (such as one involving some sort of exponential decay of sales data)? This would be something to discuss with your interviewer. We will assume that it is simply the total sales over the past week.
-- We will assume that each product can be in multiple categories, and that there is no concept of"subcat­
-egories:'
+- We will assume that each product can be in multiple categories, and that there is no concept of "subcategories".
 
 This part just gives us a good idea of what the problem, or scope of features, is.
 
@@ -981,7 +980,7 @@ Ordinarily, you would clarify this system with your interviewer. We'll scope the
 - It pulls in all your financial history, or as much of it as your bank will allow.
 - This financial history includes outgoing money (things you bought or paid for), incoming money (salary and other payments), and your current money (what's in your bank account and investments).
 - Each payment transaction has a "category" associated with it (food, travel, clothing, etc.).
-- There is some sort of data source provided that tells the system, with some reliability, which category a transaction is associated with. The user might, in some cases, override the category when it's improperly assigned (e.g., eating at the cafe of a department store getting assigned to"clothing" rather than "food").
+- There is some sort of data source provided that tells the system, with some reliability, which category a transaction is associated with. The user might, in some cases, override the category when it's improperly assigned (e.g., eating at the cafe of a department store getting assigned to "clothing" rather than "food").
 - Users will use the system to get recommendations on their spending. These recommendations will come from a mix of "typical" users ("people generally shouldn't spend more than Xo/o of their income on clothing"), but can be overridden with custom budgets. This will not be a primary focus right now.
 - We assume this is just a website for now, although we could potentially talk about a mobile app as well.
 - We probably want email notifications either on a regular basis, or on certain conditions (spending over a certain threshold, hitting a budget  max, etc.).
@@ -1179,7 +1178,7 @@ In fact, we could even take this a step further. We could skip the database enti
 
 *Generating URLs*
 
-We have not yet discussed how to actually generate the URLs. We probably do not want a monotonically increasing integer value, as this would be easy for a user to "guess:' We want URLs to be difficult to access without being provided the link.
+We have not yet discussed how to actually generate the URLs. We probably do not want a monotonically increasing integer value, as this would be easy for a user to "guess". We want URLs to be difficult to access without being provided the link.
 
 One simple path is to generate  a random GUID (e.g., Sd50e8ac-57cb-4a0d-8661-bcdee2548979). This is a 128-bit value that while not strictly guaranteed to be unique, has low enough odds of a collision that we can treat it as unique. The drawback of this plan is that such a URL is not very "pretty" to the user. We could hash it to a smaller value, but then that increases the odds of collision.
 

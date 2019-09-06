@@ -78,7 +78,7 @@ The merge method operates by copying all the elements from the target array segm
 
 You may notice that only the remaining elements from the left half of the helper array are copied into the target array. Why not the right half? The right half doesn't need to be copied because it's already there. 
 
-Consider, for example, an array like [1,   4,  5 ||  2,   8,   9]  (the "||" indicates the partition point). Prior to merging the two halves, both the helper array and the target array segment will end with [ 8,   9]. Once we copy over four elements (1,  4,   5, and 2) into the target array, the [ 8,   9] will still be in place in both arrays. There's no need to copy them over.
+Consider, for example, an array like [1,   4,  5 ||  2,   8,   9]  (the "||" indicates the partition point). Prior to merging the two halves, both the helper array and the target array segment will end with [8, 9]. Once we copy over four elements (1, 4, 5, and 2) into the target array, the [8, 9] will still be in place in both arrays. There's no need to copy them over.
 
 The space complexity of merge sort is O(n) due to the auxiliary space used to merge parts of the array.
 
@@ -311,7 +311,7 @@ Note  that both arrays have a midpoint of 20, but5appears on the  left side of o
 
 However,  if we  look  a bit  deeper, we  can  see  that one half  of the  array  must be  ordered  normally (in increasing order).  We can  therefore look  at  the  normally ordered half  to  determine whether we  should search the  left or right half.
 
-For example, if we are searching for 5 in Array1, we can look at the  left element (1O) and middle element (20). Since  10 < 20, the  left half must be ordered normally. And, since  5 is not between those, we know  that we must search the  right half.
+For example, if we are searching for 5 in Array1, we can look at the  left element (10) and middle element (20). Since  10 < 20, the  left half must be ordered normally. And, since  5 is not between those, we know  that we must search the  right half.
 
 
 In Array2,  we can see that since 50 > 20, the right half must be ordered normally. We turn to the middle (20) and right (40) element to check if 5 would fall between them. The value 5 would not; therefore, we search the left half.
@@ -417,7 +417,7 @@ There's one more little tweak. Recall that the way we figure out the length is b
 24  }
 ```
 
-It turns out that not knowing the length didn't impact the runtime of the search algorithm. We find the length in O(log n) time and then do the search in O(log n) time. Ouroverall runtime is O(log n),just as it would be in a normal array.
+It turns out that not knowing the length didn't impact the runtime of the search algorithm. We find the length in O(log n) time and then do the search in O(log n) time. Ouroverall runtime is O(log n), just as it would be in a normal array.
 
 
 **10.5  Sparse Search:** Given a sorted  array of strings that is interspersed  with empty  strings, write a method to find the location of a given string.
@@ -507,7 +507,7 @@ Once all the chunks are sorted, we merge the chunks, one by one. At the end, we 
 
 FOLLOW UP
 
-What if you have only 1O MB of memory? Assume that all the values are distinct and we now have no more than one billion non-negative integers. 
+What if you have only 10 MB of memory? Assume that all the values are distinct and we now have no more than one billion non-negative integers. 
 
 
 
@@ -823,7 +823,7 @@ We are told that every row and column is sorted. This means that element a[i][j]
 Or, in other words:
 ```
 a[i][0]  <=  a[i][1]  <=  ... <=  a[i][j-1]  <=  a[i][j]
-a[0][j]  <=  a[1][j]  <=  ... <=  a[i-l][j]  <=  a[i][j]
+a[0][j]  <=  a[1][j]  <=  ... <=  a[i-1][j]  <=  a[i][j]
 ```
 Looking at this visually, the dark gray element below is bigger than all the light gray elements.
 
@@ -983,7 +983,7 @@ Let's walk through an example on the following tree. In the below example, the v
 
 Suppose we want to find the rank of 24 in the tree above. We would compare 24 with the root 20, and find that 24 must reside on the right. The root has 4 nodes in its left subtree, and when we include the root itself, this gives us five total nodes smaller than 24. We set counter to 5.
 
-Then, we compare 24 with node 25 and find that 24 must be on the left. The value of counter does not update, since we're not"passing over"any smaller nodes. The value of c ounter is still 5.
+Then, we compare 24 with node 25 and find that 24 must be on the left. The value of counter does not update, since we're not "passing over" any smaller nodes. The value of c ounter is still 5.
 
 Next, we compare 24 with node 23, and find that 24 must be on the right. Counter gets incremented by just 1   (to 6), since 23 has no left nodes.
 

@@ -94,7 +94,7 @@ What do you think these functions would do on parameters x = -93242 and count = 
 
 With the logical shift, we would get 0 because we are shifting a zero into the most significant bit repeatedly.
 
-With the  arithmetic shift, we would  get  -1 because we  are  shifting  a one  into  the  most  significant bit repeatedly. A sequence of all ls in a (signed) integer represents -1.
+With the  arithmetic shift, we would  get  -1 because we  are  shifting  a one  into  the  most  significant bit repeatedly. A sequence of all 1s in a (signed) integer represents -1.
 
 
 ### Common Bit Tasks: Getting and Setting
@@ -142,7 +142,7 @@ To clear all bits from the most significant bit through i (inclusive), we create
 4	}
 ```
 
-To clear all bits from i through 0 (inclusive), we take a sequence of all ls (which is -1) and shift it left by i + 1 bits. This gives us a sequence of 1 s (in the most significant bits) followed by i 0 bits.
+To clear all bits from i through 0 (inclusive), we take a sequence of all 1s (which is -1) and shift it left by i + 1 bits. This gives us a sequence of 1s (in the most significant bits) followed by i 0 bits.
 
 ```java
 1	int  clearBitsithrough0(int num, int i) {
@@ -153,7 +153,7 @@ To clear all bits from i through 0 (inclusive), we take a sequence of all ls (wh
 
 **Update Bit**
 
-To set the ith bit to a valuev, we first clear the bit at position i by using a mask that looks like 11101111. Then, we shift the intended  value,v, left by i bits. This will create a number with bit i equal tov and all other bits equal to 0. Finally, we OR these two numbers, updating the ith bit ifv is 1 and leaving it as 0 otherwise.
+To set the ith bit to a valuev, we first clear the bit at position i by using a mask that looks like 11101111. Then, we shift the intended  value, v, left by i bits. This will create a number with bit i equal tov and all other bits equal to 0. Finally, we OR these two numbers, updating the ith bit ifv is 1 and leaving it as 0 otherwise.
 
 ```java
 1	int  updateBit(int num, int i, boolean  bitisl) {
@@ -169,7 +169,7 @@ Interview Questions
 
 ---
 
-Additional Questions: Arrays and Strings (#1.1, #1.4, #1.8), Math and Logic Puzzles  (#6.1O), Recursion (#8.4, #8.14), Sorting and Searching (#10.7, #10.8), C++ (#12.10), ModerateProblems (#16.1, #16.7), Hard Problems (#17.1).
+Additional Questions: Arrays and Strings (#1.1, #1.4, #1.8), Math and Logic Puzzles  (#6.10), Recursion (#8.4, #8.14), Sorting and Searching (#10.7, #10.8), C++ (#12.10), ModerateProblems (#16.1, #16.7), Hard Problems (#17.1).
 
 Hints start on page 662.
 
@@ -217,7 +217,7 @@ The trickiest part is Step  1. How do we clear the  bits in N? We can do this wi
 In a problem like this (and many bit manipulation problems), you should make sure to thoroughly test your code. It's extremely easy to wind up with off-by-one errors.
 
 
-**5.2 	Binary to String:** Given a real number between 0 and 1 (e.g., 0.72) that is passed in as a double, print the binary representation. If the number cannot be represented accurately in binary with at most 32 characters, print"ERROR:'
+**5.2 	Binary to String:** Given a real number between 0 and 1 (e.g., 0.72) that is passed in as a double, print the binary representation. If the number cannot be represented accurately in binary with at most 32 characters, print "ERROR".
 
 
 SOLUTION
@@ -230,7 +230,7 @@ First, let's start off by asking ourselves what a non-integer number in binary l
 
 	0.101₂ = 1 * 1/2¹ + 0 * 1/2² + 1 * 1/2³
  
-To print the decimal part, we can multiply by 2 and check if 2n is greater than or equal to 1. This is essentially "shifting"the fractional sum. That is:
+To print the decimal part, we can multiply by 2 and check if 2n is greater than or equal to 1. This is essentially "shifting" the fractional sum. That is:
 ```
 r = 2₁₀ * n
   = 2₁₀ * 0.101₂
@@ -383,7 +383,7 @@ Can we do better? Recall the concept of Best Conceivable Runtime. The B.C.R. for
 
 To reduce the space usage, note that we don't need to hang on to the length of each sequence the entire time. We only need it long enough to compare each 1s sequence to the immediately preceding 1s sequence.
 
-Therefore, we canjust walk through the integer doing this, tracking the current 1s sequence length and the previous ls sequence length. When we see a zero, update previous Length:
+Therefore, we canjust walk through the integer doing this, tracking the current 1s sequence length and the previous 1s sequence length. When we see a zero, update previous Length:
 
 - If the next bit is a 1, previous Length  should be set to currentLength.
 - If the next bit is a 0, then we can't merge these sequences together. So, set previous Length to 0.
@@ -456,7 +456,7 @@ To put this in a different way, we are flipping the rightmost non-trailing zero.
 
 With this change, we have increased the size of n. But, we also have one too many ones, and one too few zeros. We'll need to shrink the size of our number as much as possible while keeping that in mind.
 
-We can shrink the number by rearranging all the bits to the right of bit p such that the 0s are on the left and the ls are on the right. As we do this, we want to replace one of the 1s with a 0.
+We can shrink the number by rearranging all the bits to the right of bit p such that the 0s are on the left and the 1s are on the right. As we do this, we want to replace one of the 1s with a 0.
 
 A relatively easy way of doing this is to count how many ones are to the right of p, clear all the bits from
 0 until p, and then add back in c1-1 ones. Let c1 be the number of ones to the right of p and c0 be the number of zeros to the right of p.
@@ -693,7 +693,7 @@ then  n-1  =  abcde0111
 
 **So what  does n & (n-1}  === 0 indicate?**
 
-n and n -1 must have no ls in common. Given that they look like this:
+n and n -1 must have no 1s in common. Given that they look like this:
 ```
 if     n   =  abcde1000
 then n-1   =  abcde0111

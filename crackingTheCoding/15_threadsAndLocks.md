@@ -538,7 +538,7 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Eac
 61  }
 ```
 
-With this solution, a philosopher can never hold the larger chopstick without holding the smaller one.This prevents the ability to have a cycle, since a cycle means that a higher chopstick would"point"to a lower one.
+With this solution, a philosopher can never hold the larger chopstick without holding the smaller one. This prevents the ability to have a cycle, since a cycle means that a higher chopstick would "point" to a lower one.
 
 
 **15.4      Deadlock-Free Class:** Design a class which provides a lock only if there are no possible deadlocks.
@@ -561,7 +561,7 @@ A locks 2,  waits on  3
 B locks 3,  waits on  5
 C locks 5,  waits on  2
 ```
-We can think about this as a graph, where 2 is connected  to 3, 3 is connected  to 5, and 5 is connected to 2. A deadlock is represented  by a cycle. An edge  (w, v) exists in the graph if a process declares that it will request lock v immediately after lock w. For the earlier example, the following edges would exist in the graph: (1, 2),  (2, 3),  (3, 4),  (1, 3),  (3, 5),  (7, 5),  (5, 9),  (9,  2).The"owner" of the edge does not matter.
+We can think about this as a graph, where 2 is connected  to 3, 3 is connected  to 5, and 5 is connected to 2. A deadlock is represented  by a cycle. An edge  (w, v) exists in the graph if a process declares that it will request lock v immediately after lock w. For the earlier example, the following edges would exist in the graph: (1, 2),  (2, 3),  (3, 4),  (1, 3),  (3, 5),  (7, 5),  (5, 9),  (9,  2).The "owner" of the edge does not matter.
 
 This class will need a declare method, which threads and processes will use to declare what order they will request resources in. This declare method  will iterate through the declare order, adding each contig­ uous pair of elements (v, w) to the graph. Afterwards, it will check to see if any cycles have been created. If any cycles have been created, it will backtrack, removing these edges from the graph, and then exit.
 
@@ -658,7 +658,7 @@ The code below provides further details. For simplicity, we assume that all lock
             /* No  cycles detected.  Save the  order   that was declared,  so  that we  can
              * verify that the  process  is really calling the  locks  in  the  order  it said
              * it  would. */
-            LinkedList<LockNode> list = new Linkedlist<LockNode>();
+            LinkedList<LockNode> list = new LinkedList<LockNode>();
             for (int i = 0; i < resourcesinOrder.length; i++) {
                 LockNode resource = locks[resourcesinOrder[i]];
                 list.add(resource);
@@ -671,7 +671,7 @@ The code below provides further details. For simplicity, we assume that all lock
         /*  Get the  lock,   verifying first that the  process   is really calling the  locks  in
          * the  order  it said   it would. */
         public Lock getLock(int ownerid, int resourceID) {
-            Linkedlist<LockNode> list = lockOrder.get(ownerid);
+            LinkedList<LockNode> list = lockOrder.get(ownerid);
             if (list == null) return null;
     
             LockNode head = list.getFirst();
@@ -862,7 +862,7 @@ In the second part, we're asked if  threadl can execute synchronized method  A w
 Ultimately, the key concept to remember is that only one synchronized method can be in execution per instance of that object. Other threads can execute non-synchronized methods on that instance, or they can execute any method on a different instance of the object.
 
 
-**15.7  FizzBuzz:**  In the classic problem FizzBuzz, you are told to print the numbers from 1  to n. However, when the number is divisible by 3, print "Fizz''. When it is divisible by 5, print "Buzz''. When it is divisible by 3 and 5, print"FizzBuzz''. In this problem, you are asked to do this in a multithreaded way. Implement a multithreaded version  of FizzBuzz with four threads. One thread checks for divisibility of 3 and prints"Fizz''. Another thread is responsible for divisibility of 5 and prints"Buzz''. A third thread is responsible for divisibility of 3 and 5 and prints"FizzBuzz''.  A fourth thread does the numbers.
+**15.7  FizzBuzz:**  In the classic problem FizzBuzz, you are told to print the numbers from 1  to n. However, when the number is divisible by 3, print "Fizz". When it is divisible by 5, print "Buzz". When it is divisible by 3 and 5, print "FizzBuzz". In this problem, you are asked to do this in a multithreaded way. Implement a multithreaded version  of FizzBuzz with four threads. One thread checks for divisibility of 3 and prints "Fizz". Another thread is responsible for divisibility of 5 and prints "Buzz". A third thread is responsible for divisibility of 3 and 5 and prints "FizzBuzz".  A fourth thread does the numbers.
 
 
 SOLUTION
@@ -873,7 +873,7 @@ Let's start off with implementing a single threaded version of FizzBuzz.
 
 **Single Threaded**
 
-Although this problem (in the single threaded version) shouldn't be hard, a lot of candidates overcompli­ cate it. They look for something"beautiful"that reuses the fact that the divisible by 3 and 5 case ("FizzBuzz") seems to resemble the individual cases ("Fizz" and"Buzz").
+Although this problem (in the single threaded version) shouldn't be hard, a lot of candidates overcompli­ cate it. They look for something "beautiful" that reuses the fact that the divisible by 3 and 5 case ("FizzBuzz") seems to resemble the individual cases ("Fizz" and "Buzz").
 
 In actuality, the best way to do it, considering readability and efficiency, is just the straightforward way.
 ```java
@@ -925,7 +925,7 @@ The  loop  for each thread is substantially similar. They just have different ta
 | current % 5 == 0 | true     | false | true  | false   |
 | to print         | FizzBuzz | Fizz  | Buzz  | current |
 
-For the most part, this can be handled by taking in "target"parameters and the value to print. The output for the Number thread needs to be overwritten, though, asit's not a simple, fixed string.
+For the most part, this can be handled by taking in "target" parameters and the value to print. The output for the Number thread needs to be overwritten, though, as it's not a simple, fixed string.
 
 We can implement a FizzBuzzThread class which handles most of this. A NumberThread  class can extend FizzBuzzThread and override the print method.
 ```java

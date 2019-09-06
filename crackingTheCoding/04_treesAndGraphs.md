@@ -46,7 +46,7 @@ A binary tree is a tree in which each node has up to two children. Not all trees
 
 There are occasions when you might have a tree that is not a binary tree. For example, suppose you were using a tree to represent  a bunch  of phone  numbers.  In this case, you might  use a 10-ary tree, with each node  having  up to 10 children (one for each digit).
 
-A node is called a"leaf" node if it has no children.
+A node is called a "leaf" node if it has no children.
 
 
 **Binary Tree vs. Binary Search Tree**
@@ -65,9 +65,9 @@ When given a tree question, many candidates assume the interviewer means a binar
 
 **Balanced vs. Unbalanced**
 
-While many trees are balanced, not all are. Ask your interviewer for clarification here. Note that balancing a tree does not mean the left and right subtrees are exactly the same size (like you see under"perfect binary trees" in the following diagram).
+While many trees are balanced, not all are. Ask your interviewer for clarification here. Note that balancing a tree does not mean the left and right subtrees are exactly the same size (like you see under "perfect binary trees" in the following diagram).
 
-One way to think about it is that a "balanced" tree really means something more like "not terribly imbal­ anced:' It's balanced enough to ensure O(log n) times for insert and find, but it's not necessarily as balanced as it could be.
+One way to think about it is that a "balanced" tree really means something more like "not terribly imbalanced". It's balanced enough to ensure O(log n) times for insert and find, but it's not necessarily as balanced as it could be.
 
 Two common types of balanced trees are red-black trees (pg 639) and AVL  trees (pg 637). These are discussed in more detail in the Advanced Topics section.
 
@@ -115,7 +115,7 @@ In-order traversal means to "visit" (often,  print)  the left branch, then the c
 7  }
 ```
 
-When performed on a binary  search tree, it visits the nodes in ascending order (hence the name"in-order").
+When performed on a binary  search tree, it visits the nodes in ascending order (hence the name "in-order").
 
 
 **Pre-Order Traversal**
@@ -137,7 +137,7 @@ In a pre-order traversal, the root is always the first node visited.
 
 **Post-Order Traversal**
 
-Post-order traversal visits the current node after  its child nodes (hence the name"post-order").
+Post-order traversal visits the current node after  its child nodes (hence the name "post-order").
 
 ```java
 1  void  postOrderTraversal(TreeNode  node)  {
@@ -167,7 +167,7 @@ We have two key operations on a min-heap: insert and extract_min.
 
 When we insert into a min-heap, we always start by inserting the element at the bottom. We insert at the rightmost spot so as to maintain the complete tree property.
 
-Then, we "fix"the tree by swapping the new element with its parent, until we find an appropriate spot for the element. We essentially bubble up the minimum element.
+Then, we "fix" the tree by swapping the new element with its parent, until we find an appropriate spot for the element. We essentially bubble up the minimum element.
 
 ![](media/IX_04_07.JPG)
 
@@ -218,7 +218,7 @@ A tree is actually a type of graph, but not all graphs are trees. Simply put, a 
 A graph is simply a collection of nodes with edges between (some of) them.
 
 - Graphs can be either directed (like the following graph) or undirected. While directed edges are like a one-way street, undirected edges are like a two-way street.
-- The graph might consist of multiple isolated subgraphs. If there is a path between every pair of vertices, it is called a "connected graph:'
+- The graph might consist of multiple isolated subgraphs. If there is a path between every pair of vertices, it is called a "connected graph".
 - The graph can also have cycles (or not). An "acyclic graph" is one without cycles. 
 
 Visually, you could draw  a graph like this:
@@ -289,7 +289,7 @@ Breadth-first search and depth-first search tend to be used in different scenari
 
 However,  if we want to find the shortest path (or just any path) between two nodes, BFS is generally better. Consider representing all the friendships in the entire world in a graph and trying to find a path of friend­ ships between Ash andVanessa.
 
-In depth-first search, we could take a path like Ash  ->  Brian  ->    Carleton   ->   Davis   ->   Eric ->  Farah  ->  Gayle   ->  Harry  ->  Isabella ->  John ->  Kari... and thenfind ourselves very far away. We could go through most of the world without realizing that, in fact,Vanessa is Ash's friend. We will still eventually find the path, but it may take a long time. It also won't find us the shortest path.
+In depth-first search, we could take a path like Ash  ->  Brian  ->    Carleton   ->   Davis   ->   Eric ->  Farah  ->  Gayle   ->  Harry  ->  Isabella ->  John ->  Kari... and thenfind ourselves very far away. We could go through most of the world without realizing that, in fact, Vanessa is Ash's friend. We will still eventually find the path, but it may take a long time. It also won't find us the shortest path.
 
 In breadth-first search, we would stay close to Ash for as long as possible. We might iterate through many of Ash's friends, but we wouldn't go to his more distant connections until absolutely necessary. lfVanessa is Ash's friend, or his friend-of-a-friend, we'll find this out relatively quickly.
 
@@ -384,7 +384,7 @@ The code below provides an iterative implementation of breadth-first search.
 4       if (start ==  end) return true;
 5  
 6       // operates  as Queue
-7       LinkedList<Node>  q   =  new   Linkedlist<Node>();
+7       LinkedList<Node>  q   =  new   LinkedList<Node>();
 8  
 9       for  (Node u :  g.getNodes())  {
 10          u.state =  State.Unvisited;
@@ -491,7 +491,7 @@ We can implement a simple modification of the pre-order traversal algorithm, whe
 18  }
 19  
 20  ArrayList<LinkedList<TreeNode>>  createLevelLinkedList(TreeNode root)  {
-21      ArrayList<Linkedlist<TreeNode>>  lists = new ArrayList<LinkedList<TreeNode>>();
+21      ArrayList<LinkedList<TreeNode>>  lists = new ArrayList<LinkedList<TreeNode>>();
 22      createlevellinkedlist(root,  lists, 0);
 23      return lists;
 24  }
@@ -504,8 +504,8 @@ With each level i, we will have already  fully visited all nodes on level i -  1
 The code below implements this algorithm.
 
 ```java
-1   ArrayList<LinkedList<TreeNode>>  createLevelLinkedlist(TreeNode root)  {
-2       ArrayList<LinkedList<TreeNode>>  result = new ArrayList<Linkedlist<TreeNode>>();
+1   ArrayList<LinkedList<TreeNode>>  createLevelLinkedList(TreeNode root)  {
+2       ArrayList<LinkedList<TreeNode>>  result = new ArrayList<LinkedList<TreeNode>>();
 3       /*  "Visit" the  root   */
 4       LinkedList<TreeNode> current = new LinkedList<TreeNode>();
 5       if (root != null) {
@@ -514,7 +514,7 @@ The code below implements this algorithm.
 8  
 9       while   (current.size() > 0)  {
 10          result.add(current);//    Add previous level
-11          Linkedlist<TreeNode> parents  =   current;//Go  to next  level
+11          LinkedList<TreeNode> parents  =   current;//Go  to next  level
 12          current =  new LinkedList<TreeNode>();
 13          for (TreeNode  parent  :   parents) {
 14              /*   Visit the   children*/
@@ -535,7 +535,7 @@ One might ask which of these solutions is more efficient. Both run in O(N) time,
 
 In a sense, that's correct. The first solution uses O(log N) recursive calls (in a balanced tree), each of which adds a new level to the stack. The second solution, which is iterative, does not require this extra space.
 
-However, both solutions require returning O(N) data. The extra O(log N) space usage from the recursive implementation is dwarfed by the O(N) data that must be returned. So while the first solution may actually use more data, they are equally efficient when it comes to "big O:'
+However, both solutions require returning O(N) data. The extra O(log N) space usage from the recursive implementation is dwarfed by the O(N) data that must be returned. So while the first solution may actually use more data, they are equally efficient when it comes to "big O".
 
 
 **4.4   Check Balanced:** Implement a function to check if a binary tree is balanced. For the purposes of this question, a balanced tree is defined to be a tree such that the heights of the two subtrees of any node never differ by more than one.
@@ -565,7 +565,7 @@ In this question, we've been fortunate enough to be told exactly what balanced m
 15  }
 ```
 
-Although this works. it's not very efficient. On each node. we recurse through its entire subtree. This means that getHeight is called repeatedly on the same nodes. The algorithm isO(N  log N) since each node is "touched" once per node above it.
+Although this works. it's not very efficient. On each node. we recurse through its entire subtree. This means that getHeight is called repeatedly on the same nodes. The algorithm is O(N log N) since each node is "touched" once per node above it.
 
 We need to cut out some of the calls to getHeight.
 
@@ -574,7 +574,7 @@ If we inspect this method, we may notice that getHeight could actually check if 
 This improved algorithm works by checking the height of each subtree as we recurse down from the root. On each node, we recursively get the heights of the left and right subtrees  through  the checkHeight method. If the subtree is balanced, then checkHeight will return the actual height of the subtree. If the subtree  is not balanced, then checkHeight will return an error code. We will immediately break and return an error code from the current call.
 
 
-> What do we use for an error code? The height of a null tree is generally defined to be -1, so that's not a great idea for an error code. Instead, we' ll use Integer. MIN_VALUE.
+> What do we use for an error code? The height of a null tree is generally defined to be -1, so that's not a great idea for an error code. Instead, we'll use Integer. MIN_VALUE.
 
 
 The code below implements this algorithm.
@@ -974,7 +974,7 @@ The code below implements this algorithm.
 80      }
 81      
 82      public   void  addEdge(String startName,   String endName)   {
-83          Project start  = getOrCreateNode(startName);
+83          Project start = getOrCreateNode(startName);
 84          Project end =  getOrCreateNode(endName);
 85          start.addNeighbor(end);
 86      }
@@ -1007,7 +1007,7 @@ The code below implements this algorithm.
 113  }
 ```
 
-This solution takes O ( P  +  D) time, where P is the number of projects and  D is the  number of dependency pairs.
+This solution takes O(P + D) time, where P is the number of projects and  D is the  number of dependency pairs.
 
 
 > Note:  You might recognize this as the  topological sort algorithm on page 632. We've rederived this from scratch. Most people won't  know  this algorithm and  it's reasonable for an interviewer to expect you to be able to derive it.
@@ -1258,7 +1258,7 @@ The code below implements this approach.
 12      }
 13  
 14      boolean  pIsOnleft = covers(root.left, p);
-15      boolean   qIsOnLeft = covers(root.left,  q);
+15      boolean  qIsOnLeft = covers(root.left,  q);
 16      if (pIsOnLeft != qIsOnLeft)  {//Nodes  are   on  different side
 17          return root;
 18      }
@@ -1473,31 +1473,31 @@ It works something like this:
 
 Now, let's think through the implementation of removing, say, 1 from {1,   2} and recursing. We need to be careful about modifying this list, since a later recursive call (e.g., weave({1, 2}, {4}, {3})) might need the 1 still in {1,  2}.
 
-We could clone the list when we recurse, so that we only modify the recursive calls. Or, we could modify the list but then"revert"the changes after we're done with recursing.
+We could clone the list when we recurse, so that we only modify the recursive calls. Or, we could modify the list but then "revert" the changes after we're done with recursing.
 
 We've chosen to implement it the latter way. Since we're keeping the same reference to first, second, and prefix the entire way down the recursive call stack, then we'll need to clone prefix just before we store the complete result.
 
 ```java
 1   ArrayList<LinkedList<Integer>> allSequences(TreeNocte  node)  {
-2       ArrayList<Linkedlist<Integer>> result = new ArrayList<Linkedlist<Integer>>();
+2       ArrayList<LinkedList<Integer>> result = new ArrayList<LinkedList<Integer>>();
 3   
 4       if (node  == null)  {
-5           result.add(new Linkedlist<Integer>());
+5           result.add(new LinkedList<Integer>());
 6           return result;
 7       }
 8   
-9       Linkedlist<Integer> prefix =  new Linkedlist<Integer>();
+9       LinkedList<Integer> prefix =  new LinkedList<Integer>();
 10      prefix.add(node.data);
 11  
 12      /*   Recurse  on left and right subtrees. */
-13      ArrayList<Linkedlist<Integer>> leftSeq   =  allSequences(node.left);
+13      ArrayList<LinkedList<Integer>> leftSeq   =  allSequences(node.left);
 14      ArrayList<LinkedList<Integer>> rightSeq  =  allSequences(node.right);
 15  
 16      /*  Weave  together each  list from the  left and right sides. */
-17      for  (Linkedlist<Integer> left :   leftSeq) {
+17      for  (LinkedList<Integer> left :   leftSeq) {
 18          for  (LinkedList<Integer> right   :   rightSeq) {
 19              ArrayList<LinkedList<Integer>>  weaved =
-20                 		new ArrayList<Linkedlist<Integer>>();
+20                 		new ArrayList<LinkedList<Integer>>();
 21              weavelists(left, right,  weaved, prefix);
 22              result.addAll(weaved);
 23          }
@@ -1512,7 +1512,7 @@ We've chosen to implement it the latter way. Since we're keeping the same refere
 32      ArrayList<LinkedList<Integer>> results, LinkedList<Integer> prefix)  {
 33      /*  One list is empty.  Add  remainder  to  [a  cloned]   prefix and store result.  */
 34      if (first.size() ==    0 || second.size() ==  0)  {
-35          Linkedlist<Integer> result  =  (Linkedlist<Integer>) prefix.clone();
+35          LinkedList<Integer> result  =  (LinkedList<Integer>) prefix.clone();
 36          result.addAll(first);
 37          result.addAll(second);
 38          results.add(result);
@@ -1547,7 +1547,7 @@ As you're implementing allSequences (whether you do this before or after weaveli
 In fact, this is good advice in general when you're confused during whiteboard coding. Have a good under­ standing of what a particular function should do ("okay, this function is going to return a list of \__"). You should verify that it's really doing what you think. But when you're not dealing with that function, focus on the one you are dealing with and trust that the others do the right thing. It's often too much to keep the implementations of multiple algorithms straight in your head.
 
 
-**4.1O      Check Subtree:** T1 and T2 are two very large binary trees, with T1 much bigger than T2. Create an algorithm to determine if T2 is a subtree of T1.
+**4.10      Check Subtree:** T1 and T2 are two very large binary trees, with T1 much bigger than T2. Create an algorithm to determine if T2 is a subtree of T1.
 
 A tree T2 is a subtree of T1  if there exists a node n in T1  such that the subtree of n is identical to T2.
 That is, if you cut off the tree at node n, the two trees would be identical.
@@ -1560,7 +1560,7 @@ In problems like this, it's useful to attempt to solve the problem assuming that
 
 **The Simple Approach**
 
-In this smaller, simpler problem, we could consider comparing string representations of traversals of each tree. lfT2 is a subtree of T1, thenT2's traversal should be a substring of T1. ls the reverse true? If so,  should we use an in-order traversal or a pre-order traversal?
+In this smaller, simpler problem, we could consider comparing string representations of traversals of each tree. lf T2 is a subtree of T1, then T2's traversal should be a substring of T1. Is the reverse true? If so,  should we use an in-order traversal or a pre-order traversal?
 
 An in-order traversal will definitely not work. After all, consider a scenario in which we were using binary search  trees. A binary search tree's in-order traversal always prints out the values in sorted order.Therefore, two binary search trees with the same values will always have the same in-order traversals, even if their structure is different.
 
@@ -1690,7 +1690,7 @@ Let's draw an example.
 
 We're going to explore many solutions until we get to an optimal one that works.
 
-One thing we should realize here is that the question was phrased in a very interesting way. The interviewer did not simply say, "Design an algorithm to return a random node from a binary tree:'We were told that this is a class that we're building from scratch. There is a reason the question was phrased that way.We probably need access to some part of the internals of the data structure.
+One thing we should realize here is that the question was phrased in a very interesting way. The interviewer did not simply say, "Design an algorithm to return a random node from a binary tree". We were told that this is a class that we're building from scratch. There is a reason the question was phrased that way.We probably need access to some part of the internals of the data structure.
 
 **Option #1  [Slow & Working]**
 

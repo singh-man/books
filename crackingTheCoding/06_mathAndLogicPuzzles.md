@@ -25,7 +25,7 @@ Let X = 2ʲ⁰ * 3ʲ¹ * 5ʲ² * 7ʲ³ * 11ʲ⁴ * ...
 Let y = 2ᵏ⁰ * 3ᵏ¹ * 5ᵏ² * 7ᵏ³ * 11ᵏ⁴ * ...
 ```
 
-If x\y,then for alli, ji <=  ki.
+If x\y, then for all i, ji <=  ki.
 
 In fact, the greatest common divisor ofxand y will be:
 
@@ -165,7 +165,7 @@ The above equation is called Bayes' Theorem.
 
 **Probability of A or B**
  
-Now, imagine  you wanted to know what the probability  of landing  in A or B is. If you knew the  odds  of landing  in each individually,and you also knew the odds  of landing  in their intersection,then you could express the probability as:
+Now, imagine  you wanted to know what the probability  of landing  in A or B is. If you knew the  odds  of landing  in each individually, and you also knew the odds  of landing  in their intersection, then you could express the probability as:
 
 	P(A or B) = P(A) + P(B)  -  P(A  and   B)
 
@@ -182,7 +182,7 @@ P(x is  even or x  <=5)
 = 4/5
 ```
 
-From here,getting the special case rules for independent events and for mutually  exclusive events is easy.
+From here, getting the special case rules for independent events and for mutually  exclusive events is easy.
 
 
 **Independence**
@@ -194,7 +194,7 @@ If A and B are independent (that is, one happening tells you nothing about the o
 
 If A and B are mutually exclusive (that is, if one happens, then the other cannot happen), then P(A or B) = P(A) + P(B).This is because P(A  and   B) = 0, so this term is removed from the earlier P(A or B) equation.
 
-Many people,  strangely,  mix up  the  concepts of independence and mutual  exclusivity. They are entirely different.  In fact,two events  cannot be both  independent and  mutually  exclusive (provided  both  have probabilities  greater than  0). Why? Because mutual  exclusivity means  that  if one  happens then  the other cannot. Independence, however, says that one event happening means absolutely nothing about the other event.Thus, as long as two events  have non-zero probabilities,they will never be both  mutually  exclusive and independent.
+Many people,  strangely,  mix up  the  concepts of independence and mutual  exclusivity. They are entirely different.  In fact, two events  cannot be both  independent and  mutually  exclusive (provided  both  have probabilities  greater than  0). Why? Because mutual  exclusivity means  that  if one  happens then  the other cannot. Independence, however, says that one event happening means absolutely nothing about the other event.Thus, as long as two events  have non-zero probabilities, they will never be both  mutually  exclusive and independent.
 
 If one  or both events have  a probability of zero (that  is, it is impossible), then the  events are both indepen­ dent and  mutually exclusive.  This is provable through a simple application of the  definitions (that  is, the formulas) of independence and  mutual exclusivity.
 
@@ -240,7 +240,7 @@ Note how solving this problem is made easier by listing out what you've learned 
 
 ### Worst Case Shifting
 
-Many brainteasers are worst-case minimization problems, worded either in terms of minimizing an action or in doing something at most a specific number of times. A useful technique is to try to "balance"the worst case. That is, if an early decision results in a skewing of the worst case, we can sometimes change the deci­ sion to balance out the worst case. This will be clearest when explained with an example.
+Many brainteasers are worst-case minimization problems, worded either in terms of minimizing an action or in doing something at most a specific number of times. A useful technique is to try to "balance" the worst case. That is, if an early decision results in a skewing of the worst case, we can sometimes change the deci­ sion to balance out the worst case. This will be clearest when explained with an example.
 
 The "nine balls" question is a classic interview question. You have nine balls. Eight are of the same weight, and one is heavier. You are given a balance which tells you only whether the left side or the right side is heavier. Find the heavy ball in just two uses of the scale.
 
@@ -603,7 +603,7 @@ Either way, the number of drops is no more than 14.
 
 Therefore, we should round X up to 14. That is, we go to floor 14, then 27, then 39,.... This takes 14 steps in the worse case.
 
-As in many other maximizing/minimizing problems, the key in this problem is "worst case balancing:' 
+As in many other maximizing/minimizing problems, the key in this problem is "worst case balancing". 
 
 The following code simulates this approach.
 
@@ -672,7 +672,7 @@ The value x is odd if n is a perfect square. Here's why: pair n's factors by the
 
 Question: How many perfect squares are there?
 
-There are 1O perfect squares. You could count them (1, 4, 9, 16, 25, 36, 49, 64, 81, 100), or you could simply realize that you can take the numbers 1   through 10 and square them:
+There are 10 perfect squares. You could count them (1, 4, 9, 16, 25, 36, 49, 64, 81, 100), or you could simply realize that you can take the numbers 1 through 10 and square them:
 ```
 1*1,  2*2,  3*3,  ...,   10*10
 ```
@@ -699,7 +699,7 @@ A simple approach is to divide the bottles across the 10 test strips, first in g
 
 1.  Divide hottlP<; across available test strips, one drop per test strip.
 2.  After seven days, check the test strips for results.
-3.  On the positive test strip: select the bottles associated with it into a new set of bottles. If this set size is 1,we have located the poisoned bottle. If it's greater than one, go to step 1.
+3.  On the positive test strip: select the bottles associated with it into a new set of bottles. If this set size is 1, we have located the poisoned bottle. If it's greater than one, go to step 1.
 
 To simulate  this, we'll build classes for Bottle and TestStrip that mirror the problem's functionality.
 ```java
@@ -822,7 +822,7 @@ If we can't assume this, we can implement a fail-safe. If we have just one test 
 As noted in the beginning of the solution, it might be more optimal to run multiple tests at once.
 
 If we divide the bottles up into 10 groups (with bottles O - 99 going to strip 0, bottles 100 - 199 going to strip 1, bottles 200 - 299 going to strip 2, and so on), then day 7 will reveal the first digit of the bottle number. A
-positive result on strip i at day 7 shows that the first digit (1OO's digit) of the bottle number is i.
+positive result on strip i at day 7 shows that the first digit (100's digit) of the bottle number is i.
 
 Dividing the bottles in a different way can reveal the second or third digit. We just need to run these tests on different days so that we don't confuse the results.
 
@@ -843,7 +843,7 @@ For example, if day 7 showed a positive result on strip 4, day 8 showed a positi
 
 This mostly works, except for one edge case: what happens if the poisoned bottle has a duplicate digit? For example, bottle #882 or bottle #383.
 
-In fact, these cases are quite different. If day 8 doesn't have any"new" positive results, then we can conclude that digit 2 equals digit 1.
+In fact, these cases are quite different. If day 8 doesn't have any "new" positive results, then we can conclude that digit 2 equals digit 1.
 
 The bigger issue is what happens if day 9 doesn't have any new positive results.  In this case, all we know is that digit 3 equals either digit 1 or digit 2. We could not distinguish between bottle #383 and bottle #388. They will both have the same pattern of test results.
 
@@ -869,11 +869,11 @@ Now, bottle #383 will see (Day 7 = #3, Day  8 -> #8, Day 9-> [NONE], Day 10 -> #
 
 What happens, though, if day 10 still doesn't see any new results? Could this happen? 
 
-Actually, yes. Bottle #898 would  see (Day 7 = #8, Day 8 -> #9, Day  9->  [NONE],  Day  10 -> [N=ONE]). That's okay, though. Wejust need to distinguish bottle #898 from #899. Bottle #899 will see (Day 7 = #8, Day 9 -> [NONE],  Day  10->  #0).
+Actually, yes. Bottle #898 would  see (Day 7 = #8, Day 8 -> #9, Day  9->  [NONE],  Day  10 -> [NONE]). That's okay, though. We just need to distinguish bottle #898 from #899. Bottle #899 will see (Day 7 = #8, Day 9 -> [NONE],  Day  10->  #0).
 
 The "ambiguous" bottles from day 9 will always map to different values on day 10. The logic is:
 
-- If Day  3-> 1O's test reveals a new test result, "unshift" this value to derive the third digit.
+- If Day  3-> 10's test reveals a new test result, "unshift" this value to derive the third digit.
 - Otherwise, we know that the third digit equals either the first digit or the second digit and that the third digit, when shifted, still equals either the first digit or the second digit. Therefore, wejust need to figure out whether the first digit "shifts" into the second digit or the other way around. In the former  case, the third digit equals the first digit.  In the latter case, the third digit equals the second digit.
 
 Implementing this requires some careful work to prevent bugs.

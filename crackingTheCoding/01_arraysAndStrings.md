@@ -83,7 +83,7 @@ Imagine you were concatenating a list of strings, as shown below. What would the
 7	}
 ```
 
-On each concatenation,a new copy of the string is created, and the two strings are copied over,character by character. The first iteration requires us to copy x characters. The second iteration requires copying 2x characters. The third iteration requires 3x, and so on.The total time therefore is O(x + 2x + . . . + nx). This reduces to O(xn²).
+On each concatenation, a new copy of the string is created, and the two strings are copied over, character by character. The first iteration requires us to copy x characters. The second iteration requires copying 2x characters. The third iteration requires 3x, and so on.The total time therefore is O(x + 2x + . . . + nx). This reduces to O(xn²).
 
 > Why is it O(xn²)? Because 1 + 2 + ... + n equals n(n+1)/2, or O(n²).
 
@@ -99,7 +99,7 @@ StringBuilder can help you avoid.this problem. StringBuilder simply creates a re
 7	}
 ```
 
-A good exercise to practice strings,arrays,and general data structures is to implement your own version of StringBuilder, HashTable and ArrayList.
+A good exercise to practice strings, arrays, and general data structures is to implement your own version of StringBuilder, HashTable and ArrayList.
 
 **Additional Reading:** HashTable Collision Resolution (pg 636), Rabin-Karp Substring Search (pg 636).
 
@@ -444,9 +444,9 @@ This leads us to our final implementation.
 
 Like the other solutions, this is O(N).
 
-It's interesting to note a solution that we did not explore. We avoided solutions along the lines of"create all possible permutations and check if they are palindromes:'While such a solution would work, it's entirely infeasible in the real world. Generating all permutations requires factorial time (which is actually worse than exponential time), and it is essentially infeasible to perform on strings longer than about 10-15 characters.
+It's interesting to note a solution that we did not explore. We avoided solutions along the lines of "create all possible permutations and check if they are palindromes". While such a solution would work, it's entirely infeasible in the real world. Generating all permutations requires factorial time (which is actually worse than exponential time), and it is essentially infeasible to perform on strings longer than about 10-15 characters.
 
-I mention this (impractical) solution because a lot of candidates hear a problem like this and say, "In order to check if A is in group B, I must know everything that is in B and then check if one of the items equals A:' That's not always the case, and this problem is a simple demonstration of it. You don't need to generate all permutations in order to check if one is a palindrome.
+I mention this (impractical) solution because a lot of candidates hear a problem like this and say, "In order to check if A is in group B, I must know everything that is in B and then check if one of the items equals A". That's not always the case, and this problem is a simple demonstration of it. You don't need to generate all permutations in order to check if one is a palindrome.
 
  
 **1.51 One Away:** There are three types of edits that can be performed  on strings: insert a character, remove a character, or replace a character. Given two strings, write a function to check if they are one edit (or zero edits) away.
@@ -566,7 +566,7 @@ To do this, observe  that both methods follow similar logic: compare each charac
 
 Some  people might argue the  first approach is better, as it is clearer and easier to follow. Others, however, will argue that the  second approach is better, since  it's more compact and doesn't duplicate code (which can facilitate maintainability).
 
-You don't necessarily need to "pick a side:'You can discuss the  tradeoffs with your interviewer.
+You don't necessarily need to "pick a side". You can discuss the  tradeoffs with your interviewer.
 
 **1.6 	String  Compression:** Implement a method to perform basic string  compression using the  counts of repeated characters. For example, the  string aabcccccaaa would become a2blc5a3. If the "compressed" string would not  become smaller than the  original string, your method should return the original string. You can assume the  string has only uppercase and lowercase letters (a - z). 
 
@@ -586,7 +586,7 @@ How hard could it be?
 4 		for (int i = 0;   i <   str.length();  i++) {	
 5			countConsecutive++;
 6		
-7 			/*If next character is different than current,append this char to result.*/
+7 			/*If next character is different than current, append this char to result.*/
 8 			if (i + 1 >= str.length()  || str.charAt(i) != str.charAt(i + 1)) {
 9 				compressedString +=  ""   +  str.charAt(i) + countConsecutive;
 10				countConsecutive =  0;
@@ -596,7 +596,7 @@ How hard could it be?
 14	}
 ```
 
-This works. ls it efficient,  though?Take a look at the  runtime of this code.
+This works. Is it efficient, though? Take a look at the  runtime of this code.
 
 The  runtime is O(p + k²), where p is the  size of the  original string and k is thelnumber of character sequences. For example, if the  string  is aabccdeeaa,  then there are  six characte  sequences. It's slow because string concatenation operates in O(n² ) time  (see StringBuilder on pg 89).
 
@@ -847,7 +847,7 @@ This code is below:
 54	}
 ```
 
-This code has  a lot of"do  this for the  rows, then the  equivalent action for the  column:' In an interview, you could abbreviate this code by adding comments and TODOs that explain that the next chunk of code looks the  same as the  earlier code,  but  using rows. This would allow you to focus  on the  most important parts of the  algorithm.
+This code has  a lot of "do  this for the  rows, then the  equivalent action for the  column". In an interview, you could abbreviate this code by adding comments and TODOs that explain that the next chunk of code looks the  same as the  earlier code,  but  using rows. This would allow you to focus  on the  most important parts of the  algorithm.
 
 
 **1.9 	String Rotation:** Assumeyou have a method i5Sub5tring which checks if one word is a substring of another. Given two strings,  51 and 52, write code to check if 52 is a rotation of 51 using only one

@@ -73,13 +73,13 @@ Additionally,  if you implement this code in C, C++ or another  language that re
 16	}
 ```
 
-### The "Runner"Technique
+### The "Runner" Technique
 
-The "runner" (or second pointer) technique  is used in many linked list problems. The runner technique means that you iterate through the linked list with two pointers simultaneously, with one ahead of the other. The "fast" node might be ahead by a fixed amount, or it might be hopping multiple nodes for each one node that the"slow" node iterates through.
+The "runner" (or second pointer) technique  is used in many linked list problems. The runner technique means that you iterate through the linked list with two pointers simultaneously, with one ahead of the other. The "fast" node might be ahead by a fixed amount, or it might be hopping multiple nodes for each one node that the "slow" node iterates through.
 
 For example, suppose you had a linked list a₁ - >a₂ ->....->aₙ -> b₁->b₂->...->bₙ  and you wanted to rearrange it into a1 ->b₁ ->a₂ - >b₂ -> ...- >aₙ - >bₙ. You do not know the length of the linked list (but you do know that the length is an even number).
 
-You could have one pointer pl (the fast pointer) move  every two elements for every one move that p2 makes. When pl hits the end of the linked list, p2 will be at the midpoint. Then, move pl back to the front and begin"weaving" the elements. On each iteration, p2 selects an element and inserts it after pl.
+You could have one pointer pl (the fast pointer) move  every two elements for every one move that p2 makes. When pl hits the end of the linked list, p2 will be at the midpoint. Then, move pl back to the front and begin "weaving" the elements. On each iteration, p2 selects an element and inserts it after pl.
 
 
 ### Recursive  Problems
@@ -176,7 +176,7 @@ Implementing this is short and sweet-provided we have a way of "passing back" an
 One way to do this is to change the problem to simply printing thekth to last element. Then, we can pass back the value of the counter simply through return values.
 
 ```java
-1 	int  printKthToLast(LinkedlistNode head,   int k)  {
+1 	int  printKthToLast(LinkedListNode head,   int k)  {
 2 		if  (head == null) {
 3 			return 0;
 4 		}
@@ -222,7 +222,7 @@ We described earlier that the issue was that we couldn't simultaneously return a
 2 		public int value = 0;
 3 	}
 4	
-5 	LinkedListNode  kthTolast(LinkedlistNode  head,   int k)  {
+5 	LinkedListNode  kthTolast(LinkedListNode  head,   int k)  {
 6 		Index  idx  = new Index();
 7 		return kthToLast(head, k,   idx);
 8 	}
@@ -253,8 +253,8 @@ The code below implements this algorithm.
 
 ```java
 1 	LinkedListNode nthTolast(LinkedListNode head, int k) {
-2 		LinkedlistNode pl = head;
-3 		LinkedlistNode p2 = head;
+2 		LinkedListNode pl = head;
+3 		LinkedListNode p2 = head;
 4	
 5 		/*  Move  pl  k nodes  into the  list.*/
 6 		for (int i = 0; i < k; i++) {
@@ -295,7 +295,7 @@ The code below implements this algorithm.
 2		if (n  ==  null  || n.next ==  null)  {
 3			return false;  // Failure
 4		}
-5		LinkedlistNode next  =  n.next;
+5		LinkedListNode next  =  n.next;
 6		n.data =  next.data;
 7		n.next =  next.next;
 8		return true;
@@ -309,7 +309,7 @@ Note that this problem cannot be solved if the node to be deleted is the last no
 
 ```
 EXAMPLE 
-Input:   3  ->  5 -> 8 -> 5  ->  10 -> 2  ->  1 [partition= 5] 
+Input:   3  ->  5 -> 8 -> 5  ->  10 -> 2  ->  1 [partition = 5] 
 Output:  3  ->  1 -> 2 -> 10 ->  5  -> 5  ->  8 
 ```
 
@@ -328,7 +328,7 @@ This approach is mostly "stable" in that elements stay in their original order, 
 ```java
 1 	/*Pass in the head  of  the   linked list and  the   value  to partition around*/
 2 	LinkedListNode partition(LinkedListNode node, int x) {
-3 		LinkedlistNode beforeStart = null;
+3 		LinkedListNode beforeStart = null;
 4 		LinkedListNode beforeEnd = null;
 5 		LinkedListNode afterStart = null;
 6 		LinkedListNode afterEnd = null;
@@ -372,10 +372,10 @@ If it bugs you to keep around four different variables for tracking two  linked 
 
 If we  don't care  about making the elements of the list "stable"  (which  there's no  obligation to, since  the interviewer hasn't specified that), then we can  instead rearrange the elements by growing the list at the head and  tail.
 
-In this approach, we start a"new" list (using the existing nodes). Elements bigger than the pivot element are put  at the tail and  elements smaller are put  at the head. Each time we insert  an element, we update either the head or tail.
+In this approach, we start a "new" list (using the existing nodes). Elements bigger than the pivot element are put  at the tail and  elements smaller are put  at the head. Each time we insert  an element, we update either the head or tail.
 
 ```java
-1 	LinkedlistNode  partition(LinkedlistNode node, int  x)   {
+1 	LinkedListNode  partition(LinkedListNode node, int  x)   {
 2 		LinkedListNode head = node;
 3 		LinkedListNode tail = node;
 4	
@@ -402,11 +402,11 @@ In this approach, we start a"new" list (using the existing nodes). Elements bigg
 There are many  equally optimal solutions to this problem. If you came up  with a different one, that's okay!
 
 
-**2.5 	Sum Lists:** You have two numbers represented by a linked list,where each node contains a single digit. The digits are stored in reverse order,such that the 1's digit  is at the head of the list. Write a function that adds the two numbers and returns the sum as a linked list.
+**2.5 	Sum Lists:** You have two numbers represented by a linked list, where each node contains a single digit. The digits are stored in reverse order, such that the 1's digit  is at the head of the list. Write a function that adds the two numbers and returns the sum as a linked list.
 
 ```
 EXAMPLE
-Input: (7-> 1 -> 6) + (5 -> 9 -> 2). That is,617 +  295. 
+Input: (7-> 1 -> 6) + (5 -> 9 -> 2). That is, 617 +  295. 
 Output: 2 -> 1 -> 9. That is, 912.
 ```
 
@@ -415,7 +415,7 @@ FOLLOW UP
 Suppose the digits are stored in forward order. Repeat the above problem. 
 
 ```
-Input: (6 -> 1 -> 7) +  (2 -> 9 -> 5).That is,617 +  295.
+Input: (6 -> 1 -> 7) +  (2 -> 9 -> 5).That is, 617 +  295.
 Output: 9 -> 1 -> 2.That is, 912.
 ```
 
@@ -430,9 +430,9 @@ It's useful  to remember in this problem how exactly addition works. Imagine the
 + 2  9  5
 ```
 
-First, we add 7 and 5 to get 12. The digit 2 becomes the last digit of the number, and 1 gets carried over to the next step. Second,  we add 1, 1, and 9 to get 11.The 1 becomes the second digit,and the other 1 gets carried over the final step. Third and finally, we add 1,6 and 2 to get 9. So,our value becomes 912.
+First, we add 7 and 5 to get 12. The digit 2 becomes the last digit of the number, and 1 gets carried over to the next step. Second,  we add 1, 1, and 9 to get 11.The 1 becomes the second digit, and the other 1 gets carried over the final step. Third and finally, we add 1,6 and 2 to get 9. So, our value becomes 912.
 
-We can mimic this process recursively by adding node by node,carrying  over any "excess" data to the next node.  Let's walk through this for the below linked list:
+We can mimic this process recursively by adding node by node, carrying  over any "excess" data to the next node.  Let's walk through this for the below linked list:
 
 ```
      7 -> 1 -> 6
@@ -441,18 +441,18 @@ We can mimic this process recursively by adding node by node,carrying  over any 
 
 We do the following:
 
-1.  We add 7 and 5 first,getting a result of 12. 2 becomes the first node in our linked list,and we"carry" the
+1.  We add 7 and 5 first, getting a result of 12. 2 becomes the first node in our linked list, and we "carry" the
 1 to the next sum. 
 ```
 List: 2 -> ?
 ```
-2.  We then  add 1 and 9, as well as the "carry;' getting a result of 11. 1 becomes the second element of our linked list, and we carry the 1 to the next sum.
+2.  We then  add 1 and 9, as well as the "carry", getting a result of 11.1 becomes the second element of our linked list, and we carry the 1 to the next sum.
 
 ```
 List: 2 -> 1 -> ?
 ```
 
-3.  Finally, we add 6, 2 and our"carrY:'to get 9.This becomes the final element of our linked list.
+3.  Finally, we add 6, 2 and our "carrY", to get 9. This becomes the final element of our linked list.
 ```
 List: 2 -> 1 -> 9.
 ```
@@ -465,7 +465,7 @@ l 	LinkedListNode addlists(LinkedListNode l1, LinkedListNode l2, int  carry) {
 3 			return null;
 4 		}
 5	
-6		LinkedlistNode result = new  LinkedlistNode();
+6		LinkedListNode result = new  LinkedListNode();
 7		int  value =  carry;
 8		if (l1 !=  null)  {
 9			value +=  l1.data;
@@ -478,7 +478,7 @@ l 	LinkedListNode addlists(LinkedListNode l1, LinkedListNode l2, int  carry) {
 16	
 17		/*Recurse  */
 18		if (l1 != null || l2 != null) {
-19			LinkedlistNode  more = addlists(l1 == null ?  null : l1.next,
+19			LinkedListNode  more = addlists(l1 == null ?  null : l1.next,
 20									l2 == null ? null : l2.next,
 21									value >= 10 ?  1 : 0);
 22			result.setNext(more);
@@ -493,7 +493,7 @@ In implementing this code, we must be careful to handle the condition when one l
 
 Part B is conceptually the same (recurse, carry the excess), but has some additional complications when it comes to implementation:
 
-1. One list may be shorter than the other, and we cannot handle this "on the flY:' For example, suppose we were adding (1 -> 2 -> 3-> 4) and (5-> 6-> 7). We need to know that the 5 should be"matched"with the 2, not the 1. We can accomplish this by comparing the lengths of the lists in the beginning and padding the shorter list with zeros.
+1. One list may be shorter than the other, and we cannot handle this "on the flY". For example, suppose we were adding (1 -> 2 -> 3-> 4) and (5-> 6-> 7). We need to know that the 5 should be "matched" with the 2, not the 1. We can accomplish this by comparing the lengths of the lists in the beginning and padding the shorter list with zeros.
 2. In the first part, successive results were added to the tail (i.e., passed forward). This meant that the recur­ sive call would be passed the carry, and would return the result (which is then appended to the tail). In this case, however, results are added to the head (i.e., passed backward). The recursive call must return the result, as before, as well as the carry. This is not terribly challenging to implement, but it is more cumbersome. We can solve this issue by creating a wrapper class called Partial Sum.
 
 The code below implements this algorithm.
@@ -592,10 +592,10 @@ Note that when we compare the linked list to the reversed list, we only actually
 3 		return  isEqual(head, reversed);
 4 	}
 5	
-6 	LinkedlistNode reverseAndClone(LinkedListNode  node)  {
+6 	LinkedListNode reverseAndClone(LinkedListNode  node)  {
 7 		LinkedListNode head =   null;
 8 		while  (node  != null) {
-9 			LinkedListNode n =  new LinkedlistNode(node.data); // Clone
+9 			LinkedListNode n =  new LinkedListNode(node.data); // Clone
 10			n.next = head;
 11			head   = n;
 12			node   = node.next;
@@ -721,7 +721,7 @@ It's both. We create a simple class with two members, a boolean and a node, and 
 
 ```java
 1  class   Result  {
-2      public LinkedlistNode  node;
+2      public LinkedListNode  node;
 3      public boolean  result;
 4  }
 ```
@@ -853,7 +853,7 @@ We now have a multistep process.
 5. Now, traverse on each linked  list until the  pointers are the  same. The implementation for this is below.
 
 ```java
-1 	LinkedlistNode findintersection(LinkedListNode  list1, LinkedListNode list2) {
+1 	LinkedListNode findintersection(LinkedListNode  list1, LinkedListNode list2) {
 2 		if (list1 ==  null  ||    list2 == null) return null;
 3 	
 4		/* Get   tail and  sizes. */
@@ -866,8 +866,8 @@ We now have a multistep process.
 11		}
 12	
 13		/* Set pointers to the start  of  each linked  list. */
-14		LinkedlistNode shorter =  result1.size <   result2.size ?  list1 :   list2;
-15		LinkedlistNode longer  =  result1.size <   result2.size ?  list2 :    list1;
+14		LinkedListNode shorter =  result1.size <   result2.size ?  list1 :   list2;
+15		LinkedListNode longer  =  result1.size <   result2.size ?  list2 :    list1;
 16	
 17		/* Advance the pointer for the longer linked list by difference in lengths. */
 18		longer = getKthNode(longer,  Math.abs(result1.size -  result2.size));
@@ -883,7 +883,7 @@ We now have a multistep process.
 28	}
 29	
 30	class  Result {
-31		public  LinkedlistNode tail;
+31		public  LinkedListNode tail;
 32		public int  size;
 33		public  Result(LinkedListNode tail,  int size) {
 34			this.tail =  tail;
@@ -895,7 +895,7 @@ We now have a multistep process.
 40		if (list == null) return null;
 41	
 42		int size = 1;
-43		LinkedlistNode  current =  list;
+43		LinkedListNode  current =  list;
 44		while   (current.next != null) {
 45			size++;
 46			current = current.next;
@@ -941,7 +941,7 @@ An astute reader  may  wonder   if FastRunner might  "hop  over"  SlowRunner com
 
 **Part 2: When Do They Collide?**
 
-Let's assume  that the linked list has a "non-looped"part of size k.
+Let's assume that the linked list has a "non-looped" part of size k.
 
 If we apply our algorithm  from part  l, when  will FastRunner and SlowRunner collide?
 
@@ -967,7 +967,7 @@ So, when  do they  meet?  Well, if FastRunner is LOOP_SIZE           K  steps  b
 
 We now know that CollisionSpot is K nodes before the start of the loop. Because K  =  mod (k,  LOOP_ SIZE) (or, in other  words, k =  K   +  M    *  LOOP_SIZE, for any integer M), it is also correct to say that it is k nodes from the loop start. For example, if node N is 2 nodes into a 5 node loop, it is also correct to say that it is 7, 12, or even 397 nodes into the loop.
 
-Therefore, both  CollisionSpot and LinkedlistHead are k nodes from the start of the loop.
+Therefore, both  CollisionSpot and LinkedListHead are k nodes from the start of the loop.
 
 Now, if we keep one pointer at CollisionSpot and move the other one to LinkedListHead, they will each be k nodes from LoopStart. Moving the two pointers at the same speed will cause them to collide again-this time after k steps, at which point they will both be at LoopStart. All we have to do is return this node.
 
@@ -989,9 +989,9 @@ Our algorithm is derived directly from parts 1, 2 and 3.
 The code below implements this algorithm.
 
 ```java
-1 	LinkedListNode FindBeginning(LinkedlistNode  head)  {
+1 	LinkedListNode FindBeginning(LinkedListNode  head)  {
 2 		LinkedListNode slow  = head;
-3 		LinkedlistNode fast  = head;
+3 		LinkedListNode fast  = head;
 4	
 5 		/* Find meeting point. This will be LOOP_SIZE - k steps into the linked list. */
 6 		while (fast !=  null &&   fast.next !=  null) {

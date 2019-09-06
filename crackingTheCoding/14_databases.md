@@ -238,7 +238,7 @@ SOLUTION
  
 JOIN is used to combine the results of two tables. To perform a JOIN, each of the tables must have at least one field that will be used to find matching records from the other table. The join type defines which records will go into the result set.
 
-Let's take for example two tables: one table lists the "regular" beverages, and another lists the calorie-free beverages. Each table has two fields: the beverage name and its product code. The "code"field will be used to perform the record matching.
+Let's take for example two tables: one table lists the "regular" beverages, and another lists the calorie-free beverages. Each table has two fields: the beverage name and its product code. The "code" field will be used to perform the record matching.
 
 Regular Beverages:
 
@@ -312,7 +312,7 @@ People who  work for Companies are  Professionals. So, there is an ISA  ("is a")
 
 Each Professional has additional information such  as degree and  work experiences in addition to the properties derived from People.
 
-A Professional works for one company at a time  (probably-you might want to validate this assump­ tion),  but  Companies can  hire many Professionals. So, there is a many-to-one relationship between Professionals and  Companies. This"Works  For " relationship can store attributes such as an employee's start date and salary. These attributes are defined only when we relate a Professional with a Company.
+A Professional works for one company at a time  (probably-you might want to validate this assump­ tion),  but  Companies can  hire many Professionals. So, there is a many-to-one relationship between Professionals and  Companies. This "Works  For" relationship can store attributes such as an employee's start date and salary. These attributes are defined only when we relate a Professional with a Company.
 
 A Person can have multiple phone numbers, which is why Phone is a multi-valued attribute.
 
