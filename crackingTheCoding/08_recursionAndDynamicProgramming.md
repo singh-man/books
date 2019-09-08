@@ -294,7 +294,7 @@ Typically we use  a HashMap<Integer, Integer> for a cache. In this case,  the  k
 
 Regardless of whether or not you use memoization, note that the number of ways will quickly overflow  the bounds of an integer. By the  time you get  to just  n   = 37, the  result has already overflowed. Using a long will delay, but not completely solve, this issue.
 
-It is great to  communicate this  issue  to  your  interviewer. He probably won't ask you  to  work  around it (although you  could,  with  a Biginteger class). but  it's nice to demonstrate that you think about these issues.
+It is great to  communicate this  issue  to  your  interviewer. He probably won't ask you  to  work  around it (although you  could,  with  a BigInteger class). but  it's nice to demonstrate that you think about these issues.
 
 **8.2 Robot in a Grid:** Imagine a robot sitting on the upper left corner of grid with r rows and c columns. The robot can only move in two directions, right and down, but certain cells are "off limits" such that the robot cannot step on them. Design an algorithm to find a path for the robot from the top left to the bottom right.
 
@@ -487,10 +487,10 @@ The code  below implements this algorithm.
 3   }
 4 
 5   int  magicFast(int[] array, int start,  int end) {
-6     if (end <   start)  return -1;
+6     if (end <  start)  return -1;
 7 
 8     int midindex = (start +  end) / 2;
-9     int midValue =   array[midindex];
+9     int midValue =  array[midindex];
 10    if (midValue == midindex)  {
 11      return midindex;
 12    }
@@ -817,11 +817,11 @@ Case n =  1. Can we move Disk 1 from Tower 1 to Tower 3? Yes.
 
 Case n =  2. Can we move Disk 1 and Disk 2 from Tower 1 to Tower 3? Yes.
 
-1.  Move Disk 1  from Tower 1 to Tower 2
+1. Move Disk 1 from Tower 1 to Tower 2
 
 2. Move Disk 2 from Tower 1 to Tower 3
 
-3.  Move Disk 1 from Tower 2 to Tower 3
+3. Move Disk 1 from Tower 2 to Tower 3
  
 Note how in the above steps, Tower 2 acts as a buffer, holding a disk while we move other disks to Tower 3. 
 
@@ -921,13 +921,13 @@ SOLUTION
 
 ---
 
-Like in many recursive problems, the Base Case and Build approach will be useful. Assume we have a string S represented by the characters a1a2...an.
+Like in many recursive problems, the Base Case and Build approach will be useful. Assume we have a string S represented by the characters a₁a₂...aₙ.
 
 **Approach 1: Building from permutations of first n-1 characters.**
 
 *Base Case:* permutations offirst character substring
 
-The only permutation of a1 is the string a1.So: 
+The only permutation of a₁ is the string a₁. So: 
 ```
 P(a₁)  = a₁
 ```
@@ -937,7 +937,7 @@ P(a₁a₂) = a₁a₂ and a₂a₁
 ```
 *Case: permutations of* a₁a₂a₃
 ```
-P(a1a2a3) = a₁a₂a₃, a₁a₃a₂, a₂a₁a₃, a₂a₃a₁, a₃a₁a₂, a₃a₂a₁,
+P(a₁a₂a₃) = a₁a₂a₃, a₁a₃a₂, a₂a₁a₃, a₂a₃a₁, a₃a₁a₂, a₃a₂a₁,
 ```
 *Case: permutations of* a₁a₂a₃a₄
 
@@ -992,7 +992,7 @@ We can now implement this algorithm recursively.
 
 *Base Case: single-character strings*
 
-The onlypermutation of a1 is the string a1. So: 
+The onlypermutation of a₁ is the string a₁. So: 
 ```
 P(a₁)  =  a₁
 ```
@@ -1144,9 +1144,9 @@ The code below implements this algorithm.
 28    for  (Character c : map.keySet()) {
 29      int count =  map.get(c);
 39      if  (count >  0) {
-31        map.put(c,   count - 1);
-32        printPerms(map, prefix  +  c,  remaining - 1,   result);
-33        map.put(c,    count);
+31        map.put(c, count - 1);
+32        printPerms(map, prefix  +  c,  remaining - 1, result);
+33        map.put(c, count);
 34      }
 35    }
 36  }
@@ -1276,12 +1276,12 @@ We can implement this algorithm recursively:
 ```java
 1   enum Color { Black,   White,   Red,  Yellow,  Green}
 2   
-3   boolean   PaintFill(Color[][] screen, int  r,  int  c,  Color  ncolor) {
+3   boolean PaintFill(Color[][] screen, int  r,  int  c,  Color  ncolor) {
 4     if (screen[r][c] == ncolor) return false;
 5     return PaintFill(screen, r,  c,  screen[r][c],  ncolor);
 6   }
 7   
-8   boolean   PaintFill(Color[][] screen, int r,  int  c,  Color  ocolor,  Color  ncolor) {
+8   boolean PaintFill(Color[][] screen, int r,  int  c,  Color  ocolor,  Color  ncolor) {
 9     if (r < 0  || r >=  screen.length  ||  c  <   0 || c  >=  screen[0].length) {
 10      return false;
 11    }
@@ -1513,11 +1513,11 @@ To tackle this problem, we need to recognize the relationship between the differ
 
 **Solution#1**
 
-Imagine we had the following boxes: b₁ ,   b₂ ,   ••• ,   bₙ. The biggest stack that we can build with all the boxes equals the max of (biggest stack with bottom b1, biggest stack with bottom b₂ ,   •••, biggest stack with bottom bn).That is, if we experimented with each box as a bottom and built the biggest stack possible with each, we would find the biggest stack possible.
+Imagine we had the following boxes: b₁,   b₂,••• ,   bₙ. The biggest stack that we can build with all the boxes equals the max of (biggest stack with bottom b1, biggest stack with bottom b₂ ,   •••, biggest stack with bottom bn).That is, if we experimented with each box as a bottom and built the biggest stack possible with each, we would find the biggest stack possible.
 
 But, how would we find the biggest stack with a particular bottom? Essentially the same way. We experi­ment with different boxes for the second level, and so on for each level.
 
-Of course, we only experiment with valid boxes. If b₅ is bigger than b1, then there's no point in trying to build a stack that looks like {b₁ ,  b₅   ,  ••• }. We already know b₁ can't be below b₅.
+Of course, we only experiment with valid boxes. If b₅ is bigger than b1, then there's no point in trying to build a stack that looks like {b₁,  b₅, ... }. We already know b₁ can't be below b₅.
 
 We can perform a small optimization here. The requirements of this problem stipulate that the lower boxes must be strictly greater than the higher boxes in all dimensions. Therefore, if we sort (descending order) the boxes on a dimension-any dimension-then we know we don't have to look backwards in the list. The box b1 cannot be on top of box b₅, since its height (or whatever dimension we sorted on) is greater than b₅'s height.
 
@@ -1563,7 +1563,7 @@ The problem in this code is that it gets very inefficient. We try to find the be
 2     Collections.sort(boxes,  new BoxComparator());
 3     int maxHeight  =  0;
 4     int[] stackMap =  new int[boxes.size()];
-5     for   (int i = 0;  i < boxes.size();  i++)   {
+5     for (int i = 0;  i < boxes.size();  i++)   {
 6       int height = createStack(boxes,  i, stackMap);
 7       maxHeight  = Math.max(maxHeight,   height);
 8     }
@@ -1579,7 +1579,7 @@ The problem in this code is that it gets very inefficient. We try to find the be
 18    int maxHeight =  0;
 19    for (int i =  bottomindex + 1;  i <   boxes.size();  i++)   {
 20      if (boxes.get(i).canBeAbove(bottom)) {
-21        int  height =  createStack(boxes, i, stackMap);
+21        int height =  createStack(boxes, i, stackMap);
 22        maxHeight  =  Math.max(height,  maxHeight);
 23      }
 24    }
@@ -1612,22 +1612,22 @@ We will again use memoization to cache the height of the tallest stack with a pa
 4     return createStack(boxes, null,  0,   stackMap);
 5   }
 6   
-7   int  createStack(ArrayList<Box> boxes,   Box bottom,   int offset, int[]  stackMap)   {
+7   int  createStack(ArrayList<Box> boxes, Box bottom, int offset, int[]  stackMap)   {
 8     if (offset >= boxes.size()) return 0;  // Base case
 9   
 10    /*height with  this bottom*/
 11    Box newBottom =  boxes.get(offset);
 12    int heightWithBottom = 0;
-13    if (bottom == null  ||   newBottom .canBeAbove(bottom))  {
+13    if (bottom == null  || newBottom.canBeAbove(bottom))  {
 14      if (stackMap[offset] == 0)  {
-15        stackMap[offset] = createStack(boxes,  newBottom,  offset + 1,   stackMap);
+15        stackMap[offset] = createStack(boxes, newBottom, offset + 1, stackMap);
 16        stackMap[offset] += newBottom.height;
 17      }
 18      heightWithBottom =  stackMap[offset];
 19    }
 20  
 21    /*without this  bottom*/
-22    int  heightWithoutBottom createStack(boxes, bottom,   offset + 1,   stackMap);
+22    int  heightWithoutBottom createStack(boxes, bottom, offset + 1, stackMap);
 23  
 24    /* Return  better of  two  options. */
 25    return Math.max(heightWithBottom,  heightWithoutBottom);
@@ -1637,12 +1637,12 @@ We will again use memoization to cache the height of the tallest stack with a pa
 Again, pay close attention to when you recall and insert values into the hash table. It's typically best if these are symmetric, as they are in lines 15 and 16-18.
 
 
-**8.14 	Boolean Evaluation:** Given a boolean expression consisting  of the symbols 0 (false), 1 (true), & (AND),  I    (OR), and ^ (XOR), and a desired boolean result value result, implement a function to count the number of ways of parenthesizing the expression such that it evaluates to result. The expressionshouldbe fully parenthesized (e.g., ( 0)^( 1)) but not extraneously (e.g., ( ( ( 0))^( 1))).
+**8.14 	Boolean Evaluation:** Given a boolean expression consisting  of the symbols 0 (false), 1 (true), & (AND), | (OR), and ^ (XOR), and a desired boolean result value result, implement a function to count the number of ways of parenthesizing the expression such that it evaluates to result. The expressionshouldbe fully parenthesized (e.g., (0)^(1)) but not extraneously (e.g., (((0))^(1))).
 
 EXAMPLE
 ```
 countEval("l^0|0|1",  false) ->  2 
-countEval("0&0&0&1^l|0",   true)-> 10 
+countEval("0&0&0&1^1|0",   true)-> 10 
 ```
 
 SOLUTION
@@ -1659,10 +1659,10 @@ We could just essentially iterate through each possible place to put a parenthes
 
 ```
 countEval(0A0&0Alll,  true)=
-     countEval(0^0&0^l|l  where paren  around  char  1,  true)
- +   countEval(0^0&0^l|l  where paren  around  char  3,  true)
- +   countEval(0^0&0^l|l  where paren  around  char  S,  true)
- +   countEval(0^0&0^l|l  where paren  around  char  7,  true)
+     countEval(0^0&0^1|1  where paren  around  char  1,  true)
+ +   countEval(0^0&0^1|1  where paren  around  char  3,  true)
+ +   countEval(0^0&0^1|1  where paren  around  char  S,  true)
+ +   countEval(0^0&0^1|1  where paren  around  char  7,  true)
 ```
 
 Now what? Let's lookatjust one ofthose expressions-the paren aroundchar 3. This gives us (0^0)&(0^\1). 
@@ -1726,7 +1726,7 @@ This makes the code a bit more concise.
 12      int leftTrue =  countEval(left, true);
 13      int leftFalse = countEval(left, false);
 14      int rightTrue = countEval(right, true);
-15      int  rightFalse =   countEval(right,  false);
+15      int  rightFalse = countEval(right,  false);
 16      int total =  (leftTrue + leftFalse) *  (rightTrue + rightFalse);
 17  
 18      int  totalTrue =  0;
@@ -1763,8 +1763,8 @@ If we follow the recursive path, we'll note that we end up doing the same comput
 
 Consider the expression 0^0&0^1|1 and these recursion paths:
 
-- Add parens around char 1. (0)^(0&0^1 | 1)
-   - Add parens around char 3. (0) ^((0)&(0^1|1))
+- Add parens around char 1. (0)^(0&0^1|1)
+   - Add parens around char 3. (0)^((0)&(0^1|1))
 - Add parens around char 3. (0^0)&(0^1|1)
    - Add parens around char 1. ((0)^(0))&(0^1|1)
 
@@ -1784,7 +1784,7 @@ We can do  this  by  using memoization,  or  a hash table. We just  need to  sto
 9       char c  =  s.charAt(i);
 10      String left      =  s.substring(0,  i);
 11      String right     =  s.substring(i  +  1,  s.length());
-12      int   leftTrue   =  countEval(left,   true,  memo);
+12      int   leftTrue   =  countEval(left, true,  memo);
 13      int   leftFalse  =  countEval(left, false,  memo);
 14      int   rightTrue  =  countEval(right, true,  memo);
 15      int   rightFalse =  countEval(right, false,   memo);

@@ -25,7 +25,7 @@ The code below demonstrates the implementation of a basic class with inheritance
 13		}
 14	} ;
 15	
-16	class  Student :    public  Person {
+16	class  Student : public  Person {
 17	public:
 18		void  aboutMe() {
 19			cout <<  "I  am  a student.";
@@ -79,20 +79,20 @@ The destructor cleans up upon object deletion and  is automatically called  when
 In an earlier example, we defined p to be of type Student:
 
 ```c
-1      Student *  p  =  new  Student();
-2      p->aboutMe();
+1   Student *  p  =  new  Student();
+2   p->aboutMe();
 ```
 
 What would happen if we defined p to be a Person\*, like so?
 
 ```c
-1      Person *  p  =  new  Student();
-2      p->aboutMe();
+1   Person *  p  =  new  Student();
+2   p->aboutMe();
 ```
 
 In this case, "I   am  a  person" would be printed instead. This is because the function aboutMe is resolved at compile-time, in a mechanism known as static binding.
 
-If we want to ensure that the  Student's implementation of aboutMe is called, we can define aboutMe in the  Person class to be virtual.
+If we want to ensure that the  Student's implementation of about Me is called, we can define aboutMe in the  Person class to be virtual.
 
 ```C
 1 	class  Person {
@@ -112,10 +112,9 @@ If we want to ensure that the  Student's implementation of aboutMe is called, we
 
 Another usage for virtual functions is when we can't (or don't want to) implement a method for the parent class. Imagine, for example, that we want Student and Teacher to inherit from Person so that we can implement a common method such as addCourse(string  s). Calling addCourse on Person, however, wouldn't make much sense since the implementation depends on whether the object is actually a Student or Teacher.
 
-In this case, we might want addCourse to be a virtual function defined within Person, with the imple­
-mentation being left to the subclass.
+In this case, we might want addCourse to be a virtual function defined within Person, with the imple­mentation being left to the subclass.
 
-```C
+```c
 1 	class Person {
 2 		int  id;// all members  are private by default
 3 		char name[NAME_SIZE];
@@ -126,14 +125,14 @@ mentation being left to the subclass.
 8 		virtual  bool addCourse(string s) =  0;
 9 	};
 10	
-11	class Student :    public Person {
+11	class Student : public Person {
 12	public:
 13		void aboutMe() {
 14			cout <<  "I  am a  student." <<  endl;
 15		}
 16	
 17		bool addCourse(string s) {
-18			cout <<  "Added course " <<  s <<  "to student." <<  endl;
+18			cout <<  "Added course " <<   <<  "to student." <<  endl;
 19			return true;
 20		}
 21	};
@@ -151,8 +150,7 @@ Note that by defining addCourse to be a "pure virtual function;· Person is now 
 
 ### Virtual Destructor
 
-The virtual function naturally introduces the concept of a "virtual destructor."Suppose we wanted to imple­
-ment a destructor method for Person and Student. A naive solution might look like this:
+The virtual function naturally introduces the concept of a "virtual destructor."Suppose we wanted to imple­ment a destructor method for Person and Student. A naive solution might look like this:
 
 ```C
 1 	class  Person {
@@ -170,7 +168,7 @@ ment a destructor method for Person and Student. A naive solution might look lik
 13	} ;
 14	
 15	int  main() {
-16		Person *  p      new  Student();
+16		Person *  p   =  new  Student();
 17		delete  p; //  prints "Deleting  a person."
 18	}
 ```
@@ -195,7 +193,7 @@ To fix this, we simply define the destructor  for Person to be virtual.
 13	} ;
 14	
 15	int  main() {
-16		Person *  p      new  Student();
+16		Person *  p  =  new  Student();
 17		delete  p;
 18	}
 ```
@@ -223,8 +221,7 @@ Functions can specify default values, as shown below. Note that all default para
 
 ### Operator Overloading
 
-Operator overloading enables us to apply operators like + to objects that would otherwise not support these operations. For example, if we wanted to merge two BookShelves into one, we could overload the
-+ operator as follows.
+Operator overloading enables us to apply operators like + to objects that would otherwise not support these operations. For example, if we wanted to merge two BookShelves into one, we could overload the + operator as follows.
 
 1      Bookshelf  BookShelf::operator+(BookShelf  &other)  {  ... }
 
@@ -365,7 +362,7 @@ The code below implements this algorithm.
 12		}
 13	
 14		/* compute  start of  circular array,   and the  size  of  it */
-15		int start    size >  K ?   (size %  K)  :   0;
+15		int start =  size >  K ?   (size %  K)  :   0;
 16		int count =  min(K, size);
 17	
 18		/* print  elements in the order they were   read */
@@ -426,7 +423,7 @@ An STL map inserts the key/value pairs into a binary search tree based on the ke
 
 A hash table is traditionally implemented with an array of linked lists. When we want to insert a key/value pair, we map the key to an index in the array using a hash function. The value is then inserted into the linked list at that position.
 
-Note that the elements in a linked list at a particular index of the array do not have the same key. Rather, hashFunction ( key) is the same for these values. Therefore, in order to retrieve the value for a specific key, we need to store in each node both the exact key and the value.
+Note that the elements in a linked list at a particular index of the array do not have the same key. Rather, hashFunction(key) is the same for these values. Therefore, in order to retrieve the value for a specific key, we need to store in each node both the exact key and the value.
 
 To summarize, the hash table will be implemented with an array of linked lists, where each node in the linked list holds two pieces of data: the value and the original key. In addition, we will want to note the following design criteria:
 
@@ -472,9 +469,9 @@ Consider the following code.
 16	};
 17	
 18	void main()  {
-19		Shape   *  x  = new  Shape();
+19		Shape   * x  = new  Shape();
 20		x->circumference();  // "Circumference of  Base   Class"
-21		Shape   *y  = new  Triangle();
+21		Shape   * y  = new  Triangle();
 22		y->circumference();  // "Circumference of Triangle  Class"
 23	}
 ```
@@ -542,7 +539,7 @@ Volatile variables are not optimized, which can be very useful. Imagine this fun
 1     int opt  =  1;
 2     void  Fn(void)   {
 3         start:
-4               if (opt == 1)  goto   start;
+4               if (opt == 1)  goto start;
 5               else  break;
 6     }
 ```
@@ -552,7 +549,7 @@ At first glance, our code appears to loop infinitely. The compiler may try to op
 2          start:
 3               int opt  =  1;
 4               if (true)
-5               goto   start;
+5               goto start;
 6       }
 ```
 This becomes an infinite loop. However, an external operation might write 'O'to the location of variable opt, thus breaking the loop.
@@ -592,7 +589,7 @@ Let's think about why we have virtual methods to start with. Suppose we have the
 12	p->f();
 ```
 
-Calling p->f() will result in a call to Foo: :f().This is because pis a pointer to Foo, and f() is not virtual.
+Calling p->f() will result in a call to Foo: :f(). This is because pis a pointer to Foo, and f() is not virtual.
 
 To ensure that p->f() will invoke the most derived implementation of f(), we need to declare f() to be a virtual function.
 
@@ -614,7 +611,7 @@ Thus, we have a simple recursive algorithm:
 ```c
 1 	typedef map<Node*,  Node*> NodeMap;
 2	
-3 	Node * copy_recursive(Node   * cur, NodeMap  & nodeMap)   {
+3 	Node * copy_recursive(Node * cur, NodeMap  & nodeMap)   {
 4 		if (cur == NULL)   {
 5 			return NULL;
 6 		}
@@ -626,8 +623,8 @@ Thus, we have a simple recursive algorithm:
 12		}
 13	
 14		Node*  node =  new Node;
-15		nodeMap[cur] =  node; //  map current before   traversing links
-16		node->ptrl =  copy_recursive(cur->ptrl,  nodeMap);
+15		nodeMap[cur] =  node; // map current before   traversing links
+16		node->ptr1 =  copy_recursive(cur->ptr1,  nodeMap);
 17		node->ptr2  =  copy_recursive(cur->ptr2,  nodeMap);
 18		return node;
 19	}
@@ -653,7 +650,7 @@ In terms of the approach, we need a reference count variable that is incremented
 ```c
 1	template   <class  T>  class SmartPointer {
 2		/* The smart  pointer class needs  pointers to  both  the  object itself and to  the
-3		*  ref count.   These must be  pointers, rather than  the  actual object or  ref count
+3		*  ref count. These must be  pointers, rather than  the  actual object or  ref count
 4		*  value,   since  the  goal  of  a  smart  pointer is that the  reference count  is
 5		*  tracked across  multiple smart  pointers to  one object. */
 6		T*   obj;
@@ -668,8 +665,8 @@ We know we need constructors and a single destructor for this class, so let's ad
 4	
 5 		SmartPointer(SmartPointer<T>& sptr)  {
 6 		   /* This  constructor creates a new smart  pointer that  points to  an existing
-7 			* object.  We   will need to  first set  obj  and ref_count to  pointer to  sptr's  obj
-8 			* and ref_count.  Then,  because  we  created a new reference to  obj,   we  need to
+7 			* object. We will need to  first set  obj  and ref_count to  pointer to  sptr's  obj
+8 			* and ref_count. Then, because we created a new reference to  obj, we  need to
 9 			* increment  ref_count. */
 10		}
 11	
@@ -704,7 +701,7 @@ Getting just the approach, even without filling in the complicated C++ syntax, w
 13				}
 14		
 15				/* Override  the  equal  operator,  so  that when you set one smart  pointer equal  to
-16				 * another   the  old  smart  pointer has  its  reference count  decremented  and the  new
+16				 * another the  old  smart  pointer has  its  reference count  decremented  and the  new
 17				 * smart  pointer has  its  reference count  incrememented. */
 18				SmartPointer<T> &  operator=(SmartPointer<T>  & sptr) {
 19					if (this == &sptr)  return *this;
@@ -750,6 +747,7 @@ The code for this problem is complicated, and you probably wouldn't be expected 
 ```
 EXAMPLE
 align_malloc(1000, 128) will return a memory address that is a multiple of 128 and that points to memory of size 1000 bytes.
+
 aligned_free() will free memory allocated by align_malloc.
 ```
 
@@ -803,13 +801,12 @@ The code below implements this approach.
 17	}
 ```
 
-Let's look at the pointer arithmetic in lines 9 and 15.  If we treat p2 as a void** (or an array of void\*'s), we can just look at the index -  1 to retrieve pl.
+Let's look at the pointer arithmetic in lines 9 and 15.  If we treat p2 as a void** (or an array of void\*'s), we can just look at the index -  1 to retrieve p1.
 
-In aligned_free, we take p2 as the same p2 returned  from aligned_malloc. As before, we know that the value of pl (which points to the beginning of the full memory block) was stored just before p2. By freeing pl, we deallocate the whole memory block.
+In aligned_free, we take p2 as the same p2 returned  from aligned_malloc. As before, we know that the value of p1 (which points to the beginning of the full memory block) was stored just before p2. By freeing pl, we deallocate the whole memory block.
 
 
-**12.11 2D Alloc:**  Write a function in C  called my2DA1loc which allocates a two-dimensional  array.
-Minimize the number  of calls to malloc and make sure that  the memory is accessible by the notation arr[i][j].
+**12.11 2D Alloc:**  Write a function in C  called my2DA1loc which allocates a two-dimensional  array. Minimize the number  of calls to malloc and make sure that  the memory is accessible by the notation arr[i][j].
 
 SOLUTION
 
@@ -824,8 +821,8 @@ The code below implements this.
 l	int** my2DA1loc(int  rows,   int cols) {
 2		int**  rowptr;
 3		int i;
-4		rowptr   =  (int**) malloc(rows  * sizeof(int*));
-5		for   (i =  0;  i <   rows;   i++)    {
+4		rowptr =  (int**) malloc(rows  * sizeof(int*));
+5		for (i =  0;  i <   rows;   i++)    {
 5			rowptr[i]  =  (int*)  malloc(cols * sizeof(int));
 7		}
 8		return rowptr;
@@ -860,7 +857,7 @@ To implement this solution, we do the following.
 5 		int**  rowptr =  (int**)malloc(header +  data);
 6 		if (rowptr ==  NULL) return NULL;
 7
-8 		int* buf   =  (int*)  (rowptr +  rows);
+8 		int* buf =  (int*)  (rowptr +  rows);
 9 		for (i =  0;   i <   rows; i++)  {
 10			rowptr[i]  =  buf   +  i *  cols;
 11		}

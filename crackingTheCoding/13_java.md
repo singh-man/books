@@ -6,15 +6,12 @@ in testing a candidate's aptitude than a candidate's knowledge (and  which  have
 
 ### How to Approach
 
-As these questions focus so much on knowledge, it may seem silly to talk about an approach to these prob­
-lems. After all, isn't it just about knowing the  right  answer?
+As these questions focus so much on knowledge, it may seem silly to talk about an approach to these prob­lems. After all, isn't it just about knowing the  right  answer?
 
 Yes and  no. Of course, the  best thing you can do to master these questions is to learn Java inside  and  out. But, if you do get  stumped, you can try to tackle it with the following approach:
 
 1.  Create an example of the  scenario, and  ask yourself  how things should play out.
-
 2.  Ask yourself  how other languages would handle this scenario.
-
 3.  Consider how you would design this situation if you were the language designer. What would the impli- cations of each choice be?
 
 Your interviewer may be equally-or more-impressed if you can derive the  answer than if you automati­ cally knew it. Don't try to bluff though. Tell the  interviewer, "I'm not  sure  I can recall the  answer,  but let me see if I can figure  it out. Suppose we have this code..."
@@ -25,8 +22,8 @@ Your interviewer may be equally-or more-impressed if you can derive the  answer 
 Overloading is a term used to describe when two  methods have the  same name but differ in the  type or number of arguments.
 
 ```
-1      public  double computeArea(Circle c)  { ... }
-2      public  double computeArea(Square s)  { ... }
+1   public  double computeArea(Circle c)  { ... }
+2   public  double computeArea(Square s)  { ... }
 ```
 
 Overriding, however, occurs when a method shares the  same name and  function signature as another method in its super class.
@@ -39,9 +36,9 @@ Overriding, however, occurs when a method shares the  same name and  function si
 5 		public abstract  double  computeArea();
 6 	}
 7	
-8 	public   class Circle extends  Shape {
-9 		private double  rad =  5;
-10		public void printMe()   {
+8 	public class Circle extends  Shape {
+9 		private double rad =  5;
+10		public void printMe() {
 11			System.out.println("I am  a  circle.");
 12		}
 13	
@@ -66,7 +63,7 @@ Overriding, however, occurs when a method shares the  same name and  function si
 32			shapes[0] = circle;
 33			shapes[1] = ambiguous;
 34	
-35			for  (Shape  s  :   shapes)   {
+35			for (Shape  s  : shapes)   {
 36				s.printMe();
 37				System.out.println(s.computeArea());
 38			}
@@ -114,12 +111,12 @@ LinkedList: LinkedList is, of course, Java's built-in LinkedList class. Though i
 6          System.out.println(iter.next());
 7      }
 ```
-HashMap:The HashMap collection is widely used, both in interviews and in the real world. We've provided a snippet of the syntax below.
+HashMap: The HashMap collection is widely used, both in interviews and in the real world. We've provided a snippet of the syntax below.
 ```java
-1     HashMap<String,   String> map =  new HashMap<String,  String>();
+1     HashMap<String, String> map =  new HashMap<String,  String>();
 2     map.put("one", "uno");
 3     map.put("two",  "dos");
-4     System .  out. println(map. get("one"));
+4     System.out.println(map. get("one"));
 ```
 Before your interview, make sure you're very comfortable with the above syntax. You'll need it.
 
@@ -130,7 +127,6 @@ Interview Questions
 ---
 
 Please note that because virtually all the solutions in this book are implemented with Java, we have selected only a small number of questions for this chapter. Moreover, most of these questions deal with the "trivia" of the languages, since the rest of the book is filled with Java programming questions.
-
 
 
 **13.1     Private Constructor:** In terms of inheritance, what is the effect of keeping a constructor private?
@@ -155,7 +151,7 @@ Yes, it will get executed. The finally block gets executed when the try block ex
 Note that there are some cases in which the finally block will not get executed, such as the following: 
 
 - If the virtual machine exits during try/catch block execution.
-- If the thread which is executing during the try/ catch block gets killed.
+- If the thread which is executing during the try/catch block gets killed.
 
  
 **13.3    Final, etc.:** What is the difference between final, finally, and finalize?
@@ -165,7 +161,7 @@ SOLUTIONS
  
 ---
 
-Despite their similar sounding names, final, finally and finalize have very different purposes. To speak in very general terms, final is used to control whether a variable, method, or class is "change­ able". The finally keyword is used in a try/ catch block to ensure that a segment of code is always executed. The finalize() method is called by the garbage collector once it determines that no more references exist.
+Despite their similar sounding names, final, finally and finalize have very different purposes. To speak in very general terms, final is used to control whether a variable, method, or class is "change­able". The finally keyword is used in a try/ catch block to ensure that a segment of code is always executed. The finalize() method is called by the garbage collector once it determines that no more references exist.
 
 Further detail on these keywords and methods is provided below.
 
@@ -193,11 +189,11 @@ Watch how this plays out in the  example below.
 4 	}
 5	
 6 	public static  String foo() {
-7 		int X =   0;
-8 		int y =   5;
+7 		int X =  0;
+8 		int y =  5;
 9 		try {
 10			System.out.println("start  try");
-11			int b  =   y  / x;
+11			int b  =   y/x;
 12			System.out.println("end try");
 13			return  "returned  from try";
 14		}  catch (Exception ex)  {
@@ -235,7 +231,7 @@ Look carefully  at lines 3 to 5 in the  output. The catch block is fully execute
 
 **finalize()**
 
-The automatic garbage collector calls the finalize () methodjust before actually destroying the  object. A class can therefore override the  finalize () method from the  Object class in order to define custom behavior during garbage collection.
+The automatic garbage collector calls the finalize() method just before actually destroying the  object. A class can therefore override the  finalize() method from the  Object class in order to define custom behavior during garbage collection.
 ```
 1   protected  void  finalize() throws  Throwable {
 2        /* Close open   files,  release resources, etc */
@@ -276,7 +272,7 @@ To illustrate this, consider the  code below:
 2 	template<class T> class MyClass   {
 3 	public:
 4 		static int val;
-5 		MyClass(int v) {  val  = v;}
+5 		MyClass(int v) { val  = v; }
 6 	};
 7	
 8 	/*** MyClass.cpp ***/
@@ -287,15 +283,15 @@ To illustrate this, consider the  code below:
 13	template class  MyClass<Bar>;
 14	
 15	/*** main.cpp ***/
-16	MyClass<Foo> * fool = new MyClass<Foo>(10);
+16	MyClass<Foo> * foo1 = new MyClass<Foo>(10);
 17	MyClass<Foo> * foo2 = new MyClass<Foo>(15);
-18	MyClass<Bar> * barl = new MyClass<Bar>(20);
+18	MyClass<Bar> * bar1 = new MyClass<Bar>(20);
 19	MyClass<Bar> * bar2 = new MyClass<Bar>(35);
 20	
-21	int fl =  fool->val;  //  will equal 15
-22	int f2 =  foo2->val; //  will equal 15
-23	int bl =  barl->val;  //  will equal 35
-24	int b2 =  bar2->val; //  will equal 35
+21	int fl =  foo1->val;  //  will equal 15
+22	int f2 =  foo2->val;  //  will equal 15
+23	int bl =  bar1->val;  //  will equal 35
+24	int b2 =  bar2->val;  //  will equal 35
 ```
 
 In Java, static variables are shared across instances of MyClass, regardless of the different type parameters. Java generics and C++ templates have a number of other differences. These include:
@@ -343,14 +339,13 @@ The output for each will look like the results below.
 | (any ordering) | {1, -1, 0}    | {-1, 0, 1} |
 
 
-Very important: The output  of LinkedHashMap and TreeMap  must look like the above. For HashMap, the output was, in my own tests, { 0,   1,  -1}, but it could be any ordering. There is no guarantee on the ordering.
+Very important: The output  of LinkedHashMap and TreeMap  must look like the above. For HashMap, the output was, in my own tests, {0,   1,  -1}, but it could be any ordering. There is no guarantee on the ordering.
 
 When might you need ordering in real life?
 
 - Suppose you were creating a mapping  of names to Person objects. You might want to periodically output the people in alphabetical order by name. A TreeMap lets you do this.
 - A TreeMap  also offers a way to, given a name, output  the next 10 people. This could be useful for a "More" function in many applications.
-- A LinkedHashMap is useful whenever you need the ordering of keys to match the ordering of inser­
-tion. This might be useful in a caching situation, when you want to delete the oldest item.
+- A LinkedHashMap is useful whenever you need the ordering of keys to match the ordering of inser­tion. This might be useful in a caching situation, when you want to delete the oldest item.
 
 Generally, unless there is a reason not to, you would use HashMap. That is, if you need to get the keys back in insertion order, then use LinkedHashMap. If you need to get the keys back in their true/natural  order, then use TreeMap. Otherwise, HashMap is probably best. It is typically faster and requires less overhead.
 
@@ -373,7 +368,7 @@ The code below offers an example of object reflection.
 
 ```java
 1 	/*Parameters */
-2 	Object[]  doubleArgs   =  new Object[]  { 4.2,  3.9  };
+2 	Object[]  doubleArgs =  new Object[]  { 4.2,  3.9  };
 3	
 4 	/*  Get  class */
 5 	Class   rectangleDefinition  =  Class.forName("MyProj.Rectangle");
@@ -382,7 +377,7 @@ The code below offers an example of object reflection.
 8 	Class[]  doubleArgsClass =  new Clas s[] {double.clas s,  double.class};
 9 	Constructor doubleArgsConstructor =
 10			rectangleDefinition.getConstructor(doubleArgsClass);
-11	Rectangle rectangle  =  (Rectangle) doubleArgsConstructor.newlnstance(doubleArgs);
+11	Rectangle rectangle  =  (Rectangle) doubleArgsConstructor.newInstance(doubleArgs);
 12	
 13	/*  Equivalent:  Double area  =  rectangle.area();  */
 14	Method  m  =  rectangleDefinition.getDeclaredMethod("area");
@@ -399,9 +394,9 @@ This code does the equivalent of:
 
 Of course, it doesn't seem very useful in the above example, but reflection can be very useful in some cases. Three main  reasons are:
 
-1.  It can help you observe or manipulate the runtime behavior of applications.
-2.   It can help you debug or test programs, as you have direct access to methods, constructors, and fields.
-3.  You can call methods by name when you don't know  the  method in advance. For example, we may  let the user pass  in a class name, parameters for the constructor, and a method name. We can then use this information to create an object and  call a method. Doing  these operations without reflection would require a complex series of if-statements, if it's possible at all.
+1. It can help you observe or manipulate the runtime behavior of applications.
+2. It can help you debug or test programs, as you have direct access to methods, constructors, and fields.
+3. You can call methods by name when you don't know  the  method in advance. For example, we may  let the user pass  in a class name, parameters for the constructor, and a method name. We can then use this information to create an object and  call a method. Doing  these operations without reflection would require a complex series of if-statements, if it's possible at all.
 
 
 **13.7 	Lambda Expressions:** There is  a  class  Country  that has  methods getContinent() and getPopulation(). Write a function int getPopulation(List<Country>  countries, String  continent) that computes the total population of a given  continent, given  a list of all
@@ -418,7 +413,7 @@ Without lambda expressions, this is fairly straightforward to do.
 ```java
 1	int  getPopulation(List<Country> countries,   String  continent)  {
 2		int sum  =  0;
-3		for  (Country c   :   countries)  {
+3		for  (Country c : countries)  {
 4			if (c.getContinent().equals(continent))  {
 5				sum  +=  c.getPopulation();
 6			}
@@ -433,7 +428,7 @@ First, we use filter to get a list of the countries in the specified continent.
 
 ```java
 1   Stream<Country> northAmerica  =  countries.stream().filter(
-2        country  ->  {  return country.getContinent().equals(continent);}
+2        country  ->  { return country.getContinent().equals(continent); }
 3   );
 ```
 Second, we convert this into a list of populations using map.
@@ -451,7 +446,7 @@ This function puts it all together.
 1 	int  getPopulation(List<Country> countries,  String  continent)  {
 2 		/* Filter  countries. */
 3 		Stream<Country>  sublist =  countries.stream().filter(
-4 			country  ->  {  return  country.getContinent().equals(continent);}
+4 			country  ->  { return country.getContinent().equals(continent); }
 5 		);
 6	
 7 		/* Convert to list of populations. */
@@ -469,7 +464,7 @@ Alternatively, because of the  nature of this specific  problem, we can  actuall
 ```java
 1  int  getPopulation(List<Country> countries,  String  continent)  {
 2        Stream<Integer> populations  =  countries.stream().map(
-3              c  ->  c.getContinent().equals(continent)  ?  c.getPopulation()  :  0);
+3              c -> c.getContinent().equals(continent) ? c.getPopulation() : 0);
 4        return populations.reduce(0, (a,  b) ->  a  +  b);
 5  }
 ```
@@ -486,12 +481,12 @@ It's tempting to approach this problem by picking a subset size from 0 to N and 
 
 That creates two  issues:
 
-1. We'd have  to weight those probabilities. If N   >  1, there are more subsets of size N/2 than there are of subsets of size N (of which  there is always  only one).
+1. We'd have  to weight those probabilities. If N > 1, there are more subsets of size N/2 than there are of subsets of size N (of which  there is always  only one).
 2. It's actually more difficult  to  generate a subset of a restricted size (e.g., specifically 10) than it is to generate a subset of any size.
 
 Instead, rather than generating  a subset based on sizes, let's think about it based on elements. (The fact that we're told to use lambda expressions is also a hint that we should think about some sort of iteration or processing through the elements.)
 
-Imagine we were iterating through { 1,   2,   3} to generate a subset. Should 1 be in this subset?
+Imagine we were iterating through {1,   2,   3} to generate a subset. Should 1 be in this subset?
 
 We've got two choices: yes or no. We need to weight the probability of "yes" vs. "no" based on the percent of subsets that contain 1. So, what percent of elements contain 1?
 
@@ -501,7 +496,7 @@ For any specific element, there are as many subsets that contain the element as 
 {}		 {1}
 {2}      {1,  2}
 {3}      {1,  3}
-{2,  3}  {l,  2, 3} 
+{2,  3}  {1,  2, 3} 
 ```
 Note how the difference between the subsets on the left and the subsets on the right is the existence of
 
@@ -514,7 +509,7 @@ Without lambda expressions, we can write something like this:
 1 	List<Integer>  getRandomSubset(List<Integer> list) {
 2 		List<Integer> subset =  new ArrayList<Integer>();
 3 		Random  random =  new Random();
-4 		for (int item   :   list) {
+4 		for (int item : list) {
 5 			/* Flip   coin.   */
 6 			if (random.nextBoolean())  {
 7 				subset.add(item);

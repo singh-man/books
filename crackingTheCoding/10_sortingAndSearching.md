@@ -16,11 +16,11 @@ By scanning  through the various sorting algorithms, we might notice that bucket
 
 Learning (or re-learning) the common sorting algorithms is a great way to boost your performance.  Of the five algorithms  explained below, Merge Sort, Quick Sort and Bucket Sort are the most commonly used in interviews.
 
-**Bubble Sort | Runtime: O(n²) average and worst case. Memory: O(1) .**
+**Bubble Sort | Runtime: O(n²) average and worst case. Memory: O(1).**
 
 In bubble sort, we start at the beginning of the array and swap the first two elements  if the first is greater than the second. Then, we go to the next pair, and so on, continuously making sweeps of the array until it is sorted. In doing so, the smaller items slowly "bubble" up to the beginning of the list.
 
-**Selection Sort | Runtime: O(n²) average and worst case. Memory: O(1) .**
+**Selection Sort | Runtime: O(n²) average and worst case. Memory: O(1).**
 
 Selection sort is the child's algorithm: simple, but inefficient.  Find the smallest element using a linear scan and move it to the front (swapping it with the front element). Then, find the second smallest and move it, again doing a linear scan. Continue doing this until all the elements are in place.
 
@@ -40,7 +40,7 @@ The merge method operates by copying all the elements from the target array segm
 7       if (low <   high)  {
 8           int middle  =  (low  +  high) /    2;
 9           mergesort(array, helper,  low,  middle); //  Sort  left half
-10          mergesort(array,  helper,  middle + l,   high); //  Sort  right half
+10          mergesort(array,  helper,  middle + 1,   high); //  Sort  right half
 11          merge(array, helper,  low,  middle,  high); //  Merge them
 12      }
 13  }
@@ -52,7 +52,7 @@ The merge method operates by copying all the elements from the target array segm
 19      }
 20  
 21      int helperleft =  low;
-22      int helperRight = middle  +  l;
+22      int helperRight = middle  + 1;
 23      int current =  low;
 24  
 25      /* Iterate through  helper array.  Compare  the  left and  right half,  copying back
@@ -101,7 +101,7 @@ If we repeatedly partition the array (and its sub-arrays) around an element, the
 9   }
 10  
 11  int partition(int[] arr, int left,  int right) {
-12      int pivot   =  arr[(left + right) I 2];  // Pick  pivot  point
+12      int pivot =  arr[(left + right) I 2];  // Pick  pivot  point
 13      while  (left <= right) {
 14          // Find element  on left that should  be on right
 15          while  (arr[left] < pivot) left++;
@@ -131,13 +131,13 @@ Unlike comparison sorting algorithms, which cannot perform better than O(n log(n
 
 When we think of searching algorithms, we generally think of binary search. Indeed, this is a very useful algorithm to study.
 
-In binary search, we look for an element xin a sorted array by first comparing xto the midpoint of the array. If xis less than the midpoint, then we search the left half of the array. If xis greater than the midpoint, then we search the right half of the array. We then repeat this process, treating the left and right halves as subar­ rays. Again, we compare xto the midpoint of this subarray and then search either its left or right side. We repeat this process until we either find x or the subarray has size O.
+In binary search, we look for an element x in a sorted array by first comparing xto the midpoint of the array. If x is less than the midpoint, then we search the left half of the array. If x is greater than the midpoint, then we search the right half of the array. We then repeat this process, treating the left and right halves as subar­ rays. Again, we compare xto the midpoint of this subarray and then search either its left or right side. We repeat this process until we either find x or the subarray has size O.
 
 Note that although the concept is fairly simple, getting all the details right is far more difficult than you might think. As you study the code below, pay attention to the plus ones and minus ones.
 
 ```java
 1   int  binarySearch(int[] a,   int x)  {
-2       int low  =  0;
+2       int low  = 0;
 3       int high = a.length -  1;
 4       int mid;
 5   
@@ -155,13 +155,13 @@ Note that although the concept is fairly simple, getting all the details right i
 17  }
 18  
 19  int  binarySearchRecursive(int[] a,  int x,  int low,  int high)   {
-20      if (low  >   high) return  -1; //  Error
+20      if (low > high) return  -1; //  Error
 21  
 22      int mid     (low  + high) /    2;
 23      if  (a[mid] <   x) {
 24          return  binarySearchRecursive(a, x,  mid + 1,  high);
-25      }  else if  (a[mid] >   x) {
-26          return  binarySearchRecursive(a, x,  low,  mid -  1);
+25      }  else if (a[mid] >   x) {
+26          return binarySearchRecursive(a, x,  low,  mid -  1);
 27      }  else {
 28          return mid;
 29      }
@@ -259,16 +259,16 @@ The code below implements this algorithm.
 2       HashMaplist<String, String>  m aplist =  new HashMaplist<String,  String>();
 3   
 4       /*  Group words by   anagram  */
-5       for  (String s  :   array) {
+5       for  (String s : array) {
 6           String key =  sortChars(s);
 7           maplist.put(key,   s);
 8       }
 9   
 10      /*Convert hash table  to array*/
 11      int  index =  0;
-12      for (String key :   maplist.keySet()) {
+12      for (String key : maplist.keySet()) {
 13          ArrayList<String> list = maplist.get(key);
-14          for (String t :  list) {
+14          for (String t : list) {
 15              array[index] =  t;
 16              index++;
 17          }
@@ -303,11 +303,11 @@ If this problem smells  like binary search to you, you're  right!
 
 In classic binary search, we compare x with  the  midpoint to figure  out  if x belongs on the  left or the right side. The  complication here is that the  array  is rotated and may  have  an  inflection point. Consider, for example, the  following two arrays:
 ```
-Arrayl:  {10, 15,  20,      0,   5} 
-Array2:  {50,      5,  20,    30,   40}
+Arrayl:  {10, 15,  20,  0, 5} 
+Array2:  {50,  5,  20, 30, 40}
 ```
 
-Note  that both arrays have a midpoint of 20, but5appears on the  left side of one and on the  right  side of the  other. Therefore, comparing x with the midpoint is insufficient.
+Note  that both arrays have a midpoint of 20, but 5 appears on the  left side of one and on the  right  side of the  other. Therefore, comparing x with the midpoint is insufficient.
 
 However,  if we  look  a bit  deeper, we  can  see  that one half  of the  array  must be  ordered  normally (in increasing order).  We can  therefore look  at  the  normally ordered half  to  determine whether we  should search the  left or right half.
 
@@ -360,7 +360,7 @@ Otherwise, we have no choice but to search both halves.
 38  }
 ```
 
-This code will run in O(log  n) if all the elements are unique. However, with many duplicates, the algo­ rithm is actually O( n). This is because with many duplicates, we will often have to search both the left and right sides of the array (or subarrays).
+This code will run in O(log  n) if all the elements are unique. However, with many duplicates, the algo­ rithm is actually O(n). This is because with many duplicates, we will often have to search both the left and right sides of the array (or subarrays).
 
 Note that while this problem is not conceptually very complex, it is actually very difficult to implement flaw­ lessly. Don't feel bad if you had trouble implementing it without a few bugs. Because of the ease of making off-by-one and other minor errors, you should make sure to test your code very thoroughly.
 
@@ -383,7 +383,7 @@ But how much bigger? If we just went through the list linearly-1, then 2, then 3
 It's better to back off exponentially. Try 1, then 2, then 4, then 8, then 16, and so on. This ensures that, if the list has length n, we'll find the length in at most O(log  n) time.
 
 
-> Why O(log  n)? Imagine we start with pointer q at q   =  1. At each iteration, this pointer q doubles, until q is bigger than the length n. How many times can q double in size before it's bigger than n?Or, in other words, for what value of k does 2   = n?This expression is equal when k  = log n, as this is precisely what log means. Therefore, it will take O(log n) steps to find the length.
+> Why O(log  n)? Imagine we start with pointer q at q =  1. At each iteration, this pointer q doubles, until q is bigger than the length n. How many times can q double in size before it's bigger than n?Or, in other words, for what value of k does 2 = n? This expression is equal when k  = log n, as this is precisely what log means. Therefore, it will take O(log n) steps to find the length.
 
 
 Once we find the length, we just perform a (mostly) normal binary search. I say "mostly" because we need to make one small tweak. If the mid point is -1, we need to treat this as a "too big" value and search left. This is on line 16 below.
@@ -393,10 +393,10 @@ There's one more little tweak. Recall that the way we figure out the length is b
 ```java
 1   int  search(Listy list, int value)   {
 2       int index =  1;
-3       while  (list.elementAt(index)  != -1 &&   list.elementAt(index)  <   value)   {
+3       while (list.elementAt(index) != -1 && list.elementAt(index) < value) {
 4           index  *= 2;
 5       }
-6       return  binarySearch(list, value,   index / 2,  index);
+6       return binarySearch(list, value, index / 2,  index);
 7   }
 8   
 9   int  binarySearch(Listy list,  int value,   int low,  int high)   {
@@ -405,7 +405,7 @@ There's one more little tweak. Recall that the way we figure out the length is b
 12      while  (low <= high)   {
 13          mid =  (low + high) /  2;
 14          int middle  =  list.elementAt(mid);
-15          if (middle  >   value  ||  middle  ==   -1)  {
+15          if (middle  >  value  ||  middle  ==   -1)  {
 16              high  =  mid - 1;
 17          }  else if (middle  <   value)   {
 18              low =  mid +  1;
@@ -446,7 +446,7 @@ The recursive code below to solve this problem can easily be modified to be iter
 5   
 6       /* If mid is empty,  find closest non-empty  string. */
 7       if (strings[mid].isEmpty())  {
-8           int left = mid -  1;
+8           int left  = mid -  1;
 9           int right = mid +  1;
 10          while  (true) {
 11              if (left < first &&   right > last) {
@@ -467,14 +467,14 @@ The recursive code below to solve this problem can easily be modified to be iter
 26      if (str.equals(strings[mid])) {//Found  it!
 27          return mid;
 28      }  else if (strings[mid].compareTo(str) <  0)  {//Search  right
-29          return search(strings, str,  mid + 1,   last);
+29          return search(strings, str, mid + 1, last);
 30      }  else {//Search  left
-31          return search(strings,  str, first, mid -  1);
+31          return search(strings, str, first, mid -  1);
 32      }
 33  }
 34  
 35  int  search(String[] strings,  String str)  {
-36      if (strings == null  ||  str == null  || str == "") {
+36      if (strings == null || str == null  || str == "") {
 37          return -1;
 38      }
 39      return search(strings, str,  0,  strings.length -  1);
@@ -519,26 +519,26 @@ There are a total of 2³², or 4 billion, distinct integers possible and 231 non
 
 We have 1 GB of memory, or 8 billion bits. Thus, with 8 billion bits, we can map all possible integers to a distinct bit with the available memory. The logic is as follows:
 
-1.  Create a bit vector (BV) with 4 billion bits. Recall that a bit vector is an array that compactly stores boolean values by using an array of ints (or another data type). Each int represents 32 boolean values.
-2.  Initialize BV with all 0s.
-3.  Scan all numbers (num) from the file and call BV. set (num, 1) .
-4.  Now scan again BV from the 0th index.
-5.  Return the first index which has a value of 0. 
+1. Create a bit vector (BV) with 4 billion bits. Recall that a bit vector is an array that compactly stores boolean values by using an array of ints (or another data type). Each int represents 32 boolean values.
+2. Initialize BV with all 0s.
+3. Scan all numbers (num) from the file and call BV. set (num, 1) .
+4. Now scan again BV from the 0th index.
+5. Return the first index which has a value of 0. 
 
 The following code demonstrates  our algorithm.
 
 ```java
-1   long  numberOflnts   =  ((long) Integer.MAX_VALUE)  + 1;
-2   byte[] bitfield  = new byte   [(int) (numberOfints / 8)];
+1   long numberOflnts =  ((long) Integer.MAX_VALUE)  + 1;
+2   byte[] bitfield  = new byte [(int) (numberOfints / 8)];
 3   String  filename = .....
 4   
 5   void  findOpenNumber() throws FileNotFoundException  {
-6       Scanner  in =  new Scanner(new  FileReader(filename));
-7       while  (in.hasNextint()) {
+6       Scanner in =  new Scanner(new FileReader(filename));
+7       while (in.hasNextint()) {
 8           int n  =  in.nextlnt ();
-9           /* Finds   the   corresponding number in the   bitfield by using  the   OR  operator to
-10           *  set  the   nth  bit of  a  byte   (e.g., 10  would  correspond to  the   2nd bit of
-11           *  index   2 in the  byte   array). */
+9           /* Finds the corresponding number in the bitfield by using the OR  operator to
+10           * set the nth bit of a byte (e.g., 10  would correspond to  the 2nd bit of
+11           * index 2 in the  byte   array). */
 12          bitfield [n  / 8]   |= 1  << (n  %  8);
 13      }
 14  
@@ -557,9 +557,9 @@ The following code demonstrates  our algorithm.
 
 **Follow Up: What if we have only 10 MB memory?**
 
-It's possible to find a missing integer with two passes of the data set. We can divide up the integers into blocks of some size (we'll discuss how to decide on a size later). Let's just assume that we divide up the integers into blocks of 1000. So, block O represents the numbers O through 999, block 1 represents numbers 1000 - 1999, and so on.
+It's possible to find a missing integer with two passes of the data set. We can divide up the integers into blocks of some size (we'll discuss how to decide on a size later). Let's just assume that we divide up the integers into blocks of 1000. So, block 0 represents the numbers 0 through 999, block 1 represents numbers 1000 - 1999, and so on.
 
-Since all the values are distinct, we know how many values we should find in each block. So, we search through  the file and count how many values are between  O and 999, how many are between  1000 and 1999, and so on. If we count only 999 values in a particular range, then we know that a missing int must be in that range.
+Since all the values are distinct, we know how many values we should find in each block. So, we search through  the file and count how many values are between 0 and 999, how many are between  1000 and 1999, and so on. If we count only 999 values in a particular range, then we know that a missing int must be in that range.
 
 In the second pass, we'll actually look for which number  in that range is missing. We use the bit vector approach from the first part of this problem. We can ignore any number outside of this specific range.
 
@@ -590,14 +590,14 @@ These conditions give us a good amount of "wiggle room;" but the nearer to the m
 
 The below code provides one implementation for this algorithm.
 ```java
-1   int  findOpenNumber(String filename)  throws   FileNotFoundException  {
+1   int  findOpenNumber(String filename)  throws FileNotFoundException  {
 2       int  rangeSize =   (1  << 20);   // 2A20 bits (2A17  bytes)
 3   
 4       /*  Get  count   of  number of  values within each  block.  */
 5       int[]  blocks = getCountPerBlock(filename,  rangeSize);
 6   
 7       /*   Find  a  block   with  a  missing value.  */
-8       int  blocklndex    findBlockWithMissing(blocks, rangeSize);
+8       int blocklndex  = findBlockWithMissing(blocks, rangeSize);
 9       if (blocklndex  <   0)  return  -1;
 10  
 11      /*  Create  bit vector for  items  within  this range. */
@@ -608,7 +608,7 @@ The below code provides one implementation for this algorithm.
 16      if (offset < 0)  return -1;
 17  
 18      /*  Compute  missing  value. */
-19      return blockindex   *  rangeSize + offset;
+19      return blockindex * rangeSize + offset;
 20  }
 21  
 22  /*  Get count  of  items  within  each range. */
@@ -619,7 +619,7 @@ The below code provides one implementation for this algorithm.
 27  
 28      Scanner in =  new Scanner  (new FileReader(filename));
 29      while  (in.hasNextint()) {
-30          int value    =   in.nextint();
+30          int value = in.nextint();
 31          blocks[value / rangeSize]++;
 32      }
 33      in.close();
@@ -637,14 +637,14 @@ The below code provides one implementation for this algorithm.
 45  }
 46  
 47  /*  Create  a bit vector for  the  values  within  a  specific range. */
-48  byte[]  getBitVectorForRange(String filename,  int  blockindex, int rangeSize)
-49  throws  FileNotFoundException  {
-50      int  startRange = blockindex   * rangeSize;
+48  byte[] getBitVectorForRange(String filename,  int  blockindex, int rangeSize)
+49      throws  FileNotFoundException  {
+50      int startRange = blockindex * rangeSize;
 51      int endRange  =  startRange + rangeSize;
 52      byte[] bitVector  =  new byte[rangeSize / Byte.SIZE];
 53  
 54      Scanner  in  = new Scanner(new FileReader(filename));
-55      while  (in.hasNextint()) {
+55      while (in.hasNextint()) {
 56          int value  =  in.nextint();
 57          /*  If the  number is inside the  block  that's missing  numbers,  we  record   it */
 58          if  (startRange <=     value  &&   value  < endRange) {
@@ -659,7 +659,7 @@ The below code provides one implementation for this algorithm.
 67  
 68  /*Find  bit index that  is  0 within  byte.   */
 69  int findZero(byte  b) {
-70      for  (int i = 0; i <  Byte.SIZE; i++) {
+70      for (int i = 0; i <  Byte.SIZE; i++) {
 71          int mask = 1  <<  i;
 72          if ((b & mask) ==  0) {
 73              return  i;
@@ -718,13 +718,13 @@ When we come across a duplicate element, we print it.
 19      }
 20  
 21      boolean get(int  pos) {
-22          int wordNumber  =  (pos >>  5);  // divide by  32
+22          int wordNumber =  (pos >>  5);  // divide by  32
 23          int bitNumber =  (pos &  0x1F);  // mod 32
 24          return (bitset[wordNumber]  &   (1 <<  bitNumber))  !=  0;
 25      }
 26  
 27      void set(int  pos)  {
-28          int wordNumber  =  (pos >>  5);  // divide by  32
+28          int wordNumber =  (pos >>  5);  // divide by  32
 29          int bitNumber =  (pos &  0x1F);  // mod 32
 30          bitset[wordNumber]   |=  1  <<  bitNumber;
 31      }
@@ -818,7 +818,7 @@ Let's again look at a simple example.
 
 We want to be able to leverage the sorting  property  to more efficiently  find an element. So, we might ask ourselves, what does the unique ordering property of this matrix imply about where an element might be located?
 
-We are told that every row and column is sorted. This means that element a[i][j] will be greater than the elements in row i between columns O and j -  1 and the elements in column j between rows O and i - 1.
+We are told that every row and column is sorted. This means that element a[i][j] will be greater than the elements in row i between columns 0 and j -  1 and the elements in column j between rows 0 and i - 1.
 
 Or, in other words:
 ```
@@ -857,22 +857,22 @@ Observe that since the diagonal is sorted, we can efficiently search it using bi
 The code below implements this algorithm.
 
 ```java
-1   Coordinate   findElement(int[][]  matrix, Coordinate  origin,  Coordinate  dest, int x) {
+1   Coordinate findElement(int[][]  matrix, Coordinate  origin,  Coordinate  dest, int x) {
 2       if  (!origin. inbounds(matrix) ||  ! dest.inbounds(matrix))  {
 3           return null;
 4       }
 5       if (matrix[origin.row][origin.column] == x) {
 6           return origin;
-7       }  else if  (!origin.isBefore(dest)) {
+7       }  else if (!origin.isBefore(dest)) {
 8           return null;
 9       }
 10  
 11      /* Set  start to  start of  diagonal and end to  the  end of  the  diagonal. Since  the
 12      * grid   may  not  be square,   the  end of  the  diagonal may  not  equal  dest. */
-13      Coordinate  start = (Coordinate) origin.clone();
-14      int  diagDist =  Math.min(dest.row  -  origin.row,  dest.column   -  origin.column);
-15      Coordinate  end =  new Coordinate(start.row +  diagDist,  start.column + diagDist);
-16      Coordinate  p =  new Coordinate(0,  0);
+13      Coordinate start = (Coordinate) origin.clone();
+14      int  diagDist =  Math.min(dest.row - origin.row, dest.column - origin.column);
+15      Coordinate end =  new Coordinate(start.row + diagDist, start.column + diagDist);
+16      Coordinate p =  new Coordinate(0,  0);
 17      
 18      /* Do  binary  search  on the  diagonal,  looking  for  the  first element>  x */
 19      while  (start.isBefore(end)) {
@@ -891,21 +891,21 @@ The code below implements this algorithm.
 32   }
 33  
 34   Coordinate  partitionAndSearch(int[][]  matrix, Coordinate   origin, Coordinate  dest,
-35   Coordinate   pivot, int x)  {
+35                      Coordinate   pivot, int x)  {
 36       Coordinate  lowerLeftOrigin =  new Coordinate(pivot.row, origin.column);
 37       Coordinate  lowerLeftDest =  new Coordinate(dest.row,  pivot.column -  1);
-38       Coordinate   upperRightOrigin  =  new Coordinate(origin.row,  pivot.column);
+38       Coordinate  upperRightOrigin  =  new Coordinate(origin.row,  pivot.column);
 39       coordinate upperRightDest   =  new Coordinate(pivot.row -  1,  dest.column);
 40   
-41       Coordinate   lowerLeft =  findElement(matrix,  lowerLeftOrigin,  lowerLeftDest, x);
+41       Coordinate lowerLeft =  findElement(matrix,  lowerLeftOrigin,  lowerLeftDest, x);
 42       if  (lowerleft ==  null) {
 43           return  findElement(matrix,  upperRightOrigin, upperRightDest, x);
 44       }
 45       return lowerleft;
 46   }
 47   
-48   Coordinate   findElement(int[][] matrix,   int x)  {
-49       Coordinate  origin =  new Coordinate(0,  0);
+48   Coordinate findElement(int[][] matrix,   int x)  {
+49       Coordinate origin =  new Coordinate(0,  0);
 50       coordinate dest   =  new Coordinate(matrix.length  -  1,  matrix[0].length  -  1);
 51       return  findElement(matrix, origin,  dest,  x);
 52   }
@@ -930,7 +930,7 @@ The code below implements this algorithm.
 71           return new Coordinate(row,  column);
 72       }
 73   
-74       public   void  setToAverage(Coordinate  min,  Coordinate  max) {
+74       public void  setToAverage(Coordinate  min,  Coordinate  max) {
 75           row =  (min.row  + max.row) /  2;
 76           column =  (min.column + max.column) /  2;
 77       }
@@ -945,8 +945,8 @@ You help  yourself out a  bit by separating code  out  into other methods. For  
 **10.10  Rank from  Stream:**   Imagine you are reading in a stream of integers. Periodically,  you wish to be able to look up the rank of a number x (the  number of values less than or equal to x). Implement the data structures and algorithms to support these operations. That is, implement the method track(int x), which is called when each number is generated, and the method getRankOfNumber(int  x), which returns the number of values less than or equal to x (not including x itself).
 ```
 EXAMPLE
-Stream(in order of appearance):5,    1,   4,   4,  5,  9,   7,   13,   3 
-getRankOfNumber(l) =  0
+Stream (in order of appearance):5,    1,   4,   4,  5,  9,   7,   13,   3 
+getRankOfNumber(1) =  0
 getRankOfNumber(3) =  1
 getRankOfNumber(4) =  3
 ```
@@ -985,16 +985,16 @@ Suppose we want to find the rank of 24 in the tree above. We would compare 24 wi
 
 Then, we compare 24 with node 25 and find that 24 must be on the left. The value of counter does not update, since we're not "passing over" any smaller nodes. The value of c ounter is still 5.
 
-Next, we compare 24 with node 23, and find that 24 must be on the right. Counter gets incremented by just 1   (to 6), since 23 has no left nodes.
+Next, we compare 24 with node 23, and find that 24 must be on the right. Counter gets incremented by just 1 (to 6), since 23 has no left nodes.
 
 Finally, we find 24 and we return c ounter: 6. 
 
 Recursively, the algorithm is the following:
-```java
+```
 1   int getRank(Node  node,  int x)  {
-2       if x is  node.data, return node.leftSize()
-3       if x is  on  left of  node,   return  getRank(node.left,  x)
-4       if x is  on  right of  node,   return node.leftSize() + 1 + getRank(node.right,  x)
+2       if x is node.data, return node.leftSize()
+3       if x is on left of  node,  return  getRank(node.left,  x)
+4       if x is on right of  node, return node.leftSize() + 1 + getRank(node.right,  x)
 5   }
 ```
 The full code for this is below.
@@ -1009,7 +1009,7 @@ The full code for this is below.
 8       }
 9   }
 10  
-11  int getRankOfNumber(int   number)  {
+11  int getRankOfNumber(int number)  {
 12      return root.getRank(number);
 13  }
 14  
@@ -1040,9 +1040,9 @@ The full code for this is below.
 39              if (left ==  null)  return -1;
 40              else return left.getRank(d);
 41          }  else {
-42              int  right_rank =  right  ==  null ?  -1 :    right.getRank(d);
+42              int  right_rank =  right  ==  null ?  -1 : right.getRank(d);
 43              if (right_rank ==  -1) return -1;
-44              else return left_size +  1 +  right_rank;
+44              else return left_size + 1 +  right_rank;
 45          }
 46      }
 47  }
@@ -1159,8 +1159,8 @@ As we noted before, if we make sure the peaks are in the right place then we kno
 The code to implement this is below.
 ```java
 1   void  sortValleyPeak(int[] array) {
-2       for (int i =    1;  i <   array.length;  i += 2)  {
-3           int  biggestindex = maxindex(array,  i -  1,   i, i + 1);
+2       for (int i = 1;  i <   array.length;  i += 2)  {
+3           int  biggestindex = maxindex(array,  i - 1, i, i + 1);
 4           if (i != biggestindex) {
 5               swap(array,  i,  biggestindex);
 6           }

@@ -905,7 +905,7 @@ Implementing this requires some careful work to prevent bugs.
 23			digits[1] = digits[0];
 24		}
 25	
-25		/* If day 2 matched  day 0 or day 1,  check day 3. Day 3 is  the  s ame  as day 2, but
+25		/* If day 2 matched  day 0 or day 1,  check day 3. Day 3 is  the  same  as day 2, but
 27		*  in cremented  by 1. */
 28		if (digits[2] == -1) {
 29			if (digits[3] == -1)  {/*    Day 3 didn't give  new result*/

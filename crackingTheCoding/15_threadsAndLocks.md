@@ -29,8 +29,8 @@ The Runnable interface has the following very simple structure.
 
 To create and use a thread using this interface, we do the following:
 
-1.  Create a class which implements the Runnable interface. An object of this class is a Runnable object.
-2.  Create an object of type Thread by passing a Runnable object as argument to the Thread constructor. The Thread object now has a Runnable object that implements the run() method.
+1. Create a class which implements the Runnable interface. An object of this class is a Runnable object.
+2. Create an object of type Thread by passing a Runnable object as argument to the Thread constructor. The Thread object now has a Runnable object that implements the run() method.
 3. The start() method is invoked on the Thread object created in the previous step. 
 
 For example:
@@ -52,13 +52,13 @@ For example:
 15      }
 16  }
 17  
-18  public   static void  main(String[]  args)   {
+18  public static void  main(String[]  args)   {
 19      RunnableThreadExample instance =  new RunnableThreadExample();
 20      Thread thread =  new Thread(instance);
 21      thread.start();
 22  
 23      /*  waits  until above thread counts  to  5 (slowly)  */
-24      while  (instance.count  != 5)   {
+24      while (instance.count  != 5)   {
 25          try   {
 26              Thread.sleep(250);
 27          }  catch  (InterruptedException exc)  {
@@ -81,10 +81,10 @@ The below code provides an example of this.
 1   public class ThreadExample extends Thread {
 2       int count  =  0;
 3   
-4       public void  run()   {
+4       public void run()   {
 5           System.out.println("Thread  starting.");
 6           try  {
-7               while  (count <  5)  {
+7               while (count <  5)  {
 8                   Thread.sleep(500);
 9                   System.out.println("In Thread, count is " + count);
 10                  count++;
@@ -98,10 +98,10 @@ The below code provides an example of this.
 18  
 19  public  class  ExampleB {
 20      public  static void main(String args[])  {
-21          ThreadExample instance  =  new   ThreadExample();
+21          ThreadExample instance  =  new ThreadExample();
 22          instance.start();
 23  
-24          while  (instance.count   !=  5) {
+24          while  (instance.count !=  5) {
 25              try  {
 26                  Thread.sleep(250);
 27              }  catch (InterruptedException exc) {
@@ -116,12 +116,10 @@ This code is very similar to the first approach. The difference is that since we
 
 **Extending the Thread Class vs. Implementing the  Runnable Interface**
 
-When creating threads, there are two reasons why implementing  the Runnable interface may be prefer­
-able to extending the Thread class:
+When creating threads, there are two reasons why implementing  the Runnable interface may be prefer­able to extending the Thread class:
 
 - Java does not support multiple inheritance. Therefore, extending the Thread class means that the subclass cannot extend any other class. A class implementing the Runnable interface will be able to extend another class.
-- A class might only be interested in being runnable, and therefore, inheriting the full overhead of the
-Thread class would be excessive.
+- A class might only be interested in being runnable, and therefore, inheriting the full overhead of the Thread class would be excessive.
 
 
 ### Synchronization and Locks
@@ -158,20 +156,19 @@ To clarify the last point, consider the following code:
 19              Thread.sleep(3000);
 20              System.out.println("Thread " + name + ".foo():  ending");
 21          } catch  (InterruptedException  exc)  {
-22              System.out.println("Thread  "  +  name +  ":  interrupted.");
+22              System.out.println("Thread " + name + ":  interrupted.");
 23          }
 24      }
 25  }
 ```
-Can two instances of MyClass call foo at the same time? It d epends. If they have the same instance of
-MyObject, then no. But, if they hold different references, then the a nswer is yes.
+Can two instances of MyClass call foo at the same time? It d epends. If they have the same instance of MyObject, then no. But, if they hold different references, then the a nswer is yes.
 ```java
 1    /*   Difference references  -  both  threads can  call  MyObject.foo() */
 2   MyObject objl  =  new MyObject();
 3   MyObject obj2  =  new MyObject();
-4   MyClass thread! =  new MyClass(obj1,  "1");
+4   MyClass thread1 =  new MyClass(obj1,  "1");
 5   MyClass thread2 =  new MyClass(obj2,  "2");
-6   threadl.start();
+6   thread1.start();
 7   thread2.start()
 8
 9   /* Same  reference to obj. Only one will be  allowed  to call foo,
@@ -179,7 +176,7 @@ MyObject, then no. But, if they hold different references, then the a nswer is y
 11  MyObject obj =  new MyObject();
 12  MyClass thread1 =  new MyClass(obj,  "1");
 13  MyClass thread2 =  new MyClass(obj,  "2");
-14  threadl.start()
+14  thread1.start()
 15  thread2.start()
 ```
 
@@ -228,7 +225,7 @@ Similarly, a block of code can be synchronized. This operates very similarly to 
 13  }
 ```
 
-Like synchronizing a method, only one thread per instance ofMyObj ect can execute the code within the synchronized block. That means that if threadl and thread2 have the same instance ofMyObject, only one will be allowed to execute the code block at a time.
+Like synchronizing a method, only one thread per instance of MyObj ect can execute the code within the synchronized block. That means that if thread1 and thread2 have the same instance ofMyObject, only one will be allowed to execute the code block at a time.
 
 
 **Locks**
@@ -318,6 +315,8 @@ A thread is a particular execution path of a process. When one thread  modifies 
 
 
 SOLUTION
+
+---
  
 
 This is a tricky question, but let's start with a possible solution.
@@ -358,7 +357,7 @@ The key is that the delivery of a data token induces a context switch. Let Tₔ 
 
 This formula arises because of the following events: P₁ sends a token (3), the CPU context switches (4), P₂ receives it (5).  P₂ then sends the response token (6), the CPU context switches (7), and finally P₁ receives it (8). 
 
-P₁ will be able to easily compute T, since this is just the time between events 3 and 8. So, to solve for T꜀, we must first determine the value of Tₔ  + Tᵣ.
+P₁ will be able to easily compute T, since this is just the time between events 3 and 8. So, to solve for T꜀, we must first determine the value of Tₔ + Tᵣ.
 
 How can we do this? We can do this by measuring the length of time it takes P₁ to send and receive a token to itself. This will not induce a context switch since P₁ is running on the CPU at the time it sent the token and will not block to receive it.
 
@@ -570,13 +569,13 @@ We have one final component to discuss: how do we detect  a cycle? We can detect
 We know that if a cycle was created, one of our new edges must be to blame. Thus, as long as our depth­ first search touches all of these edges at some point, then we know that we have fully searched for a cycle.
 
 The pseudocode for this special case cycle detection looks like this:
-```java
+```
 1   boolean checkForCycle(locks[] locks)  {
 2       touchedNodes  = hash  table(lock  ->  boolean)
 3       initialize  touchedNodes  to false for each  lock   in locks
 4       for each  (lock x in  process.locks)  {
-5           if (touchedNodes[x]  == false) {
-6               if (hasCycle(x,   touchedNodes)) {
+5           if (touchedNodes[x] == false) {
+6               if (hasCycle(x, touchedNodes)) {
 7                   return true;
 8               }
 9           }
@@ -617,8 +616,7 @@ The code below provides further details. For simplicity, we assume that all lock
         public boolean hasCycle(HashMap<Integer, Boolean> touchedNodes,
                                 int[] resourcesinOrder) {
             /*check  for  a  cycle*/
-            for (
-                    int resource : resourcesinOrder) {
+            for (int resource : resourcesinOrder) {
                 if (touchedNodes.get(resource) == false) {
                     LockNode n = locks[resource];
                     if (n.hasCycle(touchedNodes)) {
@@ -749,8 +747,7 @@ public  class  Foo {
     public  void third() {   ... }
 }
 ```
-The same instance of Foo will be passed to three different threads. ThreadA will call first threadB
-will call second, and thread( will call third. Design a mechanism to ensure that first is called before second and second is called before third.
+The same instance of Foo will be passed to three different threads. ThreadA will call first threadB will call second, and thread( will call third. Design a mechanism to ensure that first is called before second and second is called before third.
 
 SOLUTION
 
@@ -855,9 +852,10 @@ SOLUTION
 By applying the word synchronized to a method, we ensure that two threads cannot execute synchro­nized methods on the same object instance at the same time.
 
 So, the answer to the first part really depends. If the two threads have the same instance of the object, then no, they cannot simultaneously execute method A. However,  if they have different instances of the object, then they can.
+
 Conceptually, you can see this by considering  locks. A synchronized method applies a "lock" on all synchro­ nized methods in that instance of the object. This blocks other threads from executing synchronized methods within that instance.
 
-In the second part, we're asked if  threadl can execute synchronized method  A while thread2 is executing non-synchronized method B. Since  B is not synchronized, there is nothing to block threadl from executing A while  thread2 is executing B. This is true regardless of whether threadl and thread2 have the same instance of the object.
+In the second part, we're asked if  thread1 can execute synchronized method  A while thread2 is executing non-synchronized method B. Since  B is not synchronized, there is nothing to block thread1 from executing A while  thread2 is executing B. This is true regardless of whether thread1 and thread2 have the same instance of the object.
 
 Ultimately, the key concept to remember is that only one synchronized method can be in execution per instance of that object. Other threads can execute non-synchronized methods on that instance, or they can execute any method on a different instance of the object.
 
@@ -892,8 +890,7 @@ In actuality, the best way to do it, considering readability and efficiency, is 
 13  }
 ```
 
-The primary thing to be careful of here is the  order of the  statements. If you put the check for divisibility by
-3 before the check for divisibility by 3 and 5, it won't print the  right thing.
+The primary thing to be careful of here is the  order of the  statements. If you put the check for divisibility by 3 before the check for divisibility by 3 and 5, it won't print the right thing.
 
 **Multithreaded**
 
@@ -915,7 +912,7 @@ The code for this will look something like:
 ```
 We'll need to  add some synchronization in the  loop.  Otherwise, the  value  of current could change between lines 2 - 4 and lines 5 - 8, and we can inadvertently exceed the  intended bounds of the  loop. Addi­ tionally, incrementing is not  thread-safe.
 
-To actually implement this concept, there are  many possibilities. One  possibility is to  have four  entirely separate thread classes that share a reference to the  current variable (which can be wrapped in an object).
+To actually implement this concept, there are  many possibilities. One  possibility is to have four  entirely separate thread classes that share a reference to the current variable (which can be wrapped in an object).
 
 The  loop  for each thread is substantially similar. They just have different target values for the  divisibility checks,  and  different print values.
 
@@ -929,19 +926,19 @@ For the most part, this can be handled by taking in "target" parameters and the 
 
 We can implement a FizzBuzzThread class which handles most of this. A NumberThread  class can extend FizzBuzzThread and override the print method.
 ```java
-1   Thread[]  threads =  {new FizzBuzzThread(true, true,  n,  "FizzBuzz"),
-2                   new FizzBuzzThread(true,  false, n,  "Fizz"),
-3                   new FizzBuzzThread(false, true,  n,  "Buzz"),
-4                   new NumberThread(false,   false,  n)};
-5   for  (Thread  thread  :   threads) {
+1   Thread[] threads =  {new FizzBuzzThread(true, true, n, "FizzBuzz"),
+2                   new FizzBuzzThread(true, false, n, "Fizz"),
+3                   new FizzBuzzThread(false, true, n, "Buzz"),
+4                   new NumberThread(false, false, n)};
+5   for  (Thread  thread : threads) {
 6       thread.start();
 7   }
 8   
 9   public class FizzBuzzThread extends  Thread {
-10      private static Object  lock  =  new Object();
+10      private static Object lock = new Object();
 11      protected static int current =  1;
 12      private int max;
-13      private boolean  div3,  div5;
+13      private boolean div3, div5;
 14      private String toPrint;
 15  
 16      public  FizzBuzzThread(boolean div3, boolean  div5, int max, String toPrint)  {
@@ -951,14 +948,14 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 20          this.toPrint =  toPrint;
 21      }
 22  
-23      public void  print() {
+23      public void print() {
 24          System.out.println(toPrint);
 25      }
 26  
-27      public void  run() {
-28          while  (true) {
+27      public void run() {
+28          while (true) {
 29              synchronized (lock)  {
-30                  if  (current >  max) {
+30                  if (current > max) {
 31                      return;
 32                  }
 33  
@@ -972,12 +969,12 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 41      }
 42  }
 43  
-44  public class NumberThread  extends  FizzBuzzThread  {
-45      public   NumberThread(boolean div3,   boolean  div5,   int max) {
+44  public class NumberThread extends FizzBuzzThread  {
+45      public NumberThread(boolean div3,   boolean  div5,   int max) {
 46          super(div3, div5,  max, null);
 47      }
 48  
-49      public   void  print() {
+49      public void print() {
 S0          System.out.println(current);
 51      }
 52  }
@@ -987,35 +984,35 @@ Observe that we need to put the comparison of current and max before the if stat
 
 Alternatively, if we're working in a language which supports this (Java 8 and many other languages do), we can pass in a validate method and a print method as parameters. 
 ```java
-1   int   n =  100;
-2   Thread[]  threads =   {
-3       new FBThread(i -> i %  3 == 0 && i % 5 == 0, i -> "FizzBuzz",   n),
-4       new FBThread(i -> i %  3 == 0 && i % 5 != 0, i -> "Fizz",  n),
-5       new FBThread(i -> i %  3 != 0 && i % 5 == 0, i -> "Buzz",  n),
+1   int n =  100;
+2   Thread[] threads = {
+3       new FBThread(i -> i %  3 == 0 && i % 5 == 0, i -> "FizzBuzz", n),
+4       new FBThread(i -> i %  3 == 0 && i % 5 != 0, i -> "Fizz", n),
+5       new FBThread(i -> i %  3 != 0 && i % 5 == 0, i -> "Buzz", n),
 6       new FBThread(i -> i %  3 != 0 && i % 5 != 0, i -> Integer.toString(i), n)};
-7   for  (Thread  thread : threads) {
+7   for  (Thread thread : threads) {
 8       thread.start();
 9   }
 10  
-11  public   class FBThread  extends  Thread {
-12      private static Object  lock  =  new Object();
-13      protected static  int  current =  1;
+11  public class FBThread extends Thread {
+12      private static Object lock  =  new Object();
+13      protected static int current =  1;
 14      private int max;
 15      private  Predicate<Integer> validate;
 16      private  Function<Integer, String>   printer;
-17      int X =  1;
+17      int X = 1;
 18  
-19      public   FBThread(Predicate<Integer> validate,
+19      public FBThread(Predicate<Integer> validate,
 20                      Function<Integer,  String>   printer, int max) {
 21          this.validate =  validate;
 22          this.printer = printer;
 23          this.max  =   max;
 24      }
 25  
-26      public  void  run() {
-27          while  (true) {
-28              synchronized (lock)  {
-29                  if  (current >  max) {
+26      public void run() {
+27          while (true) {
+28              synchronized (lock) {
+29                  if (current >  max) {
 30                      return;
 31                  }
 32                  if (validate.test(current)) {

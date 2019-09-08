@@ -202,7 +202,7 @@ Now, let's say we're building a blackjack game, so we need to know the value of 
 
 22  
 23      public boolean  busted()  { return score() >  21;  }
-24      public boolean  is21() {  return s core() ==    21;  }
+24      public boolean  is21() {  return score() ==    21;  }
 25      public boolean  isBlackJack() { ... }
 26  }
 27  
@@ -1642,8 +1642,8 @@ To shuffle a grid, we do a very similar thing, just converting the index into a 
 5           int index2   =  index1 + random.nextint(nCells  -  index1);
 6           if (index1 != index2)  {
 7               /* Get  cell at  index1.  */
-8               int rowl  =  index1 / nColumns;
-9               int column1  =  (index1 -  rowl  *  nColumns)  %  nColumns;
+8               int row1  =  index1 / nColumns;
+9               int column1  =  (index1 -  row1  *  nColumns)  %  nColumns;
 10              Cell   celll =  cells[row1][column1];
 11  
 12              /* Get  cell at  index2. */
@@ -1652,7 +1652,7 @@ To shuffle a grid, we do a very similar thing, just converting the index into a 
 15              Cell cell2 =  cells[row2][column2] ;
 16  
 17              /* Swap.  */
-18              cells[rowl][column1] =  cell2;
+18              cells[row1][column1] =  cell2;
 19              cell2.setRowAndColumn(row1,   column1);
 20              cells[row2][column2]   =  celll;
 21              cell1.setRowAndColumn(row2,   column2);

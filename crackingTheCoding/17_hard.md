@@ -27,16 +27,16 @@ The following code implements this algorithm.
 ```java
 1	int  add(int  a,  int  b) {
 2		if (b ==  0) return  a;
-3		int  sum   =  a Ab;// add without  carrying
-4		int  carry =   (a & b) <<  1; //  carry,  but don't  add
-5		return add(sum,   carry); //  recurse with  sum + carry
+3		int sum   =  a ^ b;// add without  carrying
+4		int carry =  (a & b) <<  1; //  carry,  but don't  add
+5		return add(sum, carry); //  recurse with  sum + carry
 6	}
 ```
 Alternatively, you can implement this iteratively.
 ```java
 1	int add(int a,   int b)  {
-2		while   (b   != 0)  {
-3			int sum =  a  Ab; // add  without carrying
+2		while (b != 0)  {
+3			int sum =  a ^ b; // add  without carrying
 4			int carry =  (a &   b)  <<  1; // carry, but don't add
 5			a  = sum;
 6			b  = carry;
@@ -57,9 +57,9 @@ This is a very well known interview question, and a well known algorithm. If you
 
 Let's imagine our n-element array. Suppose it looks like this: 
 
-	[1] [2]  [3]  [4]  [5]
+	[1] [2] [3] [4] [5]
 
-Using our Base Case and Build approach, we can ask this question: suppose we had a method shuffle ( ...) that worked on n  -   1 elements. Could we use this to shuffle n elements?
+Using our Base Case and Build approach, we can ask this question: suppose we had a method shuffle (...) that worked on n - 1 elements. Could we use this to shuffle n elements?
 
 Sure. In fact, that's quite easy. We would first shuffle the first n - 1 elements. Then, we would take the nth element and randomly swap it with an element in the array. That's it!
 
@@ -67,10 +67,10 @@ Recursively, that algorithm looks like this:
 ```java
 1 	/*   Random  number between  lower  and  higher,  inclusive*/
 2 	int rand(int lower,   int higher) {
-3 		return lower  + (int)(Math.random() *    (higher  -  lower  + l));
+3 		return lower  + (int)(Math.random() * (higher  -  lower  + l));
 4 	}
 5	
-6 	int[]   shuffleArrayRecursively(int[]  cards, int i) {
+6 	int[] shuffleArrayRecursively(int[]  cards, int i) {
 7 		if (i == 0)  return  cards;
 8	
 9 		shuffleArrayRecursively(cards,  i -  1);//    Shuffle earlier  part
@@ -78,8 +78,8 @@ Recursively, that algorithm looks like this:
 11	
 12		/*   Swap element k  and  i */
 13		int temp =  cards[k];
-14		cards(k]      cards(i];
-15		cards[i)  =  temp;
+14		cards[k] =  cards[i];
+15		cards[i) =  temp;
 16	
 17		/* Return   shuffled array*/
 18		return cards;
@@ -94,7 +94,7 @@ This is actually a very clean  algorithm to implement iteratively:
 2		for (inti = 0; i <  cards.length;   i++) {
 3			int k  =  rand(0,  i);
 4			int temp = cards[k];
-5			cards[k]  =  cards[i];
+5			cards[k] = cards[i];
 6			cards[i] = temp;
 7		}
 8	}
@@ -112,16 +112,16 @@ Like the  prior problem which was similar, (problem 17.2 on page 531), we can  l
 
 Suppose we have an algorithm that can pull a random set of m elements from an array of size n - 1. How can we use this algorithm to pull a random set of m elements from  an array of size n?
 
-We can  first pull a random set  of size m from  the  first n    -   1 elements. Then,  we just need to decide if array[n] should be inserted into  our subset (which  would require pulling out  a random element from it). An easy way to do this is to pick a random number k from 0 through n. If k  <  m, then insert array[n] into  subset[k]. This will both "fairly" (i.e., with proportional probability) insert  array[n] into the  subset and "fairly" remove a random element from the  subset.
+We can  first pull a random set  of size m from  the  first n - 1 elements. Then,  we just need to decide if array[n] should be inserted into  our subset (which  would require pulling out  a random element from it). An easy way to do this is to pick a random number k from 0 through n. If k  <  m, then insert array[n] into  subset[k]. This will both "fairly" (i.e., with proportional probability) insert  array[n] into the  subset and "fairly" remove a random element from the  subset.
 
 The pseudocode for this recursive algorithm would look like this:
-```java
+```
 1 	int[] pickMRecursively(int[]  original, int m,  int i) {
 2	if (i +  1  ==  m)  { // Base   case
 3 			/*  return first  m   elements of original  */
 4 		}  else if (i +  1  >   m)  {
 5 			int[]  subset = pickMRecursively(original,  m,  i -  1);
-6 			int k  =    random   value  between 0  and   i, inclusive
+6 			int k  = random   value  between 0  and   i, inclusive
 7 			if (k <   m)  {
 8 				subset[k]  =  original[i];
 9 			}
@@ -136,7 +136,7 @@ This is even cleaner to  write  iteratively. In this  approach, we  initialize  
 2    	int[]  subset =  new  int[m];
 3   
 4   	/* Fill  in subset array   with  first  part of  original array */
-5   	for (int i =  0;  i <  m  ;   i++)   {
+5   	for (int i =  0;  i <  m;   i++)   {
 6   		subset[i] =  original[i];
 7   	}
 8   
@@ -165,7 +165,7 @@ You may have seen a very similar sounding  problem: Given a list of numbers from
 
 We could solve this by computing the value of each number, based on its binary representation, and calcu­lating the sum.
 
-The runtime of this solution is n * length(n), when length is the number of bits in n. Note that length(n) = log2(n). So, the runtime is actually O(n log(n) ).  Not quite good enough!
+The runtime of this solution is n * length(n), when length is the number of bits in n. Note that length(n) = log₂(n). So, the runtime is actually O(n log(n)).  Not quite good enough!
 
 So how else can we approach it?
 
@@ -177,14 +177,14 @@ We can actually use a similar approach, but leverage the bit values more directl
 00010	00110	01010	
 -----	00111	01011	
 ```
-Removing the number above creates an imbalance of 1s and Os in the least significant bit, which we'll call LSB₁. In a list of numbers from Oto n, we would expect there to be the same number of Os as 1 s (if n is odd), or an additional O if n is even. That is:
+Removing the number above creates an imbalance of 1s and 0s in the least significant bit, which we'll call LSB₁. In a list of numbers from 0 to n, we would expect there to be the same number of 0s as 1s (if n is odd), or an additional 0 if n is even. That is:
 
-	if n %   2 == 1 then  count(0s)  =  count(1s)
-	if n %   2 == 0 then  count(0s)  =  1 + count(1s)
+	if n %  2 == 1 then  count(0s)  =  count(1s)
+	if n %  2 == 0 then  count(0s)  =  1 + count(1s)
 
 Note that this means that count(0s) is always greater than or equal to count (1s).
 
-When we remove  a valuevfrom the  list, we'll know immediately  ifvis even or odd just by looking at the least significant bits of all the other  values in the list.
+When we remove  a valuevfrom the  list, we'll know immediately if v is even or odd just by looking at the least significant bits of all the other  values in the list.
 
 ![](media/17_04_1.JPG)
 
@@ -192,7 +192,7 @@ So, if count(0s) <=  count(1s), then v is even. If count(0s) > count(1s), then v
 
 We can now remove all the evens and focus on the odds, or remove all the odds  and focus on the evens.
 
-Okay, but how do we figure out what the next bit in v is? If v were contained in our (now smaller) list, then we should expect to find the following (where count₂ indicates  the number of 0s or 1 s in the second least significant bit):
+Okay, but how do we figure out what the next bit in v is? If v were contained in our (now smaller) list, then we should expect to find the following (where count₂ indicates  the number of 0s or 1s in the second least significant bit):
 
 	count₂(0s)  = count₂(1s)  OR count₂(0s) =  1 + count₂(1s)
 
@@ -261,7 +261,7 @@ The code below implements this algorithm. We've implemented the discarding aspec
 10		ArrayList<Bitlnteger> oneBits   =  new  ArrayList<Bitlnteger>(input.size() / 2);
 11		ArrayList<Bitlnteger> zeroBits  =  new  ArrayList<Bitlnteger>(input.size() / 2);
 12	
-13		for  (Bitinteger t :   input) {
+13		for  (Bitinteger t : input) {
 14			if (t.fetch(column) ==  0)  {
 15				zeroBits.add(t);
 16			}  else {
@@ -278,7 +278,7 @@ The code below implements this algorithm. We've implemented the discarding aspec
 27	}
 ```
 
-In lines 24 and 27, we recursively calculate the other bits of v.Then, we insert either a O or 1, depending on whether or not count₁(0s) <= count₁(1s).
+In lines 24 and 27, we recursively calculate the other bits of v.Then, we insert either a 0 or 1, depending on whether or not count₁(0s) <= count₁(1s).
 
 
 **17.5	Letters and Numbers:** Given an array filled with letters and numbers, find the longest subarray with an equal number of letters and numbers.
@@ -295,11 +295,11 @@ With that said, let's start with an example:
 
 	[A, B, A, A, A,  B, B, B, A,  B, A, A,  B, B, A, A, A, A, A, A]
 
-We're looking for the smallest subarray where count (A,  subarray) =   count(B,  subarray).
+We're looking for the smallest subarray where count(A, subarray) = count(B,  subarray).
 
 **Brute Force**
 
-Let's start with the obvious solution. Just go through all subarrays, count the number ofAs and Bs (or letters and numbers), and find the longest one that is equal.
+Let's start with the obvious solution. Just go through all subarrays, count the number of As and Bs (or letters and numbers), and find the longest one that is equal.
 
 We can make one small optimization to this. We can start with the longest subarray and, as soon as we find one which fits this equality condition, return it.
 ```java
@@ -307,8 +307,8 @@ We can make one small optimization to this. We can start with the longest subarr
 2 	* subarray,  starting from the longest. As soon as we  find  one that's equal,  we
 3 	*  return. */
 4 	char[]  findLongestSubarray(char[]  array)  {
-5 		for  (int len = array.length; len  >   1; len--)  {
-6 			for  (int i = 0; i <=  array.length -  len;  i++) {
+5 		for (int len = array.length; len  >   1; len--)  {
+6 			for (int i = 0; i <=  array.length -  len;  i++) {
 7 				if (hasEquallettersNumbers(array, i,  i +  len  - 1)) {
 8 					return extractSubarray(array, i,  i +  len  - 1);
 9 				}
@@ -320,10 +320,10 @@ We can make one small optimization to this. We can start with the longest subarr
 15	/* Check if subarray has equal number of  letters and numbers. */
 16	boolean hasEqualLettersNumbers(char[] array,  int start, int end) {
 17		int counter =  0;
-18		for  (int i = start;   i <=  end; i++) {
+18		for (int i = start; i <=  end; i++) {
 19			if (Character.isletter(array[i])) {
 20				counter++;
-21			}  else  if (Character.isDigit(array[i])) {
+21			} else  if (Character.isDigit(array[i])) {
 22				counter--;
 23			}
 24		}
@@ -331,9 +331,9 @@ We can make one small optimization to this. We can start with the longest subarr
 26	}
 27	
 28	/* Return subarray of  array between start and end (inclusive). */
-29	char[]  extractSubarray(char[] array,  int start, int end) {
-30		char[]  subarray =  new   char[end -  start +  1];
-31		for  (int i = start;   i <=  end; i++) {
+29	char[] extractSubarray(char[] array,  int start, int end) {
+30		char[] subarray =  new   char[end -  start +  1];
+31		for (int i = start;   i <=  end; i++) {
 32			subarray[i  - start] = array[i];
 33		}
 34		return subarray;
@@ -362,7 +362,7 @@ Let's picture this. Suppose we inserted an equal subarray (like a11a1a) after an
 | #a | 1  | 1  | 2  | 3  | 4  | 4  | I  | 5  | 5  | 5  | 6  | 6  | 7  |
 | #1 | 0  | 1  | 1  | 1  | 1  | 2  | I  | 2  | 3  | 4  | 4  | 5  | 5  |
 
-Study the numbers before the subarray (4, 2) and the end (7, 5). You might notice that, while the values aren't the same, the differences are: 4   -   2  =    7   -   5. This makes sense. Since they've added the same number of letters and numbers, they should maintain the same difference.
+Study the numbers before the subarray (4, 2) and the end (7, 5). You might notice that, while the values aren't the same, the differences are: 4 - 2  = 7 - 5. This makes sense. Since they've added the same number of letters and numbers, they should maintain the same difference.
 
 > Observe that when the difference is the same, the subarray starts one after the initial matching index and continues through the final matching index. This explains line 10 in the code below.
 
@@ -396,7 +396,7 @@ To do so, we use a hash table to store the first time we see a particular differ
 15	int[] computeDeltaArray(char[] array)  {
 16		int[]  deltas =  new  int[array.length];
 17		int delta =  0;
-18		for   (int i = 0;  i <   array.length;  i++)  {
+18		for   (int i = 0;  i < array.length;  i++)  {
 19			if (Character.isletter(array[i])) {
 20				delta++;
 21			} else if (Character.isDigit(array[i])) {
@@ -455,8 +455,8 @@ Our first approach to this problem can be-and probably should be-a brute force s
 9	
 10	/*  Counts  the   number of   '2'  digits in a  single number */
 11	int  number0f2s(int n)  {
-12		int count  =  0;
-13		while   (n  >   0)  {
+12		int count =  0;
+13		while (n  >   0)  {
 14			if (n  %  10 == 2)  {
 15				count++;
 16			}
@@ -486,10 +486,9 @@ We can work out what exactly the ratio is by looking at the three cases individu
 
 *Case digit< 2*
 
-Consider the value x  =  61523  and d  =  3, and observe that x[d] = 1 (that is, the dth digit of x is 1 ). There are 2s at the 3rd digit in the ranges 2000   -  2999, 12000  -  12999, 22000  -  22999, 32000  - 32999, 42000  -  42999,  and 52000  -  52999. We will not yet have hit the range 62000  -  62999, so there are 6000 2s total in the 3rd digit. This is the same amount as if we were just counting all the 2s in the 3rd digit between  1  and 60000.
+Consider the value x  =  61523  and d  =  3, and observe that x[d] = 1 (that is, the dth digit of x is 1). There are 2s at the 3rd digit in the ranges 2000   -  2999, 12000  -  12999, 22000  -  22999, 32000  - 32999, 42000  -  42999,  and 52000  -  52999. We will not yet have hit the range 62000  -  62999, so there are 6000 2s total in the 3rd digit. This is the same amount as if we were just counting all the 2s in the 3rd digit between  1  and 60000.
 
 In other words, we can round down to the nearest 10ᵈ⁺¹, and then divide by 10, to compute the number of 2s in the dth digit.
-
 ```
 if x[d] < 2: count2sinRangeAtDigit(x, d) = 
 	let y  =  round  down to nearest 10⁽ᵈ⁺¹⁾
@@ -499,16 +498,16 @@ if x[d] < 2: count2sinRangeAtDigit(x, d) =
 
 Now, let's look at the case where dth digit of xis greater than 2(x[d] > 2). We can apply almost the exact same logic to see that there are the same number of 2s in the 3rd digit in the range 0 - 63525 as there as in the range 0 - 70000. So, rather than rounding down,  we round up.
 ```
-if  x[d] >  2:   count2slnRangeAtDigit(x,  d)=
-	let y  =  round up  to nearest 10a+i
+if x[d] >  2:   count2slnRangeAtDigit(x,  d)=
+	let y  =  round up  to nearest 10ᵈ⁺¹
 	return y  / 10
 ```
 *Case digit= 2*
 
-The final case may be the trickiest,  but it follows from the earlier logic. Consider x =  62523 and d =  3. We know that there are the same ranges of2s from before (that is, the ranges 2000  -  2999, 12000  -  12999, ..., 52000  -   52999). How many  appear in the  3rd digit  in the final, partial range from 62000  -   62523? Well, that should be pretty easy. It's just 524 (62000,  62001,  ...,   62523).
+The final case may be the trickiest,  but it follows from the earlier logic. Consider x =  62523 and d =  3. We know that there are the same ranges of2s from before (that is, the ranges 2000  -  2999, 12000  -  12999, ..., 52000  -   52999). How many  appear in the  3rd digit  in the final, partial range from 62000 - 62523? Well, that should be pretty easy. It's just 524 (62000,  62001,  ...,   62523).
 ```
 if  x[d]  =  2:   count2sinRangeAtDigit(x, d) =
-	let y =  round down  to nearest 10⁽ᵈ⁺¹⁾
+	let y =  round down  to nearest 10ᵈ⁺¹
 	let z =  right  side of x  (i.e., x % 10ᵈ)
 	return y / 10 + z + 1
 ```
@@ -519,14 +518,14 @@ Now, all you  need is to iterate through each digit  in the  number. Implementin
 3 		int nextPowerOf10  =  power0f10  *  10;
 4 		int right =  number % power0f10;
 5	
-6 		int roundDown   =  number   -  number % nextPowerOf10;
-7 		int  roundup =  roundDown +  nextPowerOf10;
+6 		int roundDown =  number   -  number % nextPowerOf10;
+7 		int roundup =  roundDown +  nextPowerOf10;
 8	
 9 		int digit =  (number / power0f10) % 10;
 10		if (digit < 2) { // if  the digit in spot digit is
-11			return roundDown   / 10;
+11			return roundDown / 10;
 12		}  else if (digit == 2) {
-13			return roundDown   / 10 +  right +  1;
+13			return roundDown / 10 + right +  1;
 14		}  else {
 15			return  roundup / 10;
 16		}
@@ -535,7 +534,7 @@ Now, all you  need is to iterate through each digit  in the  number. Implementin
 19	int count2sInRange(int  number) {
 20		int count =  0;
 21		int len =  String.valueOf(number).length();
-22		for (int digit = 0;   digit <  len; digi + t + )  {
+22		for (int digit = 0; digit <  len; digi + t + )  {
 23			count +=  count2sInRangeAtDigit(number, digit);
 24		}
 25		return count;
@@ -594,7 +593,7 @@ Instead, we can think of these names as "equivalenceclasses". When we find a pai
 If we need to merge two sets, then we copy one set into the other and update the hash table to point to the new set.
 	
 	READ   (Jonathan,  John)
-		CREATE  Setl =  Jonathan,   John
+		CREATE  Set1 =  Jonathan,   John
 		L1.ADD  Jonathan  -> Set1
 		L1.ADD  John  -> Set1
 	READ   (Jon,   Johnny)
@@ -603,11 +602,11 @@ If we need to merge two sets, then we copy one set into the other and update the
 		L1.ADD   Johnny -> Set2
 	READ   (Johnny,   John)
 		COPY  Set2  into Set1.
-			Setl =  Jonathan,   John,  Jon,  Johnny
+			Set1 =  Jonathan,   John,  Jon,  Johnny
 		L1.UPDATE  Jon  -> Set1
 		L1.UPDATE   Johnny -> Set1
 
-In the last step above, we iterated through all items in S et2 and updated the reference to point to Setl. As we do this, we keep track of the total frequency of names.
+In the last step above, we iterated through all items in Set2 and updated the reference to point to Set1. As we do this, we keep track of the total frequency of names.
 ```java 
 1 	HashMap<String, Integer>  trulyMostPopular(HashMap<String, Integer> names,
 2 	String[][] synonyms) {
@@ -674,21 +673,21 @@ In the last step above, we iterated through all items in S et2 and updated the r
 63		private int frequency =  0;
 64		private String rootName;
 65		
-66		public   NameSet(String  name, int freq) {
+66		public NameSet(String  name, int freq) {
 67			names.add(name);
 68			frequency =  freq;
 69			rootName =  name;
 70		}
 71		
-72		public   void  copyNamesWithFrequency(Set<String> more,  int freq) {
+72		public void  copyNamesWithFrequency(Set<String> more,  int freq) {
 73			names.addAll(more);
 74			frequency += freq;
 75		}
 76		
-77		public   Set<String>   getNames()  {  return names;  }
-78		public   String getRootName() {  return rootName; }
-79		public   int  getFrequency() {  return frequency;  }
-80		public   int size() {  return names.size();}
+77		public  Set<String>   getNames()  {  return names;  }
+78		public  String getRootName() {  return rootName; }
+79		public  int  getFrequency() {  return frequency;  }
+80		public  int size() {  return names.size();}
 81	}
 ```
 
@@ -1384,21 +1383,21 @@ SOLUTION
 
 We will assume for this question that it doesn't matter whether wordl or word2 appears first. This is a ques­tion you should ask your interviewer.
 
-To solve  this  problem, we  can  traverse the  file just  once.  We remember throughout our  traversal where we've  last  seen wordl and  word2, storing the locations in locationl and  locatioN². If the current locations are better than our best known location, we update the best locations.
+To solve  this  problem, we  can  traverse the  file just  once.  We remember throughout our  traversal where we've  last  seen wordl and  word2, storing the locations in location1 and  location2. If the current locations are better than our best known location, we update the best locations.
 
 The code below implements this algorithm.
 
 ```java
 1 	LocationPair  findClosest(String[]  words, String wordl, String word2)  {
 2 		LocationPair best  =  new  LocationPair(-1,   -1);
-3 		LocationPair  current =    new  LocationPair(-1,  -1);
+3 		LocationPair  current = new  LocationPair(-1,  -1);
 4 		for (int  i =  0;   i <   words.length;  i++) {
 5 			String word =  words[i];
 6 			if (word.equals(wordl))  {
-7 				current.locationl =  i;
+7 				current.location1 =  i;
 8 				best.updateWithMin(current);
 9 			}  else if (word.equals(word2)) {
-10				current.locatioN² =  i;
+10				current.location2 =  i;
 11				best.updateWithMin(current); // If  shorter,  update values
 12			}
 13		}
@@ -1406,30 +1405,30 @@ The code below implements this algorithm.
 15	}
 16
 17	public class  LocationPair {
-18		public int locationl,  location2;
+18		public int location1,  location2;
 19		public LocationPair(int  first, int second)  {
 20			setLocations(first, second);
 21		}
 22
 23		public void  setLocations(int first,  int second) {
-24			this.locationl = first;
-25			this.locatioN² = second;
+24			this.location1 = first;
+25			this.location2 = second;
 26		}
 27
 28		public void  setLocations(LocationPair loc)  {
-29			setLocations(loc.locationl, loc.location2);
+29			setLocations(loc.location1, loc.location2);
 30		}
 31
 32		public int  distance() {
-33			return  Math.abs(locationl -  location2);
+33			return  Math.abs(location1 -  location2);
 34		}
 35
 36		public boolean isValid()  {
-37			return locationl >=  0  &&  location2 >=  0;
+37			return location1 >=  0  &&  location2 >=  0;
 38		}
 39
 40		public void  updateWithMin(LocationPair loc)  {
-41			if (!isValid() ||     loc.distance() <   distance()) {
+41			if (!isValid() || loc.distance() <   distance()) {
 42				setlocations(loc);
 43			}
 44		}

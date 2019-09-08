@@ -505,14 +505,14 @@ The code below implements this algorithm.
 4 	}
 5	
 6 	LinkedListNode addLists(LinkedListNode l1, LinkedListNode l2) {
-7 		int lenl = length(l1);
+7 		int len1 = length(l1);
 8 		int len2 = length(l2);
 9 	
 10		/* Pad the shorter  list with zeros  -  see note (1) */
-11		if (lenl < len2) {
-12			l1 = padlist(l1, len2 - lenl);
+11		if (len1 < len2) {
+12			l1 = padlist(l1, len2 - len1);
 13		} else {
-14			l2 = padlist(l2, lenl - len2);
+14			l2 = padlist(l2, len1 - len2);
 15		}
 16	
 17		/* Add lists */
@@ -957,7 +957,7 @@ So now we know the following facts:
 4.  FastRunner is LOOP_SIZE   -   K steps behind SlowRunner.
 5.  FastRunner catches  up to SlowRunner at a rate of 1 step per unit of time.
 
-So, when  do they  meet?  Well, if FastRunner is LOOP_SIZE           K  steps  behind  SlowRunner, and FastRunner catches  up at a rate of 1 step per unit of time, then they meet  after L OOP_SIZE   -   K steps. At this point, they will be K steps before the head of the loop. Let's call this point  Collisionspot.
+So, when  do they  meet?  Well, if FastRunner is LOOP_SIZE = K  steps  behind  SlowRunner, and FastRunner catches  up at a rate of 1 step per unit of time, then they meet  after LOOP_SIZE = K steps. At this point, they will be K steps before the head of the loop. Let's call this point  Collisionspot.
 
 
 ![](media/02_8_1.JPG)
@@ -965,7 +965,7 @@ So, when  do they  meet?  Well, if FastRunner is LOOP_SIZE           K  steps  b
 
 **Part 3: How Do You Find The Start of the Loop?**
 
-We now know that CollisionSpot is K nodes before the start of the loop. Because K  =  mod (k,  LOOP_ SIZE) (or, in other  words, k =  K   +  M    *  LOOP_SIZE, for any integer M), it is also correct to say that it is k nodes from the loop start. For example, if node N is 2 nodes into a 5 node loop, it is also correct to say that it is 7, 12, or even 397 nodes into the loop.
+We now know that CollisionSpot is K nodes before the start of the loop. Because K  =  mod (k,  LOOP_ SIZE) (or, in other  words, k =  K   +  M *  LOOP_SIZE, for any integer M), it is also correct to say that it is k nodes from the loop start. For example, if node N is 2 nodes into a 5 node loop, it is also correct to say that it is 7, 12, or even 397 nodes into the loop.
 
 Therefore, both  CollisionSpot and LinkedListHead are k nodes from the start of the loop.
 

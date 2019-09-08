@@ -31,7 +31,7 @@ Let's  wa(k through a review of basic SQL syntax, using as  an example the datab
 ```
 Courses:   CourseID*,  CourseName, TeacherID 
 Teachers:   TeacherID*,  TeacherName 
-Students;   StudentID*,  StudentName
+Students:   StudentID*,  StudentName
 StudentCourses:  CourseID*,  StudentID*
 ```
 
@@ -179,8 +179,7 @@ SOLUTION
 
 ---
 
-To implement this, we can use the HAVING and GROUP   BY clauses and then perform an INNER  JOIN with
-Tenants.
+To implement this, we can use the HAVING and GROUP   BY clauses and then perform an INNER  JOIN with Tenants.
 ```sql
 1  SELECT  TenantName
 2  FROM   Tenants
@@ -192,8 +191,7 @@ Tenants.
 Whenever  you write a GROUP BY clause in an interview  (or in real life), make sure that  anything in the SELECT clause is either an aggregate function or contained within the GROUP BY clause.
 
 
-**14.2    Open  Requests:** Write a SQL query to get a list of all buildings and the number of open requests
-(Requests in which status equals'Open'). 
+**14.2    Open  Requests:** Write a SQL query to get a list of all buildings and the number of open requests (Requests in which status equals 'Open'). 
 
 
 SOLUTION
@@ -266,10 +264,10 @@ If we wanted to join Beverage with Calorie-Free Beverages, we would have many op
 
 - INNER JOIN: The result set would contain only the data where the criteria match. In our example, we would get three records: one with a COCACOLA code and two with PEPSI codes.
 - OUTER JOIN: An OUTER  JOIN will always contain the results of INNER JOIN, but it may also contain some records that have no matching record in the other table. OUTER     JOINs are divided into the following subtypes:
-	- LEFT OUTER   JOIN, or simply LEFT JOIN:The result will contain all records from the left table.
+	- LEFT OUTER JOIN, or simply LEFT JOIN:The result will contain all records from the left table.
 	If no matching records were found in the right table, then its fields will contain theNULL values. In our example, we would get four records. In addition to INNER JOIN results, BUDWEISER would be listed, because it was in the left table.
-	- RIGHT OUTER   JOIN, or simply RIGHT JOIN:This type of join is the opposite ofLEFT  JOIN. It will contain every record from the right table; the missing fields from the left table will be NULL. Note that if we have two tables, A and B, then we can say that the statement A  LEFT JOIN  B is equivalent to the statement B  RIGHT JOIN  A. In our example above, we will get five records. In addition to INNER JOIN results, FRESCA and WATER records will be listed.
-	- FULL OUTER   JOIN:This type of join combines the results of the LEFT and RIGHT  JOINS. All records from both tables will be included in the result set, regardless of whether or not a matching record exists in the other table. If no matching record was found, then the corresponding result fields will have a NULL value. In our example, we will get six records.
+	- RIGHT OUTER JOIN, or simply RIGHT JOIN:This type of join is the opposite ofLEFT  JOIN. It will contain every record from the right table; the missing fields from the left table will be NULL. Note that if we have two tables, A and B, then we can say that the statement A  LEFT JOIN  B is equivalent to the statement B  RIGHT JOIN  A. In our example above, we will get five records. In addition to INNER JOIN results, FRESCA and WATER records will be listed.
+	- FULL OUTER JOIN:This type of join combines the results of the LEFT and RIGHT  JOINS. All records from both tables will be included in the result set, regardless of whether or not a matching record exists in the other table. If no matching record was found, then the corresponding result fields will have a NULL value. In our example, we will get six records.
 
 
 **14.5     Denormalization:** What is denormalization? Explain the pros and cons.
@@ -324,8 +322,7 @@ SOLUTION
 
 ---
 
-In a simplistic database, we'll have at least  three objects: Students, Courses, and  CourseEnrollment. Students will have  at  least  a student name and   ID and  will likely have other personal information. Courses will contain the course name and  ID and  will likely contain the course description, professor, and other information. CourseEnrollment will pair Students and Courses and  will also contain a field for
-CourseGrade.
+In a simplistic database, we'll have at least  three objects: Students, Courses, and  CourseEnrollment. Students will have  at  least  a student name and   ID and  will likely have other personal information. Courses will contain the course name and  ID and  will likely contain the course description, professor, and other information. CourseEnrollment will pair Students and Courses and  will also contain a field for CourseGrade.
 
 | Students    |              |
 | --          | --           |

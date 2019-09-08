@@ -15,7 +15,7 @@ We will touch on some key concepts  in this chapter, but recognize it's not real
 - **Go broad first:** Don't dive straight into the algorithm part or get excessively focused on one part.
 - **Use the whiteboard:** Using a whiteboard helps your interviewer follow your proposed design. Get up to the whiteboard in the very beginning and use it to draw a picture of what you're proposing.
 - **Acknowledge interviewer concerns:** Your interviewer will likely jump in with concerns. Don't brush them off; validate them. Acknowledge the issues your interviewer points out and make changes accord­ ingly.
-- **Be  careful about assumptions:** An incorrect assumption can dramatically change the problem. For example, if your system produces analytics / statistics for a dataset, it matters whether those analytics must be totally up to date.
+- **Be careful about assumptions:** An incorrect assumption can dramatically change the problem. For example, if your system produces analytics / statistics for a dataset, it matters whether those analytics must be totally up to date.
 - **State your assumptions explicitly:** When you do make assumptions, state them. This allows your inter­ viewer to correct you if you're mistaken, and shows that you at least know what assumptions you're making.
 - **Estimate when necessary:** In many cases, you might not have the data you need. For example, if you're designing  a web crawler, you might need to estimate how much space it will take to store all the URLs. You can estimate this with other data you know.
 - **Drive:**  As the candidate,  you should  stay in the driver's seat. This doesn't  mean  you don't  talk to your interviewer; in fact you must talk to your interviewer. However, you should be driving through the question. Ask questions. Be open about tradeoffs. Continue to go deeper. Continue to make improvements. 
@@ -46,8 +46,7 @@ Make a list here as well of the major features or use cases. For example, forTin
 
 It's okay to make some assumptions  (when necessary), but they should be reasonable. For example, it would not be reasonable to assume that your system only needs to process 100 users per day, or to assume that you have infinite memory available.
 
-However, it might be reasonable to design for a max of one million new URLs per day. Making this assump­
-tion can help you calculate how much data your system might need to store.
+However, it might be reasonable to design for a max of one million new URLs per day. Making this assump­tion can help you calculate how much data your system might need to store.
 
 Some assumptions might take some "product sense" (which is not a bad thing). For example, is it okay for the data to be stale by a max of ten minutes? That all depends. If it takes 1O minutes for a just-entered URL to work, that's a deal-breaking issue. People usually want these URLs to be active immediately. However, if the statistics are ten minutes out of date, that might be okay.Talk to your interviewer about these sorts of assumptions.
 
@@ -64,7 +63,7 @@ It may help here to ignore major scalability challenges and just pretend that th
 
 Once you have a basic design in mind, focus on the key issues. What will be the bottlenecks or major chal­lenges in the system?
 
-For example, if you were designing TinyURL, one situation you might consider is that while some URLs will be infrequently accessed, others can suddenly peak. This might happen  if a URL is posted  on Reddit or another popular forum. You don't necessarily want to constantly hit the database.
+For example, if you were designing TinyURL, one situation you might consider is that while some URLs will be infrequently accessed, others can suddenly peak. This might happen if a URL is posted  on Reddit or another popular forum. You don't necessarily want to constantly hit the database.
 
 Your interviewer might provide some guidance here. If so, take this guidance and use it.
 
@@ -117,8 +116,7 @@ While system design questions aren't really tests of what you know, certain conc
 
 A system can be scaled one of two ways.
 
-- Vertical scaling means increasing the resources of a specific node. For example, you might add addi­
-tional memory to a server to improve its ability to handle load changes.
+- Vertical scaling means increasing the resources of a specific node. For example, you might add addi­tional memory to a server to improve its ability to handle load changes.
 - Horizontal scaling means increasing the number of nodes. For example, you might add additional servers, thus decreasing the load on any one server.
 
 Vertical scaling is generally easier than horizontal scaling, but it's limited. You can only add so much memory or disk space.
@@ -178,8 +176,7 @@ Some of the most important metrics around networking include:
 
 Imagine you have a conveyor belt that transfers items across a factory. Latency is the time it takes an item to go from one side to another.Throughput is the number of items that roll off the conveyor belt per second.
 
-- Building a fatter conveyor belt will not change latency.  It will, however,  change throughput and band­
-width.  You can get more items on the belt, thus transferring more in a given unit of time.
+- Building a fatter conveyor belt will not change latency.  It will, however,  change throughput and band­width.  You can get more items on the belt, thus transferring more in a given unit of time.
 - Shortening the belt will decrease latency, since items spend less time in transit. It won't change the throughput or bandwidth. The same number of items will roll off the belt per unit of time.
 - Making a faster conveyor belt will change all three. The time it takes an item to travel across the factory decreases. More items will also roll off the conveyor belt per unit of time.
 - Bandwidth is the number of items that can be transferred per unit of time, in the best possible condi­tions. Throughput is the time it really takes, when the machines perhaps aren't operating smoothly.
@@ -206,8 +203,7 @@ For more information, see "MapReduce" on page 642.
 In addition to the earlier concepts to learn, you should consider the following issues when designing a system.
 
 - **Failures:** Essentially any part of a system can fail. You'll need to plan for many or all of these failures.
-- **Availability and Reliability:** Availability is a function of the percentage of time the system is opera­
-tional. Reliability is a function of the probability that the system is operational for a certain unit of time.
+- **Availability and Reliability:** Availability is a function of the percentage of time the system is opera­tional. Reliability is a function of the probability that the system is operational for a certain unit of time.
 - **Read-heavy vs. Write-heavy:** Whether an application will do a lot of reads or a lot of writes impacts the design. If it's write-heavy, you could consider queuing up the writes (but think about potential failure here!). If it's read-heavy, you might want to cache. Other design decisions could change as well.
 - **Security:** Security threats can, of course, be devastating for a system. Think about the types of issues a system might face and design around those.
 
@@ -239,7 +235,7 @@ One way to do this is to pre-process each document and create a hash table index
 "many"   ->  {docl,  doc3,   doc7,   doc8,   doc9}
 ```
 
-To search for "many books", we would simply do an intersection on the values for "books" and "many", and return {doc3,  doc8}  as the result.
+To search for "many books", rwe would simply do an intesection on the values for "books" and "many", and return {doc3,  doc8}  as the result.
 
 
 **Step2**
@@ -379,8 +375,7 @@ A good way to approach this problem is to remove some of the constraints and sol
 
 First, let's forget  that we're dealing with millions of users. Design this for the simple case.
 
-We can construct a graph by treating each person as a node and letting an edge between two nodes indi­
-cate that the two users are friends.
+We can construct a graph by treating each person as a node and letting an edge between two nodes indi­cate that the two users are friends.
 
 If I wanted to find the path between two people, I could start with one person and do a simple breadth-first search.
 
@@ -537,7 +532,7 @@ The code below outlines this process. We've defined a class Server, which holds 
 8	
 9 		public  int getMachineIDForUser(int  personID) {
 10			Integer  machineID  =  personToMachineMap.get(personID);
-11			return  machineID  == null ?  -1   :    machineID;
+11			return  machineID  == null ?  -1 : machineID;
 12		}
 13	
 14		public  Person getPersonWithID(int  personID) {
@@ -652,8 +647,7 @@ In the second pass, we would essentially implement the simple solution we came u
 
 **Solution #2: Multiple  Machines**
 
-The other solution is to perform essentially the same procedure, but to use multiple machines. In this solu­
-tion, rather than storing the data in file<x>. txt, we would send the URL to machine x. 
+The other solution is to perform essentially the same procedure, but to use multiple machines. In this solu­tion, rather than storing the data in file<x>. txt, we would send the URL to machine x. 
 
 Using multiple machines has pros and cons.
 
@@ -696,8 +690,7 @@ In addition, we must also handle updating  or clearing the cache when the result
 
 A good way to approach this problem is to start by designing it for a single machine. So, how would you create a data structure that enables you to easily purge old data and also efficiently look up a value based on a key?
 
-- A linked list would allow easy purging of old data, by moving "fresh" items to the front. We could imple­
-ment it to remove the last element of the linked list when the list exceeds a certain size.
+- A linked list would allow easy purging of old data, by moving "fresh" items to the front. We could imple­ment it to remove the last element of the linked list when the list exceeds a certain size.
 - A hash table allows efficient lookups of data, but it wouldn't ordinarily allow easy data purging. 
 
 How can we get the best of both worlds? By merging the two data structures. Here's how this works:
@@ -808,8 +801,7 @@ A good way to handle Situation #3 (and likely something we'd want to do anyway) 
 
 **Step 4: Further Enhancements**
 
-There are a number of improvements and tweaks you could make to this design depending on the assump­
-tions you make and the situations you optimize for.
+There are a number of improvements and tweaks you could make to this design depending on the assump­tions you make and the situations you optimize for.
 
 One such optimization is to better support the situation where some queries are very popular.  For example, suppose (as an extreme example) a particular string constitutes 1 % of all queries. Rather than machine i forwarding the request to machine j every time, machine i could forward the request just once to j, and then i could store the results in its own cache as well.
 
@@ -842,8 +834,7 @@ This part just gives us a good idea of what the problem, or scope of features, i
 
 **Step  2: Make Reasonable Assumptions**
 
-These are the sorts of things you'd want to discuss with your interviewer. Because we don't have an inter­
-viewer in front of us, we'll have to make some assumptions.
+These are the sorts of things you'd want to discuss with your interviewer. Because we don't have an inter­viewer in front of us, we'll have to make some assumptions.
 
 - We will assume that the stats do not need to be 100% up-to-date. Data can be up to an hour old for the most popular items (for example,  top 100 in each category), and up to one day old for the less popular items. That is, few people would care if the #2,809,132th best-selling item should have actually been listed as #2,789,158th instead.
 - Precision is important for the most popular items, but a small degree of error is okay for the less popular items.
@@ -962,8 +953,7 @@ One of the advantages of this is that it scales nicely. We can easily divide up 
 The interviewer could push this design in any number of directions.
 
 - Where do you think you'd hit the next bottlenecks? What would you do about that?
-- What if there were subcategories  as well? So items could be listed under "Sports" and "Sports Equip­
-ment" (or even "Sports"> "Sports Equipment"> "Tennis"> "Rackets")?
+- What if there were subcategories  as well? So items could be listed under "Sports" and "Sports Equipment" (or even "Sports"> "Sports Equipment"> "Tennis"> "Rackets")?
 - What if data needed  to be more accurate? What if it needed  to be accurate within 30 minutes for all products?
 
 Think through your design carefully and analyze it for the tradeoffs. You might also be asked to go into more detail on any specific aspect of the product.

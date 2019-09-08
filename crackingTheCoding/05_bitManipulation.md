@@ -296,7 +296,7 @@ Both approaches are equally good; choose the one you feel most comfortable with.
 Either way, you should make sure to prepare thorough  test cases for this problem-and to actually run through them in your interview.
 
 
-**5.3 		Flip Bit to Win:** You have an integer and you can flip exactly one bit from a O to a 1. Write code to find the length of the longest sequence of 1 s you could create.
+**5.3 		Flip Bit to Win:** You have an integer and you can flip exactly one bit from a O to a 1. Write code to find the length of the longest sequence of 1s you could create.
 
 EXAMPLE 
 	
@@ -780,7 +780,7 @@ A naive solution to the problem is straightforward: iterate in a for loop from x
 
 A better solution is to recognize that if x1 and x2 are far away from each other, several full bytes will be contained between them. These full bytes can be set one at a time by doing screen[byte_pos] = 0xFF. The residual start and end of the line can be set using masks.
 ```java
-1 	void  drawLine(byte[]  s creen,   int width,   int x1, int x2,  int y)  {
+1 	void  drawLine(byte[]  screen,   int width,   int x1, int x2,  int y)  {
 2 		int start_offset =  x1 %   8;
 3 		int first_full_byte =  x1 / 8;
 4 		if (start_offset !=  0)  {
