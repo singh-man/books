@@ -141,7 +141,7 @@ This is even cleaner to  write  iteratively. In this  approach, we  initialize  
 7   	}
 8   
 9   	/* Go  through rest  of  original  array.  */
-10   	for (int i = m;   i <   original.length;  i++)  {
+10   	for (int i = m; i < original.length;  i++)  {
 11   		int k  =  rand(0, i);  //Random#  between  0 and  i, inclusive
 12   		if (k  <  m)   {
 13   			subset[k] =  original[i];
@@ -182,7 +182,7 @@ Removing the number above creates an imbalance of 1s and 0s in the least signifi
 	if n %  2 == 1 then  count(0s)  =  count(1s)
 	if n %  2 == 0 then  count(0s)  =  1 + count(1s)
 
-Note that this means that count(0s) is always greater than or equal to count (1s).
+Note that this means that count(0s) is always greater than or equal to count(1s).
 
 When we remove  a valuevfrom the  list, we'll know immediately if v is even or odd just by looking at the least significant bits of all the other  values in the list.
 
@@ -205,7 +205,7 @@ Again, we have the same conclusion:
 - If count₂(0s)  <=  count₂(1s), then LSB₂(v) = 0. 
 - If count₂(0s)  >   count₂(1s), then LSB₂(v) = 1.
 
-We can repeat this process for each bit. On each iteration, we count the number of Osand 1s in bit i to check if LSBi(v) is O or 1. Then, we discard the numbers where LSBᵢ(x) != LSBᵢ(v). That is, if v is even, we discard the odd numbers, and so on.
+We can repeat this process for each bit. On each iteration, we count the number of 0s and 1s in bit i to check if LSBᵢ(v) is 0 or 1. Then, we discard the numbers where LSBᵢ(x) != LSBᵢ(v). That is, if v is even, we discard the odd numbers, and so on.
 
 By the end of this process, we will have computed all bits inv.In each successive iteration, we look at n, then n/2, then n/4, and so on, bits. This results in a runtime of O(N).
 
@@ -534,7 +534,7 @@ Now, all you  need is to iterate through each digit  in the  number. Implementin
 19	int count2sInRange(int  number) {
 20		int count =  0;
 21		int len =  String.valueOf(number).length();
-22		for (int digit = 0; digit <  len; digi + t + )  {
+22		for (int digit = 0; digit <  len; digit++)  {
 23			count +=  count2sInRangeAtDigit(number, digit);
 24		}
 25		return count;
@@ -599,12 +599,12 @@ If we need to merge two sets, then we copy one set into the other and update the
 	READ   (Jon,   Johnny)
 		CREATE  Set2  =  Jon,  Johnny
 		L1.ADD  Jon  -> Set2
-		L1.ADD   Johnny -> Set2
+		L1.ADD  Johnny -> Set2
 	READ   (Johnny,   John)
 		COPY  Set2  into Set1.
 			Set1 =  Jonathan,   John,  Jon,  Johnny
 		L1.UPDATE  Jon  -> Set1
-		L1.UPDATE   Johnny -> Set1
+		L1.UPDATE  Johnny -> Set1
 
 In the last step above, we iterated through all items in Set2 and updated the reference to point to Set1. As we do this, we keep track of the total frequency of names.
 ```java 
@@ -627,12 +627,12 @@ In the last step above, we iterated through all items in Set2 and updated the re
 17		for  (String[] entry :  synonyms) {
 18			String name1 = entry[e];
 19			String name2 = entry[1];
-20			NameSet setl = groups.get(name1);
+20			NameSet set1 = groups.get(name1);
 21			NameSet set2 = groups.get(name2);
-22			if (setl != set2) {
+22			if (set1 != set2) {
 23				/*  Always merge the  smaller set into the  bigger  one.  */
-24				NameSet smaller =  set2.size() <  setl.size() ?  set2 :   setl;
-25				NameSet bigger  =  set2.size() <  setl.size() ?  setl :   set2;
+24				NameSet smaller =  set2.size() <  set1.size() ?  set2 :   set1;
+25				NameSet bigger  =  set2.size() <  set1.size() ?  set1 :   set2;
 26				
 27				/*  Merge lists*/
 28				Set<String> otherNames =  smaller.getNames();
@@ -640,7 +640,7 @@ In the last step above, we iterated through all items in Set2 and updated the re
 30				bigger.copyNamesWithFrequency(otherNames,  frequency);
 31				
 32				/*  Update mapping*/
-33				for  (String name :   otherNames)  {
+33				for  (String name :  otherNames)  {
 34					groups.put(name, bigger);
 35				}
 36			}
@@ -655,15 +655,15 @@ In the last step above, we iterated through all items in Set2 and updated the re
 45			String name =  entry.getKey();
 46			int frequency =  entry.getValue();
 47			NameSet group =  new NameSet(name, frequency);
-48			groups.put(name,    group);
+48			groups.put(name, group);
 49		}
 50		return groups;
 51	}
 52	
-53	HashMap<String, Integer>   convertToMap(HashMap<String, NameSet>  groups)   {
+53	HashMap<String, Integer> convertToMap(HashMap<String, NameSet>  groups)   {
 54		HashMap<String, Integer> list =  new HashMap<String, Integer>();
 55		for  (NameSet group :  groups.values()) {
-56			list.put(group.getRootName(),  group.getFrequency());
+56			list.put(group.getRootName(), group.getFrequency());
 57		}
 58		return list;
 59	}
@@ -684,10 +684,10 @@ In the last step above, we iterated through all items in Set2 and updated the re
 74			frequency += freq;
 75		}
 76		
-77		public  Set<String>   getNames()  {  return names;  }
+77		public  Set<String> getNames()  {  return names;  }
 78		public  String getRootName() {  return rootName; }
-79		public  int  getFrequency() {  return frequency;  }
-80		public  int size() {  return names.size();}
+79		public  int getFrequency() {  return frequency;  }
+80		public  int size() {  return names.size(); }
 81	}
 ```
 
@@ -737,7 +737,7 @@ s   	connectEdges(graph,  synonyms);
 12  /*  Add all names to  graph  as  nodes.   */
 13  Graph constructGraph(HashMap<String, Integer>  names) {
 14  	Graph graph =  new Graph();
-1S  	for  (Entry<String,  Integer> entry   :   names.entrySet()) {
+1S  	for  (Entry<String,  Integer> entry : names.entrySet()) {
 16  		String name =  entry.getKey();
 17  		int frequency =  entry.getValue();
 18  		graph.createNode(name,  frequency);
@@ -799,7 +799,7 @@ EXAMPLE
 Input(ht,wt): (65,   100)  (70,  150)    (56,  90)    (75,  190)  (60,  95)    (68,  110) 
 
 Output: The longest tower is length 6 and includes from top to bottom:
-(56, 90)    (60,95)  (65,100)  (68,110)  (70,150)  (75,190)
+(56, 90) (60,95)  (65,100)  (68,110)  (70,150)  (75,190)
 ```
 SOLUTION
 ---
@@ -824,11 +824,11 @@ One approach is to essentially try all possibilities. After sorting by height, w
 5	
 6 	ArrayList<Htwt> bestSeqAtindex(ArrayList<Htwt> array, ArrayList<Htwt> sequence,
 7 	int index) {
-8 		if  (index >=  array.size())  return sequence;
+8 		if  (index >= array.size())  return sequence;
 9	
-10		HtWt value   = array.get(index);
+10		HtWt value = array.get(index);
 11	
-12		ArrayList<Htwt>   bestWith  =  null;
+12		ArrayList<Htwt> bestWith  =  null;
 13		if (canAppend(sequence,  value))  {
 14			ArrayList<HtWt> sequenceWith = (ArrayList<HtWt>) sequence.clone();
 15			sequenceWitn.add(value);
@@ -864,7 +864,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 45	public   class Htwt implements Comparable<HtWt>  {
 46		private int height;
 47		private int weight;
-48		public   HtWt(int  h,  int w) {height  =  h;  weight      w;   }
+48		public   HtWt(int  h,  int w) {height  =  h;  weight w; }
 49	
 50		public int compareTo(HtWt second)  {
 51			if (this.height != second.height) {
@@ -973,7 +973,7 @@ We know that biggest this kth number could be is 3ᵏ * 5ᵏ * 7ᵏ. So, the "st
 11  		for  (int b = 0;  b <= k;  b++) {//loop  5
 12  			int powB  = (int) Math.pow(S,   b);
 13  			for  (int c  = 0;  c <= k;  c++) {//loop  7
-14  				int powc  =   (int) Math.pow( ?,  c);
+14  				int powC  =   (int) Math.pow( ?,  c);
 15  				int value  =  powA  * powB  * powC;
 16  
 17  				/*   Check for  overflow. */
@@ -991,7 +991,7 @@ We know that biggest this kth number could be is 3ᵏ * 5ᵏ * 7ᵏ. So, the "st
 ```
 
 
-What is the runtime of this approach? We have nested for loops, each of which runs for k iterations. The runtime of the allPossibleKFactors is O(k³). Then, we sort the k³ results in O(k³ log (k³)) time (which is equivalent  to O(k³ log k)  . This gives us a runtime of O(k³ log k).
+What is the runtime of this approach? We have nested for loops, each of which runs for k iterations. The runtime of the allPossibleKFactors is O(k³). Then, we sort the k³ results in O(k³ log (k³)) time (which is equivalent  to O(k³ log k). This gives us a runtime of O(k³ log k).
 
 There are a number of optimizations you could make to this (and better ways of handling the integer over­flow), but honestly this algorithm is fairly slow. We should instead focus on reworking the algorithm.
 
@@ -1040,8 +1040,8 @@ Our code looks like this:
 1 	int removeMin(Queue<Integer>   q)  {
 2 		int min = q.peek();
 3 		for   (Integer v  :  q)  {
-4 			if (min  >   v)  {
-5 				min =  v;
+4 			if (min > v)  {
+5 				min = v;
 6 			}
 7 		}
 8 		while  (q.contains(min)) {
@@ -1059,7 +1059,7 @@ Our code looks like this:
 20	int getKthMagicNumber(int   k)  {
 21		if (k  <   0)  return 0;
 22
-23		int val =  l;
+23		int val = l;
 24		Queue<Integer> q  =  new LinkedList<Integer>();
 25		addProducts(q,  1);
 26		for   (int i = 0;  i < k;  i++)  {
@@ -1082,9 +1082,9 @@ To generate a new element Ai, we are searching through a linked list where each 
 
 Where is there unnecessary work that we might be able to optimize out? Let's imagine our list looks like:
 
-	q6   =  {7A₁,     SA₂,    7A₂,    7A₃,     3A₄,     SA₄,    7A₄,     SA₅,  7A₅}
+	q6   =  {7A₁, 5A₂, 7A₂, 7A₃, 3A₄, 5A₄, 7A₄, 5A₅, 7A₅}
 
-When we search this list for the min, we check if 7A₁   <   min, and then later we check if 7A₅   <   min. That seems sort of silly, doesn't it? Since we know that A1   <   As, we should only need to check 7A1
+When we search this list for the min, we check if 7A₁ < min, and then later we check if 7A₅ < min. That seems sort of silly, doesn't it? Since we know that A₁ < A₅, we should only need to check 7A₁
 
 If we separated the list from the beginning by the constant factors, then we'd only need to check the first of the multiples of 3, 5 and 7. All subsequent elements would be bigger.
 
@@ -1098,9 +1098,9 @@ To get the min, we only need to look at the fronts of each queue:
 
 	y  = min(Q3.head(),  Q5.head(),  Q7.head())
 
-Once we compute y, we need to insert 3y into Q3, Sy into QS, and 7y into Q7. But, we only want to insert these elements if they aren't already in another list.
+Once we compute y, we need to insert 3y into Q3, 5y into Q5, and 7y into Q7. But, we only want to insert these elements if they aren't already in another list.
 
-Why might for example, 3y already be somewhere in the holding queues? Well, if y was pulled from Q7, then that means that y  = 7x, for some smaller x. If 7x is the smallest value, we must have already seen 3x. And what did we do when we saw 3x? We inserted 7  * 3x into Q7. Note that 7  *  3x  =  3  *  7x  =  3y.
+Why might for example, 3y already be somewhere in the holding queues? Well, if y was pulled from Q7, then that means that y  = 7x, for some smaller x. If 7x is the smallest value, we must have already seen 3x. And what did we do when we saw 3x? We inserted 7 * 3x into Q7. Note that 7 * 3x  =  3 * 7x  =  3y.
 
 To put this another way, if we pull an element from Q7, it will look like 7  * suffix, and we know we have already handled 3  *  suffix and 5  *  suffix. In handling 3  *  suffix, we inserted 7  *  3  *  suffix into a Q7. And in handling 5  *  suffix, we know we inserted 7  * 5  *  suffix in Q7. The only value we haven't seen yet is 7 * 7 * suffix, so we just insert 7  *  7  *  suffix into Q7.
 
@@ -1117,8 +1117,8 @@ Let's walk through this with an example to make it really clear.
 	remove min =  5. 3*5 is a  dup,  since we already  did  5*3.  insert 5*5 into Q5, 7*5
 	into Q7.
 		Q3 = 3 * 3
-		Q5 = 5*3,   5*5
-		Q7 = 7,  7*3, 7*5
+		Q5 = 5*3, 5*5
+		Q7 = 7, 7*3, 7*5
 	remove min =  7. 3*7 and  5*7 are  dups,   since we already  did  7*3 and  7*5.  insert 7*7
 	into Q7.
 		Q3 = 3*3
@@ -1144,15 +1144,15 @@ Our pseudocode for this problem is as follows:
 
 1.  Initialize array and queues Q3, Q5, and Q7
 2.  Insert 1  into array.
-3.  Insert 1*3, 1 *5 and 1*7 into Q3, Q5, and Q7 respectively.
+3.  Insert 1\*3, 1\*5 and 1\*7 into Q3, Q5, and Q7 respectively.
 4.  Let x be the minimum element in Q3, Q5, and Q7. Append x to magic.
 5.  If x was found in:
 
-		Q3 -> append x*3, x*5 and x*7 to Q3, QS, and Q7. Remove x from Q3. 
+		Q3 -> append x*3, x*5 and x*7 to Q3, Q5, and Q7. Remove x from Q3. 
 		Q5 -> append x*5 and x*7 to Q5 and Q7. Remove x from Q5.
 		Q7 -> only append x*7 to Q7. Remove x from Q7.
 
-6.  Repeat steps 4- 6  until we've found k elements. 
+6.  Repeat steps 4 - 6  until we've found k elements. 
 
 The code below implements this algorithm.
 ```java
@@ -1178,7 +1178,7 @@ The code below implements this algorithm.
 20				queue5.add(5 * val);
 21			}  else if (val == v5)  { // enqueue  into queue  5 and  7
 22				queue5.remove();
-23				queue5.add(5  *   val);
+23				queue5.add(5 * val);
 24			}  else if (val == v7)  { // enqueue  into Q7
 25				queue7.remove();
 26			}
@@ -1363,13 +1363,13 @@ Our algorithm can now be run in two passes: one to find the possible majority el
 21
 22	boolean  validate(int[]  array, int  majority) {
 23		int  count =  0;
-24		for (int n   :  array)  {
+24		for (int n :  array)  {
 25			if (n ==  majority) {
 26				count++;
 27			}
 28		}
 29
-30		return count >   array.length  / 2;
+30		return count > array.length / 2;
 31	}
 ```
 This algorithm runs in O(N)  time and O(1) space.
@@ -1390,7 +1390,7 @@ The code below implements this algorithm.
 ```java
 1 	LocationPair  findClosest(String[]  words, String wordl, String word2)  {
 2 		LocationPair best  =  new  LocationPair(-1,   -1);
-3 		LocationPair  current = new  LocationPair(-1,  -1);
+3 		LocationPair current = new  LocationPair(-1,  -1);
 4 		for (int  i =  0;   i <   words.length;  i++) {
 5 			String word =  words[i];
 6 			if (word.equals(wordl))  {
@@ -1429,7 +1429,7 @@ The code below implements this algorithm.
 39
 40		public void  updateWithMin(LocationPair loc)  {
 41			if (!isValid() || loc.distance() <   distance()) {
-42				setlocations(loc);
+42				setLocations(loc);
 43			}
 44		}
 45	}
@@ -1456,17 +1456,17 @@ Now, since the value at pA is bigger than the one at pB, we move pB. We get (9, 
 We can implement this algorithm as shown below.
 
 ```java
-1 	LocationPair findClosest(String  wordl,   String word2,
+1 	LocationPair findClosest(String  word1,   String word2,
 2 	                     HashMaplist<String, Integer>  locations) {
-3 		ArrayList<Integer> locationsl =  locations.get(wordl);
+3 		ArrayList<Integer> locations1 =  locations.get(word1);
 4 		ArrayList<Integer> locations2 =  locations.get(word2);
-5 		return findMinDistancePair(locationsl, locations2);
+5 		return findMinDistancePair(locations1, locations2);
 6 	}
 7
 8 	LocationPair findMinDistancePair(ArrayList<Integer>  array1,
 9 					ArrayList<Integer> array2) {
-10		if (array1 ==  null  ||    array2  ==  null  ||     array1.size() ==  0 ||
-11		array2.size() ==  0)  {
+10		if (array1 ==  null  || array2  ==  null  || array1.size() ==  0 ||
+11		            array2.size() ==  0)  {
 12			return null;
 13		}
 14
@@ -1475,8 +1475,8 @@ We can implement this algorithm as shown below.
 17		LocationPair  best  =  new  LocationPair(array1.get(0),  array2.get(0));
 18		LocationPair current  =  new  LocationPair(array1.get(0), array2.get(0));
 19
-20		while  (index1 <  array1.size() &&   index2  <  array2.size()) {
-21			current.setlocations(array1.get(index1),  array2.get(index2));
+20		while  (index1 <  array1.size() && index2  <  array2.size()) {
+21			current.setLocations(array1.get(index1),  array2.get(index2));
 22			best.updateWithMin(current);  // If shorter, update  values
 23			if (current.location! <  current.location2) {
 24				index1++;
@@ -1569,7 +1569,7 @@ The code below implements this approach.
 21			concat(root,  part2.head);
 22		}
 23
-24		return new NodePair(part1 ==    null ?  root : part1. head,
+24		return new NodePair(part1 == null ?  root : part1.head,
 25		part2 ==  null ?  root : part2.tail);
 26	}
 27
@@ -1588,7 +1588,7 @@ It'd be nice, though, if we could do this without these extra data structures-an
 Instead of returning the head and tail of the linked list with NodePair, we can return just the head, and then we can use the head to find the tail of the linked list.
 ```java
 1 	BiNode convert(BiNode  root) {
-2 		if (root ==    null) return null;
+2 		if (root == null) return null;
 3 
 4 		BiNode part1 = convert(root.node1);
 5 		BiNode part2 = convert(root.node2);
@@ -1612,7 +1612,7 @@ Instead of returning the head and tail of the linked list with NodePair, we can 
 23		return node;
 24	}
 ```
-Other than a call to getTail, this code is almost identical to the first solution.  It is not, however, very effi­ cient. A leaf node at depth d will be "touched" by the getTail method d times (one for each node above it), leading to an O(N²) overall runtime, where N is the number of nodes in the tree.
+Other than a call to getTail, this code is almost identical to the first solution.  It is not, however, very effi­cient. A leaf node at depth d will be "touched" by the getTail method d times (one for each node above it), leading to an O(N²) overall runtime, where N is the number of nodes in the tree.
 
 
 **Solution #3: Building a Circular Linked List**
@@ -1649,7 +1649,7 @@ This approach requires returning the head and tail of the linked list with BiNod
 26		}
 27
 28		/*join right to  left*/
-29		if (part1 != null &&   part3   != null) {
+29		if (part1 != null &&   part3 != null) {
 30			concat(tail3,  part1);
 31		}
 32
@@ -1666,8 +1666,7 @@ This approach requires returning the head and tail of the linked list with BiNod
 ```
 Observe that we have moved the main parts of the code into c onvertToCircular. The c onvert method calls this method to get the head of the circular linked list, and then breaks the circular connection.
 
-The approach takes O(N) time, since each node is only touched an average of once (or, more accurately,
-O(1) times).
+The approach takes O(N) time, since each node is only touched an average of once (or, more accurately, O(1) times).
 
 
 **17.13   Re-Space:** Oh, no! You have accidentally removed all spaces, punctuation, and capitalization in a lengthy document. A sentence like "I  reset the  c omputer.  It still didn't boot!" became "iresetthec omputeritstilldidntboot''. You'll deal with the punctuation and capi­ talization later; right now you need to re-insert the spaces. Most of the words are in a dictionary but a few are not. Given a dictionary (a list of strings) and the document (a string), design  an algorithm to unconcatenate the document in a way that minimizes the number of unrecognized characters.
@@ -1807,11 +1806,11 @@ The code is essentially identical to the earlier function, but now takes in a me
 12			return memo[start];
 13		}
 14
-15		int bestinvalid =    Integer.MAX_VALUE;
+15		int bestinvalid = Integer.MAX_VALUE;
 16		String bestParsing =  null;
 17		String partial = "";
-18		int  index  =   start;
-19		while (index   <  sentence.length())  {
+18		int  index = start;
+19		while (index < sentence.length())  {
 20			char c = sentence.charAt(index  );
 21			partial += c;
 22			int invalid =  dictionary.contains(partial)  ?  0 : partial.length();
@@ -1819,7 +1818,7 @@ The code is essentially identical to the earlier function, but now takes in a me
 24				/*  Recurse, putting  a  space after this  character. If this  is better than
 25				*  the current best option, replace the best option. */
 26				ParseResult result  =   split(dictionary,  sentence, index +    1,   memo);
-27				if (invalid +    result.invalid < bestinvalid) {
+27				if (invalid + result.invalid < bestinvalid) {
 28					bestinvalid = invalid +  result.invalid;
 29					bestParsing = partial +  " " +  result.parsed;
 30					if (bestinvalid ==  0) break; // Short circuit
@@ -1835,7 +1834,7 @@ The code is essentially identical to the earlier function, but now takes in a me
  
 Understanding the  runtime of this  is even trickier than in the  prior  solution. Again,  let's imagine the  truly bizarre case,  where essentially everything looks like a valid word.
 
-One  way we can  approach it is to realize thatsplit(i) will only be computed once for each value of i. What  happens when we callsplit(i), assuming we've already calledsplit(i+l) through split(n -  1)?
+One  way we can  approach it is to realize that split(i) will only be computed once for each value of i. What  happens when we call split(i), assuming we've already called split(i+l) through split(n -  1)?
 
 ```
 split(i) ->  calls: 
@@ -1847,10 +1846,9 @@ split(i) ->  calls:
 	split(n - 1)
 ```
 
-Each of the  recursive calls has already been computed, so they just  return immediately. Doing n  i calls at O(1) time each takes O(n  -   i) time. This means thatsplit(i) takes O(i) time at most.
+Each of the  recursive calls has already been computed, so they just  return immediately. Doing n  i calls at O(1) time each takes O(n - i) time. This means that split(i) takes O(i) time at most.
 
-We can  now  apply the  same logic  to split(i - 1), split(i - 2), and so on. If we make 1  call to compute split(n - 1),2calls to compute split(n - 2),3 calls to compute split(n - 3),...,n calls to compute split(o), how many calls total do we do? This is basically the  sum of the  numbers from
-1  through n, which is O(n²).
+We can  now  apply the  same logic  to split(i - 1), split(i - 2), and so on. If we make 1  call to compute split(n - 1), 2 calls to compute split(n - 2), 3 calls to compute split(n - 3),...,n calls to compute split(0), how many calls total do we do? This is basically the  sum of the  numbers from 1  through n, which is O(n²).
 
 Therefore, the runtime of this function is O(n²).
 
@@ -1895,10 +1893,10 @@ We can use a max heap to solve this problem. We first create a max heap (largest
 
 Then, we traverse through the list. On each element, if it's smaller than the root, we insert it into the heap and delete the largest element (which will be the root).
 
-At the end ofthe traversal, we will have a heap containing the smallest one million numbers. This algorithm is O(n   log(m) ), where mis the number of values we are looking for.
+At the end ofthe traversal, we will have a heap containing the smallest one million numbers. This algorithm is O(n log(m) ), where mis the number of values we are looking for.
 ```java
 1 	int[]  smallestK(int[] array, int k)  {
-2 		if (k  <= 0  ||    k >   array.length) {
+2 		if (k  <= 0  || k > array.length) {
 3 			throw  new IllegalArgumentException();
 4 		}
 5
@@ -1910,8 +1908,8 @@ At the end ofthe traversal, we will have a heap containing the smallest one mill
 11	PriorityQueue<Integer>  getKMaxHeap(int[] array,   int k)  {
 12		PriorityQueue<Integer>  heap  =
 13				new PriorityQueue<Integer>(k,  new MaxHeapComparator());
-14		for (int a  :   array)  {
-15			if  (heap.size() < k)  {//If space  remaining
+14		for (int a : array)  {
+15			if (heap.size() < k)  {//If space  remaining
 16				heap.add(a);
 17			} else if (a < heap.peek()) {//If full and  top  is small
 18				heap.poll();//remove  highest
@@ -1924,7 +1922,7 @@ At the end ofthe traversal, we will have a heap containing the smallest one mill
 25	/*Convert heap  to int array.  */
 26	int[] heapTointArray(PriorityQueue<Integer> heap)   {
 27		int[] array =  new int[heap.size()];
-28		while   (!heap.isEmpty())  {
+28		while (!heap.isEmpty())  {
 29			array[heap.size() -  1]  =  heap.poll();
 30		}
 31		return array;
@@ -1959,7 +1957,7 @@ The code below implements this algorithm.
 
 ```java
 1 		int[]  smallestK(int[] array, int  k)  {
-2 			if (k  <= 0 ||    k  >   array.length)  {
+2 			if (k  <= 0 || k > array.length)  {
 3 				throw new IllegalArgumentException();
 4 			}
 5	
@@ -1985,7 +1983,7 @@ The code below implements this algorithm.
 25			int pivot   =  array[randomintinRange(left,  right)];
 26			int leftEnd  =  partition(array, left,  right, pivot);
 27			int leftSize =    leftEnd - left  + 1;
-28			if (rank   ==  leftSize - 1)  {
+28			if (rank ==  leftSize - 1)  {
 29				return max(array,   left,  leftEnd);
 30			}  else if (rank < leftSize) {
 31				return rank(array, left,  leftEnd, rank);
@@ -2051,7 +2049,7 @@ This requires minor tweaks to rankaswell. We now compare the size of left and mi
 ```java
 1 	class PartitionResult {
 2 		int leftSize, middleSize;
-3 		public   PartitionResult(int left,  int middle)  {
+3 		public PartitionResult(int left,  int middle)  {
 4 			this.leftSize =  left;
 5 			this.middleSize = middle;
 6 		}
@@ -2115,8 +2113,8 @@ This requires minor tweaks to rankaswell. We now compare the size of left and mi
 64	/*Partition result into< pivot,  equal  to  pivot  -> bigger  than  pivot.   */
 65	PartitionResult partition(int[] array, int start,  int end,  int pivot) {
 66		int left =  start;    /*Stays at (right)  edge  of  left side.  */
-67		int right =   end;      /*Stays at (left) edge of  right side.   */
-68		int middle  =  start;    /*Stays at (right) edge of  middle.    */
+67		int right =   end;    /*Stays at (left) edge of  right side.   */
+68		int middle  =  start; /*Stays at (right) edge of  middle.    */
 69		while  (middle <= right)  {
 70			if (array[middle]  <   pivot) {
 71				/*Middle  is smaller than  the  pivot. Left  is either smaller or  equal  to
@@ -2191,22 +2189,22 @@ In this case, we could apply a very similar approach, with one modification: rat
 The code below implements this algorithm:
 ```java
 1 	String  printLongestWord(String arr[]) {
-2 		HashMap<String,   Boolean>  map =  new HashMap<String,   Boolean>();
+2 		HashMap<String, Boolean>  map =  new HashMap<String, Boolean>();
 3 		for (String str  :   arr) {
 4 			map.put(str,  true);
 5 		}
-6 		Arrays.sort(arr,   new LengthComparator());  // Sort   by length
+6 		Arrays.sort(arr, new LengthComparator());  // Sort   by length
 7 		for (String s  :   arr) {
 8 			if (canBuildWord(s,   true,  map))  {
-9 				Syst em.out.println(s);
+9 				System.out.println(s);
 10				return s;
 11			}
 12
 13			return "";
 14		}
 15
-16		boolean canBuildWord(String  str,   boolean isOriginalWord,
-17		HashMap<String,   Boolean>  map) {
+16		boolean canBuildWord(String  str, boolean isOriginalWord,
+17		            HashMap<String, Boolean>  map) {
 18			if (map.containsKey(str) && !isOriginalWord)  {
 19				return map.get(str);
 20			}
@@ -2214,7 +2212,7 @@ The code below implements this algorithm:
 22				String left  =  str.substring(0, i);
 23				String right = str.substring(i);
 24				if (map.containsKey(left)  &&   map.get(left) == true &&
-25				canBuildWord(right,   false,  map))  {
+25				    canBuildWord(right,   false,  map))  {
 26					return true;
 27				}
 28			}
@@ -2246,29 +2244,28 @@ Let's start with an example. We'll draw it visually to get a better feel for the
 
 Alternatively, we could have also divided all the values (including the break) by 15 minutes, to give us the array {5,    7,  8,  5,   6,  9}. This would be equivalent, but now we would want a 1-minute break.
 
-The best set of appointments for this problem has 330 minutes total, formed with {r₀ = 75, r₂ = 120,
-r₅ = 135}. Note that we've intentionally chosen an example in which the best sequence of appointments was not formed through a strictly alternating sequence.
+The best set of appointments for this problem has 330 minutes total, formed with {r₀ = 75, r₂ = 120, r₅ = 135}. Note that we've intentionally chosen an example in which the best sequence of appointments was not formed through a strictly alternating sequence.
 
-We should also recognize that choosing the longest appointment first (the "greedy" strategy) would not necessarily be optimal. For example, a sequence  like {45,   60,     45,    15} would not have 60 in the optimal set.
+We should also recognize that choosing the longest appointment first (the "greedy" strategy) would not necessarily be optimal. For example, a sequence  like {45, 60, 45, 15} would not have 60 in the optimal set.
 
 **Solution #1: Recursion**
 
 The first thing that may come to mind is a recursive solution. We have essentially a sequence of choices as we walk down the list of appointments:  Do we use this appointment or do we not? If we use appointment i, we must skip appointment i + 1 as we can't take back-to-back appointments.  Appointment i +  2 is a possibility (but not necessarily the best choice).
 ```java
-1 	int  maxMinutes(int[] massages)   {
+1 	int maxMinutes(int[] massages)   {
 2 		return  maxMinutes(massages,  0);
 3 	}
 4
 5 	int  maxMinutes(int[] massages,   int  index) {
-6 		if  (index >= massages.length) { //Out  of  bounds
+6 		if (index >= massages.length) { //Out  of  bounds
 7 			return 0;
 8 		}
 9 
 10		/*  Best  with   this  reservation. */
-11		int bestWith   = massages[index]  +  maxMinutes(massages,   index +  2);
+11		int bestWith = massages[index]  +  maxMinutes(massages,   index +  2);
 12
 13		/*  Best  without this  reservation. */
-14		int  bestWithout =    maxMinutes(massages,  index +  l);
+14		int  bestWithout = maxMinutes(massages,  index +  l);
 15
 16		/*  Return  best of  this  subarray, starting  from  index.  */
 17		return  Math.max(bestWith, bestWithout);
@@ -2279,8 +2276,7 @@ The runtime of this solution  is O(2ⁿ) because at each element we're making tw
 
 The space complexity is O(n)  due to the recursive call stack.
 
-We can also depict this through a recursive call tree on an array of length 5. The number in each node repre­sents the index value in a call to maxMinutes. Observe that, for example, maxMinutes(massages,
-0) calls maxMinutes(massages, 1) and maxMinutes(massages,   2).
+We can also depict this through a recursive call tree on an array of length 5. The number in each node repre­sents the index value in a call to maxMinutes. Observe that, for example, maxMinutes(massages, 0) calls maxMinutes(massages, 1) and maxMinutes(massages, 2).
 
 
 ![](media/17_16_1.JPG)
@@ -2295,24 +2291,24 @@ We will repeatedly call maxMinutes on the same inputs. For example,  we'll call 
 
 Our memo table is just a mapping from index to the max minutes. Therefore, a simple array will suffice.
 ```java
-1 		int  maxMinutes(int[] massages)  {
-2 			int[] memo = new int[massages.length];
-3 			return maxMinutes(massages,  0,  memo);
-4 		}
+1 	int  maxMinutes(int[] massages)  {
+2 		int[] memo = new int[massages.length];
+3 		return maxMinutes(massages,  0,  memo);
+4 	}
 5
-6 		int  maxMinutes(int[] massages,  int index,   int[] memo)  {
-7 			if (index >=  massages.length) {
-8 				return 0;
-9 			}
+6 	int  maxMinutes(int[] massages,  int index,   int[] memo)  {
+7 		if (index >=  massages.length) {
+8 			return 0;
+9 		}
 10
-11			if (memo[index] ==  0)  {
-12				int bestWith  =   massages[index] +  maxMinutes(massages, index + 2,  memo);
-13				int bestWithout  =  maxMinutes(massages, index + 1,  memo);
-14				memo[index] =  Math.max(bestWith, bestWithout);
-15			}
+11		if (memo[index] ==  0)  {
+12			int bestWith  =   massages[index] +  maxMinutes(massages, index + 2,  memo);
+13			int bestWithout  =  maxMinutes(massages, index + 1,  memo);
+14			memo[index] =  Math.max(bestWith, bestWithout);
+15		}
 16
-17			return memo[index];
-18		}
+17		return memo[index];
+18	}
 ```
 To determine the runtime, we'll draw the same recursive call tree as before but gray-out the calls that will return immediately. The calls that will never  happen will be deleted entirely.
 
@@ -2323,7 +2319,7 @@ If we drew a bigger tree, we'd see a similar pattern. The tree looks very linear
 
 **Solution #3: Iterative**
 
-Can we do better?We certainly can't beat the time complexity since we have to look at each appointment. However, we might be able to beat the space complexity. This would mean not solving the problem recur­ sively.
+Can we do better? We certainly can't beat the time complexity since we have to look at each appointment. However, we might be able to beat the space complexity. This would mean not solving the problem recur­ sively.
 
 Let's look at our first example again.
 
@@ -2333,7 +2329,7 @@ Let's look at our first example again.
 
 As we noted in the problem statement. we cannot take adjacent appointments.
 
-There's another observation, though, that we can make: We should never skip three consecutive appoint­ ments. That is, we might skip r₁  and r₂ if we wanted to take r₀ and r₃.  But we would never skip r₁, r₂, and r₃.   This would be suboptimal since we could always improve our set by grabbing that middle element.
+There's another observation, though, that we can make: We should never skip three consecutive appoint­ ments. That is, we might skip r₁ and r₂ if we wanted to take r₀ and r₃.  But we would never skip r₁, r₂, and r₃. This would be suboptimal since we could always improve our set by grabbing that middle element.
 
 This means that if we take r₀  we know we'll definitely skip r₁ and definitely take either r₂ or r₃. This substan­tially limits the options we need to evaluate and opens the door to an iterative solution.
 
@@ -2342,14 +2338,14 @@ Let's think about  our recursive + memoization solution and try to reverse the l
 A useful way to do this is to approach it from the back and move toward the start of the array. At each point, we find the solution for the subarray. 
 
 - best(7): What's the best option for {r₇ = 45}? We can get45 min. if we take r₇, so best(7) = 45
-- best(6): What's the best option for {r₆ = 15, ...}? Still 45 min., so best(6) =  45. 
-- best(5): What's the best option for {r₅ = 15, ...}? We can either:
-	- take r₅    =  15 and mergeit with best(7) =  45, or:
+- best(6): What's the best option for {r₆ = 15,...}? Still 45 min., so best(6) =  45. 
+- best(5): What's the best option for {r₅ = 15,...}? We can either:
+	- take r₅ =  15 and mergeit with best(7) =  45, or:
 	- take best(6) =  45.
 
 The first gives us 60 minutes, best(5)  =  60.
 
-- best(4): What's the best option for {r₄  =  45, ...}?We can either:
+- best(4): What's the best option for {r₄  =  45, ...}? We can either:
 	- take r₄  =  45 and merge it with best(6) =  45, or:
 	- take best(5) = 60.
 
@@ -2371,15 +2367,15 @@ Thefirst gives us 150 minutes, best(2)  =  150.
 	- take r₁ = 15 and merge it with best(3) = 135, or:
 	- take best(2) = 150. 
 
-Either way, best(l)    150.
+Either way, best(l) = 150.
 
-- best(0):What's the best option for {r₀   =  30,   ...}? We can either:
+- best(0):What's the best option for {r₀ = 30,   ...}? We can either:
 	- take r₀ = 30 and merge it with best(2) =  150,or:
 	- take best(l) =  150.
 
-The first gives us 180minutes, best(0)     180. 
+The first gives us 180minutes, best(0) = 180. 
 
-Therefore, we return 180minutes.
+Therefore, we return 180 minutes.
 
 The code below implements this algorithm.
 ```java
@@ -2405,7 +2401,7 @@ It's nice in some ways that it's iterative, but we haven't actually "won" anythi
 
 In reviewing the last solution, we can recogpize that we only use the values in the memo table for a short amount of time. Once we are several elements past an index, we never use that element's index again.
 
-In fact, at any given index i, we only need to know the best value from i +  1 and i +  2. Therefore, we can get rid of the memo table and just use two integers.
+In fact, at any given index i, we only need to know the best value from i + 1 and i + 2. Therefore, we can get rid of the memo table and just use two integers.
 ```java
 1   int  maxMinutes(int[] massages)   {
 2   	int oneAway =  0;
@@ -2424,8 +2420,7 @@ This gives us the most optimal time and space possible: O(n) time and O(1) space
 
 Why did we look backward? It's a common technique in many problems to walk backward through an array. 
 
-However, we can walk forward if we want. This is easier for some people to think about, and harder for
-others. In this case, rather than asking "What's the best set that starts with a[i]?"; we would ask "What's the best set that ends with a[i]?"
+However, we can walk forward if we want. This is easier for some people to think about, and harder for others. In this case, rather than asking "What's the best set that starts with a[i]?"; we would ask "What's the best set that ends with a[i]?"
 
 
 **17.17  Multi Search:**  Given a string band an array of smaller strings T, design a method to search bfor each small string in T.
@@ -2452,7 +2447,7 @@ The naive solution is reasonably straightforward. Just search through the bigger
 5 			ArrayList<Integer> locations  =  search(big,  small);
 5 			lookup.put(small,  locations);
 7 		}
-8 		return  lookup;
+8 		return lookup;
 9 	}
 10
 11	/*  Find  all  locations of  the  smaller string  within the  bigger  string. */
@@ -2532,7 +2527,7 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 36 		public Trie(String s) {  insertString(s, 0);   }
 37 		public Trie() {}
 38
-39 		public   ArrayList<Integer> search(String s)  {
+39 		public ArrayList<Integer> search(String s)  {
 40 			return root.search(s);
 41 		}
 42
@@ -2577,8 +2572,8 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 81 			if (s ==  null  ||  s.length() ==  0)  {
 82 				return  indexes;
 83			}  else {
-84				char  first =  s.charAt(0);
-85				if  (children.containsKey(first)) {
+84				char first =  s.charAt(0);
+85				if (children.containsKey(first)) {
 86					String remainder  =  s.substring(l);
 87					return children.get(first).search(remainder);
 88				}
@@ -2610,7 +2605,7 @@ Without some additional knowledge of the expected input, you cannot directly com
 
 **Solution #3**
 
-Alternatively, we can add all the smaller strings into a trie. For example,  the strings { i,  is, pp, ms} would look like the trie below. The asterisk(\*) hanging from a node indicates that this node completes a word.
+Alternatively, we can add all the smaller strings into a trie. For example,  the strings {i,  is, pp, ms} would look like the trie below. The asterisk(\*) hanging from a node indicates that this node completes a word.
 
 ![](media/17_07_3.JPG)
 
@@ -2627,13 +2622,12 @@ mississippi is a p. There is no node p, so we break here. p: We see a p. There i
 - p: Another  p.
 - i: We go to the i node. We see that i is a complete word, so we add it to the trie. There are no more characters left in mississippi, so we are done.
 
-Each time we find a complete "small" word, we add it to a list along with the location in the bigger word
-(mississippi) where we found the small word. The code below implements this algorithm.
+Each time we find a complete "small" word, we add it to a list along with the location in the bigger word (mississippi) where we found the small word. The code below implements this algorithm.
 ```java
 1 	HashMaplist<String, Integer> searchAll(String  big,   String[]  smalls) {
 2 		HashMapList<String,  Integer> lookup = new HashMapList<String,   Integer>();
 3 		int maxlen =  big.length();
-4 		TrieNode root   =  createTreeFromStrings(smalls,  maxLen).getRoot();
+4 		TrieNode root =  createTreeFromStrings(smalls,  maxLen).getRoot();
 5 
 6 		for  (inti = 0;  i <   big.length(); i++)  {
 7 			ArrayList<String> strings  =  findStringsAtloc(root,  big,   i);
@@ -2660,7 +2654,7 @@ Each time we find a complete "small" word, we add it to a list along with the lo
 28		int index = start;
 29		while  (index  < big.length()) {
 30			root =  root.getChild(big.charAt(index));
-31			if (root ==    null) break;
+31			if (root == null) break;
 32			if  (root.terminates()) { // Is  complete  string,  add to  list
 33				strings.add(big.substring(start,  index + 1));
 34			}
@@ -2672,7 +2666,7 @@ Each time we find a complete "small" word, we add it to a list along with the lo
 40	/*  HashMapList<String,  Integer> is  a  HashMap  that maps from Strings to
 41	* ArrayList<Integer>. See appendix  for  implementation. */
 ```
-This algorithm  takes O(kt) time to create the trie and O( bk) time to search for all the strings.
+This algorithm  takes O(kt) time to create the trie and O(bk) time to search for all the strings.
 
 
 > Reminder: k is the length of the longest string in T, b is the length of the bigger string, and t is the number of smaller strings withinT.
@@ -2715,11 +2709,11 @@ By finding the closures for each index in the array, we can find the shortest su
 2 		int bestStart =  -1;
 3 		int bestEnd = -1;
 4 		for (int i =  0;  i <   bigArray.length;  i++)   {
-5 			int end =   findClosure(bigArray,  smallArray,  i);
+5 			int end = findClosure(bigArray,  smallArray,  i);
 6 			if (end == -1)   break;
-7 			if (bestStart ==    -1   ||   end  -  i < bestEnd   -  bestStart) {
+7 			if (bestStart == -1 || end  -  i < bestEnd -  bestStart) {
 8 				bestStart =  i;
-9 				bestEnd =    end;
+9 				bestEnd = end;
 10			}
 11		}
 12		return new Range(bestStart,  bestEnd);
@@ -2742,7 +2736,7 @@ By finding the closures for each index in the array, we can find the shortest su
 29
 30	/*  Find next  instance  of element starting  from index. */
 31	int  findNextinstance(int[] array, int  element, int  index) {
-32		for (inti =  index; i <   array.length;   i++) {
+32		for (inti =  index; i < array.length;   i++) {
 33			if (array[i] ==  element)  {
 34				return  i;
 35			}
@@ -2758,16 +2752,16 @@ By finding the closures for each index in the array, we can find the shortest su
 45			end =  e;
 46		}
 47
-48		public int  length() {  return end   -  start +  1;}
+48		public int length() {  return end -  start +  1;}
 49		public int getStart() {  return start;}
-50		public int  getEnd() {  return end;}
+50		public int getEnd() {  return end;}
 51
 52		public boolean shorterThan(Range other)  {
 53			return length()  <   other.length();
 54		}
 55	}
 ```
-This algorithm will potentially take  O(SB²)  time, where B  is the  length of bigString and  Sis the  length of smal1String.This is because at each of the  B  characters, we potentially do O(SB) work: Sscans of the rest of the  string, which has potentially B  characters.
+This algorithm will potentially take  O(SB²)  time, where B  is the  length of bigString and S is the  length of smal1String.This is because at each of the  B  characters, we potentially do O(SB) work: Sscans of the rest of the  string, which has potentially B  characters.
 
 **Optimized**
 
@@ -2777,18 +2771,17 @@ Let's think about it with an example. Given the  array below,  is there a way we
 
 	7,   5,  9,   0,   2,   1,   3,   s,  7,   9,   1,   1,   5,  8,   8,   9,   7
 
-Yes. Because we're going to have to do this repeatedly, we can precompute this information in just  a single (backwards) sweep. Iterate through the  array backwards, tracking the  last (most recent) occurrence of 5.
+Yes. Because we're going to have to do this repeatedly, we can precompute this information in just a single (backwards) sweep. Iterate through the  array backwards, tracking the  last (most recent) occurrence of 5.
 
 ![](media/17_18_1.JPG)
 
-Doing this for each of { 1,  5,  9}  takes just  3 backwards sweeps.
+Doing this for each of { 1,  5,  9}  takes just 3 backwards sweeps.
 
 Some people want to merge this into one backwards sweep that handles all three values. It feels faster-but it's not  really. Doing it in one  backwards sweep means doing three comparisons at each iteration. N moves through the  list with  three comparisons at each move is no better than 3N moves and  one comparison at each move. You might as well keep the  code clean  by doing it in separate sweeps.
 
 ![](media/17_18_2.JPG)
 
-The findNextinstance function can now just use this table to find the next occurrence, rather than
-doing a search.
+The findNextInstance function can now just use this table to find the next occurrence, rather than doing a search.
 
 But, actually, we can make it a bit simpler. Using the table above, we can quickly compute the closure of each index. It'sjust the max of the column. If a column has an x in it, then there is no closure, at this indicates that there's no next occurrence of that character.
 
@@ -2799,15 +2792,15 @@ The difference between the index and the closure is the smallest subarray starti
 Now, all we have to do is to find the minimum distance in this table.
 ```java
 1 	Range shortestSupersequence(int[]big, int[] small) {
-2 		int[][ ] nextElements  = getNextElementsMulti(big,   small);
+2 		int[][] nextElements  = getNextElementsMulti(big,   small);
 3 		int[] closures = getClosures(  nextElements);
 4 		return  getShortestClosure( closures);
 5 	}
 6
 7 	/*  Create  tba  le of  next  occurrences. */
 8 	int[][] getNextElementsMulti(int[] big, int[] small) {
-9 		int[ ][] nextElements =  newint[  small.length][big.length];
-10		for  (inti =  0; i <   small.length; i++)  {
+9 		int[][] nextElements =  newint[  small.length][big.length];
+10		for (int i =  0; i < small.length; i++)  {
 11			nextElements[i]  = getNextElement(big,  small[i]);
 12		}
 13		return  nextElements;
@@ -2818,7 +2811,7 @@ Now, all we have to do is to find the minimum distance in this table.
 18	int[] getNextElement(int[]bigArray, int value)   {
 19		int next =  -1;
 20		int[] nexts  = newint[bigArray.length];
-21		for  (inti = bigArray.length  - 1; i >=  0; i--) {
+21		for (int i = bigArray.length  - 1; i >=  0; i--) {
 22			if (bigArray[i]  ==  value) {
 23				next  = i;
 24			}
@@ -2828,7 +2821,7 @@ Now, all we have to do is to find the minimum distance in this table.
 28	}
 29
 30	/*  Get  closure for  eachindex. */
-31	int[]  getClosures(int[][] nextElements)  {
+31	int[] getClosures(int[][] nextElements)  {
 32		int[] maxNextElement = new int[nextElements[0].length];
 33		for (inti = 0; i < nextElements[0].length; i++) {
 34			maxNextElement[i] = getClosureForindex(nextElements, i);
@@ -2838,13 +2831,13 @@ Now, all we have to do is to find the minimum distance in this table.
 38
 39	/*  Given an index  and the  table of  next  elements,  find   the  closure for  this index
 40	* (which  will be the  min of  this column). */
-41	int  getClosureForindex(int[][] nextElements,   int index)   {
-42		int max =    -1;
-43		for  (int i =    0;  i <   nextElements.length;  i++)  {
+41	int  getClosureForindex(int[][] nextElements, int index)   {
+42		int max = -1;
+43		for  (int i = 0;  i < nextElements.length;  i++)  {
 44			if (nextElements[i][index] ==  -1)  {
 45				return  -1;
 46			}
-47			max =  Math.max(max, nextElements[i][index]);
+47			max = Math.max(max, nextElements[i][index]);
 48		}
 49		return max;
 50	}
@@ -2853,8 +2846,8 @@ Now, all we have to do is to find the minimum distance in this table.
 53	Range getShortestClosure(int[]  closures) {
 54		int bestStart = -1;
 55		int bestEnd  =  -1;
-56		for  (int i = 0;  i <   closures.length;  i++)  {
-57			if (closures[i] ==    -1)  {
+56		for  (int i = 0;  i < closures.length;  i++)  {
+57			if (closures[i] == -1)  {
 58				break;
 59			}
 60			int current =  closures[i] -  i;
@@ -2883,29 +2876,29 @@ Instead, as we do each sweep, wejust update the closure row with the minimums. T
 
 ```java
 1 	Range shortestSupersequence(int[] big, int[] small) {
-2 		int[] closures =    getClosures(big,  small);
+2 		int[] closures = getClosures(big,  small);
 3 		return  getShortestClosure( closures);
 4 	}
 5
 6 	/*  Get closure for  eachindex. */
 7 	int[] getClosures(int[]big, int[  ] small)   {
 8 		int[ ] closure =  newintb[ig.length];
-9 		for  (inti = 0; i <   small.length; i++) {
+9 		for  (inti = 0; i < small.length; i++) {
 10			sweepForClosure(big, closure,  small[i]);
 11		}
 12		return closure;
 13	}
 14
 15	/*  Do  backwards sweep and update  the  closures list  with the  next  occurrence  of
-16	* value, ifit's  later than  the  current closure. */
+16	* value, if it's  later than  the  current closure. */
 17	void sweepForClosure(int[]big, int[] closures, int  value) {
 18		int next =  -1;
 19		for  (inti = big.length -  1; i >= 0; i-- ) {
 20			if (big[i] ==  value) {
 21				next = i;
 22			}
-23			if ((  next == -1 ||      closures[i] <   next) &&
-24			   (closures[i]  != -1)) {
+23			if ((next == -1 ||      closures[i] <   next) &&
+24			        (closures[i]  != -1)) {
 25				closures[i] =  next;
 26			}
 27		}
@@ -2914,12 +2907,12 @@ Instead, as we do each sweep, wejust update the closure row with the minimums. T
 30	/*  Get shortest closure. */
 31	Range getShortestClosure(int[ ] closures) {
 32		Range shortest =  new Range(0,  closures[0]);
-33		for  (inti = 1; i <   closures.length; i++) {
+33		for  (inti = 1; i < closures.length; i++) {
 34			if (closures[i] ==  -1)  {
 35				b reak;
 36			}
 37			Range range =  new Range(i,   closures[i]);
-38			if (!shortest.shorterThan(  range)) {
+38			if (!shortest.shorterThan( range)) {
 39				shortest =  range;
 40			}
 41		}
@@ -2959,15 +2952,13 @@ Now, what's the next subsequence? We can remove the min from earlier (2) and fin
 	
 The next subsequence is [3, 7], which is no better or worse than our current best.
 
-We can continue down this path each time, repeating this process. We will end up iterating through all
-"minimal" subsequences that start from a given point.
+We can continue down this path each time, repeating this process. We will end up iterating through all "minimal" subsequences that start from a given point.
 
 1. Current subsequence is [min of heads, max of heads]. Compare to best subsequence and update if necessary.
-2. Remove  the minimum head.
+2. Remove the minimum head.
 3. Repeat.
 
-This will give us an O(SB) time complexity. This is because for each of B elements, we are doing a compar­
-ison to the S other list heads to find the minimum.
+This will give us an O(SB) time complexity. This is because for each of B elements, we are doing a compar­ison to the S other list heads to find the minimum.
 
 This is pretty good, but let's see if we can make that minimum computation faster.
 
@@ -3020,7 +3011,7 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 40		}
 41
 42		int min =  minHeap.peek().locationWithinList;
-43		int bestRangeMin     min;
+43		int bestRangeMin = min;
 44		int bestRangeMax = max;
 45
 46		while  (true) {
@@ -3031,8 +3022,8 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 51			/*Compare range  to  best  range.*/
 52			min =  n.locationWithinList;
 53			if (max -  min < bestRangeMax -  bestRangeMin)  {
-54				bestRangeMax    max;
-55				bestRangeMin =   min;
+54				bestRangeMax = max;
+55				bestRangeMin = min;
 56			}
 57
 58			/*If there are  no more elements,  then  there's no more subsequences  and we
@@ -3047,14 +3038,13 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 67			max = Math.max(max, n.locationWithinList);
 68		}
 69
-70		return new Range(bestRangeMin,   bestRangeMax);
+70		return new Range(bestRangeMin, bestRangeMax);
 71	}
 ```
 We're going through B elements in getShortestClosure, and each time pass in the for loop will take O(log S) time (the time to insert/remove from the heap). This algorithm will therefore take O(B log S) time in the worst case.
 
 
-**17.19  Missing  Two:**  You are given an array with all the numbers from 1 to N appearing  exactly once, except for one number that is missing. How can you find the missing number in O(N) time and
-O(1) space?What if there were two numbers missing?
+**17.19  Missing  Two:**  You are given an array with all the numbers from 1 to N appearing  exactly once, except for one number that is missing. How can you find the missing number in O(N) time and O(1) space? What if there were two numbers missing?
 
 SOLUTIONS
 
@@ -3116,8 +3106,7 @@ We can still approach it this way, but we'll need to use the Biglnteger class.
 ```
 There's no need for all of this, though. We can use the sum instead. It too will be unique.
 
-Doing the sum has another benefit: there is already a closed form expression to compute the sum of
-numbers between 1 and n. This is n(n+1)/2.
+Doing the sum has another benefit: there is already a closed form expression to compute the sum of numbers between 1 and n. This is n(n+1)/2.
 
 > Most candidates probably won't remember the expression for the sum of numbers between 1 and n, and that's okay. Your interviewer might, however, ask you to derive it. Here's how to think about that: you can pair up the low and high values in the sequence of 0 +  1 + 2 +  3 +  ... + n to get: (0, n)  + (1, n-1) + (2, n-3), and so on. Each of those pairs has a sum of n and there are (n+1)/2 pairs. But what if n is even, such that (n+1)/2 is not an integer? In this case, pair up low and high values to get n/2 pairs with sum n+l. Either way, the math works out to n(n+l)/2.
 
@@ -3133,21 +3122,19 @@ Unfortunately, knowing the sum isn't enough. If, for example, the sum is 10, tha
 
 We're again at the same point we were in the first part of the problem. We need a calculation that can be applied such that the result is unique across all potential pairs of missing numbers.
 
-Perhaps there is such a calculation (the prime one would work, but it's not constant time), but your inter­
-viewer probably doesn't expect you to know such math.
+Perhaps there is such a calculation (the prime one would work, but it's not constant time), but your inter­viewer probably doesn't expect you to know such math.
 
 What else can we do? Let's go back to what we can do. We can get x  +  y and we can also get x * y. Each result leaves us with a number  of possibilities. But using both  of them narrows it down to the specific numbers. 
 
-	X + y = sum         -> y  = sum - x
-	X * y = product     -> x(sum - x)  =  product
-						x*sum -  x²  = product 
-						x*sum -  x²   -  product = 0
-						-x²   + x*sum -  product = 0 
+	X + y = sum      -> y  = sum - x
+	X * y = product  -> x(sum - x)  = product
+						x*sum -  x² = product 
+						x*sum -  x² - product = 0
+						-x² + x*sum - product = 0 
 
 At this point, we can apply the quadratic formula to solve for x. Once we have x, we can then compute y.
 
-There are actually a number of other calculations you can perform. In fact, almost any other calculation
-(other than "linear" calculations) will give us values for x and y. 
+There are actually a number of other calculations you can perform. In fact, almost any other calculation (other than "linear" calculations) will give us values for x and y. 
 
 For this part, let's use a different calculation. Instead of using the product of 1  * 2  * . . .   * n, we can use the sum of the squares: 1²   +  2²   +   . . .  +  n². This will make the Biginteger usage a little less critical, as the code will at least run on small values of n. We can discuss with our interviewer whether or not this is important. 
 
@@ -3172,11 +3159,11 @@ Implementing this is now somewhat straightforward.
 ```java
 1 	int[] missingTwo(int[] array)  {
 2 		intmax_value  = array.length +  2;
-3 		intrem_square  =  squareSumToN(max_value,  2);
+3 		intrem_square = squareSumToN(max_value,  2);
 4 		intrem_one  = max_value  *  (max_value   + 1)  / 2;
 5
-6 		for (inti =  0;  i <   array.length; i++)   {
-7 			rem_square   -=  array[i]  *  array [i];
+6 		for (inti =  0;  i < array.length; i++)   {
+7 			rem_square  -=  array[i]  *  array [i];
 8 			rem_one -=  array[i];
 9 		}
 10
@@ -3191,21 +3178,21 @@ Implementing this is now somewhat straightforward.
 19		return  sum;
 20	}
 21
-22	int[] solveEquation(int  rl,  int r2) {
+22	int[] solveEquation(int  r1,  int r2) {
 23		/* ax^2 + bx + c
 24		*  -- >
 25		*  x  =   [-b  + -  sqrt(b^2 - 4ac)]   / 2a
 26		*  In  this case,   it has  to  be  a + not  a  -  */
 27		int  a = 2;
-28		int  b = -2  *  rl;
-29		int  C = rl * rl - r2;
+28		int  b = -2 * r1;
+29		int  C = r1 * r1 - r2;
 30
 31		double  part1 =  -1  *  b;
 32		double  part2 =  Math.sqrt(b * b - 4  *  a  *  c);
 33		double  part3 =  2 *  a;
 34
 35		int  solutionX =  (int) ((part1 + part2) / part3);
-36		int  solutionY =  rl -  solutionX;
+36		int  solutionY =  r1 -  solutionX;
 37
 38		int[] solution =  {solutionX,  solutionY};
 39		return solution;
@@ -3222,15 +3209,15 @@ If this doesn't immediately make sense to you, remember thatx and y are intercha
 
 Still not convinced? Okay, we can do some math. Let's say we took the alternate value for x: [-b  - sqrt(b² - 4ac)] / 2a. What's y?
 ```
-	X  +  y  =  r1
-		  y  =  r1  -  X
-			 =  r1  - [-b - sqrt(b² - 4ac)]/2a
+	X  +  y  = r1
+		  y  = r1  -  X
+			 = r1  - [-b - sqrt(b² - 4ac)]/2a
 		     = [2a*r₁ + b + sqrt(b² - 4ac)]/2a 
 ```
 Partially plug in values for a and b, but keep the rest of the equation as-is:
 ``` 
-	= [2(2)*r₁   + (-2r₁) + sqrt(b² - 4ac)]/2a 
-	= [2r₁   + sqrt(b² - 4ac)]/2a
+	= [2(2)*r₁ + (-2r₁) + sqrt(b² - 4ac)]/2a 
+	= [2r₁ + sqrt(b² - 4ac)]/2a
 ```
  
 Recall that b = -2r₁. Now, we wind up with this equation:
@@ -3240,7 +3227,7 @@ Recall that b = -2r₁. Now, we wind up with this equation:
 
 Therefore, if we use x = (part1 +  part2) / part3, then we'll get (part1  - part2) / part3 for the value for y.
 
-We don't carewhich one we callx and which one we cally, so we can use either one. It'll work out the same in the end.
+We don't care which one we callx and which one we cally, so we can use either one. It'll work out the same in the end.
 
 
 **17.20 Continuous  Median:** Numbers are randomly generated and passed to a method. Write a program to find and maintain the median value as new values are generated. 
@@ -3340,8 +3327,8 @@ What about the rest?
 
 We have essentially two subgraphs, one on the left and one on the right. To find the volume there, we repeat a very similar process.
 
-1.   Find the max. (Actually, this is given to us. The highest on the left subgraph is the right border (6) and the highest on the right subgraph is the left border (5).)
-2.   Find the second tallest in each subgraph. In the left subgraph, this is 4. In the right subgraph, this is 3.
+1.  Find the max. (Actually, this is given to us. The highest on the left subgraph is the right border (6) and the highest on the right subgraph is the left border (5).)
+2.  Find the second tallest in each subgraph. In the left subgraph, this is 4. In the right subgraph, this is 3.
 3.  Compute  the volume between the tallest and the second tallest.
 4.  Recurse on the edge of the graph.
 
@@ -3366,8 +3353,8 @@ The code below implements this algorithm.
 16			if (start >= end)  return 0;
 17			int sum  =  0;
 18			if (isleft) {
-19				int max   =   findindexOfMax(histogram,  start, end  -  1);
-20				sum  +=  borderedVolume(histogram,  max, end);
+19				int max = findindexOfMax(histogram,  start, end  -  1);
+20				sum += borderedVolume(histogram,  max, end);
 21				sum += subgraphVolume(histogram,   start, max, isleft);
 22			}  else {
 23				int max  =  findindexOfMax(histogram,  start + 1,  end);
@@ -3382,7 +3369,7 @@ The code below implements this algorithm.
 32	int findindexOfMax(int[]  histogram,  int start,  int end) {
 33		int indexOfMax =  start;
 34		for (int i =  start + 1;   i <= end;  i++)  {
-35			if (histogram[i] >   histogram[indexOfMax])  {
+35			if (histogram[i] > histogram[indexOfMax])  {
 36				indexOfMax  =  i;
 37			}
 38		}
@@ -3395,8 +3382,8 @@ The code below implements this algorithm.
 45		if (start >=  end) return 0;
 46
 47		int min =  Math.min(histogram[start],  histogram[end]);
-48		int sum  =  0;
-49		for (int i =  start +     1;   i <   end; i++ )  {
+48		int sum =  0;
+49		for (int i =  start + 1; i < end; i++)  {
 50			sum  +=  min  -  histogram[i];
 51		}
 52		return sum;
@@ -3426,16 +3413,16 @@ We've chosen to use a HistogramData object to store this extra information, but 
 2 		int start =  0;
 3 		int end =  histogram.length -  1;
 4
-5 		HistogramData[]   data  =  createHistogramData(histogram);
+5 		HistogramData[] data  =  createHistogramData(histogram);
 6
 7 		int max =  data[0].getRightMaxindex(); // Get overall max
-8 		int leftVolume  =    subgraphVolume(data,  start, max, true);
-9 		int rightVolume =  subgraphVolume(data,  max, end,  false);
+8 		int leftVolume  = subgraphVolume(data,  start, max, true);
+9 		int rightVolume = subgraphVolume(data,  max, end,  false);
 10
 11		return leftVolume +  rightVolume;
 12	}
 13
-14	HistogramData[]   createHistogramData(int[] histo)  {
+14	HistogramData[] createHistogramData(int[] histo)  {
 15		HistogramData[]  histogram =  new HistogramData[histo.length];
 16		for  (int i = 0;  i <  histo.length; i++)  {
 17			histogram[i] =  new HistogramData(histo[i]);
@@ -3470,12 +3457,12 @@ We've chosen to use a HistogramData object to store this extra information, but 
 46		if (start >= end)  return 0;
 47		int sum =  0;
 48		if (isleft) {
-49			int max =  histogram[end  -  1].getLeftMaxindex();
-50			sum  +=  borderedVolume(histogram,   max, end);
-51			sum  +=  subgraphVolume(histogram,  start, max, isLeft);
+49			int max =  histogram[end - 1].getLeftMaxindex();
+50			sum  +=  borderedVolume(histogram, max, end);
+51			sum  +=  subgraphVolume(histogram, start, max, isLeft);
 52		}  else {
 53			int max =  histogram[start + 1].getRightMaxindex();
-54			sum  +=  borderedVolume(histogram,   start, max);
+54			sum += borderedVolume(histogram,   start, max);
 55			sum += subgraphVolume(histogram,  max, end,  isleft);
 56		}
 57
@@ -3489,7 +3476,7 @@ We've chosen to use a HistogramData object to store this extra information, but 
 65
 66		int min =  Math.min(data[start].getHeight(),  data[end].getHeight());
 67		int sum =  0;
-68		for   (int i = start + 1;  i <   end;  i++)  {
+68		for (int i = start + 1;  i <   end;  i++)  {
 69			sum +=  min -  data[i].getHeight();
 70		}
 71		return sum;
@@ -3497,15 +3484,15 @@ We've chosen to use a HistogramData object to store this extra information, but 
 73
 74	public   class HistogramData {
 75		private int height;
-76		private int leftMaxlndex   =   -1;
-77		private int rightMaxindex  =   -1;
+76		private int leftMaxlndex  = -1;
+77		private int rightMaxindex = -1;
 78
 79		public HistogramData(int v)  {height  =  v;  }
 80		public int  getHeight() {return  height;  }
-81		public int  getLeftMaxlndex() {  return  leftMaxIndex; }
-82		public void setLeftMaxindex(int idx)  {leftMaxlndex = idx;   };
-83		public int  getRightMaxlndex() {  return  rightMaxindex; }
-84		public void setRightMaxindex(int idx)  {  rightMaxindex  = idx;   };
+81		public int  getLeftMaxlndex() { return  leftMaxIndex; }
+82		public void setLeftMaxindex(int idx)  {leftMaxlndex = idx; };
+83		public int  getRightMaxlndex() { return  rightMaxindex; }
+84		public void setRightMaxindex(int idx)  { rightMaxindex  = idx; };
 85	}
 ```
  
@@ -3548,7 +3535,7 @@ In the actual implementation, we don't need to keep so much data around. Steps 2
 7 	int computeHistogramVolume(int[] histo) {
 8 		/* Get  left max */
 9 		int[] leftMaxes =  new int[histo.length];
-10		int leftMax   =  histo[0];
+10		int leftMax =  histo[0];
 11		for (int i =  0;  i <   histo.length; i++)   {
 12			leftMax   =  Math.max(leftMax,  histo[i]);
 13			leftMaxes[i] =  leftMax;
@@ -3616,14 +3603,14 @@ If we wanted to find the shortest path, we would want to use breadth-first searc
 5
 7 	HashSet<String>  setupDictionary(String[]  words)  {
 8 		HashSet<String>  hash =  new HashSet<String>();
-9 		for  (String word :   words)  {
+9 		for  (String word : words)  {
 10			hash.add(word.toLowerCase());
 11		}
 12		return  hash;
 13	}
 14
 15	LinkedList<String>  transform(HashSet<String> visited,  String startWord,
-16	String stopWord,   Set<String> dictionary)  {
+16	            String stopWord, Set<String> dictionary)  {
 17		if (startword.equals(stopWord)) {
 18			LinkedList<String> path =  new LinkedList<String>();
 19			path.add(startWord);
@@ -3635,7 +3622,7 @@ If we wanted to find the shortest path, we would want to use breadth-first searc
 25		visited.add(startWord);
 26		ArrayList<String> words  =  wordsOneAway(startWord);
 27
-28		for (String word :   words)  {
+28		for (String word : words)  {
 29			LinkedList<String> path =  transform(visited,  word,  stopWord,   dictionary);
 30			if (path != null) {
 31				path.addFirst(startWord);
@@ -3649,7 +3636,7 @@ If we wanted to find the shortest path, we would want to use breadth-first searc
 39	ArrayList<String> wordsOneAway(String  word)  {
 40		ArrayList<String> words  =  new ArrayList<String>();
 41		for (int i  =  0;  i < word.length();  i++)  {
-42			for (char c  =   'a'; c  <= 'z'; c++)  {
+42			for (char c  = 'a'; c  <= 'z'; c++)  {
 43				String w  =  word.substring(0,  i) + c  +  word.substring(i +  1);
 44				words.add(w);
 45			}
@@ -3682,7 +3669,7 @@ We can do this for the whole dictionary by creating a mapping from a "wildcard w
 	ap_ -> ape 
 	il_ -> ill 
 
-Now, when we wantto know the wordsthat are one edit away from a word like ale, we look up \_le, a_e, and al_ in the hash table.
+Now, when we want to know the wordsthat are one edit away from a word like ale, we look up \_le, a_e, and al_ in the hash table.
 
 The algorithm is otherwise essentially the same.
 ```java
@@ -3695,19 +3682,19 @@ The algorithm is otherwise essentially the same.
 7 	/* Do  a depth-first search  from startWord  to  stopWord, traveling through  each word
 8 	 * that is one edit away. */
 9 	LinkedList<String>  transform(HashSet<String> visited,  String start,  String stop,
-10	HashMapList<String,  String>   wildcardToWordList)   {
+10	                HashMapList<String,  String>   wildcardToWordList)   {
 11		if (start.equals(stop)) {
 12			LinkedList<String> path =  new LinkedList<String>();
 13			path.add(start);
 14			return path;
-15		}  else if  (visited.contains(start)) {
+15		}  else if (visited.contains(start)) {
 16			return null;
 17		}
 18
 19		visited.add(start);
 20		ArrayList<String> words  =  getValidLinkedWords(start,  wildcardToWordlist);
 21	
-22		for  (String word :  words)  {
+22		for (String word :  words)  {
 23			LinkedList<String> path =  transform(visited,  word,  stop,   wildcardToWordList);
 24			if (path != null) {
 25				path.addFirst(start);
@@ -3721,9 +3708,9 @@ The algorithm is otherwise essentially the same.
 33	/*  Insert words in  dictionary into mapping from wildcard form  -> word.  */
 34	HashMapList<String,  String>   createWildcardToWordMap(String[]   words)  {
 35		HashMapList<String,  String>  wildcardToWords = new HashMaplist<String,  String>();
-36		for  (String word :   words)  {
+36		for (String word : words)  {
 37			ArrayList<String> linked =  getWildcardRoots(word);
-38			for  (String linkedWord  :   linked) {
+38			for (String linkedWord  : linked) {
 39				wildcardToWords.put(linkedWord,  word);
 40			}
 41		}
@@ -3733,7 +3720,7 @@ The algorithm is otherwise essentially the same.
 45	/*  Get  list of  wildcards associated  with  word.  */
 46	ArrayList<String> getWildcardRoots(String  w) {
 47		ArrayList<String>  words =  new ArrayList<String>();
-48		for   (inti = 0;  i <   w.length();  i++)   {
+48		for (inti = 0;  i < w.length();  i++)   {
 49			String word =  w.substring(0,  i) + "_"  + w.substring(i + 1);
 50			words.add(word);
 51		}
@@ -3745,9 +3732,9 @@ S2		return words;
 57			HashMaplist<String,   String>  wildcardToWords)  {
 58		ArrayList<String> wildcards =  getWildcardRoots(word);
 59		ArrayList<String> linkedWords  =  new ArrayList<String>();
-60		for (String  wildcard :   wildcards)  {
+60		for (String  wildcard : wildcards)  {
 61			ArrayList<String> words  =  wildcardToWords.get(wildcard);
-62			for   (String linkedWord   :   words)  {
+62			for   (String linkedWord : words)  {
 63				if (!linkedWord.equals(word))  {
 64					linkedWords.add(linkedWord);
 65				}
@@ -3785,12 +3772,12 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 
 ```java
 1  	LinkedList<String> transform(String  startWord, String  stopWord, String[]  words)  {
-2  		HashMaplist<String,  String>   wildcardToWordList =  getWildcardToWordlist(words);
+2  		HashMaplist<String,  String> wildcardToWordList =  getWildcardToWordlist(words);
 3 
-4  		BFSData  sourceData  =  new BFSData(startWord);
-5  		BFSData   destData   =  new BFSData(stopWord);
+4  		BFSData sourceData  =  new BFSData(startWord);
+5  		BFSData destData    =  new BFSData(stopWord);
 6 
-7  		while  (!sourceData.isFinished() &&   !destData.isFinished())  {
+7  		while (!sourceData.isFinished() &&   !destData.isFinished())  {
 8  			/*  Search  out  from source. */
 9  			String collision =  searchLevel(wildcardToWordList, sourceData,  destData);
 10 			if (collision !=  null) {
@@ -3809,7 +3796,7 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 23 
 24 	/*  Search  one level and return collision, if any.  */
 25 	String  searchLevel(HashMapList<String, String>   wildcardToWordList,
-26 	BFSData  primary,   BFSData secondary) {
+26 	            BFSData  primary,   BFSData secondary) {
 27 		/*  We  only  want to  search  one level at a time. Count how  many  nodes are
 28 		* currently in  the  primary's level and only  do that many  nodes.  We'll  continue
 29 		*  to add   nodes to  the  end. */
@@ -3837,8 +3824,8 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 51 		return null;
 52 }
 53 
-54 LinkedList<String> mergePaths(BFSData bfsl, BFSData bfs2, String connection) {
-55 		PathNode endl = bfsl.visited.get(connection); // endl -> source
+54 LinkedList<String> mergePaths(BFSData bfs1, BFSData bfs2, String connection) {
+55 		PathNode endl = bfs1.visited.get(connection); // endl -> source
 56  	PathNode end2 = bfs2.visited.get(connection); // end2 -> dest
 57  	LinkedList<String> pathOne =  endl.collapse(false);  // forward
 58  	LinkedList<String> pathTwo =  end2.collapse(true);  // reverse
@@ -3857,7 +3844,7 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 71  	public BFSData(String  root) {
 72  		PathNode sourcePath =  new PathNode(root,  null);
 73  		toVisit.add(sourcePath);
-74  		visited.put(root,   sourcePath);
+74  		visited.put(root, sourcePath);
 75  	}
 76 
 77  	public boolean  isFinished() {
@@ -3884,7 +3871,7 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 98 		while  (node  != null) {
 99 			if (startsWithRoot)  {
 100 				path.addlast(node.word);
-101 			}  else {
+101 			} else {
 102 				path.addFirst(node.word);
 103 			}
 104 			node =  node.previousNode;
@@ -3896,7 +3883,7 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 110 /* HashMaplist<String, Integer> is a  HashMap  that maps from  Strings to
 111 * ArrayList<Integer>.  See  appendix  for  implementation. * /
 ```
-This algorithm's runtime is a bit harder to describe since it depends on what the language looks like, as well as the actual source and destination words. One way of expressing it is that if each word has E words that are one edit away and the source and destination are distance D, the runtime is O(E⁰\²). This is how much work each breadth-first search does.
+This algorithm's runtime is a bit harder to describe since it depends on what the language looks like, as well as the actual source and destination words. One way of expressing it is that if each word has E words that are one edit away and the source and destination are distance D, the runtime is O(E⁰/²). This is how much work each breadth-first search does.
 
 Of course, this is a lot of code to implement  in an interview. It just wouldn't be possible.   More real­ istically, you'd leave out a lot of the details. You might write just the skeleton code of transform and searchLevel, but leave out the rest.
 
@@ -3920,7 +3907,7 @@ Our code works as follows:
 ```java
 1 	Subsquare findSquare(int[][]  matrix) {
 2 		for (int i = matrix.length;  i >=  1;  i--) {
-3 			Subsquare   square = findSquareWithSize(matrix,  i);
+3 			Subsquare square = findSquareWithSize(matrix,  i);
 4 			if (square != null) return square;
 5 		}
 6 		return null;
@@ -3931,8 +3918,8 @@ Our code works as follows:
 11		int count =  matrix.length  -  squareSize + 1;
 12
 13		/* Iterate  through all  squares with  side  length squareSize. */
-14		for (int row = 0;  row <   count;  row++)  {
-15			for (int  col = 0;   col <  count;  col++)   {
+14		for (int row = 0;  row < count;  row++)  {
+15			for (int  col = 0; col <  count;  col++)   {
 16				if (isSquare(matrix,  row,  col,  squareSize)) {
 17					return new Subsquare(row, col,  squareSize);
 18				}
@@ -3987,15 +3974,15 @@ Our code for this  algorithm is below.  Note that findSquare and findSquareWithS
 
 ```java
 1 	public  class  SquareCell {
-2 		public int  zerosRight =  0;
+2 		public int zerosRight =  0;
 3 		public int zerosBelow =  0;
 4 		/*  declaration, getters,  setters */
 5 	}
 6
-7 	Subsquare  findSquare(int[][]  matrix) {
+7 	Subsquare findSquare(int[][]  matrix) {
 8 		SquareCell[][] processed =  processSquare(matrix);
 9 		for  (int i = matrix.length;  i >=  1;  i--) {
-10			Subsquare  square  =  findSquareWithSize(processed,  i);
+10			Subsquare square  =  findSquareWithSize(processed,  i);
 11			if  (square != null)  return square;
 12		}
 13		return null;
@@ -4062,7 +4049,7 @@ Like many "maximizing" problems,  this problem has a straightforward brute force
 
 To iterate through all possible submatrices (with no duplicates), we simply need to iterate through all ordered pairs of rows, and then all ordered pairs of columns.
 
-This solution is  O(N⁶), since we iterate through O(N⁴) submatrices and it takes O(N²) time to compute the area of each.
+This solution is O(N⁶), since we iterate through O(N⁴) submatrices and it takes O(N²) time to compute the area of each.
 
 ```java
 1 	SubMatrix getMaxMatrix(int[][] matrix) {
@@ -4071,10 +4058,10 @@ This solution is  O(N⁶), since we iterate through O(N⁴) submatrices and it t
 4 		SubMatrix best   =  null;
 5 		for  (int rowl = 0;  rowl  <   rowCount; rowl++)  {
 6 			for  (int row2 =  rowl;  row2 <   rowCount; row2++) {
-7 				for  (int coll =  0;  coll < columnCount; coll++) {
+7 				for  (int col1 =  0;  col1 < columnCount; coll++) {
 8 					for  (int col2   =   coll; col2 < columnCount; col2++)  {
 9 						int sum = sum(matrix,  rowl,  coll, row2, col2);
-10						if (best ==  null   ||    best.getSum()  <   sum) {
+10						if (best ==  null || best.getSum()  <   sum) {
 11							best  = new SubMatrix(rowl,   coll, row2, col2,   sum);
 12						}
 13					}
@@ -4084,7 +4071,7 @@ This solution is  O(N⁶), since we iterate through O(N⁴) submatrices and it t
 17		return best;
 18	}
 19
-20	int sum(int[][] matrix,   int rowl,  int coll, int row2,  int col2) {
+20	int sum(int[][] matrix, int rowl,  int coll, int row2,  int col2) {
 21		int sum = 0;
 22		for  (int r =  rowl;  r <= row2;  r++)  {
 23			for  (int c  =   coll; c  <=  col2;   c++) {
@@ -4095,10 +4082,10 @@ This solution is  O(N⁶), since we iterate through O(N⁴) submatrices and it t
 28	}
 29
 30	public  class SubMatrix {
-31		private int rowl,  row2,  coll, col2,   sum;
-32		public   SubMatrix(int rl,  int cl, int r2,   int c2,  int sm) {
-33			rowl =  rl;
-34			coll =  cl;
+31		private int row1,  row2,  col1, col2,   sum;
+32		public   SubMatrix(int r1,  int c1, int r2,   int c2,  int sm) {
+33			row1 =  rl;
+34			col1 =  cl;
 35			row2 =  r2;
 36			col2 =  c2;
 37			sum  =  sm;
@@ -4113,7 +4100,7 @@ It is good practice to pull the sum code into its own function since it's a fair
 
 **Dynamic  Programming Solution: O(N⁴)**
 
-Notice that the earlier solution is made slower by a factor of O(N²) simply because computing the sum of a matrix is so slow. Can we reduce the time to compute the area? Yes! In fact  we can reduce the time of c omputeSum to O(1).
+Notice that the earlier solution is made slower by a factor of O(N²) simply because computing the sum of a matrix is so slow. Can we reduce the time to compute the area? Yes! In fact  we can reduce the time of computeSum to O(1).
 
 Consider the following rectangle:
 
@@ -4152,11 +4139,11 @@ The following code implements this algorithm.
 6 
 7 		for (int rowl  = 0;  rowl < rowcount;  rowl++)   {
 8 			for (int row2 =  rowl;   row2 <  rowCount;  row2++) {
-9 				for (int  coll =  0;  coll  <   columnCount;   coll++)  {
+9 				for (int  col1 =  0;  col1  <   columnCount;   coll++)  {
 10					for (int col2   = coll;  col2   <   columnCount;  col2++)   {
 11						int sum =  sum(sumThrough, rowl,   coll, row2,  col2);
-12						if (best ==    null  ||   best.getSum()  <   sum) {
-13							best   =  new SubMatrix(rowl,   coll, row2,  col2,   sum);
+12						if (best == null  ||   best.getSum()  <   sum) {
+13							best =  new SubMatrix(rowl,   coll, row2,  col2,   sum);
 14						}
 15					}
 16				}
@@ -4167,8 +4154,8 @@ The following code implements this algorithm.
 21
 22	int[][] precomputeSums(int[][]  matrix)   {
 23		int[][] sumThrough = new  int[matrix.length][matrix[0].length];
-24		for   (int r = 0;  r <   matrix.length;  r++)  {
-25			for  (int c =  0;  c  <   matrix[0].length;  c++) {
+24		for (int r = 0;  r <   matrix.length;  r++)  {
+25			for (int c =  0;  c  <   matrix[0].length;  c++) {
 26				int left = c >  0 ? sumThrough[r][c  -  1]  :   0;
 27				int top = r >  0 ? sumThrough[r -  l][c] :   0;
 28				int overlap =  r > 0 &&   c >  0 ? sumThrough[r - l][c - 1]  :   0;
@@ -4179,9 +4166,9 @@ The following code implements this algorithm.
 33	}
 34
 35	int sum(int[][] sumThrough, int rl,  int cl, int r2,   int c2)  {
-36		int topAndLeft = rl >  0 &&   cl >  0 ?  sumThrough[rl - l][cl - 1] 0;
-37		int left =    cl > 0 ? sumThrough[r2][cl -  1]  :   0;
-38		int top =    rl > 0 ? sumThrough[rl  - l][c2] :   0;
+36		int topAndLeft = r1 >  0 &&   c1 >  0 ?  sumThrough[r1 - l][c1 - 1] 0;
+37		int left = c1 > 0 ? sumThrough[r2][c1 -  1]  : 0;
+38		int top  = r1 > 0 ? sumThrough[r1 - l][c2] : 0;
 39		int full = sumThrough[r2][c2];
 40		return full -  left -  top + topAndLeft;
 41	}
@@ -4212,8 +4199,7 @@ Picture a submatrix:
 
 ![](media/17_24_2.JPG)
 
-Given a rowStart and rowEnd, we want to find the colStart and colEnd  that give us the highest
-possible  sum. To do this, we can sum up each column and then apply the maximumSubArray function explained at the beginning  of this problem.
+Given a rowStart and rowEnd, we want to find the colStart and colEnd  that give us the highest possible sum. To do this, we can sum up each column and then apply the maximumSubArray function explained at the beginning  of this problem.
 
 For the earlier example, the maximum  subarray is the first through fourth columns. This means that the maximum submatrix is (rowStart, first column) through (rowEnd, fourth  column).
 
@@ -4224,7 +4210,7 @@ We now have pseudocode that looks like the following.
 3       foreach  rowEnd  in  rows
 4           foreach  col  in  columns
 5                partialSum[col]=  sum  of  matrix[rowStart,  col]  through matrix[rowEnd, col]
-6           runningMaxSum   =  max5ubArray(partia1Sum)
+6           runningMaxSum =  max5ubArray(partialSum)
 7           maxSum = max(runningMaxSum,   maxSum)
 8   return maxSum
 ```
@@ -4234,10 +4220,10 @@ In lines 5 and 6, we're basically adding up a[0] ... a[i] from scratch, even tho
 ```
 1   maxSum  =  0
 2   foreach  rowStart  in  rows
-3         clear   array  partialSum
+3         clear array  partialSum
 4      foreach  rowEnd  in  rows
-5               foreach  col  in  columns
-6               partia1Sum[col]   +=  matrix[rowEnd, col]
+5               foreach col  in  columns
+6               partialSum[col]   +=  matrix[rowEnd, col]
 7          runningMaxSum   = maxSubArray(partialSum)
 8      maxSum  =  max(runningMaxSum,  maxSum)
 9   return maxSum
@@ -4250,7 +4236,7 @@ Our full code looks like this:
 4 		SubMatrix best =  null;
 5
 6 		for  (int rowStart  =  0;  rowStart  <   rowCount; rowStart++) {
-7 			int[] partia1Sum =  new  int[colCount];
+7 			int[] partialSum =  new  int[colCount];
 8
 9 			for  (int rowEnd  =  rowStart;  rowEnd  <   rowCount; rowEnd++)    {
 18				/*  Add  values  at  row rowEnd.  */
@@ -4269,13 +4255,13 @@ Our full code looks like this:
 23	}
 24
 25	Range maxSubArray(int[]  array, int N)   {
-26		Range best =    null;
+26		Range best = null;
 27		int start = 0;
 28		int sum =  0;
 29
-30		for  (int i = 0;  i <   N;    i++) {
+30		for  (int i = 0;  i < N; i++) {
 31			sum += array[i];
-32			if (best == null ||   sum >  best.sum) {
+32			if (best == null || sum >  best.sum) {
 33				best = new Range(start, i,  sum);
 34			}
 35
@@ -4292,8 +4278,8 @@ Our full code looks like this:
 46		public  int start, end,  sum;
 47		public  Range(int start, int end,  int sum) {
 48			this.start =  start;
-49			this.end    end;
-50			this.sum =  sum;
+49			this.end = end;
+50			this.sum = sum;
 51		}
 52	}
 ```
@@ -4307,8 +4293,7 @@ SOLUTION
 
 ---
 
-Many problems involving a dictionary can be solved by doing some pre-processing. Where can we do pre­
-processing?
+Many problems involving a dictionary can be solved by doing some pre-processing. Where can we do pre­processing?
 
 Well, if we're going  to create a rectangle of words, we know that  each  row must be the same length and each column must be the same length. So let's group the words of the dictionary  based  on their sizes. Let's call this grouping D, where D[i] contains the list of words of length  i.
 
@@ -4338,9 +4323,9 @@ At this point, we know that the first column starts with tqp.We know-or should k
 
 This leads us to a more optimal solution. We can build a trie to easily look up if a substring is a prefix of a word in the dictionary. Then, when we build our rectangle, row by row, we check to see if the columns  are all valid prefixes. If not, we fail immediately, rather than continue to try to build this rectangle.
 
-The code below implements this algorithm.  It is long and complex, so we will go through it step by step. 
+The code below implements this algorithm. It is long and complex, so we will go through it step by step. 
 
-First, we do some pre-processing to group  words by their lengths. We create an array of tries (one for each word length), but hold off on building the tries until we need them.
+First, we do some pre-processing to group words by their lengths. We create an array of tries (one for each word length), but hold off on building the tries until we need them.
 
 
 	1     WordGroup[]   grouplist = WordGroup.createWordGroups(list);
@@ -4369,7 +4354,7 @@ s  			if (z % i == 0) {
 ```
 The makeRectangle method is called by maxRectangle and tries to build a rectangle of a specific length and height.
 ```java
-1 	Rectangle  makeRectangle(int length,  int  height)  {
+1 	Rectangle makeRectangle(int length,  int  height)  {
 2 		if (grouplist[length - 1] ==  null  ||   grouplist[height - 1]) {
 3 			return null;
 4 		}
@@ -4391,7 +4376,7 @@ But, if everything is okay so far, and all the columns are valid prefixes of wor
 
 ```java
 1 	Rectangle  makePartialRectangle(int 1,  int h,  Rectangle  rectangle) {
-2 		if (rectangle.height == h)  { //    Check if complete  rectangle
+2 		if (rectangle.height == h)  { // Check if complete  rectangle
 3 			if (rectangle.isComplete(l,  h,  grouplist[h -  1])) {
 4 				return rectangle;
 5 			}
@@ -4405,7 +4390,7 @@ But, if everything is okay so far, and all the columns are valid prefixes of wor
 13
 14		/*    Go  through  all words of  the  right length. Add each  one to  the  current partial
 15		*   rectangle,  and attempt  to  build  a rectangle recursively. */
-16		for  (int i =    0;  i <  grouplist[l - 1].length(); i++)  {
+16		for  (int i = 0;  i <  grouplist[l - 1].length(); i++)  {
 17			/*    Create  a new rectangle which is this rect + new word.  */
 18			Rectangle  orgPlus  =  rectangle.append(groupList[l - 1].getWord(i));
 19
@@ -4442,14 +4427,14 @@ The Rectangle class representsa partially orfullyformed rectangle ofwords. The m
 20		}
 21
 22		public char  getletter (int i, int j) {  return matrix[i][j];   }
-23		public String getColumn(int   i) {  ... }
+23		public String getColumn(int i) {  ... }
 24
 25		/*Check if all columns are  valid. All  rows are  already known  to  be  valid since
 26		* they  were added directly from dictionary. */
 27		public boolean  isComplete(int l,  int h,  WordGroup  grouplist) {
 28				if (height == h)  {
 29				/*Check if each  column is a word in  the  dictionary. */
-30				for  (int i = 0;  i <   l; i++)  {
+30				for  (int i = 0;  i < l; i++)  {
 31					String col = getColumn(i);
 32					if (!groupList.containsWord(col))  {
 33						return false;
@@ -4505,7 +4490,7 @@ The lists in WordGroup are created through a static method called createWordGrou
 23
 24			/*Group the  words in  the  dictionary into lists of  words of  same length.
 25			* grouplist[i]  will contain a  list of  words,  each  of  length (i + l). */
-26			grouplist =    new WordGroup[maxWordlength];
+26			grouplist = new WordGroup[maxWordlength];
 27			for  (int i = 0;  i <  list.length; i++)  {
 28				/*We  do wordlength  -  1  instead of  just wordlength  since   this is used as
 29				* an  index  and no words are  of  length 0 */
@@ -4522,10 +4507,10 @@ The lists in WordGroup are created through a static method called createWordGrou
 The full code for this problem, including the code for Trie and T rieNode, can be found in the code attachment. Note that in a problem as complex as this, you'd most likely only need to write the pseudocode. Writing the entire code would be nearly impossible in such a short amount of time.
 
 
-**17.26  Sparse Similarity:** The similarity of two documents (each with distinct words) is defined to be the size of the intersection divided by the size of the union. For example,  if the documents consist of integers, the similarity of {1,   5,   3} and {1,   7,   2,   3} is 0. 4, because the intersection has size
-2 and the union has size 5.
+**17.26  Sparse Similarity:** The similarity of two documents (each with distinct words) is defined to be the size of the intersection divided by the size of the union. For example,  if the documents consist of integers, the similarity of {1,   5,   3} and {1,   7,   2,   3} is 0. 4, because the intersection has size 2 and the union has size 5.
 
 We have a long list of documents (with distinct values and each with an associated ID) where the similarity is believed to be "sparse". That is, any two arbitrarily selected documents are very likely to have similarity O. Design an algorithm that returns a list of pairs of document IDs and the associated similarity.
+
 Print only the pairs with similarity greater than 0. Empty documents should not be printed at all. For simplicity, you may assume each document is represented as an array of distinct integers.
 
 ```
@@ -4537,7 +4522,7 @@ Input:
 	19:   {15,   29,   2,   6,   8,   7}
 	24:   {7,   10}
 Output: 
-	ID1,   ID2 : SIMILARITY
+	ID1,  ID2 : SIMILARITY
 	13,   19 : 0.1
 	13,   16 : 0.25
 	19,   24 : 0.14285714285714285
@@ -4549,7 +4534,7 @@ SOLUTION
 
 This sounds like quite a tricky problem, so let's start off with a brute force algorithm. If nothing else, it will help wrap our heads around the problem.
 
-Remember that each document is an array of distinct "words'; and each is just an integer.
+Remember that each document is an array of distinct "words", and each is just an integer.
 
 **Brute Force**
 
@@ -4565,7 +4550,7 @@ To compute the union, we need to be sure that we don't double count elements tha
 
 Alternatively, we can think about it this way. If we did double count elements, it would mean that elements in the intersection (in both A and B) were counted twice. Therefore, the easy fix is to just remove these duplicate elements.
 
-	union(A, B) = A+ B  -  intersection(A,  B)
+	union(A, B) = A + B  -  intersection(A,  B)
 
 This means that all we really need to do is compute the intersection. We can derive the union, and therefore similarity, from that immediately.
 
@@ -4586,10 +4571,10 @@ Before implementing this, let's first think about the classes we'll need.
 We'll need to return a list of document  pairs and their similarities.  We'll use a DocPair class for this. The exact return type will be a hash table that maps from DocPair to a double representing the similarity.
 ```java
 1 	public class  DocPair  {
-2 		public int  docl,   doc2;
+2 		public int  doc1,   doc2;
 3
-4 		public DocPair(int dl,  int  d2)  {
-5 			docl  = dl;
+4 		public DocPair(int d1,  int  d2)  {
+5 			doc1  = d1;
 6 			doc2  = d2;
 7 		}
 8 
@@ -4597,32 +4582,32 @@ We'll need to return a list of document  pairs and their similarities.  We'll us
 10		public  boolean equals(Object  o)  {
 11			if (o  instanceof DocPair)   {
 12				DocPair  p =  (DocPair)  o;
-13				return  p.docl == docl  &&   p.doc2 == doc2;
+13				return  p.doc1 == doc1  &&   p.doc2 == doc2;
 14			}
 15			return false;
 16		}
 17
 18		@Override
-19		public int hashCode()   { return (docl *  31)  ^  doc2; }
+19		public int hashCode() { return (doc1 *  31)  ^  doc2; }
 20	}
 ```
 It will also be useful to have a class that represents the documents.
 ```java
 1  	public class  Document {
 2  		private ArrayList<Integer> words;
-3  		private int  docid;
+3  		private int  docId;
 4
 5  		public  Document(int id,  ArrayList<Integer> w) {
-6  			docid  =  id;
+6  			docId  =  id;
 7  			words  =  w;
 8  		}
 9
 10 		public  ArrayList<Integer>   getWords() {  return words;}
-11 		public int getid()  { return docid;  }
-12 		public int size()  {  return  words == null  ?  0 : words.size();  }
+11 		public int getid() { return docId; }
+12 		public int size()  { return  words == null  ?  0 : words.size(); }
 13 	}
 ```
-Strictly speaking, we don't need any of this. However,  readability is important, and it's a lot easier to read ArrayList<Document>than ArrayList<ArrayList<Integer>>.
+Strictly speaking, we don't need any of this. However,  readability is important, and it's a lot easier to read ArrayList<Document> than ArrayList<ArrayList<Integer>>.
 
 Doing this sort  of thing not only shows good coding style, it also makes your life in an interview a lot easier. You have to write a lot less. (You probably would not define the entire Document class, unless you had  extra time  or your interviewer asked you to.)
 ```java
@@ -4630,11 +4615,11 @@ Doing this sort  of thing not only shows good coding style, it also makes your l
 2 		HashMap<DocPair,  Double>  similarities =  new  HashMap<DocPair,  Double>();
 3 		for (int i =  0;   i <  documents.size();  i++) {
 4 			for (int j =  i +  1;   j <  documents.size();   j++) {
-5 				Document   docl =  documents.get(i);
-6 				Document   doc2 =  documents.get(j);
-7 				double sim   =  computeSimilarity(docl,  doc2);
-8 				if  (sim >  0) {
-9 					DocPair pair  =  new  DocPair(docl.getid(), doc2.getld());
+5 				Document  doc1 =  documents.get(i);
+6 				Document  doc2 =  documents.get(j);
+7 				double sim =  computeSimilarity(doc1,  doc2);
+8 				if (sim >  0) {
+9 					DocPair pair  =  new  DocPair(doc1.getid(), doc2.getld());
 10					similarities.put(pair,  sim);
 11				}
 12			}
@@ -4642,18 +4627,18 @@ Doing this sort  of thing not only shows good coding style, it also makes your l
 14		return similarities;
 15	}
 16
-17	double  computeSimilarity(Document docl,   Document   doc2)  {
+17	double  computeSimilarity(Document doc1,   Document   doc2)  {
 18		int intersection  =  0;
-19		HashSet<Integer>  setl  =  new  HashSet<Integer>();
-20		setl.addAll(docl.getWords());
+19		HashSet<Integer>  set1  =  new  HashSet<Integer>();
+20		set1.addAll(doc1.getWords());
 21
-22		for (int word   :   doc2.getWords())  {
-23			if  (setl.contains(word)) {
+22		for (int word : doc2.getWords())  {
+23			if (set1.contains(word)) {
 24				intersection++;
 25			}
 26		}
 27
-28		double union =  docl.size() +  doc2.size() -  intersection;
+28		double union =  doc1.size() +  doc2.size() -  intersection;
 29		return intersection /  union;
 30	}
 ```
@@ -4665,10 +4650,9 @@ We did this to avoid  an  integer division  bug.  If we  didn't do  this, the  d
 
 If the  documents were  sorted, you  could compute the  intersection between two  documents by walking through them in sorted order,  much like you would when doing a sorted merge of two arrays.
 
-This would take O(A   +   B) time. This is the  same time  as our current algorithm, but less space.  Doing this on D documents with W words each would take O(D²  W) time.
+This would take O(A + B) time. This is the  same time  as our current algorithm, but less space.  Doing this on D documents with W words each would take O(D² W) time.
 
-Since we don't know that the arrays are sorted, we could first sort them. This would take O(D * W log W)
-time.The full runtime then is O(D   * W   log W   +  D² W).
+Since we don't know that the arrays are sorted, we could first sort them. This would take O(D * W log W) time.The full runtime then is O(D * W log W +  D² W).
 
 We cannot necessarily assume that the second part "dominates" the first one, because it doesn't neces­ sarily. It depends on the relative size of D and log W. Therefore, we need to keep both terms in our runtime expression.
 
@@ -4733,11 +4717,9 @@ If we look up document 12's elements in a hash table for this document, we'll ge
 
 	1  -> {12,  13,  15,  17}
 	5  -> {12,  13,  15}
-	9  ->  {12,  15}
+	9  -> {12,  15}
 
-This tells us that documents 13, 15, and 17 have some similarity. Under our current algorithm, we would now need to compare document 12 to documents 13, 15, and 17 to see the number of elements document
-12 has in common with each (that is, the size of the intersection). The union can be computed from the
-document sizes and the intersection, as we did before.
+This tells us that documents 13, 15, and 17 have some similarity. Under our current algorithm, we would now need to compare document 12 to documents 13, 15, and 17 to see the number of elements document 12 has in common with each (that is, the size of the intersection). The union can be computed from the document sizes and the intersection, as we did before.
 
 Observe, though, that document 13 appeared twice in the hash table, document 15 appeared three times, and document 17 appeared once. We discarded that information.  But can we use it instead? What does it indicate that some documents appeared multiple times and others didn't?
 
@@ -4745,7 +4727,7 @@ Document 13 appeared twice because it has two elements (1 and 5) in common. Docu
 
 We could go through each document, look up the items in the hash table, and then count how many times each document appears in each item's lists. There's a more direct way to do it.
 
-1. As before,  build a hash table for a list of documents.
+1. As before, build a hash table for a list of documents.
 
 2. Create a new hash table that maps from a document pair to an integer (which will indicate the size of the intersection).
 
@@ -4758,19 +4740,19 @@ Comparing this runtime to the previous one is a bit tricky. One way we can look 
 ```java
 1 	HashMap<DocPair,  Double>
 2 	computeSimilarities(HashMap<Integer,   Document>  documents)  {
-3 		HashMapList<Integer,   Integer> wordToDocs   =  groupWords(documents);
-4 		HashMap<DocPair,  Double> similarities =  computeintersections(wordToDocs);
+3 		HashMapList<Integer, Integer> wordToDocs = groupWords(documents);
+4 		HashMap<DocPair, Double> similarities = computeintersections(wordToDocs);
 5 		adjustToSimilarities(documents,  similarities);
 6 		return similarities;
 7 	}
 8
 9 	/*  create hash  table from each  word to  where it appears. */
-10	HashMapList<Integer,   Integer> groupWords(HashMap<Integer, Document> documents)  {
-11		HashMapList<Integer,  Integer> wordToDocs =  new HashMapList<Integer,  Integer>();
+10	HashMapList<Integer, Integer> groupWords(HashMap<Integer, Document> documents)  {
+11		HashMapList<Integer, Integer> wordToDocs =  new HashMapList<Integer,  Integer>();
 12
-13		for  (Document doc  :   documents.values()) {
+13		for  (Document doc : documents.values()) {
 14			ArrayList<Integer> words =  doc.getWords();
-15			for  (int word :  words)  {
+15			for  (int word : words)  {
 16				wordToDocs.put(word,  doc.getid());
 17			}
 18		}
@@ -4784,7 +4766,7 @@ Comparing this runtime to the previous one is a bit tricky. One way we can look 
 26				HashMapList<Integer,   Integer> wordToDocs ) {
 27		HashMap<DocPair,  Double> similarities =  new HashMap<DocPair,  Double>();
 28		Set<Integer> words =  wordToDocs.keySet();
-29		for  (int word :   words)  {
+29		for  (int word : words)  {
 30			ArrayList<Integer> docs =  wordToDocs.get(word);
 31			Collections.sort(docs);
 32			for  (int i = 0;  i <  docs.size();  i++)  {
@@ -4798,8 +4780,8 @@ Comparing this runtime to the previous one is a bit tricky. One way we can look 
 40	}
 41
 42	/*  Increment  the  intersection size of  each  document pair. */
-43	void  increment(HashMap<DocPair, Double> similarities, int docl,   int doc2)  {
-44		DocPair pair = new DocPair(docl,  doc2);
+43	void  increment(HashMap<DocPair, Double> similarities, int doc1,   int doc2)  {
+44		DocPair pair = new DocPair(doc1,  doc2);
 45		if (!similarities.containsKey(pair)) {
 46			similarities.put(pair, 1.0);
 47		}  else {
@@ -4813,9 +4795,9 @@ Comparing this runtime to the previous one is a bit tricky. One way we can look 
 55		for  (Entry<DocPair,  Double> entry  :   similarities.entrySet())  {
 56			DocPair  pair =  entry.getKey();
 57			Double intersection =  entry.getValue();
-58			Document  docl  =  documents.get(pair.docl);
-59			Document  doc2 =    documents.get(pair.doc2);
-60			double  union =    (double) docl.size()  +  doc2.size() -  intersection;
+58			Document doc1 =  documents.get(pair.doc1);
+59			Document doc2 =  documents.get(pair.doc2);
+60			double union  =  (double) doc1.size()  +  doc2.size() -  intersection;
 61			entry.setValue(intersection / union);
 62		}
 63	}
@@ -4842,14 +4824,14 @@ We will use an Element class to group together documents and words. When we sort
 ```java
 1 	class Element implements Comparable<Element>   {
 2 		public int  word,  document;
-3 		public  Element(int w,   int d)  {
+3 		public  Element(int w, int d)  {
 4 			word =  w;
-5 			document =      d;
+5 			document = d;
 6 		}
 7
 8 		/*  When  we  sort the  words,  this function will   be used  to  compare the  words.  */
 9 		public int compareTo(Element e)  {
-10			if (word ==    e.word)  {
+10			if (word == e.word)  {
 11				return document -  e.document;
 12			}
 13			return word -  e.word;
@@ -4858,7 +4840,7 @@ We will use an Element class to group together documents and words. When we sort
 16
 17	HashMap<DocPair,  Double> computeSimilarities(
 18			HashMap<Integer, Document>  documents)  {
-19		ArrayList<Element>  elements =    sortWords(documents);
+19		ArrayList<Element>  elements = sortWords(documents);
 20		HashMap<DocPair,  Double> similarities =  computeintersections(elements);
 21		adjustToSimilarities(documents,  similarities);
 22		return similarities;
@@ -4867,9 +4849,9 @@ We will use an Element class to group together documents and words. When we sort
 25	/*  Throw all words into one list,  sorting by the  word and then  the  document. */
 26	ArrayList<Element>  sortWords(HashMap<Integer,  Document>  docs)  {
 27		ArrayList<Element> elements  =  new ArrayList<Element>();
-28		for  (Document doc  :   docs.values()) {
+28		for  (Document doc  : docs.values()) {
 29			ArrayList<Integer> words =  doc.getWords();
-30			for  (int word :   words)  {
+30			for  (int word : words)  {
 31				elements.add(new   Element(word,  doc.get!d()));
 32			}
 33		}
@@ -4879,7 +4861,7 @@ We will use an Element class to group together documents and words. When we sort
 37
 38	/*  Increment  the  intersection size of  each  document pair. */
 39	void  increment(HashMap<DocPair, Double> similarities, int doc1,  int doc2)  {
-40		DocPair pair =  new DocPair(docl,  doc2);
+40		DocPair pair =  new DocPair(doc1,  doc2);
 41		if (!similarities.containsKey(pair)) {
 42			similarities.put(pair, 1.0);
 43		}  else {
@@ -4895,8 +4877,8 @@ We will use an Element class to group together documents and words. When we sort
 53			Element left =  elements.get(i);
 54			for  (int j =  i +  1;  j < elements.size();  j++)  {
 55				Element right =  elements.get(j);
-56				if  (left.word !=  right.word) {
-57
+56				if (left.word !=  right.word) {
+57                  break;
 58				}
 59				increment(similarities,  left.document, right.document);
 60			}
@@ -4910,9 +4892,9 @@ We will use an Element class to group together documents and words. When we sort
 68		for  (Entry<DocPair,   Double> entry  :   similarities.entrySet()) {
 69			DocPair pair =  entry.getKey();
 70			Double intersection =  entry.getValue();
-71			Document docl  =  documents.get(pair.doc1);
-72			Document  doc2 =  documents.get(pair.doc2);
-73			double  union  =  (double) docl.size()  +  doc2.size() -  intersection;
+71			Document doc1 =  documents.get(pair.doc1);
+72			Document doc2 =  documents.get(pair.doc2);
+73			double  union  =  (double) doc1.size()  +  doc2.size() -  intersection;
 74			entry.setValue(intersection / union);
 75		}
 76	}

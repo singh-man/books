@@ -540,22 +540,22 @@ To do this, observe  that both methods follow similar logic: compare each charac
 5 		}
 6		
 7 		/*Get  shorter and  longer string.*/
-8 		String sl = first.length() <  second.length() ?  first :   second;
-9 		String s2 = first.length() < second.length()  ?  second   :   first;
+8 		String s1 = first.length() < second.length()  ?  first  :   second;
+9 		String s2 = first.length() < second.length()  ?  second :   first;
 10		
 11		int index1  = 0;
 12		int index2  = 0;
 13		boolean foundDifference  =  false;
-14		while  (index2 <  s2.length() &&   index1 <  sl.length()) {
-15			if  (sl.charAt(index1) != s2.charAt(index2)) {
+14		while (index2 <  s2.length() &&   index1 <  s1.length()) {
+15			if (s1.charAt(index1) != s2.charAt(index2)) {
 16				/*Ensure that  this  is  the first difference found.*/
 17				if (foundDifference)  return false;
 18				foundDifference =  true;
 19		
-20				if (sl.length() == s2.length()) {//On replace, move shorter pointer
+20				if (s1.length() == s2.length()) {//On replace, move shorter pointer
 21					index1++;
 22				}
-23			}  else {
+23			} else {
 24				index1++;  // If matching,  move  shorter pointer
 25			}
 26			index2++;  // Always   move  pointer for longer string
@@ -866,18 +866,18 @@ y  = erbottle
 s2 = yx   = erbottlewat
 ```
 
-So, we need to check  if there's a way to split s1 into x  andy such that xy = s1 andyx = s2. Regardless of where the division between x andy is, we can see thatyx will always be a substring of xyxy.That is, s2 will always be a substring of s1s1.
+So, we need to check  if there's a way to split s1 into x and y such that xy = s1 and yx = s2. Regardless of where the division between x andy is, we can see thatyx will always be a substring of xyxy.That is, s2 will always be a substring of s1s1.
 
-And this is precisely how we solve the problem: simply do isSubstring(slsl,  s2). The code below implements this algorithm.
+And this is precisely how we solve the problem: simply do isSubstring(s1s1,  s2). The code below implements this algorithm.
 
 ```java
-1 	boolean  isRotation(String sl,  String s2)  {
-2 		int len =  sl.length();
-3 		/*  Check that sl and s2 are  equal  length and not  empty*/
+1 	boolean  isRotation(String s1,  String s2)  {
+2 		int len =  s1.length();
+3 		/*  Check that s1 and s2 are  equal  length and not  empty*/
 4 		if (len == s2.length() &&   len   >   0)  {
-5 			/*  Concatenate  sl and sl within new  buffer  */
-6 			String slsl =  sl + sl;
-7 			return isSubstring(slsl,  s2);
+5 			/*  Concatenate  s1 and s1 within new  buffer  */
+6 			String s1s1 =  s1 + s1;
+7 			return isSubstring(s1s1,  s2);
 8 		}
 9 		return false;
 10	}

@@ -499,12 +499,12 @@ In this problem, we've been told what our data structure should look like:
 ```java
 1	class  SetOfStacks {
 2		ArrayList<Stack>  stacks  =   new ArrayList<Stack>();
-3		public  void    push(int  v)   {  ... }
+3		public void push(int  v)   {  ... }
 4		public int  pop() {...  }
 5	}
 ```
 
-We know that push () should behave identically to a single stack, which means that we need push () to call push () on the last stack in the array of stacks. We have to be a bit careful here though: if the last stack is at capacity, we need to create a new stack. Our code should look something like this:
+We know that push() should behave identically to a single stack, which means that we need push() to call push() on the last stack in the array of stacks. We have to be a bit careful here though: if the last stack is at capacity, we need to create a new stack. Our code should look something like this:
 
 ```java
 1 	void  push(int v)  {
@@ -519,7 +519,7 @@ We know that push () should behave identically to a single stack, which means th
 10	}
 ```
 
-What should pop() do? It should behave similarly to push () in that it should operate on the last stack. If the last stack is empty (after popping), then we should remove the stack from the list of stacks.
+What should pop() do? It should behave similarly to push() in that it should operate on the last stack. If the last stack is empty (after popping), then we should remove the stack from the list of stacks.
 
 ```java
 1	int pop() {
@@ -632,7 +632,7 @@ SOLUTION
 
 ---
 
-Since the major difference between a queue and a stack is the order (first-in first-out vs. last-in first-out), we know that we need to modify peek() and pop() to go in reverse order. We can use our second stack to reverse the order of the elements (by popping sl and pushing the elements on to s2). In such an imple­ mentation, on each peek() and pop() operation, we would pop everything from sl onto s2, perform the peek/pop operation, and then push everything back.
+Since the major difference between a queue and a stack is the order (first-in first-out vs. last-in first-out), we know that we need to modify peek() and pop() to go in reverse order. We can use our second stack to reverse the order of the elements (by popping s1 and pushing the elements on to s2). In such an imple­ mentation, on each peek() and pop() operation, we would pop everything from s1 onto s2, perform the peek/pop operation, and then push everything back.
 
 This will work, but if two pop/peeks are performed back-to-back, we're needlessly moving elements. We can implement a "lazy" approach where we let the elements sit in s2 until we absolutely must reverse the elements.
 
@@ -692,13 +692,13 @@ SOLUTION
  
 ---
 
-One approach is to implement a rudimentary sorting algorithm. We search through the  entire stack  to find the  minimum element and then push that onto a new  stack. Then,  we find  the  new  minimum element and push that. This will actually require a total  of three stacks: s1 is the  original stack, s2 is the  final sorted stack,  and s3 acts  as a buffer  during our searching of sl. To search sl for each minimum, we need to pop elements from sl and push them onto the buffer, s3.
+One approach is to implement a rudimentary sorting algorithm. We search through the  entire stack  to find the  minimum element and then push that onto a new  stack. Then,  we find  the  new  minimum element and push that. This will actually require a total  of three stacks: s1 is the  original stack, s2 is the  final sorted stack,  and s3 acts  as a buffer  during our searching of s1. To search s1 for each minimum, we need to pop elements from s1 and push them onto the buffer, s3.
 
 Unfortunately, this requires two  additional stacks, and we can only use one. Can we do better? Yes.
 
-Rather  than searching for the  minimum repeatedly, we can sort  sl by inserting each element from sl in order into s2. How would this work?
+Rather  than searching for the  minimum repeatedly, we can sort  s1 by inserting each element from s1 in order into s2. How would this work?
 
-Imagine we have the  following stacks,  where s2 is "sorted" and sl is not:
+Imagine we have the  following stacks,  where s2 is "sorted" and s1 is not:
 
 | s1 | s2 |
 | -- | -- |
@@ -707,11 +707,11 @@ Imagine we have the  following stacks,  where s2 is "sorted" and sl is not:
 | 10 | 3  |
 | 7	 | 1  |
 
-When we pop 5 from s1, we need to find the  right place in s2 to insert this number. In this case, the  correct place is on s2 just above 3. How do we get  it there? We can  do this by popping 5 from sl and holding it in a temporary variable.Then, we move 12 and 8 over to s1 (by popping them from s2 and pushing them onto sl) and then push 5 onto s2.
+When we pop 5 from s1, we need to find the  right place in s2 to insert this number. In this case, the  correct place is on s2 just above 3. How do we get  it there? We can  do this by popping 5 from s1 and holding it in a temporary variable.Then, we move 12 and 8 over to s1 (by popping them from s2 and pushing them onto sl) and then push 5 onto s2.
 
 ![](media/03_5_1.JPG)
 
-Note that 8 and 12 are still in sl-and that's okay!We just repeat the same steps for those two numbers as we did for 5, each time popping offthe top of sl and putting it into the "right place" on s2. (Of course, since 8 and 12 were moved from s2 to s1 precisely because they were larger than 5, the "right place" for these elements will be right on top of 5. We won't need to muck around with s2's other elements, and the inside of the below while loop will not be run when tmp is 8 or 12.)
+Note that 8 and 12 are still in sl-and that's okay!We just repeat the same steps for those two numbers as we did for 5, each time popping offthe top of s1 and putting it into the "right place" on s2. (Of course, since 8 and 12 were moved from s2 to s1 precisely because they were larger than 5, the "right place" for these elements will be right on top of 5. We won't need to muck around with s2's other elements, and the inside of the below while loop will not be run when tmp is 8 or 12.)
 
 ```java
 1 	void  sort(Stack<Integer> s) {

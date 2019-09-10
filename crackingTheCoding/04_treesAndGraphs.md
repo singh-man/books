@@ -171,7 +171,7 @@ Then, we "fix" the tree by swapping the new element with its parent, until we fi
 
 ![](media/IX_04_07.JPG)
 
-This takes O( log n)  time, where n is the number of nodes in the heap.
+This takes O(log n)  time, where n is the number of nodes in the heap.
 
 *Extract Minimum Element*
 
@@ -425,7 +425,7 @@ To create a tree of minimal height, we need to match the number of nodes in the 
 
 We proceed with constructing our tree in a similar fashion. The middle of each subsection of the array becomes the root of the node. The left half of the array will become our left subtree, and the right half of the array will become the right subtree.
 
-One way to implement this is to use a simple root.insertNode(int  v) method which inserts the value v through a recursive process that starts with the root node. This will indeed construct a tree with minimal height but it will not do so very efficiently.  Each insertion  will require traversing the tree, giving a total cost ofO(N  log  N) to the tree.
+One way to implement this is to use a simple root.insertNode(int  v) method which inserts the value v through a recursive process that starts with the root node. This will indeed construct a tree with minimal height but it will not do so very efficiently.  Each insertion  will require traversing the tree, giving a total cost of O(N log N) to the tree.
 
 Alternatively, we can cut out the extra traversals by recursively using the createMinimalBST method. This method is passed just a subsection of the array and returns the root of a minimal tree for that array.
 
@@ -674,9 +674,9 @@ We've used an Integer instead of int so that we can know when last_printed has b
 
 If you don't  like the  use of static  variables, then  you can tweak  this code  to use a wrapper  class for the integer, as shown below.
 ```java
-1     class  WrapInt {
-2          public int  value;
-3     }
+1   class  WrapInt {
+2        public int  value;
+3   }
 ```
 Or, if you're implementing this in C++ or another language that  supports passing  integers by reference, then  you can simply do that.
 
@@ -1128,9 +1128,9 @@ The code below implements this algorithm.
 49  }
 ```
 
-Like the earlier algorithm, this solution is O (P+D) time, where P is the number of projects and D is the number of dependency pairs.
+Like the earlier algorithm, this solution is O(P+D) time, where P is the number of projects and D is the number of dependency pairs.
 
-By the way, this problem is called **topological sort:**  linearly ordering the vertices in a graph such that for every edge (a,  b), a appears before b in the linear order.
+By the way, this problem is called **topological sort:**  linearly ordering the vertices in a graph such that for every edge (a, b), a appears before b in the linear order.
 
 **4.8       First Common Ancestor:** Design an algorithm and write code to find the first common ancestor of two nodes in a binary tree. Avoid storing additional nodes in a data structure. NOTE: This is not
 necessarily a binary search tree.
@@ -1932,7 +1932,7 @@ What is the time complexity of this algorithm?
 
 Consider that node at depth d will be "touched" (via countPathsWithSumFromNode)  by d nodes above it. 
 
-In a balanced binary tree, d will be no more than approximately log   N. Therefore, we know that with N nodes in the tree, countPathsWithSumFromNode will be called O(N log  N) times.The runtime is O(N log N).
+In a balanced binary tree, d will be no more than approximately log N. Therefore, we know that with N nodes in the tree, countPathsWithSumFromNode will be called O(N log N) times.The runtime is O(N log N).
 
 We can also approach this from the other direction. At the root node, we traverse to all N - 1 nodes beneath it (via countPathsWithSumFromNode). At the second level (where there are two nodes), we traverse to N   -  3 nodes. At the third level (where there are four nodes, plus three above those), we traverse to N   -   7 nodes. Following this pattern, the total work is roughly:
 ```
@@ -2048,7 +2048,7 @@ Despite the complexity of deriving this algorithm, the code to implement this is
 36  }
 ```
 
-The runtime for this algorithm is O(N), where N is the number of nodes in the tree. We know it is O(N) because we travel to each node just once, doing O(1) work each time. In a balanced tree, the space complexity is O( log   N) due to the hash table. The space complexity can grow to O(n) in an unbalanced tree.
+The runtime for this algorithm is O(N), where N is the number of nodes in the tree. We know it is O(N) because we travel to each node just once, doing O(1) work each time. In a balanced tree, the space complexity is O(log   N) due to the hash table. The space complexity can grow to O(n) in an unbalanced tree.
 
 
 

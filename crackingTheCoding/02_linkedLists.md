@@ -77,7 +77,7 @@ Additionally,  if you implement this code in C, C++ or another  language that re
 
 The "runner" (or second pointer) technique  is used in many linked list problems. The runner technique means that you iterate through the linked list with two pointers simultaneously, with one ahead of the other. The "fast" node might be ahead by a fixed amount, or it might be hopping multiple nodes for each one node that the "slow" node iterates through.
 
-For example, suppose you had a linked list a₁ - >a₂ ->....->aₙ -> b₁->b₂->...->bₙ  and you wanted to rearrange it into a1 ->b₁ ->a₂ - >b₂ -> ...- >aₙ - >bₙ. You do not know the length of the linked list (but you do know that the length is an even number).
+For example, suppose you had a linked list a₁ - >a₂ ->....->aₙ -> b₁->b₂->...->bₙ  and you wanted to rearrange it into a₁ ->b₁ ->a₂ - >b₂ -> ...- >aₙ - >bₙ. You do not know the length of the linked list (but you do know that the length is an even number).
 
 You could have one pointer pl (the fast pointer) move  every two elements for every one move that p2 makes. When pl hits the end of the linked list, p2 will be at the midpoint. Then, move pl back to the front and begin "weaving" the elements. On each iteration, p2 selects an element and inserts it after pl.
 
@@ -452,7 +452,7 @@ List: 2 -> ?
 List: 2 -> 1 -> ?
 ```
 
-3.  Finally, we add 6, 2 and our "carrY", to get 9. This becomes the final element of our linked list.
+3.  Finally, we add 6, 2 and our "carry", to get 9. This becomes the final element of our linked list.
 ```
 List: 2 -> 1 -> 9.
 ```
@@ -461,7 +461,7 @@ The code below implements this algorithm.
 
 ```java
 l 	LinkedListNode addlists(LinkedListNode l1, LinkedListNode l2, int  carry) {
-2 		if (l1 == null &&  l2 ==    null  &&   carry ==   0) {
+2 		if (l1 == null &&  l2 == null  &&   carry ==   0) {
 3 			return null;
 4 		}
 5	
@@ -474,7 +474,7 @@ l 	LinkedListNode addlists(LinkedListNode l1, LinkedListNode l2, int  carry) {
 12			value +=  l2.data;
 13		}
 14	
-15		result.data    value % 10; /* Second digit of  number */
+15		result.data = value % 10; /* Second digit of  number */
 16	
 17		/*Recurse  */
 18		if (l1 != null || l2 != null) {
@@ -913,7 +913,7 @@ We now have a multistep process.
 58	}
 ```
 
-This algorithm takes O(A  +  B) time, where A and Bare the lengths of the two linked lists. It takes O( 1) additional space.
+This algorithm takes O(A  +  B) time, where A and Bare the lengths of the two linked lists. It takes O(1) additional space.
 
 
 **2.8 	Loop Detection:** Given a circular linked list, implement an algorithm that returns the node at the beginning of the loop.

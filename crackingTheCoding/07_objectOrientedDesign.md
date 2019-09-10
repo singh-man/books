@@ -240,7 +240,7 @@ BlackJackCard.
 An executable, fully automated  version of blackjack is provided in the downloadable code attachment.
 
 
-**7.2   Call Center:** Imagine you have a call center with three levels of employees: respondent, manager, and director. An incoming telephone call must be first allocated to a respondent  who is free. If the respondent can't handle the call, he or she must escalate the call to a manager. If the manager is not free or not able to handle it, then the call should be escalated to a director. Design the classes and data structures for this problem. Implement a method  dispatchCall () which assigns a call to the first available employee.
+**7.2   Call Center:** Imagine you have a call center with three levels of employees: respondent, manager, and director. An incoming telephone call must be first allocated to a respondent  who is free. If the respondent can't handle the call, he or she must escalate the call to a manager. If the manager is not free or not able to handle it, then the call should be escalated to a director. Design the classes and data structures for this problem. Implement a method  dispatchCall() which assigns a call to the first available employee.
 
 SOLUTION
 
@@ -365,7 +365,7 @@ Employee is a super class for the Director, Manager, and Respondent classes. It 
 20      /*Returns  whether  or  not  the  employee is free.*/
 21      public boolean isFree()  { return currentCall ==  null;  }
 22  
-23      public Rank getRank()  {  return rank;}
+23      public Rank getRank()  {  return rank; }
 24  }
 25
 ```
@@ -1442,7 +1442,7 @@ Implementing this requires implementing  the Iterator interface. The details of 
 To implement the Iterator interface, we need to do the following:
 
 - Modify the CircularArray<T> definition to add implements Iterable<T>. This will also require us to add an iterator() method to CircularArray<T>.
-- Create a CircularArrayiterator<T> which implements  Iterator<T>. This will also require us to implement, in the CircularArrayiterator, the methods hasNext(), next(), and remove ().
+- Create a CircularArrayiterator<T> which implements  Iterator<T>. This will also require us to implement, in the CircularArrayiterator, the methods hasNext(), next(), and remove().
 
 Once we've done the above items, the for loop will "magically" work.
 
@@ -1485,7 +1485,7 @@ In the code below, we have removed the aspects of CircularArray which were ident
 34  }
 ```
 
-In the above code, note that the first iteration of the for loop will call hasNext ()and then next (). Be very sure that your implementation  will return the correct values here.
+In the above code, note that the first iteration of the for loop will call hasNext() and then next(). Be very sure that your implementation  will return the correct values here.
 
 When you get a problem like this one in an interview, there's a good chance you don't remember exactly what the various methods and interfaces are called. In this case, work through the problem as well as you can. If you can reason out what sorts of methods one might need, that alone will show a good degree of competency.
 
@@ -1644,7 +1644,7 @@ To shuffle a grid, we do a very similar thing, just converting the index into a 
 7               /* Get  cell at  index1.  */
 8               int row1  =  index1 / nColumns;
 9               int column1  =  (index1 -  row1  *  nColumns)  %  nColumns;
-10              Cell   celll =  cells[row1][column1];
+10              Cell cell1 =  cells[row1][column1];
 11  
 12              /* Get  cell at  index2. */
 13              int row2 =  index2   / nColumns;
@@ -1654,7 +1654,7 @@ To shuffle a grid, we do a very similar thing, just converting the index into a 
 17              /* Swap.  */
 18              cells[row1][column1] =  cell2;
 19              cell2.setRowAndColumn(row1,   column1);
-20              cells[row2][column2]   =  celll;
+20              cells[row2][column2]   =  cell1;
 21              cell1.setRowAndColumn(row2,   column2);
 22          }
 23      }
@@ -1893,7 +1893,7 @@ The code below uses this implementation.
 17      public Hasher(int capacity) {
 18          /*  Create  list of  linked   lists at a  particular size. Fill list  with  null
 19           * values,  as  it's the  only  way to  make  the  array the  desired size. */
-20          arr = newArrayList < LinkedListNode <K, V>> ();
+20          arr = newArrayList < LinkedListNode <K, V>>();
 21          arr.ensureCapacity(capacity);  // Optional  optimization
 22          for (int i = 0; i < capacity; i++) {
 23              arr.add(null);

@@ -151,7 +151,7 @@ What if the two segments represent the same infinite line? In this case, we have
 	Assume:
 		start1.x <   start2.x &&   start1.x < end1.x   &&   start2.x < end2.x
 	Then intersection  occurs if:
-		start2 is between  start1 and  end1
+		start2 is between  start1 and end1
 ```
 We can now go ahead and implement this algorithm.
 
@@ -212,8 +212,8 @@ We can now go ahead and implement this algorithm.
 54	void  swap(Point one, Point two)  {
 55		double  x =  one.x;
 56		double  y =  one.y;
-57		one.setlocation(two.x, two.y);
-58		two.setlocation(x,  y);
+57		one.setLocation(two.x, two.y);
+58		two.setLocation(x,  y);
 59	}
 60	
 61	public class  Line  {
@@ -233,7 +233,7 @@ We can now go ahead and implement this algorithm.
 75				this.y = y;
 76			}
 77	
-78			public void setlocation(double x,   double   y)  {
+78			public void setLocation(double x,   double   y)  {
 79				this.x = x;
 80				this.y = y;
 81			}
@@ -962,7 +962,7 @@ Observe that reducing a by half takes O(log a)work. Why? For each round of "redu
 
 We do O(log a) rounds.
 
-1.  Reducinga to a/2 takes O(log a)time.
+1.  Reducing a to a/2 takes O(log a)time.
 2.  Reducing a/2 to a/4 takes O(log a/2) time.
 3.  Reducing a/4 to a/8 takes O(log  a/4 ) time.
 
@@ -2070,58 +2070,58 @@ If you don't like the work ofbuilding a string only to compare it (and then dest
 
 Instead, we can iterate through the values for a and b as before.  But this time, to check if the string matches the pattern (given those values for a andb), we walk through value, comparing each substring to the first instance of the a and b strings.
 ```java
-1    boolean  doesMatch(String pattern,  String value) {
-2        if (pattern.length() == 0)  return value.length() ==  0;
+1   boolean  doesMatch(String pattern,  String value) {
+2       if (pattern.length() == 0)  return value.length() ==  0;
 3
-4        char  mainChar = pattern.charAt(0);
-5        char  altChar = mainChar == 'a' ? 'b' : 'a';
-6        int size = value.length();
+4       char mainChar = pattern.charAt(0);
+5       char altChar = mainChar == 'a' ? 'b' : 'a';
+6       int size = value.length();
 7
-8         int countOfMain = countOf(pattern,  mainChar);
-9         int countOfAlt = pattern.length() -  countOfMain;
-10        int firstAlt =  pattern.indexOf(altChar);
-11        int maxMainSize = size / countOfMain;
+8        int countOfMain = countOf(pattern,  mainChar);
+9        int countOfAlt = pattern.length() -  countOfMain;
+10       int firstAlt =  pattern.indexOf(altChar);
+11       int maxMainSize = size / countOfMain;
 12
-13        for  (int mainSize =  0;  mainSize  <=  maxMainSize; mainSize++)  {
-14            int remaininglength = size -  mainSize * countOfMain;
-15            if (countOfAlt == 0  || remaininglength %  countOfAlt  ==  0)  {
-16                int altlndex =  firstAlt  *  mainSize;
-17                int altSize =  countOfAlt  == 0 ? 0  : remaininglength / countOfAlt;
-18                if (matches(pattern,  value,   mainSize,  altSize,  altlndex)) {
-19                    return true;
-20                }
-21            }
-22        }
-23        return false;
-24    }
+13       for  (int mainSize =  0;  mainSize  <=  maxMainSize; mainSize++)  {
+14           int remaininglength = size -  mainSize * countOfMain;
+15           if (countOfAlt == 0  || remaininglength %  countOfAlt  ==  0)  {
+16               int altlndex =  firstAlt  *  mainSize;
+17               int altSize =  countOfAlt  == 0 ? 0  : remaininglength / countOfAlt;
+18               if (matches(pattern,  value,   mainSize,  altSize,  altlndex)) {
+19                   return true;
+20               }
+21           }
+22       }
+23       return false;
+24   }
 25
-26    /* Iterates through  pattern and value. At each  character within   pattern, checks  if
-27    * this is the  main string or  the  alternate string. Then checks  if the  next  set of
-28    * characters in  value  match the  original set of  those  characters (either  the  main
-29    * or  the  alternate. */
-30    boolean  matches(String pattern,  String value,   int mainSize,  int altSize,
-31                  int firstAlt) {
-32        int stringlndex =    mainSize;
-33        for  (int i =    1;  i <   pattern.length();  i++)  {
-34            int size =  pattern.charAt(i) == pattern.charAt(0) ?  mainSize  :   altSize;
-35            int offset = pattern.charAt(i) ==  pattern.charAt(0) ?  0  :   firstAlt;
-36            if (!isEqual(value, offset,  stringlndex, size))  {
-37               return false;
-38            }
-39            stringindex +=  size;
-40        }
-41        return true;
-42    }
+26   /* Iterates through  pattern and value. At each  character within   pattern, checks  if
+27   * this is the  main string or  the  alternate string. Then checks  if the  next  set of
+28   * characters in  value  match the  original set of  those  characters (either  the  main
+29   * or  the  alternate. */
+30   boolean  matches(String pattern,  String value,   int mainSize,  int altSize,
+31                 int firstAlt) {
+32       int stringlndex =    mainSize;
+33       for  (int i = 1;  i <   pattern.length();  i++)  {
+34           int size =  pattern.charAt(i) == pattern.charAt(0) ?  mainSize  :   altSize;
+35           int offset = pattern.charAt(i) ==  pattern.charAt(0) ?  0  :   firstAlt;
+36           if (!isEqual(value, offset,  stringlndex, size))  {
+37              return false;
+38           }
+39           stringindex +=  size;
+40       }
+41       return true;
+42   }
 43
-44    /* Checks if two substrings are  equal,   starting at given  offsets and continuing to
-45    * size. */
-46    boolean  isEqual(String s1, int offset1, int offset2, int size) {
-47      for  (int i = 0;  i <   size;  i++)  {
-48          if (s1.charAt(offset1 +  i) != s1.charAt(offset2 + i)) {
-49             return false;
-50          }
-51      }
-52      return true;
+44   /* Checks if two substrings are  equal,   starting at given  offsets and continuing to
+45   * size. */
+46   boolean  isEqual(String s1, int offset1, int offset2, int size) {
+47     for  (int i = 0;  i <   size;  i++)  {
+48         if (s1.charAt(offset1 +  i) != s1.charAt(offset2 + i)) {
+49            return false;
+50         }
+51     }
+52     return true;
 53   }
 ```
 This algorithm will still take  O(N²) time,  but the  benefit is that it can short circuit when matches fail early (which they  usually  will). The previous algorithm must go through all the  work to build  the string  before it can learn that it has failed.
@@ -2150,34 +2150,34 @@ Given a water cell, how can we compute the  amount of water nearby? If the  cell
 
 For each cell, we need to check  eight adjacent cells. We could do this by writing in lines to check up, down, left, right, and  each of the  four diagonal cells. It's even easier,  though, to do this with a loop.
 ```java
-1    ArrayList<Integer>  computePondSizes(int[][]   land) {
-2        ArrayList<Integer>  pondSizes =  new  ArrayList<Integer>();
-3        for (int r =  0; r < land.length;   r++) {
-4            for (int c  =  0; c < land[r].length;  c++)   {
-5                if (land[r][c] ==  0) {//Optional.   Would  return anyway.
-6                    int  size =  computeSize(land,  r,  c);
-7                    pondSizes.add(size);
-8                }
-9            }
-10       }
-11       return pondSizes;
-12   }
+1   ArrayList<Integer>  computePondSizes(int[][]   land) {
+2       ArrayList<Integer>  pondSizes =  new  ArrayList<Integer>();
+3       for (int r =  0; r < land.length;   r++) {
+4           for (int c  =  0; c < land[r].length;  c++)   {
+5               if (land[r][c] ==  0) {//Optional.   Would  return anyway.
+6                   int  size =  computeSize(land,  r,  c);
+7                   pondSizes.add(size);
+8               }
+9           }
+10      }
+11      return pondSizes;
+12  }
 13
-14   int  computeSize(int[][] land, int  row, int col) {
-15       /* If out  of  bounds or already visited.  */
-16       if (row < 0 || col < 0 || row  >= land.length || col >=  land[row].length ||
-17       			land[row][col]  !=  0) {//visited  or not water
-18           return 0;
-19       }
-20       int size =  1;
-21       land[row][col] =  -1;  // Mark  visited
-22       for (int  dr =  -1;  dr <=  1;   dr++)  {
-23           for (int dc  =  -1;  dc  <=  1;   dc++)  {
-24               size +=  computeSize(land, row + dr, col + dc);
-25           }
-26       }
-27       return size;
-28   }
+14  int  computeSize(int[][] land, int  row, int col) {
+15      /* If out  of  bounds or already visited.  */
+16      if (row < 0 || col < 0 || row  >= land.length || col >=  land[row].length ||
+17      			land[row][col]  !=  0) {//visited  or not water
+18          return 0;
+19      }
+20      int size =  1;
+21      land[row][col] =  -1;  // Mark  visited
+22      for (int  dr =  -1;  dr <=  1;   dr++)  {
+23          for (int dc  =  -1;  dc  <=  1;   dc++)  {
+24              size +=  computeSize(land, row + dr, col + dc);
+25          }
+26      }
+27      return size;
+28  }
 ```
 In this  case,  we  marked a cell as  visited  by  setting its  value  to  -1. This allows  us  to  check,  in one line (land[row][col] != 0), if the  value  is valid dry land  or visited. In either case, the  value will be zero.
 
@@ -2185,35 +2185,35 @@ You might also  notice that the  for loop iterates through nine  cells, not  eig
 
 If you don't like modifying the  input matrix, you can create a secondary visited matrix.
 ```java
-1     ArrayList<Integer>  computePondSizes(int[][] land)  {
-2         boolean[][] visited =  new  boolean[land.length][land[0].length];
-3         ArrayList<Integer>  pondSizes =  new  ArrayList<Integer>();
-4         for (int r =  0;   r <  land.length;  r++) {
-5             for (int  c  =  0;   c  <  land[r].length;  c++)   {
-6                 int size = computeSize(land,  visited, r,  c);
-7                 if (size > 0) {
-8                     pondSizes.add(size);
-9                 }
-10            }
-11        }
-12        return pondSizes;
-13    }
+1   ArrayList<Integer>  computePondSizes(int[][] land)  {
+2       boolean[][] visited =  new  boolean[land.length][land[0].length];
+3       ArrayList<Integer>  pondSizes =  new  ArrayList<Integer>();
+4       for (int r =  0;   r <  land.length;  r++) {
+5           for (int  c  =  0;   c  <  land[r].length;  c++)   {
+6               int size = computeSize(land,  visited, r,  c);
+7               if (size > 0) {
+8                   pondSizes.add(size);
+9               }
+10          }
+11      }
+12      return pondSizes;
+13  }
 14
-15    int  computeSize(int[][] land, boolean[][] visited,  int  row, int  col)  {
-16        /*  If  out of  bounds or already visited.  */
-17        if  (row <  0 || col <  0 || row  >=  land.length || col >= land[row].length  ||
-18        visited[row][col] ||    land[row][col]  !=  0) {
-19            return 0;
-20        }
-21        int  size =  1;
-22        visited[row][col]  =  true;
-23        for (int  dr =  -1;  dr <=  1;   dr++)  {
-24            for (int dc  =  -1;  dc  <= 1;   dc++)  {
-25                size +=  computeSize(land,  visited,  row  +  dr,  col +  dc);
-26            }
-27        }
-28        return size;
-29    }
+15  int  computeSize(int[][] land, boolean[][] visited,  int  row, int  col)  {
+16      /*  If  out of  bounds or already visited.  */
+17      if  (row <  0 || col <  0 || row  >=  land.length || col >= land[row].length  ||
+18      visited[row][col] || land[row][col]  !=  0) {
+19          return 0;
+20      }
+21      int  size =  1;
+22      visited[row][col]  =  true;
+23      for (int  dr =  -1;  dr <=  1;   dr++)  {
+24          for (int dc  =  -1;  dc  <= 1;   dc++)  {
+25              size +=  computeSize(land,  visited,  row  +  dr,  col +  dc);
+26          }
+27      }
+28      return size;
+29  }
 ```
 Both implementations are O(WH), whereWis the  width of the  matrix  and  His the  height.
  
@@ -2253,40 +2253,40 @@ This is exactly what we do algorithmically. We take the first digit and run thro
 
 We will assume the list of words is passed in as a HashSet. A HashSet operates similarly to a hash table, but rather than offering key->value lookups, it can tell us if a word is contained  in the set in O(1) time.
 ```java
-1     ArrayList<String> getValidT9Words(String number, HashSet<String>  wordList) {
-2         ArrayList<String> results  =  new   ArrayList<String>();
-3         getValidWords(number,  0, "",  wordList, results);
-4         return results;
-5     }
+1    ArrayList<String> getValidT9Words(String number, HashSet<String>  wordList) {
+2        ArrayList<String> results  =  new   ArrayList<String>();
+3        getValidWords(number,  0, "",  wordList, results);
+4        return results;
+5    }
 6
-7     void  getValidWords(String number,  int index,   String prefix,
-8           HashSet<String>  wordSet,   ArrayList<String>  results) {
-9         /* If it's  a  complete   word,  print it. */
-10        if (index == number.length() && wordSet.contains(prefix)) {
-11            results.add(prefix);
-12            return;
-13        }
+7    void  getValidWords(String number,  int index,   String prefix,
+8          HashSet<String>  wordSet,   ArrayList<String>  results) {
+9        /* If it's  a  complete   word,  print it. */
+10       if (index == number.length() && wordSet.contains(prefix)) {
+11           results.add(prefix);
+12           return;
+13       }
 14
-15        /* Get  characters that match  this digit. */
-16        char   digit = number.charAt(index);
-17        char[] letters =  getT9Chars(digit);
+15       /* Get  characters that match  this digit. */
+16       char digit = number.charAt(index);
+17       char[] letters =  getT9Chars(digit);
 18
-19        /* Go  through all  remaining options.  */
-20        if (letters != null) {
-21            for (char letter : letters) {
-22                getValidWords(number,  index  + 1,  prefix + letter, wordSet,   results);
-23            }
-24        }
-25    }
+19       /* Go  through all  remaining options.  */
+20       if (letters != null) {
+21           for (char letter : letters) {
+22               getValidWords(number,  index  + 1,  prefix + letter, wordSet,   results);
+23           }
+24       }
+25   }
 26
-27    /* Return   array of  characters that map to this digit.  */
-28    char[] getT9Chars(char digit) {
-29        if (!Character.isDigit(digit)) {
-30            return null;
-31        }
-32        int  dig =  Character.getNumericValue(digit) -  Character.getNumericValue('0');
-33        return t9Letters[dig];
-34    }
+27   /* Return   array of  characters that map to this digit.  */
+28   char[] getT9Chars(char digit) {
+29       if (!Character.isDigit(digit)) {
+30           return null;
+31       }
+32       int  dig =  Character.getNumericValue(digit) -  Character.getNumericValue('0');
+33       return t9Letters[dig];
+34   }
 35
 36    /* Mapping of  digits to letters.  */
 37   char[][] t9Letters =  {null, null,  {'a', 'b', 'c'}, {'d', 'e', 'f'},
@@ -2364,61 +2364,61 @@ Our algorithm now has a few steps:
 
 That's it!
 ```java
-1     /* WORD LOOKUP   */
-2     ArrayList<String>  getValidT9Words(String numbers,
-3               HashMapList<String,  String> dictionary)  {
-4         return dictionary.get(numbers);
-5     }
+1   /* WORD LOOKUP   */
+2   ArrayList<String>  getValidT9Words(String numbers,
+3             HashMapList<String,  String> dictionary)  {
+4       return dictionary.get(numbers);
+5   }
 6
-7     /* PRECOMPUTATION */
+7   /* PRECOMPUTATION */
 8
-9     /* Create a hash  table that maps from a number to  all words that have this
-10    * numerical representation. */
-11    HashMapList<String,  String>  initializeDictionary(String[] words)  {
-12        /*  Create a hash  table that maps from a letter to  the  digit */
-13        HashMap<Character, Character> letterToNumberMap = createletterToNumberMap();
+9   /* Create a hash  table that maps from a number to  all words that have this
+10  * numerical representation. */
+11  HashMapList<String,  String>  initializeDictionary(String[] words)  {
+12      /*  Create a hash  table that maps from a letter to  the  digit */
+13      HashMap<Character, Character> letterToNumberMap = createletterToNumberMap();
 14
-15        /*  Create  word ->  number map. */
-16        HashMaplist<String, String> wordsToNumbers = new HashMaplist<String,  String>();
-17        for (String word : words)  {
-18            String numbers =  convertToT9(word,  letterToNumberMap);
-19            wordsToNumbers.put(numbers, word);
-20        }
-21        return wordsToNumbers;
-22    }
+15      /*  Create  word ->  number map. */
+16      HashMaplist<String, String> wordsToNumbers = new HashMaplist<String,  String>();
+17      for (String word : words)  {
+18          String numbers =  convertToT9(word,  letterToNumberMap);
+19          wordsToNumbers.put(numbers, word);
+20      }
+21      return wordsToNumbers;
+22  }
 23
-24    /*  Convert  mapping of  number->letters into  letter->number. */
-25    HashMap<Character, Character>  createletterToNumberMap() {
-26        HashMap<Character, Character>   letterToNumberMap
-27        new HashMap<Character, Character>();
-28        for  (int i = 0;  i <  t9Letters.length; i++)  {
-29            char[] letters  =  t9Letters[i];
-30            if (letters != null) {
-31                for  (char letter  :   letters) {
-32                    char  c = Character.forDigit(i,   10);
-33                    letterToNumberMap.put(letter,  c);
-34                }
-35            }
-36        }
-37        return letterToNumberMap;
-38    }
+24  /*  Convert  mapping of  number->letters into  letter->number. */
+25  HashMap<Character, Character> createletterToNumberMap() {
+26      HashMap<Character, Character> letterToNumberMap
+27      new HashMap<Character, Character>();
+28      for  (int i = 0;  i <  t9Letters.length; i++)  {
+29          char[] letters  =  t9Letters[i];
+30          if (letters != null) {
+31              for  (char letter  :   letters) {
+32                  char  c = Character.forDigit(i,   10);
+33                  letterToNumberMap.put(letter,  c);
+34              }
+35          }
+36      }
+37      return letterToNumberMap;
+38  }
 39
-40    /*  Convert  from a  string to  its T9 representation. */
-41    String  convertToT9(String word, HashMap<Character, Character>  letterToNumberMap) {
-42        StringBuilder sb =  new StringBuilder();
-43        for  (char c : word.toCharArray()) {
-44            if (letterToNumberMap.containsKey(c)) {
-45                char digit = letterToNumberMap.get(c);
-46                sb.append(digit);
-47            }
-48        }
-49        return sb.toString();
-50    }
+40  /*  Convert  from a  string to  its T9 representation. */
+41  String  convertToT9(String word, HashMap<Character, Character>  letterToNumberMap) {
+42      StringBuilder sb =  new StringBuilder();
+43      for  (char c : word.toCharArray()) {
+44          if (letterToNumberMap.containsKey(c)) {
+45              char digit = letterToNumberMap.get(c);
+46              sb.append(digit);
+47          }
+48      }
+49      return sb.toString();
+50  }
 51
-52    char[][] t9Letters =/*  Same as  before   */
+52  char[][] t9Letters =/*  Same as  before   */
 53
-54    /*  HashMaplist<String,  Integer>  is a HashMap  that maps from Strings to
-55    *  ArrayList<Integer>.  See appendix for  implementation.  */
+54  /*  HashMaplist<String,  Integer>  is a HashMap  that maps from Strings to
+55  *  ArrayList<Integer>.  See appendix for  implementation.  */
 ```
 Getting the wordsthatmap to this number will run in O(N) time, whereN is the number of digits. The O(N) comes in during the hash table look up (we need to convert the number to a hash table). If you know the words are never longer than a certain max size, then you could also describe the runtime as O(1).
 
@@ -2505,8 +2505,8 @@ Target approach:
 18       int sum1 =  sum(array1);
 19       int sum1 =  sum(array2);
 20
-21       if ((sum1  -  sum2) %   2   != 0)  return null;
-22       return (sum1   -  sum2) / 2;
+21       if ((sum1 - sum2) % 2 != 0)  return null;
+22       return (sum1 - sum2) / 2;
 23   }
 ```
 
@@ -2533,7 +2533,7 @@ We can do this very quickly with a hash table. We just throw all the elements in
 7    /* Find  a  pair of  values with  a  specific  difference.  */
 8    int[] findDifference(int[] array1,  int[]  array2, int  target)  {
 9        HashSet<Integer> contents2  =  getContents(array2);
-10       for (int one  : array1) {
+10       for (int one : array1) {
 11           int two = one  -  target;
 12           if (contents2.contains(two)) {
 13               int[]  values =  {one,  two};
@@ -2560,7 +2560,7 @@ This solution will take O(A+B) time. This is the Best Conceivable Runtime (BCR),
 If the arrays are sorted, we can iterate through them to find an appropriate pair. This will require less space.
 ```java
 1   int[] findSwapValues(int[] array1,  int[]  array2) {
-2       Integer target  =  getTarget(array1,  array2);
+2       Integer target =  getTarget(array1,  array2);
 3       if (target ==  null) return null;
 4       return  findDifference(array1,  array2, target);
 5   }
@@ -2588,7 +2588,7 @@ If the arrays are sorted, we can iterate through them to find an appropriate pai
 27      return null;
 28   }
 ```
-This algorithm takes O(A  +  B) time but requires the arrays to be sorted. If the arrays aren't sorted, we can still apply this algorithm but we'd have to sort the arrays first. The overall runtime would be O(A   log   A  + B   log   B).
+This algorithm takes O(A  +  B) time but requires the arrays to be sorted. If the arrays aren't sorted, we can still apply this algorithm but we'd have to sort the arrays first. The overall runtime would be O(A log A  + B log B).
 
 
 **16.22   Langton's Ant:** An ant is sitting on an infinite grid of white and black squares. It initially faces right. At each step, it does the following:
@@ -2659,9 +2659,9 @@ This relabeling will not impact the big O time since we have to create a new mat
 28          int numRows =  grid.length;
 29          if (position.row  <   0)  {
 30              shiftRow  =  numRows;
-31              numRows  *=    2;
+31              numRows  *= 2;
 32          }  else if (position.row >=  numRows)   {
-33              numRows  *=    2;
+33              numRows  *= 2;
 34          }
 35
 36          /*  Calculate new number of  columns.  */
@@ -2700,8 +2700,8 @@ This relabeling will not impact the big O time since we have to create a new mat
 69      /*  Print board. */
 70      public String toString()  {
 71          StringBuilder sb  =  new StringBuilder();
-72          for  (int r = 0;  r <   grid.length;  r++)  {
-73              for  (int c = 0;  c  <   grid[0].length;  c++) {
+72          for  (int r = 0;  r < grid.length;  r++)  {
+73              for  (int c = 0;  c < grid[0].length;  c++) {
 74                  if (r == ant.position.row &&   c  ==  ant.position.column)  {
 75                      sb.append(ant.orientation);
 76                  }  else if (grid[r][c]) {
@@ -2806,7 +2806,7 @@ Since we will need to print  a grid, we can track what should be top-left and  b
 1   public class  Board {
 2       private HashSet<Position>  whites  =  new HashSet<Position>();
 3       private Ant ant  =  new Ant();
-4       private  Position  topLeftCorner =  new Position(0,  0);
+4       private Position topLeftCorner =  new Position(0,  0);
 5       private Position bottomRightCorner = new Position(0,  0);
 6
 7       public Board()  {}
@@ -2875,7 +2875,7 @@ Since we will need to print  a grid, we can track what should be top-left and  b
 ```
 The implementation of Ant and Orientation is the same.
 
-The implementation of Position gets updated slightly, in order to support the HashSet functionality. The position will be the key, so we need to implement a hashCode () function.
+The implementation of Position gets updated slightly, in order to support the HashSet functionality. The position will be the key, so we need to implement a hashCode() function.
 ```java
 1   public   class Position {
 2       public int row;
@@ -2969,7 +2969,7 @@ In the below code, we generate the range 0 through 24  by doing 5 * rand5() + ra
 
 Note that because we discard values in this approach, we have no guarantee on the number of rand5() calls it may take to return a value. This is what is meant by a nondeterministic number of calls.
 ```java
-1  int rand7 () {
+1  int rand7() {
 2      while  (true) {
 3          int num = 5 * rand5()  + rand5();
 4          if (num < 21)  {
@@ -3386,107 +3386,107 @@ Let's see this with an example: 2 -  6  -  7 * 8 / 2 +  5
 
 The code below implements this algorithm.
 ```java
-1     public enum  Operator  {
-2         ADD,  SUBTRACT,  MULTIPLY,   DIVIDE,    BLANK
-3     }
+1   public enum  Operator  {
+2       ADD,  SUBTRACT,  MULTIPLY,   DIVIDE,    BLANK
+3   }
 4   
-5     double  compute(String  sequence)  {
-6         Stack<Double> numberStack = new Stack<Double> ();
-7         Stack<Operator> operatorStack = new Stack<Operator>();
+5   double  compute(String  sequence)  {
+6       Stack<Double> numberStack = new Stack<Double>();
+7       Stack<Operator> operatorStack = new Stack<Operator>();
 8   
-9         for  (int i = 0;  i < sequence.length();  i++)  {
-10            try   {
-11                /*  Get number and push.  */
-12                int value = parseNextNumber(sequence,  i);
-13                numberStack.push((double) value);
+9       for  (int i = 0;  i < sequence.length();  i++)  {
+10          try   {
+11              /*  Get number and push.  */
+12              int value = parseNextNumber(sequence,  i);
+13              numberStack.push((double) value);
 14  
-15                /*  Move  to  the  operator. */
-16                i +=  Integer.toString(value).length();
-17                if (i >= sequence.length()) {
-18                    break;
-19                }
+15              /*  Move  to  the  operator. */
+16              i +=  Integer.toString(value).length();
+17              if (i >= sequence.length()) {
+18                  break;
+19              }
 20  
-21                /*  Get operator,  collapse top  as  needed,  push operator. */
-22                Operator  op = parseNextOperator(sequence,  i);
-23                collapseTop(op,  numberStack,  operatorStack);
-24                operatorStack.push(op);
-25            }  catch  (NumberFormatException ex)  {
-26                return Integer.MIN_VALUE;
-27            }
-28        }
+21              /*  Get operator,  collapse top  as  needed,  push operator. */
+22              Operator  op = parseNextOperator(sequence,  i);
+23              collapseTop(op,  numberStack,  operatorStack);
+24              operatorStack.push(op);
+25          }  catch  (NumberFormatException ex)  {
+26              return Integer.MIN_VALUE;
+27          }
+28      }
 29  
-30        /*  Do  final  collapse. */
-31        collapseTop(Operator.BLANK,  numberStack,  operatorStack);
-32        if (numberStack.size() == 1 &&   operatorStack.size() == 0)  {
-33            return  numberStack.pop();
-34        }
-35        return 0;
-36    }
+30      /*  Do  final  collapse. */
+31      collapseTop(Operator.BLANK,  numberStack,  operatorStack);
+32      if (numberStack.size() == 1 &&   operatorStack.size() == 0)  {
+33          return  numberStack.pop();
+34      }
+35      return 0;
+36  }
 37  
-38    /*  Collapse  top  until  priority(futureTop) > priority(top). Collapsing means to  pop
-39    *  the  top  2 numbers and apply  the  operator popped from the  top  of  the  operator
-40    *  stack,  and then  push that onto  the  numbers stack. */
-41    void  collapseTop(Operator futureTop,   Stack<Double>   numberStack,
-42        				Stack<Operator> operatorStack)  {
-43        while  (operatorStack.size() >= 1 &&   numberStack.size() >= 2)  {
-44            if (priorityOfOperator(futureTop)  <=
-45                priorityOfOperator(operatorStack.peek()))  {
-46                double second = numberStack.pop();
-47                double first = numberStack.pop();
-48                Operator op = operatorStack.pop();
-49                double  collapsed =  applyOp(first, op,  second);
-50                numberStack.push(collapsed);
-51            }  else {
-52                break;
-53            }
-54        }
-55    }
+38  /*  Collapse  top  until  priority(futureTop) > priority(top). Collapsing means to  pop
+39  *  the  top  2 numbers and apply  the  operator popped from the  top  of  the  operator
+40  *  stack,  and then  push that onto  the  numbers stack. */
+41  void  collapseTop(Operator futureTop,   Stack<Double>   numberStack,
+42      				Stack<Operator> operatorStack)  {
+43      while  (operatorStack.size() >= 1 &&   numberStack.size() >= 2)  {
+44          if (priorityOfOperator(futureTop)  <=
+45              priorityOfOperator(operatorStack.peek()))  {
+46              double second = numberStack.pop();
+47              double first = numberStack.pop();
+48              Operator op = operatorStack.pop();
+49              double collapsed =  applyOp(first, op,  second);
+50              numberStack.push(collapsed);
+51          }  else {
+52              break;
+53          }
+54      }
+55  }
 56  
-57    /*  Return  priority of  operator.  Mapped  so  that:
-58    * addition == subtraction < multiplication == division. */
-59    int  priorityOfOperator(Operator op)  {
-60        switch  (op)  {
-61            case  ADD:       return 1;
-62            case  SUBTRACT:  return 1;
-63            case  MULTIPLY:  return 2;
-64            case  DIVIDE:    return 2;
-65            case  BLANK:     return 0;
-66        }
-67        return 0;
-68    }
+57  /*  Return  priority of  operator.  Mapped  so  that:
+58  * addition == subtraction < multiplication == division. */
+59  int  priorityOfOperator(Operator op)  {
+60      switch  (op)  {
+61          case  ADD:       return 1;
+62          case  SUBTRACT:  return 1;
+63          case  MULTIPLY:  return 2;
+64          case  DIVIDE:    return 2;
+65          case  BLANK:     return 0;
+66      }
+67      return 0;
+68  }
 69  
-70    /*  Apply operator: left  [op]  right. */
-71    double  applyOp(double  left, Operator  op,  double  right) {
-72        if (op ==   Operator.ADD) return left +  right;
-73        else if (op == Operator.SUBTRACT) return left  -  right;
-74        else if (op == Operator.MULTIPLY) return left  *  right;
-75        else if (op == Operator.DIVIDE) return left / right;
-76        else return right;
-77    }
+70  /*  Apply operator: left  [op]  right. */
+71  double  applyOp(double  left, Operator  op,  double  right) {
+72      if (op ==   Operator.ADD) return left +  right;
+73      else if (op == Operator.SUBTRACT) return left  -  right;
+74      else if (op == Operator.MULTIPLY) return left  *  right;
+75      else if (op == Operator.DIVIDE) return left / right;
+76      else return right;
+77  }
 78  
-79    /*  Return  the  number that starts at offset. */
-80    int parseNextNumber(String  seq,   int offset) {
-81        StringBuilder sb  =  new StringBuilder();
-82        while  (offset < seq.length() &&   Character.isDigit(seq.charAt(offset))) {
-83            sb.append(seq.charAt(offset));
-84            offset++;
-85        }
-86        return Integer.parseint(sb.toString());
-87    }
+79  /*  Return  the  number that starts at offset. */
+80  int parseNextNumber(String  seq,   int offset) {
+81      StringBuilder sb  =  new StringBuilder();
+82      while  (offset < seq.length() &&   Character.isDigit(seq.charAt(offset))) {
+83          sb.append(seq.charAt(offset));
+84          offset++;
+85      }
+86      return Integer.parseint(sb.toString());
+87  }
 88  
-89    /*  Return  the  operator that occurs  as  offset. */
-90    Operator  parseNextOperator(String sequence,   int offset) {
-91        if (offset < sequence.length()) {
-92            char  op =   sequence.charAt(offset);
-93            switch (op) {
-94                case '+': return Operator.ADD;
-95                case '-': return Operator.SUBTRACT;
-96                case '*': return Operator.MULTIPLY;
-97                case '/': return Operator.DIVIDE;
-98            }
-99        }
-100       return Operator.BLANK;
-101   }
+89  /*  Return  the  operator that occurs  as  offset. */
+90  Operator  parseNextOperator(String sequence,   int offset) {
+91      if (offset < sequence.length()) {
+92          char  op =   sequence.charAt(offset);
+93          switch (op) {
+94              case '+': return Operator.ADD;
+95              case '-': return Operator.SUBTRACT;
+96              case '*': return Operator.MULTIPLY;
+97              case '/': return Operator.DIVIDE;
+98          }
+99      }
+100     return Operator.BLANK;
+101 }
 ```
 
 This code also takes O(N) time, where N is the length of the string.

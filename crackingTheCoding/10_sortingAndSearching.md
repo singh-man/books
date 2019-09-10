@@ -528,14 +528,14 @@ We have 1 GB of memory, or 8 billion bits. Thus, with 8 billion bits, we can map
 The following code demonstrates  our algorithm.
 
 ```java
-1   long numberOflnts =  ((long) Integer.MAX_VALUE)  + 1;
-2   byte[] bitfield  = new byte [(int) (numberOfints / 8)];
+1   long numberOfInts =  ((long) Integer.MAX_VALUE)  + 1;
+2   byte[] bitfield  = new byte [(int) (numberOfInts / 8)];
 3   String  filename = .....
 4   
 5   void  findOpenNumber() throws FileNotFoundException  {
 6       Scanner in =  new Scanner(new FileReader(filename));
-7       while (in.hasNextint()) {
-8           int n  =  in.nextlnt ();
+7       while (in.hasNextInt()) {
+8           int n  =  in.nextInt();
 9           /* Finds the corresponding number in the bitfield by using the OR  operator to
 10           * set the nth bit of a byte (e.g., 10  would correspond to  the 2nd bit of
 11           * index 2 in the  byte   array). */
@@ -745,7 +745,7 @@ We can approach this in two  ways: a more naive  solution that only takes advant
 
 **Solution #1: Naive Solution**
 
-As a first approach, we can  do binary  search on every  row to find the  element. This algorithm will be O(M log( N)), since there are M rows and  it takes O( log( N)) time to search each one. This is a good approach to mention to your interviewer before you proceed with generating a better algorithm.
+As a first approach, we can  do binary  search on every  row to find the  element. This algorithm will be O(M log( N)), since there are M rows and  it takes O(log( N)) time to search each one. This is a good approach to mention to your interviewer before you proceed with generating a better algorithm.
 
 To develop an algorithm, let's start  with a simple example.
 

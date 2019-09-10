@@ -575,26 +575,26 @@ Generating P(n)  for the general case is just a simple generalization of the abo
 The following code implements this algorithm:
 
 ```java
-1     ArrayList<ArrayList<Integer>> getSubsets(ArrayList<Integer> set,  int  index) {
-2       ArrayList<ArrayList<Integer>> allsubsets;
-3       if (set.size() ==  index) { //Base  case   -  add  empty set
-4         allsubsets =  new ArrayList<ArrayList<Integer>>();
-5         allsubsets.add(new ArrayList<Integer>());  // Empty set
-6       }  else {
-7         allsubsets =  getSubsets(set,  index + 1);
-8         int item =  set.get(index);
-9         ArrayList<ArrayList<Integer>> moresubsets
-10        new ArrayList<ArrayList<Integer>>();
-11        for (ArrayList<Integer> subset : allsubsets) {
-12          ArrayList<Integer>  newsubset =  new ArrayList<Integer>();
-13          newsubset.addAll(subset);  //
-14          newsubset.add(item);
-15          moresubsets.add(newsubset);
-16        }
-17        allsubsets.addAll(moresubsets);
-18      }
-19      return allsubsets;
-20    }
+1   ArrayList<ArrayList<Integer>> getSubsets(ArrayList<Integer> set,  int  index) {
+2     ArrayList<ArrayList<Integer>> allsubsets;
+3     if (set.size() ==  index) { //Base  case   -  add  empty set
+4       allsubsets =  new ArrayList<ArrayList<Integer>>();
+5       allsubsets.add(new ArrayList<Integer>());  // Empty set
+6     }  else {
+7       allsubsets =  getSubsets(set,  index + 1);
+8       int item =  set.get(index);
+9       ArrayList<ArrayList<Integer>> moresubsets
+10      new ArrayList<ArrayList<Integer>>();
+11      for (ArrayList<Integer> subset : allsubsets) {
+12        ArrayList<Integer>  newsubset =  new ArrayList<Integer>();
+13        newsubset.addAll(subset);  //
+14        newsubset.add(item);
+15        moresubsets.add(newsubset);
+16      }
+17      allsubsets.addAll(moresubsets);
+18    }
+19    return allsubsets;
+20  }
 ```
 
 This solution will be O(n2ⁿ) in time and space, which is the best we can do. For a slight optimization, we could also implement this algorithm iteratively.
@@ -1005,11 +1005,11 @@ P(a₁a₃)  =  a₁a₃ and  a₃a₁ .
 ```
 *Case: three-character strings*
 
-Here is where the cases get more interesting.  How can we generate all permutations of three-character strings, such as a1 a2a3,  given the permutations of two-character strings?
+Here is where the cases get more interesting.  How can we generate all permutations of three-character strings, such as a₁a₂a₃,  given the permutations of two-character strings?
 
 Well, in essence, we just need to "try" each character as the first character and then append the permuta­tions.
 ```
-P(a₁a₂a₃ ) =  {a₁ +  P(a₂a₃)}  +  {a₂ +  P(a₁a₃)} +  {a₃ +  P(a₁a₂)}
+P(a₁a₂a₃) =  {a₁ +  P(a₂a₃)}  +  {a₂ +  P(a₁a₃)} +  {a₃ +  P(a₁a₂)}
 	{a₁ +  P(a₂a₃)} -> a₁a₂a₃, a₁a₃a₂
 	{a₂ +  P(a₁a₃)} -> a₂a₁a₃, a₂a₃a₁
 	{a₃ +  P(a₁a₂)} -> a₃a₁a₂, a₃a₂a₁
@@ -1751,7 +1751,7 @@ This makes the code a bit more concise.
 37  }
 ```
 
-Note that the tradeoff of computing the false results from the true ones, and of computing the {leftTrue,  rightTrue,  leftFalse,  and  rightFalse} values upfront, is a small amount of extra work in some cases. For example, if we're looking for the ways that an AND (&) can result in true, we never would have needed the leftFa1se and rightFa1se results. Likewise, if we're looking for the ways that an OR (|) can result in false, we never would have needed the leftTrue and rightTrue results.
+Note that the tradeoff of computing the false results from the true ones, and of computing the {leftTrue,  rightTrue,  leftFalse,  and  rightFalse} values upfront, is a small amount of extra work in some cases. For example, if we're looking for the ways that an AND (&) can result in true, we never would have needed the leftFalse and rightFalse results. Likewise, if we're looking for the ways that an OR (|) can result in false, we never would have needed the leftTrue and rightTrue results.
 
 Our current code is blind to what we do and don't actually need to do and instead just computes all of the values. This is probably a reasonable tradeoff to make (especially given the constraints of whiteboard coding) as it makes our code substantially shorter and less tedious to write. Whichever approach you make, you should discuss the tradeoffs with your interviewer.
 

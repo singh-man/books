@@ -232,7 +232,7 @@ One way to do this is to pre-process each document and create a hash table index
 
 ```
 "books"  ->  {doc2,  doc3,   doc6,   doc8}
-"many"   ->  {docl,  doc3,   doc7,   doc8,   doc9}
+"many"   ->  {doc1,  doc3,   doc7,   doc8,   doc9}
 ```
 
 To search for "many books", rwe would simply do an intesection on the values for "books" and "many", and return {doc3,  doc8}  as the result.

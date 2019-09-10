@@ -156,8 +156,8 @@ To clear all bits from i through 0 (inclusive), we take a sequence of all 1s (wh
 To set the ith bit to a valuev, we first clear the bit at position i by using a mask that looks like 11101111. Then, we shift the intended  value, v, left by i bits. This will create a number with bit i equal tov and all other bits equal to 0. Finally, we OR these two numbers, updating the ith bit ifv is 1 and leaving it as 0 otherwise.
 
 ```java
-1	int  updateBit(int num, int i, boolean  bitisl) {
-2		int value =  bitisl ?  1 : 0;
+1	int  updateBit(int num, int i, boolean  bitIs1) {
+2		int value =  bitIs1 ?  1 : 0;
 3		int mask =  ~(1  << i);
 4		return (num &   mask)  |  (value << i);
 5	}
@@ -652,10 +652,10 @@ next =  n  -  (2ᶜ¹  -  1)   -  1  -  (2ᶜ⁰⁻¹    -  1).
 ```
 Again, this is very easy to implement.
 ```java
-1     int getPrevArith(int n)  {
-2         /* ... same calculation for c0  and  c1 as  before ... */
-3         return n  -  (1  << c1) -  (1  << ( c0  -  1)) + 1;
-4    }
+1   int getPrevArith(int n)  {
+2       /* ... same calculation for c0  and  c1 as  before ... */
+3       return n  -  (1  << c1) -  (1  << ( c0  -  1)) + 1;
+4   }
 ```
 Whew! Don't worry, you wouldn't be expected to get all this in an interview-at least not without a lot of help from the interviewer.
 

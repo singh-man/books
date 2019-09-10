@@ -462,7 +462,7 @@ Consider the following code.
 9	
 10	class  Triangle:  public Shape   {
 11	public:
-12		int  circumference () {
+12		int  circumference() {
 13			cout << "Circumference of Triangle  Class\n";
 14			return 3  *  edge_length;
 15		}
@@ -536,32 +536,32 @@ int volatile *  volatile  x;
 ```
 Volatile variables are not optimized, which can be very useful. Imagine this function:
 ```c
-1     int opt  =  1;
-2     void  Fn(void)   {
-3         start:
-4               if (opt == 1)  goto start;
-5               else  break;
-6     }
+1   int opt  =  1;
+2   void  Fn(void)   {
+3       start:
+4             if (opt == 1)  goto start;
+5             else  break;
+6   }
 ```
 At first glance, our code appears to loop infinitely. The compiler may try to optimize it to:
 ```c
-1     void  Fn(void)   {
-2          start:
-3               int opt  =  1;
-4               if (true)
-5               goto start;
-6       }
+1  void  Fn(void)   {
+2       start:
+3            int opt  =  1;
+4            if (true)
+5            goto start;
+6   }
 ```
 This becomes an infinite loop. However, an external operation might write 'O'to the location of variable opt, thus breaking the loop.
 
 To prevent the compiler from performing such optimization, we want to signal that another element of the system could change the variable. We do this using the volatile keyword, as shown below.
 ```c
-1     volatile int opt  =  1;
-2     void  Fn(void)   {
-3          start:
-4               if (opt == 1)  goto   start;
-5               else break;
-6       }
+1   volatile int opt  =  1;
+2   void  Fn(void)   {
+3        start:
+4             if (opt == 1)  goto   start;
+5             else break;
+6   }
 ```
 Volatile variables are also useful when multi-threaded  programs have global variables and any thread can modify these shared variables. We may not want optimization on these variables.
 
@@ -678,11 +678,11 @@ We know we need constructors and a single destructor for this class, so let's ad
 ```
 There's one additional way that referencescan becreated: by setting one SmartPointer equal to another. We'll want to override the equal operator to handle this, but for now, let's sketch the code like this.
 ```c
-1      onSetEquals(SmartPoint<T>  ptrl, SmartPoint<T> ptr2) {
-2         /*  If ptrl has  an existing value,   decrement  its  reference count.   Then,  copy the
-3          * pointers to  obj  and ref_count over.  Finally,  since   we  created a  new
-4          * reference,  we  need to  increment  ref_count. */
-5       }
+1   onSetEquals(SmartPoint<T>  ptrl, SmartPoint<T> ptr2) {
+2      /*  If ptrl has  an existing value,   decrement  its  reference count.   Then,  copy the
+3       * pointers to  obj  and ref_count over.  Finally,  since   we  created a  new
+4       * reference,  we  need to  increment  ref_count. */
+5    }
 ```
 Getting just the approach, even without filling in the complicated C++ syntax, would count for a lot. Finishing out the code is now just a matter of filling the details.
 ```c

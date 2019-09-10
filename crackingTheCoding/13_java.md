@@ -88,10 +88,10 @@ Java's collection framework is incredibly useful, and you will see it used throu
 
 ArrayList: An ArrayList is a dynamically resizing array, which grows as you insert elements.
 ```java
-1    ArrayList<String> myArr =  new ArrayList<String>();
-2    myArr.add("one");
-3    myArr.add("two");
-4    System.out.println(myArr.get(0));  /* prints <one> */
+1   ArrayList<String> myArr =  new ArrayList<String>();
+2   myArr.add("one");
+3   myArr.add("two");
+4   System.out.println(myArr.get(0));  /* prints <one> */
 ```
 Vector: A vector is very similar to an ArrayList except that it is synchronized.  Its syntax is almost identical as well.
 
@@ -103,20 +103,20 @@ Vector: A vector is very similar to an ArrayList except that it is synchronized.
 ```
 LinkedList: LinkedList is, of course, Java's built-in LinkedList class. Though it rarely comes up in an interview, it's useful to study because it demonstrates some of the syntax for an iterator.
 ```java
-1     LinkedList<String> mylinkedlist  = new LinkedList<String>();
-2     mylinkedlist.add("two");
-3     myLinkedList.addFirst("one");
-4     Iterator<String> iter  =  mylinkedlist.iterator();
-5     while (iter.hasNext()) {
-6          System.out.println(iter.next());
-7      }
+1   LinkedList<String> mylinkedlist  = new LinkedList<String>();
+2   mylinkedlist.add("two");
+3   myLinkedList.addFirst("one");
+4   Iterator<String> iter  =  mylinkedlist.iterator();
+5   while (iter.hasNext()) {
+6        System.out.println(iter.next());
+7   }
 ```
 HashMap: The HashMap collection is widely used, both in interviews and in the real world. We've provided a snippet of the syntax below.
 ```java
-1     HashMap<String, String> map =  new HashMap<String,  String>();
-2     map.put("one", "uno");
-3     map.put("two",  "dos");
-4     System.out.println(map. get("one"));
+1   HashMap<String, String> map =  new HashMap<String,  String>();
+2   map.put("one", "uno");
+3   map.put("two",  "dos");
+4   System.out.println(map. get("one"));
 ```
 Before your interview, make sure you're very comfortable with the above syntax. You'll need it.
 

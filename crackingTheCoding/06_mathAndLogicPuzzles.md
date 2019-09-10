@@ -538,7 +538,7 @@ We'll write this in a simple way that directly corresponds to the problem.
 2 		int boys  = 0;
 3 		int girls =  0;
 4 		for (int i =  0;  i <   n;  i++)   {
-5 			int[] genders   = runOneFamily();
+5 			int[] genders = runOneFamily();
 6 			girls += genders[0];
 7 			boys  += genders[1];
 8 		}
@@ -547,7 +547,7 @@ We'll write this in a simple way that directly corresponds to the problem.
 11	
 12	int[] runOneFamily()  {
 13		Random  random = new Random();
-14		int boys  =  0;
+14		int boys  = 0;
 15		int girls = 0;
 16		while  (girls == 0)  { // until we have  a  girl
 17			if (random.nextBoolean())  { // girl
@@ -757,7 +757,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 51	
 52		/*  Checks for  poisoned  bottles since   before  DAYS_FOR_RESULT */
 53		public boolean isPositiveOnDay(int day)  {
-54			int testDay  =  day  -  DAYS_FOR_RESULT;
+54			int testDay =  day  -  DAYS_FOR_RESULT;
 55			if (testDay <  0 ||  testDay  >= dropsByDay.size()) {
 56				return false;
 57			}
