@@ -9,7 +9,7 @@ We're given two interesting bits of knowledge here:
 1.  It's a large array, so efficiency is very important.
 2.  We are sorting based on ages, so we know the values are in a small range.
 
-By scanning  through the various sorting algorithms, we might notice that bucket sort (or radix sort) would be a perfect candidate for this algorithm.  In fact, we can make the buckets small ( just 1   year each) and get O(n) running time.
+By scanning  through the various sorting algorithms, we might notice that bucket sort (or radix sort) would be a perfect candidate for this algorithm.  In fact, we can make the buckets small (just 1 year each) and get O(n) running time.
 
 
 ### Common Sorting Algorithms
@@ -26,9 +26,9 @@ Selection sort is the child's algorithm: simple, but inefficient.  Find the smal
 
 **Merge Sort | Runtime: O(n log (n)) average and worst case. Memory: Depends.**
 
-Merge sort divides the array in half, sorts each of those halves, and then merges them back together. Each of those halves has the same sorting algorithm applied to it. Eventually, you are merging  just two single­ element arrays. It is the "merge" part that does all the heavy lifting.
+Merge sort divides the array in half, sorts each of those halves, and then merges them back together. Each of those halves has the same sorting algorithm applied to it. Eventually, you are merging  just two single-element arrays. It is the "merge" part that does all the heavy lifting.
 
-The merge method operates by copying all the elements from the target array segment into a helper array, keeping track of where the start of the left and right halves should be (helperleft and helperRight). We then iterate through helper, copying the smaller element from each half into the array. At the end, we copy any remaining elements into the target array.
+The merge method operates by copying all the elements from the target array segment into a helper array, keeping track of where the start of the left and right halves should be (helperLeft and helperRight). We then iterate through helper, copying the smaller element from each half into the array. At the end, we copy any remaining elements into the target array.
 
 ```java
 1   void  mergesort(int[]  array)  {
@@ -38,7 +38,7 @@ The merge method operates by copying all the elements from the target array segm
 5   
 6   void  mergesort(int[] array, int[]  helper, int  low,  int high)  {
 7       if (low <   high)  {
-8           int middle  =  (low  +  high) /    2;
+8           int middle  =  (low  +  high) / 2;
 9           mergesort(array, helper,  low,  middle); //  Sort  left half
 10          mergesort(array,  helper,  middle + 1,   high); //  Sort  right half
 11          merge(array, helper,  low,  middle,  high); //  Merge them
@@ -51,16 +51,16 @@ The merge method operates by copying all the elements from the target array segm
 18          helper[i] =  array[i];
 19      }
 20  
-21      int helperleft =  low;
+21      int helperLeft =  low;
 22      int helperRight = middle  + 1;
 23      int current =  low;
 24  
 25      /* Iterate through  helper array.  Compare  the  left and  right half,  copying back
 26      * the  smaller element  from the  two halves  into the  original  array. */
 27      while  (helperLeft <= middle  &&   helperRight <= high)  {
-28          if  (helper[helperleft] <=  helper[helperRight]) {
-29              array[current] =  helper[helperleft];
-30              helperleft++;
+28          if  (helper[helperLeft] <=  helper[helperRight]) {
+29              array[current] =  helper[helperLeft];
+30              helperLeft++;
 31          }  else {//If right element  is smaller than  left element
 32              array[current]  =  helper[helperRight];
 33              helperRight++;
@@ -69,9 +69,9 @@ The merge method operates by copying all the elements from the target array segm
 36      }
 37  
 38      /* Copy  the  rest of  the  left side  of  the  array into the  target array */
-39      int  remaining = middle  -  helperleft;
+39      int  remaining = middle  -  helperLeft;
 40      for  (int i = 0;  i <=  remaining;   i++)  {
-41          array[current +  i] = helper[helperleft +  i];
+41          array[current +  i] = helper[helperLeft +  i];
 42      }
 43  }
 ```
@@ -102,12 +102,12 @@ If we repeatedly partition the array (and its sub-arrays) around an element, the
 10  
 11  int partition(int[] arr, int left,  int right) {
 12      int pivot =  arr[(left + right) I 2];  // Pick  pivot  point
-13      while  (left <= right) {
+13      while left <= right) {
 14          // Find element  on left that should  be on right
-15          while  (arr[left] < pivot) left++;
+15          while (arr[left] < pivot) left++;
 16  
 17          // Find element  on right that should  be on left
-18          while  (arr[right] >   pivot) right--;
+18          while (arr[right] >   pivot) right--;
 19  
 20          // Swap  elements,   and move  left and right indices
 21          if (left <= right) {
@@ -122,7 +122,7 @@ If we repeatedly partition the array (and its sub-arrays) around an element, the
 
 **Radix Sort | Runtime:** O(kn)  **(see  below)**
 
-Radix sort is a sorting algorithm for integers (and some other data types) that takes advantage of the fact that integers have a finite number of bits. In radix sort, we iterate through each digit of the number, grouping numbers by each digit. For example,  if we have an array of integers, we might first sort by the first digit, so that the Os are grouped together. Then, we sort each of these groupings by the next digit. We repeat this process sorting by each subsequent digit, until finally the whole array is sorted.
+Radix sort is a sorting algorithm for integers (and some other data types) that takes advantage of the fact that integers have a finite number of bits. In radix sort, we iterate through each digit of the number, grouping numbers by each digit. For example,  if we have an array of integers, we might first sort by the first digit, so that the 0s are grouped together. Then, we sort each of these groupings by the next digit. We repeat this process sorting by each subsequent digit, until finally the whole array is sorted.
 
 Unlike comparison sorting algorithms, which cannot perform better than O(n log(n)) in the average case, radix sort has a runtime of O(kn), where n is the number of elements and k is the number of passes of the sorting algorithm.
 
@@ -131,7 +131,7 @@ Unlike comparison sorting algorithms, which cannot perform better than O(n log(n
 
 When we think of searching algorithms, we generally think of binary search. Indeed, this is a very useful algorithm to study.
 
-In binary search, we look for an element x in a sorted array by first comparing xto the midpoint of the array. If x is less than the midpoint, then we search the left half of the array. If x is greater than the midpoint, then we search the right half of the array. We then repeat this process, treating the left and right halves as subar­ rays. Again, we compare xto the midpoint of this subarray and then search either its left or right side. We repeat this process until we either find x or the subarray has size O.
+In binary search, we look for an element x in a sorted array by first comparing x to the midpoint of the array. If x is less than the midpoint, then we search the left half of the array. If x is greater than the midpoint, then we search the right half of the array. We then repeat this process, treating the left and right halves as subarrays. Again, we compare x to the midpoint of this subarray and then search either its left or right side. We repeat this process until we either find x or the subarray has size O.
 
 Note that although the concept is fairly simple, getting all the details right is far more difficult than you might think. As you study the code below, pay attention to the plus ones and minus ones.
 
@@ -141,8 +141,8 @@ Note that although the concept is fairly simple, getting all the details right i
 3       int high = a.length -  1;
 4       int mid;
 5   
-6       while  (low  <=  high)   {
-7           mid =  (low + high) /    2;
+6       while (low <= high) {
+7           mid = (low + high) /    2;
 8           if (a[mid]  <  x)  {
 9               low  =  mid +  1;
 10          }  else if  (a[mid] >   x)  {
@@ -157,7 +157,7 @@ Note that although the concept is fairly simple, getting all the details right i
 19  int  binarySearchRecursive(int[] a,  int x,  int low,  int high)   {
 20      if (low > high) return  -1; //  Error
 21  
-22      int mid     (low  + high) /    2;
+22      int mid = (low  + high) /    2;
 23      if  (a[mid] <   x) {
 24          return  binarySearchRecursive(a, x,  mid + 1,  high);
 25      }  else if (a[mid] >   x) {
@@ -168,7 +168,7 @@ Note that although the concept is fairly simple, getting all the details right i
 30  }
 ```
 
-Potential ways to search a data structure extend beyond binary search, and you would do best not to limit yourself tojust this option. You might, for example, search for a node by leveraging a binary tree, or by using a hash table. Think beyond binary search!
+Potential ways to search a data structure extend beyond binary search, and you would do best not to limit yourself to just this option. You might, for example, search for a node by leveraging a binary tree, or by using a hash table. Think beyond binary search!
 
 ---
 
@@ -197,7 +197,7 @@ The code below does just that. It works from the back of A and B, moving the lar
 4       int indexMerged  = lastB + lastA - 1; /*   end  of  merged array*/
 5   
 6       /*   Merge a  and  b,  starting from  the  last element in each*/
-7       while   (indexB  >=  0)  {
+7       while (indexB  >=  0)  {
 8           /*   end  of  a  is >  than  end  of  b*/
 9           if (indexA  >=  0 &&   a[indexA]  >   b[indexB])  {
 10              a[indexMerged] = a[indexA];//    copy  element
@@ -259,13 +259,13 @@ The code below implements this algorithm.
 2       HashMaplist<String, String>  m aplist =  new HashMaplist<String,  String>();
 3   
 4       /*  Group words by   anagram  */
-5       for  (String s : array) {
+5       for (String s : array) {
 6           String key =  sortChars(s);
 7           maplist.put(key,   s);
 8       }
 9   
 10      /*Convert hash table  to array*/
-11      int  index =  0;
+11      int index =  0;
 12      for (String key : maplist.keySet()) {
 13          ArrayList<String> list = maplist.get(key);
 14          for (String t : list) {
@@ -275,7 +275,7 @@ The code below implements this algorithm.
 18      }
 19  }
 20  
-21  String  sortChars(String  s)  {
+21  String sortChars(String  s)  {
 22      char[]  content =  s.toCharArray();
 23      Arrays.sort(content);
 24      return new  String(content);
@@ -316,13 +316,14 @@ For example, if we are searching for 5 in Array1, we can look at the  left eleme
 
 In Array2,  we can see that since 50 > 20, the right half must be ordered normally. We turn to the middle (20) and right (40) element to check if 5 would fall between them. The value 5 would not; therefore, we search the left half.
 
-The tricky condition is if the left and the middle are identical, as in the example array { 2,   2,   2,   3, 4, 2}. In this case, we can check if the rightmost element is different. If it is, we can searchjust the right side.
+The tricky condition is if the left and the middle are identical, as in the example array {2, 2, 2, 3, 4, 2}. In this case, we can check if the rightmost element is different. If it is, we can search just the right side.
+
 Otherwise, we have no choice but to search both halves.
 
 ```java
 1   int search(int a[], int left,  int right, int x)  {
-2       int mid =  (left + right) /    2;
-3       if (x  == a[mid])   {//Found  element
+2       int mid =  (left + right) / 2;
+3       if (x == a[mid])   {//Found  element
 4           return mid;
 5       }
 6       if (right < left) {
@@ -345,7 +346,7 @@ Otherwise, we have no choice but to search both halves.
 23              return search(a, left,  mid -  1,  x); //  Search  left
 24          }
 25      }  else if (a[left] ==  a[mid])   {//Left or  right half is all  repeats
-26          if (a[mid]   != a[right]) {//If right is different, search  it
+26          if (a[mid] != a[right]) {//If right is different, search  it
 27              return search(a, mid +  1,  right,  x); //  search   right
 28          }  else {//Else,  we  have  to  search  both  halves
 29              int result =  search(a, left,  mid -  1,  x); //  Search  left
@@ -360,9 +361,9 @@ Otherwise, we have no choice but to search both halves.
 38  }
 ```
 
-This code will run in O(log  n) if all the elements are unique. However, with many duplicates, the algo­ rithm is actually O(n). This is because with many duplicates, we will often have to search both the left and right sides of the array (or subarrays).
+This code will run in O(log  n) if all the elements are unique. However, with many duplicates, the algorithm is actually O(n). This is because with many duplicates, we will often have to search both the left and right sides of the array (or subarrays).
 
-Note that while this problem is not conceptually very complex, it is actually very difficult to implement flaw­ lessly. Don't feel bad if you had trouble implementing it without a few bugs. Because of the ease of making off-by-one and other minor errors, you should make sure to test your code very thoroughly.
+Note that while this problem is not conceptually very complex, it is actually very difficult to implement flawlessly. Don't feel bad if you had trouble implementing it without a few bugs. Because of the ease of making off-by-one and other minor errors, you should make sure to test your code very thoroughly.
 
 
 **10.4  Sorted Search, No Size:**  You are given an array-like data structure Listy which lacks a size method. It does, however, have an elementAt(i) method that returns the element at index i in O(1)  time. If i is beyond the bounds of the data structure,  it returns -1. (For this reason, the data structure only supports positive integers.) Given a Listy which contains sorted, positive integers, find the index at which an element x occurs. If x occurs multiple times, you may return any index.
@@ -383,7 +384,7 @@ But how much bigger? If we just went through the list linearly-1, then 2, then 3
 It's better to back off exponentially. Try 1, then 2, then 4, then 8, then 16, and so on. This ensures that, if the list has length n, we'll find the length in at most O(log  n) time.
 
 
-> Why O(log  n)? Imagine we start with pointer q at q =  1. At each iteration, this pointer q doubles, until q is bigger than the length n. How many times can q double in size before it's bigger than n?Or, in other words, for what value of k does 2 = n? This expression is equal when k  = log n, as this is precisely what log means. Therefore, it will take O(log n) steps to find the length.
+> Why O(log  n)? Imagine we start with pointer q at q =  1. At each iteration, this pointer q doubles, until q is bigger than the length n. How many times can q double in size before it's bigger than n? Or, in other words, for what value of k does 2 = n? This expression is equal when k  = log n, as this is precisely what log means. Therefore, it will take O(log n) steps to find the length.
 
 
 Once we find the length, we just perform a (mostly) normal binary search. I say "mostly" because we need to make one small tweak. If the mid point is -1, we need to treat this as a "too big" value and search left. This is on line 16 below.
@@ -402,7 +403,7 @@ There's one more little tweak. Recall that the way we figure out the length is b
 9   int  binarySearch(Listy list,  int value,   int low,  int high)   {
 10      int mid;
 11  
-12      while  (low <= high)   {
+12      while (low <= high)   {
 13          mid =  (low + high) /  2;
 14          int middle  =  list.elementAt(mid);
 15          if (middle  >  value  ||  middle  ==   -1)  {
@@ -417,7 +418,7 @@ There's one more little tweak. Recall that the way we figure out the length is b
 24  }
 ```
 
-It turns out that not knowing the length didn't impact the runtime of the search algorithm. We find the length in O(log n) time and then do the search in O(log n) time. Ouroverall runtime is O(log n), just as it would be in a normal array.
+It turns out that not knowing the length didn't impact the runtime of the search algorithm. We find the length in O(log n) time and then do the search in O(log n) time. Our overall runtime is O(log n), just as it would be in a normal array.
 
 
 **10.5  Sparse Search:** Given a sorted  array of strings that is interspersed  with empty  strings, write a method to find the location of a given string.
@@ -539,7 +540,7 @@ The following code demonstrates  our algorithm.
 9           /* Finds the corresponding number in the bitfield by using the OR  operator to
 10           * set the nth bit of a byte (e.g., 10  would correspond to  the 2nd bit of
 11           * index 2 in the  byte   array). */
-12          bitfield [n  / 8]   |= 1  << (n  %  8);
+12          bitfield[n / 8] |= 1  << (n  %  8);
 13      }
 14  
 15      for (int i =  0;  i <   bitfield.length;  i++)   {
@@ -566,7 +567,7 @@ In the second pass, we'll actually look for which number  in that range is missi
 The question, now, is what is the appropriate block size? Let's define some variables as follows: 
 
 - Let rangeSize be the size of the ranges that each block in the first pass represents. 
-- Let arrayS1ze represent the number of blocks in the first pass. Note that arraySize = 2³¹/rangesize since there are 2³¹ non-negative integers.
+- Let arraySize represent the number of blocks in the first pass. Note that arraySize = 2³¹/rangeSize since there are 2³¹ non-negative integers.
 
 We need to select a value for rangeSize such that the memory from the first pass (the array) and the second pass (the bit vector) fit.
 
@@ -575,14 +576,14 @@ We need to select a value for rangeSize such that the memory from the first pass
 The array in the first pass can fit in 10 megabytes, or roughly 223 bytes, of memory. Since each element in the array is an int, and an int is 4 bytes, we can hold an array of at most about 221 elements. So, we can deduce the following:
 
 ``` 
-arraySize = 2³¹/rangeS1ze <= 2²¹
+arraySize = 2³¹/rangeSize <= 2²¹
 rangeSize >= 2³¹/2²¹
 rangeSize >= 2¹⁰
 ```
 
 *Second Pass: The Bit Vector*
 
-We need to have enough space to store rangeSize bits. Since we can fit 2²³ bytes in memory, we can fit 2²⁶ bits in memory.Therefore, we can conclude the following:
+We need to have enough space to store rangeSize bits. Since we can fit 2²³ bytes in memory, we can fit 2²⁶ bits in memory. Therefore, we can conclude the following:
 ```
 2¹¹ <=  rangeSize  <=  2²⁶
 ```
@@ -627,7 +628,7 @@ The below code provides one implementation for this algorithm.
 35  }
 36  
 37  /*  Find a block  whose count  is low.  */
-38  int  findBlockWithMissing(int[] blocks,   int  rangeSize) {
+38  int findBlockWithMissing(int[] blocks,   int  rangeSize) {
 39      for  (int i = 0;  i <  blocks.length;  i++)  {
 40          if (blocks[i] < rangeSize) {
 41              return i;
@@ -638,7 +639,7 @@ The below code provides one implementation for this algorithm.
 46  
 47  /*  Create  a bit vector for  the  values  within  a  specific range. */
 48  byte[] getBitVectorForRange(String filename,  int  blockindex, int rangeSize)
-49      throws  FileNotFoundException  {
+49      			throws FileNotFoundException  {
 50      int startRange = blockindex * rangeSize;
 51      int endRange  =  startRange + rangeSize;
 52      byte[] bitVector  =  new byte[rangeSize / Byte.SIZE];
@@ -680,11 +681,10 @@ The below code provides one implementation for this algorithm.
 88  }
 ```
 
-What if, as a follow up question, you are asked to solve the problem with even less memory? In this case, we can do repeated passes using the approach from the first step. We'd first check to see how many integers are found within each sequence of a million elements. Then, in the second pass, we'd check how many inte­ gers are found in each sequence  of a thousand elements. Finally, in the third pass, we'd apply the bit vector.
+What if, as a follow up question, you are asked to solve the problem with even less memory? In this case, we can do repeated passes using the approach from the first step. We'd first check to see how many integers are found within each sequence of a million elements. Then, in the second pass, we'd check how many integers are found in each sequence  of a thousand elements. Finally, in the third pass, we'd apply the bit vector.
 
 
-**10.8  Find Duplicates:** You have an array with all the numbers from 1 to N, where  N is at most 32,000. The array may have duplicate entries and you do not know what N is. With only 4 kilobytes of memory
-available, how would you print all duplicate elements in the array?
+**10.8  Find Duplicates:** You have an array with all the numbers from 1 to N, where  N is at most 32,000. The array may have duplicate entries and you do not know what N is. With only 4 kilobytes of memory available, how would you print all duplicate elements in the array?
 
 
 SOLUTION
@@ -766,7 +766,7 @@ Observe that we can also make a similar conclusion by looking at the ends of col
 
 We can bring these observations together into a solution.1he observations are the following:
 
-- If the start of a column is greater than x, then xis to the left of the column. 
+- If the start of a column is greater than x, then x is to the left of the column. 
 - If the end of a column is less than x, then x is to the right of the column.
 - If the start of a row is greater than x, then x is above that row. 
 - If the end of a row is less than x, then x is below that row.
@@ -777,7 +777,7 @@ We need to start with the greatest column and work our way to the left. This mea
 
 This element may not be the end of a row in the full matrix, but it is an end of a row of a submatrix. The same conditions apply. The value at array[0][2], which  is 40, is less than 55, so we know we can move downwards.
 
-We now have a submatrix to consider that looks like the following  (the gray squares have been eliminated).
+We now have a submatrix to consider that looks like the following (the gray squares have been eliminated).
 
 ![](media/10_9_1.JPG)
 
@@ -846,7 +846,7 @@ Let's return to the original problem: suppose we were searching for the value 85
 
 85 can't be in the black area, since 95 is in the upper left hand corner and is therefore the smallest element in that square.
 
-85 can't be in the light gray area either, since 35 is in the lower right hand corner ofthat square.
+85 can't be in the light gray area either, since 35 is in the lower right hand corner of that square.
 
 85 must be in one of the two white areas.
 
@@ -892,10 +892,10 @@ The code below implements this algorithm.
 33  
 34   Coordinate  partitionAndSearch(int[][]  matrix, Coordinate   origin, Coordinate  dest,
 35                      Coordinate   pivot, int x)  {
-36       Coordinate  lowerLeftOrigin =  new Coordinate(pivot.row, origin.column);
-37       Coordinate  lowerLeftDest =  new Coordinate(dest.row,  pivot.column -  1);
-38       Coordinate  upperRightOrigin  =  new Coordinate(origin.row,  pivot.column);
-39       coordinate upperRightDest   =  new Coordinate(pivot.row -  1,  dest.column);
+36       Coordinate lowerLeftOrigin  =  new Coordinate(pivot.row, origin.column);
+37       Coordinate lowerLeftDest    =  new Coordinate(dest.row,  pivot.column -  1);
+38       Coordinate upperRightOrigin =  new Coordinate(origin.row,  pivot.column);
+39       Coordinate upperRightDest   =  new Coordinate(pivot.row -  1,  dest.column);
 40   
 41       Coordinate lowerLeft =  findElement(matrix,  lowerLeftOrigin,  lowerLeftDest, x);
 42       if  (lowerleft ==  null) {
@@ -917,9 +917,9 @@ The code below implements this algorithm.
 58           column =  c;
 59       }
 60   
-61       public   boolean  inbounds(int[][]  matrix) {
+61       public boolean inbounds(int[][]  matrix) {
 62           return  row >=  0 &&   column >=  0 &&
-63           row <  matrix.length &&   column <  matrix[0].length;
+63           row <  matrix.length &&  column <  matrix[0].length;
 64       }
 65   
 66       public boolean  isBefore(Coordinate p)  {
@@ -955,9 +955,9 @@ SOLUTION
 
 ---
 
-A relatively  easy way to implement this would be to have an array that holds all the elements in sorted order. When a new element comes in, we would need to shift the other elements to make room. Imple­ menting getRankOfNumber  would be quite efficient, though. We would simply perform a binary search for n, and return the index.
+A relatively  easy way to implement this would be to have an array that holds all the elements in sorted order. When a new element comes in, we would need to shift the other elements to make room. Implementing getRankOfNumber  would be quite efficient, though. We would simply perform a binary search for n, and return the index.
 
-However, this is very inefficient for inserting elements (that is, the track(int  x) function). We need a data structure which is good at keeping relative ordering, as well as updating when we insert new elements. A binary  search tree can dojust that.
+However, this is very inefficient for inserting elements (that is, the track(int  x) function). We need a data structure which is good at keeping relative ordering, as well as updating when we insert new elements. A binary  search tree can do just that.
 
 Instead of inserting elements into an array, we insert elements into a binary search tree. The method track(int  x) will run in O(log  n) time, where n is the size of the tree (provided, of course, that the tree is balanced).
 
@@ -983,11 +983,11 @@ Let's walk through an example on the following tree. In the below example, the v
 
 Suppose we want to find the rank of 24 in the tree above. We would compare 24 with the root 20, and find that 24 must reside on the right. The root has 4 nodes in its left subtree, and when we include the root itself, this gives us five total nodes smaller than 24. We set counter to 5.
 
-Then, we compare 24 with node 25 and find that 24 must be on the left. The value of counter does not update, since we're not "passing over" any smaller nodes. The value of c ounter is still 5.
+Then, we compare 24 with node 25 and find that 24 must be on the left. The value of counter does not update, since we're not "passing over" any smaller nodes. The value of counter is still 5.
 
 Next, we compare 24 with node 23, and find that 24 must be on the right. Counter gets incremented by just 1 (to 6), since 23 has no left nodes.
 
-Finally, we find 24 and we return c ounter: 6. 
+Finally, we find 24 and we return counter: 6. 
 
 Recursively, the algorithm is the following:
 ```
@@ -1016,10 +1016,10 @@ The full code for this is below.
 15  
 16  public  class RankNode {
 17      public int left_size  =  0;
-18      public RankNode  left,  right;
-19      public int  data   =  0;
-20      public RankNode(int   d)  {
-21          data   =  d;
+18      public RankNode left, right;
+19      public int data =  0;
+20      public RankNode(int d)  {
+21          data =  d;
 22      }
 23  
 24      public void  insert(int d)  {
@@ -1028,7 +1028,7 @@ The full code for this is below.
 27              else left = new RankNode(d);
 28              left_size++;
 29          }  else {
-30              if (right  !=  null)  right.insert(d);
+30              if (right !=  null)  right.insert(d);
 31              else right  = new  RankNode(d);
 32          }
 33      }
@@ -1100,7 +1100,7 @@ Before coding, we should clarify the exact algorithm, though.
 - Iterate through the elements, starting from index 1  (not 0) and jumping two elements at a time.
 - At each element, swap it with the previous element. Since every three elements appear in the order small <=  medium  <=  large, swapping these elements will always put medium as a peak: medium <=  small <=  large.
 
-This approach will ensure that the peaks are in the right place: indexes 1, 3, 5, and so on. As long as the odd­ numbered  elements (the peaks) are bigger than the adjacent elements, then the even-numbered elements (the valleys) must be smaller than the adjacent elements.
+This approach will ensure that the peaks are in the right place: indexes 1, 3, 5, and so on. As long as the odd-numbered  elements (the peaks) are bigger than the adjacent elements, then the even-numbered elements (the valleys) must be smaller than the adjacent elements.
 
 The code to implement this is below.
 

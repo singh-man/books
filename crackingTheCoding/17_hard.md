@@ -79,7 +79,7 @@ Recursively, that algorithm looks like this:
 12		/*   Swap element k  and  i */
 13		int temp =  cards[k];
 14		cards[k] =  cards[i];
-15		cards[i) =  temp;
+15		cards[i] =  temp;
 16	
 17		/* Return   shuffled array*/
 18		return cards;
@@ -132,7 +132,7 @@ The pseudocode for this recursive algorithm would look like this:
 ```
 This is even cleaner to  write  iteratively. In this  approach, we  initialize  an  array  subset to  be  the  first m elements in original. Then,  we iterate through the  array, starting at element m, inserting array[i] into the subset at (random) position k whenever k   <  m.
 ```java
-1    int[] pickMiteratively(int[] original,  int  m)  {
+1    int[] pickMIteratively(int[] original,  int  m)  {
 2    	int[]  subset =  new  int[m];
 3   
 4   	/* Fill  in subset array   with  first  part of  original array */
@@ -184,7 +184,7 @@ Removing the number above creates an imbalance of 1s and 0s in the least signifi
 
 Note that this means that count(0s) is always greater than or equal to count(1s).
 
-When we remove  a valuevfrom the  list, we'll know immediately if v is even or odd just by looking at the least significant bits of all the other  values in the list.
+When we remove  a value v from the  list, we'll know immediately if v is even or odd just by looking at the least significant bits of all the other  values in the list.
 
 ![](media/17_04_1.JPG)
 
@@ -207,7 +207,7 @@ Again, we have the same conclusion:
 
 We can repeat this process for each bit. On each iteration, we count the number of 0s and 1s in bit i to check if LSBᵢ(v) is 0 or 1. Then, we discard the numbers where LSBᵢ(x) != LSBᵢ(v). That is, if v is even, we discard the odd numbers, and so on.
 
-By the end of this process, we will have computed all bits inv.In each successive iteration, we look at n, then n/2, then n/4, and so on, bits. This results in a runtime of O(N).
+By the end of this process, we will have computed all bits in v. In each successive iteration, we look at n, then n/2, then n/4, and so on, bits. This results in a runtime of O(N).
 
 If it helps, we can also move through this more visually. In the first iteration, we start with all the numbers:
 ```
@@ -278,7 +278,7 @@ The code below implements this algorithm. We've implemented the discarding aspec
 27	}
 ```
 
-In lines 24 and 27, we recursively calculate the other bits of v.Then, we insert either a 0 or 1, depending on whether or not count₁(0s) <= count₁(1s).
+In lines 24 and 27, we recursively calculate the other bits of v. Then, we insert either a 0 or 1, depending on whether or not count₁(0s) <= count₁(1s).
 
 
 **17.5	Letters and Numbers:** Given an array filled with letters and numbers, find the longest subarray with an equal number of letters and numbers.
@@ -289,7 +289,7 @@ SOLUTION
 
 In the introduction, we discussed the importance of creating a really good, general-purpose example. That's absolutely true. It's also important, though, to understand what matters.
 
-In this case, we just want an equal number of letters and numbers. All letters are treated identically and all numbers are treated identically. Therefore, we can use an example with a single letter and a single number-or, for that matter, As and Bs, Os and 1s, or Thingls and Thing2s.
+In this case, we just want an equal number of letters and numbers. All letters are treated identically and all numbers are treated identically. Therefore, we can use an example with a single letter and a single number-or, for that matter, As and Bs, 0s and 1s, or Thing1s and Thing2s.
 
 With that said, let's start with an example:
 
@@ -377,7 +377,7 @@ Let's update the earlier array with the differences.
 
 Whenever we return the same difference, then  we know we have found an equal subarray. To find the biggest subarray, we just have to find the two indices farthest apart with the same value.
 
-To do so, we use a hash table to store the first time we see a particular difference.Then, each time we see the same difference, we see if this subarray (from first occurrence of this index to current index) is bigger than the current max. If so, we update the max.
+To do so, we use a hash table to store the first time we see a particular difference. Then, each time we see the same difference, we see if this subarray (from first occurrence of this index to current index) is bigger than the current max. If so, we update the max.
 ```java
 1 	char[]  findLongestSubarray(char[] array)  {
 2 		/* Compute deltas between  count  of  numbers  and  count  of  letters.*/
@@ -496,7 +496,7 @@ if x[d] < 2: count2sinRangeAtDigit(x, d) =
 ```
 *Case digit> 2*
 
-Now, let's look at the case where dth digit of xis greater than 2(x[d] > 2). We can apply almost the exact same logic to see that there are the same number of 2s in the 3rd digit in the range 0 - 63525 as there as in the range 0 - 70000. So, rather than rounding down,  we round up.
+Now, let's look at the case where dth digit of x is greater than 2(x[d] > 2). We can apply almost the exact same logic to see that there are the same number of 2s in the 3rd digit in the range 0 - 63525 as there as in the range 0 - 70000. So, rather than rounding down,  we round up.
 ```
 if x[d] >  2:   count2slnRangeAtDigit(x,  d)=
 	let y  =  round up  to nearest 10ᵈ⁺¹
@@ -588,7 +588,7 @@ If we later find that John is equivalent to, say, Jonny, we'll need to look up t
 
 This will work, but it's unnecessarily complicated to keep track of these two lists.
 
-Instead, we can think of these names as "equivalenceclasses". When we find a pair (Jonathan, John), we put these in the same set (or equivalence classes). Each name maps to its equivalence  class. All items in the set map to the same instance of the set.
+Instead, we can think of these names as "equivalence classes". When we find a pair (Jonathan, John), we put these in the same set (or equivalence classes). Each name maps to its equivalence class. All items in the set map to the same instance of the set.
 
 If we need to merge two sets, then we copy one set into the other and update the hash table to point to the new set.
 	
@@ -721,7 +721,7 @@ In this case, we'd be building essentially a graph.
 
 Now what? Visually, it seems easy enough. Each component is an equivalent set of names. We just need to group the names by their component, sum up their frequencies, and return a list with one arbitrarily chosen name from each group.
 
-In practice, how does this work? We could pick a name and do a depth-first (or breadth-first) search to sum the frequencies of all the names in one component. We would have to make sure that we hit each compo­ nent exactly once. That's easy enough to achieve: mark a node as visited after it's discovered in the graph search, and only start the search for nodes where visited is false.
+In practice, how does this work? We could pick a name and do a depth-first (or breadth-first) search to sum the frequencies of all the names in one component. We would have to make sure that we hit each component exactly once. That's easy enough to achieve: mark a node as visited after it's discovered in the graph search, and only start the search for nodes where visited is false.
 ```java
 1   HashMap<String, Integer> trulyMostPopular(HashMap<String, Integer>  names,
 2   String[][] synonyms) {
@@ -906,7 +906,7 @@ Sure. We just append A[4] on to the longest subsequence that it can be appended 
 
 This is now fairly straightforward to implement.
 ```java
-1 	ArrayList<Htwt> longestincreasingSeq(ArrayList<Htwt> array)  {
+1 	ArrayList<Htwt> longestIncreasingSeq(ArrayList<Htwt> array)  {
 2 		Collections.sort(array);
 3 	
 4 		ArrayList<ArrayList<HtWt>> solutions = new ArrayList<ArrayList<Htwt>>();
@@ -1190,7 +1190,7 @@ The code below implements this algorithm.
 
 When you get this question, do your best to solve it-even though it's really difficult. You can start with a brute force approach  (challenging, but not quite as tricky), and then you can start trying to optimize it. Or, try to find a pattern in the numbers.
 
-Chances are that your interviewer will help you along when you get stuck. W hatever you do, don't give up! Think out loud, wonder out loud, and explain your thought process.  Your interviewer will probably jump in to guide you.
+Chances are that your interviewer will help you along when you get stuck. Whatever you do, don't give up! Think out loud, wonder out loud, and explain your thought process.  Your interviewer will probably jump in to guide you.
 
 Remember, perfection on this problem is not expected. Your performance is evaluated  in comparison to other candidates. Everyone struggles on a tricky problem.
 
@@ -1211,7 +1211,7 @@ Let's start off with an example:
 
 One thing we can notice here is that if the majority element (in this case 7) appears less often in the begin­ning, it must appear much more often toward the end. That's a good observation to make.
 
-This interview question specifically requires us to do this in O(N) time and O(1) space. Nonetheless, some­ times it can be useful to relax one of those requirements and develop an algorithm. Let's try relaxing the time requirement but staying firm on the O(1) space requirement.
+This interview question specifically requires us to do this in O(N) time and O(1) space. Nonetheless, sometimes it can be useful to relax one of those requirements and develop an algorithm. Let's try relaxing the time requirement but staying firm on the O(1) space requirement.
 
 **Solution #1  (Slow)**
 
@@ -1293,7 +1293,7 @@ Do we know  at this  point that 7 is the  majority element? Not necessarily. We 
 
 This is pretty good, but  let's see  if we can  make this a bit faster. We should notice that some elements are being "inspected" repeatedly. Can we get rid of this?
 
-Lookat the first validate(3). This fails after the subarray[3, 1], because 3 was not the majority element. But because validate fails the instant an element is not  the majority element, it also means nothing else in that subarray was the  majority element. By our earlier  logic,  we  don't  need to call validate(1). We know  that 1 did not  appear more than half the  time.  If it is the majority element, it'll pop up later.
+Look at the first validate(3). This fails after the subarray[3, 1], because 3 was not the majority element. But because validate fails the instant an element is not  the majority element, it also means nothing else in that subarray was the  majority element. By our earlier  logic,  we  don't  need to call validate(1). We know  that 1 did not  appear more than half the  time.  If it is the majority element, it'll pop up later.
 
 Let's try this again and see if it works out. 
 
@@ -1338,7 +1338,7 @@ We should pause for a moment to think what this algorithm is doing.
 
 Each time we terminate the validate step, the subarray has no majority element. This means that there are at least as many non-7s as there are 7s. Although we're essentially removing this subarray from the original array, the majority element will still be found in the rest of the array-and will still have majority status. Therefore, at some point, we will discover the majority element.
 
-Our algorithm can now be run in two passes: one to find the possible majority element and another to vali­ date it. Rather than using two variables to count (countYes and countNo), we'll just use a single count variable that increments and decrements.
+Our algorithm can now be run in two passes: one to find the possible majority element and another to validate it. Rather than using two variables to count (countYes and countNo), we'll just use a single count variable that increments and decrements.
 ```java
 1	int  findMajorityElement(int[] array) {
 2		int  candidate =  getCandidate(array);
@@ -1381,9 +1381,9 @@ SOLUTION
 
 ---
 
-We will assume for this question that it doesn't matter whether wordl or word2 appears first. This is a ques­tion you should ask your interviewer.
+We will assume for this question that it doesn't matter whether word1 or word2 appears first. This is a ques­tion you should ask your interviewer.
 
-To solve  this  problem, we  can  traverse the  file just  once.  We remember throughout our  traversal where we've  last  seen wordl and  word2, storing the locations in location1 and  location2. If the current locations are better than our best known location, we update the best locations.
+To solve  this  problem, we  can  traverse the  file just  once.  We remember throughout our  traversal where we've  last  seen word1 and word2, storing the locations in location1 and  location2. If the current locations are better than our best known location, we update the best locations.
 
 The code below implements this algorithm.
 
@@ -1664,12 +1664,12 @@ This approach requires returning the head and tail of the linked list with BiNod
 41		return head;
 42	}
 ```
-Observe that we have moved the main parts of the code into c onvertToCircular. The c onvert method calls this method to get the head of the circular linked list, and then breaks the circular connection.
+Observe that we have moved the main parts of the code into convertToCircular. The convert method calls this method to get the head of the circular linked list, and then breaks the circular connection.
 
 The approach takes O(N) time, since each node is only touched an average of once (or, more accurately, O(1) times).
 
 
-**17.13   Re-Space:** Oh, no! You have accidentally removed all spaces, punctuation, and capitalization in a lengthy document. A sentence like "I  reset the  c omputer.  It still didn't boot!" became "iresetthec omputeritstilldidntboot''. You'll deal with the punctuation and capi­ talization later; right now you need to re-insert the spaces. Most of the words are in a dictionary but a few are not. Given a dictionary (a list of strings) and the document (a string), design  an algorithm to unconcatenate the document in a way that minimizes the number of unrecognized characters.
+**17.13   Re-Space:** Oh, no! You have accidentally removed all spaces, punctuation, and capitalization in a lengthy document. A sentence like "I  reset the  computer.  It still didn't boot!" became "iresetthec omputeritstilldidntboot''. You'll deal with the punctuation and capitalization later; right now you need to re-insert the spaces. Most of the words are in a dictionary but a few are not. Given a dictionary (a list of strings) and the document (a string), design  an algorithm to unconcatenate the document in a way that minimizes the number of unrecognized characters.
 
 ```
 EXAMPLE
@@ -1704,7 +1704,7 @@ Let's imagine this in terms of a string like thisismikesfavoritefood. What is th
 
 After we choose the first space, we can recursively pick the second space, then the third space, and so on, until we are done with the string.
 
-We take the best (fewest invalid characters)  out of all thesechoices and return.
+We take the best (fewest invalid characters)  out of all these choices and return.
 
 What should the function return? We need both the number of invalid characters in the recursive path as well as the actual parsing. Therefore, we just return both by using a custom-built ParseResult class.
 ```java
@@ -1767,7 +1767,7 @@ Commonly, when we have exponential runtimes for a recursive algorithm, we optimi
 
 Where do recursive paths overlap? That is, where are the common subproblems?
 
-Let's again imagine the string thisismikesfavori tefood. Again, imagine that everything is a valid word.
+Let's again imagine the string thisismikesfavoritefood. Again, imagine that everything is a valid word.
 
 In this case, we attempt to insert the first space after t as well as after th (and many other choices). Think about what the next choice is.
 
@@ -1782,11 +1782,11 @@ In this case, we attempt to insert the first space after t as well as after th (
 
 	...
 
-Adding a space after t and h leads to the same recursive path as inserting a space after th.There's no sense in computing split(isismikesfavoritefood) twice when it will lead to the same result.
+Adding a space after t and h leads to the same recursive path as inserting a space after th. There's no sense in computing split(isismikesfavoritefood) twice when it will lead to the same result.
 
 We should instead cache the result. We do this using a hash table which maps from the current substring to the ParseResult object.
 
-We don't actually need tomake the currentsubstring akey.Thestartindexin the stringsufficientlyrepresents the substring. After all, if we were to use the substring, we'd really be using sentence.substring(start, sentence. length). This hash table will map from a start index to the best parsing from that index to the end of the string.
+We don't actually need tomake the current substring a key. The start index in the string sufficiently represents the substring. After all, if we were to use the substring, we'd really be using sentence.substring(start, sentence. length). This hash table will map from a start index to the best parsing from that index to the end of the string.
 
 And, since the start index is the key, we don't need  a true hash  table at all. We can just use an array of ParseResult objects. This will also serve the purpose of mapping from an index to an object.
 
@@ -1834,7 +1834,7 @@ The code is essentially identical to the earlier function, but now takes in a me
  
 Understanding the  runtime of this  is even trickier than in the  prior  solution. Again,  let's imagine the  truly bizarre case,  where essentially everything looks like a valid word.
 
-One  way we can  approach it is to realize that split(i) will only be computed once for each value of i. What  happens when we call split(i), assuming we've already called split(i+l) through split(n -  1)?
+One  way we can  approach it is to realize that split(i) will only be computed once for each value of i. What  happens when we call split(i), assuming we've already called split(i+1) through split(n -  1)?
 
 ```
 split(i) ->  calls: 
@@ -1861,7 +1861,7 @@ SOLUTION
 
 There are a number of ways to approach this problem. We will go through three of them: sorting, max heap, and selection rank.
 
-Some of these algorithms require modifying the array. This is something you should discuss with your inter­ viewer. Note, though, that even if modifying the original array is not acceptable, you can always clone the array and modify the clone instead. This will not impact the overall big O time of any algorithm.
+Some of these algorithms require modifying the array. This is something you should discuss with your interviewer. Note, though, that even if modifying the original array is not acceptable, you can always clone the array and modify the clone instead. This will not impact the overall big O time of any algorithm.
 
 
 **Solution 1: Sorting**
@@ -1893,7 +1893,7 @@ We can use a max heap to solve this problem. We first create a max heap (largest
 
 Then, we traverse through the list. On each element, if it's smaller than the root, we insert it into the heap and delete the largest element (which will be the root).
 
-At the end ofthe traversal, we will have a heap containing the smallest one million numbers. This algorithm is O(n log(m) ), where mis the number of values we are looking for.
+At the end of the traversal, we will have a heap containing the smallest one million numbers. This algorithm is O(n log(m)), where m is the number of values we are looking for.
 ```java
 1 	int[]  smallestK(int[] array, int k)  {
 2 		if (k  <= 0  || k > array.length) {
@@ -2043,9 +2043,9 @@ If the elements are not unique, we can tweak this algorithm slightly to accommod
 
 **Approach 4: Selection Rank Algorithm (if elements are not unique)**
 
-The major change that needs to be made is to the partition function. When we partition the arrayaround a pivot element, we now partition it into three chunks: less than pivat, equal to pivat, and greater than pivot.
+The major change that needs to be made is to the partition function. When we partition the array around a pivot element, we now partition it into three chunks: less than pivot, equal to pivot, and greater than pivot.
 
-This requires minor tweaks to rankaswell. We now compare the size of left and middle partitions to rank.
+This requires minor tweaks to rank as well. We now compare the size of left and middle partitions to rank.
 ```java
 1 	class PartitionResult {
 2 		int leftSize, middleSize;
@@ -2139,7 +2139,7 @@ This requires minor tweaks to rankaswell. We now compare the size of left and mi
 90		return new  PartitionResult(left   -  start, right -  left +  1);
 91	}
 ```
-Notice the change made to s mallestK too. We can't simply copy all elements less than orequal tothreshold into the array. Since we have duplicates, there could be many more thank elements that are less than or equal to threshold. (We also can't just  say "okay, only copyk elements over". We could  inadvertently fill up the array early on with "equal" elements, and not leave enough space for the  smaller ones.)
+Notice the change made to smallest K too. We can't simply copy all elements less than or equal to threshold into the array. Since we have duplicates, there could be many more thank elements that are less than or equal to threshold. (We also can't just  say "okay, only copy k elements over". We could  inadvertently fill up the array early on with "equal" elements, and not leave enough space for the  smaller ones.)
 
 The solution for this is fairly simple: only copy over the smaller  elements first, then fill up the  array with equal elements at the end.
 
@@ -2184,7 +2184,7 @@ The pseudocode for this would  look like the following:
 
 This works great for when we just  want  to know  composites of two  words.  But what  if a word could be formed by any number of other words?
 
-In this case, we could apply a very similar approach, with one modification: rather than simply looking up if the r ight side is in the array, we would recursively see if we can build the right side from the other elements in the array.
+In this case, we could apply a very similar approach, with one modification: rather than simply looking up if the right side is in the array, we would recursively see if we can build the right side from the other elements in the array.
 
 The code below implements this algorithm:
 ```java
@@ -2220,11 +2220,11 @@ The code below implements this algorithm:
 30			return false;
 31		}
 ```
-Note that  in this solution we have performed a small optimization. We use a dynamic programming/ memoization approach to cache theresultsbetween calls.This way, if we repeatedly need to check if there's any way to build "testingtester", we'll only have to compute it once.
+Note that  in this solution we have performed a small optimization. We use a dynamic programming/ memoization approach to cache the results between calls. This way, if we repeatedly need to check if there's any way to build "testingtester", we'll only have to compute it once.
 
-Abooleanflag isOriginalWordisusedto complete theaboveoptimization.Themethod canBuildWord is called for the original word and for each substring, and its first step is to check the cache for a previously calculated result. However, for the original words, we have a problem: map is initialized to true for them, but we don' t want to return true (since a word cannot  be composed solely of itself). Therefore, for the original word, we simply bypass thischeck using the isOriginalWord flag.
+A boolean flag isOriginalWord is used to complete the above optimization. The method canBuildWord is called for the original word and for each substring, and its first step is to check the cache for a previously calculated result. However, for the original words, we have a problem: map is initialized to true for them, but we don' t want to return true (since a word cannot  be composed solely of itself). Therefore, for the original word, we simply bypass this check using the isOriginalWord flag.
 
-**17.16  The  Masseuse:** A popular masseuse  receives a sequence  of back-to-back appointment requests and is debating  which ones to accept. She needs a 15-minute break between  appointments and therefore  she cannot  accept  any adjacent  requests. Given a sequence  of back-to-back appoint­ ment requests (all multiples of 15 minutes, none overlap, and none can be moved), find the optimal (highest total booked minutes) set the masseuse can honor. Return the number of minutes.
+**17.16  The  Masseuse:** A popular masseuse  receives a sequence  of back-to-back appointment requests and is debating  which ones to accept. She needs a 15-minute break between  appointments and therefore  she cannot  accept  any adjacent  requests. Given a sequence  of back-to-back appointment requests (all multiples of 15 minutes, none overlap, and none can be moved), find the optimal (highest total booked minutes) set the masseuse can honor. Return the number of minutes.
 
 ```
 EXAMPLE
@@ -2282,8 +2282,7 @@ We can also depict this through a recursive call tree on an array of length 5. T
 ![](media/17_16_1.JPG)
 
 
-As with many recursive problems, we should evaluate if there's a possibility to memoize repeated subprob­
-lems. Indeed, there is.
+As with many recursive problems, we should evaluate if there's a possibility to memoize repeated subproblems. Indeed, there is.
 
 **Solution #2: Recursion + Memoization**
 
@@ -2319,7 +2318,7 @@ If we drew a bigger tree, we'd see a similar pattern. The tree looks very linear
 
 **Solution #3: Iterative**
 
-Can we do better? We certainly can't beat the time complexity since we have to look at each appointment. However, we might be able to beat the space complexity. This would mean not solving the problem recur­ sively.
+Can we do better? We certainly can't beat the time complexity since we have to look at each appointment. However, we might be able to beat the space complexity. This would mean not solving the problem recursively.
 
 Let's look at our first example again.
 
@@ -2329,7 +2328,7 @@ Let's look at our first example again.
 
 As we noted in the problem statement. we cannot take adjacent appointments.
 
-There's another observation, though, that we can make: We should never skip three consecutive appoint­ ments. That is, we might skip r₁ and r₂ if we wanted to take r₀ and r₃.  But we would never skip r₁, r₂, and r₃. This would be suboptimal since we could always improve our set by grabbing that middle element.
+There's another observation, though, that we can make: We should never skip three consecutive appointments. That is, we might skip r₁ and r₂ if we wanted to take r₀ and r₃.  But we would never skip r₁, r₂, and r₃. This would be suboptimal since we could always improve our set by grabbing that middle element.
 
 This means that if we take r₀  we know we'll definitely skip r₁ and definitely take either r₂ or r₃. This substan­tially limits the options we need to evaluate and opens the door to an iterative solution.
 
@@ -2340,7 +2339,7 @@ A useful way to do this is to approach it from the back and move toward the star
 - best(7): What's the best option for {r₇ = 45}? We can get45 min. if we take r₇, so best(7) = 45
 - best(6): What's the best option for {r₆ = 15,...}? Still 45 min., so best(6) =  45. 
 - best(5): What's the best option for {r₅ = 15,...}? We can either:
-	- take r₅ =  15 and mergeit with best(7) =  45, or:
+	- take r₅ =  15 and merge it with best(7) =  45, or:
 	- take best(6) =  45.
 
 The first gives us 60 minutes, best(5)  =  60.
@@ -2361,7 +2360,7 @@ The first gives us 135 minutes, best(3)  =  135.
 	- take r₂ =  60 and merge it with best(4) =  90, or:
 	- take best(3) =  135.
 
-Thefirst gives us 150 minutes, best(2)  =  150. 
+The first gives us 150 minutes, best(2)  =  150. 
 
 - best(1): What's the best option for { r₁ =  15,   ...}? We can either: 
 	- take r₁ = 15 and merge it with best(3) = 135, or:
@@ -2399,7 +2398,7 @@ It's nice in some ways that it's iterative, but we haven't actually "won" anythi
 
 **Solution #4: Iterative with Optimal Time and  Space**
 
-In reviewing the last solution, we can recogpize that we only use the values in the memo table for a short amount of time. Once we are several elements past an index, we never use that element's index again.
+In reviewing the last solution, we can recognize that we only use the values in the memo table for a short amount of time. Once we are several elements past an index, we never use that element's index again.
 
 In fact, at any given index i, we only need to know the best value from i + 1 and i + 2. Therefore, we can get rid of the memo table and just use two integers.
 ```java
@@ -2423,7 +2422,7 @@ Why did we look backward? It's a common technique in many problems to walk backw
 However, we can walk forward if we want. This is easier for some people to think about, and harder for others. In this case, rather than asking "What's the best set that starts with a[i]?"; we would ask "What's the best set that ends with a[i]?"
 
 
-**17.17  Multi Search:**  Given a string band an array of smaller strings T, design a method to search bfor each small string in T.
+**17.17  Multi Search:**  Given a string band an array of smaller strings T, design a method to search b for each small string in T.
 
 SOLUTION
 
@@ -2482,7 +2481,7 @@ This will take O(kbt) time, where k is the length of the longest string in T, b 
 
 To optimize this, we should think about how we can tackle all the elements in T at once, or somehow re-use work.
 
-One way is to create a trie-like data structure using each suffix in the bigger string.For the string bibs, the suffix list would be: bibs, ibs, bs, s.
+One way is to create a trie-like data structure using each suffix in the bigger string. For the string bibs, the suffix list would be: bibs, ibs, bs, s.
 
 The tree for this is below.
 
@@ -2669,14 +2668,14 @@ Each time we find a complete "small" word, we add it to a list along with the lo
 This algorithm  takes O(kt) time to create the trie and O(bk) time to search for all the strings.
 
 
-> Reminder: k is the length of the longest string in T, b is the length of the bigger string, and t is the number of smaller strings withinT.
+> Reminder: k is the length of the longest string in T, b is the length of the bigger string, and t is the number of smaller strings within T.
 
 
 The total time to solve the question is O(kt + bk).
 
 Solution #1 was O(kbt). We know that O(kt + bk)  will be faster than O(kbt).
 
-Solution #2 was O(b₂ +  kt). Since b will always  be bigger than k (or if it's not, then we know this really long string k cannot be found in b), we know Solution #3 is also faster than Solution #2.
+Solution #2 was O(b² +  kt). Since b will always  be bigger than k (or if it's not, then we know this really long string k cannot be found in b), we know Solution #3 is also faster than Solution #2.
 
 
 **17.18   Shortest Supersequence:** You are given two arrays, one shorter (with all distinct elements) and one longer. Find the shortest subarray in the longer array that contains all the elements in the shorter array. The items can appear in any order.
@@ -2761,7 +2760,7 @@ By finding the closures for each index in the array, we can find the shortest su
 54		}
 55	}
 ```
-This algorithm will potentially take  O(SB²)  time, where B  is the  length of bigString and S is the  length of smal1String.This is because at each of the  B  characters, we potentially do O(SB) work: Sscans of the rest of the  string, which has potentially B  characters.
+This algorithm will potentially take  O(SB²)  time, where B  is the  length of bigString and S is the  length of smal1String.This is because at each of the  B  characters, we potentially do O(SB) work: S scans of the rest of the  string, which has potentially B  characters.
 
 **Optimized**
 
@@ -2783,7 +2782,7 @@ Some people want to merge this into one backwards sweep that handles all three v
 
 The findNextInstance function can now just use this table to find the next occurrence, rather than doing a search.
 
-But, actually, we can make it a bit simpler. Using the table above, we can quickly compute the closure of each index. It'sjust the max of the column. If a column has an x in it, then there is no closure, at this indicates that there's no next occurrence of that character.
+But, actually, we can make it a bit simpler. Using the table above, we can quickly compute the closure of each index. It's just the max of the column. If a column has an x in it, then there is no closure, at this indicates that there's no next occurrence of that character.
 
 The difference between the index and the closure is the smallest subarray starting at that index. 
  
@@ -2859,7 +2858,7 @@ Now, all we have to do is to find the minimum distance in this table.
 66		return new Range(bestStart,  bestEnd);
 67	}
 ```
-This algorithm  will potentially take O(SB) time, where Bis the length of bigString andSis the length of smal1String. This is because we doSsweeps through the array to build up the next occurrences table and each sweep takes O(B) time.
+This algorithm  will potentially take O(SB) time, where B is the length of bigString and S is the length of smallString. This is because we do S sweeps through the array to build up the next occurrences table and each sweep takes O(B) time.
 
 It uses O(SB) space.
 
@@ -2872,7 +2871,7 @@ While our solution  is fairly optimal, we can reduce the space usage. Remember t
 
 In actuality, all we need is the closure row, which is the minimum of all the other rows. We don't need to store all the other next occurrence information the entire time.
 
-Instead, as we do each sweep, wejust update the closure row with the minimums. The rest of the algorithm works essentially the same way.
+Instead, as we do each sweep, we just update the closure row with the minimums. The rest of the algorithm works essentially the same way.
 
 ```java
 1 	Range shortestSupersequence(int[] big, int[] small) {
@@ -2966,7 +2965,7 @@ What we're doing in these repeated minimum calls is taking a bunch of elements, 
 
 We can make this faster by using a min-heap.  First, put each of the heads in a min-heap. Remove the minimum. Look up the list that this minimum came from and add back the new head. Repeat.
 
-To get the list that the minimum element came from, we'll need to use a HeapNode  class that stores both the locationWithinlist (the index) and the listId. This way, when we remove the minimum, we can jump back to the correct list and add its new head to the heap.
+To get the list that the minimum element came from, we'll need to use a HeapNode  class that stores both the locationWithinList (the index) and the listId. This way, when we remove the minimum, we can jump back to the correct list and add its new head to the heap.
 
 ```java
 1 	Range shortestSupersequence(int[]  array,  int[]   elements) {
@@ -3058,7 +3057,7 @@ We have a very constrained problem here. We can't store all the values (that wou
 
 This suggests that we need to do some sort of computation  with the values. What characteristics does this computation  need to have?
 
-- **Unique.**   If  this computation  gives the  same result on two arrays (which fit the  description in the problem), then those arrays must be equivalent (same missing number). That is, the result of the compu­ tation must uniquely correspond to the specific array and missing number.
+- **Unique.**   If  this computation  gives the  same result on two arrays (which fit the  description in the problem), then those arrays must be equivalent (same missing number). That is, the result of the computation must uniquely correspond to the specific array and missing number.
 - **Reversible.** We need some way of getting from the result of the calculation to the missing number.
 - **Constant Time:** The calculation can be slow, but it must be constant time per element in the array.
 - **Constant Space:** The calculation can require additional memory, but it must be O(1) memory.
@@ -3079,7 +3078,7 @@ What other calculations could we do? We don't even need to do all this prime num
 - **Constant time**  and space? Yes.
 - **Reversible?** Let's think about this. If  we compare what our product is to what it would have been without a number removed, can we find the missing number? Sure. We just divide full_product by actual_product.This will tell us which number was missing from actual_product.
 
-There'sjust one issue: this product is really, really, really big. Ifn is 20, the product will be somewhere around 2,000,000,000,000,000,000.
+There's just one issue: this product is really, really, really big. If n is 20, the product will be somewhere around 2,000,000,000,000,000,000.
 
 We can still approach it this way, but we'll need to use the Biglnteger class.
 ```java
@@ -3108,7 +3107,7 @@ There's no need for all of this, though. We can use the sum instead. It too will
 
 Doing the sum has another benefit: there is already a closed form expression to compute the sum of numbers between 1 and n. This is n(n+1)/2.
 
-> Most candidates probably won't remember the expression for the sum of numbers between 1 and n, and that's okay. Your interviewer might, however, ask you to derive it. Here's how to think about that: you can pair up the low and high values in the sequence of 0 +  1 + 2 +  3 +  ... + n to get: (0, n)  + (1, n-1) + (2, n-3), and so on. Each of those pairs has a sum of n and there are (n+1)/2 pairs. But what if n is even, such that (n+1)/2 is not an integer? In this case, pair up low and high values to get n/2 pairs with sum n+l. Either way, the math works out to n(n+l)/2.
+> Most candidates probably won't remember the expression for the sum of numbers between 1 and n, and that's okay. Your interviewer might, however, ask you to derive it. Here's how to think about that: you can pair up the low and high values in the sequence of 0 +  1 + 2 +  3 +  ... + n to get: (0, n)  + (1, n-1) + (2, n-3), and so on. Each of those pairs has a sum of n and there are (n+1)/2 pairs. But what if n is even, such that (n+1)/2 is not an integer? In this case, pair up low and high values to get n/2 pairs with sum n+1. Either way, the math works out to n(n+1)/2.
 
 Switching to a sum will delay the overflow issue substantially, but it won't wholly prevent it. You should discuss the issue with your interviewer to see how he/she would like you to handle it. Just mentioning it is plenty sufficient for many interviewers.
 
@@ -3118,7 +3117,7 @@ This is substantially more difficult. Let's start with what our earlier approach
 - Sum: Using this approach will give us the sum of the two values that are missing.
 - Product: Using this approach will give us the product of the two values that are missing.
 
-Unfortunately, knowing the sum isn't enough. If, for example, the sum is 10, that could correspond to (1, 9), (2, 8), and a handful of other pairs.The same could be said for the product.
+Unfortunately, knowing the sum isn't enough. If, for example, the sum is 10, that could correspond to (1, 9), (2, 8), and a handful of other pairs. The same could be said for the product.
 
 We're again at the same point we were in the first part of the problem. We need a calculation that can be applied such that the result is unique across all potential pairs of missing numbers.
 
@@ -3136,7 +3135,7 @@ At this point, we can apply the quadratic formula to solve for x. Once we have x
 
 There are actually a number of other calculations you can perform. In fact, almost any other calculation (other than "linear" calculations) will give us values for x and y. 
 
-For this part, let's use a different calculation. Instead of using the product of 1  * 2  * . . .   * n, we can use the sum of the squares: 1²   +  2²   +   . . .  +  n². This will make the Biginteger usage a little less critical, as the code will at least run on small values of n. We can discuss with our interviewer whether or not this is important. 
+For this part, let's use a different calculation. Instead of using the product of 1  * 2  * . . .   * n, we can use the sum of the squares: 1²   +  2²   +   . . .  +  n². This will make the BigInteger usage a little less critical, as the code will at least run on small values of n. We can discuss with our interviewer whether or not this is important. 
 
 
 	X   + y  = s -> y =  s  -  X
@@ -3201,11 +3200,11 @@ Implementing this is now somewhat straightforward.
 
 You might notice that the quadratic formula usually gives us two answers (see the+ or - part), yet in our code, we only use the (+) result. We never checked the (-) answer. Why is that?
 
-The existence of the "alternate" solution doesn't mean that one is the correct solution and one is "fake". It means that there are exactly two values forx which will correctly fulfill our equation: 2x² - 2sx  + (s² -t) = 0.
+The existence of the "alternate" solution doesn't mean that one is the correct solution and one is "fake". It means that there are exactly two values for x which will correctly fulfill our equation: 2x² - 2sx  + (s² -t) = 0.
 
 That's true. There are. What's the other one? The other value is y!
 
-If this doesn't immediately make sense to you, remember thatx and y are interchangeable. Had we solved for y earlier instead of x, we would have wound up with an identical equation: 2y² - 2sy + (s² - t) = 0. So of course y could fulfillx's equation andx could fulfill y's equation. They have the exact same equation. Sincex and y are both solutions to equations that look like2 [something]² - 2s [something]  + s² - t =  0, then the other something that fulfills that equation must be y.
+If this doesn't immediately make sense to you, remember that x and y are interchangeable. Had we solved for y earlier instead of x, we would have wound up with an identical equation: 2y² - 2sy + (s² - t) = 0. So of course y could fulfill x's equation and x could fulfill y's equation. They have the exact same equation. Since x and y are both solutions to equations that look like2 [something]² - 2s [something]  + s² - t =  0, then the other something that fulfills that equation must be y.
 
 Still not convinced? Okay, we can do some math. Let's say we took the alternate value for x: [-b  - sqrt(b² - 4ac)] / 2a. What's y?
 ```
@@ -3227,7 +3226,7 @@ Recall that b = -2r₁. Now, we wind up with this equation:
 
 Therefore, if we use x = (part1 +  part2) / part3, then we'll get (part1  - part2) / part3 for the value for y.
 
-We don't care which one we callx and which one we cally, so we can use either one. It'll work out the same in the end.
+We don't care which one we call x and which one we call y, so we can use either one. It'll work out the same in the end.
 
 
 **17.20 Continuous  Median:** Numbers are randomly generated and passed to a method. Write a program to find and maintain the median value as new values are generated. 
@@ -3237,7 +3236,7 @@ SOLUTIONS
 
 ---
  
-One solution is to use two priority heaps: a max heap for the values below the median, and a min heap for the values above the median. This will divide the elements roughly in half, with the middle two elements as the top of the two heaps.This makes it trivial to find the median.
+One solution is to use two priority heaps: a max heap for the values below the median, and a min heap for the values above the median. This will divide the elements roughly in half, with the middle two elements as the top of the two heaps. This makes it trivial to find the median.
 
 What do we mean by "roughly in half", though? "Roughly" means that, if we have an odd number of values, one heap will have an extra value. Observe that the following is true:
 
@@ -3315,8 +3314,8 @@ We should study this example to see what we can learn from it. What exactly dict
 Let's look at the tallest bar, which has size 8. What role does that bar play? It plays an important  role for being the highest, but it actually wouldn't matter if that bar instead had height 100. It wouldn't affect the volume.
 
 The tallest bar forms a barrier for water on its left and right. But the volume of water is actually controlled by the next highest bar on the left and right.
-- **Water on immediate left of tallest bar:** The next tallest bar on the left has height 6. We can fill up the area in between with water, but we have to deduct the height of each histogram between the tallest and next tallest.This gives a volume on the immediate left of: (6-0) +  (6-0) +  (6-3) +  (6-0) = 21.
-- **Water on immediate right of tallest bar:**  The next tallest bar on the right has height 5. We can now compute the volume: (5-0)  +  (5-2)  +  (5-0)     13.
+- **Water on immediate left of tallest bar:** The next tallest bar on the left has height 6. We can fill up the area in between with water, but we have to deduct the height of each histogram between the tallest and next tallest. This gives a volume on the immediate left of: (6-0) +  (6-0) +  (6-3) +  (6-0) = 21.
+- **Water on immediate right of tallest bar:**  The next tallest bar on the right has height 5. We can now compute the volume: (5-0)  +  (5-2)  +  (5-0) = 13.
 
 This just tells us part of the volume.
 
@@ -3347,19 +3346,19 @@ The code below implements this algorithm.
 10	}
 11
 12	/* Compute  the  volume of  a  subgraph  of  the  histogram.  One max  is at either start
-13	 * or  end (depending   on isleft). Find second  tallest, then  compute volume between
+13	 * or  end (depending   on isLeft). Find second  tallest, then  compute volume between
 14	 * tallest and second  tallest.  Then compute volume of  subgraph. */
-15	int subgraphVolume(int[] histogram,  int start, int end,  boolean  isleft) {
+15	int subgraphVolume(int[] histogram,  int start, int end,  boolean  isLeft) {
 16			if (start >= end)  return 0;
 17			int sum  =  0;
-18			if (isleft) {
+18			if (isLeft) {
 19				int max = findindexOfMax(histogram,  start, end  -  1);
 20				sum += borderedVolume(histogram,  max, end);
-21				sum += subgraphVolume(histogram,   start, max, isleft);
+21				sum += subgraphVolume(histogram,   start, max, isLeft);
 22			}  else {
 23				int max  =  findindexOfMax(histogram,  start + 1,  end);
 24				sum  +=  borderedVolume(histogram,  start, max);
-25				sum  += subgraphVolume(histogram,   max, end,  isleft);
+25				sum  += subgraphVolume(histogram,   max, end,  isLeft);
 26			}
 27
 28		return sum;
@@ -3393,7 +3392,7 @@ This algorithm takes O(N²) time in the worst  case, where N is the number of ba
 
 **Solution #2 (Optimized)**
 
-To optimize the previous algorithm, let's think  about the exact cause of the inefficiency of the prior algo­ rithm. The root  cause is the perpetual calls to findIndexOfMax. This suggests that it should be our focus for optimizing.
+To optimize the previous algorithm, let's think  about the exact cause of the inefficiency of the prior algorithm. The root  cause is the perpetual calls to findIndexOfMax. This suggests that it should be our focus for optimizing.
 
 One thing we should notice is that we don't pass  in arbitrary ranges into the findIndexOfMax function. It's actually  always  finding the max  from  one point to an edge (either the right  edge or the left edge). Is there a quicker way we could know what the max height is from a given point to each edge?
 
@@ -3450,20 +3449,20 @@ We've chosen to use a HistogramData object to store this extra information, but 
 39	}
 40
 41	/*  Compute  the  volume of  a  subgraph  of  the  histogram. One max  is at either start
-42	* or  end (depending  on isleft). Find second  tallest, then  compute volume between
+42	* or  end (depending  on isLeft). Find second  tallest, then  compute volume between
 43	* tallest and second tallest. Then compute volume of  subgraph. */
 44	int subgraphVolume(HistogramData[] histogram,  int start, int end,
-45				boolean  isleft) {
+45				boolean  isLeft) {
 46		if (start >= end)  return 0;
 47		int sum =  0;
-48		if (isleft) {
+48		if (isLeft) {
 49			int max =  histogram[end - 1].getLeftMaxindex();
 50			sum  +=  borderedVolume(histogram, max, end);
 51			sum  +=  subgraphVolume(histogram, start, max, isLeft);
 52		}  else {
 53			int max =  histogram[start + 1].getRightMaxindex();
 54			sum += borderedVolume(histogram,   start, max);
-55			sum += subgraphVolume(histogram,  max, end,  isleft);
+55			sum += subgraphVolume(histogram,  max, end,  isLeft);
 56		}
 57
 58		return sum;
@@ -3669,7 +3668,7 @@ We can do this for the whole dictionary by creating a mapping from a "wildcard w
 	ap_ -> ape 
 	il_ -> ill 
 
-Now, when we want to know the wordsthat are one edit away from a word like ale, we look up \_le, a_e, and al_ in the hash table.
+Now, when we want to know the words that are one edit away from a word like ale, we look up \_le, a_e, and al_ in the hash table.
 
 The algorithm is otherwise essentially the same.
 ```java
@@ -3885,7 +3884,7 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 ```
 This algorithm's runtime is a bit harder to describe since it depends on what the language looks like, as well as the actual source and destination words. One way of expressing it is that if each word has E words that are one edit away and the source and destination are distance D, the runtime is O(E⁰/²). This is how much work each breadth-first search does.
 
-Of course, this is a lot of code to implement  in an interview. It just wouldn't be possible.   More real­ istically, you'd leave out a lot of the details. You might write just the skeleton code of transform and searchLevel, but leave out the rest.
+Of course, this is a lot of code to implement  in an interview. It just wouldn't be possible.   More realistically, you'd leave out a lot of the details. You might write just the skeleton code of transform and searchLevel, but leave out the rest.
 
 
 **17.23  Max Square Matrix:** Imagine you have a square matrix, where each cell (pixel) is either black or white. Design an algorithm to find the maximum subsquare such that all four borders are filled with black pixels.
@@ -3956,7 +3955,7 @@ Our code works as follows:
 
 A large part of the slowness of the "simple" solution above is due  to the fact we have to do O(N) work each time  we  want to check a potential square. By doing some pre-processing, we can  cut  down the  time  of isSquare to O(1). The time of the  whole algorithm is reduced to O(N³).
 
-If we analyze what isSquare does,  we  realize  that all it ever  needs to know  is if the  next squareSize items, on the  right  of as well as below particular cells, are zeros. We can pre-compute this data in a straight­ forward, iterative fashion.
+If we analyze what isSquare does,  we  realize  that all it ever  needs to know  is if the  next squareSize items, on the  right  of as well as below particular cells, are zeros. We can pre-compute this data in a straight-forward, iterative fashion.
 
 We iterate from right to left, bottom to top. At each cell, we do the following computation:
 
@@ -4181,7 +4180,7 @@ Believe it or not, an even more optimal solution exists. If we have R rows and C
 
 Recall the solution to the maximum subarray problem: "Given an array of integers, find the subarray with the largest sum". We can find the maximum subarray in O(N) time. We will leverage this solution for this problem.
 
-Every submatrix can be represented by a contiguous sequence of rows and a contiguous sequence of columns. If we were to iterate through every contiguous sequence of rows, we would thenjust need to find, for each of those, the set of columns that gives us the highest sum. That is:
+Every submatrix can be represented by a contiguous sequence of rows and a contiguous sequence of columns. If we were to iterate through every contiguous sequence of rows, we would then just need to find, for each of those, the set of columns that gives us the highest sum. That is:
 
 ```java
 1	maxSum =    0
@@ -4319,7 +4318,7 @@ Imagine that we are trying to build a 6x5 rectangle and the first few rows are:
 	pizza 
 	.....
 
-At this point, we know that the first column starts with tqp.We know-or should know-that no dictionary word starts with tqp. Why do we bother continuing to build a rectangle when we know we'll fail to create a valid one in the end?
+At this point, we know that the first column starts with tqp. We know-or should know-that no dictionary word starts with tqp. Why do we bother continuing to build a rectangle when we know we'll fail to create a valid one in the end?
 
 This leads us to a more optimal solution. We can build a trie to easily look up if a substring is a prefix of a word in the dictionary. Then, when we build our rectangle, row by row, we check to see if the columns  are all valid prefixes. If not, we fail immediately, rather than continue to try to build this rectangle.
 
@@ -4370,9 +4369,9 @@ The makeRectangle method is called by maxRectangle and tries to build a rectangl
 ```
 The makePartialRectangle method is where the action happens. It is passed in the intended, final length and height, and a partially formed rectangle. If the rectangle is already of the final height, then we just check to see if the columns form valid, complete words, and return.
 
-Otherwise, we check to see if the columns form valid prefixes.  If they do not, then we immediately break since there is no way to build a valid rectangle offof this partial one.
+Otherwise, we check to see if the columns form valid prefixes.  If they do not, then we immediately break since there is no way to build a valid rectangle off of this partial one.
 
-But, if everything is okay so far, and all the columns are valid prefixes of words, then we search through all the words of the right length, append each to the current rectangle, and recursively try to build a rectangle offof{current rectangle  with new word  appended}.
+But, if everything is okay so far, and all the columns are valid prefixes of words, then we search through all the words of the right length, append each to the current rectangle, and recursively try to build a rectangle off of{current rectangle  with new word  appended}.
 
 ```java
 1 	Rectangle  makePartialRectangle(int 1,  int h,  Rectangle  rectangle) {
@@ -4403,7 +4402,7 @@ But, if everything is okay so far, and all the columns are valid prefixes of wor
 26		return null;
 27	}
 ```
-The Rectangle class representsa partially orfullyformed rectangle ofwords. The method isPartialOk can be called to check  if the rectangle is, thusfar, a valid one (that is, all the columns are prefixes of words). The method isComplete serves a similar function, but checks if each of the columns makes a full word.
+The Rectangle class represents a partially or fully formed rectangle of words. The method isPartialOk can be called to check  if the rectangle is, thusfar, a valid one (that is, all the columns are prefixes of words). The method isComplete serves a similar function, but checks if each of the columns makes a full word.
 ```java
 1 	public class  Rectangle  {
 2 		public int height, length;
@@ -4504,7 +4503,7 @@ The lists in WordGroup are created through a static method called createWordGrou
 37		}
 38	}
 ```
-The full code for this problem, including the code for Trie and T rieNode, can be found in the code attachment. Note that in a problem as complex as this, you'd most likely only need to write the pseudocode. Writing the entire code would be nearly impossible in such a short amount of time.
+The full code for this problem, including the code for Trie and TrieNode, can be found in the code attachment. Note that in a problem as complex as this, you'd most likely only need to write the pseudocode. Writing the entire code would be nearly impossible in such a short amount of time.
 
 
 **17.26  Sparse Similarity:** The similarity of two documents (each with distinct words) is defined to be the size of the intersection divided by the size of the union. For example,  if the documents consist of integers, the similarity of {1,   5,   3} and {1,   7,   2,   3} is 0. 4, because the intersection has size 2 and the union has size 5.
@@ -4652,9 +4651,9 @@ If the  documents were  sorted, you  could compute the  intersection between two
 
 This would take O(A + B) time. This is the  same time  as our current algorithm, but less space.  Doing this on D documents with W words each would take O(D² W) time.
 
-Since we don't know that the arrays are sorted, we could first sort them. This would take O(D * W log W) time.The full runtime then is O(D * W log W +  D² W).
+Since we don't know that the arrays are sorted, we could first sort them. This would take O(D * W log W) time. The full runtime then is O(D * W log W +  D² W).
 
-We cannot necessarily assume that the second part "dominates" the first one, because it doesn't neces­ sarily. It depends on the relative size of D and log W. Therefore, we need to keep both terms in our runtime expression.
+We cannot necessarily assume that the second part "dominates" the first one, because it doesn't necessarily. It depends on the relative size of D and log W. Therefore, we need to keep both terms in our runtime expression.
 
 **Optimized (Somewhat)**
 
@@ -4675,8 +4674,7 @@ What would make a document similar to docA? That is, what characteristics define
 
 Suppose docA is {14,  15,  100,  9,  3}. For a document to have similarity > 0, it needs to have a 14, a 15, a 100, a 9, or a 3. How can we quickly gather a list of all documents with one of those elements?
 
-The slow (and, really, only way) is to read every single word from every single document to find the docu­
-ments that contain a 14, a 15, a 100, a 9, or a 3. That  will take O(DW) time. Not good.
+The slow (and, really, only way) is to read every single word from every single document to find the documents that contain a 14, a 15, a 100, a 9, or a 3. That  will take O(DW) time. Not good.
 
 However, note that we're doing this repeatedly. We can reuse the work from one call to the next.
 
@@ -4705,7 +4703,7 @@ If we consider the runtime -O(PW +  DW)- we probably can't get rid of the O(DW) 
 
 It would be difficult to eliminate the P part in O(PW) because we have to at least print all P pairs (which takes O(P) time). The best place to focus, then, is on the W part. 1s there some way we can do less than O(W) work for each pair of similar documents?
 
-One way to tackle this is to analyze what information the hash table gives us. Consider this list of docu- ments:
+One way to tackle this is to analyze what information the hash table gives us. Consider this list of documents:
 
 	12:  {1,  5,  9}
 	13:  {5,  3,  1,  8}
@@ -4723,7 +4721,7 @@ This tells us that documents 13, 15, and 17 have some similarity. Under our curr
 
 Observe, though, that document 13 appeared twice in the hash table, document 15 appeared three times, and document 17 appeared once. We discarded that information.  But can we use it instead? What does it indicate that some documents appeared multiple times and others didn't?
 
-Document 13 appeared twice because it has two elements (1 and 5) in common. Document 17 appeared once because it has only one element (1) in common. Document 15 appeared three times because it has three elements (1, 5, and 9) in common. This information  can actually directly give us the size of the inter­ section.
+Document 13 appeared twice because it has two elements (1 and 5) in common. Document 17 appeared once because it has only one element (1) in common. Document 15 appeared three times because it has three elements (1, 5, and 9) in common. This information  can actually directly give us the size of the intersection.
 
 We could go through each document, look up the items in the hash table, and then count how many times each document appears in each item's lists. There's a more direct way to do it.
 
@@ -4741,7 +4739,7 @@ Comparing this runtime to the previous one is a bit tricky. One way we can look 
 1 	HashMap<DocPair,  Double>
 2 	computeSimilarities(HashMap<Integer,   Document>  documents)  {
 3 		HashMapList<Integer, Integer> wordToDocs = groupWords(documents);
-4 		HashMap<DocPair, Double> similarities = computeintersections(wordToDocs);
+4 		HashMap<DocPair, Double> similarities = computeIntersections(wordToDocs);
 5 		adjustToSimilarities(documents,  similarities);
 6 		return similarities;
 7 	}
@@ -4762,7 +4760,7 @@ Comparing this runtime to the previous one is a bit tricky. One way we can look 
 22
 23	/*  Compute intersections of  documents.  Iterate through  each  list of  documents and
 24	* then  each  pair within  that list,  incrementing the  intersection of  each  page. */
-25	HashMap<DocPair,  Double> computeintersections(
+25	HashMap<DocPair,  Double> computeIntersections(
 26				HashMapList<Integer,   Integer> wordToDocs ) {
 27		HashMap<DocPair,  Double> similarities =  new HashMap<DocPair,  Double>();
 28		Set<Integer> words =  wordToDocs.keySet();
@@ -4817,7 +4815,7 @@ Imagine we took all of the words, tagged them by their original document, and th
 
 	1₁₂, 1₁₃, 1₁₅, 1₁₆, 2₁₄, 3₁₃, 3₁₄, 4₁₄, 5₁₂, 5₁₅, 6₁₆, 8₁₃, 8₁₅, 9₁₂, 9₁₅
 
-Now we have essentially the same approach as before. We iterate through this list of elements. For each sequence of identical elements, we increment the intersection counts for the corresponding pair of docu­ ments.
+Now we have essentially the same approach as before. We iterate through this list of elements. For each sequence of identical elements, we increment the intersection counts for the corresponding pair of documents.
 
 We will use an Element class to group together documents and words. When we sort the list, we will sort first on the word but break ties on the document ID.
 
@@ -4841,7 +4839,7 @@ We will use an Element class to group together documents and words. When we sort
 17	HashMap<DocPair,  Double> computeSimilarities(
 18			HashMap<Integer, Document>  documents)  {
 19		ArrayList<Element>  elements = sortWords(documents);
-20		HashMap<DocPair,  Double> similarities =  computeintersections(elements);
+20		HashMap<DocPair,  Double> similarities =  computeIntersections(elements);
 21		adjustToSimilarities(documents,  similarities);
 22		return similarities;
 23	}
@@ -4870,7 +4868,7 @@ We will use an Element class to group together documents and words. When we sort
 46	}
 47
 48	/*  Adjust  the  intersection value  to  become the  similarity. */
-49	HashMap<DocPair,  Double> computeintersections(ArrayList<Element> elements)  {
+49	HashMap<DocPair,  Double> computeIntersections(ArrayList<Element> elements)  {
 50		HashMap<DocPair,  Double> similarities =  new HashMap<DocPair,  Double>();
 51
 52		for  (int i = 0;  i <  elements.size();  i++)  {

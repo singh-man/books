@@ -2,7 +2,7 @@
 
 So-called "puzzles" (or brain teasers) are some of the most hotly debated questions, and many companies have policies banning them. Unfortunately, even when these questions are banned, you still may find yourself being asked one of them. Why? Because no one can agree on a definition of what a brainteaser is.
 
-The good news is that if you are asked a puzzle or brainteaser, it's likely to be a reasonably fair one. It prob­ ably won't rely on a trick of wording, and it can almost always be logically deduced. Many have their foun­ dations in mathematics or computer science, and almost all have solutions that can be logically deduced.
+The good news is that if you are asked a puzzle or brainteaser, it's likely to be a reasonably fair one. It probably won't rely on a trick of wording, and it can almost always be logically deduced. Many have their foundations in mathematics or computer science, and almost all have solutions that can be logically deduced.
 
 We'll go through some common approaches for tackling these questions, as well as some of the essential knowledge.
 
@@ -18,7 +18,7 @@ Note that many of these primes have an exponent of zero.
 
 **Divisibility**
 
-The prime number law stated above means that, in order for a numberx to divide a number y (written x\y, or mod (y, x)  =  0), all primes inx's prime factorization must be in y's prime factorization. Or, more specifically:
+The prime number law stated above means that, in order for a number x to divide a number y (written x\y, or mod (y, x)  =  0), all primes in x's prime factorization must be in y's prime factorization. Or, more specifically:
 
 ```
 Let X = 2ʲ⁰ * 3ʲ¹ * 5ʲ² * 7ʲ³ * 11ʲ⁴ * ...
@@ -27,11 +27,11 @@ Let y = 2ᵏ⁰ * 3ᵏ¹ * 5ᵏ² * 7ᵏ³ * 11ᵏ⁴ * ...
 
 If x\y, then for all i, ji <=  ki.
 
-In fact, the greatest common divisor ofxand y will be:
+In fact, the greatest common divisor of x and y will be:
 
 gcd (x, y) = 2ᵐⁱⁿ⁽ʲ⁰, ᵏ⁰⁾   * 3ᵐᶦⁿ⁽ʲ¹, ᵏ¹⁾ * 5ᵐᶦⁿ⁽ʲ², ᵏ²⁾ * ....
 
-The least common multiple ofx and y will be:
+The least common multiple of x and y will be:
 
 lcm (x, y) = 2ᵐᵃˣ⁽ʲ⁰, ᵏ⁰⁾ * 3ᵐᵃˣ⁽ʲ¹, ᵏ¹⁾ * 5ᵐᵃˣ⁽ʲ², ᵏ²⁾ * ...
 
@@ -135,7 +135,7 @@ Of course, there are a number of optimizations that can be made to this. One sim
 
 Probability can be a complex topic, but it's based in a few basic laws that can be logically derived.
 
-Let's look at a Venn diagram to visualize two eventsA and B. The areas of the two circles represent their rela­tive probability, and the overlapping area is the event {A and   B}.
+Let's look at a Venn diagram to visualize two events A and B. The areas of the two circles represent their relative probability, and the overlapping area is the event {A and   B}.
 
 
 ![](media/IX_06_02.JPG)
@@ -147,7 +147,7 @@ Imagine you were throwing a dart at this Venn diagram. What is the probability t
 
 	P(A  and  B)  =  P(B given A)   P(A)
 
-For example, imagine we were picking a number between  1 and 10 (inclusive). What's the probability of picking an even number and a number between  1 and 5? The odds of picking a numberbetween 1  and 5 is 50%, and the odds of a number between  1 and 5 being even is 40%. So, the odds of doing both are: 
+For example, imagine we were picking a number between  1 and 10 (inclusive). What's the probability of picking an even number and a number between  1 and 5? The odds of picking a number between 1  and 5 is 50%, and the odds of a number between  1 and 5 being even is 40%. So, the odds of doing both are: 
 
 ```
 = P(x  is even and  x  <=  5)
@@ -156,7 +156,7 @@ For example, imagine we were picking a number between  1 and 10 (inclusive). Wha
 = 1/5
 ```
 
-Observe that  since P(A  and   B)   =  P(B given A)  P(A) = P(A  given  B)  P(B), you can express the probability of A given B in terms of the reverse:
+Observe that  since P(A and B) =  P(B given A)  P(A) = P(A given B)  P(B), you can express the probability of A given B in terms of the reverse:
 
 	P(A given B) = P(B given A) P(A) / P(B) 
 
@@ -167,9 +167,9 @@ The above equation is called Bayes' Theorem.
  
 Now, imagine  you wanted to know what the probability  of landing  in A or B is. If you knew the  odds  of landing  in each individually, and you also knew the odds  of landing  in their intersection, then you could express the probability as:
 
-	P(A or B) = P(A) + P(B)  -  P(A  and   B)
+	P(A or B) = P(A) + P(B)  -  P(A and B)
 
-Logically, this makes sense. If we simply added their sizes, we would have double-counted their intersec­tion.We need to subtract this out.We can again visualize this through a Venn diagram:
+Logically, this makes sense. If we simply added their sizes, we would have double-counted their intersection. We need to subtract this out.We can again visualize this through a Venn diagram:
 
 ![](media/IX_06_03.JPG)
 
@@ -194,9 +194,9 @@ If A and B are independent (that is, one happening tells you nothing about the o
 
 If A and B are mutually exclusive (that is, if one happens, then the other cannot happen), then P(A or B) = P(A) + P(B).This is because P(A  and   B) = 0, so this term is removed from the earlier P(A or B) equation.
 
-Many people,  strangely,  mix up  the  concepts of independence and mutual  exclusivity. They are entirely different.  In fact, two events  cannot be both  independent and  mutually  exclusive (provided  both  have probabilities  greater than  0). Why? Because mutual  exclusivity means  that  if one  happens then  the other cannot. Independence, however, says that one event happening means absolutely nothing about the other event.Thus, as long as two events  have non-zero probabilities, they will never be both  mutually  exclusive and independent.
+Many people,  strangely,  mix up  the  concepts of independence and mutual  exclusivity. They are entirely different.  In fact, two events  cannot be both  independent and  mutually  exclusive (provided  both  have probabilities  greater than  0). Why? Because mutual  exclusivity means  that  if one  happens then  the other cannot. Independence, however, says that one event happening means absolutely nothing about the other event. Thus, as long as two events  have non-zero probabilities, they will never be both  mutually  exclusive and independent.
 
-If one  or both events have  a probability of zero (that  is, it is impossible), then the  events are both indepen­ dent and  mutually exclusive.  This is provable through a simple application of the  definitions (that  is, the formulas) of independence and  mutual exclusivity.
+If one  or both events have  a probability of zero (that  is, it is impossible), then the  events are both independent and  mutually exclusive.  This is provable through a simple application of the  definitions (that  is, the formulas) of independence and  mutual exclusivity.
 
 
 ### Start Talking
@@ -210,7 +210,7 @@ In many cases,  you will find it useful  to write  down "rules" or patterns that
 
 You have  two ropes,  and each takes exactly one  hour to burn.  How would you use them to time  exactly  15 minutes? Note that the ropes are of uneven densities, so half the rope length-wise does not necessarily take half an hour to burn.
 
-> Tip: Stop here and spend some time trying to solve this problem on your own. Ifyou absolutely must, read through this section for hints-but do so slowly. Every paragraph  will get you a bit closer to the solution.
+> Tip: Stop here and spend some time trying to solve this problem on your own. If you absolutely must, read through this section for hints-but do so slowly. Every paragraph  will get you a bit closer to the solution.
 
 From the  statement of the  problem, we  immediately know  that we can  time  one  hour. We can  also  time two hours,  by lighting one  rope,  waiting until  it is burnt, and  then lighting the  second. We can  generalize this into  a rule.
 
@@ -222,7 +222,7 @@ However,  we can light a rope at both ends. The two flames  would meet after  30
 
 *Rule 2:* Given a rope that takes x minutes to burn,  we can time  Yi minutes.
 
-We now  know  that we can  time  30 minutes using a single rope. This also means that we can  remove 30 minutes of burning time from the second rope, by lighting rope 1 on both ends and rope 2 onjust one end.
+We now  know  that we can  time  30 minutes using a single rope. This also means that we can  remove 30 minutes of burning time from the second rope, by lighting rope 1 on both ends and rope 2 on just one end.
 
 *Rule 3:* If rope 1 takes x minutes to burn and rope 2 takes y minutes, we can turn  rope 2 into a rope that takes (y-x) minutes or (y- x/2) minutes.
 
@@ -231,7 +231,7 @@ Now, let's piece all of these together. We can turn rope 2 into a rope with 30 m
 From start  to end,  our approach is as follows:
 
 1. Light rope 1 at both ends and  rope 2 at one  end.
-2. When  the  two flames  on Rope 1 meet, 30 minutes will have  passed. Rope 2 has 30 minutes left of burn­ time.
+2. When  the  two flames  on Rope 1 meet, 30 minutes will have  passed. Rope 2 has 30 minutes left of burntime.
 3. At that point, light Rope 2 at the other end.
 4. In exactly fifteen minutes, Rope 2 will be completely burnt.
 
@@ -240,13 +240,13 @@ Note how solving this problem is made easier by listing out what you've learned 
 
 ### Worst Case Shifting
 
-Many brainteasers are worst-case minimization problems, worded either in terms of minimizing an action or in doing something at most a specific number of times. A useful technique is to try to "balance" the worst case. That is, if an early decision results in a skewing of the worst case, we can sometimes change the deci­ sion to balance out the worst case. This will be clearest when explained with an example.
+Many brainteasers are worst-case minimization problems, worded either in terms of minimizing an action or in doing something at most a specific number of times. A useful technique is to try to "balance" the worst case. That is, if an early decision results in a skewing of the worst case, we can sometimes change the decision to balance out the worst case. This will be clearest when explained with an example.
 
 The "nine balls" question is a classic interview question. You have nine balls. Eight are of the same weight, and one is heavier. You are given a balance which tells you only whether the left side or the right side is heavier. Find the heavy ball in just two uses of the scale.
 
-A first approach is to divide the balls in sets of four, with the ninth ball sitting off to the side. The heavy ball is in the heavier set. If they are the same weight, then we know that the ninth ball is the heavy one. Repli­ cating this approach for the remaining sets would result in a worst case of three weighings-one too many!
+A first approach is to divide the balls in sets of four, with the ninth ball sitting off to the side. The heavy ball is in the heavier set. If they are the same weight, then we know that the ninth ball is the heavy one. Replicating this approach for the remaining sets would result in a worst case of three weighings-one too many!
 
-This is an imbalance in the worst case: the ninth ball takesjust one weighing to discover if it's heavy, whereas others take three. If we penalize the ninth ball by putting more balls off to the side, we can lighten the load on the others. This is an example of "worst case balancing:"
+This is an imbalance in the worst case: the ninth ball takes just one weighing to discover if it's heavy, whereas others take three. If we penalize the ninth ball by putting more balls off to the side, we can lighten the load on the others. This is an example of "worst case balancing:"
 
 If we divide the balls into sets of three items each, we will know after just one weighing which set has the heavy one. We can even formalize this into a rule: given N balls,  where N is divisible by 3, one use of the scale will point us to a set of X balls with the heavy ball.
 
@@ -265,7 +265,7 @@ Interview Questions
 
 ---
 
-**6.1       The Heavy Pill:** You have 20 bottles ofpills. 19 bottles have 1.0 gram pills, but one has pills of weight 1.1 grams. Given a scale that provides an exact measurement, how would you find the heavy bottle? You can only use the scale once.
+**6.1       The Heavy Pill:** You have 20 bottles of pills. 19 bottles have 1.0 gram pills, but one has pills of weight 1.1 grams. Given a scale that provides an exact measurement, how would you find the heavy bottle? You can only use the scale once.
 
 SOLUTION
 
@@ -273,12 +273,11 @@ SOLUTION
 
 Sometimes, tricky constraints can be a clue. This is the case with the constraint that we can only use the scale once.
 
-Because we can only use the scale once, we know something interesting: we must weigh multiple pills at the same time. In fact, we know we must weigh pills from at least 19 bottles at the same time. Other­ wise, if we skipped two or more bottles entirely, how could we distinguish between those missed bottles? Remember that we only have one chance to use the scale.
+Because we can only use the scale once, we know something interesting: we must weigh multiple pills at the same time. In fact, we know we must weigh pills from at least 19 bottles at the same time. Otherwise, if we skipped two or more bottles entirely, how could we distinguish between those missed bottles? Remember that we only have one chance to use the scale.
 
 So how can we weigh pills from more than one bottle and discover which bottle has the heavy pills? Let's suppose there were just two bottles, one of which had heavier pills. If we took one pill from each bottle, we would get a weight of 2.1 grams, but we wouldn't know which bottle contributed the extra 0.1 grams. We know we must treat the bottles differently somehow.
 
-If we took one pill from Bottle #1 and two pills from Bottle #2, what would the scale show? It depends. If Bottle #1 were the heavy bottle, we would get 3.1 grams. If Bottle #2 were the heavy bottle, we would get
-3.2 grams. And that is the trick to this problem.
+If we took one pill from Bottle #1 and two pills from Bottle #2, what would the scale show? It depends. If Bottle #1 were the heavy bottle, we would get 3.1 grams. If Bottle #2 were the heavy bottle, we would get 3.2 grams. And that is the trick to this problem.
 
 We know the "expected" weight of a bunch of pills. The difference between the expected weight and the actual weight will indicate which bottle contributed the heavier pills, provided we select a different number of pills from each bottle.
 
@@ -293,13 +292,13 @@ This formula will tell you the bottle number:
 
 So, if the set of pills weighed 211.3 grams, then Bottle #13 would have the heavy pills.
 
-**6.2        Basketball:** You have a basketball  hoop  and someone  says that  you can play one oftwo games.
+**6.2        Basketball:** You have a basketball  hoop  and someone  says that  you can play one of two games.
 
 Game 1: You get one shot to make the hoop.
 
 Game 2: You get  three  shots and you have to make two of three shots.
 
-If p is the probability  of making a particular shot, forwhich  values of p should you pick one game or the other?
+If p is the probability  of making a particular shot, for which  values of p should you pick one game or the other?
 
 SOLUTION
 
@@ -310,12 +309,12 @@ To solve this problem, we can apply straightforward  probability  laws by compar
 
 **Probability of winning Game  1:**
 
-The probability ofwinning Game  1 is p, by definition.
+The probability of winning Game  1 is p, by definition.
 
 
 **Probability of winning Game 2:**
 
-Let s(k,n) be the probability ofmaking exactly k shots out of n. The probability of winning Game 2 is the probability of making exactly two shots out ofthree OR making all three shots. In other words:
+Let s(k, n) be the probability of making exactly k shots out of n. The probability of winning Game 2 is the probability of making exactly two shots out of three OR making all three shots. In other words:
 ```
 P(winning) = s(2,3) + s(3,3) 
 ```
@@ -345,7 +344,7 @@ Which game should you play?
 
 You should play Game 1  if P ( Game   1)  >   P (Game   2):
 ```
-p  >  3p² - 2p³ •
+p  >  3p² - 2p³.
 1  >  3p  - 2p²
 2p² - 3p +  1  >  0 
 (2p - l)(p -  1) >   0 
@@ -380,7 +379,7 @@ There's a cleaner, more solid proof for why it won't work. The chessboard initia
 Each domino we set on the board will always take up one white and one black square. Therefore,  31 dominos will take up 31 white squares and 31 black squares exactly. On this board, however, we must have 30 black squares and 32 white squares. Hence, it is impossible.
 
 
-**6.4 	Ants on a Triangle:** There are three ants on different vertices of a triangle. What is the probability of collision (between any two or all of them) if they start walking on the sides of the triangle? Assume that each ant randomly picks a direction, with eitherdirection being equally likely to be chosen, and that they walk at the same speed.
+**6.4 	Ants on a Triangle:** There are three ants on different vertices of a triangle. What is the probability of collision (between any two or all of them) if they start walking on the sides of the triangle? Assume that each ant randomly picks a direction, with either direction being equally likely to be chosen, and that they walk at the same speed.
 
 Similarly, find the probability of collision with n ants on an n-vertex polygon.
 
@@ -388,7 +387,7 @@ SOLUTION
 
 ---
 
-The ants will collide  if any of them are moving towards each other. So, the only way that they won't collide is if they are all moving in the same direction  (clockwise or counterclockwise). We can compute this prob­ ability and work backwards from there.
+The ants will collide  if any of them are moving towards each other. So, the only way that they won't collide is if they are all moving in the same direction  (clockwise or counterclockwise). We can compute this probability and work backwards from there.
 
 Since each ant can move in two directions, and there are three ants, the probability  is:
 
@@ -402,12 +401,12 @@ The probability of collision  is therefore the  probability of the  ants not mov
 ```
 P (collision) = 1-P (same direction) = 1 - 1/4 = 3/4
 ```
-To generalize this to an n-vertex polygon: there are still only two ways in which the  ants can move to avoid a collision, but there are 2" ways they  can move in total. Therefore, in general, probability of collision  is:
+To generalize this to an n-vertex polygon: there are still only two ways in which the  ants can move to avoid a collision, but there are 2ⁿ ways they  can move in total. Therefore, in general, probability of collision  is:
 ```
-P (clockwise)= (1/2)ⁿ 
-P (counter)= (1/2)ⁿ
-P (same direction)= 2 (1/2)ⁿ = (1/2)⁽ⁿ⁻¹⁾
-P (collision)= 1 - P (same direction)= 1 - (1/2)⁽ⁿ⁻¹⁾
+P (clockwise) = (1/2)ⁿ 
+P (counter) = (1/2)ⁿ
+P (same direction) = 2 (1/2)ⁿ = (1/2)⁽ⁿ⁻¹⁾
+P (collision) = 1 - P (same direction)= 1 - (1/2)⁽ⁿ⁻¹⁾
 ```
 
 **6.5 	Jugs of Water:** You have  a five-quart jug, a three-quart jug, and an unlimited supply of water (but no measuring cups).  How would you come up with  exactly  four quarts of water? Note that the jugs are oddly shaped, such that filling up exactly "half" of the jug would be impossible.
@@ -453,9 +452,9 @@ The two blue-eyed people see each other, but are unsure whether c is 1  or 2. Th
 
 **Case c > 2: The  General Case.**
 
-As we increase c, we can see that this logic continues to apply. If c = 3, then those three people will imme­ diately know that there are either 2 or 3 people with blue eyes.  If there were two people, then those two people would have left on the second night. So, when the others are still around after that night, each person would conclude that c = 3 and that they, therefore, have blue eyes too. They would leave that night.
+As we increase c, we can see that this logic continues to apply. If c = 3, then those three people will immediately know that there are either 2 or 3 people with blue eyes.  If there were two people, then those two people would have left on the second night. So, when the others are still around after that night, each person would conclude that c = 3 and that they, therefore, have blue eyes too. They would leave that night.
 
-This same pattern extends up through any value of c.Therefore, if c men have blue eyes, it will take c nights for the blue-eyed men to leave. All will leave on the same night.
+This same pattern extends up through any value of c. Therefore, if c men have blue eyes, it will take c nights for the blue-eyed men to leave. All will leave on the same night.
 
 
 **6.7 The  Apocalypse:** In the new post-apocalyptic world, the world queen is desperately concerned about the birth rate. Therefore, she decrees that all families should ensure that they have one girl or else they face massive fines. If all families abide by this policy-that is, they have continue to have children until they have one girl, at which point they immediately stop-what will the gender ratio of the new generation be? (Assume that the odds of someone having a boy or a girl on any given pregnancy  is equal.) Solve this out logically and then write a computer simulation of it. 
@@ -475,7 +474,7 @@ We can work out the probability for each gender sequence.
 
 - P(G) = 1/2. That is, 50% of families  will have a girl first. The others will go on to have more children.
 - P(BG) = 1/4. Of those who have a second child (which is 50%), 50% of them will have a girl the next time.
-- P(BBG) = 1/8. Of those who have a third child (which  is 25%), 50% of them will have a girl the next time.
+- P(BBG) = 1/8. Of those who have a third child (which is 25%), 50% of them will have a girl the next time.
 
 And so on.
 
@@ -514,7 +513,7 @@ This looks like it's going  to inch closer to 128/128  (which is of course 1). T
 
 If the earlier sum is 1, this would mean that the gender ratio is even. Families contribute exactly one girl and on average one boy. The birth policy  is therefore ineffective. Does this make sense?
 
-At first glance. this seems wrong. The policy is clPsigned to favor girls as it ensures that all families have a girl.
+At first glance. this seems wrong. The policy is designed to favor girls as it ensures that all families have a girl.
 
 On the other hand, the families that  keep having children contribute  (potentially) multiple boys to the population. This could offset the impact of the "one girl" policy.
 
@@ -536,7 +535,7 @@ We'll write this in a simple way that directly corresponds to the problem.
 ```java
 1 	double  runNFamilies(int n)  {
 2 		int boys  = 0;
-3 		int girls =  0;
+3 		int girls = 0;
 4 		for (int i =  0;  i <   n;  i++)   {
 5 			int[] genders = runOneFamily();
 6 			girls += genders[0];
@@ -564,7 +563,7 @@ We'll write this in a simple way that directly corresponds to the problem.
 Sure enough, if you run this on large values of n, you should get something very close to 0.5.
 
 
-**6.8 	The Egg Drop Problem:**  There is a building of 100 floors. If an egg drops from the Nth floor or above, it will break. If it's  dropped from any floor below, it will not break.You're given two eggs. Find N, while minimizing the number of drops for the worst case.
+**6.8 	The Egg Drop Problem:**  There is a building of 100 floors. If an egg drops from the Nth floor or above, it will break. If it's  dropped from any floor below, it will not break. You're given two eggs. Find N, while minimizing the number of drops for the worst case.
 
 SOLUTION
 
@@ -577,29 +576,28 @@ We may observe that, regardless of how we drop Egg 1, Egg 2 must do a linear sea
 
 As a first try, suppose we drop an egg from the 10th floor, then the 20th, ...
 
-- If Egg  1 breaks on the first drop (floor 10), then we have at most 10 drops total.
-- If Egg  1 breaks on the last drop (floor 100), then we have at most 19 drops total (floors 10, 20,...,90, 100, then 91 through 99).
+- If Egg 1 breaks on the first drop (floor 10), then we have at most 10 drops total.
+- If Egg 1 breaks on the last drop (floor 100), then we have at most 19 drops total (floors 10, 20,...,90, 100, then 91 through 99).
 
-That's pretty good, but all we've considered  is the absolute worst case.We should do some "load balancing" to make those two cases more even.
+That's pretty good, but all we've considered  is the absolute worst case. We should do some "load balancing" to make those two cases more even.
 
 Our goal is to create a system for dropping Egg 1 such that the number of drops is as consistent as possible, whether Egg 1 breaks on the first drop or the last drop.
 
-1. A perfectly load-balanced system would be one in which Drops ( Egg 1)  + Drops ( Egg 2) is always the same, regardless of where Egg 1 breaks.
+1. A perfectly load-balanced system would be one in which Drops (Egg 1)  + Drops (Egg 2) is always the same, regardless of where Egg 1 breaks.
 2. For that to be the case, since each drop of Egg 1 takes one more step, Egg 2 is allowed one fewer step.
-3. We  must,   therefore,  reduce   the   number   of   steps   potentially  required   by   Egg  2   by one  drop  each  time.  For example,  if   Egg  1  is  dropped   on  floor  20  and  then  floor  30, Egg 2 is potentially required to take 9 steps.When we drop Egg 1 again, we must reduce potential Egg 2 steps to only 8. That is, we must drop Egg 1 at floor 39.
+3. We  must, therefore, reduce the number of steps potentially  required by Egg 2 by one  drop  each  time. For example, if Egg 1 is  dropped on  floor 20 and then  floor  30, Egg 2 is potentially required to take 9 steps.When we drop Egg 1 again, we must reduce potential Egg 2 steps to only 8. That is, we must drop Egg 1 at floor 39.
 4. Therefore, Egg 1 must start at floor X, then go up by X-1 floors, then X- 2, ..., until it gets to 100.
 5. Solve for X.
 ```
-X + (X - l)+(X - 2)+...+1 = 100
-X(X+l)/2 = 100
+X + (X - 1)+(X - 2)+...+1 = 100
+X(X+1)/2 = 100
 X ≈ 13.65
 ```
-X clearly needs to be an integer.Should we round X up or down?
+X clearly needs to be an integer. Should we round X up or down?
 
-- If we round X up to 14, then we would go up by 14, then 13, then 12, and so on.The last increment would be 4, and it would happen on floor  99. If Egg 1 broke on any of the prior floors, we know we've balanced the eggs such that the number of drops of Egg 1 and Egg 2 always sum to the same thing: 14. If Egg 1 hasn't broken by floor 99, then we just need one more drop to determine if it will break at floor 100.
-Either way, the number of drops is no more than 14.
+- If we round X up to 14, then we would go up by 14, then 13, then 12, and so on. The last increment would be 4, and it would happen on floor  99. If Egg 1 broke on any of the prior floors, we know we've balanced the eggs such that the number of drops of Egg 1 and Egg 2 always sum to the same thing: 14. If Egg 1 hasn't broken by floor 99, then we just need one more drop to determine if it will break at floor 100. Either way, the number of drops is no more than 14.
 
-- If we round X down to 13, then we would go up by 13, then 12, then 11, and so on.The last increment will be 1 and it will happen at floor 91. This is after 13 drops. Floors 92 through 100 have not been covered yet. We can't cover those floors in just omi drop (which would be necessary to merely tie the "round up" case).
+- If we round X down to 13, then we would go up by 13, then 12, then 11, and so on. The last increment will be 1 and it will happen at floor 91. This is after 13 drops. Floors 92 through 100 have not been covered yet. We can't cover those floors in just one drop (which would be necessary to merely tie the "round up" case).
 
 Therefore, we should round X up to 14. That is, we go to floor 14, then 27, then 39,.... This takes 14 steps in the worse case.
 
@@ -611,18 +609,18 @@ The following code simulates this approach.
 1 	int breakingPoint =  ...,
 2 	int countDrops =  0;
 3	
-4 	boolean  drop(int floor) {
+4 	boolean drop(int floor) {
 5 		countDrops++;
 6 		return floor >=  breakingPoint;
 7 	}
 8	
-9 	int  findBreakingPoint(int floors) {
+9 	int findBreakingPoint(int floors) {
 10		int interval =  14;
-11		int  previousFloor = 0;
+11		int previousFloor = 0;
 12		int egg1 =  interval;
 13	
 14		/*  Drop egg1  at  decreasing intervals. */
-15		while  (!drop(egg1) &&  egg1  <=  floors) {
+15		while (!drop(egg1) &&  egg1  <=  floors) {
 16			interval -=  1;
 17			previousFloor = eggl;
 18			egg1  += interval;
@@ -630,7 +628,7 @@ The following code simulates this approach.
 20	
 21		/*  Drop egg2  at 1 unit increments. */
 22		int egg2  = previousFloor  + 1;
-23		while   (egg2   <  egg1  &&   egg2  <=  floors &&    !drop(egg2)) {
+23		while (egg2 < egg1  && egg2  <=  floors && !drop(egg2)) {
 24			egg2  += 1;
 25		}
 26	
@@ -641,13 +639,12 @@ The following code simulates this approach.
 
 If we want to generalize this code for more building sizes, then we can solve for x in:
 
-	x(x+l)/2  =  number of floors
+	x(x+1)/2  =  number of floors
 
 This will involve the quadratic formula.
 
 
-**6.9         100 Lockers:** There are 100 closed lockers in a hallway.  A man begins by opening all 100 lockers.
-Next, he closes every second locker. Then, on his third pass, he toggles every third locker (closes it if it is open or opens it if it is closed). This process continues for 100 passes, such that on each pass i, the man toggles every ith locker. After his 100th pass in the hallway, in which he toggles only locker #100, how many lockers are open?
+**6.9         100 Lockers:** There are 100 closed lockers in a hallway.  A man begins by opening all 100 lockers. Next, he closes every second locker. Then, on his third pass, he toggles every third locker (closes it if it is open or opens it if it is closed). This process continues for 100 passes, such that on each pass i, the man toggles every ith locker. After his 100th pass in the hallway, in which he toggles only locker #100, how many lockers are open?
 
 SOLUTION
 
@@ -657,8 +654,7 @@ We can tackle this problem by thinking through what it means for a door to be to
 
 **Question: For which rounds is a door toggled (open or closed)?**
 
-A door n is toggled once for each factor of n, including itself and 1. That is, door 15 is toggled on rounds 1,
-3, 5, and 15.
+A door n is toggled once for each factor of n, including itself and 1. That is, door 15 is toggled on rounds 1, 3, 5, and 15.
 
 
 **Question: When would a door be left open?**
@@ -698,7 +694,7 @@ The fact that there's such a lag between  starting a test and reading the result
 
 A simple approach is to divide the bottles across the 10 test strips, first in groups of 100. Then, we wait seven days. When the results come back, we look for a positive result across the test strips. We select the bottles associated with the positive test strip, "toss" (i.e., ignore) all the other bottles, and repeat the process. We perform this operation until there is only one bottle left in the test set.
 
-1.  Divide hottlP<; across available test strips, one drop per test strip.
+1.  Divide bottles across available test strips, one drop per test strip.
 2.  After seven days, check the test strips for results.
 3.  On the positive test strip: select the bottles associated with it into a new set of bottles. If this set size is 1, we have located the poisoned bottle. If it's greater than one, go to step 1.
 
@@ -708,7 +704,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 2 		private boolean  poisoned =  false;
 3 		private int id;
 4	
-5 		public  Bottle(int id)   {this.id = id;}
+5 		public  Bottle(int id) {this.id = id;}
 6 		public  int get!d() {return  id;}
 7 		public  void  setAsPoisoned() {poisoned =  true;}
 8 		public  boolean  isPoisoned() {return  poisoned;}
@@ -720,12 +716,12 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 14						new ArrayList<ArrayList<Bottle>>();
 15		private int id;
 16	
-17		public  TestStrip(int id) {this.id  =  id;}
-18		public  int getid() {return  id;}
+17		public TestStrip(int id) {this.id  =  id;}
+18		public int getid() {return  id;}
 19	
 20		/*  Resize  list of  days/drops to  be large enough. */
 21		private void sizeDropsForDay(int day)  {
-22			while  (dropsByDay.size()  <=  day)  {
+22			while (dropsByDay.size()  <=  day)  {
 23				dropsByDay.add(new ArrayList<Bottle>());
 24			}
 25		}
@@ -739,7 +735,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 33	
 34		/*  Checks if any of  the  bottles in  the  set are  poisoned. */
 35		private boolean hasPoison(ArrayList<Bottle> bottles) {
-36			for  (Bottle b : bottles) {
+36			for (Bottle b : bottles) {
 37				if (b.isPoisoned()) {
 38					return true;
 39				}
@@ -761,7 +757,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 55			if (testDay <  0 ||  testDay  >= dropsByDay.size()) {
 56				return false;
 57			}
-58			for  (int d =  0;  d <=  testDay;   d++) {
+58			for (int d =  0;  d <=  testDay;   d++) {
 59				ArrayList<Bottle> bottles  =  dropsByDay.get(d);
 60				if (hasPoison(bottles)) {
 61					return true;
@@ -802,7 +798,7 @@ This is just one way of simulating the behavior of the bottles and test strips, 
 25	}
 26	
 27	/*  Distribute bottles across test  strips  evenly. */
-28	void  runTestSet(ArrayList<Bottle>   bottles, ArrayList<TestStrip>    strips, int day)  {
+28	void  runTestSet(ArrayList<Bottle> bottles, ArrayList<TestStrip> strips, int day)  {
 29		int index = 0;
 30		for  (Bottle bottle  :   bottles) {
 31			TestStrip strip  =  strips.get(index);
@@ -822,8 +818,7 @@ If we can't assume this, we can implement a fail-safe. If we have just one test 
 
 As noted in the beginning of the solution, it might be more optimal to run multiple tests at once.
 
-If we divide the bottles up into 10 groups (with bottles O - 99 going to strip 0, bottles 100 - 199 going to strip 1, bottles 200 - 299 going to strip 2, and so on), then day 7 will reveal the first digit of the bottle number. A
-positive result on strip i at day 7 shows that the first digit (100's digit) of the bottle number is i.
+If we divide the bottles up into 10 groups (with bottles 0 - 99 going to strip 0, bottles 100 - 199 going to strip 1, bottles 200 - 299 going to strip 2, and so on), then day 7 will reveal the first digit of the bottle number. A positive result on strip i at day 7 shows that the first digit (100's digit) of the bottle number is i.
 
 Dividing the bottles in a different way can reveal the second or third digit. We just need to run these tests on different days so that we don't confuse the results.
 
@@ -875,7 +870,7 @@ Actually, yes. Bottle #898 would  see (Day 7 = #8, Day 8 -> #9, Day  9->  [NONE]
 The "ambiguous" bottles from day 9 will always map to different values on day 10. The logic is:
 
 - If Day  3-> 10's test reveals a new test result, "unshift" this value to derive the third digit.
-- Otherwise, we know that the third digit equals either the first digit or the second digit and that the third digit, when shifted, still equals either the first digit or the second digit. Therefore, wejust need to figure out whether the first digit "shifts" into the second digit or the other way around. In the former  case, the third digit equals the first digit.  In the latter case, the third digit equals the second digit.
+- Otherwise, we know that the third digit equals either the first digit or the second digit and that the third digit, when shifted, still equals either the first digit or the second digit. Therefore, we just need to figure out whether the first digit "shifts" into the second digit or the other way around. In the former  case, the third digit equals the first digit.  In the latter case, the third digit equals the second digit.
 
 Implementing this requires some careful work to prevent bugs.
 
@@ -887,14 +882,14 @@ Implementing this requires some careful work to prevent bugs.
 5 		int nTestStrips = strips.size();
 6	
 7 		/* Run tests. */
-8 		for  (int day = 0; day < tests;   day++)   {
+8 		for (int day = 0; day < tests;   day++)   {
 9 			runTestSet(bottles, strips,  day);
 16		}
 11	
 12		/* Get results. */
 13		HashSet<Integer> previousResults = new  HashSet<Integer>();
 14		int[] digits  = new  int[tests];
-15		for  (int day = 0; day < tests;   day++)   {
+15		for (int day = 0; day < tests;   day++)   {
 16			int resultDay = day + TestStrip.DAYS_FOR_RESULT;
 17			digits[day] =  getPositiveOnDay(strips,  resultDay,  previousResults);
 18			previousResults.add(digits[day]);
@@ -926,7 +921,7 @@ Implementing this requires some careful work to prevent bugs.
 44	void  runTestSet(ArrayList<Bottle> bottles, ArrayList<TestStrip>  strips, int day)  {
 45		if (day > 3)  return;//    only  works for 3 days  (digits)+one  extra
 46	
-47		for  (Bottle bottle :  bottles) {
+47		for (Bottle bottle :  bottles) {
 48			int index  =  getTestStripindexForDay(bottle,  day,  strips.size());
 49	 		TestStrip testStrip  =  strips.get(index);
 50			testStrip.addDropOnDay(day,  bottle);
@@ -935,7 +930,7 @@ Implementing this requires some careful work to prevent bugs.
 53	
 54	/*    Get strip that should  be used  on this bottle on this day. */
 55	int  getTestStripindexForDay(Bottle bottle, int day,  int nTestStrips) {
-56		int id =    bottle.getid();
+56		int id = bottle.getid();
 57		switch  (day)  {
 58		case  0:  return id / 100;
 59		case  1:  return (id % 100) /    10;
@@ -948,9 +943,9 @@ Implementing this requires some careful work to prevent bugs.
 66	/*    Get results that are  positive for  a  particular day,  excluding   prior results. */
 67	int getPositiveOnDay(ArrayList<TestStrip>  testStrips,  int  day,
 68									HashSet<Integer>  previousResults)  {
-69		for  (TestStrip testStrip  :   testStrips) {
+69		for (TestStrip testStrip : testStrips) {
 70			int id  =  testStrip.getid();
-71			if (testStrip.isPositiveOnDay(day)  &&    !previousResults.contains(id))  {
+71			if (testStrip.isPositiveOnDay(day)  && !previousResults.contains(id))  {
 72				return testStrip.getid();
 73			}
 74		}

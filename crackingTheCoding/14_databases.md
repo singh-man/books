@@ -5,7 +5,7 @@ If you  profess knowledge of databases, you  might be asked some questions on it
 
 ### SQL Syntax and Variations
 
-Implicit and explicit joins are shown below. These two statements  are equivalent, and it's  a matter of personal preference which one youchoose. For consistency, we  will stick to the explicit join.
+Implicit and explicit joins are shown below. These two statements  are equivalent, and it's  a matter of personal preference which one you choose. For consistency, we  will stick to the explicit join.
 
 
 | Explicit Join                                    | Implicit Join                       |
@@ -22,12 +22,12 @@ Normalized databases are designed to minimize redundancy, while denormalized dat
 
 In a traditional normalized database with data like Courses and Teachers, Courses might contain a column called TeacherID, which is a foreign key to Teacher. One benefit of this is that information about the teacher (name, address, etc.)  is only  stored once in the database. The  drawback is that many common queries will require expensive joins.
 
-Instead, we  can denormalize the database by  storing redundant data. For example, if we  knew that we would have to repeat this  query often, we might store the teacher's name in the Courses table. Denormal­ ization is commonly used to create highly scalable systems.
+Instead, we can denormalize the database by  storing redundant data. For example, if we  knew that we would have to repeat this  query often, we might store the teacher's name in the Courses table. Denormalization is commonly used to create highly scalable systems.
 
 
 ### SQL Statements
 
-Let's  wa(k through a review of basic SQL syntax, using as  an example the database that was  mentioned earlier. This  database has the following simple structure (* indicates a primary key):
+Let's  walk through a review of basic SQL syntax, using as  an example the database that was  mentioned earlier. This  database has the following simple structure (* indicates a primary key):
 ```
 Courses:   CourseID*,  CourseName, TeacherID 
 Teachers:   TeacherID*,  TeacherName 
@@ -131,18 +131,18 @@ Imagine you are asked to design a system to represent an apartment rental agency
 
 *Step 2: Define the Core Objects*
 
-Next, we should look at the core objects of our system. Each of these core objects typically translates into a table. In this case, our core objects might be Property, B uilding, Apartment, Tenant and Manager.
+Next, we should look at the core objects of our system. Each of these core objects typically translates into a table. In this case, our core objects might be Property, Building, Apartment, Tenant and Manager.
 
 
 **Step 3: Analyze Relationships**
 
 Outlining the core objects should give us a good sense of what the tables should be. How do these tables relate to each other? Are they many-to-many? One-to-many?
 
-If Buildings has a one-to-many relationship with Apartments(oneBuilding has many Apartments), then we might represent this as follows:
+If Buildings has a one-to-many relationship with Apartments (oneBuilding has many Apartments), then we might represent this as follows:
 
 ![](media/IX_14_01.JPG)
 
-Note that the Apartments table links back toBuildings with aBuildingID column.
+Note that the Apartments table links back to Buildings with a BuildingID column.
 
 If we want to allow for the possibility that one person rents more than one apartment, we might want to implement a many-to-many relationship as follows:
 
@@ -158,7 +158,7 @@ Finally, we fill in the details. Walk through the common actions that will be ta
 
 ### Large Database Design
 
-When designing a large, scalable database, joins (which are required in the above examples) are generally very slow. Thus, you must denormalize your data. Think carefully about how data will be used-you'll prob­ ably need to duplicate the data in multiple tables.
+When designing a large, scalable database, joins (which are required in the above examples) are generally very slow. Thus, you must denormalize your data. Think carefully about how data will be used-you'll probably need to duplicate the data in multiple tables.
 
 ---
 
@@ -173,7 +173,7 @@ Questions 1  through 3 refer to the following database schema:
 Note that each apartment can have multiple tenants, and each tenant can have multiple apartments. Each apartment belongs to one building, and each building belongs to one complex.
 
 
-**14.1 	Multiple Apartments:** Write a SQL query to get a list of tenants who are renting more than  one apartment.							pg  172
+**14.1 	Multiple Apartments:** Write a SQL query to get a list of tenants who are renting more than  one apartment.	
 
 SOLUTION
 
@@ -223,7 +223,7 @@ SOLUTION
 UPDATE queries, like SELECT queries, can have WHERE clauses. To implement this query, we get a list of all apartment IDs within building #11 and the list of update requests from those apartments.
 ```sql
 1  UPDATE  Requests
-2  SET  Status =   'Closed'
+2  SET  Status = 'Closed'
 3  WHERE  AptID  IN (SELECT  AptID  FROM   Apartments   WHERE  BuildingID =  11)
 ```
 
@@ -264,10 +264,10 @@ If we wanted to join Beverage with Calorie-Free Beverages, we would have many op
 
 - INNER JOIN: The result set would contain only the data where the criteria match. In our example, we would get three records: one with a COCACOLA code and two with PEPSI codes.
 - OUTER JOIN: An OUTER  JOIN will always contain the results of INNER JOIN, but it may also contain some records that have no matching record in the other table. OUTER     JOINs are divided into the following subtypes:
-	- LEFT OUTER JOIN, or simply LEFT JOIN:The result will contain all records from the left table.
-	If no matching records were found in the right table, then its fields will contain theNULL values. In our example, we would get four records. In addition to INNER JOIN results, BUDWEISER would be listed, because it was in the left table.
-	- RIGHT OUTER JOIN, or simply RIGHT JOIN:This type of join is the opposite ofLEFT  JOIN. It will contain every record from the right table; the missing fields from the left table will be NULL. Note that if we have two tables, A and B, then we can say that the statement A  LEFT JOIN  B is equivalent to the statement B  RIGHT JOIN  A. In our example above, we will get five records. In addition to INNER JOIN results, FRESCA and WATER records will be listed.
-	- FULL OUTER JOIN:This type of join combines the results of the LEFT and RIGHT  JOINS. All records from both tables will be included in the result set, regardless of whether or not a matching record exists in the other table. If no matching record was found, then the corresponding result fields will have a NULL value. In our example, we will get six records.
+	- LEFT OUTER JOIN, or simply LEFT JOIN: The result will contain all records from the left table.
+	If no matching records were found in the right table, then its fields will contain the NULL values. In our example, we would get four records. In addition to INNER JOIN results, BUDWEISER would be listed, because it was in the left table.
+	- RIGHT OUTER JOIN, or simply RIGHT JOIN: This type of join is the opposite of LEFT  JOIN. It will contain every record from the right table; the missing fields from the left table will be NULL. Note that if we have two tables, A and B, then we can say that the statement A  LEFT JOIN  B is equivalent to the statement B  RIGHT JOIN  A. In our example above, we will get five records. In addition to INNER JOIN results, FRESCA and WATER records will be listed.
+	- FULL OUTER JOIN: This type of join combines the results of the LEFT and RIGHT  JOINS. All records from both tables will be included in the result set, regardless of whether or not a matching record exists in the other table. If no matching record was found, then the corresponding result fields will have a NULL value. In our example, we will get six records.
 
 
 **14.5     Denormalization:** What is denormalization? Explain the pros and cons.
@@ -276,7 +276,7 @@ SOLUTION
  
 --- 
 
-Denormalization is a database  optimization technique  in which we add redundant  data to one or more tables. This can help us avoid costlyjoins in a relational database.
+Denormalization is a database  optimization technique  in which we add redundant  data to one or more tables. This can help us avoid costly joins in a relational database.
 
 By contrast, in a traditional normalized database, we store data in separate logical tables and attempt  to minimize redundant data. We may strive to have only one copy of each piece of data in the database.
 
@@ -310,7 +310,7 @@ People who  work for Companies are  Professionals. So, there is an ISA  ("is a")
 
 Each Professional has additional information such  as degree and  work experiences in addition to the properties derived from People.
 
-A Professional works for one company at a time  (probably-you might want to validate this assump­ tion),  but  Companies can  hire many Professionals. So, there is a many-to-one relationship between Professionals and  Companies. This "Works  For" relationship can store attributes such as an employee's start date and salary. These attributes are defined only when we relate a Professional with a Company.
+A Professional works for one company at a time  (probably-you might want to validate this assumption),  but  Companies can  hire many Professionals. So, there is a many-to-one relationship between Professionals and  Companies. This "Works  For" relationship can store attributes such as an employee's start date and salary. These attributes are defined only when we relate a Professional with a Company.
 
 A Person can have multiple phone numbers, which is why Phone is a multi-valued attribute.
 
@@ -377,7 +377,7 @@ Be very careful about what implicit assumptions you make. If you look at the abo
 
 However, you will need to make some assumptions, or you'd drive yourself crazy. Which assumptions you make is less important than just recognizing that you made assumptions. Incorrect assumptions, both in the real world and in an interview, can be dealt with as long as they are acknowledged.
 
-Remember, additionally, that there's a trade-off between flexibility and complexity. Creating a system in which a course can have multiple professors does increase the database's flexibility, but it also increases its complexity. If we tried to make our database  flexible to every possible situation, we'd wind up with some­ thing hopelessly complex.
+Remember, additionally, that there's a trade-off between flexibility and complexity. Creating a system in which a course can have multiple professors does increase the database's flexibility, but it also increases its complexity. If we tried to make our database  flexible to every possible situation, we'd wind up with something hopelessly complex.
 
 Make your design reasonably flexible, and state any other assumptions or constraints. This goes for not just database design, but object-oriented design and programming in general.
 

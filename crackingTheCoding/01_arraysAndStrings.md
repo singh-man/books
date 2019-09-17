@@ -1,7 +1,7 @@
 ## 1 Arrays and Strings
 
 
-Hopefully, all readers of this book are familiar with arrays and strings, so we won't .bore you with such details. Instead, we'll focus on some of the more common techniques and issues with these data struc­tures.
+Hopefully, all readers of this book are familiar with arrays and strings, so we won't bore you with such details. Instead, we'll focus on some of the more common techniques and issues with these data struc­tures.
 
 Please note that array questions and string questions are often interchangeable. That is, a question that this book states using an array may be asked instead as a string question, and vice versa.
 
@@ -32,7 +32,7 @@ Alternatively, we can implement the hash table with a balanced binary search tre
 
 In some languages, arrays (often called lists in this case) are automatically resizable. The array or list will grow as you append items. In other languages, like Java, arrays are fixed length. The size is defined when you create the array.
 
-When you need an array-like data structure that offers dynamic resizing, you would usually use an ArrayList. An ArrayList is an array that resizes itself as needed while still providing O(1) access. A typical implementa­ tion is that when the array is full, the array doubles in size. Each doubling takes O(n) time, but happens so rarely that its amortized insertion time is still O(1).
+When you need an array-like data structure that offers dynamic resizing, you would usually use an ArrayList. An ArrayList is an array that resizes itself as needed while still providing O(1) access. A typical implementation is that when the array is full, the array doubles in size. Each doubling takes O(n) time, but happens so rarely that its amortized insertion time is still O(1).
 
 ```java
 1	ArrayList<String>  merge(String[]  words,   String[] more)  {
@@ -47,8 +47,7 @@ This is an essential data structure for interviews. Be sure you are comfortable 
 
 *Why is the amortized insertion runtime O(1)?*
 
-Suppose you have an array of size N. We can work backwards to compute how many elements we copied at each capacity increase. Observe that when we increase the array to K elements, the array was previously
-half that size. Therefore, we needed to copy '.Yi elements.
+Suppose you have an array of size N. We can work backwards to compute how many elements we copied at each capacity increase. Observe that when we increase the array to K elements, the array was previously half that size. Therefore, we needed to copy x/2 elements.
 
 ```
 final  capacity increase  :  n/2  elements to  copy
@@ -83,11 +82,11 @@ Imagine you were concatenating a list of strings, as shown below. What would the
 7	}
 ```
 
-On each concatenation, a new copy of the string is created, and the two strings are copied over, character by character. The first iteration requires us to copy x characters. The second iteration requires copying 2x characters. The third iteration requires 3x, and so on.The total time therefore is O(x + 2x + . . . + nx). This reduces to O(xn²).
+On each concatenation, a new copy of the string is created, and the two strings are copied over, character by character. The first iteration requires us to copy x characters. The second iteration requires copying 2x characters. The third iteration requires 3x, and so on. The total time therefore is O(x + 2x + . . . + nx). This reduces to O(xn²).
 
 > Why is it O(xn²)? Because 1 + 2 + ... + n equals n(n+1)/2, or O(n²).
 
-StringBuilder can help you avoid.this problem. StringBuilder simply creates a resizable array of all the strings, copying them back to a string only when necessary.
+StringBuilder can help you avoid this problem. StringBuilder simply creates a resizable array of all the strings, copying them back to a string only when necessary.
 
 ```java
 1	String  joinWords(String[]  words) {
@@ -115,7 +114,7 @@ SOLUTION
 
 ---
 
-You should first ask your interviewer if the string is an ASCII string or a Unicode string. Asking this question will show an eye for detail and a solid foundation in computer science. We'll assume for simplicity the char­ acter set is ASCII. If this assumption is not valid, we would need to increase the storage size.
+You should first ask your interviewer if the string is an ASCII string or a Unicode string. Asking this question will show an eye for detail and a solid foundation in computer science. We'll assume for simplicity the character set is ASCII. If this assumption is not valid, we would need to increase the storage size.
 
 One solution is to create an array of boolean values, where the flag at index i indicates whether character i in the alphabet is contained in the string. The second time you see this character you can immediately return false.
 
@@ -182,7 +181,7 @@ Observe first that strings of different lengths cannot be permutations of each o
 
 **Solution #1: Sort the strings.**
 
-If two strings are permutations, then we know they have the same characters, but in different orders. There­ fore, sorting the strings will put the characters from two permutations in the same order. We just need to compare the sorted versions of the strings.
+If two strings are permutations, then we know they have the same characters, but in different orders. Therefore, sorting the strings will put the characters from two permutations in the same order. We just need to compare the sorted versions of the strings.
 
 ```java
 1 	String sort(String  s) {
@@ -206,7 +205,7 @@ However, if efficiency is very important, we can implement it a different way.
 
 **Solution #2: Check if the two strings have identical character counts.**
 
-We can also use the definition of a permutation-two words with the same character counts-to imple­ ment this algorithm. We simply iterate through this code, counting how many times each character appears. Then, afterwards, we compare the two arrays.
+We can also use the definition of a permutation-two words with the same character counts-to implement this algorithm. We simply iterate through this code, counting how many times each character appears. Then, afterwards, we compare the two arrays.
 
 ```java
 1 	boolean permutation(String  s,  String  t)  {
@@ -251,6 +250,7 @@ SOLUTION
 A common approach in string manipulation problems is to edit the string starting from the end and working backwards. This is useful because we have an extra buffer at the end, which allows us to change characters without worrying about what we're overwriting.
 
 We will use this approach in this problem. The algorithm employs a two-scan approach. In the first scan, we count the number of spaces. By tripling this number, we can  compute how  many  extra characters we will have in the final string.  In the second pass,  which is done in reverse order, we actually edit the string. When we see a space, we replace it with %20. If there is no space, then we copy the original character.
+
 The code below implements this algorithm.
 
 ```java
@@ -277,14 +277,14 @@ The code below implements this algorithm.
 21	}
 ```
 
-We have implemented this problem using character arrays, because Java strings are immutable. If we used strings directly, the function would have to return a new copy of the string,  but it would allow us to imple­ ment this in just  one pass.
+We have implemented this problem using character arrays, because Java strings are immutable. If we used strings directly, the function would have to return a new copy of the string,  but it would allow us to implement this in just  one pass.
 
 **1.4 	Palindrome Permutation:** Given  a  string,  write   a  function to  check if it  is a  permutation of a  palindrome. A palindrome is a  word  or  phrase that is the same forwards and  backwards. A permutation is a rearrangement of letters. The  palindrome does not  need to  be  limited to just dictionary words.
 
 ```
 EXAMPLE
 Input:      Tact  Coa
-Output:     True (permutations: "taco  cat'; "atco   cta", etc.)
+Output:     True (permutations: "taco  cat", "atco   cta", etc.)
 ```
 
 SOLUTION
@@ -300,7 +300,7 @@ What does it take to be able to write a set of characters the same way forwards 
 For example, we know tactcoapapa is a permutation of a palindrome because it has two  Ts, four As, two Cs, two Ps, and one O. That O would be the center of all possible palindromes.
 
 
-> To be more precise, strings with even length (after removing all non-letter characters) must have all even counts of characters. Strings of an odd length must have exactly one character with an odd count. Of course, an "even" string can't have an odd number of exactly one character, otherwise it wouldn't be an even-length string (an odd number+ many even numbers= an odd number). Likewise, a string with odd length can't have  all characters with even counts (sum of evens is even). It's therefore sufficient to say that, to be a permutation ot a palindrome,  a string can have no more than one character that is odd. This will cover both the odd and the even cases.
+> To be more precise, strings with even length (after removing all non-letter characters) must have all even counts of characters. Strings of an odd length must have exactly one character with an odd count. Of course, an "even" string can't have an odd number of exactly one character, otherwise it wouldn't be an even-length string (an odd number+ many even numbers= an odd number). Likewise, a string with odd length can't have  all characters with even counts (sum of evens is even). It's therefore sufficient to say that, to be a permutation of a palindrome,  a string can have no more than one character that is odd. This will cover both the odd and the even cases.
 
 
 This leads us to our first algorithm.
@@ -345,7 +345,7 @@ Implementing this algorithm is fairly straightforward. We use a hash table to co
 33	int[] buildCharFrequencyTable(String phrase)  {
 34		int[] table =  new  int[Character.getNumericValue('z') -
 35		Character.getNumericValue('a') +  1];
-36		for   (char  c  : phrase.toCharArray()) {
+36		for (char  c  : phrase.toCharArray()) {
 37			int x = getCharNumber(c);
 38			if (x  !=  -1)  {
 39				table[x]++;
@@ -395,8 +395,7 @@ Given this, we can use a single integer (as a bit vector). When we see a letter,
 
 We can easily check that no bits in the integer are 1: just compare the integer to 0. There is actually a very elegant way to check that an integer has exactly one bit set to 1.
 
-Picture an integer like 00010000. We could of course shift the integer repeatedly to check that there's only a single 1. Alternatively,  if we subtract 1 from the number, we'll get 00001111. What's notable about this
-is that there is no overlap between the numbers (as opposed to say 00101000, which, when we subtract 1 from, we get 00100111.) So, we can check to see that a number has exactly one 1 because if we subtract 1 from it and then AND it with the new number, we should get 0. 
+Picture an integer like 00010000. We could of course shift the integer repeatedly to check that there's only a single 1. Alternatively,  if we subtract 1 from the number, we'll get 00001111. What's notable about this is that there is no overlap between the numbers (as opposed to say 00101000, which, when we subtract 1 from, we get 00100111.) So, we can check to see that a number has exactly one 1 because if we subtract 1 from it and then AND it with the new number, we should get 0.
 
 ```
 00010000   -  1  =  00001111
@@ -526,9 +525,9 @@ Observe that you don't need to check the strings for insertion, removal, and rep
 This algorithm (and almost any reasonable algorithm) takes O(n) time, where n is the length of the shorter string.
 
 
-> Why is the runtime dictated by the shorter string instead of the longer string? If the strings are the same length (plus or minusone character), then it doesn't matter whether we use the longer string or the shorter string to define the runtime. If the strings are very different lengths, then the algorithm will terminate in O(1)  time. One really, really long string therefore won't significantly extend the runtime. It increases the runtime only if both strings are long.
+> Why is the runtime dictated by the shorter string instead of the longer string? If the strings are the same length (plus or minus one character), then it doesn't matter whether we use the longer string or the shorter string to define the runtime. If the strings are very different lengths, then the algorithm will terminate in O(1)  time. One really, really long string therefore won't significantly extend the runtime. It increases the runtime only if both strings are long.
 
-We might notice that the code for oneEditReplace is very simtlar to that for oneEditinsert. We can merge them into one method.
+We might notice that the code for oneEditReplace is very similar to that for oneEditinsert. We can merge them into one method.
 
 To do this, observe  that both methods follow similar logic: compare each character and ensure  that the strings are only different by one. The methods  vary in how they handle  that difference. The method oneEditReplace does nothing other than flag the difference, whereas oneEditinsert increments the pointer to the longer string. We can handle both of these in the same method.
 
@@ -598,7 +597,7 @@ How hard could it be?
 
 This works. Is it efficient, though? Take a look at the  runtime of this code.
 
-The  runtime is O(p + k²), where p is the  size of the  original string and k is thelnumber of character sequences. For example, if the  string  is aabccdeeaa,  then there are  six characte  sequences. It's slow because string concatenation operates in O(n² ) time  (see StringBuilder on pg 89).
+The  runtime is O(p + k²), where p is the  size of the  original string and k is the number of character sequences. For example, if the  string  is aabccdeeaa,  then there are  six character sequences. It's slow because string concatenation operates in O(n² ) time  (see StringBuilder on pg 89).
 
 We can fix this by using a StringBuilder.
 
@@ -622,7 +621,7 @@ We can fix this by using a StringBuilder.
 
 Both of these solutions create the compressed string first and then return the shorter of the input string and the compressed string.
 
-Instead, we can check in advance.This will be more optimal in cases where we don't have a large number of repeating characters. It will avoid us having to create a stringthat we never use. The downside of this is that it causes a second loop through the characters and also adds nearly duplicated code.
+Instead, we can check in advance. This will be more optimal in cases where we don't have a large number of repeating characters. It will avoid us having to create a string that we never use. The downside of this is that it causes a second loop through the characters and also adds nearly duplicated code.
 
 ```java
 1 	String  compress(String str) {
@@ -731,11 +730,11 @@ SOLUTION
 ---
 
 
-At first glance, this problem seems easy: just iterate through the matrix and every time we see a cell with value zero, set its row and column to 0. There's one problem with that solution though: when we come across other cells in that row or column, we'll see the zeros and change their row and column to zero.Pretty soon, our entire  matrix will be set to zeros.
+At first glance, this problem seems easy: just iterate through the matrix and every time we see a cell with value zero, set its row and column to 0. There's one problem with that solution though: when we come across other cells in that row or column, we'll see the zeros and change their row and column to zero. Pretty soon, our entire  matrix will be set to zeros.
 
-One way around this is to keep a second matrix which flags the zero locations. We would then do a second pass through the matrix to set the zeros.This would take O(MN) space.
+One way around this is to keep a second matrix which flags the zero locations. We would then do a second pass through the matrix to set the zeros. This would take O(MN) space.
 
-Do we really need O(MN) space?  No. Since we're going  to set the entire row and column to zero, we don't need to track that it was exactly cell[2][4] (row 2, column 4). We only need to know that row 2 has a zero somewhere, and column 4 has a zero somewhere.We'll set the entire row and column to zero anyway, so why would we care to keep track of the exact location of the zero?
+Do we really need O(MN) space?  No. Since we're going  to set the entire row and column to zero, we don't need to track that it was exactly cell[2][4] (row 2, column 4). We only need to know that row 2 has a zero somewhere, and column 4 has a zero somewhere. We'll set the entire row and column to zero anyway, so why would we care to keep track of the exact location of the zero?
 
 The code below implements this algorithm. We use two arrays to keep track of all the rows with zeros and all the columns with zeros. We then nullify rows and columns  based  on the values in these arrays.
 
@@ -850,8 +849,7 @@ This code is below:
 This code has  a lot of "do  this for the  rows, then the  equivalent action for the  column". In an interview, you could abbreviate this code by adding comments and TODOs that explain that the next chunk of code looks the  same as the  earlier code,  but  using rows. This would allow you to focus  on the  most important parts of the  algorithm.
 
 
-**1.9 	String Rotation:** Assumeyou have a method i5Sub5tring which checks if one word is a substring of another. Given two strings,  51 and 52, write code to check if 52 is a rotation of 51 using only one
-call to i5Sub5tring (e.g., "waterbottle" is a rotation of" erbottlewat").
+**1.9 	String Rotation:** Assume you have a method i5Sub5tring which checks if one word is a substring of another. Given two strings, s1 and s2, write code to check if s2 is a rotation of s1 using only one call to isSub5tring (e.g., "waterbottle" is a rotation of" erbottlewat").
 
 SOLUTION
 
@@ -866,7 +864,7 @@ y  = erbottle
 s2 = yx   = erbottlewat
 ```
 
-So, we need to check  if there's a way to split s1 into x and y such that xy = s1 and yx = s2. Regardless of where the division between x andy is, we can see thatyx will always be a substring of xyxy.That is, s2 will always be a substring of s1s1.
+So, we need to check  if there's a way to split s1 into x and y such that xy = s1 and yx = s2. Regardless of where the division between x and y is, we can see that yx will always be a substring of xyxy. That is, s2 will always be a substring of s1s1.
 
 And this is precisely how we solve the problem: simply do isSubstring(s1s1,  s2). The code below implements this algorithm.
 

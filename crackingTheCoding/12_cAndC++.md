@@ -132,7 +132,7 @@ In this case, we might want addCourse to be a virtual function defined within Pe
 15		}
 16	
 17		bool addCourse(string s) {
-18			cout <<  "Added course " <<   <<  "to student." <<  endl;
+18			cout <<  "Added course " << s <<  "to student." <<  endl;
 19			return true;
 20		}
 21	};
@@ -150,7 +150,7 @@ Note that by defining addCourse to be a "pure virtual function;· Person is now 
 
 ### Virtual Destructor
 
-The virtual function naturally introduces the concept of a "virtual destructor."Suppose we wanted to imple­ment a destructor method for Person and Student. A naive solution might look like this:
+The virtual function naturally introduces the concept of a "virtual destructor". Suppose we wanted to imple­ment a destructor method for Person and Student. A naive solution might look like this:
 
 ```C
 1 	class  Person {
@@ -160,7 +160,7 @@ The virtual function naturally introduces the concept of a "virtual destructor."
 5 		}
 6 	};
 7	
-8 	class Student    public Person   {
+8 	class Student  :  public Person   {
 9 	public:
 10		~student() {
 11			cout << "Deleting  a student."  << endl;
@@ -276,23 +276,23 @@ One  will often see programmers perform addition on a pointer, such  as what you
 5      cout <<  *p;  // Outputs  1
 ```
 
-Performing p++  will skip ahead by  sizeof(int) bytes,  such  that the  code outputs 1. Had p  been of different type, it would skip ahead as many  bytes as the  size of the  data structure.
+Performing p++ will skip ahead by  sizeof(int) bytes, such  that the  code outputs 1. Had p  been of different type, it would skip ahead as many  bytes as the  size of the  data structure.
 
 
 ### Templates
 
-Templates are a way of reusing code to apply the same class to different data types. For example, we might have a list-like data structure which we would like to use for lists of various types. The code below imple­ ments this with the Shiftedlist class.
+Templates are a way of reusing code to apply the same class to different data types. For example, we might have a list-like data structure which we would like to use for lists of various types. The code below implements this with the ShiftedList class.
 
 ```C
 1 	template  <class T>class ShiftedList  {
 2 		T* array;
 3 		int  offset,  size;
 4 	public:
-5 		Shiftedlist(int sz)  :   offset(0),  size(sz) {
+5 		ShiftedList(int sz)  :   offset(0),  size(sz) {
 6 			array =  new  T[size];
 7 		}
 8	
-9 		~Shiftedlist()  {
+9 		~ShiftedList()  {
 10			delete  [] array;
 11		}
 12	
@@ -301,11 +301,11 @@ Templates are a way of reusing code to apply the same class to different data ty
 15		}
 16	
 17		T  getAt(int i) {
-18			return array[convertindex(i)];
+18			return array[convertIndex(i)];
 19		}
 20	
 21		void  setAt(T  item,  int i) {
-22			array[convertindex(i)]  =  item;
+22			array[convertIndex(i)]  =  item;
 23		}
 24	
 25	private:
@@ -323,7 +323,7 @@ Interview Questions
 
 ---
  
-**12.1    Last K Lines:** Write a method to print the last Klines of an input file using C++.
+**12.1    Last K Lines:** Write a method to print the last K lines of an input file using C++.
 
 SOLUTION
 
@@ -356,7 +356,7 @@ The code below implements this algorithm.
 6	
 7 		/* read file  line by   line into circular array  */
 8 		/* peek()  so an EOF   following  a line ending is not  considered a  separate  line */
-9 		while  (file.peek()  !=  EOF) {
+9 		while (file.peek()  !=  EOF) {
 10			getline(file,   L[size % K]);
 11			size++;
 12		}
@@ -366,7 +366,7 @@ The code below implements this algorithm.
 16		int count =  min(K, size);
 17	
 18		/* print  elements in the order they were   read */
-19		for  (inti =  0;  i <  count;  i++)  {
+19		for (int i =  0;  i <  count;  i++)  {
 20			cout <<  L[(start +  i) %   K]  <<  endl;
 21		}
 22	}
@@ -374,7 +374,7 @@ The code below implements this algorithm.
 
 This solution will require reading in the whole file, but only ten lines will be in memory at any given point.
 
-**12.2     Reverse String:** Implement a function void  reversetchar* str) in C or C++ which reverses a null­ terminated string.
+**12.2     Reverse String:** Implement a function void  reverse(char* str) in C or C++ which reverses a null-terminated string.
 
 SOLUTION
 
@@ -417,7 +417,7 @@ SOLUTION
 
 In a hash  table, a value  is stored by calling  a hash  function on a key. Values are not  stored in sorted order. Additionally, since  hash tables use  the  key to find  the  index that will store the  value,  an insert  or lookup can be done in amortized O(1) time (assuming few collisions  in the  hash table).  In a hash table, one must also handle potential collisions. This is often done by chaining, which means to create a linked list of all the values  whose keys map  to a particular index.
 
-An STL map inserts the key/value pairs into a binary search tree based on the keys. There is no need to handle collisions, and, since the tree is balanced, the insert andlookup time is guaranteed to be O(log N).
+An STL map inserts the key/value pairs into a binary search tree based on the keys. There is no need to handle collisions, and, since the tree is balanced, the insert and lookup time is guaranteed to be O(log N).
 
 **How is a hash table implemented?**
 
@@ -429,9 +429,9 @@ To summarize, the hash table will be implemented with an array of linked lists, 
 
 1. We want to use a good hash function to ensure that the keys are well distributed. If they are not well distributed, then we would get a lot of collisions and the speed to find an element would decline.
 
-2.  No matter how good our hash function is, we will still have collisions, so we need a method for handling them. This often means chaining via a linked list, but it's not the only way.
+2. No matter how good our hash function is, we will still have collisions, so we need a method for handling them. This often means chaining via a linked list, but it's not the only way.
 
-3.  We may also wish to implement  methods  to dynamically increase or decrease  the  hash table  size depending on capacity. For example, when the ratio of the number of elements to the table size exceeds a certain threshold, we may wish to increase the hash table size. This would mean creating a new hash table and transferring the entries from the old table to the new table. Because this is an expensive opera­ tion, we want to be careful to not do it too often.
+3. We may also wish to implement  methods  to dynamically increase or decrease  the  hash table  size depending on capacity. For example, when the ratio of the number of elements to the table size exceeds a certain threshold, we may wish to increase the hash table size. This would mean creating a new hash table and transferring the entries from the old table to the new table. Because this is an expensive operation, we want to be careful to not do it too often.
 
 **What  can be used instead of a hash table, if the number of inputs  is small?**
 
@@ -504,7 +504,7 @@ An example of shallow and  deep copy is below.
 12	}
 ```
 
-Note that shallow_copy may cause a lot of programming runtime errors, especially with the creation and deletion of objects. Shallow copy  should be used very carefully  and  only when a programmer really under­ stands what he wants to do. In most cases,  shallow copy  is used when there is a need to pass  information about a complex structure without actual duplication of data.  One must also be careful with destruction of objects in a shallow copy.
+Note that shallow_copy may cause a lot of programming runtime errors, especially with the creation and deletion of objects. Shallow copy  should be used very carefully  and  only when a programmer really understands what he wants to do. In most cases,  shallow copy  is used when there is a need to pass  information about a complex structure without actual duplication of data.  One must also be careful with destruction of objects in a shallow copy.
 
 In real life, shallow copy is rarely used.  Deep copy  should be used in most cases, especially when the  size of the  copied structure is small.
 
@@ -552,7 +552,7 @@ At first glance, our code appears to loop infinitely. The compiler may try to op
 5            goto start;
 6   }
 ```
-This becomes an infinite loop. However, an external operation might write 'O'to the location of variable opt, thus breaking the loop.
+This becomes an infinite loop. However, an external operation might write 'O' to the location of variable opt, thus breaking the loop.
 
 To prevent the compiler from performing such optimization, we want to signal that another element of the system could change the variable. We do this using the volatile keyword, as shown below.
 ```c
@@ -589,11 +589,11 @@ Let's think about why we have virtual methods to start with. Suppose we have the
 12	p->f();
 ```
 
-Calling p->f() will result in a call to Foo: :f(). This is because pis a pointer to Foo, and f() is not virtual.
+Calling p->f() will result in a call to Foo::f(). This is because p is a pointer to Foo, and f() is not virtual.
 
 To ensure that p->f() will invoke the most derived implementation of f(), we need to declare f() to be a virtual function.
 
-Now, let's go back to our destructor. Destructors are used to clean up memory  and resources. If Foo's destructor were not virtual, then Foo's destructor would be called, even when pis really of type Bar.
+Now, let's go back to our destructor. Destructors are used to clean up memory  and resources. If Foo's destructor were not virtual, then Foo's destructor would be called, even when p is really of type Bar.
 
 This is why we declare destructors to be virtual; we want to ensure that the destructor for the most derived class is called.
 
@@ -605,7 +605,7 @@ SOLUTION
 
 ---
 
-The algorithm will maintain a mapping from a node address in the original structure to the corresponding node in the new structure.This mapping will allow us to discover previously copied nodes during a tradi­ tional depth-first traversal of the structure. Traversals often mark visited nodes-the mark can take many forms and does not necessarily need to be stored in the node.
+The algorithm will maintain a mapping from a node address in the original structure to the corresponding node in the new structure. This mapping will allow us to discover previously copied nodes during a traditional depth-first traversal of the structure. Traversals often mark visited nodes-the mark can take many forms and does not necessarily need to be stored in the node.
 
 Thus, we have a simple recursive algorithm:
 ```c
@@ -641,11 +641,11 @@ SOLUTION
 
 ---
 
-A smart pointer is the same as a normal pointer, but it provides safety via automatic memory management. It avoids issues like dangling pointers, memory leaks and allocation failures. The smart pointer must main­ tain a single reference count for all references to a given object.
+A smart pointer is the same as a normal pointer, but it provides safety via automatic memory management. It avoids issues like dangling pointers, memory leaks and allocation failures. The smart pointer must maintain a single reference count for all references to a given object.
 
 This is one of those problems that seems at first glance pretty overwhelming, especially if you're  not a C++ expert. One useful way to approach the problem is to divide the problem into two parts: (1) outline  the pseudocode and approach and then (2) implement the detailed code.
 
-In terms of the approach, we need a reference count variable that is incremented when we add a new refer­ ence to the object and decremented when we remove a reference. The code should look something like the below pseudocode:
+In terms of the approach, we need a reference count variable that is incremented when we add a new reference to the object and decremented when we remove a reference. The code should look something like the below pseudocode:
 
 ```c
 1	template   <class  T>  class SmartPointer {
@@ -676,7 +676,7 @@ We know we need constructors and a single destructor for this class, so let's ad
 15			* object.  */
 16		}
 ```
-There's one additional way that referencescan becreated: by setting one SmartPointer equal to another. We'll want to override the equal operator to handle this, but for now, let's sketch the code like this.
+There's one additional way that reference scan be created: by setting one SmartPointer equal to another. We'll want to override the equal operator to handle this, but for now, let's sketch the code like this.
 ```c
 1   onSetEquals(SmartPoint<T>  ptrl, SmartPoint<T> ptr2) {
 2      /*  If ptrl has  an existing value,   decrement  its  reference count.   Then,  copy the
@@ -747,7 +747,6 @@ The code for this problem is complicated, and you probably wouldn't be expected 
 ```
 EXAMPLE
 align_malloc(1000, 128) will return a memory address that is a multiple of 128 and that points to memory of size 1000 bytes.
-
 aligned_free() will free memory allocated by align_malloc.
 ```
 
@@ -836,7 +835,7 @@ Observe how, in the above code, we've told rowptr where exactly each index shoul
 To free this memory, we cannot simply  call free on rowptr. We need to make sure  to free not  only the memory from the  first malloc call, but  also each subsequent call.
 ```c
 1	void  my2DDealloc(int** rowptr,   int  rows) {
-2		for (i =  0;   i <   rows; i++)  {
+2		for (i =  0; i < rows; i++)  {
 3			free(rowptr[i]);
 4		}
 5		free(rowptr);
@@ -853,18 +852,18 @@ To implement this solution, we do the following.
 1 	int** my2DA1loc(int rows,  int cols) {
 2 		int i;
 3 		int  header =  rows   *  sizeof(int*);
-4 		int  data = rows   *  cols *  sizeof(int);
+4 		int  data = rows * cols *  sizeof(int);
 5 		int**  rowptr =  (int**)malloc(header +  data);
 6 		if (rowptr ==  NULL) return NULL;
 7
 8 		int* buf =  (int*)  (rowptr +  rows);
-9 		for (i =  0;   i <   rows; i++)  {
-10			rowptr[i]  =  buf   +  i *  cols;
+9 		for (i =  0; i < rows; i++)  {
+10			rowptr[i]  =  buf +  i *  cols;
 11		}
 12		return rowptr;
 13	}
 ```
-You should carefully  observe what is happening on lines 11 through 13. lf there are five rows of six columns each,  array[0] will point to array[S], array[1] will point to array[11], and  so on.
+You should carefully  observe what is happening on lines 11 through 13. If there are five rows of six columns each,  array[0] will point to array[S], array[1] will point to array[11], and  so on.
 
 Then,  when we  actually call array[1][3], the  computer looks  up  array[1], which is a  pointer to another spot in memory-specifically, a pointer to array[5]. This element is treated as its own array, and we then get  the  third  (zero-indexed) element from it.
 

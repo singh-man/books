@@ -16,7 +16,7 @@ But in addition, interviewers want to test the following:
 - *Big Picture Understanding:* Are you a person who understands  what the software is really about? Can you prioritize test cases properly? For example, suppose you're asked to test an e-commerce system like Amazon. It's great to make sure that the product images appear in the right place, but it's even more important that payments work reliably, products are added to the shipment queue, and customers are never double charged.
 - *Knowing How the Pieces Fit Together:* Do you understand  how software works, and how it might fit into a greater ecosystem? Suppose you're asked to test Google Spreadsheets. It's important  that you test opening, saving, and editing documents. But, Google Spreadsheets is part of a larger ecosystem. You need to test integration with Gmail, with plug-ins, and with other components.
 - *Organization:* Do you approach the problem in a structured manner, or do you just spout off anything that comes to your head? Some candidates, when asked to come up with test cases for a camera, will just state anything and everything that comes to their head. A good candidate will break down the parts into categories like Taking Photos, Image Management, Settings, and so on. This structured approach will also help you to do a more thorough job creating the test cases.
-- *Practicality:* Can you actually create reasonable testing plans? For example, if a user reports that the software crashes when they open a specific image, and you just tell them to reinstall the software, that's typically not very practical. Your testing plans need to be feasible and realistic for a company to imple­ ment.
+- *Practicality:* Can you actually create reasonable testing plans? For example, if a user reports that the software crashes when they open a specific image, and you just tell them to reinstall the software, that's typically not very practical. Your testing plans need to be feasible and realistic for a company to implement.
 
 Demonstrating these aspects will show that you will be a valuable member of the testing team.
 
@@ -47,7 +47,7 @@ The bounds also extend to environmental factors as well. For example, should the
 
 No product is fail-proof, so analyzing failure conditions  needs to be part of your testing. A good discussion to have with your interviewer is about when it's acceptable (or even necessary) for the product  to fail, and what failure should mean.
 
-For example, if you were testing a laundry machine, you might decide that the machine should be able to handle at least 30 shirts or pants. Loading 30 - 45 pieces of clothing may result in minor failure, such as the clothing being inadequately cleaned. At more than 45 pieces of clothing, extreme failure might be accept­ able. However, extreme failure in this case should probably mean the machine never turning on the water. It should certainly not mean a flood or a fire.
+For example, if you were testing a laundry machine, you might decide that the machine should be able to handle at least 30 shirts or pants. Loading 30 - 45 pieces of clothing may result in minor failure, such as the clothing being inadequately cleaned. At more than 45 pieces of clothing, extreme failure might be acceptable. However, extreme failure in this case should probably mean the machine never turning on the water. It should certainly not mean a flood or a fire.
 
 **Step 5: How would you perform the testing?**
 
@@ -60,7 +60,7 @@ Testing a piece of software is actually very similar to testing a real world obj
 
 Note that software testing has two core aspects to it:
 
-- *Manual  vs. Automated Testing:* In an ideal world, we might love to automate everything, but that's rarely feasible. Some things are simply much better with manual testing because some features are too quali­ tative for a computer to effectively examine (such as if content represents pornography). Additionally, whereas a computer can generally recognize only issues that it's been told to look for, human observa­ tion may reveal new issues that haven't been specifically examined. Both humans and computers form an essential part of the testing process.
+- *Manual  vs. Automated Testing:* In an ideal world, we might love to automate everything, but that's rarely feasible. Some things are simply much better with manual testing because some features are too qualitative for a computer to effectively examine (such as if content represents pornography). Additionally, whereas a computer can generally recognize only issues that it's been told to look for, human observation may reveal new issues that haven't been specifically examined. Both humans and computers form an essential part of the testing process.
 - *Black Box Testing vs. White Box Testing:* This distinction refers to the degree of access we have into the software. In black box testing, we're just given the software as-is and need to test it. With white box testing, we have additional  programmatic  access to test individual functions. We can also automate some black box testing, although it's certainly much harder.
 
 Let's walk through an approach from start to end.
@@ -78,7 +78,8 @@ Software typically has one or more target users, and  the features are designed 
 In the software blocking scenario, the use cases of the parents include installing the software, updating controls, removing controls, and of course their own personal internet usage. For the children, the use cases include accessing legal content as well as "illegal" content.
 
 Remember that it's not up to you to just magically decide the use cases. This is a conversation to have with your interviewer.
-**###### Step 4: What are  the bounds of use?**
+
+**Step 4: What are  the bounds of use?**
 
 Now that we have the vague use cases defined, we need to figure out what exactly this means. What does it mean for a website to be blocked? Should just the "illegal" page be blocked, or the entire website? Is the application supposed to "learn" what is bad content, or is it based on a white list or black list? If it's supposed to learn what inappropriate content is, what degree of false positives or false negatives is acceptable?
 
@@ -109,7 +110,7 @@ Suppose you were asked to write code to test sort (int[] array), which sorts an 
 
 In general, you should think about the following types of test cases:
 
-- *The normal case:* Does it generate the correct output for typical inputs? Remember to think about poten­ tial issues here. For example, because sorting  often  requires some sort of partitioning, it's reasonable to think that the algorithm might fail on arrays with an odd number of elements, since they can't be evenly partitioned. Your test case should list both examples.
+- *The normal case:* Does it generate the correct output for typical inputs? Remember to think about potential issues here. For example, because sorting  often  requires some sort of partitioning, it's reasonable to think that the algorithm might fail on arrays with an odd number of elements, since they can't be evenly partitioned. Your test case should list both examples.
 - *The extremes:* What happens  when you pass in an empty array? Or a very small (one element)  array? What if you pass in a very large one?
 - *Nulls and "illegal" input:* It is worthwhile  to think about how the code should behave when given illegal input. For example, if you're testing a function to generate the nth Fibonacci number, your test cases should probably include the situation where n is negative.
 - *Strange input:* A fourth kind of input sometimes comes up: strange input. What happens when you pass in an already sorted array? Or an array that's sorted in reverse order?
@@ -137,7 +138,7 @@ Once you have the test cases and results defined, writing the code to implement 
 
 ### Troubleshooting Questions
 
-A final type of question is explaining how you would debug or troubleshoot an existing issue. Many candi­ dates balk at a question like this, giving unrealistic answers like "reinstall the software". You can approach these questions in a structured manner, like anything else.
+A final type of question is explaining how you would debug or troubleshoot an existing issue. Many candidates balk at a question like this, giving unrealistic answers like "reinstall the software". You can approach these questions in a structured manner, like anything else.
 
 Let's walk through this problem with an example: You're working on the Google Chrome team when you receive a bug report: Chrome crashes on launch. What would you do?
 
@@ -194,13 +195,13 @@ There are two mistakes in this code.
  
 First, note that an unsigned  int is, by definition, always greater than or equal to zero. The for loop condi­tion will therefore always be true, and it will loop infinitely.
 
-The correct code to print all numbers from 100 to l, is i >   0. If we truly wanted to print zero, we could add an additional printf statement after the for loop.
+The correct code to print all numbers from 100 to l, is i > 0. If we truly wanted to print zero, we could add an additional printf statement after the for loop.
 ```
 1     unsigned inti;
 2      for (i =  100; i >   0; --i)
 3           printf("%d\n",  i);
 ```
-One additional correction is to use%u in place of%d, as we are printing unsigned  int.
+One additional correction is to use %u in place of %d, as we are printing unsigned  int.
 ```
 1     unsigned inti;
 2      for (i =   100; i >  0; --i)
@@ -289,7 +290,7 @@ To perform load testing, we  must first identify the performance critical scenar
 
 Then, we design tests to simulate the load, taking care to measure each of these criteria.
 
-In the absence of formal  testing tools,  we  can  basically  create our  own.  For example, we could simulate concurrent users by creating thousands of virtual  users.  We would write  a multi-threaded program with thousands of threads, where each thread acts as a real-world user loading the page.  For each user, we would programmatically measure response time, data I/O, etc.
+In the absence of formal  testing tools,  we  can  basically create our own. For example, we could simulate concurrent users by creating thousands of virtual  users.  We would write  a multi-threaded program with thousands of threads, where each thread acts as a real-world user loading the page.  For each user, we would programmatically measure response time, data I/O, etc.
 
 We would then analyze the results based on the data gathered during the tests and  compare it with  the accepted values.
 
@@ -312,7 +313,7 @@ To illustrate the technique in this problem, let us guide you through a mock con
 - **Interviewer:** Probably children.
 - **Candidate:** Okay, that's interesting. What will they be doing with it? Will they be writing, drawing, or doing something else with it?
 - **Interviewer:** Drawing.
-- **Candidate:** Okay, great. On what? Paper?Clothing?Walls?
+- **Candidate:** Okay, great. On what? Paper? Clothing? Walls?
 - **Interviewer:** On clothing.
 - **Candidate:** Great. What kind of tip does the pen have? Felt? Ballpoint? Is it intended to wash off, or is it intended to be permanent?
 - **Interviewer:** It's intended to wash off. 
@@ -331,7 +332,7 @@ Consider what the different components of the object or problem, and go from the
 - *Intended use:* Drawing. Does the pen write properly on clothing?
 - *Intended use:* Washing. Does it wash off of clothing (even if it's been there for an extended period of time)? Does it wash off in hot warm and cold water?
 - *Safety:* Is the pen safe (non-toxic) for children?
-- *Unintended uses:* How else might children use the pen?They might write on other surfaces, so you need to check whether the behavior there is correct. They might also stomp on the pen, throw it, and so on.
+- *Unintended uses:* How else might children use the pen? They might write on other surfaces, so you need to check whether the behavior there is correct. They might also stomp on the pen, throw it, and so on.
 
 You'll need to make sure that the pen holds up under these conditions.
 

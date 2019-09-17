@@ -59,7 +59,7 @@ For example:
 22  
 23      /*  waits  until above thread counts  to  5 (slowly)  */
 24      while (instance.count  != 5)   {
-25          try   {
+25          try {
 26              Thread.sleep(250);
 27          }  catch  (InterruptedException exc)  {
 28              exc.printStackTrace();
@@ -89,7 +89,7 @@ The below code provides an example of this.
 9                   System.out.println("In Thread, count is " + count);
 10                  count++;
 11              }
-12          }  catch  (InterruptedException exc)  {
+12          }  catch (InterruptedException exc)  {
 13              System.out.println("Thread interrupted.");
 14          }
 15          System.out.println("Thread  terminating.");
@@ -97,11 +97,11 @@ The below code provides an example of this.
 17  }
 18  
 19  public  class  ExampleB {
-20      public  static void main(String args[])  {
+20      public static void main(String args[])  {
 21          ThreadExample instance  =  new ThreadExample();
 22          instance.start();
 23  
-24          while  (instance.count !=  5) {
+24          while (instance.count !=  5) {
 25              try  {
 26                  Thread.sleep(250);
 27              }  catch (InterruptedException exc) {
@@ -131,7 +131,7 @@ The keyword synchronized and the lock form the basis for implementing synchroniz
 
 **Synchronized Methods**
 
-Most commonly, we restrict access to shared resources through the use of the synchronized keyword.  It can be applied to methods and code blocks, and restricts multiple threads from executing the code simul­ taneously on the same object.
+Most commonly, we restrict access to shared resources through the use of the synchronized keyword.  It can be applied to methods and code blocks, and restricts multiple threads from executing the code simultaneously on the same object.
 
 To clarify the last point, consider the following code:
 ```java
@@ -161,7 +161,7 @@ To clarify the last point, consider the following code:
 24      }
 25  }
 ```
-Can two instances of MyClass call foo at the same time? It d epends. If they have the same instance of MyObject, then no. But, if they hold different references, then the a nswer is yes.
+Can two instances of MyClass call foo at the same time? It depends. If they have the same instance of MyObject, then no. But, if they hold different references, then the answer is yes.
 ```java
 1    /*   Difference references  -  both  threads can  call  MyObject.foo() */
 2   MyObject objl  =  new MyObject();
@@ -180,7 +180,7 @@ Can two instances of MyClass call foo at the same time? It d epends. If they hav
 15  thread2.start()
 ```
 
-Static methods synchronize on the class lock. The two threads above could not simultaneously execute synchronized static methods on thesame class, even if one is calling foo and the other is calling bar.
+Static methods synchronize on the class lock. The two threads above could not simultaneously execute synchronized static methods on the same class, even if one is calling foo and the other is calling bar.
 
 ```java
 1   public class MyClass extends Thread   {
@@ -225,7 +225,7 @@ Similarly, a block of code can be synchronized. This operates very similarly to 
 13  }
 ```
 
-Like synchronizing a method, only one thread per instance of MyObj ect can execute the code within the synchronized block. That means that if thread1 and thread2 have the same instance ofMyObject, only one will be allowed to execute the code block at a time.
+Like synchronizing a method, only one thread per instance of MyObject can execute the code within the synchronized block. That means that if thread1 and thread2 have the same instance of MyObject, only one will be allowed to execute the code block at a time.
 
 
 **Locks**
@@ -281,8 +281,7 @@ A deadlock is a situation where a thread is waiting for an object lock that anot
 In order for a deadlock to occur, you must have all four of the following conditions met:
 
 1. *Mutual Exclusion:* Only one process can access a resource at a given time. (Or, more accurately, there is limited access to a resource. A deadlock could also occur if a resource has limited quantity.)
-2. *Hold and Wait:* Processes already holding a resource can request additional resources, without relin­
-quishing their current resources.
+2. *Hold and Wait:* Processes already holding a resource can request additional resources, without relin­quishing their current resources.
 3. *No Preemption:* One process cannot forcibly remove another process' resource.
 4. *Circular Wait:* Two or more processes form a circular chain where each process is waiting on another resource in the chain.
 
@@ -329,7 +328,7 @@ Let's take an easy example: Assume there are only two processes, P₁ and P₂.
 
 P₁ is executing and P₂ is waiting for execution. At some point, the operating system must swap P₁ and P₂- let's assume it happens  at the Nth instruction of P₁. If tₓ,ₖ  indicates the timestamp in microseconds of the kth instruction of process x, then the context switch would take t₂,₁  -  t₁,ₙ microseconds.
 
-The tricky part is this: how do we know when this swapping occurs? We cannot, of course, record the time­ stamp of every instruction in the process.
+The tricky part is this: how do we know when this swapping occurs? We cannot, of course, record the timestamp of every instruction in the process.
 
 Another issue is that  swapping  is governed  by the scheduling algorithm of the operating  system and there may be many kernel level threads which are also doing context switches. Other processes could be contending  for the CPU or the kernel handling interrupts. The user does not have any control over these extraneous context switches. For instance, if at time t₁,ₙ the kernel decides to handle an interrupt, then the context switch time would be overstated.
 
@@ -342,7 +341,7 @@ A context switch results and the task scheduler must select another process to r
 To summarize, an iteration of the game is played with the following steps:
 
 1. P₂ blocks awaiting data from P₁.
-2. P₁ marks the start time.marks the start time.
+2. P₁ marks the start time.
 3. P₁ sends token to P₂.
 4. P₁ attempts to read a response token from P₂. This induces a context switch.
 5. P₂ is scheduled and receives the token.
@@ -407,20 +406,20 @@ First, let's implement a simple simulation of the dining philosophers problem in
 29          putDown();
 30      }
 31  
-32      public void  pickUp()  {
+32      public void pickUp()  {
 33          left.pickup();
 34          right.pickUp();
 35      }
 36  
-37      public void  chew()  {}
+37      public void chew()  {}
 38  
-39      public void  putDown() {
+39      public void putDown() {
 40          right.putDown();
 41          left.putDown();
 42      }
 43  
 44      public void  run() {
-45          for  (int i = 0;  i <   bites; i++)  {
+45          for (int i = 0;  i < bites; i++)  {
 46              eat();
 47          }
 48      }
@@ -452,12 +451,12 @@ To prevent deadlocks, we can implement a strategy where a philosopher will put d
 16          }
 17      }
 18  
-19      public   boolean  pickUp()  {
+19      public boolean  pickUp()  {
 20          /*  attempt  to pick  up */
 21          if (!left.pickup()) {
 22              return false;
 23          }
-24          if  (!right.pickup()) {
+24          if (!right.pickup()) {
 25              left.putDown();
 26              return false;
 27          }
@@ -472,7 +471,7 @@ One issue  with  this is that if all the  philosophers were  perfectly synchroni
 
 **Solution #2: Prioritized Chopsticks**
 
-Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Each philosopher attempts to pick up the  lower numbered chopstick first.This essentially means that each philosopher goes for the  left chopstick before right one  (assuming that's the  way you labeled it), except for the  last philosopher who does this in reverse. This will break the cycle.
+Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Each philosopher attempts to pick up the  lower numbered chopstick first. This essentially means that each philosopher goes for the  left chopstick before right one  (assuming that's the  way you labeled it), except for the  last philosopher who does this in reverse. This will break the cycle.
 ```java
 1   public class  Philosopher  extends Thread {
 2       private int bites =  10;
@@ -495,14 +494,14 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Eac
 19          putDown();
 20      }
 21  
-22      public  void pickUp() {
+22      public void pickUp() {
 23          lower.pickup();
 24          higher.pickup();
 25      }
 26  
-27      public  void  chew() {  ... }
+27      public void chew() {  ... }
 28  
-29      public  void  putDown() {
+29      public void putDown() {
 30          higher.putDown();
 31          lower.putDown();
 32      }
@@ -514,7 +513,7 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Eac
 38      }
 39  }
 40  
-41  public  class  Chopstick {
+41  public class Chopstick {
 42      private Lock lock;
 43      private int  number;
 44  
@@ -523,15 +522,15 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Eac
 47          this.number =  n;
 48      }
 49  
-50      public  void  pickup() {
+50      public void pickup() {
 51          lock.lock();
 52      }
 53  
-54      public  void  putDown()  {
+54      public void putDown()  {
 55          lock.unlock();
 56      }
 57  
-58      public int  getNumber()   {
+58      public int getNumber()   {
 59          return number;
 60      }
 61  }
@@ -562,11 +561,11 @@ C locks 5,  waits on  2
 ```
 We can think about this as a graph, where 2 is connected  to 3, 3 is connected  to 5, and 5 is connected to 2. A deadlock is represented  by a cycle. An edge  (w, v) exists in the graph if a process declares that it will request lock v immediately after lock w. For the earlier example, the following edges would exist in the graph: (1, 2),  (2, 3),  (3, 4),  (1, 3),  (3, 5),  (7, 5),  (5, 9),  (9,  2).The "owner" of the edge does not matter.
 
-This class will need a declare method, which threads and processes will use to declare what order they will request resources in. This declare method  will iterate through the declare order, adding each contig­ uous pair of elements (v, w) to the graph. Afterwards, it will check to see if any cycles have been created. If any cycles have been created, it will backtrack, removing these edges from the graph, and then exit.
+This class will need a declare method, which threads and processes will use to declare what order they will request resources in. This declare method  will iterate through the declare order, adding each contiguous pair of elements (v, w) to the graph. Afterwards, it will check to see if any cycles have been created. If any cycles have been created, it will backtrack, removing these edges from the graph, and then exit.
 
-We have one final component to discuss: how do we detect  a cycle? We can detect a cycle by doing a depth-first search through each c onnected component  (i.e., each connected  part of the graph). Complex algorithms exist to find all the connected  components  of a graph, but our work in this problem does not require this degree of complexity.
+We have one final component to discuss: how do we detect  a cycle? We can detect a cycle by doing a depth-first search through each connected component  (i.e., each connected  part of the graph). Complex algorithms exist to find all the connected  components  of a graph, but our work in this problem does not require this degree of complexity.
 
-We know that if a cycle was created, one of our new edges must be to blame. Thus, as long as our depth­ first search touches all of these edges at some point, then we know that we have fully searched for a cycle.
+We know that if a cycle was created, one of our new edges must be to blame. Thus, as long as our depth-first search touches all of these edges at some point, then we know that we have fully searched for a cycle.
 
 The pseudocode for this special case cycle detection looks like this:
 ```
@@ -605,7 +604,7 @@ The code below provides further details. For simplicity, we assume that all lock
          * call the   locks in */
         private HashMap<Integer, LinkedList<LockNode>> lockOrder;
     
-        private LockFactory(int count) {  ...}
+        private LockFactory(int count) { ...}
         public static LockFactory getinstance() { return instance; }
     
         public static synchronized LockFactory initialize(int count) {
@@ -630,7 +629,7 @@ The code below provides further details. For simplicity, we assume that all lock
         /*To prevent  deadlocks, force  the  processes to  declare  upfront what order  they
          * will  need the  locks  in. Verify  that this order  does  not  create a  deadlock  (a
          * cycle  in  a  directed graph) */
-        public boolean declare(int ownerid, int[] resourcesinOrder) {
+        public boolean declare(int ownerId, int[] resourcesinOrder) {
             HashMap<Integer, Boolean> touchedNodes = new HashMap<Integer, Boolean>();
     
             /*add  nodes to  graph*/
@@ -661,15 +660,15 @@ The code below provides further details. For simplicity, we assume that all lock
                 LockNode resource = locks[resourcesinOrder[i]];
                 list.add(resource);
             }
-            lockOrder.put(ownerid, list);
+            lockOrder.put(ownerId, list);
     
             return true;
         }
     
         /*  Get the  lock,   verifying first that the  process   is really calling the  locks  in
          * the  order  it said   it would. */
-        public Lock getLock(int ownerid, int resourceID) {
-            LinkedList<LockNode> list = lockOrder.get(ownerid);
+        public Lock getLock(int ownerId, int resourceID) {
+            LinkedList<LockNode> list = lockOrder.get(ownerId);
             if (list == null) return null;
     
             LockNode head = list.getFirst();
@@ -747,7 +746,7 @@ public  class  Foo {
     public  void third() {   ... }
 }
 ```
-The same instance of Foo will be passed to three different threads. ThreadA will call first threadB will call second, and thread( will call third. Design a mechanism to ensure that first is called before second and second is called before third.
+The same instance of Foo will be passed to three different threads. ThreadA will call first threadB will call second, and threadC will call third. Design a mechanism to ensure that first is called before second and second is called before third.
 
 SOLUTION
 
@@ -799,7 +798,7 @@ What about using a lock to do something like the below code?
 ``` 
 
 
-This code won't actually quite work due to the concept of lock ownership. One thread is actually performing the lock (in the FooBad constructor), but different threads attempt to unlock the locks. This is not allowed, and your code will raise an exception. A lock in Java is owned by the same threadwhich locked it.
+This code won't actually quite work due to the concept of lock ownership. One thread is actually performing the lock (in the FooBad constructor), but different threads attempt to unlock the locks. This is not allowed, and your code will raise an exception. A lock in Java is owned by the same thread which locked it.
 
 Instead, we can replicate this behavior with semaphores. The logic is identical.
 ```java
@@ -842,8 +841,7 @@ Instead, we can replicate this behavior with semaphores. The logic is identical.
 37  }
 ```
 
-**15.6  Synchronized Methods:** You are given a class with synchronized method A    and a normal method B. If you have two threads in one instance of a program, can they both execute A at the same time? Can they execute A and B at the same time?
-pg 180
+**15.6  Synchronized Methods:** You are given a class with synchronized method A and a normal method B. If you have two threads in one instance of a program, can they both execute A at the same time? Can they execute A and B at the same time?
 
 SOLUTION
 
@@ -853,7 +851,7 @@ By applying the word synchronized to a method, we ensure that two threads cannot
 
 So, the answer to the first part really depends. If the two threads have the same instance of the object, then no, they cannot simultaneously execute method A. However,  if they have different instances of the object, then they can.
 
-Conceptually, you can see this by considering  locks. A synchronized method applies a "lock" on all synchro­ nized methods in that instance of the object. This blocks other threads from executing synchronized methods within that instance.
+Conceptually, you can see this by considering  locks. A synchronized method applies a "lock" on all synchronized methods in that instance of the object. This blocks other threads from executing synchronized methods within that instance.
 
 In the second part, we're asked if  thread1 can execute synchronized method  A while thread2 is executing non-synchronized method B. Since  B is not synchronized, there is nothing to block thread1 from executing A while  thread2 is executing B. This is true regardless of whether thread1 and thread2 have the same instance of the object.
 
@@ -871,7 +869,7 @@ Let's start off with implementing a single threaded version of FizzBuzz.
 
 **Single Threaded**
 
-Although this problem (in the single threaded version) shouldn't be hard, a lot of candidates overcompli­ cate it. They look for something "beautiful" that reuses the fact that the divisible by 3 and 5 case ("FizzBuzz") seems to resemble the individual cases ("Fizz" and "Buzz").
+Although this problem (in the single threaded version) shouldn't be hard, a lot of candidates overcomplicate it. They look for something "beautiful" that reuses the fact that the divisible by 3 and 5 case ("FizzBuzz") seems to resemble the individual cases ("Fizz" and "Buzz").
 
 In actuality, the best way to do it, considering readability and efficiency, is just the straightforward way.
 ```java
@@ -879,9 +877,9 @@ In actuality, the best way to do it, considering readability and efficiency, is 
 2       for (int i =  1;   i <=  n;  i++)  {
 3           if (i % 3  == 0  && i % 5  ==  0) {
 4               System.out.println("FizzBuzz");
-5           }  else if (i %   3  ==  0)  {
+5           }  else if (i % 3  ==  0)  {
 6               System.out.println("Fizz");
-7           }  else if (i  %   5  ==  0) {
+7           }  else if (i % 5  ==  0) {
 8               System.out.println("Buzz");
 9           }  else {
 10              System.out.println(i);
@@ -910,11 +908,11 @@ The code for this will look something like:
 8		}
 9	}
 ```
-We'll need to  add some synchronization in the  loop.  Otherwise, the  value  of current could change between lines 2 - 4 and lines 5 - 8, and we can inadvertently exceed the  intended bounds of the  loop. Addi­ tionally, incrementing is not  thread-safe.
+We'll need to  add some synchronization in the  loop.  Otherwise, the  value  of current could change between lines 2 - 4 and lines 5 - 8, and we can inadvertently exceed the  intended bounds of the  loop. Additionally, incrementing is not  thread-safe.
 
 To actually implement this concept, there are  many possibilities. One  possibility is to have four  entirely separate thread classes that share a reference to the current variable (which can be wrapped in an object).
 
-The  loop  for each thread is substantially similar. They just have different target values for the  divisibility checks,  and  different print values.
+The  loop  for each thread is substantially similar. They just have different target values for the  divisibility checks, and different print values.
 
 |                  | FizzBuzz | Fizz  | Buzz  | Number  |
 | --               | --       | --    | --    | --      |
@@ -1025,6 +1023,6 @@ Alternatively, if we're working in a language which supports this (Java 8 and ma
 39  }
 ```
 
-There are ofcourse many other ways of implementing this as well.
+There are of course many other ways of implementing this as well.
 
 

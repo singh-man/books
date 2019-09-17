@@ -26,14 +26,14 @@ The tricks in Column 3 are as follows:
 
 3. Think about this operation bit by bit. If you XOR a bit with its own negated value, you will always  get  1. Therefore, the  solution to a^(\~a) will be a sequence of 1s.
 
-4. \~0 is a sequence of 1s, so\~0  << 2 is 1s followed by two Os. ANDing that with another value  will clear the  last two bits of the  value.
+4. \~0 is a sequence of 1s, so\~0  << 2 is 1s followed by two 0s. ANDing that with another value  will clear the  last two bits of the  value.
 
 If you didn't see these tricks immediately, think about them logically.
 
 
 ### Bit Facts and Tricks
 
-The following expressions are useful  in bit manipulation. Don't just  memorize them, though; think deeply about why each of these is true. We use "1s" and "Os" to indicate a sequence of 1s or Os, respectively. 
+The following expressions are useful  in bit manipulation. Don't just  memorize them, though; think deeply about why each of these is true. We use "1s" and "0s" to indicate a sequence of 1s or 0s, respectively. 
 
 ```
 X  ^ 0s  =  X     X  &  0s    X  |  0s  =  X 
@@ -48,9 +48,9 @@ To understand these expressions, recall that these operations occur bit-by-bit, 
 
 Computers typically store integers in two's complement representation. A positive number is represented as itself while a negative number is represented as the two's complement of its absolute value (with a 1 in its sign bit to indicate that a negative value). The two's complement of an N-bit number (where N is the number of bits used for the number, excluding the sign bit) is the complement of the number with respect to 2ᴺ.
 
-Let's look at the 4-bit integer -3 as an example. If it's a 4-bit number, we have one bit for the sign and three bits for the value. We want the complement with respect to 2³,  which is 8. The complement of 3 (the abso­ lute value of -3) with respect to 8 is 5. 5 in binary is 101. Therefore, -3 in binary as a 4-bit number  is 1101, with the first bit being the sign bit.
+Let's look at the 4-bit integer -3 as an example. If it's a 4-bit number, we have one bit for the sign and three bits for the value. We want the complement with respect to 2³,  which is 8. The complement of 3 (the absolute value of -3) with respect to 8 is 5. 5 in binary is 101. Therefore, -3 in binary as a 4-bit number  is 1101, with the first bit being the sign bit.
 
-In other words, the binary representation of-K (negative K) as a N-bit number is c one at ( 1,  2ᴺ⁻¹  -  K). 
+In other words, the binary representation of-K (negative K) as a N-bit number is concat ( 1,  2ᴺ⁻¹  -  K). 
 
 Another way to look at this is that we invert the bits in the positive representation and then add 1. 3 is 011 in binary. Flip the bits to get 100, add 1 to get 101, then prepend the sign bit (1) to get 1101.
 
@@ -114,7 +114,7 @@ This method shifts 1 over by i bits, creating a value that looks like 00010000. 
 
 **Set Bit**
 
-Set Bit shifts  1 over byi  bits, creating a value like 00010000. By performing an OR with num, only the value at bit i will change. All other  bits of the mask are zero and will not affect num.
+Set Bit shifts  1 over by i  bits, creating a value like 00010000. By performing an OR with num, only the value at bit i will change. All other  bits of the mask are zero and will not affect num.
 
 ```java
 1	int setBit(int num, inti) {
@@ -124,7 +124,7 @@ Set Bit shifts  1 over byi  bits, creating a value like 00010000. By performing 
 
 **Clear Bit**
 
-This methodoperates in almost the reverse of setBit. First, we create a number like 11101111 by creating the reverse of it (00010000) and negating it. Then, we perform an AND with num. This will clear the ith bit and leave the remainder unchanged.
+This method operates in almost the reverse of setBit. First, we create a number like 11101111 by creating the reverse of it (00010000) and negating it. Then, we perform an AND with num. This will clear the ith bit and leave the remainder unchanged.
 
 ```java
 1	int clearBit(int num, int i) {
@@ -153,7 +153,7 @@ To clear all bits from i through 0 (inclusive), we take a sequence of all 1s (wh
 
 **Update Bit**
 
-To set the ith bit to a valuev, we first clear the bit at position i by using a mask that looks like 11101111. Then, we shift the intended  value, v, left by i bits. This will create a number with bit i equal tov and all other bits equal to 0. Finally, we OR these two numbers, updating the ith bit ifv is 1 and leaving it as 0 otherwise.
+To set the ith bit to a value v, we first clear the bit at position i by using a mask that looks like 11101111. Then, we shift the intended  value, v, left by i bits. This will create a number with bit i equal to v and all other bits equal to 0. Finally, we OR these two numbers, updating the ith bit if v is 1 and leaving it as 0 otherwise.
 
 ```java
 1	int  updateBit(int num, int i, boolean  bitIs1) {
@@ -171,10 +171,8 @@ Interview Questions
 
 Additional Questions: Arrays and Strings (#1.1, #1.4, #1.8), Math and Logic Puzzles  (#6.10), Recursion (#8.4, #8.14), Sorting and Searching (#10.7, #10.8), C++ (#12.10), ModerateProblems (#16.1, #16.7), Hard Problems (#17.1).
 
-Hints start on page 662.
 
-
-5.1 	**Insertion:** You are given two 32-bit numbers, N and M, and two bit positions, iand j. Write a method to insert  M into N such  that M starts at bit j and  ends at bit i. You can assume that the bits j through i have enough space to fit all of M. That  is, if M = 10011, you can assume that  there are at least  5 bits between j and  i. You would not, for example, have j = 3and i= 2, because Mcould  not  fully fit between bit 3 and  bit 2.
+5.1 	**Insertion:** You are given two 32-bit numbers, N and M, and two bit positions, i and j. Write a method to insert  M into N such  that M starts at bit j and  ends at bit i. You can assume that the bits j through i have enough space to fit all of M. That  is, if M = 10011, you can assume that  there are at least  5 bits between j and  i. You would not, for example, have j = 3and i= 2, because M could  not  fully fit between bit 3 and  bit 2.
 
 EXAMPLE 
 
@@ -191,7 +189,7 @@ This problem can be approached in three key steps:
 2. Shift M so that  it lines up with  bits j through i
 3. Merge M and N.
 
-The trickiest part is Step  1. How do we clear the  bits in N? We can do this with a mask. This mask will have all 1s, except for Os in the  bits j through i. We create this mask  by creating the  left half of the  mask first, and then the  right half.
+The trickiest part is Step  1. How do we clear the  bits in N? We can do this with a mask. This mask will have all 1s, except for 0s in the  bits j through i. We create this mask  by creating the  left half of the  mask first, and then the  right half.
 ```java
 1 	int  updateBits(int n, int  m,  int i, int j) {
 2 		/* Create a mask to clear bits i through j in n. EXAMPLE: i = 2, j = 4.  Result
@@ -211,7 +209,7 @@ The trickiest part is Step  1. How do we clear the  bits in N? We can do this wi
 16		int  n_cleared =  n  &  mask; //  Clear bits j through i.
 17		int  m_shifted =  m  <<  i; //  Move m   into  correct position.
 18	
-19		return  n_cleared  |   m_shifted; // OR  them, and we're done!
+19		return n_cleared | m_shifted; // OR  them, and we're done!
 20	}
 ```
 In a problem like this (and many bit manipulation problems), you should make sure to thoroughly test your code. It's extremely easy to wind up with off-by-one errors.
@@ -224,7 +222,7 @@ SOLUTION
 
 ---
  
-NOTE: When otherwise ambiguous, we'll use the subscripts x₂ and x₁₀ to indicate whether xis in base 2 or base 10.
+NOTE: When otherwise ambiguous, we'll use the subscripts x₂ and x₁₀ to indicate whether x is in base 2 or base 10.
  
 First, let's start off by asking ourselves what a non-integer number in binary looks like. By analogy to a decimal number, the binary number 0.101₂ would look like:
 
@@ -313,7 +311,7 @@ We can think about each integer as being an alternating sequence of 0s and 1s. W
 
 **Brute Force**
 
-One approach is to convert an integer into an array that reflects the lengths of the 0s and 1s sequences. For example, 11011101111 would be (reading from right to left) [0₀, 4₁, 1₀, 3₁, 2₁, 21₀]. The subscript reflects whether the integer corresponds to a Os sequence or a 1s sequence, but the actual solu­tion doesn't need this. It's a strictly alternating sequence, always starting with the Os sequence.
+One approach is to convert an integer into an array that reflects the lengths of the 0s and 1s sequences. For example, 11011101111 would be (reading from right to left) [0₀, 4₁, 1₀, 3₁, 2₁, 21₀]. The subscript reflects whether the integer corresponds to a 0s sequence or a 1s sequence, but the actual solu­tion doesn't need this. It's a strictly alternating sequence, always starting with the 0s sequence.
 
 Once we have this, we just walk through the array. At each 0s sequence, then we consider merging the adjacent 1s sequences if the 0s sequence has length 1.
 ```java
@@ -330,9 +328,9 @@ Once we have this, we just walk through the array. At each 0s sequence, then we 
 11		ArrayList<Integer>  sequences  =  new ArrayList<Integer>();
 12		
 13		int searchingFor = 0;
-14		int counter   =  0;
+14		int counter =  0;
 15		
-16		for  (int i =  0;  i < Integer.BYTES * 8;  i++)  {
+16		for (int i =  0;  i < Integer.BYTES * 8;  i++)  {
 17			if ((n  &  1)  != searchingFor)  {
 18				sequences.add(counter);
 19				searchingFor =  n &  1; // Flip  1 to  0 or  0 to  1
@@ -351,7 +349,7 @@ Once we have this, we just walk through the array. At each 0s sequence, then we 
 32	int  findlongestSequence(ArrayList<Integer> seq)  {
 33		int maxSeq = 1;
 34		
-35		for  (int i = 0;  i <  seq.size(); i += 2)   {
+35		for (int i = 0;  i <  seq.size(); i += 2)   {
 36			int zerosSeq  =  seq.get(i);
 37			int onesSeqRight =  i -  1 >=  0 ? seq.get(i - 1)  : 0;
 38			int onesSeqLeft = i +  1 <  seq.size() ?   seq.get(i +  1) : 0;
@@ -374,7 +372,7 @@ Once we have this, we just walk through the array. At each 0s sequence, then we 
 This is pretty good. It's O(b) time and O(b) memory, where b is the length of the sequence.
 
 
-> Be careful  with how you express the runtime. For example, if you say the runtime is O(n), what is n? It is not correct to say that this algorithm  is O(value of the integer). This algorithm is O(number of bits). For this reason, when you have potential ambiguity in what n might mean, it's bestjust to not use n. Then neither you nor your interviewer will be confused. Pick a different variable name. We used "b'; for the number of bits. Something logical works well.
+> Be careful  with how you express the runtime. For example, if you say the runtime is O(n), what is n? It is not correct to say that this algorithm is O(value of the integer). This algorithm is O(number of bits). For this reason, when you have potential ambiguity in what n might mean, it's best just to not use n. Then neither you nor your interviewer will be confused. Pick a different variable name. We used "b", for the number of bits. Something logical works well.
 
 
 Can we do better? Recall the concept of Best Conceivable Runtime. The B.C.R. for this algorithm is O(b) (since we'll always have to read through the sequence), so we know we can't optimize the time. We can, however, reduce the memory usage.
@@ -383,7 +381,7 @@ Can we do better? Recall the concept of Best Conceivable Runtime. The B.C.R. for
 
 To reduce the space usage, note that we don't need to hang on to the length of each sequence the entire time. We only need it long enough to compare each 1s sequence to the immediately preceding 1s sequence.
 
-Therefore, we canjust walk through the integer doing this, tracking the current 1s sequence length and the previous 1s sequence length. When we see a zero, update previous Length:
+Therefore, we can just walk through the integer doing this, tracking the current 1s sequence length and the previous 1s sequence length. When we see a zero, update previous Length:
 
 - If the next bit is a 1, previous Length  should be set to currentLength.
 - If the next bit is a 0, then we can't merge these sequences together. So, set previous Length to 0.
@@ -427,7 +425,7 @@ The terminology can be confusing for this problem. We'll call getNext the bigger
 
 **The Brute  Force Approach**
 
-An easy approach is simply brute force: count the number of 1s in n, and then increment (or decrement) until you find a number with the same number of 1s. Easy-but not terribly interesting. Can we do some­ thing a bit more optimal? Yes!
+An easy approach is simply brute force: count the number of 1s in n, and then increment (or decrement) until you find a number with the same number of 1s. Easy-but not terribly interesting. Can we do something a bit more optimal? Yes!
 
 Let's start with the code for getNext, and then move on to getPrev.
 
@@ -446,7 +444,7 @@ We know the following:
 
 1. If we flip a zero to a one, we must flip a one to a zero.
 2. When we do that, the number will be bigger if and only if the zero-to-one bit was to the left of the one­-to-zero bit.
-3. We want to make the number bigger, but not unnecessarily bigger.Therefore, we need to flip the right- most zero which has ones on the right of it.
+3. We want to make the number bigger, but not unnecessarily bigger. Therefore, we need to flip the right- most zero which has ones on the right of it.
 
 To put this in a different way, we are flipping the rightmost non-trailing zero. That is, using the above example, the trailing zeros are in the 0th and 1st spot. The rightmost non-trailing zero is at bit 7. Let's call this position p.
 
@@ -458,12 +456,11 @@ With this change, we have increased the size of n. But, we also have one too man
 
 We can shrink the number by rearranging all the bits to the right of bit p such that the 0s are on the left and the 1s are on the right. As we do this, we want to replace one of the 1s with a 0.
 
-A relatively easy way of doing this is to count how many ones are to the right of p, clear all the bits from
-0 until p, and then add back in c1-1 ones. Let c1 be the number of ones to the right of p and c0 be the number of zeros to the right of p.
+A relatively easy way of doing this is to count how many ones are to the right of p, clear all the bits from 0 until p, and then add back in c1-1 ones. Let c1 be the number of ones to the right of p and c0 be the number of zeros to the right of p.
 
 Let's walk through this with an example.
 
-*Step2: Clear bits to the right of p.From before, c0 = 2. c1 = 5. p = 7.*
+*Step2: Clear bits to the right of p. From before, c0 = 2. c1 = 5. p = 7.*
 
 ![](media/05_4_3.JPG)
 
@@ -479,7 +476,7 @@ Or, more concisely, we do:
 n &=  ~((1 <<  p)  -  1).
 ```
 
-*Step 3:Add in c 1   -  1 ones.*
+*Step 3:Add in c1   -  1 ones.*
 
 ![](media/05_4_4.JPG)
 
@@ -502,12 +499,12 @@ The code for getNext is below.
 3 		int c  = n;
 4 		int c0 = 0;
 5 		int c1 = 0;
-6 		while  (((c & 1) ==   0)  &&   (c != 0))  {
+6 		while (((c & 1) ==   0)  &&   (c != 0))  {
 7 			c0  ++;
 8 			c  >>= l;
 9 		}
 10	
-11		while  ((c & 1) == 1)   {
+11		while ((c & 1) == 1)   {
 12			c1++;
 13			c >>= 1;
 14		}
@@ -532,11 +529,11 @@ The code for getNext is below.
 To implement getPrev, we follow a very similar approach.
 
 1. Compute c0 and c1. Note that c1 is the number of trailing ones, and c0 is the size of the block of zeros immediately to the left of the trailing ones.
-2.  Flip the rightmost non-trailing one to a zero. This will be at position p   =  c1 + c0.
-3.  Clear all bits to the right of bit p.
-4.  Insert c1 + 1 ones immediatelyto the right of position p.
+2. Flip the rightmost non-trailing one to a zero. This will be at position p = c1 + c0.
+3. Clear all bits to the right of bit p.
+4. Insert c1 + 1 ones immediately to the right of position p.
 
-Note that Step 2 setsbit p to a zero and Step 3 sets bits 0 through p-1 to azero. We can merge these steps.
+Note that Step 2 sets bit p to a zero and Step 3 sets bits 0 through p-1 to a zero. We can merge these steps.
 
 Let's walk through this with an example.
 
@@ -556,7 +553,7 @@ int b = a << (p + 1); // Sequence  of  1s  followed by   p + 1  zeros.
 n  &= b;		      // Clears bits  0 through p. 
 ``` 
 
-*Steps 4: Insert c1 + 1 ones immediately to the right ofposition p.*
+*Steps 4: Insert c1 + 1 ones immediately to the right of position p.*
 
 ![](media/05_4_7.JPG)
 
@@ -608,8 +605,8 @@ If c0 is the  number of trailing  zeros, c1 is the  size of the  one  block imme
 A quick and dirty way to perform steps 1  and  2 is to set the trailing zeros  to 1 (giving us p trailing ones),  and then add 1. Adding  one  will flip all trailing ones, so we wind up with a 1 at bit p followed by p zeros. We can perform this arithmetically. 
 
 ```
-n  +=  2ᶜ⁰ - 1 	// Sets trailing  0s to 1,   giving us   p  trailing 1s
-n  +=  1;		// Flips first p  1s to 0s, and  puts a  1  at bit  p. 
+n  +=  2ᶜ⁰ - 1 	// Sets trailing  0s to 1, giving us p trailing 1s
+n  +=  1;		// Flips first p  1s to 0s, and  puts a 1 at bit  p. 
 ```
 
 Now, to perform Step  3 arithmetically, we just  do:
@@ -635,9 +632,9 @@ If c₁ is the number of trailing ones,  c₀  is the size of the zero block imm
 
 1.  Set the pth bit to 0
 2.  Set all bits following p to 1
-3.  Set bits O through c₀ - 1 to 0.
+3.  Set bits 0 through c₀ - 1 to 0.
 
-We canimplement this arithmetically asfollows. For clarity in theexample, we will assume n = 10000011. This makes c₁ = 2 and c₀ =  5.
+We can implement this arithmetically as follows. For clarity in the example, we will assume n = 10000011. This makes c₁ = 2 and c₀ =  5.
 
 ```
 n -=  2ᶜ¹   -  l;		// Removes  trailing 1s. n  is now 10000000.
@@ -647,14 +644,14 @@ n -=  2ᶜ⁰⁻¹ -  1;		// Flips last  (c0-1) 0s.   n  is now 01110000.
  
 This reduces mathematically to:
 ```
-next =  n  -  (2ᶜ¹  -  1)   -  1  -  (2ᶜ⁰⁻¹    -  1).
+next =  n  -  (2ᶜ¹  -  1) -  1  -  (2ᶜ⁰⁻¹ -  1).
      =  n  -  2ᶜ¹ -  2ᶜ⁰⁻¹  + 1
 ```
 Again, this is very easy to implement.
 ```java
 1   int getPrevArith(int n)  {
 2       /* ... same calculation for c0  and  c1 as  before ... */
-3       return n  -  (1  << c1) -  (1  << ( c0  -  1)) + 1;
+3       return n  -  (1  << c1) -  (1  << (c0  -  1)) + 1;
 4   }
 ```
 Whew! Don't worry, you wouldn't be expected to get all this in an interview-at least not without a lot of help from the interviewer.
@@ -685,7 +682,7 @@ Try doing subtraction by hand (in base 2 or 10). What happens?
 ```
 When you subtract 1 from a number, you look at the least significant bit. If it's a 1 you change it to 0, and you are done. If it's a zero, you must "borrow" from a larger bit. So, you go to increasingly larger bits, changing each bit from a O to a 1, until you find a 1. You flip that 1 to a 0 and you are done.
 
-Thus, n-1  will look like n, except that n's initial  Os will be 1s in n -1, and n's least significant 1 will be a O in n -1. That is:
+Thus, n-1  will look like n, except that n's initial 0s will be 1s in n -1, and n's least significant 1 will be a 0 in n-1. That is:
 ```
 if      n  =  abcdel000 
 then  n-1  =  abcde0111
@@ -732,9 +729,9 @@ This code is good, but we can make it a bit better. Rather than simply shifting 
 
 The code below utilizes this approach.
 ```java
-1 	int  bitSwapRequired(int a,  int b)  {
+1 	int bitSwapRequired(int a,  int b)  {
 2 		int count  = 0;
-3 		for  (int c = a ^ b; c  != 0;  c =  c & (c - 1))  {
+3 		for (int c = a ^ b; c  != 0;  c =  c & (c - 1))  {
 4 			count++;
 5 		}
 6 		return  count;

@@ -124,11 +124,11 @@ In the below solution, we  simply iterate through the linked list, adding each e
 13	}
 ```
 
-The  above solution takes O(N) time, where N is the number ofelements in the linked list.
+The  above solution takes O(N) time, where N is the number of elements in the linked list.
 
 **Follow  Up: No Buffer Allowed**
 
-lfwe don't have a buffer, we can iterate with two pointers: current which iterates through the linked list, and runner which checks all subsequent nodes for duplicates.
+If we don't have a buffer, we can iterate with two pointers: current which iterates through the linked list, and runner which checks all subsequent nodes for duplicates.
 
 ```java
 1 	void deleteDups(LinkedListNode   head)  {
@@ -159,21 +159,21 @@ SOLUTION
 
 We will approach this problem both recursively and non-recursively. Remember that recursive solutions are often cleaner but less optimal. For example, in this problem, the recursive implementation is about half the length of the iterative solution but also takes O(n) space, where n is the number of elements in the linked list.
 
-Note that for this solution, we have definedk such that passing in k = 1 would return the last element, k = 2 would return to the second to last element, and so on. It is equally acceptable to definek such that k = 0 would return the last element.
+Note that for this solution, we have defined k such that passing in k = 1 would return the last element, k = 2 would return to the second to last element, and so on. It is equally acceptable to define k such that k = 0 would return the last element.
 
 **Solution #1: If linked list size is known**
 
-If the size of the linked list is known, then thekth to last element is the ( length  - k)th element. We can just iterate through the linked list to find this element. Because this solution is so trivial, we can almost be sure that this is not what the interviewer intended.
+If the size of the linked list is known, then the kth to last element is the (length  - k)th element. We can just iterate through the linked list to find this element. Because this solution is so trivial, we can almost be sure that this is not what the interviewer intended.
 
 **Solution #2: Recursive**
 
-This algorithm recurses through the linked list. When it hits the end, the method passes back a counter set to 0. Each parent call adds 1  to this counter. When the counter equalsk, we know we have reached thekth to last element of the linked list.
+This algorithm recurses through the linked list. When it hits the end, the method passes back a counter set to 0. Each parent call adds 1  to this counter. When the counter equals k, we know we have reached the kth to last element of the linked list.
 
 Implementing this is short and sweet-provided we have a way of "passing back" an integer value through the stack. Unfortunately, we can't pass back a node and a counter using normal return statements. So how do we handle this?
 
 *Approach A: Don't Return the Element.*
 
-One way to do this is to change the problem to simply printing thekth to last element. Then, we can pass back the value of the counter simply through return values.
+One way to do this is to change the problem to simply printing the kth to last element. Then, we can pass back the value of the counter simply through return values.
 
 ```java
 1 	int  printKthToLast(LinkedListNode head,   int k)  {
@@ -242,7 +242,7 @@ We described earlier that the issue was that we couldn't simultaneously return a
 
 Each of these recursive solutions takes O(n) space due to the recursive calls.
 
-There are a number of other solutions that wehaven't addressed. We could store the counter in a static vari­ able. Or, we could create a class that stores both the node and the counter, and return an instance of that class. Regardless of which solution we pick, we need a way to update both the node and the counter in a way that all levels of the recursive stack will see.
+There are a number of other solutions that we haven't addressed. We could store the counter in a static variable. Or, we could create a class that stores both the node and the counter, and return an instance of that class. Regardless of which solution we pick, we need a way to update both the node and the counter in a way that all levels of the recursive stack will see.
 
 
 **Solution #3: Iterative**
@@ -441,8 +441,7 @@ We can mimic this process recursively by adding node by node, carrying  over any
 
 We do the following:
 
-1.  We add 7 and 5 first, getting a result of 12. 2 becomes the first node in our linked list, and we "carry" the
-1 to the next sum. 
+1.  We add 7 and 5 first, getting a result of 12. 2 becomes the first node in our linked list, and we "carry" the 1 to the next sum.
 ```
 List: 2 -> ?
 ```
@@ -493,8 +492,8 @@ In implementing this code, we must be careful to handle the condition when one l
 
 Part B is conceptually the same (recurse, carry the excess), but has some additional complications when it comes to implementation:
 
-1. One list may be shorter than the other, and we cannot handle this "on the flY". For example, suppose we were adding (1 -> 2 -> 3-> 4) and (5-> 6-> 7). We need to know that the 5 should be "matched" with the 2, not the 1. We can accomplish this by comparing the lengths of the lists in the beginning and padding the shorter list with zeros.
-2. In the first part, successive results were added to the tail (i.e., passed forward). This meant that the recur­ sive call would be passed the carry, and would return the result (which is then appended to the tail). In this case, however, results are added to the head (i.e., passed backward). The recursive call must return the result, as before, as well as the carry. This is not terribly challenging to implement, but it is more cumbersome. We can solve this issue by creating a wrapper class called Partial Sum.
+1. One list may be shorter than the other, and we cannot handle this "on the fly". For example, suppose we were adding (1 -> 2 -> 3-> 4) and (5-> 6-> 7). We need to know that the 5 should be "matched" with the 2, not the 1. We can accomplish this by comparing the lengths of the lists in the beginning and padding the shorter list with zeros.
+2. In the first part, successive results were added to the tail (i.e., passed forward). This meant that the recursive call would be passed the carry, and would return the result (which is then appended to the tail). In this case, however, results are added to the head (i.e., passed backward). The recursive call must return the result, as before, as well as the carry. This is not terribly challenging to implement, but it is more cumbersome. We can solve this issue by creating a wrapper class called Partial Sum.
 
 The code below implements this algorithm.
 
@@ -615,7 +614,7 @@ Note that when we compare the linked list to the reversed list, we only actually
 26	}
 ```
 
-Observe that we've modularized this code into reverse and isEqua 1 functions. We've also created a new class so that we can return both the head and the tail of this method. We could have also returned a two­ element array, but that approach is less maintainable.
+Observe that we've modularized this code into reverse and isEqual functions. We've also created a new class so that we can return both the head and the tail of this method. We could have also returned a two-element array, but that approach is less maintainable.
 
 **Solution #2: Iterative Approach**
 
@@ -668,11 +667,11 @@ Now, we simply iterate through the rest of the linked list. At each iteration, w
 
 First, a word on notation: in this solution, when we use the notation node  Kx, the variable K indicates the value of the node data, and x (which is either for b) indicates whether we are referring to the front node with that value or the back node. For example, in the below linked list node   2b would refer to the second (back) node with value 2.
 
-Now, like many linked list problems, you can approach this problem recursively. We may have some intui­ tive idea that we want to compare element 0 and element n  -   1, element 1 and element n - 2, element 2 and element n-3,  and so on, until the middle element(s). For example:
+Now, like many linked list problems, you can approach this problem recursively. We may have some intuitive idea that we want to compare element 0 and element n  -   1, element 1 and element n - 2, element 2 and element n-3,  and so on, until the middle element(s). For example:
 ```
 0  (  1  (  2  (  3  )   2  )   1  )  0
 ```
-In order to apply this approach, we first need to know when we've reached the middle element, as this will form our base case. We can do this by passing in length  -  2 for the length each time. When the length equals 0 or 1, we're at the center of the linked list. This is because the length is reduced by 2 each time. Once we've recursed  Yi times, length will be down to 0.
+In order to apply this approach, we first need to know when we've reached the middle element, as this will form our base case. We can do this by passing in length  -  2 for the length each time. When the length equals 0 or 1, we're at the center of the linked list. This is because the length is reduced by 2 each time. Once we've recursed N/2 times, length will be down to 0.
 
 ```java
 1  recurse(Node n,  int length) {
@@ -695,23 +694,23 @@ Let's examine what the call stack looks like:
 4            v4 =  isPalindrome:   list  = 3  )  2  )  1  )  0.length =  1
 5            returns v3
 6         returns v2
-7      returns vl
+7      returns v1
 8   returns  ?
 ```
 
 In the above call stack, each call wants to check  if the list is a palindrome by comparing its head node with the corresponding node from the back of the list. That is:
 
 - Line 1 needs to compare node  0f with node   0b
-- Line 2 needs to compare node  1f with node   lb
+- Line 2 needs to compare node  1f with node   1b
 - Line 3 needs to compare node  2f with node   2b
 - Line 4 needs to compare node  3f with node   3b.
 
-If we rewind the stack, passing nodes back as described below, we can dojust that:
+If we rewind the stack, passing nodes back as described below, we can do just that:
 
-- Line 4 sees that it is the middle node (since length =  1), and passes back head. next.The value head equals node   3, so head. next is node   2b.
-- Line 3 compares its head, node   2f, to returned_node (the value from the previous recursive call), which is node   2b. lf the values match, it passes a reference to node  lb (returned_node. next) up to line 2.
-- Line 2 compares its head (node   1f) to returned_node (node   lb). If the values match, it passes a reference to node   0b (or, returned_node. next) up to line 1.
-- Line 1   compares its head, node   0f, to returned_node, which is node   0b. If the values match, it returns true.
+- Line 4 sees that it is the middle node (since length =  1), and passes back head. next. The value head equals node 3, so head. next is node   2b.
+- Line 3 compares its head, node   2f, to returned_node (the value from the previous recursive call), which is node 2b. If the values match, it passes a reference to node  1b (returned_node. next) up to line 2.
+- Line 2 compares its head (node 1f) to returned_node (node 1b). If the values match, it passes a reference to node 0b (or, returned_node. next) up to line 1.
+- Line 1 compares its head, node 0f, to returned_node, which is node 0b. If the values match, it returns true.
 
 To generalize, each call compares its head to returned_node, and then passes returned_node. next up the stack. In this way, every node i gets compared to node n   -   i. If at any point the values do not match, we return false, and every call up the stack checks for that value.
 
@@ -735,16 +734,16 @@ The example below illustrates the parameters and return values from this sample 
 5           isPalindrome:  list =  4  )  3  )  2  )  1  )  0.  len  =   1
 6           returns node 3b,  true
 7         returns node 2b,  true
-8       returns node lb,   true
+8       returns node 1b,   true
 9     returns node 0b,  true
 10  returns null,  true
 ```
 
-Implementing this code is nowjust a matter of filling in the details.
+Implementing this code is now just a matter of filling in the details.
 ```java
 1 	boolean  isPalindrome(LinkedListNode head)  {
-2 		int length =    lengthOflist(head);
-3 		Result  p =    isPalindromeRecurse(head,  length);
+2 		int length = lengthOflist(head);
+3 		Result  p = isPalindromeRecurse(head,  length);
 4 		return p.result;
 5 	}
 6	
@@ -883,9 +882,9 @@ We now have a multistep process.
 28	}
 29	
 30	class  Result {
-31		public  LinkedListNode tail;
+31		public LinkedListNode tail;
 32		public int  size;
-33		public  Result(LinkedListNode tail,  int size) {
+33		public Result(LinkedListNode tail,  int size) {
 34			this.tail =  tail;
 35			this.size =  size;
 36		}
@@ -896,16 +895,16 @@ We now have a multistep process.
 41	
 42		int size = 1;
 43		LinkedListNode  current =  list;
-44		while   (current.next != null) {
+44		while (current.next != null) {
 45			size++;
 46			current = current.next;
 47		}
 48		return new Result(current,   size);
 49	}
 50	
-51	LinkedListNode   getKthNode(LinkedListNode  head,  int k)  {
-52		LinkedListNode   current =  head;
-53		while   (k  >   0 &&   current != null) {
+51	LinkedListNode getKthNode(LinkedListNode  head,  int k)  {
+52		LinkedListNode current =  head;
+53		while (k  >   0 &&   current != null) {
 54			current =  current.next;
 55			k--;
 56		}
@@ -951,10 +950,10 @@ At each subsequent step, FastRunner and  SlowRunner get either one step  farther
 
 So now we know the following facts:
 
-1.  SlowRunner is O steps  into the loop.
-2.  FastRunner is K steps  into the loop.
+1.  SlowRunner is 0 steps into the loop.
+2.  FastRunner is K steps into the loop.
 3.  SlowRunner is K steps behind FastRunner.
-4.  FastRunner is LOOP_SIZE   -   K steps behind SlowRunner.
+4.  FastRunner is LOOP_SIZE - K steps behind SlowRunner.
 5.  FastRunner catches  up to SlowRunner at a rate of 1 step per unit of time.
 
 So, when  do they  meet?  Well, if FastRunner is LOOP_SIZE = K  steps  behind  SlowRunner, and FastRunner catches  up at a rate of 1 step per unit of time, then they meet  after LOOP_SIZE = K steps. At this point, they will be K steps before the head of the loop. Let's call this point  Collisionspot.
@@ -995,8 +994,8 @@ The code below implements this algorithm.
 4	
 5 		/* Find meeting point. This will be LOOP_SIZE - k steps into the linked list. */
 6 		while (fast !=  null &&   fast.next !=  null) {
-7 			slow  =  slow.next;
-8 			fast =   fast.next.next;
+7 			slow =  slow.next;
+8 			fast =  fast.next.next;
 9 			if (slow   ==  fast) {//Collision
 10				break;
 11			}
@@ -1021,7 +1020,7 @@ The code below implements this algorithm.
 ```
 
 
-Additional Questions:Trees and Graphs (#4.3),  Object-Oriented Design (#7.12),  System Design and Scal­ability (#9.5), Moderate Problems (#16.25), Hard Problems (#17.12).
+Additional Questions: Trees and Graphs (#4.3),  Object-Oriented Design (#7.12),  System Design and Scal­ability (#9.5), Moderate Problems (#16.25), Hard Problems (#17.12).
 
 
 

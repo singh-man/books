@@ -19,34 +19,34 @@ First, we briefly set a to diff, which is the right side of the above  number li
 The code below implements this.
 ```
 1 	//Example  for a  = 9,   b  = 4 
-2   a = a -  b;//a = 9  -  4 = 5
-3   b = a +  b;//b = 5  +  4 = 9
-4   a = b -  a;//a = 9  -  5
+2   a = a - b; // a = 9  -  4 = 5
+3   b = a + b; // b = 5  +  4 = 9
+4   a = b - a; // a = 9  -  5
 ```
 We can implement a similar solution  with bit manipulation. The benefit of this solution  is that  it works for more data types than just integers.
 ```
 1   //Example  for a  = 101  (in  binary) and  b  = 110
-2   a = a^b;//a = 101^110  = 011
-3   b = a^b;//b = 011^110  = 101
-4   a = a^b;//a = 011^101  = 110
+2   a = a^b; // a = 101^110 = 011
+3   b = a^b; // b = 011^110 = 101
+4   a = a^b; // a = 011^101 = 110
 ```
 This code works by using XORs. The easiest  way to see how this works is by focusing on a specific bit. If we can correctly swap two bits, then we know the entire operation works correctly.
 
 Let's take two bits, x and y, and walk through this line by line.
 
-1.  x  =  x  ^   y
+1.  x  =  x ^ y
 
 This line essentially checks if x and y have different values. It will result in 1  if and only if x !=  y.
 
-2.   y  =  X  ^  y
+2.   y  =  X ^ y
 ```
 	Or:y = {0 if originally same, 1  if different} ^ {original y}
 ```
-Observe that XORing a bit with 1  always flips the bit, whereas XORing with O will  never change it. 
+Observe that XORing a bit with 1  always flips the bit, whereas XORing with 0 will never change it. 
 
-Therefore, if we do y = 1 ^ {original y} when x != y, theny will be flipped and therefore have x's original value.
+Therefore, if we do y = 1 ^ {original y} when x != y, then y will be flipped and therefore have x's original value.
 
-Otherwise, if x == y, then we do y =  0  ^ {original y} and the value of y does notchange. 
+Otherwise, if x == y, then we do y =  0  ^ {original y} and the value of y does not change. 
 
 Either way, y will be equal to the original value of x.
 
@@ -99,9 +99,9 @@ If we're doing the operation repeatedly, then we can probably afford to take som
 2 		HashMap<String,  Integer> table  =
 3 				new HashMap<String,   Integer>();
 4 		for (String word : book)  {
-5 			word =   word.toLowerCase();
+5 			word =  word.toLowerCase();
 6 			if (word.trim() != "") {
-7 				if (!  table.containsKey(word)) {
+7 				if (!table.containsKey(word)) {
 8 					table.put(word,  0);
 9 				}
 10				table.put(word,  table.get(word)  + 1);
@@ -149,7 +149,7 @@ What if the two segments represent the same infinite line? In this case, we have
 
 ```
 	Assume:
-		start1.x <   start2.x &&   start1.x < end1.x   &&   start2.x < end2.x
+		start1.x < start2.x && start1.x < end1.x && start2.x < end2.x
 	Then intersection  occurs if:
 		start2 is between  start1 and end1
 ```
@@ -158,22 +158,22 @@ We can now go ahead and implement this algorithm.
 ```java
 1 	Point  intersection(Point start1, Point  end1,   Point  start2, Point  end2)  {
 2 		/* Rearranging  these so  that, in  order  of  x values: start  is before   end and
-3 		 * point   1  is before   point   2.  This  will make some of  the  later  logic simpler. */
+3 		 * point 1 is before point   2.  This  will make some of  the  later  logic simpler. */
 4 		if (start1.x >  end1.x) swap(start1, end1);
 5 		if (start2.x >  end2.x) swap(start2, end2);
 6 		if (start1.x >  start2.x) {
 7 		 	swap(start1, start2);
-8 		  	swap(end1,   end2);
+8 		  	swap(end1, end2);
 9 		}
 10	
 11		/*  Compute  lines (including slope  and y-intercept). */
-12		Line linel  = new Line(start1, end1);
+12		Line line1  = new Line(start1, end1);
 13		Line line2  = new Line(start2, end2);
 14	
 15		/* If the  lines are  parallel, they  intercept only  if they  have the  same y
 16		 * intercept and start 2 is on line 1. */
-17		if (linel.slope == line2.slope) {
-18			if (linel.yintercept == line2.yintercept &&
+17		if (line1.slope == line2.slope) {
+18			if (line1.yintercept == line2.yintercept &&
 19					isBetween(start1, start2,  end1)) {
 20				return start2;
 21			}
@@ -181,8 +181,8 @@ We can now go ahead and implement this algorithm.
 23		}
 24	
 25		/*  Get intersection coordinate. */
-26		double x  = (line2.yintercept - linel.yintercept) / (linel.slope -  line2.slope);
-27		double y  = x * linel.slope + linel.yintercept;
+26		double x  = (line2.yintercept - line1.yintercept) / (line1.slope -  line2.slope);
+27		double y  = x * line1.slope + line1.yintercept;
 28		Point intersection = new Point(x,  y);
 29	
 30		/*  Check if within  line segment range. */
@@ -196,16 +196,16 @@ We can now go ahead and implement this algorithm.
 38	/*  Checks if middle  is between start and end.  */
 39	boolean  isBetween(double start, double  middle,  double  end)  {
 40		if (start > end)  {
-41			return end <= middle  &&   middle <= start;
+41			return end <= middle && middle <= start;
 42		}  else {
-43			return start <= middle  &&   middle <= end;
+43			return start <= middle && middle <= end;
 44		}
 45	}
 46	
 47	/*  Checks if middle is between start and end.  */
 48	boolean  isBetween(Point start, Point   middle,  Point  end)  {
 49		return  isBetween(start.x,  middle.x, end.x) &&
-50		isBetween(start.y,  middle.y,   end.y);
+50				isBetween(start.y,  middle.y, end.y);
 51	}
 52	
 53	/*  Swap coordinates of  point   one and two.  */
@@ -228,12 +228,12 @@ We can now go ahead and implement this algorithm.
 70	
 71		public class Point {
 72			public double x,  y;
-73			public Point(double x,  double   y)  {
+73			public Point(double x,  double y)  {
 74				this.x = x;
 75				this.y = y;
 76			}
 77	
-78			public void setLocation(double x,   double   y)  {
+78			public void setLocation(double x, double y)  {
 79				this.x = x;
 80				this.y = y;
 81			}
@@ -258,7 +258,7 @@ There are a few major design decisions to consider:
 4. In general, how much do we prioritize compactness  of code versus speed of execution vs. clarity of code? Remember: The most efficient code may not always be the best. Your ability to understand and maintain the code matters, too.
 
 
-**Solution #1: If haswon is called many times**
+**Solution #1: If hasWon is called many times**
 
 There are only 39   or about 20,000, tic-tac-toe boards (assuming a 3x3 board). Therefore, we can represent our tic-tac-toe board as an int, with each digit representing a piece (0 means Empty, 1  means Red, 2 means Blue). We set up a hash table or array in advance with all possible boards as keys and the value indicating who has won. Our function then is simply this:
 ```java
@@ -268,7 +268,7 @@ There are only 39   or about 20,000, tic-tac-toe boards (assuming a 3x3 board). 
 ```
 To convert a board (represented by a char array) to an int, we can use what is essentially a "base 3" repre­sentation. Each board is represented as 3°v₀ + 3¹v₁ + 3²v₂ + ... + 3⁸v₈ , where v₁ is a 0 if the space is empty, a 1 if it's a "blue spot" and a 2 if it's a "red spot".
 ```java
-1 	enum Piece   {  Empty,  Red,  Blue};
+1 	enum Piece { Empty,  Red,  Blue };
 2	
 3 	int  convertBoardToint(Piece[][] board) {
 4 		int sum =  0;
@@ -347,10 +347,10 @@ If we know the very last move that was made (and we've been checking for a winne
 53		}
 ```
 
-There is actually a way toclean up thiscode to remove some of the duplicatedcode. We'll see this approach in a later functi on.
+There is actually a way to clean up thiscode to remove some of the duplicated code. We'll see this approach in a later function.
 
 
-**Solution #3: Designing for just  a 3x3 board**
+**Solution #3: Designing for just a 3x3 board**
 
 If we really only want to implement a solution for a 3x3 board, the code is relatively short and simple. The only complex part is trying to be clean and organized, without writing too much duplicated code.
 
@@ -410,7 +410,7 @@ The most obvious way is through a series of nested for-loops.
 7 		for (int i = 0;  i <   size;  i++)  {
 8 			first =  board[i][0];
 9 			if (first == Piece.Empty)  continue;
-10			for (int j =  1; j <   size; j++)  {
+10			for (int j =  1; j < size; j++)  {
 11				if (board[i][j] != first) {
 12					break;
 13				}  else if (j == size -  1)  { //Last element
@@ -435,7 +435,7 @@ The most obvious way is through a series of nested for-loops.
 32		/*  Check diagonals. */
 33		first = board[0][0];
 34		if (first != Piece.Empty)  {
-35			for  (int i = 1;  i <   size; i++)  {
+35			for  (int i = 1;  i < size; i++)  {
 36				if (board[i][i] != first) {
 37					break;
 38				}  else if (i == size -  1)  {//Last  element
@@ -446,7 +446,7 @@ The most obvious way is through a series of nested for-loops.
 43
 44		first = board[0][size -  1];
 45		if (first != Piece.Empty)  {
-46			for  (int i = 1;  i <   size; i++)  {
+46			for  (int i = 1;  i < size; i++)  {
 47				if (board[i][size -  i -  1]  != first) {
 48					break;
 49				}  else if (i == size -  1)  { //Last element
@@ -573,13 +573,13 @@ Another way of doing it is, of course,  to actually build an iterator.
 46		@Override
 47		public boolean  hasNext()   {
 48			return current.row +  rowincrement  <   size &&
-49			current.column +  colIncrement  <   size;
+49				   current.column +  colIncrement  <   size;
 50		}
 51
 52		@Override
 53		public Position next() {
 54			current =  new Position(current.row + rowincrement,
-55			current.column +  colIncrement);
+55									current.column +  colIncrement);
 56			return current;
 57		}
 58	}
@@ -601,7 +601,7 @@ SOLUTION
 
 ---
 
-A simple approach  is to compute  the factorial, and then count the number of trailing zeros by continu­ ously dividing by ten. The problem with this though is that the bounds of an int would be exceeded very quickly. To avoid this issue, we can look at this problem mathematically.
+A simple approach  is to compute  the factorial, and then count the number of trailing zeros by continuously dividing by ten. The problem with this though is that the bounds of an int would be exceeded very quickly. To avoid this issue, we can look at this problem mathematically.
 
 Consider a factorial like 19! :
 ```
@@ -625,7 +625,7 @@ The first way is to iterate through all the numbers from 2 through n, counting t
 2 	  * 25->  2,   etc.  */
 3 	 int factors0f5(int i)  {
 4 	 	int count = 0;
-5 	 	while  (i % 5 == 0)  {
+5 	 	while (i % 5 == 0)  {
 6 	 		count++;
 7	 		i /= 5;
 8 	 	}
@@ -692,14 +692,14 @@ The simple brute force way is to just iterate through all pairs, compute the dif
 ```
 One minor optimization we could perform from here is to return immediately if we find a difference of zero, since this is the smallest difference possible. However, depending  on the input, this might actually be slower.
 
-This will only be faster if there's a pair with difference zero early in the list of pairs. But to add this optimiza­ tion, we need to execute an additional line of code each time. There's a tradeoff here; it's faster for some inputs and slower for others. Given that it adds complexity in reading the code, it may be best to leave it out.
+This will only be faster if there's a pair with difference zero early in the list of pairs. But to add this optimization, we need to execute an additional line of code each time. There's a tradeoff here; it's faster for some inputs and slower for others. Given that it adds complexity in reading the code, it may be best to leave it out.
 
 With or without this "optimization", the algorithm will take O(AB) time.
 
 
 **Optimal**
 
-A more optimal approach is to sort the arrays. Once the arrays are sorted, we can find the minimum differ­ ence by iterating through the array.
+A more optimal approach is to sort the arrays. Once the arrays are sorted, we can find the minimum difference by iterating through the array.
 
 Consider the following two arrays: 
 ```
@@ -777,7 +777,7 @@ We can implement a solution to this problem by using the same approach. Our goal
 When does a - b overflow? It will overflow only when a is positive and b is negative, or the other way around. It may be difficult to specially detect the overflow condition, but we can detect when a and b have different signs. Note that if a and b have different signs, then we want k to equal sign (a).
 
 The logic looks like:
-```java
+```
 1	if a  and  b have  different signs:
 2		// if a > 0, then b < 0, and  k  =  1.
 3		// if a < 0, then b > 0, and  k  =  0.
@@ -931,7 +931,7 @@ How can we phrase subtraction in terms of addition? This one is pretty straightf
 ```
 The negation of the value k is implemented by adding -1 k times. Observe that this will take O(k) time.
 
-If optimizing is something  we value here, we can try to get a to zero faster. (For this explanation, we'll assume that a is positive.) To do this, we can first reduce a by 1, then 2, then 4, then 8, and so on. We'll call this value de1ta. We want a to reach exactly zero. When reducinga by the next de1ta would change the sign of a, we reset delta back to 1 and repeat the process.
+If optimizing is something  we value here, we can try to get a to zero faster. (For this explanation, we'll assume that a is positive.) To do this, we can first reduce a by 1, then 2, then 4, then 8, and so on. We'll call this value de1ta. We want a to reach exactly zero. When reducing a by the next de1ta would change the sign of a, we reset delta back to 1 and repeat the process.
 
 For example:
 ```
@@ -958,17 +958,17 @@ The code below implements this algorithm.
 ```
 Figuring out the runtime here takes a bit of calculation.
 
-Observe that reducing a by half takes O(log a)work. Why? For each round of "reduce a by half", the abso­lute values of a and delta always add up to the same number.The values of delta anda will converge at a/2. Since de1ta is being doubled each time, it will take O(log a)steps to reach half of a.
+Observe that reducing a by half takes O(log a) work. Why? For each round of "reduce a by half", the abso­lute values of a and delta always add up to the same number. The values of delta and a will converge at a/2. Since de1ta is being doubled each time, it will take O(log a)steps to reach half of a.
 
 We do O(log a) rounds.
 
-1.  Reducing a to a/2 takes O(log a)time.
+1.  Reducing a to a/2 takes O(log a) time.
 2.  Reducing a/2 to a/4 takes O(log a/2) time.
-3.  Reducing a/4 to a/8 takes O(log  a/4 ) time.
+3.  Reducing a/4 to a/8 takes O(log a/4) time.
 
 ... As so on , for O(log a) rounds.
 
-The runtime therefore is O(log a+ log(a/2) +log(a/4)+ ... ), with O(log a) terms in the expression.
+The runtime therefore is O(log a + log(a/2) + log(a/4) + ... ), with O(log a) terms in the expression.
 
 Recall two rules of logs:
 
@@ -1002,7 +1002,7 @@ The connection between addition and multiplication is equally straightforward. T
 4 			return multiply(b,  a);  // algorithm is faster if b <  a
 5 		}
 6 		int  sum =  0;
-7 		for  (int i = abs(b); i >  0; i = minus(i, 1))  {
+7 		for (int i = abs(b); i >  0; i = minus(i, 1))  {
 8 			sum +=  a;
 9 		}
 10		if (b <  0) {
@@ -1030,7 +1030,7 @@ We also implemented a simple abs  function  to help.
 
 **Division**
 
-Of the three operations, division is certainly the hardest."The good  thing is that we can use the multiply, subtract, and negate methods now to implement divide.
+Of the three operations, division is certainly the hardest. The good thing is that we can use the multiply, subtract, and negate methods now to implement divide.
 
 We are trying to compute x where  X = a/b. Or, to put this another way, find x where a = bx. We've now changed the problem into one that can be stated with something we know how to do: *multiplication*.
 
@@ -1071,14 +1071,14 @@ In tackling this problem,  you should be aware of the following:
 - Be careful about making assumptions while coding.  Don't assume that  the numbers are all positive or that a is bigger than b.
 
 
-**16.10  Living  People:** Given  a list of people with  their  birth  and  death years,  implement a method to compute the year with the most number of peoplealive. You may assume that all people were born between 1900 and  2000 (inclusive). If a person was alive during any portion of that year, they should be included in that year's count. For example, Person (birth = 1908, death = 1909) is included in the counts for both 1908 and 1909.
+**16.10  Living  People:** Given  a list of people with  their  birth  and  death years,  implement a method to compute the year with the most number of people alive. You may assume that all people were born between 1900 and  2000 (inclusive). If a person was alive during any portion of that year, they should be included in that year's count. For example, Person (birth = 1908, death = 1909) is included in the counts for both 1908 and 1909.
 
 
 SOLUTION
 
 ---
 
-The first thing we should do is outline what this solution will look like. The interview question hasn't speci­ fied the  exact form  of input. In a real interview, we could  ask the  interviewer how the input is structured. Alternatively, you can explicitly state your (reasonable) assumptions.
+The first thing we should do is outline what this solution will look like. The interview question hasn't specified the  exact form  of input. In a real interview, we could  ask the  interviewer how the input is structured. Alternatively, you can explicitly state your (reasonable) assumptions.
 
 Here, we'll need to make our  own  assumptions. We will assume that we have an array  of simple Person objects:
 ```java
@@ -1099,7 +1099,7 @@ With that in mind, let's start with a bruteforce algorithm.
 
 **Brute Force**
 
-The brute force algorithm falls directly out  from the  wording of the problem. We need to find the year with the most number of people alive.Therefore, we go through each year and  check how many people are alive in that year.
+The brute force algorithm falls directly out  from the  wording of the problem. We need to find the year with the most number of people alive. Therefore, we go through each year and  check how many people are alive in that year.
 ```java
 1 	int maxAliveYear(Person[] people,  int min,   int max)   {
 2 		int maxAlive = 0;
@@ -1121,9 +1121,9 @@ The brute force algorithm falls directly out  from the  wording of the problem. 
 18		return maxAliveYear;
 19	}
 ```
-Note that we havepassed in the values for the min year(l 900) and max year (2000). We shouldn't hard code these values.
+Note that we have passed in the values for the min year(l 900) and max year (2000). We shouldn't hard code these values.
 
-The runtime of this is O(RP), whereRis the range of years (100 in this case) and P is the number of people.
+The runtime of this is O(RP), where R is the range of years (100 in this case) and P is the number of people.
 
 **Slightly Better Brute Force**
 
@@ -1154,7 +1154,7 @@ A slightly  better way of doing this is to create an array where we track the nu
 23	/* Get  index   of  largest  element in array. */
 24	int  getMaxlndex(int[] values) {
 25		int max = 0;
-26		for (int i =  1;  i <   values.length;  i++)   {
+26		for (int i =  1;  i < values.length;  i++)   {
 27			if (values[i] > values[max]) {
 28				max =  i;
 29			}
@@ -1166,15 +1166,15 @@ Be careful on the size of the array in line 9. If the range of years is 1900 to 
 
 Let's think about the runtime by breaking this into parts.
 
-- We create an R-sized array, whereRis the min and max years.
+- We create an R-sized array, where R is the min and max years.
 - Then, for P people, we iterate through the years (Y) that the person is alive. 
-- Then, we iterate through theR-sized array again.
+- Then, we iterate through the R-sized array again.
 
-The total runtime is O(PY + R). In the worst case, Y is Rand we have done no better than we did in the first algorithm.
+The total runtime is O(PY + R). In the worst case, Y is R and we have done no better than we did in the first algorithm.
 
 **More Optimal**
 
-Let's create an example. (In fact, an example is really helpful in almost all problems. Ideally, you've already done this.) Each column below is matched, so that the items correspond to the same person. For compact­ ness, we'll just write the last two digits of the year.
+Let's create an example. (In fact, an example is really helpful in almost all problems. Ideally, you've already done this.) Each column below is matched, so that the items correspond to the same person. For compactness, we'll just write the last two digits of the year.
 ```
 birth:  12   20   10   01    10   23    13   90   83   75 
 death:  15   90   98   72    98   82    98   98   99   94
@@ -1201,24 +1201,24 @@ If we walk through the two arrays like this, we can track the number of people a
 2 		int[] births = getSortedYears(people, true);
 3 		int[] deaths = getSortedYears(people, false);
 4
-5 		int birthindex = 0;
-6 		int deathindex = 0;
+5 		int birthIndex = 0;
+6 		int deathIndex = 0;
 7 		int currentlyAlive = 0·,
 8 		int maxAlive = 0;
 9 		int maxAliveYear  =  min;
 10
 11		/* Walk through  arrays. */
-12		while (birth!ndex  <  births.length) {
-13			if  (births[birthindex] <=  deaths[deathIndex])  {
+12		while (birthIndex  <  births.length) {
+13			if  (births[birthIndex] <=  deaths[deathIndex])  {
 14				currentlyAlive++;  // include birth
 15				if (currentlyAlive > maxAlive)  {
 16					maxAlive  = currentlyAlive;
-17					maxAliveYear  = births[birthindex];
+17					maxAliveYear  = births[birthIndex];
 18				}
-19				birth!ndex++;  // move birth  index
-20			}  else if (births[birth!ndex] > deaths[deathIndex]) {
+19				birthIndex++;  // move birth  index
+20			}  else if (births[birthIndex] > deaths[deathIndex]) {
 21				currentlyAlive--;  // include death
-22				deathindex++;  // move death index
+22				deathIndex++;  // move death index
 23			}
 24		}
 25
@@ -1297,7 +1297,7 @@ There's a simple fix:  instead  of decrementing array[deathYear], we should decr
 23		int maxAliveYear =  0;
 24		int maxAlive  = 0;
 25		int  currentlyAlive =  0;
-26		for (int year  =  0;  year   <   deltas.length;  year++)   {
+26		for (int year  =  0;  year < deltas.length;  year++)   {
 27			currentlyAlive += deltas[year];
 28			if (currentlyAlive >   maxAlive)  {
 29				maxAliveYear  =  year;
@@ -1308,7 +1308,7 @@ There's a simple fix:  instead  of decrementing array[deathYear], we should decr
 34		return maxAliveYear;
 35	}
 ```
-This algorithm takes O(R + P) time, whereR is the range of years andPis the number of people. Although O(R + P)  might be faster than O(P log P) for many expected inputs, you cannot directly compare the speeds to say that one is faster than the other.
+This algorithm takes O(R + P) time, where R is the range of years and P is the number of people. Although O(R + P)  might be faster than O(P log P) for many expected inputs, you cannot directly compare the speeds to say that one is faster than the other.
 
 
 **16.11    Diving Board:** You are building a diving board by placing a bunch of planks of wood end-to-end. There are two types of planks, one of length shorter and one of length longer. You must use exactly K planks of wood. Write a method to generate all possible lengths for the diving board.
@@ -1344,7 +1344,7 @@ We can follow this logic to write recursive code. Note that we don't need to tra
 ```
 We've added each length to a hash set. This will automatically prevent adding duplicates.
 
-This algorithm takes O(2ᵏ) time, since there are two choices at each recursive call and we recurse to a depth of K.
+This algorithm takes O(2ᴷ) time, since there are two choices at each recursive call and we recurse to a depth of K.
 
 **Memoization Solution**
 
@@ -1352,10 +1352,9 @@ As in many recursive algorithms (especially those with exponential runtimes), we
 
 Observe that some of the recursive calls will be essentially equivalent. For example, picking plank 1 and then plank 2 is equivalent to picking plank 2 and then plank 1.
 
-Therefore, if we've seen this (total,  plank  count) pair before then we stop this recursive path. We can do this using a HashSet with a key of (total, plank c ount).
+Therefore, if we've seen this (total,  plank  count) pair before then we stop this recursive path. We can do this using a HashSet with a key of (total, plank count).
 
 > Many candidates will make a mistake here. Rather than stopping only when they've seen (total, plank count), they'll stop whenever they've seen just total before. This is incorrect. Seeing two planks of length 1 is not the same thing as one plank of length 2, because there are different numbers of planks remaining. In memoization problems, be very careful about what you choose for your key.
-
 
 The code for this approach is very similar to the earlier approach.
 ```java
@@ -1393,7 +1392,7 @@ Of course, a bunch of those sums will never actually be reached. How many unique
 
 If you re-read the prior paragraph, you might notice something interesting. There are only K distinct sums we can get. Isn't that the whole point of the problem-to find all possible sums?
 
-We don't actually need to go through all arrangements of planks. Wejust need to go through all unique sets of K planks (sets, not orders!). There are only K ways of picking K planks if we only have two possible types: {O of type A, K of type B}, {1 of type A, K-1 of type B}, {2 of type A, K-2 of type B}, ...
+We don't actually need to go through all arrangements of planks. We just need to go through all unique sets of K planks (sets, not orders!). There are only K ways of picking K planks if we only have two possible types: {O of type A, K of type B}, {1 of type A, K-1 of type B}, {2 of type A, K-2 of type B}, ...
 
 This can be done in just a simple for loop. At each "sequence", we just compute the sum.
 ```java
@@ -1407,7 +1406,7 @@ This can be done in just a simple for loop. At each "sequence", we just compute 
 8		return lengths;
 9	}
 ```
-We've used a HashSet here for consistency with the prior solutions.This isn't really necessary though, since we shouldn't get any duplicates. We could instead use an ArrayList. If we do this, though, wejust need to handle an edge case where the two types of planks are the same length. In this case, we would just return an ArrayList of size 1.
+We've used a HashSet here for consistency with the prior solutions. This isn't really necessary though, since we shouldn't get any duplicates. We could instead use an ArrayList. If we do this, though, we just need to handle an edge case where the two types of planks are the same length. In this case, we would just return an ArrayList of size 1.
 
 
 **16.12  XML Encoding:** Since XML is very verbose, you are given a way of encoding it where each tag gets mapped to a pre-defined integer value. The language/grammar is as follows:
@@ -1418,7 +1417,7 @@ END        -->   0
 Tag        -->   some  predefined  mapping to int
 Value      -->   string value
 ```
-For example, the following XML might be converted into the compressed string below (assuming a mapping of family ->   1,   person  ->2,  firstName  ->  3,   lastName  ->  4,  state ->  5).
+For example, the following XML might be converted into the compressed string below (assuming a mapping of family -> 1, person -> 2, firstName -> 3, lastName -> 4, state ->  5).
 ```xml
 <family lastName="McDowell"  state="CA">
 	<person firstName="Gayle">Some  Message</person>
@@ -1486,7 +1485,7 @@ We will assume, since it makes the problem a bit more interesting, that we mean 
 
 This line that cuts two squares in half must connect  the two middles. We can easily calculate the slope, knowing that  slope =  (y1 - y2)/(x1 - x2).  Once we calculate the slope using the two middles, we can use the same equation to calculate the start and end points of the line segment.
 
-In the below code, we will assume the origin ( 0,  0) is in the upper left-hand corner.
+In the below code, we will assume the origin (0,  0) is in the upper left-hand corner.
 ```java
 1 	public  class Square   {
 2 		.....
@@ -1531,13 +1530,13 @@ In the below code, we will assume the origin ( 0,  0) is in the upper left-hand 
 41			return new Point(x1, y1);
 42		}
 43
-44		public   Line  cut(Square other)  {
+44		public Line cut(Square other)  {
 45			/*  Calculate where a  line between each middle  would collide with  the  edges  of
 46			*  the  squares   */
-47			Point  p1 =  extend(this.middle(),  other.middle(),  this.size);
-48			Point  p2 =  extend(this.middle(),  other.middle(),  -1 * this.size);
-49			Point  p3 =  extend(other.middle(), this.middle(),  other.size);
-50			Point  p4 =  extend(other.middle(), this.middle(),  -1 * other.size);
+47			Point  p1 = extend(this.middle(),  other.middle(),  this.size);
+48			Point  p2 = extend(this.middle(),  other.middle(),  -1 * this.size);
+49			Point  p3 = extend(other.middle(), this.middle(),  other.size);
+50			Point  p4 = extend(other.middle(), this.middle(),  -1 * other.size);
 51
 52			/*  Of above points,  find  start and end of  lines. Start is farthest left (with
 53			* top    most as  a  tie  breaker) and end is farthest right (with  bottom most as
@@ -1547,10 +1546,10 @@ In the below code, we will assume the origin ( 0,  0) is in the upper left-hand 
 57
 58			for  (int i = 0;  i <  points.length;  i++)  {
 59				if (points[i].x <  start.x ||
-60					(points[i].x ==  start.x &&   points[i].y <   start.y)) {
+60					(points[i].x ==  start.x && points[i].y < start.y)) {
 61					start =  points[i];
 62				} else if (points[i].x >  end.x  ||
-63							(points[i].x ==  end.x  &&   points[i].y >  end.y)) {
+63							(points[i].x ==  end.x  && points[i].y >  end.y)) {
 64					end =  points[i];
 65				}
 66			}
@@ -1577,7 +1576,7 @@ To find the most common line then, we just iterate through all lines segments, u
 
 However, there's one little complication. We're defining two lines to be equal if the lines have the same slope and y-intercept. We are then, furthermore, hashing the lines based on these values (specifically, based on the slope). The problem is that floating point numbers cannot always be represented  accurately in binary. We resolve this by checking if two floating point numbers are within an epsilon value of each other.
 
-What does this mean for our hash table? It means that two lines with "equal" slopes may not be hashed to the same value.To solve this, we will round the slope down to the next epsilon and use this flooredSlope as the hash key. Then, to retrieve all lines that are potentially equal, we will search the hash table at three spots: flooredSlope, flooredSlope - epsilon, and flooredSlope + epsilon. This will ensure that we've checked out all lines that might be equal.
+What does this mean for our hash table? It means that two lines with "equal" slopes may not be hashed to the same value. To solve this, we will round the slope down to the next epsilon and use this flooredSlope as the hash key. Then, to retrieve all lines that are potentially equal, we will search the hash table at three spots: flooredSlope, flooredSlope - epsilon, and flooredSlope + epsilon. This will ensure that we've checked out all lines that might be equal.
 ```java
 1  	/* Find  line that goes  through most  number of  points. */
 2  	Line  findBestLine(GraphPoint[] points)  {
@@ -1600,12 +1599,12 @@ What does this mean for our hash table? It means that two lines with "equal" slo
 19
 20 	/* Return  the   line with  the   most  equivalent other lines.  */
 21 	Line  getBestLine(HashMapList<Double,   Line>  linesBySlope) {
-22 		Line  bestLine =  null;
-23 		int bestCount  =  0;
+22 		Line bestLine =  null;
+23 		int bestCount =  0;
 24
 25 		Set<Double>  slopes =  linesBySlope.keySet();
 26
-27 		for (double slope  :   slopes)  {
+27 		for (double slope : slopes)  {
 28 			ArrayList<Line>  lines = linesBySlope.get(slope);
 29 			for (Line  line :   lines) {
 30 				/* count  lines that are  equivalent to  current line */
@@ -1640,7 +1639,7 @@ What does this mean for our hash table? It means that two lines with "equal" slo
 59 		if (lines == null) return 0;
 60
 61 		int count  = 0;
-62 		for  (Line  parallelLine  : lines) {
+62 		for (Line  parallelLine  : lines) {
 63 			if (parallelLine.isEquivalent(line)) {
 64 				count++;
 65 			}
@@ -1663,7 +1662,7 @@ What does this mean for our hash table? It means that two lines with "equal" slo
 82 			}
 83 		}
 84
-85 		public static  double  floorToNearestEpsilon(double  d)  {
+85 		public static double floorToNearestEpsilon(double  d)  {
 86 			int r =  (int) (d  / epsilon);
 87 			return ((double) r) *  epsilon;
 88 		}
@@ -1688,7 +1687,7 @@ What does this mean for our hash table? It means that two lines with "equal" slo
 We need to be careful about the calculation of the slope of a line. The line might be completely vertical, which means that it doesn't have a y-intercept and its slope is infinite. We can keep track of this in a separate flag (infinite_slope). We need to check this condition in the equals method.
 
 
-**16.15  Master Mind:** TheG ame of Master Mind is played as follows:
+**16.15  Master Mind:** The Game of Master Mind is played as follows:
 
 The computer has four slots, and each slot will contain a ball that is red (R), yellow (Y), green (G) or blue (B). For example, the computer might have RGGB (Slot #1 is red, Slots #2 and #3 are green, Slot#4 is blue).
 
@@ -1721,7 +1720,7 @@ The code below implements this algorithm.
 8 	}
 9
 10	int  code(char c)  {
-11		switch   (c)  {
+11		switch (c)  {
 12		case 'B':
 13			return 0;
 14		case 'G':
@@ -1737,14 +1736,14 @@ The code below implements this algorithm.
 24
 25	int MAX_COLORS =  4;
 26
-27	Result   estimate(String guess,   String solution)  {
-28		if  (guess.length() != solution.length())  return null;
+27	Result estimate(String guess,   String solution)  {
+28		if (guess.length() != solution.length())  return null;
 29
 30		Result res  =  new Result();
 31		int[]  frequencies =  new int[MAX_COLORS];
 32
 33		/*  Compute  hits and build   frequency  table */
-34		for  (int i =  0;  i <   guess.length();  i++)  {
+34		for (int i =  0;  i < guess.length();  i++)  {
 35			if  (guess.charAt(i) ==  solution.charAt(i)) {
 36				res.hits++;
 37			}  else {
@@ -1756,9 +1755,9 @@ The code below implements this algorithm.
 43		}
 44
 45		/*  Compute  pseudo-hits */
-46		for  (int i = 0;  i <  guess.length();  i++)  {
+46		for (int i = 0;  i <  guess.length();  i++)  {
 47			int code  =  code(guess.charAt(i));
-48			if (code  >=  0 &&   frequencies[code]  >  0 &&
+48			if (code  >=  0 && frequencies[code]  >  0 &&
 49					guess.charAt(i)  != solution.charAt(i)) {
 50				res.pseudoHits++;
 51				frequencies[code]--;
@@ -1770,7 +1769,7 @@ The code below implements this algorithm.
 Note that the easier the algorithm for a problem is, the more important it is to write clean and correct code. In this case, we've pulled code (char  c) into its own method, and we've created a Result class to hold the result, rather than just printing it.
 
 
-**16.16  Sub Sort:** Given an array of integers, write  a method to find indices m and n such that if you sorted elements m throughn, the  entire array would be sorted. Minimize n   -   m (that is, find the  smallest such sequence).
+**16.16  Sub Sort:** Given an array of integers, write  a method to find indices m and n such that if you sorted elements m through n, the  entire array would be sorted. Minimize n - m (that is, find the  smallest such sequence).
 
 ```
 EXAMPLE
@@ -1790,25 +1789,25 @@ Now, let's approach this problem by looking at an example.
 
 	1,  2,  4,  7,  10,   11,   8,   12,   5,   6,   16,   18,   19
 
-Our first thoughtmight be to just find the longest increasing subsequence at the beginning and the longest increasing subsequence at the  end.
+Our first thought might be to just find the longest increasing subsequence at the beginning and the longest increasing subsequence at the  end.
 
 	left:	1,   2,  4,  7,  10,   11 
 	middle: 8,   12
 	right:  5,   6,  16,   18,   19
 
-These subsequences are easy to generate. We just start from the  left and the right sides, and work our way inward. When  an element is out  of order,  then we have  found the  end of our increasing/decreasing subse­ quence.
+These subsequences are easy to generate. We just start from the  left and the right sides, and work our way inward. When  an element is out  of order,  then we have  found the  end of our increasing/decreasing subsequence.
 
 In order to solve our problem, though, we would need to be able to sort the middle part of the  array and, by doing just that, get all the  elements in the  array in order. Specifically, the following would have to be true:
 
 	/* all  items on  left are smaller than all  items in middle */
-	min(middle)  >   end(left)
+	min(middle) > end(left)
 
 	/* all items in  middle are  smaller than all  items in right */
-	max(middle)  <   start(right) 
+	max(middle) < start(right) 
 
 Or, in other words, for all elements:
 	
-	left< middle  <   right
+	left< middle < right
 
 In fact,  this condition will never be  met.  The middle section is, by definition, the  elements that were  out of order. That is, it is always the  case that left. end  >   middle. start and  middle. end  >  right. start. Thus, you cannot sort the  middle to make the  entire array sorted.
 
@@ -1845,19 +1844,19 @@ The following code implements this algorithm.
 20		// slide right until greater than  array[max_index]
 21		int right_index =  shrinkRight(array,  max_index, start_right);
 22
-23		System.out.println(left_index  +  cc    cc +  right_index);
+23		System.out.println(left_index  +  " " +  right_index);
 24	}
 25
 26	int  findEndOfLeftSubsequence(int[] array)  {
-27		for (int i = 1;  i <   array.length; i++)  {
-28			if (array[i] <   array[i - 1])  return i - 1;
+27		for (int i = 1;  i < array.length; i++)  {
+28			if (array[i] < array[i - 1])  return i - 1;
 29		}
 30		return array.length - 1;
 31	}
 32
 33	int  findStartOfRightSubsequence(int[] array)  {
 34		for (int i =  array.length - 2;  i >=  0;  i--) {
-35			if (array[i] >  array[i + 1])  return i +  1;
+35			if (array[i] >  array[i + 1])  return i + 1;
 36		}
 37		return 0;
 38	}
@@ -1872,7 +1871,7 @@ The following code implements this algorithm.
 47
 48	int shrinkRight(int[] array, int max_index, int start) {
 49		int comp = array[max_index];
-50		for  (int i = start; i <   array.length; i++)  {
+50		for (int i = start; i <   array.length; i++)  {
 51			if (array(i1 >= comp) return i - 1);
 52		}
 53		return array.length -  1;
@@ -1898,36 +1897,36 @@ This is a challenging problem, but an extremely common one. Let's approach this 
 
 If we think about our array as having alternating  sequences  of positive and negative numbers, we can observe that we would never include only part of a negative subsequence or part of a positive sequence. Why would we? Including part of a negative subsequence would make things unnecessarily negative, and we should just instead not include that negative sequence at all. Likewise, including only part of a positive subsequence would be strange, since the sum would be even bigger if we included the whole thing.
 
-For the purposes of coming up with our algorithm, we can think about our array as being a sequence  of alternating negative and positive numbers. Each number corresponds to the sum of a subsequence of posi­ tive numbers of a subsequence of negative numbers. For the array above, our new reduced array would be:
+For the purposes of coming up with our algorithm, we can think about our array as being a sequence  of alternating negative and positive numbers. Each number corresponds to the sum of a subsequence of positive numbers of a subsequence of negative numbers. For the array above, our new reduced array would be:
 
 	5        -9       6      -2       3
 
 This doesn't give away a great algorithm immediately, but it does help us to better understand what we're working with.
 
-Consider the array above.Would it ever make sense to have {5, -9} in a subsequence? No.These numbers sum to -4, so we're better off not including either number, or possibly just having the sequence  be just {5}).
+Consider the array above. Would it ever make sense to have {5, -9} in a subsequence? No. These numbers sum to -4, so we're better off not including either number, or possibly just having the sequence  be just {5}).
 
 When would we want negative numbers included in a subsequence? Only if it allows us to join two positive subsequences, each of which have a sum greater than the negative value.
 
 We can approach this in a step-wise manner, starting with the first element in the array.
 
-When we look at 5, this is the biggest sum we've seen so far. We set maxSum to 5, and sum to 5. Then, we consider-9. If we added it to sum, we'd get a negative value.There's no sense in extending the subsequence from 5 to -9 (which "reduces" to a sequence of just -4), so we just reset the value of sum.
+When we look at 5, this is the biggest sum we've seen so far. We set maxSum to 5, and sum to 5. Then, we consider-9. If we added it to sum, we'd get a negative value. There's no sense in extending the subsequence from 5 to -9 (which "reduces" to a sequence of just -4), so we just reset the value of sum.
 
 Now, we consider 6. This subsequence is greater than 5, so we update both maxSum and sum.
 
 Next, we look at -2. Adding this to 6 will set sum to 4. Since this is still a "value add" (when adjoined to another, bigger sequence), we might want {6, -2}  in our max subsequence. We'll update  sum, but not maxSum.
 
-Finally, we look at 3. Adding 3 to sum (4) gives us 7, so we update maxsum. The max subsequence is there­fore the sequence {6, -2,  3}.
+Finally, we look at 3. Adding 3 to sum(4) gives us 7, so we update maxSum. The max subsequence is there­fore the sequence {6, -2,  3}.
 
 When we look at this in the fully expanded  array, our logic is identical. The code below implements this algorithm.
 ```java
-1 	int  getMaxSum(int[] a)  {
+1 	int getMaxSum(int[] a)  {
 2 		int maxsum  =  0;
 3 		int sum =  0;
-4 		for (inti =  0;  i < a.length;  i++)   {
+4 		for (int i =  0;  i < a.length;  i++)   {
 5 			sum += a[i];
 6 			if (maxsum < sum)  {
 7 				maxsum = sum;
-8 			} else if (sum <   0)  {
+8 			} else if (sum < 0)  {
 9 				sum =  0;
 10			}
 11		}
@@ -1968,14 +1967,14 @@ Ouch.
 
 One  easy  optimization is to  notice that if the  pattern starts  with 'a'. then the  a string  must start  at  the beginning of value. (Otherwise, the b string must start at the beginning ofvalue.) Therefore, there aren't O(n²) possible values for a; there are O(n).
 
-The algorithm then is to check  if the  pattern starts with a or b. If it starts  with b, we can "invert" it (flipping each 'a' to a 'b' and  each 'b'to an 'a') so that it starts  with 'a'. Then, iterate through all possible substrings for a (each  of which  must begin at index 0) and  all possible substrings for b (each  of which must begin at some character after the end of a). As before, we then compare the  string for this pattern with the  original string.
+The algorithm then is to check  if the  pattern starts with a or b. If it starts  with b, we can "invert" it (flipping each 'a' to a 'b' and  each 'b' to an 'a') so that it starts  with 'a'. Then, iterate through all possible substrings for a (each  of which  must begin at index 0) and  all possible substrings for b (each  of which must begin at some character after the end of a). As before, we then compare the  string for this pattern with the  original string.
 
 This algorithm now  takes  O(n⁴) time.
 
-There's one more minor (optional) optimization we can make. We don't actually need to do this "inversion" if the  string starts  with 'b' instead of 'a'. The buildF romPattern method can take care of this. We can think about the first character in the pattern as the "main" item and the  other character as the alternate character. The buildFromPattern method can build  the  appropriate string  based on whether 'a' is the  main  char­ acter or alternate character.
+There's one more minor (optional) optimization we can make. We don't actually need to do this "inversion" if the  string starts  with 'b' instead of 'a'. The buildFromPattern method can take care of this. We can think about the first character in the pattern as the "main" item and the  other character as the alternate character. The buildFromPattern method can build  the  appropriate string  based on whether 'a' is the  main  character or alternate character.
 ```java
 1 	boolean  doesMatch(String pattern,  String value) {
-2 		if  (pattern.length() == 0) return value.length() ==  0;
+2 		if (pattern.length() == 0) return value.length() ==  0;
 3
 4 		int size =  value.length();
 5 		for (int mainSize =  0;   mainSize  <  size;  mainSize++) {
@@ -1993,7 +1992,7 @@ There's one more minor (optional) optimization we can make. We don't actually ne
 17		return false;
 18	}
 19
-20	String buildFromPattern(String pattern,   String  main, String  alt) {
+20	String buildFromPattern(String pattern, String  main, String  alt) {
 21		StringBuffer  sb =  new  StringBuffer();
 22		char  first =  pattern.charAt(0);
 23		for (char c : pattern.toCharArray())  {
@@ -2012,7 +2011,7 @@ We should look for a more optimal algorithm.
 
 Let's think  through our  current algorithm. Searching through all values for the  main  string is fairly fast  (it takes O(n)  time).  It's the  alternate string  that is so slow: O(n²) time. We should study how to optimize that.
 
-Suppose we have a pattem like aabab and we're comparing it to the string catcatgocatgo. Once we've picked "cat" as the value for a to try, then the a strings are going to take up nine characters (three a strings with length three each). Therefore, the b strings must take up the remaining four characters, with each having length two. Moreover, we actually know exactly where they must occur, too. If a is cat, and the pattern is aabab, then b must be go.
+Suppose we have a pattem like aabab and we're comparing it to the string catcatgocat go. Once we've picked "cat" as the value for a to try, then the a strings are going to take up nine characters (three a strings with length three each). Therefore, the b strings must take up the remaining four characters, with each having length two. Moreover, we actually know exactly where they must occur, too. If a is cat, and the pattern is aabab, then b must be go.
 
 In other words, once we've picked a, we've picked b too. There's no need to iterate. Gathering some basic stats on pattern (number of as, number of bs, first occurrence of each) and iterating through values for a (or whichever the main string is) will be sufficient.
 ```java
@@ -2028,7 +2027,7 @@ In other words, once we've picked a, we've picked b too. There's no need to iter
 10		int firstAlt =  pattern.indexOf(altChar);
 11		int maxMainSize = size / coµntOfMain;
 12
-13		for  (int mainSize =  0;  mainSize <= maxMainSize; mainSize++)  {
+13		for (int mainSize =  0;  mainSize <= maxMainSize; mainSize++)  {
 14			int remaininglength = size -  mainSize  *  countOfMain;
 15			String first = value.substring(0, mainSize);
 16			if (countOfAlt == 0  || remainingLength % countOfAlt == 0)  {
@@ -2059,16 +2058,16 @@ In other words, once we've picked a, we've picked b too. There's no need to iter
 41	String buildFromPattern(...)  {  /* same as  before   */}
 ```
 
-This algorithm takes O(n²), since we iterate through O(n) possibilities  for the main string and do O(n) work to build and compare the strings.
+This algorithm takes O(n²), since we iterate through O(n) possibilities for the main string and do O(n) work to build and compare the strings.
 
 Observe that we've also cut down the possibilities for the main string that we try. If there are three instances of the main string, then its length cannot be any more than one third of value.
 
 
 **Optimized (Alternate}**
 
-If you don't like the work ofbuilding a string only to compare it (and then destroy it), we can eliminate this. 
+If you don't like the work of building a string only to compare it (and then destroy it), we can eliminate this. 
 
-Instead, we can iterate through the values for a and b as before.  But this time, to check if the string matches the pattern (given those values for a andb), we walk through value, comparing each substring to the first instance of the a and b strings.
+Instead, we can iterate through the values for a and b as before. But this time, to check if the string matches the pattern (given those values for a and b), we walk through value, comparing each substring to the first instance of the a and b strings.
 ```java
 1   boolean  doesMatch(String pattern,  String value) {
 2       if (pattern.length() == 0)  return value.length() ==  0;
@@ -2099,9 +2098,9 @@ Instead, we can iterate through the values for a and b as before.  But this time
 27   * this is the  main string or  the  alternate string. Then checks  if the  next  set of
 28   * characters in  value  match the  original set of  those  characters (either  the  main
 29   * or  the  alternate. */
-30   boolean  matches(String pattern,  String value,   int mainSize,  int altSize,
+30   boolean  matches(String pattern, String value, int mainSize, int altSize,
 31                 int firstAlt) {
-32       int stringlndex =    mainSize;
+32       int stringlndex = mainSize;
 33       for  (int i = 1;  i <   pattern.length();  i++)  {
 34           int size =  pattern.charAt(i) == pattern.charAt(0) ?  mainSize  :   altSize;
 35           int offset = pattern.charAt(i) ==  pattern.charAt(0) ?  0  :   firstAlt;
@@ -2146,7 +2145,7 @@ SOLUTION
 
 The first thing we can try is just walking through the  array. It's easy enough to find water:  when it's a zero, that's water.
 
-Given a water cell, how can we compute the  amount of water nearby? If the  cell is not  adjacent to any zero cells, then the  size of this pond is 1. If it is, then we need to add in the  adjacent cells, plus  any water cells adjacent to those cells. We need to, of course, be careful to not recount any cells. We can do this with a modi­ fied breadth-first or depth-first search. Once  we visit a cell, we permanently mark it as visited.
+Given a water cell, how can we compute the  amount of water nearby? If the  cell is not  adjacent to any zero cells, then the  size of this pond is 1. If it is, then we need to add in the  adjacent cells, plus  any water cells adjacent to those cells. We need to, of course, be careful to not recount any cells. We can do this with a modified breadth-first or depth-first search. Once  we visit a cell, we permanently mark it as visited.
 
 For each cell, we need to check  eight adjacent cells. We could do this by writing in lines to check up, down, left, right, and  each of the  four diagonal cells. It's even easier,  though, to do this with a loop.
 ```java
@@ -2188,8 +2187,8 @@ If you don't like modifying the  input matrix, you can create a secondary visite
 1   ArrayList<Integer>  computePondSizes(int[][] land)  {
 2       boolean[][] visited =  new  boolean[land.length][land[0].length];
 3       ArrayList<Integer>  pondSizes =  new  ArrayList<Integer>();
-4       for (int r =  0;   r <  land.length;  r++) {
-5           for (int  c  =  0;   c  <  land[r].length;  c++)   {
+4       for (int r =  0; r <  land.length;  r++) {
+5           for (int  c  =  0;   c  <  land[r].length;  c++) {
 6               int size = computeSize(land,  visited, r,  c);
 7               if (size > 0) {
 8                   pondSizes.add(size);
@@ -2202,7 +2201,7 @@ If you don't like modifying the  input matrix, you can create a secondary visite
 15  int  computeSize(int[][] land, boolean[][] visited,  int  row, int  col)  {
 16      /*  If  out of  bounds or already visited.  */
 17      if  (row <  0 || col <  0 || row  >=  land.length || col >= land[row].length  ||
-18      visited[row][col] || land[row][col]  !=  0) {
+18      	visited[row][col] || land[row][col]  !=  0) {
 19          return 0;
 20      }
 21      int  size =  1;
@@ -2215,7 +2214,7 @@ If you don't like modifying the  input matrix, you can create a secondary visite
 28      return size;
 29  }
 ```
-Both implementations are O(WH), whereWis the  width of the  matrix  and  His the  height.
+Both implementations are O(WH), where W is the  width of the  matrix  and  His the  height.
  
 > Note:  Many people say "O(N)" or "O(N²)", as though N has some inherent meaning. It doesn't. Suppose this were  a square matrix. You could describe the  runtime as O(N) or O(N²). Both are correct, depending on what you mean by N. The runtime is O(N²), where N is the length of one side. Or, if N is the  number of cells, it is O(N). Be careful  by what you mean by N. In fact, it might be safer to just  not  use  Nat all when there's any ambiguity as to what it could mean.
 
@@ -2260,7 +2259,7 @@ We will assume the list of words is passed in as a HashSet. A HashSet operates s
 5    }
 6
 7    void  getValidWords(String number,  int index,   String prefix,
-8          HashSet<String>  wordSet,   ArrayList<String>  results) {
+8          	HashSet<String>  wordSet,   ArrayList<String>  results) {
 9        /* If it's  a  complete   word,  print it. */
 10       if (index == number.length() && wordSet.contains(prefix)) {
 11           results.add(prefix);
@@ -2296,7 +2295,7 @@ We will assume the list of words is passed in as a HashSet. A HashSet operates s
 ```
  
 
-This algorithm runs in O(4ᴺ ) time, where N is the length of the string. This is because we recursively branch four times for each call to getValidWords, and we recurse until a call stack depth  of N.
+This algorithm runs in O(4ᴺ) time, where N is the length of the string. This is because we recursively branch four times for each call to getValidWords, and we recurse until a call stack depth  of N.
 
 This is very, very slow on large strings.
 
@@ -2304,9 +2303,9 @@ This is very, very slow on large strings.
 
 Let's return to thinking about how you would do this, if you were doing it by hand. Imagine the example of 33835676368 (which corresponds to development). If you were doing this by hand, I bet you'd skip over solutions thatstart with fftf [3383], as no valid words start with those characters.
 
-Ideally, we'd like our program to make the same sort of optimization: stop recursing down paths which will obviously fail. Specifically, if there are no words in the dictionary thatstart with prefix, stop recursing.
+Ideally, we'd like our program to make the same sort of optimization: stop recursing down paths which will obviously fail. Specifically, if there are no words in the dictionary that start with prefix, stop recursing.
 
-The Trie data structure  (see "Tries (Prefix Trees)" on page  105) can do this for us. Whenever we reach a string which is not a valid prefix, we exit.
+The Trie data structure (see "Tries (Prefix Trees)" on page  105) can do this for us. Whenever we reach a string which is not a valid prefix, we exit.
 ```java
 1    ArrayList<String> getValidT9Words(String  number,  Trie   trie) {
 2        ArrayList<String> results  =  new ArrayList<String>();
@@ -2360,7 +2359,7 @@ Our algorithm now has a few steps:
 
 **Word Lookup:**
 
-1.   Just look up the entry in the hash table and return the list. 
+1. Just look up the entry in the hash table and return the list. 
 
 That's it!
 ```java
@@ -2389,8 +2388,8 @@ That's it!
 23
 24  /*  Convert  mapping of  number->letters into  letter->number. */
 25  HashMap<Character, Character> createletterToNumberMap() {
-26      HashMap<Character, Character> letterToNumberMap
-27      new HashMap<Character, Character>();
+26      HashMap<Character, Character> letterToNumberMap = 
+27      		new HashMap<Character, Character>();
 28      for  (int i = 0;  i <  t9Letters.length; i++)  {
 29          char[] letters  =  t9Letters[i];
 30          if (letters != null) {
@@ -2420,7 +2419,7 @@ That's it!
 54  /*  HashMaplist<String,  Integer>  is a HashMap  that maps from Strings to
 55  *  ArrayList<Integer>.  See appendix for  implementation.  */
 ```
-Getting the wordsthatmap to this number will run in O(N) time, whereN is the number of digits. The O(N) comes in during the hash table look up (we need to convert the number to a hash table). If you know the words are never longer than a certain max size, then you could also describe the runtime as O(1).
+Getting the words that map to this number will run in O(N) time, where N is the number of digits. The O(N) comes in during the hash table look up (we need to convert the number to a hash table). If you know the words are never longer than a certain max size, then you could also describe the runtime as O(1).
 
 Note that it's easy to think, "Oh, linear-that's not that fast". But it depends what it's linear on. Linear on the length of the word is extremely fast. Linear on the length of the dictionary is not so fast.
 
@@ -2428,7 +2427,7 @@ Note that it's easy to think, "Oh, linear-that's not that fast". But it depends 
 
 EXAMPLE
 
-Input:{4,   1,  2,  1,  1,  2} and {3,   6,  3,  3} 
+Input: {4,   1,  2,  1,  1,  2} and {3,   6,  3,  3} 
 
 Output: {1,   3}
 
@@ -2452,9 +2451,9 @@ Doing some quick math:
 	2a -  2b  =  sumA -  sumB
 	a  -  b  = (sumA  -  sumB)  / 2
 
-Therefore, we're looking for two values  that have  a specific  target difference: (sumA  -  sumB)  / 2.
+Therefore, we're looking for two values  that have  a specific  target difference: (sumA - sumB) / 2.
 
-Observe that because that the target must be an integer (after all, you can't swap two integers to get  a non­ integer difference), we can conclude that the  difference between the sums must be even to have  a valid pair.
+Observe that because that the target must be an integer (after all, you can't swap two integers to get  a non-integer difference), we can conclude that the  difference between the sums must be even to have  a valid pair.
 
 **Brute Force**
 
@@ -2510,7 +2509,7 @@ Target approach:
 23   }
 ```
 
-We've used an Integer (a boxed data type) as the return value for getTarget. This allows us to distin- guish an "error" case.
+We've used an Integer (a boxed data type) as the return value for getTarget. This allows us to distinguish an "error" case.
 
 This algorithm takes O(AB) time.
 
@@ -2520,7 +2519,7 @@ This problem reduces to finding a pair of values that have a particular differen
 
 In the brute force, we're looping through A and then, for each element, looking for an element in B which gives us the "right" difference. If the value in A is 5 and the target is 3, then we must be looking for the value 2. That's the only value that could fulfill the goal. 
 
-That is, rather than writing one - two ==  target, we could have written two == one   - target. How can we more quickly find an element in B that equals one - target?
+That is, rather than writing one - two ==  target, we could have written two == one - target. How can we more quickly find an element in B that equals one - target?
  
 We can do this very quickly with a hash table. We just throw all the elements in B into a hash table. Then, iterate through A and look for the appropriate element in B.
 ```java
@@ -2571,9 +2570,9 @@ If the arrays are sorted, we can iterate through them to find an appropriate pai
 10
 11      while  (a  <   array1.length && b < array2.length) {
 12          int  difference =  array1[a] -  array2[b];
-13          /*  Compare  difference to  target.  If difference is too  small,   then  make it
-14          *   bigger  by moving a  to  a  bigger  value. If it is too  big,   then  make it
-15          * smaller by moving b to  a  bigger  value.   If it's just right, return this
+13          /* Compare  difference to  target.  If difference is too  small,   then  make it
+14          * bigger  by moving a to  a  bigger  value. If it is too  big,   then  make it
+15          * smaller by moving b to  a  bigger  value. If it's just right, return this
 16          * pair. */
 17          if  (difference ==  target) {
 18              int[] values  = {array1[a],  array2[b]};
@@ -2641,8 +2640,8 @@ This relabeling will not impact the big O time since we have to create a new mat
 10       *  columns. */
 11      private void  copyWithShift(boolean[][] oldGrid, boolean[][]  newGrid,
 12                            int shiftRow,  int  shiftColumn) {
-13            for   (int r = 0;  r < oldGrid.length;  r++)  {
-14                for  (int c =  0; c  < oldGrid[0].length;  c++) {
+13            for (int r = 0;  r < oldGrid.length;  r++)  {
+14                for (int c =  0; c  < oldGrid[0].length;  c++) {
 15                    newGrid[r + shiftRow][c +  shiftColumn] =  oldGrid[r][c];
 16                }
 17            }
@@ -2666,7 +2665,7 @@ This relabeling will not impact the big O time since we have to create a new mat
 35
 36          /*  Calculate new number of  columns.  */
 37          int numColumns =  grid[0].length;
-38          if (position.column <   0)  {
+38          if (position.column < 0)  {
 39              shiftColumn =  numColumns;
 40              numColumns *= 2;
 41          }  else if (position.column >= numColumns)   {
@@ -2674,7 +2673,7 @@ This relabeling will not impact the big O time since we have to create a new mat
 43          }
 44
 45          /*  Grow  array, if necessary. Shift ant's  position too. */
-46          if (numRows  != grid.length  ||  numColumns  != grid[0].length) {
+46          if (numRows != grid.length  ||  numColumns  != grid[0].length) {
 47              boolean[][]  newGrid =  new boolean[numRows][numColumns];
 48              copyWithShift(grid,  newGrid, shiftRow, shiftColumn);
 49              ant.adjustPosition(shiftRow,  shiftColumn);
@@ -2686,7 +2685,7 @@ This relabeling will not impact the big O time since we have to create a new mat
 55      private void  flip(Position  position) {
 56          int row =  position.row;
 57          int column =  position.column;
-58          grid[row][column] =  grid[row][column]  ?  false true;
+58          grid[row][column] =  grid[row][column]  ?  false : true;
 59      }
 60
 61      /*  Move ant. */
@@ -2746,7 +2745,7 @@ We pulled the Ant code into a separate class. The nice thing about this is that 
 24      }
 25  }
 ```
-Orientation is also its own enum,  with a few useful functions.
+Orientation is also its own enum, with a few useful functions.
 ```java
 1    public enum  Orientation {
 2        left, up, right, down;
@@ -2777,7 +2776,7 @@ Orientation is also its own enum,  with a few useful functions.
 27       }
 28   }
 ```
-We've also put  Position into its own simple class. We could just  as easily track the  row and  column sepa­rately.
+We've also put  Position into its own simple class. We could just  as easily track the  row and  column separately.
 ```java
 1    public class  Position {
 2        public int row;
@@ -2799,7 +2798,7 @@ We can  do this by using a HashSet of the  white squares. If a position is in th
 
 The one tricky bit is how to print the  board. Where  do we start printing? Where  do we end?
 
-Since we will need to print  a grid, we can track what should be top-left and  bottom-right corner of the grid. Each time  the  ant  moves,  we compare the  ant's  position to the  most top-left position and  most bottom­ right position, updating them if necessary.
+Since we will need to print  a grid, we can track what should be top-left and  bottom-right corner of the grid. Each time  the  ant  moves,  we compare the  ant's  position to the  most top-left position and  most bottom-right position, updating them if necessary.
 
 
 ```java
@@ -2841,12 +2840,12 @@ Since we will need to print  a grid, we can track what should be top-left and  b
 36      }
 37
 38      /*  Check if cell is white. */
-39      public boolean  isWhite(Position p)  {
+39      public boolean isWhite(Position p)  {
 40          return whites.contains(p);
 41      }
 42
 43      /*  Check if cell is white. */
-44      public boolean  isWhite(int row,  int column) {
+44      public boolean isWhite(int row,  int column) {
 45          return  whites.contains(new Position(row,  column));
 46      }
 47
@@ -2869,7 +2868,7 @@ Since we will need to print  a grid, we can track what should be top-left and  b
 64              }
 65              sb.append("\n");
 66          }
-67          sb.append("Ant:  "  + ant.orientation + ".   \n");
+67          sb.append("Ant:  "  + ant.orientation + ".  \n");
 68          return sb.toString();
 69      }
 ```
@@ -2958,7 +2957,7 @@ We know that, in order for our function to be correct, this probability must equ
 
 Does this mean the problem is impossible?  Not exactly. Strictly speaking,  it means that, as long as we can list out the combinations of rand5() results that will result in a particular value of rand7(), the function will not give well distributed results.
 
-We can still solve this prob/em. We just have to use a while loop, and realize that there's no telling just how many turns will be required to return a result.
+We can still solve this problem. We just have to use a while loop, and realize that there's no telling just how many turns will be required to return a result.
 
 
 **Second Attempt (Nondeterministic Number of Calls)**
@@ -2978,20 +2977,20 @@ Note that because we discard values in this approach, we have no guarantee on th
 7      }
 8  }
 ```
-Observe that doing 5 * rand5()  +  rand5() gives us exactly one way of getting each number in its range (0 to 24). This ensures that each value is equally probable.
+Observe that doing 5 * rand5() + rand5() gives us exactly one way of getting each number in its range (0 to 24). This ensures that each value is equally probable.
 
-Could we instead do 2  *  rand5()  +  rand5()? No, because the values wouldn't be equally distributed. For example, there would be three ways of getting a 6 (6 =  2  *  1  +  4, 6  =  2  *  2  +  2, and 6  =  2 *  3  +  0) but only one way of getting a O(0=2\*0+0). The values in the range are not equally probable.
+Could we instead do 2 * rand5() + rand5()? No, because the values wouldn't be equally distributed. For example, there would be three ways of getting a 6(6 =  2  *  1  +  4, 6  =  2  *  2  +  2, and 6  =  2 *  3  +  0) but only one way of getting a O(0=2\*0+0). The values in the range are not equally probable.
 
 There is a way that we can use 2  *  rand5() and still get an identically distributed range, but it's much more complicated. See below.
 ```java
 1   int rand7() {
-2       while  (true) {
+2       while (true) {
 3           int r1 =  2 * rand5(); /*evens  between 0 and 9*/
-4           int r2  = rand5();  /*used  later to  generate a 0  or  1*/
-5           if (r2   != 4)  { /*r2   has  extra   even  num-discard  the  extra*/
+4           int r2 = rand5();  /*used  later to  generate a 0  or  1*/
+5           if (r2 != 4)  { /*r2   has  extra   even  num-discard  the  extra*/
 6               int rand1 =  r2  %  2;  /*Generate 0 or  1*/
 7               int num  =  r1 +  rand1; /*will be in  the  range  0 to  9*/
-8               if (num <   7)   {
+8               if (num < 7)   {
 9                  return num;
 10              }
 11          }
@@ -3063,17 +3062,17 @@ Alternatively, we can sort the array and then find the pairs in a single pass. C
 
 	{-2,   -1,   0,   3,   5,  6,  7,  9,  13,   14}.
 
-Letfirst point to the head of the array and last point to the end of the array. To find the complement of first, wejust move last backwards until we find it. If first +  last <  sum, then there is no comple­ ment forfirst. We can therefore movefirst forward. We stop whenfirst is greater than last.
+Let first point to the head of the array and last point to the end of the array. To find the complement of first, we just move last backwards until we find it. If first +  last <  sum, then there is no complement for first. We can therefore move first forward. We stop when first is greater than last.
 
-Why must this find all complements forfirst? Because the array is sorted and we're trying progressively smaller numbers. When the sum offirst and last is less than the sum, we know that trying even smaller numbers (as last) won't help us find a complement.
+Why must this find all complements for first? Because the array is sorted and we're trying progressively smaller numbers. When the sum of first and last is less than the sum, we know that trying even smaller numbers (as last) won't help us find a complement.
 
-Why must this find all complements for last? Because all pairs must be made up of afirst and a last. We've found all complements forfirst, therefore we've found all complements of last.
+Why must this find all complements for last? Because all pairs must be made up of a first and a last. We've found all complements for first, therefore we've found all complements of last.
 ```java
 1   void  printPairSums(int[] array, int  sum)  {
 2       Arrays.sort(array);
 3       int first =  0;
 4       int last = array.length -  1;
-5       while   (first <  last) {
+5       while (first <  last) {
 6           int s =  array[first] + array[last];
 7           if (s == sum)  {
 8               System.out.println(array[first] + " " +  array[last]);
@@ -3136,7 +3135,7 @@ The algorithms now operate as follows:
 ```java
 1  public  class Cache  {
 2      private int maxCacheSize;
-3      private HashMap < Integer,  LinkedListNode>  map
+3      private HashMap <Integer,  LinkedListNode>  map = 
 4                 new HashMap < Integer, LinkedListNode>();
 5      private  LinkedListNode listHead  =  nullf
 6      public  LinkedListNode listTail =  null;
@@ -3145,12 +3144,12 @@ The algorithms now operate as follows:
 9          maxCacheSize = maxSize;
 10     }
 11
-12     /* Get value for  key and mark as most necently used. */
+12     /* Get value for  key and mark as most recently used. */
 13     public String getValue(int  key)  {
 14         LinkedListNode item = map.get(key);
 15         if (item == null) return  null;
 16
-17         /* Move  to  front of  list to  mark  as �ost  recently  used. */
+17         /* Move  to  front of  list to  mark  as most  recently  used. */
 18         if (item != listHead)  {
 19             removeFromLinkedList(item);
 20             insertAtFrontOfLinkedList(item);
@@ -3206,7 +3205,7 @@ The algorithms now operate as follows:
 70     }
 71
 72     private static  class  LinkedListNode {
-73         private  LinkedListNode next,  prev;
+73         private LinkedListNode next,  prev;
 74         public int  key;
 75         public String value;
 76         public LinkedListNode(int  k, String v) {
@@ -3217,10 +3216,10 @@ The algorithms now operate as follows:
 81 }
 ```
 
-Note that we've chosen to makeLinkedListNode an inner class of Cache, since no other classes should need access to this class and really should only exist within  the scope of Cache.
+Note that we've chosen to make LinkedListNode an inner class of Cache, since no other classes should need access to this class and really should only exist within the scope of Cache.
 
 
-**16.26  Calculator:** Given an arithmeticequationconsistingofpositiveintegers,+,-,* and/ (no parentheses), compute t he result.
+**16.26  Calculator:** Given an arithmetic equation consisting of positive integers,+,-,* and/ (no parentheses), compute the result.
 
 EXAMPLE 
 
@@ -3246,7 +3245,7 @@ For example, suppose we have this expression:
 	
 	2 - 6 - 7*8/2  +  5
 
-It's fine to compute 2-6 immediately and store itintoa result variable. But, when we see 7* (something), we know we need to fully process that term before adding it to the result.
+It's fine to compute 2-6 immediately and store it into a result variable. But, when we see 7* (something), we know we need to fully process that term before adding it to the result.
 
 We can do this by reading left to right and maintaining two variables.
 
@@ -3376,7 +3375,7 @@ The processing works as follows:
   - Collapsing:  pop two elements off numberStack, pop an operator off operatorStack, apply the operator, and push the result onto numberStack.
   - Priority: addition  and subtraction have equal priority, which is lower than the priority of multipli­cation and division (also equal priority).
 
-This collapsing continues until the above inequality is broken, at which point c urrentOperator is pushed onto operatorStack.
+This collapsing continues until the above inequality is broken, at which point currentOperator is pushed onto operatorStack.
 
 - At the very end, we collapse the stack.
 
@@ -3467,7 +3466,7 @@ The code below implements this algorithm.
 79  /*  Return  the  number that starts at offset. */
 80  int parseNextNumber(String  seq,   int offset) {
 81      StringBuilder sb  =  new StringBuilder();
-82      while  (offset < seq.length() &&   Character.isDigit(seq.charAt(offset))) {
+82      while (offset < seq.length() &&   Character.isDigit(seq.charAt(offset))) {
 83          sb.append(seq.charAt(offset));
 84          offset++;
 85      }

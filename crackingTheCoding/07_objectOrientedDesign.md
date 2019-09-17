@@ -1,7 +1,6 @@
 ## 7 Object-Oriented Design
 
-Object-oriented design questions require a candidate to sketch out the classes and methods to imple­ ment technical problems or real-life objects. These problems give-or at least are believed to give­
-an interviewer insight into your coding style.
+Object-oriented design questions require a candidate to sketch out the classes and methods to implement technical problems or real-life objects. These problems give-or at least are believed to give-an interviewer insight into your coding style.
 
 These questions are not so much about regurgitating design patterns as they are about demonstrating that you understand how to create elegant, maintainable object-oriented code. Poor performance on this type of question may raise serious red flags.
 
@@ -19,7 +18,7 @@ When being asked an object-oriented design question, you should inquire who is g
 
 For example,  suppose you were asked to describe the object-oriented design for a coffee maker. This seems straightforward enough, right? Not quite.
 
-Your coffee maker might be an industrial machine designed to be used in a massive restaurant servicing hundreds of customers per hour and making ten different kinds of coffee products. Or it might be a very simple machine, designed to be used by the elderly for just simple black coffee. These use cases will signifi­ cantly impact your design.
+Your coffee maker might be an industrial machine designed to be used in a massive restaurant servicing hundreds of customers per hour and making ten different kinds of coffee products. Or it might be a very simple machine, designed to be used by the elderly for just simple black coffee. These use cases will significantly impact your design.
 
 
 **Step 2: Define the Core Objects**
@@ -52,10 +51,9 @@ For example,  a Party walks into the Restaurant, and a Guest requests a Table fr
 
 Because interviewers are trying to test your capabilities and not your knowledge, design patterns are mostly beyond the scope of an interview. However, the Singleton and Factory Method design patterns are widely used in interviews, so we will cover them here.
 
-There are far more design patterns than this book could possibly discuss. A great way to improve your soft­
-ware engineering skills is to pick up a book that focuses on this area specifically.
+There are far more design patterns than this book could possibly discuss. A great way to improve your software engineering skills is to pick up a book that focuses on this area specifically.
 
-Be careful  you don't fall into a trap of constantly trying to find the "right" design pattern for a particular problem.  You should create the design that works for that problem. In some cases it might be an estab­ lished pattern, but in many other cases it is not.
+Be careful  you don't fall into a trap of constantly trying to find the "right" design pattern for a particular problem.  You should create the design that works for that problem. In some cases it might be an established pattern, but in many other cases it is not.
 
 
  **Singleton Class**
@@ -112,7 +110,7 @@ First, we need to recognize that a "generic" deck of cards can mean many things.
 Let's assume that your interviewer clarifies that the deck is a standard 52-card set, like you might see used in a blackjack or poker game. If so,  the design might look like this:
 
 ```java
-1   public   enum Suit   {
+1   public enum Suit {
 2       Club (0),  Diamond  (1),  Heart (2), Spade (3);
 3       private int value;
 4       private Suit(int v)  { value  =  v; }
@@ -120,7 +118,7 @@ Let's assume that your interviewer clarifies that the deck is a standard 52-card
 6       public  static Suit  getSuitFromValue(int value)  {... }
 7   }
 8   
-9   public   class Deck <T  extends   Card> {
+9   public class Deck <T  extends   Card> {
 10      private ArrayList<T>  cards;//   all cards,   dealt or  not
 11      private int  dealtlndex =  0;  // marks first undealt card
 12  
@@ -147,8 +145,8 @@ Let's assume that your interviewer clarifies that the deck is a standard 52-card
 33          suit =  s;
 34      }
 35  
-36      public  abstract int value();
-37      public   Suit  suit() {return  suit;}
+36      public abstract int value();
+37      public Suit  suit() {return  suit;}
 38  
 39      /*  Checks if the  card  is available to  be given  out  to  someone */
 40      public boolean  isAvailable() {return  available;  }
@@ -234,8 +232,7 @@ Now, let's say we're building a blackjack game, so we need to know the value of 
 53 }
 ```
 
-This is just one way of handling aces. We could, alternatively, create  a class of type Ace that  extends
-BlackJackCard.
+This is just one way of handling aces. We could, alternatively, create  a class of type Ace that  extends BlackJackCard.
 
 An executable, fully automated  version of blackjack is provided in the downloadable code attachment.
 
@@ -252,7 +249,7 @@ There are a few things which are common to them, like address,  name, job title,
 
 Finally, there should be one CallHandler class which would route the calls to the correct person.
 
-Note that on any object-oriented design question, there are many ways to design the objects. Discuss the trade-offs of different solutions with your interviewer.  You should usually design for long-term code flex­ ibility and maintenance.
+Note that on any object-oriented design question, there are many ways to design the objects. Discuss the trade-offs of different solutions with your interviewer.  You should usually design for long-term code flexibility and maintenance.
 
 We'll go through each of the classes below in detail.
 
@@ -330,7 +327,7 @@ Call represents a call from a user. A call has a minimum rank and is assigned to
 14      }
 15  
 16      /*Set employee who  is handling  call.*/
-17      public void  setHandler(Employee  e)  {handler      e; }
+17      public void  setHandler(Employee  e)  {handler = e; }
 18  
 19      public void reply(String message)  {... }
 20      public Rank getRank()  {return  rank;}
@@ -357,7 +354,7 @@ Employee is a super class for the Director, Manager, and Respondent classes. It 
 12  
 13      /*The issue has  not  been resolved. Escalate the  call, and assign a new call to
 14      * the  employee. */
-15      public void  escalateAndReassign()  {    }
+15      public void  escalateAndReassign()  { ... }
 16  
 17      /*Assign  a new call to  an employee,  if the  employee is free.*/
 18      public boolean assignNewCall()   {  ... }
@@ -431,7 +428,7 @@ A user also can be introduced:
 - Deleting
 - Credit information
 
-Each of the main system components  translates  roughly to an object, and each action translates to a method. Let's walk through one potential design.
+Each of the main system components  translates roughly to an object, and each action translates to a method. Let's walk through one potential design.
 
 The Jukebox class represents the body of the problem. Many of the interactions between the components of the system, or between the system and the user, are channeled through here.
 
@@ -446,7 +443,7 @@ The Jukebox class represents the body of the problem. Many of the interactions b
 8                   SongSelector ts) {  ....   }
 9   
 10      public Song getCurrentSong()  {  return  ts.getCurrentSong(); }
-11      public void  setUser(User  u)  {  this.user =  u;}
+11      public void setUser(User  u)  {  this.user =  u;}
 12  }
 ```
 
@@ -512,7 +509,7 @@ The classes  for CD, Song, and  User are all fairly straightforward. They consis
 15  }
 ```
 
-This is by no means the  only "correct" implementation. The interviewer's responses to initial questions, as well as other constraints, will shape the design of thejukebox classes.
+This is by no means the  only "correct" implementation. The interviewer's responses to initial questions, as well as other constraints, will shape the design of the jukebox classes.
 
  
 **7.4        Parking Lot:** Design a parking lot using object-oriented principles.
@@ -559,7 +556,7 @@ In the below implementation, we have created an abstract class Vehicle, from whi
 21  }
 22  
 23      public class  Bus extends  Vehicle  {
-24          public Bus()  {
+24          public Bus() {
 25          spotsNeeded  =  5;
 26          size =  VehicleSize.Large;
 27      }
@@ -569,7 +566,7 @@ In the below implementation, we have created an abstract class Vehicle, from whi
 31  }
 32  
 33  public class Car extends  Vehicle  {
-34      public Car()   {
+34      public Car() {
 35          spotsNeeded  =  1;
 36          size =  VehicleSize.Compact;
 37      }
@@ -588,7 +585,7 @@ In the below implementation, we have created an abstract class Vehicle, from whi
 50  }
 ```
 
-The ParkingLot class is essentially a wrapper class for an array of Levels. By implementing it this way, we are able to separate out logic that deals with actually finding free spots and parking cars out from the broader actions of the ParkingLot. If we didn't do it this way, we would need to hold parking spots in some sort of doublearray (or hash table which maps from a level number to the list of spots).  It's cleaner to just separate ParkingLot from Level.
+The ParkingLot class is essentially a wrapper class for an array of Levels. By implementing it this way, we are able to separate out logic that deals with actually finding free spots and parking cars out from the broader actions of the ParkingLot. If we didn't do it this way, we would need to hold parking spots in some sort of double array (or hash table which maps from a level number to the list of spots).  It's cleaner to just separate ParkingLot from Level.
 
 ```java
 1   public class ParkingLot  {
@@ -642,7 +639,7 @@ The ParkingSpot is implemented by having just a variable which represents the si
 10      public boolean  isAvailable() {  return  vehicle == null; }
 11  
 12      /* Check   if the spot is b ig  enough  and   is available */
-13      public boolean c anFitVehicle(Vehicle vehicle)  {  ... }
+13      public boolean canFitVehicle(Vehicle vehicle)  {  ... }
 14  
 15      /* Park vehicle in this  spot. */
 16      public boolean park(Vehicle  v)   {           }
@@ -703,7 +700,7 @@ The class OnlineReaderSystem represents the body of our program. We could implem
 23      }
 24  
 25      public User getActiveUser() {  return activeUser; }
-26      public void  setActiveUser(User user)  {
+26      public void setActiveUser(User user)  {
 27          activeUser =  user;
 28          display.displayuser(user);
 29      }
@@ -725,7 +722,7 @@ We then implement separate classes to handle the user manager, the library, and 
 10          return  book;
 11      }
 12  
-13      public boolean  remove(Book b)  {  return remove(b.getID());}
+13      public boolean  remove(Book b)  {  return remove(b.getID()); }
 14      public boolean  remove(int id)  {
 15          if (!books.containsKey(id)) {
 16              return false;
@@ -742,7 +739,7 @@ We then implement separate classes to handle the user manager, the library, and 
 27  public class UserManager {
 28      private HashMap<Integer, User> users;
 29  
-30      public User  addUser(int id,   String details, int accountType)  {
+30      public User addUser(int id,   String details, int accountType)  {
 31          if (users.containsKey(id))  {
 32              return null;
 33          }
@@ -751,9 +748,9 @@ We then implement separate classes to handle the user manager, the library, and 
 36          return user;
 37      }
 38  
-39      public User find(int id) {  return users.get(id); }
-40      public boolean  remove(User u)  {  return remove(u.getID());}
-41      public boolean  remove(int id)  {
+39      public User find(int id) { return users.get(id); }
+40      public boolean remove(User u)  { return remove(u.getID()); }
+41      public boolean remove(int id)  {
 42          if (!users.containsKey(id)) {
 43              return false;
 44          }
@@ -767,12 +764,12 @@ We then implement separate classes to handle the user manager, the library, and 
 52      private User activeuser;
 53      private int pageNumber   =  0;
 54  
-55      public   void  displayUser(User user)  {
+55      public void displayUser(User user)  {
 56          activeUser =  user;
 57          refreshUsername();
 58      }
 59  
-60      public  void  displayBook(Book book) {
+60      public void displayBook(Book book) {
 61          pageNumber  =  0;
 62          activeBook  =  book;
 63  
@@ -781,7 +778,7 @@ We then implement separate classes to handle the user manager, the library, and 
 66          refreshPage();
 67      }
 68  
-69      public  void  turnPageForward() {
+69      public void turnPageForward() {
 70          pageNumber++;
 71          refreshPage();
 72      }
@@ -801,37 +798,37 @@ We then implement separate classes to handle the user manager, the library, and 
 The classes for User and Book simply hold data and provide little true functionality.
 
 ```java
-1   public   class Book {
-2       private int  bookid;
+1   public class Book {
+2       private int  bookId;
 3       private String details;
 4   
-5       public   Book(int  id,   String det) {
-6           bookid  =  id;
+5       public Book(int  id,   String det) {
+6           bookId  =  id;
 7           details =  det;
 8       }
 9   
-10      public  int  getID() {return  bookld;}
-11      public  void  setID(int id) {  bookld  = id;}
-12      public  String getDetails()  {  return details;  }
-13      public  void  setDetails(String d)  {details  =  d};
+10      public  int  getID() { return  bookId; }
+11      public  void  setID(int id) {  bookId  = id; }
+12      public  String getDetails()  { return details;  }
+13      public  void  setDetails(String d)  { details  =  d };
 14  }
 15  
 16  public class User   {
-17      private int userid;
+17      private int userId;
 18      private String details;
 19      private int accountType;
 20  
 21      public  void renewMembership()  {  }
 22  
 23      public User(int id, String details,  int  accountType)  {
-24          userid = id;
+24          userId = id;
 25          this.details =  details;
 26          this.accountType =  accountType;
 27      }
 28  
 29      /* Getters and  setters */
-30      public int getID() {  return userid; }
-31      public void setID(int  id)  { userid = id; }
+30      public int getID() { return userId; }
+31      public void setID(int  id)  { userId = id; }
 32      public String getDetails()  {
 33          return details;
 34      }
@@ -840,11 +837,11 @@ The classes for User and Book simply hold data and provide little true functiona
 37          this.details =  details;
 38      }
 39      public int getAccountType()  {  return accountType }
-40      public  void setAccountType(int t) {  accountType  = t; }
+40      public void setAccountType(int t) {  accountType  = t; }
 41  }
 ```
 
-The decision to tear offuser management, library, and display into their own classes, when this functionality could have been in the  general OnlineReaderSystem class, is an interesting one. On a very small system, making this decision could make the  system overly complex. However,  as the  system grows,  and more and more functionality gets added to OnlineReaderSystem, breaking off such components prevents this main class from getting overwhelmingly lengthy.
+The decision to tear off user management, library, and display into their own classes, when this functionality could have been in the  general OnlineReaderSystem class, is an interesting one. On a very small system, making this decision could make the  system overly complex. However,  as the  system grows,  and more and more functionality gets added to OnlineReaderSystem, breaking off such components prevents this main class from getting overwhelmingly lengthy.
 
  
 **7.6   Jigsaw:** Implement an NxN jigsaw  puzzle.  Design  the  data  structures and  explain an algorithm to solve  the  puzzle.  You can  assume that you  have  a fitsWith method which, when passed two
@@ -855,7 +852,7 @@ SOLUTION
  
 ---
 
-We have  a traditional jigsaw puzzle. The puzzle is grid-like, with rows and columns. Each piece is located in a single  row and column and has four edges. Each edge comes in one  of three types:  inner, outer, and  flat. A corner piece, for example, will have two flat edges and  two other edges, whichcould be inner  or outer.
+We have  a traditional jigsaw puzzle. The puzzle is grid-like, with rows and columns. Each piece is located in a single  row and column and has four edges. Each edge comes in one  of three types:  inner, outer, and  flat. A corner piece, for example, will have two flat edges and  two other edges, which could be inner  or outer.
 
 
 ![](media/07_6_1.JPG)
@@ -872,7 +869,7 @@ We'll need classes to represent Puzzle, Piece, and Edge. Additionally, we'll wan
 
 Puzzle will start off with a list of the pieces. When we solve the puzzle, we'll fill in an NxN solution matrix of pieces.
 
-Piece will have a hash table that maps from an orientation to the appropriate edge. Note that we might rotate the piece at some point, so the hash table could change. The orientation of the edges will be arbi­ trarily assigned at first.
+Piece will have a hash table that maps from an orientation to the appropriate edge. Note that we might rotate the piece at some point, so the hash table could change. The orientation of the edges will be arbitrarily assigned at first.
 
 Edge will have just its shape and a pointer back to its parent piece. It will not keep  its orientation. 
 
@@ -888,7 +885,7 @@ A potential object-oriented design looks like the following:
 7           case RIGHT:  return  LEFT;
 8           case TOP:  return  BOTTOM;
 9           case BOTTOM:  return  TOP;
-10          default:   return  null;
+10          default: return  null;
 11          }
 12      }
 13  }
@@ -937,8 +934,8 @@ A potential object-oriented design looks like the following:
 56      /*  Rotate  edges  by  "numberRotations". */
 57      public   void rotateEdgesBy(int numberRotations)  {  ... }
 58  
-59      public   boolean  isCorner() {            }
-60      public   boolean  isBorder() {            }
+59      public   boolean  isCorner() { ... }
+60      public   boolean  isBorder() { ... }
 61  }
 62  
 63  public   class Edge {
@@ -968,7 +965,7 @@ The code below outlines this algorithm.
 8           /*Get  the  right edge and list to  match.    */
 9           Piece  pieceToMatch =  column ==  0 ?  solution[row -  1][0]  :
 10                                   solution[row][column  -  1];
-11          Orientation  orientationToMatch    column == 0 ? Orientation.BOTTOM : 
+11          Orientation  orientationToMatch = column == 0 ? Orientation.BOTTOM : 
 12                                                           Orientation.RIGHT;
 13          Edge edgeToMatch = pieceToMatch.getEdgeWithOrientation(orientationToMatch);
 14  
@@ -1025,7 +1022,7 @@ We will assume that "friending" is mutual; I  am only your contact if you are mi
 
 This is also something to discuss with your interviewer, but here are some ideas: 
 
-- Signing online and offiine.
+- Signing online and offline.
 - Add requests (sending, accepting, and rejecting).
 - Updating a status message. 
 - Creating private and group chats.
@@ -1051,7 +1048,7 @@ The server will consist of a set of machines. Data will be split across machines
 
 **What are the key objects  and methods?**
 
-The key objects of the  system will be a concept of users, conversations, and status messages. We've imple­ mented a UserManager class. If we were  looking more at the  networking aspects of the problem, or a different component, we might have instead dived into those objects.
+The key objects of the  system will be a concept of users, conversations, and status messages. We've implemented a UserManager class. If we were  looking more at the  networking aspects of the problem, or a different component, we might have instead dived into those objects.
 
 ```java
 1   /*  UserManager serves as a  central place for core user actions. */
@@ -1086,8 +1083,7 @@ The method sentAddRequest in the  User class  is called by UserManager to add an
 1.  User A clicks "add user" on the client and it gets sent to the server.
 2.  User A calls requestAddUser(User B).
 3.  This method calls UserManager. addUser.
-4.  UserManager calls both User  A. sentAddRequest and
-    User B.receivedAddRequest.
+4.  UserManager calls both User  A. sentAddRequest and User B.receivedAddRequest.
 
 Again, this is just one way of designing these interactions. It is not the only way, or even the only "good" way.
 
@@ -1203,7 +1199,7 @@ The downloadable code attachment provides a more detailed look at these methods,
 
 The following questions may be interesting to discuss with your interviewer further.
 
-*Q1: How do we know ifsomeone is online-1 mean, really, really know?*
+*Q1: How do we know if someone is online--I mean, really, really know?*
 
 While we would like users to tell us when they  sign off, we can' t know for sure. A user's connection might have died,  for example. To make sure that we know  when a user has signed off, we  might try regularly pinging the client to make sure it's still there.
 
@@ -1215,7 +1211,7 @@ We have some information stored in the  computer's memory and some in the  datab
 
 While we designed out chat server without worrying-too much- about scalability, in real life this would be a concern. We'd need to split our data across many servers, which would increase our concern about out-of-sync data.
 
-*Q4: How we dopreventdenial ofservice attacks?*
+*Q4: How we do prevent denial of service attacks?*
 
 Clients can push data to us-what if they try to DOS (denial of service) us? How do we prevent that?
 
@@ -1282,8 +1278,8 @@ One possible design for Othello is below.
 15      private Game()   {
 17          board =   new Board(ROWS,   COLUMNS);
 18          players = new Player[2];
-19          players[0] =   new  Player(Color.Black);
-20          players[1] =   new  Player(Color.White);
+19          players[0] =  new  Player(Color.Black);
+20          players[1] =  new  Player(Color.White);
 21      }
 22 
 23      public  static  Game  getinstance() {
@@ -1322,7 +1318,7 @@ The Board class manages the actual pieces themselves.  It does not handle much o
 20      /*  Flips  pieces   starting at (row,  column) and proceeding  in  direction d. */
 21      private int flipSection(int row,  int column,  Color  color,  Direction d)  { ...  }
 22
-23      public  int  getScoreForColor(Color c)  {
+23      public int getScoreForColor(Color c)  {
 24          if (c  ==  Color.Black) return  blackCount;
 25          else  return whiteCount;
 26      }
@@ -1336,7 +1332,7 @@ The Board class manages the actual pieces themselves.  It does not handle much o
 As described earlier, we implement the black and white pieces with the Piece class, which has a simple Color variable representing whether it is a black or white piece.
 
 ```java
-1   public class   Piece  {
+1   public class Piece  {
 2       private Color  color;
 3       public Piece(Color c)  {  color  = c; }
 4   
@@ -1525,17 +1521,17 @@ It's better to just have a boolean flag for isExposed. We'll do a similar thing 
 6       private boolean  isExposed  =  false;
 7       private boolean  isGuess  =  false;
 8   
-9       public   Cell(int r, int c)  {  ... }
+9       public Cell(int r, int c)  {  ... }
 10  
 11      /*  Getters and setters for   above variables. */
 12  
 13  
-14      public   boolean  flip() {
+14      public boolean flip() {
 15          isExposed  =  true;
 16          return  !isBomb;
 17      }
 18  
-19      public   boolean  toggleGuess()  {
+19      public boolean toggleGuess()  {
 20          if (!isExposed)  {
 21              isGuess  =  !isGuess;
 22          }
@@ -1630,7 +1626,7 @@ To place the bombs, we could randomly pick a cell and then place a bomb if it's 
 
 To get around this, we could take an approach  similar to the card deck shuffling problem  (pg 531). We could place the K bombs in the first K cells and then shuffle all the cells around.
 
-Shuffling an array operates  by iterating through the array from i = 0 through N-1. For each i, we pick a random indexbetween i and N-1 and swap it with that index.
+Shuffling an array operates  by iterating through the array from i = 0 through N-1. For each i, we pick a random index between i and N-1 and swap it with that index.
 
 To shuffle a grid, we do a very similar thing, just converting the index into a row and column location.
 
@@ -1639,7 +1635,7 @@ To shuffle a grid, we do a very similar thing, just converting the index into a 
 2       int nCells   =  nRows *  nColumns ;
 3       Random  random =  new  Random();
 4       for (int index1 =  0;  index1 <   nCells;  index1++) {
-5           int index2   =  index1 + random.nextint(nCells  -  index1);
+5           int index2  =  index1 + random.nextint(nCells  -  index1);
 6           if (index1 != index2)  {
 7               /* Get  cell at  index1.  */
 8               int row1  =  index1 / nColumns;
@@ -1654,7 +1650,7 @@ To shuffle a grid, we do a very similar thing, just converting the index into a 
 17              /* Swap.  */
 18              cells[row1][column1] =  cell2;
 19              cell2.setRowAndColumn(row1,   column1);
-20              cells[row2][column2]   =  cell1;
+20              cells[row2][column2] =  cell1;
 21              cell1.setRowAndColumn(row2,   column2);
 22          }
 23      }
@@ -1665,7 +1661,7 @@ To shuffle a grid, we do a very similar thing, just converting the index into a 
 
 Once the bombs have been placed, we need to set the values of the numbered cells. We could go through each cell and check how many bombs are around it. This would work, but it's actually a bit slower than is necessary.
 
-Instead, we can go to each bomb and increment each cell around it. For example,  ceffs with 3 bombs wiff get incrementNumber called three times on them and will wind up with a number of 3.
+Instead, we can go to each bomb and increment each cell around it. For example,  cells with 3 bombs will get incrementNumber called three times on them and will wind up with a number of 3.
 
 ```java
 1   /* Set  the  cells around the  bombs  to the  right number. Although the  bombs have
@@ -1681,7 +1677,7 @@ Instead, we can go to each bomb and increment each cell around it. For example, 
 11          int col =  bomb.getColumn();
 12          for  (int[] delta :   deltas) {
 13              int r = row +  delta[0];
-14              int c  =  col +  delta[1];
+14              int c = col +  delta[1];
 15              if (inBounds(r,  c))   {
 16                  cells[r][c].incrementNumber();
 17              }
@@ -1707,7 +1703,7 @@ cells to a queue, to flip their neighboring cells.
 8       Queue<Cell> toExplore  =  new LinkedList<Cell>();
 9       toExplore.add(cell);
 10  
-11      while  (!toExplore.isEmpty()) {
+11      while (!toExplore.isEmpty()) {
 12          Cell  current =  toExplore.remove();
 13  
 14          for  (int[]  delta :   deltas) {
@@ -1716,7 +1712,7 @@ cells to a queue, to flip their neighboring cells.
 17  
 18              if (inBounds(r,  c))   {
 19                  Cell  neighbor  =  cells[r][c];
-20                  if  (flipCell(neighbor) &&   neighbor.isBlank()) {
+20                  if (flipCell(neighbor) &&   neighbor.isBlank()) {
 21                      toExplore.add(neighbor);
 22                  }
 23              }
@@ -1740,7 +1736,7 @@ Many candidates may see this problem and instantly panic. A file system seems so
 
 However, there's no need to panic. If we think through the components  of a file system, we can tackle this problem just like any other object-oriented design question.
 
-A file system, in its most simplistic version, consists  of Files and Directories. Each Directory contains a set of Files and Directories. Since Files and Directories share so many characteris­ tics, we've implemented them such that they inherit from the same class, Entry.
+A file system, in its most simplistic version, consists  of Files and Directories. Each Directory contains a set of Files and Directories. Since Files and Directories share so many characteristics, we've implemented them such that they inherit from the same class, Entry.
 
 ```java
 1   public abstract class  Entry  {
@@ -1772,9 +1768,9 @@ A file system, in its most simplistic version, consists  of Files and Directorie
 27  
 28      /*  Getters and setters.  */
 29      public long  getcreationTime()  {  return created; }
-30      public long  getLastUpdatedTime()  { return lastUpdated;}
+30      public long  getLastUpdatedTime()  { return lastUpdated; }
 31      public long  getLastAccessedTime() { return lastAccessed; }
-32      public void  changeName(String n)  {name  =  n;}
+32      public void  changeName(String n)  { name  =  n; }
 33      public String getName() {return  name;}
 34  }
 35  

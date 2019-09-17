@@ -16,8 +16,7 @@ It uses the following operations:
 - peek(): Return the top of the stack.
 - is Empty(): Return true if and only if the stack is empty.
 
-Unlike an array, a stack does not offer constant-time access to the ith item. However, it does allow constant­
-time adds and removes, as it doesn't require shifting elements around.
+Unlike an array, a stack does not offer constant-time access to the ith item. However, it does allow constant-time adds and removes, as it doesn't require shifting elements around.
 
 We have provided simple sample code to implement a stack. Note that a stack can also be implemented using a linked list, if items were added and removed from the same side.
 
@@ -36,7 +35,7 @@ We have provided simple sample code to implement a stack. Note that a stack can 
 12	
 13		public T  pop()   {
 14			if (top == null) throw  new EmptystackException();
-15			T item   =  top.data;
+15			T item =  top.data;
 16			top =  top.next;
 17			return item;
 18		}
@@ -105,20 +104,20 @@ A queue can also be implemented  with a linked list. In fact, they are essential
 25		public T remove()   {
 26			if (first ==    null) throw  new NoSuchElementException();
 27			T data =  first.data;
-28			first =   first.next;
+28			first  =  first.next;
 29			if (first == null) {
-30				last =    null;
+30				last = null;
 31			}
 32			return data;
 33		}
 34	
 35		public T peek()  {
-36			if (first ==    null) throw  new NoSuchElementException();
+36			if (first == null) throw  new NoSuchElementException();
 37			return first.data;
 38		}
 39	
 40		public  boolean isEmpty() {
-41			return first ==    null;
+41			return first == null;
 42		}
 43	}
 ```
@@ -182,7 +181,7 @@ The code for this solution is below.
 23		}
 24	
 25		/*  Pop item  from top  stack.  */
-26		public   int  pop(int stackNum) {
+26		public int  pop(int stackNum) {
 27			if (isEmpty(stackNum))  {
 28				throw new EmptyStackException();
 29			}
@@ -195,7 +194,7 @@ The code for this solution is below.
 36		}
 37	
 38		/*  Return  top  element.   */
-39		public   int peek(int stackNum) {
+39		public int peek(int stackNum) {
 40			if (isEmpty(stackNum))  {
 41				throw new EmptyStackException();
 42			}
@@ -221,7 +220,7 @@ The code for this solution is below.
 62	}
 ```
 
-If we had additional information about the expected usages of the stacks, then we could modify this algo­rithm accordingly.  For example,  if we expected Stack  1  to have many more elements than Stack 2, we could allocate more space to Stack 1  and lessspace to Stack 2.
+If we had additional information about the expected usages of the stacks, then we could modify this algo­rithm accordingly.  For example,  if we expected Stack  1  to have many more elements than Stack 2, we could allocate more space to Stack 1  and less space to Stack 2.
 
 **Approach 2: Flexible Divisions**
 
@@ -233,18 +232,18 @@ Please note that the code for this solution is far more complex than would be ap
 
 ```java
 1  	public class MultiStack {
-2  	    /*  Stackinfo is  a  simple  class that holds  a  set of  data  about  each  ck.
+2  	    /*  StackInfo is  a  simple  class that holds  a  set of  data  about  each  ck.
 3  	     * does not  hold  the  actual items  in  the  stack. We  could  have e
 4  	     * just a  bunch of  individual variables,  but  that's messy and doesn't n  us
 5  	     * much.  */
-6  	    private class Stackinfo {
+6  	    private class StackInfo {
 7  	        public int start, size, capacity;
-8  	        public Stackinfo(int start, int capacity) {
+8  	        public StackInfo(int start, int capacity) {
 9  	            this.start = start;
 10 	            this.capacity = capacity;
 11 	        }
 12	
-13	        /*  Check if an index  on the  full array   is within   the  stack ndaries.
+13	        /*  Check if an index  on the  full array   is within   the  stack boundaries.
 14		         * stack can  wrap around  to  the  start of  the  array. */
 15 	        public boolean isWithinStackCapacity(int index) {
 16 	            /*  If outside of  bounds of  array, return false.  */
@@ -253,9 +252,9 @@ Please note that the code for this solution is far more complex than would be ap
 19		        }
 20		
 21		            /*  If index  wraps around,  adjust it.  */
-22		            int contiguousindex = index < start ? index + values.length : index;
+22		            int contiguousIndex = index < start ? index + values.length : index;
 23		            int end = start + capacity;
-24		            return start <= contiguousindex && contiguousindex < end;
+24		            return start <= contiguousIndex && contiguousIndex < end;
 25 	        }
 26	
 27	        public int lastCapacityIndex() {
@@ -270,14 +269,14 @@ Please note that the code for this solution is far more complex than would be ap
 36 	        public boolean isEmpty() { return size == 0; }
 37 	    }
 38	
-39	    private Stackinfo[] info;
+39	    private StackInfo[] info;
 40 	    private int[] values;
 41	
 42	    public MultiStack(int numberOfStacks, int defaultSize) {
 43 	        /*  Create  metadata  for  all the  stacks.  */
-44 	        info = new Stackinfo[numberOfStacks];
+44 	        info = new StackInfo[numberOfStacks];
 45 	        for (int i = 0; i < numberOfStacks; i++) {
-46 	            info[i] = new Stackinfo(defaultSize * i, defaultSize);
+46 	            info[i] = new StackInfo(defaultSize * i, defaultSize);
 47 	        }
 48 	        values = new int[numberOfStacks * defaultSize];
 49 	    }
@@ -290,7 +289,7 @@ Please note that the code for this solution is far more complex than would be ap
 56 	        }
 57	
 58	        /* If this stack  is full, expand it. */
-59 	        Stackinfo stack = info[stackNum];
+59 	        StackInfo stack = info[stackNum];
 60 	        if (stack.isFull()) {
 61 	            expand(stackNum);
 62 	        }
@@ -303,7 +302,7 @@ Please note that the code for this solution is far more complex than would be ap
 69	
 70	    /*  Remove  value  from stack. */
 71 	    public int pop(int stackNum) throws Exception {
-72 	        Stackinfo stack = info[stackNum];
+72 	        StackInfo stack = info[stackNum];
 73 	        if (stack.isEmpty()) {
 74 	            throw new EmptyStackException();
 75 	        }
@@ -317,15 +316,15 @@ Please note that the code for this solution is far more complex than would be ap
 83	
 84	    /*  Get top  element  of  stack. */
 85 	    public int peek(int stackNum) {
-86 	        Stackinfo stack = info[stackNum];
+86 	        StackInfo stack = info[stackNum];
 87 	        return values[stack.lastElementIndex()];
 88 	    }
-89	    /*  Shift items  in  stack   over  by one element. If we  have available acity,
-90	     * we'll end up shrinking the  stack   by one element. If we  don't have ilable
+89	    /*  Shift items  in  stack   over  by one element. If we  have available capacity,
+90	     * we'll end up shrinking the  stack   by one element. If we  don't have available
 91 	     * capacity,  then  we'll need to  shift the  next  stack   over  too. */
 92	    private void shift(int stackNum) {
 93 	        System.out.println("/// Shifting" + stackNum);
-94 	        Stackinfo stack = info[stackNum];
+94 	        StackInfo stack = info[stackNum];
 95	
 96	        /*  If this stack is at its  full capacity, then  you need to  move  the  next
 97	         * stack   over  by one element. This  stack   can now  claim  the  freed index */
@@ -357,7 +356,7 @@ Please note that the code for this solution is far more complex than would be ap
 123	    /* Returns  the  number of  items  actually present in  stack.  */
 124	    public int numberOfElements() {
 125	        int size = 0;
-126	        for (Stackinfo sd : info) {
+126	        for (StackInfo sd : info) {
 127	            size += sd.size;
 128	        }
 129	        return size;
@@ -389,7 +388,7 @@ Please note that the code for this solution is far more complex than would be ap
 155	}
 ```
 
-In problems like this, it's important to focus on writing clean, maintainable code. You should use additional classes, as we did with Stackinfo, and pull chunks of code into separate methods. Of course, this advice applies to the "real world" as well.
+In problems like this, it's important to focus on writing clean, maintainable code. You should use additional classes, as we did with StackInfo, and pull chunks of code into separate methods. Of course, this advice applies to the "real world" as well.
 
 **3.2 	Stack Min:** How would you design a stack which, in addition to push and pop, has a function min which returns the minimum element? Push, pop and min should all operate in O(1) time. 
 
@@ -409,11 +408,11 @@ push(5);  // stack is {5},   min is 5
 push(6);  // stack is {6,  5},  min is 5 
 push(3);  // stack is {3,  6,  5},   min is 3 
 push(7);  // stack is {7,  3,  6,  5},   min is 3
-pop();  // pops  7.  stack is {3,   6,   5},   min is 3 
-pop();  // pops  3. stack   is {6,   5}.   min is 5.
+pop();    // pops  7. stack is {3,   6,   5},   min is 3 
+pop();    // pops  3. stack is {6,   5}.   min is 5.
 ```
 
-Observe how once the stack goes back to a prior state ({ 6, 5}), the minimum also goes back to its prior state (5). This leads us to our second solution.
+Observe how once the stack goes back to a prior state ({6, 5}), the minimum also goes back to its prior state (5). This leads us to our second solution.
 
 If we kept track of the minimum at each state, we would be able to easily know the minimum. We can do this by having each node record what the minimum beneath itself is. Then, to find the min, you just look at what the top element thinks is the min.
 
@@ -439,7 +438,7 @@ When you push an element onto the stack, the element is given the current minimu
 17		public int value;
 18		public int min;
 19		public NodeWithMin(int  v,  int min) {
-20			value   =  v;
+20			value =  v;
 21			this.min =  min;
 22		}
 23	}
@@ -447,16 +446,16 @@ When you push an element onto the stack, the element is given the current minimu
 
 There's just one issue with this: if we have a large stack, we waste a lot of space by keeping track of the min for every single element. Can we do better?
 
-We can (maybe) do a bit better than this by using an additional stack which keeps  track of the mins.
+We can (maybe) do a bit better than this by using an additional stack which keeps track of the mins.
 
 ```java
 1 	public class  StackWithMin2 extends  Stack<Integer>  {
 2 		Stack<Integer>  s2;
-3 		public  stackWithMiN2() {
+3 		public stackWithMiN2() {
 4 			s2 =  new Stack<Integer>();
 5 		}
 6	
-7 		public  void   push(int value) {
+7 		public void push(int value) {
 8 			if (value  <=   min()) {
 9 				s2.push(value);
 10			}
@@ -484,11 +483,11 @@ We can (maybe) do a bit better than this by using an additional stack which keep
 Why might  this be more space efficient? Suppose we had a very large stack and the  first element inserted happened to be the minimum.  In the first solution,  we would be keeping n integers, where n is the size of the stack. In the second solution though, we store just a few pieces of data: a second stack with one element and the members within this stack.
 
 
-**3.3      Stack of Plates:** Imagine  a  (literal)  stack  of  plates.  If  the  stack  gets  too  high,  it might  topple. Therefore, in real life, we would  likely start  a new  stack  when  the  previous  stack  exceeds some threshold. Implement a data  structure SetOfStacks that  mimics  this. SetOfStacks should  be composed of several stacks and should create a new stack once the previous one  exceeds capacity. SetOfStacks.push() and  SetOfStacks. pop() should  behave identically  to a single  stack (that is, pop()  should  return the same values as it would if there  were just  a single stack).
+**3.3      Stack of Plates:** Imagine  a  (literal)  stack  of  plates.  If  the  stack  gets  too  high,  it might  topple. Therefore, in real life, we would  likely start  a new  stack  when  the  previous  stack  exceeds some threshold. Implement a data  structure SetOfStacks that  mimics  this. SetOfStacks should  be composed of several stacks and should create a new stack once the previous one  exceeds capacity. SetOfStacks.push() and  SetOfStacks.pop() should  behave identically  to a single  stack (that is, pop()  should  return the same values as it would if there  were just  a single stack).
 
 FOLLOW UP
 
-Implement a function  popAt(int  index) which  performs  a pop  operation on a specific  sub­ stack.
+Implement a function  popAt(int  index) which  performs  a pop  operation on a specific  sub-stack.
 
 SOLUTION
 
@@ -509,7 +508,7 @@ We know that push() should behave identically to a single stack, which means tha
 ```java
 1 	void  push(int v)  {
 2 		Stack  last = getlastStack();
-3 		if (last != null &&    !last.isFull()) { //add  to last stack
+3 		if (last != null && !last.isFull()) { //add  to last stack
 4 			last.push(v);
 5 		} else {//must  create new stack
 6 			Stack  stack =  new Stack(capacity);
@@ -533,27 +532,26 @@ What should pop() do? It should behave similarly to push() in that it should ope
 
 ##### Follow Up: Implement popAt(int index)
 
-This is a bit trickier to implement, but we can imagine a "rollover" system. If we pop an element from stack
-1, we need to remove the bottom of stack 2 and push it onto stack 1. We then need to rollover from stack 3 to stack 2, stack 4 to stack 3, etc.
+This is a bit trickier to implement, but we can imagine a "rollover" system. If we pop an element from stack 1, we need to remove the bottom of stack 2 and push it onto stack 1. We then need to rollover from stack 3 to stack 2, stack 4 to stack 3, etc.
 
 You could make an argument  that, rather than "rolling over", we should be okay with some stacks not being at full capacity. This would improve the time complexity (by a fair amount, with a large number  of elements), but it might get us into tricky situations later on if someone assumes that all stacks (other than the last) operate at full capacity. There's no "right answer" here; you should discuss this trade-off with your interviewer.
 
 ```java
-1 	public  class  SetOfStacks {
+1 	public class SetOfStacks {
 2 		ArrayList<Stack> stacks  = new ArrayList<Stack>();
 3 		public int capacity;
 4 		public  SetOfStacks(int capacity)  {
 5 			this.capacity =  capacity;
 6 		}
 7	
-8 		public Stack  getLastStack() {
+8 		public Stack getLastStack() {
 9 			if (stacks.size() == 0)  return null;
 10			return stacks.get(stacks.size()  -  1);
 11		}
 12	
 13		public void  push(int v)  {/*see  earlier code    */}
 14		public int pop()   {/*see  earlier code    */}
-15		public boolean   isEmpty() {
+15		public boolean isEmpty() {
 16			Stack  last =  getlastStack();
 17			return last ==  null ||   last.isEmpty();
 18		}
@@ -562,8 +560,8 @@ You could make an argument  that, rather than "rolling over", we should be okay 
 21			return leftShift(index, true);
 22		}
 23	
-24		public   int leftShift(int index,   boolean  removeTop) {
-25			Stack  stack   =  stacks.get(index);
+24		public int leftShift(int index,   boolean  removeTop) {
+25			Stack stack = stacks.get(index);
 26			int removed_item;
 27			if (removeTop) removed_item = stack.pop();
 28			else removed_item = stack.removeBottom();
@@ -579,7 +577,7 @@ You could make an argument  that, rather than "rolling over", we should be okay 
 38	
 39	public class Stack  {
 40		private int  capacity;
-41		public Node top,   bottom;
+41		public Node top, bottom;
 42		public int size =  0;
 43	
 44		public Stack(int capacity) {this.capacity =  capacity;  }
@@ -587,7 +585,7 @@ You could make an argument  that, rather than "rolling over", we should be okay 
 46	
 47		public void  join(Node  above,  Node below)  {
 48			if (below != null) below.above =  above;
-49			if (above  != null) above.below  =   below;
+49			if (above != null) above.below =  below;
 50		}
 51	
 52		public boolean  push(int v)  {
@@ -608,7 +606,7 @@ You could make an argument  that, rather than "rolling over", we should be okay 
 67		}
 68	
 69		public boolean  isEmpty()   {
-70			return size ==    0;
+70			return size == 0;
 71		}
 72	
 73		public int removeBottom() {
@@ -623,7 +621,7 @@ You could make an argument  that, rather than "rolling over", we should be okay 
 
 This problem is not conceptually that tough, but it requires a lot of code to implement it fully. Your inter­viewer would not ask you to implement the entire code.
 
-A good strategy on problems like this is to separate code into other methods, like a leftShift method that popAt  can call. This will make your code cleaner and give you the opportunity to lay down the skel­ eton of the code before dealing with some of the details.
+A good strategy on problems like this is to separate code into other methods, like a leftShift method that popAt  can call. This will make your code cleaner and give you the opportunity to lay down the skeleton of the code before dealing with some of the details.
 
 
 **3.4       Queue via Stacks:** Implement a MyQueue class which implements a queue using two stacks.
@@ -632,7 +630,7 @@ SOLUTION
 
 ---
 
-Since the major difference between a queue and a stack is the order (first-in first-out vs. last-in first-out), we know that we need to modify peek() and pop() to go in reverse order. We can use our second stack to reverse the order of the elements (by popping s1 and pushing the elements on to s2). In such an imple­ mentation, on each peek() and pop() operation, we would pop everything from s1 onto s2, perform the peek/pop operation, and then push everything back.
+Since the major difference between a queue and a stack is the order (first-in first-out vs. last-in first-out), we know that we need to modify peek() and pop() to go in reverse order. We can use our second stack to reverse the order of the elements (by popping s1 and pushing the elements on to s2). In such an implementation, on each peek() and pop() operation, we would pop everything from s1 onto s2, perform the peek/pop operation, and then push everything back.
 
 This will work, but if two pop/peeks are performed back-to-back, we're needlessly moving elements. We can implement a "lazy" approach where we let the elements sit in s2 until we absolutely must reverse the elements.
 
@@ -683,9 +681,7 @@ The code below implements this algorithm.
 During  your actual interview, you may find that you forget the  exact API calls. Don't stress too  much if that happens to  you.  Most  interviewers are  okay  with  your  asking for them to  refresh your  memory on  little details. They're much more concerned with your big picture understanding.
 
 
-**3.5 	Sort  Stack:** Write a program to sort a stack  such that the  smallest items are on the  top. You can use an additional temporary stack,  but  you may  not  copy  the  elements into  any  other data structure
-(such as an array). The stack  supports the  following operations: push, pop, peek, and isEmpty. 
-
+**3.5 	Sort  Stack:** Write a program to sort a stack  such that the  smallest items are on the  top. You can use an additional temporary stack,  but  you may  not  copy  the  elements into  any  other data structure (such as an array). The stack  supports the  following operations: push, pop, peek, and isEmpty.
 
 
 SOLUTION
@@ -707,19 +703,19 @@ Imagine we have the  following stacks,  where s2 is "sorted" and s1 is not:
 | 10 | 3  |
 | 7	 | 1  |
 
-When we pop 5 from s1, we need to find the  right place in s2 to insert this number. In this case, the  correct place is on s2 just above 3. How do we get  it there? We can  do this by popping 5 from s1 and holding it in a temporary variable.Then, we move 12 and 8 over to s1 (by popping them from s2 and pushing them onto sl) and then push 5 onto s2.
+When we pop 5 from s1, we need to find the right place in s2 to insert this number. In this case, the  correct place is on s2 just above 3. How do we get  it there? We can  do this by popping 5 from s1 and holding it in a temporary variable. Then, we move 12 and 8 over to s1 (by popping them from s2 and pushing them onto s1) and then push 5 onto s2.
 
 ![](media/03_5_1.JPG)
 
-Note that 8 and 12 are still in sl-and that's okay!We just repeat the same steps for those two numbers as we did for 5, each time popping offthe top of s1 and putting it into the "right place" on s2. (Of course, since 8 and 12 were moved from s2 to s1 precisely because they were larger than 5, the "right place" for these elements will be right on top of 5. We won't need to muck around with s2's other elements, and the inside of the below while loop will not be run when tmp is 8 or 12.)
+Note that 8 and 12 are still in s1-and that's okay! We just repeat the same steps for those two numbers as we did for 5, each time popping off the top of s1 and putting it into the "right place" on s2. (Of course, since 8 and 12 were moved from s2 to s1 precisely because they were larger than 5, the "right place" for these elements will be right on top of 5. We won't need to muck around with s2's other elements, and the inside of the below while loop will not be run when tmp is 8 or 12.)
 
 ```java
 1 	void  sort(Stack<Integer> s) {
 2 		Stack<Integer> r  =  new Stack<Integer>();
 3 		while (!s.isEmpty()) {
-4 			/*  Insert each  element   in s  in  sorted order into r.  */
+4 			/*  Insert each  element in s  in  sorted order into r.  */
 5 			int tmp =  s.pop();
-6 			while (!r.isEmpty() &&   r.peek() > tmp)  {
+6 			while (!r.isEmpty() && r.peek() > tmp)  {
 7 				s.push(r.pop());
 8 			}
 9 			r.push(tmp);
@@ -741,7 +737,7 @@ With the mergesort  solution, we would create two extra stacks and divide the st
 With the quicksort solution, we would create two additional stacks and divide the stack into the two stacks based on a pivot element. The two stacks would be recursively sorted, and then merged  back together into the original stack. Like the earlier solution, this one involves creating two additional stacks per level of recursion.
 
 
-**3.6 		Animal Shelter:** An animal  shelter, which holds only dogs andcats, operates on a strictly "first in, first out" basis. People must adopt either the "oldest" (based on arrival time) ofall animals at the  shelter, or they  can  select whether they  would prefer  a dog or a cat  (and  will receive the  oldest animal  of that type). They cannot select which  specific animal  they would  like. Create the  data structures to maintain this system and implement operations such as enqueue, dequeueAny, dequeueDog, and  dequeueCat.You may use the built-in LinkedList data structure.
+**3.6 		Animal Shelter:** An animal  shelter, which holds only dogs and cats, operates on a strictly "first in, first out" basis. People must adopt either the "oldest" (based on arrival time) of all animals at the  shelter, or they  can  select whether they  would prefer  a dog or a cat  (and  will receive the  oldest animal  of that type). They cannot select which  specific animal  they would  like. Create the  data structures to maintain this system and implement operations such as enqueue, dequeueAny, dequeueDog, and  dequeueCat.You may use the built-in LinkedList data structure.
 
 
 SOLUTION
@@ -767,8 +763,8 @@ An alternative approach that is simple,  clean  and efficient is to simply  use 
 12	}
 13	
 14	class AnimalQueue  {
-15		LinkedList<Dog>  dogs =  new  LinkedList<Dog>();
-16		LinkedList<Cat> cats  = new  LinkedList<Cat>();
+15		LinkedList<Dog> dogs = new  LinkedList<Dog>();
+16		LinkedList<Cat> cats = new  LinkedList<Cat>();
 17		private int order =  0;   // acts  as  timestamp
 18	
 19		public  void  enqueue(Animal a)  {
@@ -777,16 +773,16 @@ An alternative approach that is simple,  clean  and efficient is to simply  use 
 22			a.setOrder(order);
 23			order++;
 24	
-25			if  (a instanceof Dog)  dogs.addlast((Dog) a);
+25			if (a instanceof Dog) dogs.addlast((Dog) a);
 26			else if (a instanceof Cat) cats.addlast((Cat)a);
 27		}
 28	
 29		public  Animal dequeueAny() {
 30			/* Look  at tops of dog  and   cat  queues, and   pop  the  queue with the  oldest
 31			*  value.  */
-32			if  (dogs.size() == 0) {
+32			if (dogs.size() == 0) {
 33				return  dequeueCats();
-34			}  else if (cats.size() ==    0) {
+34			} else if (cats.size() == 0) {
 35				return dequeueDogs();
 36			}
 37	
@@ -799,21 +795,21 @@ An alternative approach that is simple,  clean  and efficient is to simply  use 
 44			}
 45		}
 46	
-47		public Dog dequeueDogs()  {
+47		public Dog dequeueDogs() {
 48			return dogs.poll();
 49		}
 50	
-51		public  Cat   dequeueCats()  {
+51		public  Cat dequeueCats() {
 52			return cats.poll();
 53		}
 54	}
 55	
-56	public class  Dog  extends  Animal   {
-57		public  Dog(String n)   {  super(n); }
+56	public class Dog extends Animal {
+57		public  Dog(String n)   { super(n); }
 58	}
 59	
-60	public class  Cat   extends  Animal   {
-61		public Cat(String n) {  super(n);  }
+60	public class Cat extends  Animal   {
+61		public Cat(String n) { super(n); }
 62	}
 ```
 

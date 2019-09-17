@@ -1,7 +1,6 @@
 ## 13 Java
 
-While Java-related questions are found throughout this book,  this chapter deals with questions about the language and syntax. Such questions are more unusual at bigger companies, which believe more
-in testing a candidate's aptitude than a candidate's knowledge (and  which  have the  time  and  resources to train  a candidate in a particular language). However,  at other companies, these pesky questions can be quite common.
+While Java-related questions are found throughout this book,  this chapter deals with questions about the language and syntax. Such questions are more unusual at bigger companies, which believe more in testing a candidate's aptitude than a candidate's knowledge (and  which  have the  time  and  resources to train  a candidate in a particular language). However,  at other companies, these pesky questions can be quite common.
 
 
 ### How to Approach
@@ -12,9 +11,9 @@ Yes and  no. Of course, the  best thing you can do to master these questions is 
 
 1.  Create an example of the  scenario, and  ask yourself  how things should play out.
 2.  Ask yourself  how other languages would handle this scenario.
-3.  Consider how you would design this situation if you were the language designer. What would the impli- cations of each choice be?
+3.  Consider how you would design this situation if you were the language designer. What would the implications of each choice be?
 
-Your interviewer may be equally-or more-impressed if you can derive the  answer than if you automati­ cally knew it. Don't try to bluff though. Tell the  interviewer, "I'm not  sure  I can recall the  answer,  but let me see if I can figure  it out. Suppose we have this code..."
+Your interviewer may be equally-or more-impressed if you can derive the  answer than if you automatically knew it. Don't try to bluff though. Tell the  interviewer, "I'm not  sure  I can recall the  answer,  but let me see if I can figure  it out. Suppose we have this code..."
 
 
 ### Overloading vs. Overriding
@@ -42,19 +41,19 @@ Overriding, however, occurs when a method shares the  same name and  function si
 11			System.out.println("I am  a  circle.");
 12		}
 13	
-14		public   double  computeArea()  {
+14		public double computeArea()  {
 15			return rad *  rad * 3.15;
 16		}
 17	}
 18	
-19	public   class Ambiguous extends  Shape {
+19	public class Ambiguous extends  Shape {
 20		private double  area =  10;
 21		public   double  computeArea()  {
 22			return area;
 23		}
 24	}
 25	
-26	public   class  IntroductionOverriding {
+26	public class IntroductionOverriding {
 27		public  static void  main(String[] args)  {
 28			Shape[]  shapes  =  new Shape[2];
 29			Circle circle  =  new Circle();
@@ -172,8 +171,8 @@ The final statement has a different meaning depending on its context.
 
 - When  applied to a variable (primitive):The value  of the  variable cannot change.
 - When  applied to a variable (reference): The reference variable cannot point to any other object on the heap.
-- When  applied to a method:The method cannot be overridden.
-- When  applied to a class:The class cannot be subclassed.
+- When  applied to a method: The method cannot be overridden.
+- When  applied to a class: The class cannot be subclassed.
 
 
 **finally keyword**
@@ -198,7 +197,7 @@ Watch how this plays out in the  example below.
 13			return  "returned  from try";
 14		}  catch (Exception ex)  {
 15			System.out.println("catch");
-16			return lem() +  " |     returned  from catch";
+16			return lem() +  " | returned from catch";
 17		}  finally {
 18			System.out.println("finally");
 19		}
@@ -218,13 +217,13 @@ Watch how this plays out in the  example below.
 
 The output for this code is the following:
 ```
-1      start  bar
+1      start bar
 2      start try
 3      catch
 4      lem
 5      finally
-6      return from   lem   \  returned from catch
-7      end   bar
+6      return from lem | returned from catch
+7      end bar
 ```
 Look carefully  at lines 3 to 5 in the  output. The catch block is fully executed (including the  function call in the return statement), then the  finally block, and then the  function actually returns.
 
@@ -297,9 +296,9 @@ To illustrate this, consider the  code below:
 In Java, static variables are shared across instances of MyClass, regardless of the different type parameters. Java generics and C++ templates have a number of other differences. These include:
 
 - C++ templates can use primitive types, like int. Java cannot and must instead use Integer.
-- InJava, you can restrict the template's type parameters to be of a certain type.For instance, you might use generics to implement a CardDeck and specify that the type parameter must extend from CardGame.
+- In Java, you can restrict the template's type parameters to be of a certain type. For instance, you might use generics to implement a CardDeck and specify that the type parameter must extend from CardGame.
 - In C++, the type parameter can be instantiated, whereas Java does not support this.
-- In Java, the type parameter  (i.e., the Foo in MyClass<Foo>) cannot be used for static methods and variables, since these would be shared between MyClass<Foo> and MyClass<Bar>. In C++, these classes are different, so the type parameter can be used for static methods and variables.
+- In Java, the type parameter (i.e., the Foo in MyClass<Foo>) cannot be used for static methods and variables, since these would be shared between MyClass<Foo> and MyClass<Bar>. In C++, these classes are different, so the type parameter can be used for static methods and variables.
 - In Java, all instances of MyClass, regardless of their type parameters, are the same type. The type parameters are erased at runtime. In C++, instances with different type parameters are different types.
 
 Remember: Although Java generics and C++ templates look the same in many ways, they are very different.
@@ -314,8 +313,8 @@ SOLUTION
 All offer a key->value map and a way to iterate through the keys. The most important distinction between these classes is the time guarantees and the ordering of the keys.
 
 - HashMap offers O(1) lookup and insertion. If you iterate through the keys, though,  the ordering of the keys is essentially arbitrary. It is implemented by an array of linked lists.
-- TreeMap offers O(log   N) lookup and insertion. Keys are ordered, so if you need to iterate through the keys in sorted order, you can. This means that keys must implement the Comparable interface. TreeMap is implemented by a Red-Black Tree.
-- LinkedHashMap  offers O(1)  lookup and insertion. Keys are ordered by their insertion  order. It is implemented by doubly-linked buckets.
+- TreeMap offers O(log N) lookup and insertion. Keys are ordered, so if you need to iterate through the keys in sorted order, you can. This means that keys must implement the Comparable interface. TreeMap is implemented by a Red-Black Tree.
+- LinkedHashMap  offers O(1) lookup and insertion. Keys are ordered by their insertion order. It is implemented by doubly-linked buckets.
 
 Imagine you passed an empty TreeMap, HashMap, and LinkedHashMap into the following function:
 
@@ -359,19 +358,17 @@ SOLUTION
 Object Reflection is a feature in Java that provides a way to get reflective information about Java classes and objects, and perform operations such as:
 
 1. Getting information about the methods and fields present inside the class at runtime.
-
 2. Creating a new instance of a class.
-
 3. Getting and setting the object fields directly by getting field reference, regardless of what the access modifier is.
 
 The code below offers an example of object reflection.
 
 ```java
 1 	/*Parameters */
-2 	Object[]  doubleArgs =  new Object[]  { 4.2,  3.9  };
+2 	Object[] doubleArgs =  new Object[]  { 4.2,  3.9 };
 3	
 4 	/*  Get  class */
-5 	Class   rectangleDefinition  =  Class.forName("MyProj.Rectangle");
+5 	Class rectangleDefinition  =  Class.forName("MyProj.Rectangle");
 6	
 7 	/*  Equivalent: Rectangle rectangle  =  new  Rectangle(4.2, 3.9);  */
 8 	Class[]  doubleArgsClass =  new Clas s[] {double.clas s,  double.class};
@@ -399,8 +396,7 @@ Of course, it doesn't seem very useful in the above example, but reflection can 
 3. You can call methods by name when you don't know  the  method in advance. For example, we may  let the user pass  in a class name, parameters for the constructor, and a method name. We can then use this information to create an object and  call a method. Doing  these operations without reflection would require a complex series of if-statements, if it's possible at all.
 
 
-**13.7 	Lambda Expressions:** There is  a  class  Country  that has  methods getContinent() and getPopulation(). Write a function int getPopulation(List<Country>  countries, String  continent) that computes the total population of a given  continent, given  a list of all
-countries and the name of a continent.
+**13.7 	Lambda Expressions:** There is  a  class  Country  that has  methods getContinent() and getPopulation(). Write a function int getPopulation(List<Country>  countries, String  continent) that computes the total population of a given  continent, given  a list of all countries and the name of a continent.
 
 SOLUTION
 
@@ -413,7 +409,7 @@ Without lambda expressions, this is fairly straightforward to do.
 ```java
 1	int  getPopulation(List<Country> countries,   String  continent)  {
 2		int sum  =  0;
-3		for  (Country c : countries)  {
+3		for (Country c : countries)  {
 4			if (c.getContinent().equals(continent))  {
 5				sum  +=  c.getPopulation();
 6			}
@@ -471,7 +467,7 @@ Alternatively, because of the  nature of this specific  problem, we can  actuall
 Lambda functions were  new  to Java 8, so if you don't recognize them, that's probably why. Now is a great time  to learn  about them, though!
 
 
-**13.8     Lambda    Random:** Using Lambda expressions, write a function List<Integer> getRandomSubset( List<Integer> list) that returns a random subset of arbitrary size. All subsets (including the empty set) should be equally likely to be chosen.
+**13.8     Lambda    Random:** Using Lambda expressions, write a function List<Integer> getRandomSubset(List<Integer> list) that returns a random subset of arbitrary size. All subsets (including the empty set) should be equally likely to be chosen.
  
 SOLUTION
 
