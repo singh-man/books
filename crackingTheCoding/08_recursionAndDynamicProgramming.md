@@ -1,4 +1,5 @@
-## 8 Recursion and  Dynamic Programming
+8 Recursion and  Dynamic Programming
+====================================
 
 
 While  there are a large number of recursive problems, many follow similar patterns. A good hint that a problem is recursive is that it can be built off of subproblems.
@@ -268,7 +269,7 @@ The previous solution for countWays is called  many times for the  same values, 
 
 Essentially, if we've seen this value of n before, return the cached value. Each time we compute a fresh value, add  it to the cache.
 
-Typically we use  a HashMap<Integer, Integer> for a cache. In this case,  the  keys  will be  exactly  1 through n. It's more compact to use an integer array.
+Typically we use  a HashMap\<Integer, Integer> for a cache. In this case,  the  keys  will be  exactly  1 through n. It's more compact to use an integer array.
 
 ```java
 1   int countWays(int n)  {

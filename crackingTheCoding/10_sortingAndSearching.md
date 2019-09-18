@@ -1,4 +1,5 @@
-## 10 Sorting and Searching
+10 Sorting and Searching
+========================
 
 Understanding the common sorting and searching algorithms is incredibly valuable, as many sorting and searching problems are tweaks of the well-known algorithms. A good approach is therefore to run through the different sorting algorithms and see if one applies particularly well.
 
@@ -835,7 +836,7 @@ The light gray elements also have an ordering to them: each is bigger than the e
 
 This means that for any rectangle we draw in the matrix, the bottom right hand corner will always be the biggest.
 
-Likewise, the top left hand corner will always be the smallest. The colors below indicate what we know about the ordering of elements (light gray< dark gray  < black):
+Likewise, the top left hand corner will always be the smallest. The colors below indicate what we know about the ordering of elements (light gray < dark gray  < black):
 
 ![](media/10_9_4.JPG)
 

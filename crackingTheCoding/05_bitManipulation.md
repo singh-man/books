@@ -1,4 +1,5 @@
-## 5 Bit Manipulation
+5 Bit Manipulation
+==================
 
 Bit manipulation is used in a variety  of problems. Sometimes, the  question explicitly calls for bit manipu­lation.  Other times,  it's simply  a useful  technique to optimize your  code.  You should be  comfortable doing bit manipulation by hand, as well as with code.  Be careful;  it's easy to make little mistakes.
 

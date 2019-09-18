@@ -1,4 +1,5 @@
-## 7 Object-Oriented Design
+7 Object-Oriented Design
+========================
 
 Object-oriented design questions require a candidate to sketch out the classes and methods to implement technical problems or real-life objects. These problems give-or at least are believed to give-an interviewer insight into your coding style.
 
@@ -1419,7 +1420,7 @@ The code below implements this approach.
 
 There are a number of things here which are easy to make mistakes on, such as:
 
-- In Java, we cannot create an array of the generic type. Instead, we must either cast the array or define iterns to be of type List<T>. For simplicity, we have done the former.
+- In Java, we cannot create an array of the generic type. Instead, we must either cast the array or define iterns to be of type List\<T>. For simplicity, we have done the former.
 - The % operator will return a negative value when we do negValue %  posVal. For example, -8  % 3 is -2. This is different from how mathematicians  would define the modulus function. We must add iterns.length to a negative index to get the correct positive result.
 - We need to be sure to consistently convert the raw index to the rotated index. For this reason, we have implemented a convert function that is used by other methods.  Even the rotate function uses convert. This is a good example of code reuse.
 
@@ -1437,8 +1438,8 @@ Implementing this requires implementing  the Iterator interface. The details of 
 
 To implement the Iterator interface, we need to do the following:
 
-- Modify the CircularArray<T> definition to add implements Iterable<T>. This will also require us to add an iterator() method to CircularArray<T>.
-- Create a CircularArrayiterator<T> which implements  Iterator<T>. This will also require us to implement, in the CircularArrayiterator, the methods hasNext(), next(), and remove().
+- Modify the CircularArray\<T> definition to add implements Iterable\<T>. This will also require us to add an iterator() method to CircularArray\<T>.
+- Create a CircularArrayiterator\<T> which implements  Iterator\<T>. This will also require us to implement, in the CircularArrayiterator, the methods hasNext(), next(), and remove().
 
 Once we've done the above items, the for loop will "magically" work.
 
@@ -1839,7 +1840,8 @@ SOLUTION
 
 ---
 
-Suppose we are implementing a hash table that looks like Hash<K,   V>. That is, the hash table maps from objects of type K to objects of type V.
+
+Suppose we are implementing a hash table that looks like Hash\<K,   V>. That is, the hash table maps from objects of type K to objects of type V.
 
 At first, we might think our data structure would look something like this:
 

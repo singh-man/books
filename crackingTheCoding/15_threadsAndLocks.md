@@ -1,4 +1,5 @@
-## 15 Threads and  Locks
+15 Threads and  Locks
+=====================
 
 
 In a Microsoft, Google or Amazon interview, it's not terribly common to be asked to implement an algo­rithm with threads  (unless you're working in a team for which this is a particularly important  skill). It is, however, relatively common for interviewers at any company to assess your general understanding  of threads, particularly your understanding of deadlocks.

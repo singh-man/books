@@ -1,4 +1,5 @@
-## 17 Hard
+17 Hard
+=======
 
 Our first instinct in problems like these should be that we're going to have to work with bits. Why? Because when you take away the+ sign, what other choice do we have? Plus, that's how computers do it!
 
@@ -484,7 +485,7 @@ We say "roughly" because there are (very common) boundary conditions. For exampl
 
 We can work out what exactly the ratio is by looking at the three cases individually: digit < 2, digit =  2, and digit >   2.
 
-*Case digit< 2*
+*Case digit < 2*
 
 Consider the value x  =  61523  and d  =  3, and observe that x[d] = 1 (that is, the dth digit of x is 1). There are 2s at the 3rd digit in the ranges 2000   -  2999, 12000  -  12999, 22000  -  22999, 32000  - 32999, 42000  -  42999,  and 52000  -  52999. We will not yet have hit the range 62000  -  62999, so there are 6000 2s total in the 3rd digit. This is the same amount as if we were just counting all the 2s in the 3rd digit between  1  and 60000.
 
@@ -4606,7 +4607,7 @@ It will also be useful to have a class that represents the documents.
 12 		public int size()  { return  words == null  ?  0 : words.size(); }
 13 	}
 ```
-Strictly speaking, we don't need any of this. However,  readability is important, and it's a lot easier to read ArrayList<Document> than ArrayList<ArrayList<Integer>>.
+Strictly speaking, we don't need any of this. However,  readability is important, and it's a lot easier to read ArrayList\<Document> than ArrayList\<ArrayList\<Integer>>.
 
 Doing this sort  of thing not only shows good coding style, it also makes your life in an interview a lot easier. You have to write a lot less. (You probably would not define the entire Document class, unless you had  extra time  or your interviewer asked you to.)
 ```java

@@ -1,4 +1,5 @@
-## 9 System Design and Scalability
+9 System Design and Scalability
+===============================
 
 Despite how intimidating they seem, scalability questions can be among the easiest questions. There are no "gotchas", no tricks, and no fancy algorithms-at least not usually. What trips up many people is that they believe there's something "magic" to these problems-some hidden bit of knowledge.
 
@@ -190,7 +191,7 @@ MapReduce is often associated with Google, but it's used much more broadly than 
 
 As its name suggests, a MapReduce program requires you to write a Map step and a Reduce step. The rest is handled by the system.
 
-- Map takes in some data and emits a <key, value> pair.
+- Map takes in some data and emits a \<key, value> pair.
 - Reduce takes a key and a set of associated values and "reduces" them in some way, emitting a new key and value. The results of this might be fed back into the Reduce program for more reducing.
 
 MapReduce allows us to do a lot of processing in parallel, which makes processing huge amounts of data more scalable.
@@ -641,14 +642,14 @@ Now that we have a solution for the simple version, what happens when we have al
 
 **Solution #1: Disk Storage**
 
-If we stored all the data on one machine, we would do two passes of the document. The first pass would split the list of URLs into 4000 chunks of 1 GB each. An easy way to do that might be to store each URL u in a file named<x>. txt where x  =  hash(u)   %  4000.That is, we divide up the URLs based on their hash value (modulo the number of chunks). This way, all URLs with the same hash value would be in the same file.
+If we stored all the data on one machine, we would do two passes of the document. The first pass would split the list of URLs into 4000 chunks of 1 GB each. An easy way to do that might be to store each URL u in a file named\<x>. txt where x  =  hash(u)   %  4000.That is, we divide up the URLs based on their hash value (modulo the number of chunks). This way, all URLs with the same hash value would be in the same file.
 
 In the second pass, we would essentially implement the simple solution we came up with earlier: load each file into memory, create a hash table of the URLs, and look for duplicates.
 
 
 **Solution #2: Multiple  Machines**
 
-The other solution is to perform essentially the same procedure, but to use multiple machines. In this solu­tion, rather than storing the data in file<x>. txt, we would send the URL to machine x. 
+The other solution is to perform essentially the same procedure, but to use multiple machines. In this solu­tion, rather than storing the data in file\<x>. txt, we would send the URL to machine x. 
 
 Using multiple machines has pros and cons.
 

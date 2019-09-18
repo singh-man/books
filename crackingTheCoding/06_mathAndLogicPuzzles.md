@@ -1,4 +1,5 @@
-## 6 Math and Logic Puzzles
+6 Math and Logic Puzzles
+========================
 
 So-called "puzzles" (or brain teasers) are some of the most hotly debated questions, and many companies have policies banning them. Unfortunately, even when these questions are banned, you still may find yourself being asked one of them. Why? Because no one can agree on a definition of what a brainteaser is.
 

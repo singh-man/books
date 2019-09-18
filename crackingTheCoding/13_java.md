@@ -1,4 +1,5 @@
-## 13 Java
+13 Java
+=======
 
 While Java-related questions are found throughout this book,  this chapter deals with questions about the language and syntax. Such questions are more unusual at bigger companies, which believe more in testing a candidate's aptitude than a candidate's knowledge (and  which  have the  time  and  resources to train  a candidate in a particular language). However,  at other companies, these pesky questions can be quite common.
 
@@ -244,7 +245,7 @@ SOLUTION
 
 ---
 
-Many programmers consider templates and generics to be essentially equivalent because both allow you to do something like List<String>. But, how each language does this, and why, varies significantly.
+Many programmers consider templates and generics to be essentially equivalent because both allow you to do something like List\<String>. But, how each language does this, and why, varies significantly.
 
 The  implementation of Java  generics is rooted in an idea  of "type erasure". This technique eliminates the parameterized types when source code is translated to the  Java Virtual Machine (JVM) byte code.
 
@@ -262,7 +263,7 @@ During compilation, this code is re-written into:
 ```
 The use of Java generics didn't really change much about our capabilities; it just made things a bit prettier. For this reason, Java generics are sometimes called "syntactic sugar".
 
-This is quite different from  C++. In C++, templates are essentially a glorified macro set, with  the  compiler creating a new  copy  of the  template code for each type.  Proof of this  is in the  fact  that an  instance of MyClass<Foo> will not  share a static variable withMyClass<Bar>. Two instances ofMyClass<Foo>, however, will share a static variable.
+This is quite different from  C++. In C++, templates are essentially a glorified macro set, with  the  compiler creating a new  copy  of the  template code for each type.  Proof of this  is in the  fact  that an  instance of MyClass\<Foo> will not  share a static variable withMyClass\<Bar>. Two instances of MyClass\<Foo>, however, will share a static variable.
 
 To illustrate this, consider the  code below:
 
@@ -298,7 +299,7 @@ In Java, static variables are shared across instances of MyClass, regardless of 
 - C++ templates can use primitive types, like int. Java cannot and must instead use Integer.
 - In Java, you can restrict the template's type parameters to be of a certain type. For instance, you might use generics to implement a CardDeck and specify that the type parameter must extend from CardGame.
 - In C++, the type parameter can be instantiated, whereas Java does not support this.
-- In Java, the type parameter (i.e., the Foo in MyClass<Foo>) cannot be used for static methods and variables, since these would be shared between MyClass<Foo> and MyClass<Bar>. In C++, these classes are different, so the type parameter can be used for static methods and variables.
+- In Java, the type parameter (i.e., the Foo in MyClass\<Foo>) cannot be used for static methods and variables, since these would be shared between MyClass\<Foo> and MyClass\<Bar>. In C++, these classes are different, so the type parameter can be used for static methods and variables.
 - In Java, all instances of MyClass, regardless of their type parameters, are the same type. The type parameters are erased at runtime. In C++, instances with different type parameters are different types.
 
 Remember: Although Java generics and C++ templates look the same in many ways, they are very different.
@@ -396,7 +397,7 @@ Of course, it doesn't seem very useful in the above example, but reflection can 
 3. You can call methods by name when you don't know  the  method in advance. For example, we may  let the user pass  in a class name, parameters for the constructor, and a method name. We can then use this information to create an object and  call a method. Doing  these operations without reflection would require a complex series of if-statements, if it's possible at all.
 
 
-**13.7 	Lambda Expressions:** There is  a  class  Country  that has  methods getContinent() and getPopulation(). Write a function int getPopulation(List<Country>  countries, String  continent) that computes the total population of a given  continent, given  a list of all countries and the name of a continent.
+**13.7 	Lambda Expressions:** There is  a  class  Country  that has  methods getContinent() and getPopulation(). Write a function int getPopulation(List\<Country>  countries, String  continent) that computes the total population of a given  continent, given  a list of all countries and the name of a continent.
 
 SOLUTION
 
@@ -467,7 +468,7 @@ Alternatively, because of the  nature of this specific  problem, we can  actuall
 Lambda functions were  new  to Java 8, so if you don't recognize them, that's probably why. Now is a great time  to learn  about them, though!
 
 
-**13.8     Lambda    Random:** Using Lambda expressions, write a function List<Integer> getRandomSubset(List<Integer> list) that returns a random subset of arbitrary size. All subsets (including the empty set) should be equally likely to be chosen.
+**13.8     Lambda    Random:** Using Lambda expressions, write a function List\<Integer> getRandomSubset(List\<Integer> list) that returns a random subset of arbitrary size. All subsets (including the empty set) should be equally likely to be chosen.
  
 SOLUTION
 

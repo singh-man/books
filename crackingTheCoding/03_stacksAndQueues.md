@@ -1,4 +1,5 @@
-## 3 Stacks and Queues
+3 Stacks and Queues
+===================
 
 Questions on stacks and queues will be much easier to handle if you are comfortable with the ins and outs of the data structure. The problems can be quite tricky, though. While some problems may be slight modifications on the original data structure, others have much more complex challenges.
 

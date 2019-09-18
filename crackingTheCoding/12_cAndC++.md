@@ -1,4 +1,5 @@
-## 12 C and C++
+12 C and C++
+============
 
 A good interviewer won't demand that you code in a language you don't profess to know. Hopefully, if you're asked to code in C++, it's listed on your resume. If you don't remember  all the APls, don't worry-most interviewers (though not all) don't care that much. We do recommend, however, studying up on basic C++ syntax so that you can approach these questions with ease.
 
@@ -635,7 +636,7 @@ Thus, we have a simple recursive algorithm:
 24	}
 ```
 
-**12.9 	Smart Pointer:** Write a smart pointer class. A smart pointer is a data type, usually implemented with templates, that simulates a pointer while also providing automatic garbage collection.  It automatically counts the number of references to a *SmartPointer<T\*>* object and frees the object of type T when the reference count hits zero.
+**12.9 	Smart Pointer:** Write a smart pointer class. A smart pointer is a data type, usually implemented with templates, that simulates a pointer while also providing automatic garbage collection.  It automatically counts the number of references to a *SmartPointer\<T\*>* object and frees the object of type T when the reference count hits zero.
 
 SOLUTION
 

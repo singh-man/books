@@ -1,4 +1,5 @@
-## 1 Arrays and Strings
+1 Arrays and Strings
+====================
 
 
 Hopefully, all readers of this book are familiar with arrays and strings, so we won't bore you with such details. Instead, we'll focus on some of the more common techniques and issues with these data struc­tures.

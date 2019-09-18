@@ -1,4 +1,5 @@
-## 16 Moderate
+16 Moderate
+===========
 
 **16.1      Number Swapper:** Write a function to swap a number in place (that is, without temporary variables).
 
@@ -1807,7 +1808,7 @@ In order to solve our problem, though, we would need to be able to sort the midd
 
 Or, in other words, for all elements:
 	
-	left< middle < right
+	left < middle < right
 
 In fact,  this condition will never be  met.  The middle section is, by definition, the  elements that were  out of order. That is, it is always the  case that left. end  >   middle. start and  middle. end  >  right. start. Thus, you cannot sort the  middle to make the  entire array sorted.
 
