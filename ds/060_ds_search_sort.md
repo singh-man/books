@@ -43,7 +43,7 @@ $$c^2$$
 
   1. ##### Bubble Sort
      (Precondition: s = {S0 . . . Sn–1 } is a sequence of n ordinal values.)
-     (Postcondition: The entire sequence Sis sorted.)  
+     (Postcondition: The entire sequence S is sorted.)  
      1. Do steps 2–4 for i = n –1 down to 1.  
      1. Do step 3 for j = 0 up to i–1.  
      1. If the two consecutive elements Sj and Sj+1 , are out of order, swap them.  
@@ -53,7 +53,7 @@ $$c^2$$
 
   1. ##### Selection Sort
      (Precondition: s = {S0 . . . Sn–1 } is a sequence of n ordinal values.)
-     (Postcondition: The entire sequence Sis sorted.)
+     (Postcondition: The entire sequence S is sorted.)
      1. Do steps 2–4 for i = n –1 down to 1.
      1. Locate the index m of the largest element among {S0 . . Si } .
      1. Swap Si and Sm .
@@ -61,7 +61,7 @@ $$c^2$$
  
   1. ##### Merge Sort
      (Precondition: s = {Sp . . . Sq–1 } is a sequence of q – p ordinal values.)
-     (Postcondition: The entire sequence Sis sorted.)
+     (Postcondition: The entire sequence S is sorted.)
      1. If q – p > 1, do steps 2–5.
      1. Split Sinto two subsequences, a = {Sp . . . Sm–1 } and b = {Sm . . . Sq–1 }, where m = ( q – p )/2.
      1. Sort a.
@@ -70,7 +70,7 @@ $$c^2$$
 
   1. ##### Quick Sort
      (Precondition: s = {Sp . . . Sq–1 } is a sequence of q – p ordinal values.)
-     (Postcondition: The entire sequence Sis sorted.)
+     (Postcondition: The entire sequence S is sorted.)
      1. If q – p > 1, do steps 2–5.
      1. Apply Algorithm 14.7 to s, obtaining the pivot index m.
      1. (Invariant: the pivot element Sm iSin its correct sorted position.)
@@ -81,7 +81,7 @@ $$c^2$$
 
   1. ##### Shell Sort
      (Precondition: s = {S0 . . . Sn-1 } is a sequence of n ordinal values.)
-     (Postcondition: The entire sequence Sis sorted.)
+     (Postcondition: The entire sequence S is sorted.)
      1. Set d = 1.
      1. Repeat step 3 until 9d > n.
      1. Set d = 3d + 1.
@@ -91,10 +91,10 @@ $$c^2$$
 
   1. ##### Heap Sort
      (Precondition: s = {S0 . . . Sn-1 } is a sequence of n ordinal values.)
-     (Postcondition: The entire sequence Sis sorted.)
+     (Postcondition: The entire sequence S is sorted.)
      1. Do steps 2–3 for i = n/2 –1 down to 0.
      1. Apply the heapify algorithm to the subsequence {Si . . . Sn-1 }.
-     1. (Invariant: every root-to-leaf path in Sis nonincreasing.)
+     1. (Invariant: every root-to-leaf path in S is nonincreasing.)
      1. Do steps 5–7 for i = n –1 down to 1.
      1. Swap Si with S0 .
      1. (Invariant: The subsequence {Si . . . Sn-1 } is sorted.)
@@ -113,7 +113,7 @@ $$c^2$$
 ### Non Comparison Sort
   1. ##### Radix Sort
      (Precondition: s = {S0 . . . Sn-1 } is a sequence of n integers or character strings with radix r and width w.)
-     (Postcondition: The sequence Sis sorted numerically or lexicographically.)
+     (Postcondition: The sequence S is sorted numerically or lexicographically.)
      1. Repeat step 2 for d = 0 up to w –1.
      1. Apply a stable sorting algorithm to the sequence s, sorting only on digit number d.
      A sorting algorithm is said to be stable if it preserves the relative order of elements with equal keys. For example, the insertion sort is stable, but the heap sort is not.
@@ -123,7 +123,7 @@ $$c^2$$
 #### Comparison and non comparison sort
   1. ##### Bucket Sort -> Sort of comparison algo
      (Precondition: s = {S0 . . . Sn-1 } is a sequence of n ordinal values with known minimum value min and maximum value max.)
-     (Postcondition: the sequence Sis sorted.)
+     (Postcondition: the sequence S is sorted.)
      1. Initialize an array of n buckets (collections).
      1. Repeat step 3 for each Si in the sequence.
      1. Insert Si into bucket j, where j = rn , r = (Si – min)/(max + 1 – min).
