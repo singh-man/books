@@ -37,7 +37,7 @@ StudentCourses:  CourseID*,  StudentID*
 
 Using the above table, implement the following queries.
 
-**Query 1: Student Enrollment**
+#### Query 1: Student Enrollment
 
 Implement a query to get a list of all students and how many courses each student is enrolled in. At first, we might try something like this:
 ```
@@ -122,19 +122,19 @@ Note how we handled the NULL values in the SELECT statement to convert the NULL 
 Additionally, you might be asked to design your own database. We'll walk you through an approach  for this. You might notice the similarities between this approach and the approach for object-oriented design.
 
 
-**Step  1: Handle Ambiguity**
+#### Step  1: Handle Ambiguity
 
 Database questions often have some ambiguity, intentionally or unintentionally. Before you proceed with your design, you must understand exactly what you need to design.
 
 Imagine you are asked to design a system to represent an apartment rental agency. You will need to know whether this agency has multiple locations or just one. You should also discuss with your interviewer how general you should be. For example, it would be extremely rare for a person to rent two apartments in the same building. But does that mean you shouldn't be able to handle that? Maybe, maybe not. Some very rare conditions might be best handled through a work around (like duplicating the person's contact information in the database).
 
 
-*Step 2: Define the Core Objects*
+#### Step 2: Define the Core Objects
 
 Next, we should look at the core objects of our system. Each of these core objects typically translates into a table. In this case, our core objects might be Property, Building, Apartment, Tenant and Manager.
 
 
-**Step 3: Analyze Relationships**
+#### Step 3: Analyze Relationships
 
 Outlining the core objects should give us a good sense of what the tables should be. How do these tables relate to each other? Are they many-to-many? One-to-many?
 
@@ -151,7 +151,7 @@ If we want to allow for the possibility that one person rents more than one apar
 The TenantApartments table stores a relationship between Tenants and Apartments.
 
 
-**Step 4: Investigate Actions**
+#### Step 4: Investigate Actions
 
 Finally, we fill in the details. Walk through the common actions that will be taken and understand how to store and retrieve the relevant data. We'll need to handle lease terms, moving out, rent payments, etc. Each of these actions requires new tables and columns.
 

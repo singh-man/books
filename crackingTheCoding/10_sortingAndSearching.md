@@ -16,15 +16,15 @@ By scanning  through the various sorting algorithms, we might notice that bucket
 
 Learning (or re-learning) the common sorting algorithms is a great way to boost your performance.  Of the five algorithms  explained below, Merge Sort, Quick Sort and Bucket Sort are the most commonly used in interviews.
 
-**Bubble Sort | Runtime: O(n²) average and worst case. Memory: O(1).**
+#### Bubble Sort | Runtime: O(n²) average and worst case. Memory: O(1).
 
 In bubble sort, we start at the beginning of the array and swap the first two elements  if the first is greater than the second. Then, we go to the next pair, and so on, continuously making sweeps of the array until it is sorted. In doing so, the smaller items slowly "bubble" up to the beginning of the list.
 
-**Selection Sort | Runtime: O(n²) average and worst case. Memory: O(1).**
+#### Selection Sort | Runtime: O(n²) average and worst case. Memory: O(1).
 
 Selection sort is the child's algorithm: simple, but inefficient.  Find the smallest element using a linear scan and move it to the front (swapping it with the front element). Then, find the second smallest and move it, again doing a linear scan. Continue doing this until all the elements are in place.
 
-**Merge Sort | Runtime: O(n log (n)) average and worst case. Memory: Depends.**
+#### Merge Sort | Runtime: O(n log (n)) average and worst case. Memory: Depends.
 
 Merge sort divides the array in half, sorts each of those halves, and then merges them back together. Each of those halves has the same sorting algorithm applied to it. Eventually, you are merging  just two single-element arrays. It is the "merge" part that does all the heavy lifting.
 
@@ -83,7 +83,7 @@ Consider, for example, an array like [1,   4,  5 ||  2,   8,   9]  (the "||" ind
 The space complexity of merge sort is O(n) due to the auxiliary space used to merge parts of the array.
 
 
-**Quick Sort | Runtime:** O(n  log(n)) **average**, O(n² ) **worst case. Memory:** O(log(n)).
+#### Quick Sort | Runtime: O(n  log(n)) average, O(n² ) worst case. Memory: O(log(n)).
 
 In quick sort we pick a random element and partition the array, such that all numbers that are less than the partitioning element come before all elements that are greater than it. The partitioning can be performed efficiently through a series of swaps (see below).
 
@@ -120,7 +120,7 @@ If we repeatedly partition the array (and its sub-arrays) around an element, the
 28  }
 ```
 
-**Radix Sort | Runtime:** O(kn)  **(see  below)**
+#### Radix Sort | Runtime: O(kn)  (see  below)
 
 Radix sort is a sorting algorithm for integers (and some other data types) that takes advantage of the fact that integers have a finite number of bits. In radix sort, we iterate through each digit of the number, grouping numbers by each digit. For example,  if we have an array of integers, we might first sort by the first digit, so that the 0s are grouped together. Then, we sort each of these groupings by the next digit. We repeat this process sorting by each subsequent digit, until finally the whole array is sorted.
 

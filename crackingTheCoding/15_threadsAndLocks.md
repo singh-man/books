@@ -18,7 +18,7 @@ In Java, we can implement threads in one of two ways:
 We will cover both of these below.
 
 
-**Implementing the Runnable Interface**
+#### Implementing the Runnable Interface
 
 The Runnable interface has the following very simple structure.
 ```java
@@ -71,7 +71,7 @@ For example:
 In the above code, observe that all we really needed to do is have our class implement the run() method (line 4). Another method can then pass an instance of the class to new  Thread(obj) (lines 19 - 20) and call start() on the thread (line 21 ).
 
 
-**Extending the Thread Class**
+#### Extending the Thread Class
 
 Alternatively, we can create a thread by extending the Thread class. This will almost always mean that we override the run() method, and the subclass may also call the thread constructor explicitly in its constructor.
 
@@ -114,7 +114,7 @@ The below code provides an example of this.
 This code is very similar to the first approach. The difference is that since we are extending the Thread class, rather than just implementing an interface, we can call start() on the instance of the class itself.
 
 
-**Extending the Thread Class vs. Implementing the  Runnable Interface**
+#### Extending the Thread Class vs. Implementing the  Runnable Interface
 
 When creating threads, there are two reasons why implementing  the Runnable interface may be prefer­able to extending the Thread class:
 
@@ -129,7 +129,7 @@ Threads within a given process share the same memory space, which is both a posi
 The keyword synchronized and the lock form the basis for implementing synchronized execution of code.
 
 
-**Synchronized Methods**
+#### Synchronized Methods
 
 Most commonly, we restrict access to shared resources through the use of the synchronized keyword.  It can be applied to methods and code blocks, and restricts multiple threads from executing the code simultaneously on the same object.
 
@@ -205,7 +205,7 @@ Thread  2.bar(): starting
 Thread  2.bar(): ending
 ```
 
-**Synchronized Blocks**
+#### Synchronized Blocks
 
 Similarly, a block of code can be synchronized. This operates very similarly to synchronizing a method.
 
@@ -228,7 +228,7 @@ Similarly, a block of code can be synchronized. This operates very similarly to 
 Like synchronizing a method, only one thread per instance of MyObject can execute the code within the synchronized block. That means that if thread1 and thread2 have the same instance of MyObject, only one will be allowed to execute the code block at a time.
 
 
-**Locks**
+#### Locks
 
 For more granular control, we can utilize a lock. A lock (or monitor) is used to synchronize access to a shared resource by associating the resource with the lock. A thread gets access to a shared resource by first acquiring the lock associated with the resource. At any given time, at most one thread can hold the lock and, therefore, only one thread can access the shared resource.
 

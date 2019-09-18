@@ -38,7 +38,7 @@ You might also have a Tree class to wrap this node. For the purposes of intervie
 Tree and graph questions are rife with ambiguous details and incorrect assumptions. Be sure to watch out for the following issues and seek clarification when necessary.
 
 
-**Trees vs. Binary Trees**
+#### Trees vs. Binary Trees
 
 A binary tree is a tree in which each node has up to two children. Not all trees are binary trees. For example, this tree is not a binary tree. You could call it a ternary tree.
 
@@ -49,7 +49,7 @@ There are occasions when you might have a tree that is not a binary tree. For ex
 A node is called a "leaf" node if it has no children.
 
 
-**Binary Tree vs. Binary Search Tree**
+#### Binary Tree vs. Binary Search Tree
 
 A binary search tree is a binary tree in which every node fits a specific ordering property: all left descendents  <= n < all right descendents. This must be true for each node n.
 
@@ -63,7 +63,7 @@ Note that this inequality must be true for all of a node's descendents, not just
 
 When given a tree question, many candidates assume the interviewer means a binary search  tree. Be sure to ask. A binary search tree imposes the condition  that, for each node, its left descendents are less than or equal to the current node, which is less than the right descendents.
 
-**Balanced vs. Unbalanced**
+#### Balanced vs. Unbalanced
 
 While many trees are balanced, not all are. Ask your interviewer for clarification here. Note that balancing a tree does not mean the left and right subtrees are exactly the same size (like you see under "perfect binary trees" in the following diagram).
 
@@ -72,21 +72,21 @@ One way to think about it is that a "balanced" tree really means something more 
 Two common types of balanced trees are red-black trees (pg 639) and AVL  trees (pg 637). These are discussed in more detail in the Advanced Topics section.
 
 
-**Complete Binary Trees**
+#### Complete Binary Trees
 
 A complete binary tree is a binary tree in which every level of the tree is fully filled, except for perhaps the last level. To the extent that the last level is filled, it is filled left to right.
 
 ![](media/IX_04_03.JPG)
 
 
-**Full Binary Trees**
+#### Full Binary Trees
 
 A full binary tree is a binary tree in which every node has either zero or two children. That  is, no nodes have only one child.
 
 ![](media/IX_04_04.JPG)
 
 
-**Perfect Binary Trees**
+#### Perfect Binary Trees
 
 A perfect binary tree is one that is both full and complete. All leaf  nodes will be at the same level, and this level has the maximum number of nodes.
 
@@ -100,7 +100,7 @@ Note that perfect trees are rare in interviews and in real life, as a perfect tr
 
 Prior to your  interview, you  should be  comfortable implementing in-order, post-order, and pre-order traversal. The most common of these is in-order traversal.
 
-**In-Order Traversal**
+#### In-Order Traversal
 
 In-order traversal means to "visit" (often,  print)  the left branch, then the current node, and  finally, the right branch.
 
@@ -117,7 +117,7 @@ In-order traversal means to "visit" (often,  print)  the left branch, then the c
 When performed on a binary  search tree, it visits the nodes in ascending order (hence the name "in-order").
 
 
-**Pre-Order Traversal**
+#### Pre-Order Traversal
 
 Pre-order traversal visits the current node before its child nodes (hence the name "pre-order").
 
@@ -134,7 +134,7 @@ Pre-order traversal visits the current node before its child nodes (hence the na
 In a pre-order traversal, the root is always the first node visited.
 
 
-**Post-Order Traversal**
+#### Post-Order Traversal
 
 Post-order traversal visits the current node after  its child nodes (hence the name "post-order").
 
@@ -227,7 +227,7 @@ Visually, you could draw  a graph like this:
 In terms of programming, there are two common ways to represent a graph.
 
 
-**Adjacency List**
+#### Adjacency List
 
 This is the  most common way to represent a graph. Every vertex  (or node) stores a list of adjacent vertices. In an undirected graph, an edge like (a,  b) would be stored twice: once in a's adjacent vertices and once in b's adjacent vertices.
 
@@ -260,7 +260,7 @@ You don't necessarily need any  additional classes to  represent a graph. An arr
 
 This is a bit more compact, but it isn't quite as clean. We tend to use node classes unless there's a compelling reason not  to.
 
-**Adjacency Matrices**
+#### Adjacency Matrices
 
 An adjacency matrix  is an NxN boolean matrix (where N is the  number of nodes), where a true value  at matrix[i][j] indicates an edge from node i to node j. (You can also use an integer matrix with 0s and
 1 s.)

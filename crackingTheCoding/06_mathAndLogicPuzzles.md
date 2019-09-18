@@ -16,7 +16,7 @@ As you probably know, every positive integer can be decomposed into a product of
 Note that many of these primes have an exponent of zero.
 
 
-**Divisibility**
+#### Divisibility
 
 The prime number law stated above means that, in order for a number x to divide a number y (written x\y, or mod (y, x)  =  0), all primes in x's prime factorization must be in y's prime factorization. Or, more specifically:
 
@@ -45,7 +45,7 @@ gcd * lcm = 2ᵐⁱⁿ⁽ʲ⁰, ᵏ⁰⁾ * 2ᵐᵃˣ⁽ʲ⁰, ᵏ⁰⁾ * 3ᵐ�
           = xy
 ```
 
-**Checking for Primality**
+#### Checking for Primality
 
 This question is so common that we feel the need to specifically cover it. The naive way is to simply iterate from 2 through n-1,  checking for divisibility on each iteration.
 
@@ -83,7 +83,7 @@ The √n is sufficient because, for every number a which divides n evenly, there
 Of course, in reality, all we really need to do is to check if n is divisible by a prime number. This is where the Sieve of Eratosthenes comes in.
 
 
-**Generating a List of Primes: The Sieve of Eratosthenes**
+#### Generating a List of Primes: The Sieve of Eratosthenes
 
 The Sieve of Eratosthenes is a highly efficient way to generate a list of primes. It works by recognizing that all non-prime numbers are divisible by a prime number.
 
@@ -141,7 +141,7 @@ Let's look at a Venn diagram to visualize two events A and B. The areas of the t
 ![](media/IX_06_02.JPG)
 
 
-**Probability of A and  B**
+#### Probability of A and  B
 
 Imagine you were throwing a dart at this Venn diagram. What is the probability that you would land in the intersection between A and B?  If you knew the odds of landing in A, and you also knew the percent of A that's also in B (that is, the odds of being in B given that you were in A), then you could express the prob­ability as:
 
@@ -163,7 +163,7 @@ Observe that  since P(A and B) =  P(B given A)  P(A) = P(A given B)  P(B), you c
 The above equation is called Bayes' Theorem.
 
 
-**Probability of A or B**
+#### Probability of A or B
  
 Now, imagine  you wanted to know what the probability  of landing  in A or B is. If you knew the  odds  of landing  in each individually, and you also knew the odds  of landing  in their intersection, then you could express the probability as:
 
@@ -185,12 +185,12 @@ P(x is  even or x  <=5)
 From here, getting the special case rules for independent events and for mutually  exclusive events is easy.
 
 
-**Independence**
+#### Independence
 
 If A and B are independent (that is, one happening tells you nothing about the other happening), then P(A and B) = P(A) P(B). This rule simply comes from recognizing that P(B given  A) = P(B), since A indicates nothing about B.
 
 
-**Mutual Exclusivity**
+#### Mutual Exclusivity
 
 If A and B are mutually exclusive (that is, if one happens, then the other cannot happen), then P(A or B) = P(A) + P(B).This is because P(A  and   B) = 0, so this term is removed from the earlier P(A or B) equation.
 

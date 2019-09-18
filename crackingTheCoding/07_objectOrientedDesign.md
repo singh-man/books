@@ -10,7 +10,7 @@ These questions are not so much about regurgitating design patterns as they are 
 Regardless of whether the object is a physical item or a technical task, object-oriented design questions can be tackled in similar ways. The following approach will work well for many problems.
 
 
-**Step  1: Handle  Ambiguity**
+#### Step  1: Handle  Ambiguity
 
 Object-oriented design (OOD) questions are often intentionally vague in order to test whether you'll make assumptions or if you'll ask clarifying questions.  After all, a developer who just codes something without understanding what she is expected to create wastes the company's time and money, and may create much more serious issues.
 
@@ -21,12 +21,12 @@ For example,  suppose you were asked to describe the object-oriented design for 
 Your coffee maker might be an industrial machine designed to be used in a massive restaurant servicing hundreds of customers per hour and making ten different kinds of coffee products. Or it might be a very simple machine, designed to be used by the elderly for just simple black coffee. These use cases will significantly impact your design.
 
 
-**Step 2: Define the Core Objects**
+#### Step 2: Define the Core Objects
 
 Now that we understand what we're designing, we should consider what the "core objects" in a system are. For example, suppose we are asked to do the object-oriented design for a restaurant. Our core objects might be things like Table, Guest, Party, Order, Meal, Employee, Server, and Host.
 
 
-**Step 3: Analyze Relationships**
+#### Step 3: Analyze Relationships
 
 Having more or less decided on our core objects, we now want to analyze the relationships between the objects. Which objects are members of which other objects? Do any objects inherit from any others? Are relationships many-to-many or one-to-many?
 
@@ -40,7 +40,7 @@ For example, in the restaurant question, we may come up with the following desig
 Be very careful here-you can often make incorrect assumptions. For example, a single Table may have multiple Parties (as is common in the trendy "communal tables" at some restaurants). You should talk to your interviewer about how general purpose your design should be.
 
 
-**Step 4: Investigate Actions**
+#### Step 4: Investigate Actions
 
 At this point, you should have the basic outline of your object-oriented design. What remains is to consider the key actions that the objects will take and how they relate to each other. You may find that you have forgotten some objects, and you will need to update your design.
 
@@ -56,7 +56,7 @@ There are far more design patterns than this book could possibly discuss. A grea
 Be careful  you don't fall into a trap of constantly trying to find the "right" design pattern for a particular problem.  You should create the design that works for that problem. In some cases it might be an established pattern, but in many other cases it is not.
 
 
- **Singleton Class**
+ #### Singleton Class
 
 The Singleton pattern ensures that a class has only one instance and ensures access to the instance through the application.  It can be useful in cases where you have a "global" object with exactly one instance. For example, we may want to implement Restaurant such that it has exactly one instance of Restaurant.
 
@@ -76,7 +76,7 @@ The Singleton pattern ensures that a class has only one instance and ensures acc
 It should be noted that many people dislike the Singleton design pattern, even calling it an "anti-pattern". One reason for this is that it can interfere with unit testing.
 
 
-**Factory Method**
+#### Factory Method
 
 The Factory Method offers an interface for creating an instance of a class, with its subclasses deciding which class to instantiate. You might want to implement this with the creator class being abstract and not providing an implementation for the Factory method. Or, you could have the Creator class be a concrete class that provides an implementation for the Factory method. In this case, the Factory method would take a parameter representing which class to instantiate.
 

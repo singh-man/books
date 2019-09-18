@@ -27,7 +27,7 @@ These questions are largely about the process rather than the ultimate design.
 If your manager asked you to design a system such as TinyURL, you probably wouldn't just say, "Okay", then lock yourself in your office to design it by yourself. You would probably have a lot more questions before you do it. This is the way you should handle it in an interview.
 
 
-**Step 1: Scope the Problem**
+#### Step 1: Scope the Problem
 
 You can't design a system if you don't know what you're designing. Scoping the problem  is important because  you want to ensure that you're building what the interviewer wants and because this might be something that interviewer is specifically evaluating.
 
@@ -42,7 +42,7 @@ Make a list here as well of the major features or use cases. For example, for Ti
 - Retrieving the URL associated with a TinyURL. 
 - User accounts and link management.
 
-**Step 2: Make Reasonable Assumptions**
+#### Step 2: Make Reasonable Assumptions
 
 It's okay to make some assumptions  (when necessary), but they should be reasonable. For example, it would not be reasonable to assume that your system only needs to process 100 users per day, or to assume that you have infinite memory available.
 
@@ -51,7 +51,7 @@ However, it might be reasonable to design for a max of one million new URLs per 
 Some assumptions might take some "product sense" (which is not a bad thing). For example, is it okay for the data to be stale by a max of ten minutes? That all depends. If it takes 1O minutes for a just-entered URL to work, that's a deal-breaking issue. People usually want these URLs to be active immediately. However, if the statistics are ten minutes out of date, that might be okay. Talk to your interviewer about these sorts of assumptions.
 
 
-**Step  3: Draw the Major Components**
+#### Step  3: Draw the Major Components
 
 Get up out of that chair and go to the whiteboard. Draw a diagram of the major components. You might have something  like a frontend server (or set of servers) that pull data from the backend's data store. You might have another  set of servers that crawl the internet  for some data, and another set that process analytics. Draw a picture of what this system might look like.
 
@@ -59,7 +59,7 @@ Walk through your system from end-to-end to provide a flow. A user enters a new 
 
 It may help here to ignore major scalability challenges and just pretend that the simple, obvious approaches will be okay. You'll handle the big issues in Step 4.
 
-**Step  4: Identify  the  Key Issues**
+#### Step  4: Identify  the  Key Issues
 
 Once you have a basic design in mind, focus on the key issues. What will be the bottlenecks or major chal­lenges in the system?
 
@@ -68,7 +68,7 @@ For example, if you were designing TinyURL, one situation you might consider is 
 Your interviewer might provide some guidance here. If so, take this guidance and use it.
 
 
-**Step  5: Redesign for the  Key Issues**
+#### Step  5: Redesign for the  Key Issues
 
 Once you have identified the key issues, it's time to adjust your design for it. You might find that it involves a major redesign or just some minor tweaking (like using a cache).
 
@@ -84,21 +84,21 @@ In some cases, you're not being asked to design an entire system. You're just be
 In these cases, try the following approach.
 
 
-**Step  1 : Ask Questions**
+#### Step  1 : Ask Questions
 
 As in the earlier approach, ask questions to make sure you really understand the question. There might be details the interviewer left out (intentionally or unintentionally). You can't solve a problem if you don't understand exactly what the problem is.
 
 
-**Step  2: Make Believe**
+#### Step  2: Make Believe
 
 Pretend that the data can all fit on one machine and there are no memory limitations. How would you solve the problem? The answer to this question will provide the general outline for your solution.
 
 
-**Step 3: Get Real**
+#### Step 3: Get Real
 
 Now go back to the original problem. How much data can you fit on one machine, and what problems will occur when you split up the data? Common problems include figuring out how to logically divide the data up, and how one machine would identify where to look up a different piece of data.
 
-**Step 4: Solve Problems**
+#### Step 4: Solve Problems
 
 Finally, think about how to solve the issues you identified in Step 2. Remember that the solution for each issue might be to actually remove the issue entirely, or it might be to simply mitigate the issue. Usually, you can continue using (with modifications) the approach you outlined in Step 1, but occasionally you will need to fundamentally alter the approach.
 
@@ -112,7 +112,7 @@ Your goal is not to re-architect a complex system that companies have spent mill
 While system design questions aren't really tests of what you know, certain concepts can make things a lot easier. We will give a brief overview here. All of these are deep, complex topics, so we encourage you to use online resources for more research.
 
 
-**Horizontal vs. Vertical Scaling**
+#### Horizontal vs. Vertical Scaling
 
 A system can be scaled one of two ways.
 
@@ -122,12 +122,12 @@ A system can be scaled one of two ways.
 Vertical scaling is generally easier than horizontal scaling, but it's limited. You can only add so much memory or disk space.
 
 
-**Load Balancer**
+#### Load Balancer
 
 Typically, some frontend parts of a scalable website will be thrown behind  a load balancer. This allows a system to distribute the load evenly so that one server doesn't crash and take down the whole system. To do so, of course, you have to build out a network of cloned servers that all have essentially the same code and access to the same data.
 
 
-**Database Denormalization and  NoSQL**
+#### Database Denormalization and  NoSQL
 
 Joins in a relational database such as SQL can get very slow as the system grows bigger. For this reason, you would generally avoid them.
 
@@ -135,7 +135,7 @@ Denormalization is one part of this. Denormalization means adding redundant info
 
 Or, you can go with a NoSQL database. A NoSQL database does not support joins and might structure data in a different way. It is designed to scale better.
 
-**Database Partitioning (Sharding)**
+#### Database Partitioning (Sharding)
 
 Sharding means splitting the data across multiple machines while ensuring you have a way of figuring out which data is on which machine.
 
@@ -148,7 +148,7 @@ A few common ways of partitioning include:
 Many architectures actually end up using multiple partitioning schemes.
 
 
-**Caching**
+#### Caching
 
 An in-memory cache can deliver very rapid results. It is a simple key-value pairing and typically sits between your application layer and your data store.
 
@@ -157,7 +157,7 @@ When an application requests a piece of information, it first tries the cache. I
 When you cache, you might cache a query and its results directly. Or, alternatively, you can cache the specific object (for example, a rendered version of a part of the website, or a list of the most recent blog posts).
 
 
-**Asynchronous Processing & Queues**
+#### Asynchronous Processing & Queues
 
 Slow operations should ideally be done asynchronously. Otherwise, a user might get stuck waiting and waiting for a process to complete.
 
@@ -166,7 +166,7 @@ In some cases, we can do this in advance (i.e., we can pre-process). For example
 In other cases, we might tell the user to wait and notify them when the process is done. You've probably seen this on websites before. Perhaps you enabled some new part of a website and it says it needs a few minutes to import your data, but you'll get a notification when it's done.
 
 
-**Networking Metrics**
+#### Networking Metrics
 
 Some of the most important metrics around networking include:
 
@@ -184,7 +184,7 @@ Imagine you have a conveyor belt that transfers items across a factory. Latency 
 Latency can be easy to disregard, but it can be very important in particular situations. For example,  if you're playing certain online games, latency can be a very big deal. How can you play a typical online sports game (like a two-player football game) if you aren't notified very quickly of your opponent's movement? Additionally, unlike throughput where at least you have the option of speeding things up through data compression, there is often little you can do about latency.
 
 
-**MapReduce**
+#### MapReduce
 
 MapReduce is often associated with Google, but it's used much more broadly than that. A MapReduce program is typically used to process large amounts of data.
 
@@ -224,7 +224,7 @@ Your goal in these problems is to be able to understand use cases, scope a probl
 Before we start solving the problem, we need to understand whether this is a one time only operation, or if this findWords procedure will be called repeatedly. Let's assume that we will be calling findWords many times for the same set of documents, and, therefore, we can accept the burden of pre-processing.
 
 
-**Step 1**
+#### Step 1
 
 The first step is to pretend we just have a few dozen documents. How would we implement findWords in this case? (Tip: stop here and try to solve this yourself before reading on.)
 
@@ -238,7 +238,7 @@ One way to do this is to pre-process each document and create a hash table index
 To search for "many books", we would simply do an intesection on the values for "books" and "many", and return {doc3, doc8}  as the result.
 
 
-**Step2**
+#### Step2
 
 Now go back to the original problem. What problems are introduced  with millions of documents?  For starters, we probably need to divide up the documents across many machines. Also, depending on a variety of factors, such as the number of possible words and the repetition of words in a document, we may not be able to fit the full hash table on one machine. Let's assume that this is the case.
 
@@ -250,7 +250,7 @@ This division introduces the following key concerns:
 
 These are just three concerns. There may be many others.
 
-**Step3**
+#### Step3
 
 In Step 3, we find solutions to each of these issues. One solution is to divide up the words alphabetically by keyword, such that each machine  controls a range of words (e.g., "after" through "apple").
 

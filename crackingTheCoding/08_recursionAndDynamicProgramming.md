@@ -18,17 +18,17 @@ Recursive solutions, by definition, are built off of solutions to subproblems. M
 There are many ways you might divide a problem into subproblems. Three of the most common approaches to develop an algorithm are bottom-up, top-down, and half-and-half.
 
 
-**Bottom-Up Approach**
+#### Bottom-Up Approach
 
 The bottom-up approach is often the most intuitive. We start with knowing how to solve the problem for a simple case, like a list with only one element. Then we figure out how to solve the problem  for two elements, then for three elements, and so on. The key here is to think about how you can build the solution for one case off of the previous case (or multiple previous cases).
 
-**Top-Down  Approach**
+#### Top-Down  Approach
 
 The top-down  approach  can be more complex since it's less concrete. But sometimes, it's the best way to think about the problem.
 
 In these problems, we think about how we can divide the problem for case N into subproblems. Be careful of overlap between the cases.
 
-**Half-and-Half Approach**
+#### Half-and-Half Approach
 
 In addition to top-down and bottom-up approaches, it's often effective to divide the data set in half.
 
@@ -58,7 +58,7 @@ Alternatively, you can study the pattern of the recursive calls and implement so
 One of the simplest examples of dynamic programming is computing the nth Fibonacci number. A good way to approach such a problem is often to implement it as a normal recursive solution, and then add the caching part.
 
 
-**Fibonacci Numbers**
+#### Fibonacci Numbers
 
 Let's walk through an approach to compute the nth Fibonacci number.
 

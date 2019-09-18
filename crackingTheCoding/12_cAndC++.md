@@ -243,7 +243,7 @@ Two pointers can  equal each other,  such  that changing one's  value  also chan
 Note  that the  size of a pointer varies  depending on the  architecture: 32 bits on a 32-bit  machine and  64 bits on a 64-bit  machine. Pay attention to this difference, as it's common for interviewers to ask exactly  how much space a data structure takes  up.
 
 
-**References**
+#### References
 
 A reference is another name (an alias) for a pre-existing object and  it does not have memory of its own. For example:
 
@@ -264,7 +264,7 @@ You cannot create a reference without specifying where in memory it refers to. H
 ```
 Unlike pointers, references cannot be null and  cannot be reassigned to another piece of memory.
 
-**Pointer Arithmetic**
+#### Pointer Arithmetic
 
 One  will often see programmers perform addition on a pointer, such  as what you see  below:
 
