@@ -220,7 +220,7 @@ Let's walk through this on the above graph.
 
 1. The first value of n is a. We look at its adjacent nodes (b, c, and e), update the values of path_weight (to 5, 3, and 2) and previous (to a) and then remove a from remaining.
 2. Then, we go to the next smallest node, which is e. We previously updated path_weight[e] to be 2. Its adjacent nodes are h and i, so we update path_weight (to 6 and 9) and previous for both of those. Observe that 6 is path_weight[e]  (which is 2) + the weight of the edge (e,  h) (which is 4).
-3. The next smallest node is c, which has path_weight 3. Its adjacent nodes are b and d. The value of path_weight[d] is infinity, so we update it to 4 (which is path_weight[c]   + weight(edge  c, d). The value of path_weight[b] has been previously set to 5. However, since path_weight[c] +  weight(edge c,  b) (which is 3 + 1  = 4) is less than 5, we update path_weight[b] to 4 and previous to c. This indicates that we would improve the path from a to b by going through c.
+3. The next smallest node is c, which has path_weight 3. Its adjacent nodes are b and d. The value of path_weight[d] is infinity, so we update it to 4 (which is path_weight[c] + weight(edge c, d). The value of path_weight[b] has been previously set to 5. However, since path_weight[c] +  weight(edge c,  b) (which is 3 + 1  = 4) is less than 5, we update path_weight[b] to 4 and previous to c. This indicates that we would improve the path from a to b by going through c.
 
 We continue doing this until remaining is empty. The following diagram shows the changes to the path_ weight (left) and previous (right) at each step. The topmost row shows the current value for n (the node we are removing from remaining). We black out a row after it has been removed from remaining.
 
@@ -557,22 +557,22 @@ The HashMapList class is essentially shorthand for HashMap\<T, ArrayList\<E>>. I
 For example, we might want a data structure that maps from an integer to a list of strings. Ordinarily, we'd have to write something like this:
 
 ```java
-1   HashMap<Integer,   ArrayList<String>> maplist =
+1   HashMap<Integer,   ArrayList<String>> mapList =
 2           new HashMap<Integer,   ArrayList<String>>();
 3   for (String s : strings) {
 4       int key =  computeValue(s);
-5       if (!maplist.containsKey(key)) {
-6           maplist.put(key, new ArrayList<String>());
+5       if (!mapList.containsKey(key)) {
+6           mapList.put(key, new ArrayList<String>());
 7       }
-8       maplist.get(key).add(s);
+8       mapList.get(key).add(s);
 9   }
 ```
 Now, we can just write this:
 ```java
-1  HashMaplist<Integer, String> maplist = new HashMapList<Integer,  String>();
+1  HashMapList<Integer, String> mapList = new HashMapList<Integer,  String>();
 2  for (String s : strings) {
 3       int key =  computeValue(s);
-4       maplist.put(key,  s);
+4       mapList.put(key,  s);
 5  }
 ```
 It's not a big change, but it makes our code a bit simpler.

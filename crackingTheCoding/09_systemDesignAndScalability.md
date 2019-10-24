@@ -719,7 +719,7 @@ For illustrative  purposes, abbreviated code for the cache is below. The code at
 13		public void  moveToFront(String  query)  {...   }
 14	
 15		/*Removes node from linked list  */
-16		public void  removeFromlinkedlist(Node node)  {...  }
+16		public void  removeFromlinkedList(Node node)  {...  }
 17	
 18		/*   Gets  results from cache,  and updates  linked list  */
 19		public String[]  getResults(String query)  {
@@ -927,12 +927,12 @@ We would run frequent jobs to merge files together  by product ID and time range
 
 ```
 /sportsequipment
-	1423,Dec   13  08:23-Dec  13  08:23,1
-	4221,Dec   13  15:22-Dec  15  15:45,5
+	1423,Dec 13  08:23-Dec  13  08:23,1
+	4221,Dec 13  15:22-Dec  15  15:45,5
 
 /safety
-	1423,Dec   13  08:23-Dec  13  08:23,1
-	5221,Dec   12  03:19-Dec  12  03:28,19
+	1423,Dec 13  08:23-Dec  13  08:23,1
+	5221,Dec 12  03:19-Dec  12  03:28,19
 ...
 ```
 

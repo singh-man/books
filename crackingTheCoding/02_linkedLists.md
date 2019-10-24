@@ -134,7 +134,7 @@ If we don't have a buffer, we can iterate with two pointers: current which itera
 ```java
 1 	void deleteDups(LinkedListNode   head)  {
 2 		LinkedListNode  current =  head;
-3 		while (current   !=  null) {
+3 		while (current !=  null) {
 4 			/* Remove  all future  nodes that  have the same value */
 5 			LinkedListNode runner  =  current;
 6 			while (runner.next  !=  null) {
@@ -177,11 +177,11 @@ Implementing this is short and sweet-provided we have a way of "passing back" an
 One way to do this is to change the problem to simply printing the kth to last element. Then, we can pass back the value of the counter simply through return values.
 
 ```java
-1 	int  printKthToLast(LinkedListNode head,   int k)  {
+1 	int  printKthToLast(LinkedListNode head, int k)  {
 2 		if  (head == null) {
 3 			return 0;
 4 		}
-5 		int index   = printKthToLast(head.next,  k)  + 1;
+5 		int index = printKthToLast(head.next,  k)  + 1;
 6 		if (index == k)  {
 7 			System.out.println(k +   "th to last node is " +  head.data);
 8 		}
@@ -223,7 +223,7 @@ We described earlier that the issue was that we couldn't simultaneously return a
 2 		public int value = 0;
 3 	}
 4	
-5 	LinkedListNode  kthTolast(LinkedListNode  head,   int k)  {
+5 	LinkedListNode kthTolast(LinkedListNode  head,   int k)  {
 6 		Index  idx  = new Index();
 7 		return kthToLast(head, k,   idx);
 8 	}
@@ -388,7 +388,7 @@ In this approach, we start a "new" list (using the existing nodes). Elements big
 10				head =  node;
 11			}  else  {
 12				/*  Insert node at tail. */
-13				tail.next =    node;
+13				tail.next = node;
 14				tail = node;
 15			}
 16			node =  next;
@@ -460,8 +460,8 @@ List: 2 -> 1 -> 9.
 The code below implements this algorithm.
 
 ```java
-l 	LinkedListNode addlists(LinkedListNode l1, LinkedListNode l2, int  carry) {
-2 		if (l1 == null &&  l2 == null  &&   carry ==   0) {
+l 	LinkedListNode addLists(LinkedListNode l1, LinkedListNode l2, int  carry) {
+2 		if (l1 == null &&  l2 == null  && carry == 0) {
 3 			return null;
 4 		}
 5	
@@ -478,7 +478,7 @@ l 	LinkedListNode addlists(LinkedListNode l1, LinkedListNode l2, int  carry) {
 16	
 17		/*Recurse  */
 18		if (l1 != null || l2 != null) {
-19			LinkedListNode  more = addlists(l1 == null ?  null : l1.next,
+19			LinkedListNode  more = addLists(l1 == null ?  null : l1.next,
 20									l2 == null ? null : l2.next,
 21									value >= 10 ?  1 : 0);
 22			result.setNext(more);
@@ -510,9 +510,9 @@ The code below implements this algorithm.
 9 	
 10		/* Pad the shorter  list with zeros  -  see note (1) */
 11		if (len1 < len2) {
-12			l1 = padlist(l1, len2 - len1);
+12			l1 = padList(l1, len2 - len1);
 13		} else {
-14			l2 = padlist(l2, len1 - len2);
+14			l2 = padList(l2, len1 - len2);
 15		}
 16	
 17		/* Add lists */
@@ -567,7 +567,7 @@ The code below implements this algorithm.
 66	}
 ```
 
-Note how we have pulled insertBefore(), padlist(), and length() (not listed) into their own methods. This makes the code cleaner and easier to read-a wise thing to do in your interviews!
+Note how we have pulled insertBefore(), padList(), and length() (not listed) into their own methods. This makes the code cleaner and easier to read-a wise thing to do in your interviews!
 
 
 **2.6       Palindrome:** Implement a function to check if a linked list is a palindrome.
@@ -589,12 +589,12 @@ Note that when we compare the linked list to the reversed list, we only actually
 ```java
 1 	boolean  isPalindrome(LinkedListNode head)  {
 2 		LinkedListNode reversed =  reverseAndClone(head);
-3 		return  isEqual(head, reversed);
+3 		return isEqual(head, reversed);
 4 	}
 5	
 6 	LinkedListNode reverseAndClone(LinkedListNode  node)  {
 7 		LinkedListNode head =   null;
-8 		while  (node  != null) {
+8 		while (node  != null) {
 9 			LinkedListNode n =  new LinkedListNode(node.data); // Clone
 10			n.next = head;
 11			head   = n;
@@ -603,15 +603,15 @@ Note that when we compare the linked list to the reversed list, we only actually
 14		return head;
 15	}
 16	
-17	boolean  isEqual(LinkedListNode one,  LinkedListNode  two)  {
-18		while  (one  != null &&   two != null) {
+17	boolean isEqual(LinkedListNode one,  LinkedListNode  two)  {
+18		while (one != null && two != null) {
 19			if (one.data  != two.data)  {
 20				return false;
 21			}
 22			one = one.next;
 23			two = two.next;
 24		}
-25		return one ==  null   &&   two ==  null;
+25		return one == null && two ==  null;
 26	}
 ```
 
@@ -640,7 +640,7 @@ Now, we simply iterate through the rest of the linked list. At each iteration, w
 7 		/* Push elements from  first  half of  linked list onto   stack. When  fast  runner
 8 		* (which is moving at 2x speed) reaches the end of the linked list, then we
 9 		*  know we're at the   middle */
-10		while   (fast != null &&  fast.next != null) {
+10		while (fast != null &&  fast.next != null) {
 11			stack.push(slow.data);
 12			slow  =   slow.next;
 13			fast = fast.next.next;
@@ -651,7 +651,7 @@ Now, we simply iterate through the rest of the linked list. At each iteration, w
 18			slow =  slow.next;
 19		}
 20	
-21		while   (slow  != null) {
+21		while (slow != null) {
 22			int top =  stack.pop().intValue();
 23	
 24			/*   If  values are   different, then   it's not   a  palindrome*/
@@ -720,9 +720,9 @@ But wait, you might ask, sometimes we said we'll return a boolean value, and som
 It's both. We create a simple class with two members, a boolean and a node, and return an instance of that class.
 
 ```java
-1  class   Result  {
-2      public LinkedListNode  node;
-3      public boolean  result;
+1  class Result  {
+2      public LinkedListNode node;
+3      public boolean result;
 4  }
 ```
 
@@ -743,7 +743,7 @@ The example below illustrates the parameters and return values from this sample 
 Implementing this code is now just a matter of filling in the details.
 ```java
 1 	boolean  isPalindrome(LinkedListNode head)  {
-2 		int length = lengthOflist(head);
+2 		int length = lengthOfList(head);
 3 		Result  p = isPalindromeRecurse(head,  length);
 4 		return p.result;
 5 	}
@@ -788,7 +788,7 @@ Some of you might be wondering why we went through all this effort to create a s
 However, if we were implementing this in C or C++, we could have passed in a double pointer.
 
 ```c++
-1   bool  isPalindromeRecurse(Node  head,  int length, Node** next)   {
+1   bool isPalindromeRecurse(Node  head,  int length, Node** next)   {
 2		...
 3   }
 ```
@@ -854,7 +854,7 @@ We now have a multistep process.
 
 ```java
 1 	LinkedListNode findintersection(LinkedListNode  list1, LinkedListNode list2) {
-2 		if (list1 ==  null  ||    list2 == null) return null;
+2 		if (list1 ==  null  || list2 == null) return null;
 3 	
 4		/* Get   tail and  sizes. */
 5		Result result1  =  getTailAndSize(list1);
@@ -866,8 +866,8 @@ We now have a multistep process.
 11		}
 12	
 13		/* Set pointers to the start  of  each linked  list. */
-14		LinkedListNode shorter =  result1.size <   result2.size ?  list1 :   list2;
-15		LinkedListNode longer  =  result1.size <   result2.size ?  list2 :    list1;
+14		LinkedListNode shorter =  result1.size < result2.size ?  list1 : list2;
+15		LinkedListNode longer  =  result1.size < result2.size ?  list2 : list1;
 16	
 17		/* Advance the pointer for the longer linked list by difference in lengths. */
 18		longer = getKthNode(longer,  Math.abs(result1.size -  result2.size));
@@ -997,7 +997,7 @@ The code below implements this algorithm.
 6 		while (fast !=  null &&   fast.next !=  null) {
 7 			slow =  slow.next;
 8 			fast =  fast.next.next;
-9 			if (slow   ==  fast) {//Collision
+9 			if (slow == fast) {//Collision
 10				break;
 11			}
 12		}

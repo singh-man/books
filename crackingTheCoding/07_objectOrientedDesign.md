@@ -121,13 +121,13 @@ Let's assume that your interviewer clarifies that the deck is a standard 52-card
 8   
 9   public class Deck <T  extends   Card> {
 10      private ArrayList<T>  cards;//   all cards,   dealt or  not
-11      private int  dealtlndex =  0;  // marks first undealt card
+11      private int  dealtIndex =  0;  // marks first undealt card
 12  
 13      public void setDeckOfCards(ArrayList<T>  deckOfCards) {... }
 14  
 15      public void shuffle() {... }
 16      public int remainingCards() {
-17          return cards.size()  -  dealtlndex;
+17          return cards.size()  -  dealtIndex;
 18      }
 19      public T[]  dealHand(int  number) {... }
 20      public T  dealCard()  {... }
@@ -284,7 +284,7 @@ CallHandler represents the body of the program, and all calls are funneled first
 25      /*  Routes  the  call to  an available employee,  or  saves  in  a  queue if no employee
 26      * is available. */
 27      public void  dispatchCall(Caller caller)  {
-28          Call  call = new Call(caller);
+28          Call call = new Call(caller);
 29          dispatchCall(call);
 30      }
 31  
@@ -930,13 +930,13 @@ A potential object-oriented design looks like the following:
 51  public   class Piece  {
 52      private HashMap<Orientation,  Edge> edges     new HashMap<Orientation,  Edge>();
 53  
-54      public  Piece(Edge[]   edgelist) {  ... }
+54      public Piece(Edge[]   edgeList) {  ... }
 55  
 56      /*  Rotate  edges  by  "numberRotations". */
-57      public   void rotateEdgesBy(int numberRotations)  {  ... }
+57      public void rotateEdgesBy(int numberRotations)  {  ... }
 58  
-59      public   boolean  isCorner() { ... }
-60      public   boolean  isBorder() { ... }
+59      public boolean  isCorner() { ... }
+60      public boolean  isBorder() { ... }
 61  }
 62  
 63  public   class Edge {
@@ -1277,7 +1277,7 @@ One possible design for Othello is below.
 14      private final int  COLUMNS = 10;
 15 
 15      private Game()   {
-17          board =   new Board(ROWS,   COLUMNS);
+17          board = new Board(ROWS,   COLUMNS);
 18          players = new Player[2];
 19          players[0] =  new  Player(Color.Black);
 20          players[1] =  new  Player(Color.White);
@@ -1298,8 +1298,8 @@ The Board class manages the actual pieces themselves.  It does not handle much o
 
 ```java
 1   public class Board {
-2       private int blackCount =   0;
-3       private int whiteCount =   0;
+2       private int blackCount = 0;
+3       private int whiteCount = 0;
 4       private Piece[][]  board;
 5
 6       public Board(int rows,  int columns)  {
@@ -1633,7 +1633,7 @@ To shuffle a grid, we do a very similar thing, just converting the index into a 
 
 ```java
 1   void  shuffleBoard()  {
-2       int nCells   =  nRows *  nColumns ;
+2       int nCells =  nRows *  nColumns ;
 3       Random  random =  new  Random();
 4       for (int index1 =  0;  index1 <   nCells;  index1++) {
 5           int index2  =  index1 + random.nextint(nCells  -  index1);
@@ -1690,8 +1690,7 @@ Instead, we can go to each bomb and increment each cell around it. For example, 
 
 Expanding the blank region could be done either iteratively or recursively. We implemented it iteratively. 
 
-You can think about this algorithm like this: each blank cell is surrounded by either blank cells or numbered cells (never a bomb). All need to be flipped. But, if you're flipping a blank cell, you also need to add the blank
-cells to a queue, to flip their neighboring cells.
+You can think about this algorithm like this: each blank cell is surrounded by either blank cells or numbered cells (never a bomb). All need to be flipped. But, if you're flipping a blank cell, you also need to add the blank cells to a queue, to flip their neighboring cells.
 
 ```java
 1   void  expandBlank(Cell  cell) {

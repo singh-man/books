@@ -293,59 +293,59 @@ Of course, if we need to convert a board into this format every time we want to 
 
 If we know the very last move that was made (and we've been checking for a winner up until now), then we only need to check the row, column, and diagonal that overlaps with this position.
 ```java
-1 		Piece hasWon(Piece[][] board, int  row,  int column)  {
-2 			if  (board.length != board[0].length) return Piece.Empty;
+1 	Piece hasWon(Piece[][] board, int  row,  int column)  {
+2 		if  (board.length != board[0].length) return Piece.Empty;
 3	
-4 			Piece piece = board[row][column];
+4 		Piece piece = board[row][column];
 5	
-6 			if (piece == Piece.Empty) return  Piece.Empty;
+6 		if (piece == Piece.Empty) return  Piece.Empty;
 7	
-8 			if (hasWonRow(board,  row)  || hasWonColumn(board,  column))   {
-9 				return piece;
-10			}
+8 		if (hasWonRow(board,  row)  || hasWonColumn(board,  column))   {
+9 			return piece;
+10		}
 11	
-12			if (row  == column && haswonDiagonal(board,  1))   {
-13				return  piece;
-14			}
+12		if (row  == column && haswonDiagonal(board,  1))   {
+13			return  piece;
+14		}
 15	
-16			if (row == (board.length - column - 1)  && hasWonDiagonal(board, -1))   {
-17				return piece;
-18			}
+16		if (row == (board.length - column - 1)  && hasWonDiagonal(board, -1))   {
+17			return piece;
+18		}
 19	
-20			return  Piece.Empty;
-21		}
+20		return  Piece.Empty;
+21	}
 22	
-23		boolean hasWonRow(Piece[][] board,  int row)  {
-24			for (int c  = 1;  c  <   board[row].length;  c++)  {
-25				if (board[row][c] != board[row][0]) {
-26					return false;
-27				}
-28			}
-29			return true;
-30		}
+23	boolean hasWonRow(Piece[][] board,  int row)  {
+24		for (int c  = 1;  c  <   board[row].length;  c++)  {
+25			if (board[row][c] != board[row][0]) {
+26				return false;
+27			}
+28		}
+29		return true;
+30	}
 31	
-32		boolean hasWonColumn(Piece[][] board,  int column) {
-33			for (int r =  1;  r < board.length;  r++)  {
-34				if (board[r][column] != board[0][column])  {
-35					return false;
-36				}
-37			}
-38			return true;
-39		}
+32	boolean hasWonColumn(Piece[][] board,  int column) {
+33		for (int r =  1;  r < board.length;  r++)  {
+34			if (board[r][column] != board[0][column])  {
+35				return false;
+36			}
+37		}
+38		return true;
+39	}
 40	
-41		boolean  hasWonDiagonal(Piece[][]  board, int direction) {
-42			int row =  0;
-43			int column =  direction == 1 ? 0 : board.length  -  1;
-44			Piece  first = board[0][column];
-45			for  (int i = 0;  i <   board.length;  i++)  {
-46				if (board[row][column] != first) {
-47					return false;
-48				}
-49				row +=  1;
-50				column +=  direction;
-51			}
-52			return true;
-53		}
+41	boolean  hasWonDiagonal(Piece[][]  board, int direction) {
+42		int row =  0;
+43		int column =  direction == 1 ? 0 : board.length  -  1;
+44		Piece  first = board[0][column];
+45		for  (int i = 0;  i <   board.length;  i++)  {
+46			if (board[row][column] != first) {
+47				return false;
+48			}
+49			row +=  1;
+50			column +=  direction;
+51		}
+52		return true;
+53	}
 ```
 
 There is actually a way to clean up thiscode to remove some of the duplicated code. We'll see this approach in a later function.
@@ -1045,7 +1045,7 @@ The code below implements this algorithm.
 ```java
 1 	int divide(int a, int b) throws java.lang.ArithmeticException {
 2 		if (b == 0)   {
-3 			throw   new java.lang.ArithmeticException("ERROR");
+3 			throw new java.lang.ArithmeticException("ERROR");
 4 		}
 5 		int absa = abs(a);
 6 		int absb = abs(b);
@@ -1132,7 +1132,7 @@ A slightly  better way of doing this is to create an array where we track the nu
 ```java
 1 	int maxAliveYear(Person[] people,  int  min,  int max) {
 2 		int[]  years =  createYearMap(people,  min,  max);
-3 		int best = getMaxlndex(years);
+3 		int best = getMaxIndex(years);
 4 		return best + min;
 5 	}
 6
@@ -1153,7 +1153,7 @@ A slightly  better way of doing this is to create an array where we track the nu
 21	}
 22
 23	/* Get  index   of  largest  element in array. */
-24	int  getMaxlndex(int[] values) {
+24	int  getMaxIndex(int[] values) {
 25		int max = 0;
 26		for (int i =  1;  i < values.length;  i++)   {
 27			if (values[i] > values[max]) {
@@ -1818,7 +1818,6 @@ Let min  equal min(middle and right side) and  max equal max(middle  and  left s
 
 On the  left side, we start with the  end of the  subsequence (value 11, at element 5) and move to the  left. The value  min  equals 5. Once  we find an element i such that array[i] <  min, we know that we could sort the  middle and  have that part of the  array appear in order.
 
-
 Then, we do a similar thing on the right side. The value max equals 12. So, we begin with the start of the right subsequence (value 6) and move to the right. We compare the max of 12 to 6, then 7, then 16. When reach 16, we know that no elements smaller than 12 could be after it (since it's an increasing subsequence). Thus, the middle of the array could now be sorted to make the entire array sorted.
 
 The following code implements this algorithm.
@@ -1885,7 +1884,7 @@ Note the use of other methods in this solution. Although we could have jammed it
 ```
 EXAMPLE
 Input:  2, -8,  3,   -2,  4,  -10
-Output: 5  ( i. e • ,  {3,    -2,  4} )
+Output: 5  (i.e.,  {3,    -2,  4})
 ```
 
 SOLUTION
@@ -2032,10 +2031,10 @@ In other words, once we've picked a, we've picked b too. There's no need to iter
 14			int remaininglength = size -  mainSize  *  countOfMain;
 15			String first = value.substring(0, mainSize);
 16			if (countOfAlt == 0  || remainingLength % countOfAlt == 0)  {
-17				int altindex = firstAlt *  mainSize;
+17				int altIndex = firstAlt *  mainSize;
 18				int altSize = countOfAlt  ==  0 ? 0  : remaininglength / countOfAlt;
 19				String second = countOfAlt == 0  ?   ""  :
-20						value.substring(altindex, altSize +  altindex);
+20						value.substring(altIndex, altSize +  altIndex);
 21
 22				String cand =  buildFromPattern(pattern, first, second);
 23				if (cand.equals(value))  {
@@ -2083,11 +2082,11 @@ Instead, we can iterate through the values for a and b as before. But this time,
 11       int maxMainSize = size / countOfMain;
 12
 13       for  (int mainSize =  0;  mainSize  <=  maxMainSize; mainSize++)  {
-14           int remaininglength = size -  mainSize * countOfMain;
-15           if (countOfAlt == 0  || remaininglength %  countOfAlt  ==  0)  {
-16               int altlndex =  firstAlt  *  mainSize;
-17               int altSize =  countOfAlt  == 0 ? 0  : remaininglength / countOfAlt;
-18               if (matches(pattern,  value,   mainSize,  altSize,  altlndex)) {
+14           int remainingLength = size -  mainSize * countOfMain;
+15           if (countOfAlt == 0  || remainingLength %  countOfAlt  ==  0)  {
+16               int altIndex =  firstAlt  *  mainSize;
+17               int altSize =  countOfAlt  == 0 ? 0  : remainingLength / countOfAlt;
+18               if (matches(pattern,  value,   mainSize,  altSize,  altIndex)) {
 19                   return true;
 20               }
 21           }
@@ -2101,11 +2100,11 @@ Instead, we can iterate through the values for a and b as before. But this time,
 29   * or  the  alternate. */
 30   boolean  matches(String pattern, String value, int mainSize, int altSize,
 31                 int firstAlt) {
-32       int stringlndex = mainSize;
+32       int stringIndex = mainSize;
 33       for  (int i = 1;  i <   pattern.length();  i++)  {
 34           int size =  pattern.charAt(i) == pattern.charAt(0) ?  mainSize  :   altSize;
 35           int offset = pattern.charAt(i) ==  pattern.charAt(0) ?  0  :   firstAlt;
-36           if (!isEqual(value, offset,  stringlndex, size))  {
+36           if (!isEqual(value, offset,  stringIndex, size))  {
 37              return false;
 38           }
 39           stringindex +=  size;
@@ -2274,7 +2273,7 @@ We will assume the list of words is passed in as a HashSet. A HashSet operates s
 19       /* Go  through all  remaining options.  */
 20       if (letters != null) {
 21           for (char letter : letters) {
-22               getValidWords(number,  index  + 1,  prefix + letter, wordSet,   results);
+22               getValidWords(number,  index  + 1,  prefix + letter, wordSet, results);
 23           }
 24       }
 25   }
@@ -2379,7 +2378,7 @@ That's it!
 13      HashMap<Character, Character> letterToNumberMap = createletterToNumberMap();
 14
 15      /*  Create  word ->  number map. */
-16      HashMaplist<String, String> wordsToNumbers = new HashMaplist<String,  String>();
+16      HashMapList<String, String> wordsToNumbers = new HashMapList<String,  String>();
 17      for (String word : words)  {
 18          String numbers =  convertToT9(word,  letterToNumberMap);
 19          wordsToNumbers.put(numbers, word);
@@ -2406,7 +2405,7 @@ That's it!
 40  /*  Convert  from a  string to  its T9 representation. */
 41  String  convertToT9(String word, HashMap<Character, Character>  letterToNumberMap) {
 42      StringBuilder sb =  new StringBuilder();
-43      for  (char c : word.toCharArray()) {
+43      for (char c : word.toCharArray()) {
 44          if (letterToNumberMap.containsKey(c)) {
 45              char digit = letterToNumberMap.get(c);
 46              sb.append(digit);
@@ -2417,7 +2416,7 @@ That's it!
 51
 52  char[][] t9Letters =/*  Same as  before   */
 53
-54  /*  HashMaplist<String,  Integer>  is a HashMap  that maps from Strings to
+54  /*  HashMapList<String,  Integer>  is a HashMap  that maps from Strings to
 55  *  ArrayList<Integer>.  See appendix for  implementation.  */
 ```
 Getting the words that map to this number will run in O(N) time, where N is the number of digits. The O(N) comes in during the hash table look up (we need to convert the number to a hash table). If you know the words are never longer than a certain max size, then you could also describe the runtime as O(1).
@@ -2569,7 +2568,7 @@ If the arrays are sorted, we can iterate through them to find an appropriate pai
 8       int a =  0;
 9       int b =  0;
 10
-11      while  (a  <   array1.length && b < array2.length) {
+11      while  (a < array1.length && b < array2.length) {
 12          int  difference =  array1[a] -  array2[b];
 13          /* Compare  difference to  target.  If difference is too  small,   then  make it
 14          * bigger  by moving a to  a  bigger  value. If it is too  big,   then  make it
@@ -3049,7 +3048,7 @@ We can optimize this with a hash map, where the value in the hash map reflects t
 13 
 14  }
 15 
-16  void  adjustCounterBy(HashMap<Integer, Integer>  counter,   int key,   int delta) {
+16  void  adjustCounterBy(HashMap<Integer, Integer>  counter, int key, int delta) {
 17      counter.put(key,  counter.getOrDefault(key, 0) + delta);
 18  }
 ```
@@ -3079,7 +3078,7 @@ Why must this find all complements for last? Because all pairs must be made up o
 8               System.out.println(array[first] + " " +  array[last]);
 9               first++;
 10              last--;
-11          }  else {
+11          } else {
 12              if (s <  sum) first++;
 13              else last - -;
 14          }
@@ -3296,11 +3295,11 @@ The code below implements this algorithm.
 7 
 8        double  result =  0;
 9        Term processing =   null;
-10       for  (int i = 0;  i < terms.size(); i++)  {
+10       for (int i = 0;  i < terms.size(); i++)  {
 11           Term current = terms.get(i);
 12           Term next =  i + 1 <   terms.size() ? terms.get(i + 1) : null;
 13
-14           /*    Apply the  current term  to  "processing". */
+14           /* Apply the  current term  to  "processing". */
 15           processing = collapseTerm(processing, current);
 16
 17           /* If next  term  is + or  -,  then  this cluster is done and we  should  apply
@@ -3328,7 +3327,7 @@ The code below implements this algorithm.
 39    }
 40
 41    double  applyOp(double  left, Operator  op,  double  right) {
-42       if (op ==   Operator.ADD) return left + right;
+42       if (op == Operator.ADD) return left + right;
 43       else if (op ==  Operator.SUBTRACT)  return left  -  right;
 44       else if (op ==  Operator.MULTIPLY) return left *  right;
 45       else if (op ==  Operator.DIVIDE) return left /  right;

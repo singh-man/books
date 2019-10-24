@@ -108,9 +108,9 @@ In-order traversal means to "visit" (often,  print)  the left branch, then the c
 ```java
 1  void  inOrderTraversal(TreeNode  node) {
 2       if (node !=  null) {
-3             inOrderTraversal(node.left);
-4             visit(node);
-5             inOrderTraversal(node.right);
+3       	inOrderTraversal(node.left);
+4       	visit(node);
+5       	inOrderTraversal(node.right);
 6      }
 7  }
 ```
@@ -124,7 +124,7 @@ Pre-order traversal visits the current node before its child nodes (hence the na
 
 ```java
 1  void  preOrderTraversal(TreeNode  node)  {
-2       if (node !=  null) {
+2  		 if (node !=  null) {
 3             visit(node);
 4             preOrderTraversal(node.left);
 5             preOrderTraversal(node.right);
@@ -383,7 +383,7 @@ The code below provides an iterative implementation of breadth-first search.
 4       if (start ==  end) return true;
 5  
 6       // operates  as Queue
-7       LinkedList<Node>  q   =  new   LinkedList<Node>();
+7       LinkedList<Node>  q =  new LinkedList<Node>();
 8  
 9       for (Node u :  g.getNodes())  {
 10          u.state =  State.Unvisited;
@@ -490,7 +490,7 @@ We can implement a simple modification of the pre-order traversal algorithm, whe
 19  
 20  ArrayList<LinkedList<TreeNode>>  createLevelLinkedList(TreeNode root)  {
 21      ArrayList<LinkedList<TreeNode>>  lists = new ArrayList<LinkedList<TreeNode>>();
-22      createlevellinkedlist(root,  lists, 0);
+22      createLevelLinkedList(root,  lists, 0);
 23      return lists;
 24  }
 ```
@@ -892,9 +892,9 @@ The code below implements this algorithm.
 4       return orderProjects(graph.getNodes());
 5    }
 6  
-7    /*  Build  the  graph,  adding  the  edge (a,   b)  if b is dependent  on a. Assumes  a  pair
-8    * is listed in  "build order". The pair (a,   b)  in  dependencies  indicates that b
-9    * depends on a  and a must be built before  b. */
+7    /* Build  the  graph,  adding  the  edge (a,   b)  if b is dependent  on a. Assumes  a  pair
+8     * is listed in  "build order". The pair (a,   b)  in  dependencies  indicates that b
+9     * depends on a  and a must be built before  b. */
 10   Graph buildGraph(String[] projects, String[][] dependencies) {
 11      Graph graph = new Graph();
 12      for (String project  :   projects) {
@@ -1111,7 +1111,7 @@ The code below implements this algorithm.
 39  public class  Graph {}
 40  
 41  /* Essentially equivalent to earlier  solution,  with  state info  added and
-42  * dependency count  removed. */
+42   * dependency count  removed. */
 43  public class Project {
 44      public enum  State {COMPLETE,  PARTIAL,   BLANK};
 45      private State state  =  State.BLANK;
@@ -1162,7 +1162,7 @@ If each node has a link to its parent, we could trace p and q's paths up until t
 20      return node;
 21  }
 22  
-23  int   depth(TreeNode node)  {
+23  int depth(TreeNode node)  {
 24      int depth =  0;
 25      while (node != null) {
 26          node  =  node.parent;
@@ -1235,7 +1235,7 @@ Alternatively, you could follow a chain in which p and q are on the same side. T
 The code below implements this approach.
 
 ```java
-1   TreeNode  commonAncestor(TreeNode root,  TreeNode p,  TreeNode q)  {
+1   TreeNode commonAncestor(TreeNode root, TreeNode p, TreeNode q)  {
 2       /*  Error check  -  one  node  is not  in the   tree. */
 3       if  (!covers(root, p)  ||   covers(root,   q))   {
 4           return null;
@@ -1243,7 +1243,7 @@ The code below implements this approach.
 6       return  ancestorHelper(root, p,  q);
 7   }
 8   
-9   TreeNode ancestorHelper(TreeNode root,   TreeNode p,  TreeNode q)  {
+9   TreeNode ancestorHelper(TreeNode root, TreeNode p, TreeNode q)  {
 10      if (root == null || root == p  || root == q) {
 11          return root;
 12      }
@@ -1257,7 +1257,7 @@ The code below implements this approach.
 20      return  ancestorHelper(childSide, p,  q);
 21  }
 22  
-23  boolean   covers(TreeNode root, TreeNode p)  {
+23  boolean covers(TreeNode root, TreeNode p)  {
 24      if (root ==  null) return false;
 25      if (root ==  p)  return true;
 26      return covers(root.left,  p)  ||   covers(root.right,   p);
@@ -1292,12 +1292,12 @@ The code below offers an initial solution, but it has a bug. Can you find it?
 4       if (root ==  p &&  root  ==  q) return  root;
 5  
 6       TreeNode x  =  commonAncestor(root.left,  p, q);
-7       if (x  != null  &&   x  !=  p &&   x  != q) {   // Already found ancestor
+7       if (x  != null  &&   x  !=  p && x  != q) {   // Already found ancestor
 8           return  x;
 9       }
 10  
 11      TreeNode y =  commonAncestor(root.right, p, q);
-12      if (y  !=  null  &&   y !=  p &&   y !=  q) {   // Already found ancestor
+12      if (y  !=  null  &&   y !=  p && y !=  q) {   // Already found ancestor
 13          return  y;
 14      }
 15  
@@ -1306,7 +1306,7 @@ The code below offers an initial solution, but it has a bug. Can you find it?
 18      } else  if (root  ==  p ||  root  ==  q) {
 19          return  root;
 20      } else  {
-21          return  x  == null ?  y    x;  /* return  the non-null  value  */
+21          return  x  == null ?  y  :  x;  /* return  the non-null  value  */
 22      }
 23  }
 ```
@@ -1489,7 +1489,7 @@ We've chosen to implement it the latter way. Since we're keeping the same refere
 18          for  (LinkedList<Integer> right : rightSeq) {
 19              ArrayList<LinkedList<Integer>>  weaved =
 20                 			new ArrayList<LinkedList<Integer>>();
-21              weavelists(left, right,  weaved, prefix);
+21              weaveLists(left, right,  weaved, prefix);
 22              result.addAll(weaved);
 23          }
 24      }
@@ -1512,17 +1512,17 @@ We've chosen to implement it the latter way. Since we're keeping the same refere
 41      
 42      /*  Recurse with head of  first added to  the  prefix. Removing the  head will  damage
 43      * first, so  we'll need to  put  it back where we  found it afterwards. */
-44      int headfirst =  first.removeFirst();
+44      int headFirst =  first.removeFirst();
 45      prefix.addLast(headFirst);
-46      weavelists(first, second, results, prefix);
-47      prefix.removelast();
+46      weaveLists(first, second, results, prefix);
+47      prefix.removeLast();
 48      first.addFirst(headFirst);
 49      
 50      /*  Do  the  same thing with  second,  damaging and then  restoring the  list.*/
 51      int headSecond = second.removeFirst();
 52      prefix.addLast(headSecond);
-53      weavelists(first, second, results, prefix);
-54      prefix.removelast();
+53      weaveLists(first, second, results, prefix);
+54      prefix.removeLast();
 55      second.addFirst(headSecond);
 56  }
 ```
@@ -1533,7 +1533,7 @@ If this sounds like you, try this: trust and focus. Trust that one method does t
 
 Look at weaveLists. It has a specific job: to weave two lists together and return a list of all possible weaves. The existence of allSequences is irrelevant. Focus on the task that weaveLists has to do and design this algorithm.
 
-As you're implementing allSequences (whether you do this before or after weavelists), trust that weaveLists will do the right thing. Don't concern yourself with the particulars of how weaveLists operates while implementing something that is essentially independent. Focus on what you're doing while you're doing it.
+As you're implementing allSequences (whether you do this before or after weaveLists), trust that weaveLists will do the right thing. Don't concern yourself with the particulars of how weaveLists operates while implementing something that is essentially independent. Focus on what you're doing while you're doing it.
 
 In fact, this is good advice in general when you're confused during whiteboard coding. Have a good understanding of what a particular function should do ("okay, this function is going to return a list of \__"). You should verify that it's really doing what you think. But when you're not dealing with that function, focus on the one you are dealing with and trust that the others do the right thing. It's often too much to keep the implementations of multiple algorithms straight in your head.
 
@@ -1590,9 +1590,9 @@ Now consider the subtree problem. If T2's pre-order traversal is a substring of 
 Implementing this is quite straightforward. We just need to construct and compare the pre-order traversals.
 
 ```java
-1   boolean  containsTree(TreeNode t1, TreeNode t2) {
-2       StringBuilder string1  = new StringBuilder();
-3       StringBuilder string2  = new StringBuilder();
+1   boolean containsTree(TreeNode t1, TreeNode t2) {
+2       StringBuilder string1 = new StringBuilder();
+3       StringBuilder string2 = new StringBuilder();
 4  
 5       getOrderString(t1, string1);
 6       getOrderString(t2, string2);
@@ -1628,16 +1628,16 @@ The code below implements this algorithm.
 ```java
 1   boolean containsTree(TreeNode  t1, TreeNode  t2)  {
 2       if (t2  ==   null) return  true;   //  The empty  tree  is always a  subtree
-3       return  subTree(t1,   t2);
+3       return subTree(t1,   t2);
 4   }
 5  
-6   boolean  subTree(TreeNode   r1, TreeNode  r2)  {
-7       if (r1 ==   null)  {
+6   boolean subTree(TreeNode r1, TreeNode  r2)  {
+7       if (r1 == null)  {
 8           return  false;   // big  tree  empty   &  subtree still not found.
 9       }  else if (r1.data ==   r2.data  &&  matchTree(r1,  r2))  {
 10          return  true;
 11      }
-12      return  subTree(r1.left,  r2)   ||  subTree(r1.right,  r2);
+12      return  subTree(r1.left,  r2) ||  subTree(r1.right,  r2);
 13  }
 14  
 15  boolean  matchTree(TreeNode   r1, TreeNode  r2)  {
@@ -1750,7 +1750,7 @@ This means that each node must know the size of the nodes on the left and the si
 10      }
 11  
 12      public  TreeNode getRandomNode()   {
-13          int leftSize  = left    == null ?  0  :   left.size();
+13          int leftSize  = left == null ?  0  : left.size();
 14          Random random =  new Random();
 15          int index  =  random.nextint(size);
 16          if (index  <  leftSize) {

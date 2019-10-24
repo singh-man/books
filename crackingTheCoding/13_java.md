@@ -103,10 +103,10 @@ Vector: A vector is very similar to an ArrayList except that it is synchronized.
 ```
 LinkedList: LinkedList is, of course, Java's built-in LinkedList class. Though it rarely comes up in an interview, it's useful to study because it demonstrates some of the syntax for an iterator.
 ```java
-1   LinkedList<String> mylinkedlist  = new LinkedList<String>();
-2   mylinkedlist.add("two");
+1   LinkedList<String> myLinkedList  = new LinkedList<String>();
+2   myLinkedList.add("two");
 3   myLinkedList.addFirst("one");
-4   Iterator<String> iter  =  mylinkedlist.iterator();
+4   Iterator<String> iter  =  myLinkedList.iterator();
 5   while (iter.hasNext()) {
 6        System.out.println(iter.next());
 7   }
@@ -521,7 +521,7 @@ To implement this approach using lambda expressions, we can do the following:
 2		Random  random =  new Random();
 3		List<Integer> subset =  list.stream().filter(
 4			k  ->  { return  random.nextBoolean(); /*  Flip  coin.  */
-5		}).collect(Collectors.tolist());
+5		}).collect(Collectors.toList());
 6		return  subset;
 7	}
 ```
@@ -534,7 +534,7 @@ Or, we can use a predicate (defined within the class or within the function):
 5	
 6 	List<Integer>  getRandomSubset(List<Integer> list) {
 7 		List<Integer> subset =  list.stream().filter(flipCoin).
-8 		collect(Collectors.tolist());
+8 		collect(Collectors.toList());
 9 		return subset;
 10	}
 ```

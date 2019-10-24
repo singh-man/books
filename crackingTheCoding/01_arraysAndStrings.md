@@ -92,7 +92,7 @@ StringBuilder can help you avoid this problem. StringBuilder simply creates a re
 ```java
 1	String  joinWords(String[]  words) {
 2		StringBuilder  sentence = new  StringBuilder();
-3		for (String w   :   words)  {
+3		for (String w : words)  {
 4			sentence.append(w);
 5		}
 6		return sentence.toString();
@@ -128,12 +128,12 @@ The code below implements this algorithm.
 
 ```java
 1 	boolean  isUniqueChars(String str) {
-2 		if (str.length() >   128) return false;
+2 		if (str.length() > 128) return false;
 3	
-4 		boolean[]   char_set =  new boolean[128];
+4 		boolean[] char_set =  new boolean[128];
 5 		for (int i = 0;  i <  str.length(); i++)  {
 6 			int val =  str.charAt(i);
-7 			if  (char_set[val]) {//Already  found  this char  in  string
+7 			if (char_set[val]) {//Already  found  this char  in  string
 8 				return false;
 9 			}
 10			char_set[val] =  true;
@@ -148,11 +148,11 @@ The time complexity for this code is O(n), where n is the length of the string. 
 We can reduce our space usage by a factor of eight by using a bit vector. We will assume, in the below code, that the string only uses the lowercase letters a through z. This will allow us to use just a single int.
 
 ```java
-1 	boolean   isUniqueChars(String str)  {
-2 		int  checker = 0;
-3 		for  (int  i = 0;  i < str.length(); i++) {
-4 			int  val =  str.charAt(i) -   'a';
-5 			if ((checker & (1 << val))  >   0) {
+1 	boolean isUniqueChars(String str)  {
+2 		int checker = 0;
+3 		for (int  i = 0;  i < str.length(); i++) {
+4 			int  val =  str.charAt(i) - 'a';
+5 			if ((checker & (1 << val)) > 0) {
 6 				return false;
 7 			}
 8 			checker |=  (1 << val);
@@ -693,8 +693,8 @@ We perform such a swap on each layer, starting from the outermost layer and work
 The code for this algorithm is below.
 
 ```java
-1 	boolean   rotate(int[][] matrix)  {
-2 		if  (matrix.length == 0 || matrix.length  != matrix[0].length) return false;
+1 	boolean rotate(int[][] matrix)  {
+2 		if (matrix.length == 0 || matrix.length  != matrix[0].length) return false;
 3 		int n  = matrix.length;
 4 		for (int  layer =  0;  layer <  n/2;  layer++)  {
 5 			int first = layer;
@@ -755,12 +755,12 @@ The code below implements this algorithm. We use two arrays to keep track of all
 13		}
 14		
 15		// Nullify  rows
-16		for (inti = 0; i <  row.length;   i++) {
+16		for (inti = 0; i < row.length; i++) {
 17			if (row[i])  nullifyRow(matrix, i);
 18		}
 19		
 20		// Nullify  columns
-21		for (int j =  0;   j <   column.length;  j++) {
+21		for (int j =  0;   j < column.length; j++) {
 22			if (column[j])  nullifyColumn(matrix, j);
 23		}
 24		}
@@ -772,7 +772,7 @@ The code below implements this algorithm. We use two arrays to keep track of all
 30		}
 31		
 32		void nullifyColumn(int[][] matrix, int  col) {
-33		for (int  i =  0;   i <   matrix.length;   i++) {
+33		for (int  i =  0;   i < matrix.length; i++) {
 34			matrix[i][col] =  0;
 35		}
 36	}
@@ -791,12 +791,12 @@ We can  reduce the  space to O(1) by using the  first row as a replacement for t
 This code is below:
 
 ```java
-1 	void  setzeros(int[][] matrix) {
+1 	void  setZeros(int[][] matrix) {
 2 		boolean  rowHasZero = false;
 3 		boolean  colHasZero = false;
 4		
 5 		// Check   if first row  has a  zero
-6 		for (int j = 0;   j <   matrix[0].length;  j++) {
+6 		for (int j = 0; j < matrix[0].length; j++) {
 7 			if  (matrix[0][j] == 0) {
 8 				rowHasZero  = true;
 9 				break;
@@ -804,7 +804,7 @@ This code is below:
 11		}
 12		
 13		// Check   if first column   has a  zero
-14		for (int i = 0;   i <   matrix.length;   i++) {
+14		for (int i = 0; i <   matrix.length; i++) {
 15			if (matrix[i][0] ==    0) {
 16				colHasZero = true;
 17				break;
@@ -812,8 +812,8 @@ This code is below:
 19		}
 20		
 21		// Check   for zeros in the rest  of the array
-22		for (int i =  1;   i <   matrix.length;  i++) {
-23			for (int j =  1;   j < matrix[0].length; j++) {
+22		for (int i =  1; i <   matrix.length; i++) {
+23			for (int j =  1; j < matrix[0].length; j++) {
 24				if  (matrix[iJ[jJ ==  0) {
 25					matrix[i][0] =  0;
 26					matrix[0J[j] =  0;
@@ -822,14 +822,14 @@ This code is below:
 29		}
 30		
 31		// Nullify rows   based  on  values in  first column
-32		for (int i = 1;   i <   matrix.length; i++) {
+32		for (int i = 1; i < matrix.length; i++) {
 33			if  (matrix[i][0] == 0) {
 34				nullifyRow(matrix,  i);
 35			}
 36		}
 37		
 38		// Nullify  columns based on  values in  first row
-39		for (int j = 1;   j < matrix[0].length;   j++) {
+39		for (int j = 1;   j < matrix[0].length; j++) {
 40			if (matrix[0][j] ==    0) {
 41				nullifyColumn(matrix,  j);
 42			}
@@ -873,7 +873,7 @@ And this is precisely how we solve the problem: simply do isSubstring(s1s1,  s2)
 1 	boolean  isRotation(String s1,  String s2)  {
 2 		int len =  s1.length();
 3 		/*  Check that s1 and s2 are  equal  length and not  empty*/
-4 		if (len == s2.length() &&   len   >   0)  {
+4 		if (len == s2.length() && len > 0)  {
 5 			/*  Concatenate  s1 and s1 within new  buffer  */
 6 			String s1s1 =  s1 + s1;
 7 			return isSubstring(s1s1,  s2);

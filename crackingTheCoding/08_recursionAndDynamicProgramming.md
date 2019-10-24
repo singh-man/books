@@ -623,7 +623,7 @@ Generating all subsets, then, really just comes down to generating all binary nu
 11  ArrayList<Integer> convertlntToSet(int x, ArrayList<Integer> set) {
 12    ArrayList<Integer> subset =  new  ArrayList<Integer>();
 13    int  index =  0;
-14    for  (int  k = x; k > 0; k >>= 1) {
+14    for (int  k = x; k > 0; k >>= 1) {
 15      if ((k & 1) == 1) {
 16        subs et.add(set.get(index));
 17      }
@@ -1125,7 +1125,7 @@ The code below implements this algorithm.
 17  }
 18  
 19  void printPerms(HashMap<Character,  Integer> map,  String  prefix, int remaining,
-20  ArrayList<String>  result) {
+20    ArrayList<String>  result) {
 21    /* Base case. Permutation has been completed. */
 22    if (remaining == 0) {
 23      result.add(prefix);
@@ -1209,8 +1209,8 @@ If we're going to apply this approach, we'll need to check for duplicate values 
 20     return set;
 21  }
 22  
-23  String insertlnside(String str,  int leftlndex) {
-24    String left  =  str.substring(0,  leftlndex + 1);
+23  String insertlnside(String str,  int leftIndex) {
+24    String left  =  str.substring(0,  leftIndex + 1);
 25    String right =  str.substring(leftindex + 1,  str.length());
 26    return left  + "()" + right;
 27  }
@@ -1479,7 +1479,7 @@ Implementing this is now reasonably straightforward.
 28        return false;
 29      }
 30      
-31      /*  Check diagonals: if  the  distance between the  columns equals  the  distance
+31      /* Check diagonals: if  the  distance between the  columns equals  the  distance
 32      * between the  rows,  then  they're in  the  same diagonal. */
 33      int columnDistance  =  Math.abs(column2  -  column1);
 34      
@@ -1530,7 +1530,7 @@ The code below implements this algorithm recursively.
 12  int createStack(ArrayList<Box>  boxes,  int bottomindex)  {
 13    Box bottom =  boxes.get(bottomindex);
 14    int maxHeight =  0;
-15    for  (inti =  bottomlndex  + 1; i <  boxes.size();  i++)  {
+15    for  (inti =  bottomIndex  + 1; i <  boxes.size();  i++)  {
 16      if (boxes.get(i).canBeAbove(bottom))  {
 17        int height =  createStack(boxes,  i);
 18        maxHeight =  Math.max(height,  maxHeight);

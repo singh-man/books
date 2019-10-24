@@ -78,14 +78,14 @@ In an arithmetic right shift, we shift values to the right but fill in the new b
 What do you think these functions would do on parameters x = -93242 and count = 40?
 
 ```java
-1 	int repeatedArith  meticShift(int  x, int count) {
-2 		for (inti = 0; i <  count; i++) {
+1 	int repeatedArithmeticShift(int  x, int count) {
+2 		for (int i = 0; i <  count; i++) {
 3 			x >>= 1; // Arith  metic   shift by1
 4 		}
 5 		return x;
 6 	}
 7	
-8 	int repeatedLogicalShift( int  x, int count) {
+8 	int repeatedLogicalShift(int  x, int count) {
 9 		for (inti =   0; i <  count; i++) {
 10			x >>>= 1; // Logical  shift by1
 11		}
@@ -108,7 +108,7 @@ The following operations are very important to know, but do not simply memorize 
 This method shifts 1 over by i bits, creating a value that looks like 00010000. By performing an AND with num, we clear all bits other  than the  bit at bit i. Finally, we compare that to 0. If that new value is not zero, then  bit i must have a 1. Otherwise,  bit i is a 0.
 
 ```java
-1   boolean  getBit(int num, inti) {
+1   boolean  getBit(int num, int i) {
 2         return (( num &  (1 << i)) != 0);
 3   }
 ```
@@ -118,7 +118,7 @@ This method shifts 1 over by i bits, creating a value that looks like 00010000. 
 Set Bit shifts  1 over by i  bits, creating a value like 00010000. By performing an OR with num, only the value at bit i will change. All other  bits of the mask are zero and will not affect num.
 
 ```java
-1	int setBit(int num, inti) {
+1	int setBit(int num, int i) {
 2		return num | (  1  << i);
 3	}
 ```
@@ -137,7 +137,7 @@ This method operates in almost the reverse of setBit. First, we create a number 
 To clear all bits from the most significant bit through i (inclusive), we create a mask with a 1 at the ith bit (1 <<  i). Then, we subtract 1 from it, giving us a sequence of 0s followed by i 1s. We then AND our number with this mask to leave just the last i bits.
 
 ```java
-1	int  clearBitsMSBthroughI(int num, inti) {
+1	int  clearBitsMSBthroughI(int num, int i) {
 2		int mask =  (1  << i) - 1;
 3		return num &   mask;
 4	}
@@ -239,7 +239,7 @@ r = 2₁₀ * n
 If r  >= 1, then we know that n had a 1 right after the decimal point. By doing this continuously, we can check every digit.
 ```java
 1 	String  printBinary(double num)  {
-2 		if (num  >=  1 ||  num   <=  0) {
+2 		if (num  >=  1 ||  num <=  0) {
 3 			return  "ERROR";
 4 		}
 5	
@@ -391,7 +391,7 @@ Update max Length  as we go.
 ```java
 1 	int flipBit(int a)  {
 2 		/* If all ls, this is already  the  longest sequence.  */
-3 		if  ( = a == 0)  return Integer.BYTES *  8;
+3 		if  (~a == 0)  return Integer.BYTES *  8;
 4	
 5 		int currentlength =   0;
 6 		int previouslength =  0;
@@ -603,7 +603,7 @@ If c0 is the  number of trailing  zeros, c1 is the  size of the  one  block imme
 2.  Set all bits following p to 0.
 3.  Set bits 0 through c1 - 2 to 1. This will be  c1 - 1 total bits.
 
-A quick and dirty way to perform steps 1  and  2 is to set the trailing zeros  to 1 (giving us p trailing ones),  and then add 1. Adding  one  will flip all trailing ones, so we wind up with a 1 at bit p followed by p zeros. We can perform this arithmetically. 
+A quick and dirty way to perform steps 1  and  2 is to set the trailing zeros  to 1 (giving us p trailing ones),  and then add 1. Adding one will flip all trailing ones, so we wind up with a 1 at bit p followed by p zeros. We can perform this arithmetically. 
 
 ```
 n  +=  2ᶜ⁰ - 1 	// Sets trailing  0s to 1, giving us p trailing 1s

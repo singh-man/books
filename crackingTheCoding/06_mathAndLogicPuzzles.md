@@ -56,7 +56,7 @@ This question is so common that we feel the need to specifically cover it. The n
 3 			return false;
 4 		}
 5 		for (int i = 2;  i < n;  i++)  {
-6 			if (n  %  i ==    0) {
+6 			if (n  %  i == 0) {
 7 				return false;
 8 			}
 9 		}
@@ -537,7 +537,7 @@ We'll write this in a simple way that directly corresponds to the problem.
 1 	double  runNFamilies(int n)  {
 2 		int boys  = 0;
 3 		int girls = 0;
-4 		for (int i =  0;  i <   n;  i++)   {
+4 		for (int i =  0;  i < n;  i++)   {
 5 			int[] genders = runOneFamily();
 6 			girls += genders[0];
 7 			boys  += genders[1];
@@ -546,7 +546,7 @@ We'll write this in a simple way that directly corresponds to the problem.
 10	}
 11	
 12	int[] runOneFamily()  {
-13		Random  random = new Random();
+13		Random random = new Random();
 14		int boys  = 0;
 15		int girls = 0;
 16		while  (girls == 0)  { // until we have  a  girl
@@ -624,13 +624,13 @@ The following code simulates this approach.
 15		while (!drop(egg1) &&  egg1  <=  floors) {
 16			interval -=  1;
 17			previousFloor = eggl;
-18			egg1  += interval;
+18			egg1 += interval;
 19		}
 20	
 21		/*  Drop egg2  at 1 unit increments. */
 22		int egg2  = previousFloor  + 1;
 23		while (egg2 < egg1  && egg2  <=  floors && !drop(egg2)) {
-24			egg2  += 1;
+24			egg2 += 1;
 25		}
 26	
 27		/* If it didn't  break, return  -1. */
@@ -718,7 +718,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 15		private int id;
 16	
 17		public TestStrip(int id) {this.id  =  id;}
-18		public int getid() {return  id;}
+18		public int getId() {return  id;}
 19	
 20		/*  Resize  list of  days/drops to  be large enough. */
 21		private void sizeDropsForDay(int day)  {
@@ -745,7 +745,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 42		}
 43	
 44		/*  Gets  bottles used in  the  test DAYS_FOR_RESULT  days ago. */
-45		public ArrayList<Bottle> getlastWeeksBottles(int  day)  {
+45		public ArrayList<Bottle> getLastWeeksBottles(int  day)  {
 46			if (day  <  DAYS_FOR_RESULT) {
 47				return null;
 48			}
@@ -775,7 +775,7 @@ This is just one way of simulating the behavior of the bottles and test strips, 
 1 	int  findPoisonedBottle(ArrayList<Bottle> bottles, ArrayList<TestStrip>  strips) {
 2 		int today = 0;
 3	
-4 		while  (bottles.size() > 1 &&   strips.size() >  0)  {
+4 		while (bottles.size() > 1 &&   strips.size() >  0)  {
 5 			/*  Run tests. */
 5 			runTestSet(bottles, strips,  today);
 7	
@@ -783,7 +783,7 @@ This is just one way of simulating the behavior of the bottles and test strips, 
 9 			today +=  TestStrip.DAYS_FOR_RESULT;
 10	
 11			/*  Check results. */
-12			for  (TestStrip strip : strips) {
+12			for (TestStrip strip : strips) {
 13				if (strip.isPositiveOnDay(today)) {
 14					bottles =  strip.getLastWeeksBottles(today);
 15					strips.remove(strip);

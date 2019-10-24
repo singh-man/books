@@ -516,13 +516,13 @@ Now, all you  need is to iterate through each digit  in the  number. Implementin
 ```java
 1 	int count2sInRangeAtDigit(int  number, int  d) {
 2 		int powerOf10 =  (int) Math.pow(10,  d);
-3 		int nextPowerOf10  =  power0f10  *  10;
-4 		int right =  number % power0f10;
+3 		int nextPowerOf10  =  powerOf10  *  10;
+4 		int right =  number % powerOf10;
 5	
 6 		int roundDown =  number   -  number % nextPowerOf10;
 7 		int roundup =  roundDown +  nextPowerOf10;
 8	
-9 		int digit =  (number / power0f10) % 10;
+9 		int digit =  (number / powerOf10) % 10;
 10		if (digit < 2) { // if  the digit in spot digit is
 11			return roundDown / 10;
 12		}  else if (digit == 2) {
@@ -725,7 +725,7 @@ Now what? Visually, it seems easy enough. Each component is an equivalent set of
 In practice, how does this work? We could pick a name and do a depth-first (or breadth-first) search to sum the frequencies of all the names in one component. We would have to make sure that we hit each component exactly once. That's easy enough to achieve: mark a node as visited after it's discovered in the graph search, and only start the search for nodes where visited is false.
 ```java
 1   HashMap<String, Integer> trulyMostPopular(HashMap<String, Integer>  names,
-2   String[][] synonyms) {
+2   		String[][] synonyms) {
 3   	/* Create  data. */
 4   	Graph graph = constructGraph(names);
 s   	connectEdges(graph,  synonyms);
@@ -800,7 +800,7 @@ EXAMPLE
 Input(ht,wt): (65,   100)  (70,  150)    (56,  90)    (75,  190)  (60,  95)    (68,  110) 
 
 Output: The longest tower is length 6 and includes from top to bottom:
-(56, 90) (60,95)  (65,100)  (68,110)  (70,150)  (75,190)
+	(56, 90) (60,95)  (65,100)  (68,110)  (70,150)  (75,190)
 ```
 SOLUTION
 ---
@@ -836,7 +836,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 16			bestWith = bestSeqAtIndex(array, sequenceWith, index + 1);
 17		}
 18	
-19		ArrayList<Htwt>  bestWitnout = bestSeqAtlndex(array, sequence, index  + 1);
+19		ArrayList<Htwt>  bestWitnout = bestSeqAtIndex(array, sequence, index  + 1);
 20	
 21		if (bestWith ==  null || bestWithout.size() > bestWith.size()) {
 22			return  bestWithout;
@@ -862,10 +862,10 @@ One approach is to essentially try all possibilities. After sorting by height, w
 42		return seql.size()  >   seq2.size()  ?  seql   :   seq2;
 43	}
 44	
-45	public   class Htwt implements Comparable<HtWt>  {
+45	public class Htwt implements Comparable<HtWt>  {
 46		private int height;
 47		private int weight;
-48		public   HtWt(int  h,  int w) {height  =  h;  weight w; }
+48		public HtWt(int  h,  int w) {height  =  h;  weight w; }
 49	
 50		public int compareTo(HtWt second)  {
 51			if (this.height != second.height) {
@@ -878,7 +878,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 58		/* Returns true if "this" should  be  lined up before   "other". Note that it's
 59		* possible that this.isBefore(other) and other.isBefore(this) are  both  false.
 60		* This  is different from the  compareTo  method,  where if a < b then  b >  a. */
-61		public   boolean  isBefore(Htwt other)  {
+61		public boolean  isBefore(Htwt other)  {
 62			if (height < other.height &&  weight  < other.weight) {
 63				return true;
 64			}  else {
@@ -916,16 +916,16 @@ This is now fairly straightforward to implement.
 7 		/*  Find the  longest subsequence  that terminates with  each  element. Track the
 8 		* longest overall subsequence  as  we  go. */
 9 		for  (int i = 0;  i <  array.size(); i++)  {
-10			ArrayList<HtWt>  longestAtindex =  bestSeqAtindex(array, solutions,  i);
-11			solutions.add(i,  longestAtindex);
-12			bestSequence  =  max(bestSequence,  longestAtindex);
+10			ArrayList<HtWt>  longestAtIndex =  bestSeqAtIndex(array, solutions,  i);
+11			solutions.add(i,  longestAtIndex);
+12			bestSequence  =  max(bestSequence,  longestAtIndex);
 13		}
 14	
 15		return  bestSequence;
 16	}
 17	
 18	/*  Find the  longest subsequence  which terminates with  this element.   */
-19	ArrayList<Htwt> bestSeqAtindex(ArrayList<HtWt>  array,
+19	ArrayList<Htwt> bestSeqAtIndex(ArrayList<HtWt>  array,
 20	ArrayList<ArrayList<Htwt>> solutions, int index) {
 21		HtWt  value  =  array.get(index);
 22	
@@ -1172,7 +1172,7 @@ The code below implements this algorithm.
 13			int v3  = queue3.size() > 0 ? queue3.peek() : Integer.MAX_VALUE;
 14			int v5  = queue5.size() > 0 ? queue5.peek() : Integer.MAX_VALUE;
 15			int v7  = queue7.size() > 0 ? queue7.peek() : Integer.MAX_VALUE;
-16			val = Math.min(v3,   Math.min(v5,   v7));
+16			val = Math.min(v3, Math.min(v5, v7));
 17			if (val == v3)  { // enqueue  into queue  3,   5 and  7
 18				queue3.remove();
 19				queue3.add(3 * val);
@@ -1301,7 +1301,8 @@ Let's try this again and see if it works out.
 	validate(3)
 		sees 3  ->  countYes  =  1,   countNo  =  0
 		sees 1  ->  countYes  =  1,   countNo  =  1
-		TERMINATE.   3 is not   majority thus   far. skip 1
+		TERMINATE.   3 is not   majority thus   far. 
+	skip 1
 	validate(7)
 		sees 7  ->  countYes  = 1,    countNo  =  0 
 		sees 1  ->  countYes  = 1,    countNo  =  1
@@ -1458,7 +1459,7 @@ We can implement this algorithm as shown below.
 
 ```java
 1 	LocationPair findClosest(String  word1,   String word2,
-2 	                     HashMaplist<String, Integer>  locations) {
+2 	                     HashMapList<String, Integer>  locations) {
 3 		ArrayList<Integer> locations1 =  locations.get(word1);
 4 		ArrayList<Integer> locations2 =  locations.get(word2);
 5 		return findMinDistancePair(locations1, locations2);
@@ -1490,15 +1491,15 @@ We can implement this algorithm as shown below.
 31  }
 32
 33	/*  Precomputation. */
-34	HashMaplist<String,  Integer>   getWordlocations(String[]  words)  {
-35		HashMaplist<String, Integer> locations =  new  HashMaplist<String,  Integer>();
+34	HashMapList<String,  Integer>   getWordlocations(String[]  words)  {
+35		HashMapList<String, Integer> locations =  new  HashMapList<String,  Integer>();
 36		for  (int i = 0;  i <  words.length;  i++)  {
 37			locations.put(words[i],  i);
 38		}
 39		return locations;
 40	}
 41
-42	/*  HashMaplist<String, Integer> is  a  HashMap  that maps from Strings to
+42	/*  HashMapList<String, Integer> is  a  HashMap  that maps from Strings to
 43	* ArrayList<Integer>.  See appendix  for  implementation.  * /
 ```
 
@@ -1533,7 +1534,7 @@ Yes! We would simply merge the different parts. The pseudocode looks something l
 1	BiNode convert(BiNode  node)  {
 2		BiNode left =  convert(node.left);
 3		BiNode right = convert(node.right);
-4		mergelists(left,  node,  right);
+4		mergeLists(left,  node,  right);
 5		return left;// front of  left
 6	}
 ```
@@ -1728,8 +1729,8 @@ What should the function return? We need both the number of invalid characters i
 17			partial +=  c;
 18			int invalid =  dictionary.contains(partial)  ?  0 : partial.length();
 19			if (invalid <  bestinvalid) {//Short  circuit
-20				/*   Recurse,  putting a space  after this character. If this is better than
-21				*  the  current best option, replace the  best option. */
+20				/* Recurse,  putting a space  after this character. If this is better than
+21				 * the  current best option, replace the  best option. */
 22				ParseResult result = split(dictionary,  sentence, index  + 1);
 23				if (invalid +  result.invalid <  bestinvalid) {
 24					bestinvalid = invalid +  result.invalid;
@@ -1774,7 +1775,7 @@ In this case, we attempt to insert the first space after t as well as after th (
 
 	split(thisismikesfavoritefood)  ->
 			t  + split(hisismikesfavoritefood)
-		OR   th+ split(isismikesfavoritefood) 
+		OR  th + split(isismikesfavoritefood) 
 		OR  ...
 	
 	split(hisismikesfavoritefood) ->
@@ -1818,7 +1819,7 @@ The code is essentially identical to the earlier function, but now takes in a me
 23			if (invalid < bestinvalid) { // Short circuit
 24				/*  Recurse, putting  a  space after this  character. If this  is better than
 25				*  the current best option, replace the best option. */
-26				ParseResult result  =   split(dictionary,  sentence, index +    1,   memo);
+26				ParseResult result  =   split(dictionary,  sentence, index + 1, memo);
 27				if (invalid + result.invalid < bestinvalid) {
 28					bestinvalid = invalid +  result.invalid;
 29					bestParsing = partial +  " " +  result.parsed;
@@ -1847,7 +1848,7 @@ split(i) ->  calls:
 	split(n - 1)
 ```
 
-Each of the  recursive calls has already been computed, so they just  return immediately. Doing n  i calls at O(1) time each takes O(n - i) time. This means that split(i) takes O(i) time at most.
+Each of the recursive calls has already been computed, so they just  return immediately. Doing n - i calls at O(1) time each takes O(n - i) time. This means that split(i) takes O(i) time at most.
 
 We can  now  apply the  same logic  to split(i - 1), split(i - 2), and so on. If we make 1  call to compute split(n - 1), 2 calls to compute split(n - 2), 3 calls to compute split(n - 3),...,n calls to compute split(0), how many calls total do we do? This is basically the  sum of the  numbers from 1  through n, which is O(n²).
 
@@ -1996,7 +1997,7 @@ The code below implements this algorithm.
 37		/*  Partition array   around  pivot  such  that all elements  <=  pivot   come before  all
 38		* elements  >   pivot.  */
 39		int partition(int[] array, int left,  int right, int pivot) {
-40         while  (left <= right) {
+40         while (left <= right) {
 41             if (array[left] >   pivot) {
 42      	   	/*  Left  is bigger  than  pivot.  Swap  it to  the  right side, where we  know  it
 43      	   	* should  be.  */
@@ -2067,7 +2068,7 @@ This requires minor tweaks to rank as well. We now compare the size of left and 
 17		/*  Copy elements   smaller than  the  threshold  element. */
 18		int[]  smallest =  new int[k];
 19		int count =  0;
-20		for  (int a  :   array) {
+20		for (int a  :   array) {
 21			if (a  <  threshold) {
 22				smallest[count] =  a;
 23				count++;
@@ -2076,7 +2077,7 @@ This requires minor tweaks to rank as well. We now compare the size of left and 
 26
 27		/* If there's still  room left,  this must be for  elements  equal  to  the  threshold
 28		 * element.   Copy those  in. */
-29		while  (count < k)  {
+29		while (count < k)  {
 30			smallest[count] =  threshold;
 31			count++;
 32		}
@@ -2114,9 +2115,9 @@ This requires minor tweaks to rank as well. We now compare the size of left and 
 64	/*Partition result into< pivot,  equal  to  pivot  -> bigger  than  pivot.   */
 65	PartitionResult partition(int[] array, int start,  int end,  int pivot) {
 66		int left =  start;    /*Stays at (right)  edge  of  left side.  */
-67		int right =   end;    /*Stays at (left) edge of  right side.   */
-68		int middle  =  start; /*Stays at (right) edge of  middle.    */
-69		while  (middle <= right)  {
+67		int right =  end;    /*Stays at (left) edge of  right side.   */
+68		int middle = start; /*Stays at (right) edge of  middle.    */
+69		while (middle <= right)  {
 70			if (array[middle]  <   pivot) {
 71				/*Middle  is smaller than  the  pivot. Left  is either smaller or  equal  to
 72				* the  pivot. Either way, swap them.  Then middle  and left should  move  by
@@ -2124,20 +2125,20 @@ This requires minor tweaks to rank as well. We now compare the size of left and 
 74				swap(array,  middle,  left);
 75				middle++;
 76				left++;
-77			}  else if (array[middle]  > pivot) {
+77			} else if (array[middle]  > pivot) {
 78				/*Middle  is bigger   than  the  pivot. Right  could  have any value.   Swap  them,
 79				*  then  we  know  that the  new right is bigger   than  the  pivot. Move  right by
 80				* one. */
 81				swap(array,  middle,  right);
 82				right--;
-83			}  else if (array[middle]  ==  pivot) {
+83			} else if (array[middle]  ==  pivot) {
 84				/*  Middle is  equal to  the  pivot.  Move by  one. */
 85				middle++;
 86			}
 87		}
 88
 89		/* Return sizes of left and   middle. */
-90		return new  PartitionResult(left   -  start, right -  left +  1);
+90		return new  PartitionResult(left -  start, right -  left +  1);
 91	}
 ```
 Notice the change made to smallest K too. We can't simply copy all elements less than or equal to threshold into the array. Since we have duplicates, there could be many more thank elements that are less than or equal to threshold. (We also can't just  say "okay, only copy k elements over". We could  inadvertently fill up the array early on with "equal" elements, and not leave enough space for the  smaller ones.)
@@ -2407,7 +2408,7 @@ In fact, at any given index i, we only need to know the best value from i + 1 an
 2   	int oneAway =  0;
 3   	int twoAway =  0;
 4   	for (int i =  massages.length  -  1;  i >=  0;  i--) {
-5   		int  bestWith =  massages[i] + twoAway;
+5   		int bestWith =  massages[i] + twoAway;
 6   		int bestWithout =  oneAway;
 7   		int current =  Math.max(bestWith,  bestWithout);
 8   		twoAway =  oneAway;
@@ -2440,7 +2441,7 @@ Note that in our example, we made sure to have some strings (like "is") that app
 
 The naive solution is reasonably straightforward. Just search through the bigger string for each instance of the smaller string.
 ```java
-1 	HashMaplist<String, Integer> searchAll(String  big,   String[]  smalls) {
+1 	HashMapList<String, Integer> searchAll(String  big,   String[]  smalls) {
 2 		HashMapList<String,   Integer> lookup =
 3 					new HashMapList<String,   Integer>();
 4 		for  (String small :  smalls) {
@@ -2471,7 +2472,7 @@ The naive solution is reasonably straightforward. Just search through the bigger
 29		return true;
 30	}
 31
-32	/*  HashMaplist<String, Integer>  is a  HashMap  that maps from Strings to
+32	/*  HashMapList<String, Integer>  is a  HashMap  that maps from Strings to
 33	*  ArrayList<Integer>. See  appendix for   implementation.  * /
 ```
 We could have also used a substring and equals function, instead of writing isAtLocation. This is slightly faster (though not in terms of big 0) because it doesn't require creating a bunch of substrings.
@@ -2490,7 +2491,7 @@ The tree for this is below.
 
 Then, all you need to do is search in the suffix tree for each string in T. Note that if "B" were a word, you would come up with two locations.
 ```java
-1  	HashMaplist<String, Integer>  searchAll(String   big,   String[]  smalls) {
+1  	HashMapList<String, Integer>  searchAll(String   big,   String[]  smalls) {
 2  		HashMapList<String, Integer> lookup =  new HashMapList<String, Integer>();
 3  		Trie tree  =  createTrieFromString(big);
 4  		for   (String s  :  smalls) {
@@ -2624,12 +2625,12 @@ mississippi is a p. There is no node p, so we break here. p: We see a p. There i
 
 Each time we find a complete "small" word, we add it to a list along with the location in the bigger word (mississippi) where we found the small word. The code below implements this algorithm.
 ```java
-1 	HashMaplist<String, Integer> searchAll(String  big,   String[]  smalls) {
+1 	HashMapList<String, Integer> searchAll(String  big,   String[]  smalls) {
 2 		HashMapList<String,  Integer> lookup = new HashMapList<String,   Integer>();
-3 		int maxlen =  big.length();
+3 		int maxLen =  big.length();
 4 		TrieNode root =  createTreeFromStrings(smalls,  maxLen).getRoot();
 5 
-6 		for  (inti = 0;  i <   big.length(); i++)  {
+6 		for (int i = 0;  i <   big.length(); i++)  {
 7 			ArrayList<String> strings  =  findStringsAtloc(root,  big,   i);
 8 			insertintoHashMap(strings,  lookup,  i);
 9 		}
@@ -2640,8 +2641,8 @@ Each time we find a complete "small" word, we add it to a list along with the lo
 14	/*  Insert each  string into  trie (provided  string is not  longer   than  maxLen). */
 15	Trie  createTreeFromStrings(String[] smalls,  int  maxLen) {
 16		Trie  tree =  new Trie("");
-17		for  (String s  :   smalls) {
-18			if (s.length() <=   maxlen)  {
+17		for (String s  :   smalls) {
+18			if (s.length() <=   maxLen)  {
 19				tree.insertString(s,   0);
 26			}
 21		}
@@ -2652,10 +2653,10 @@ Each time we find a complete "small" word, we add it to a list along with the lo
 26	ArrayList<String>  findStringsAtLoc(TrieNode root,  String  big,   int start) {
 27		ArrayList<String> strings = new ArrayList<String>();
 28		int index = start;
-29		while  (index  < big.length()) {
+29		while (index  < big.length()) {
 30			root =  root.getChild(big.charAt(index));
 31			if (root == null) break;
-32			if  (root.terminates()) { // Is  complete  string,  add to  list
+32			if (root.terminates()) { // Is  complete  string,  add to  list
 33				strings.add(big.substring(start,  index + 1));
 34			}
 35			index++;
@@ -2684,8 +2685,8 @@ Solution #2 was O(b² +  kt). Since b will always  be bigger than k (or if it's 
 EXAMPLE
 Input:
 {1,   5,   9}
-{7,    5,   9,  0,  2,   1,   3,  5, 7, 9. 1,   1,   5,   8,   8,   9,  7}
-                                  ----------
+{7,   5,   9,  0,  2,   1,   3,  5, 7, 9. 1,   1,   5,   8,   8,   9,  7}
+                                 ----------
 Output:[7,   10]    (the  underlined portion  above)
 ```
 
@@ -2725,7 +2726,7 @@ By finding the closures for each index in the array, we can find the shortest su
 18	int  findClosure(int[]  bigArray, int[]   smallArray, int  index) {
 19	 	int max =  -1;
 20	 	for (int i = 0;  i < smallArray.length;  i++)   {
-21	 		int next =    findNextinstance(bigArray, smallArray[i],  index);
+21	 		int next = findNextInstance(bigArray, smallArray[i],  index);
 22	 		if (next == -1)   {
 23	 			return -1;
 24	 		}
@@ -2735,7 +2736,7 @@ By finding the closures for each index in the array, we can find the shortest su
 28	 }
 29
 30	/*  Find next  instance  of element starting  from index. */
-31	int  findNextinstance(int[] array, int  element, int  index) {
+31	int  findNextInstance(int[] array, int  element, int  index) {
 32		for (inti =  index; i < array.length;   i++) {
 33			if (array[i] ==  element)  {
 34				return  i;
@@ -2897,7 +2898,7 @@ Instead, as we do each sweep, we just update the closure row with the minimums. 
 20			if (big[i] ==  value) {
 21				next = i;
 22			}
-23			if ((next == -1 ||      closures[i] <   next) &&
+23			if ((next == -1 || closures[i] < next) &&
 24			        (closures[i]  != -1)) {
 25				closures[i] =  next;
 26			}
@@ -2911,7 +2912,7 @@ Instead, as we do each sweep, we just update the closure row with the minimums. 
 34			if (closures[i] ==  -1)  {
 35				b reak;
 36			}
-37			Range range =  new Range(i,   closures[i]);
+37			Range range =  new Range(i, closures[i]);
 38			if (!shortest.shorterThan( range)) {
 39				shortest =  range;
 40			}
@@ -2981,13 +2982,13 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 10		/* Initialize hash map  from item value to  locations. */
 11		HashMap<Integer,   Queue<Integer>> itemlocations =
 12				new HashMap<Integer,  Queue<Integer>>();
-13		for  (int s  :   small)   {
+13		for (int s  :   small)   {
 14			Queue<Integer> queue = new LinkedList<Integer>();
 15			itemlocations.put(s,  queue);
 15		}
 17
 18		/*Walk through  big  array,  adding  the  item  locations to  hash  map*/
-19		for  (int i = 0;  i < big.length;  i++)  {
+19		for (int i = 0;  i < big.length;  i++)  {
 20			Queue<Integer>  queue =  itemlocations.get(big[i]);
 21			if (queue  != null) {
 22				queue.add(i);
@@ -3004,7 +3005,7 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 33		int max =  Integer.MIN_VALUE;
 34
 35		/*Insert min element  from each  list.*/
-36		for  (int i = 0;  i < lists.size(); i++)  {
+36		for (int i = 0;  i < lists.size(); i++)  {
 37			int head =  lists.get(i).remove();
 38			minHeap.add(new HeapNode(head, i));
 39			max  =   Math.max(max, head);
@@ -3014,7 +3015,7 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 43		int bestRangeMin = min;
 44		int bestRangeMax = max;
 45
-46		while  (true) {
+46		while (true) {
 47			/*Remove min node.*/
 48			HeapNode  n = minHeap.poll();
 49			Queue<Integer>  list = lists.get(n.listid);
@@ -3033,7 +3034,7 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 62			}
 63
 64			/*Add  new head of  list to  heap. */
-65			n.locationWithinlist =  list.remove();
+65			n.locationWithinList =  list.remove();
 66			minHeap.add(n);
 67			max = Math.max(max, n.locationWithinList);
 68		}
@@ -3257,14 +3258,14 @@ The algorithm works as follows. When a new value arrives, it is placed in the ma
 6 		*  maxHeap.size() >= minHeap.size() */
 7 		if (maxHeap.size() == minHeap.size()) {
 8 			if ((minHeap.peek()  != null) &&
-9 				randomNumber   >  minHeap.peek()) {
+9 				randomNumber  >  minHeap.peek()) {
 10				maxHeap.offer(minHeap.poll());
 11				minHeap.offer(randomNumber);
 12			} else {
 13				maxHeap.offer(randomNumber);
 14			}
 15		}  else {
-16			if (randomNumber  < maxHeap.peek())  {
+16			if (randomNumber < maxHeap.peek())  {
 17				minHeap.offer(maxHeap.poll());
 18				maxHeap.offer(randomNumber);
 19			}
@@ -3280,7 +3281,7 @@ The algorithm works as follows. When a new value arrives, it is placed in the ma
 29		if (maxHeap.isEmpty())  {
 30			return 0;
 31		}
-32		if (maxHeap.size()  == minHeap.size())  {
+32		if (maxHeap.size() == minHeap.size())  {
 33			return ((double)minHeap.peek() + (double)maxHeap.peek())  /  2;
 34		} else {
 35			/* If maxHeap and  minHeap are  of  different  sizes, then   maxHeap  must  have  one
@@ -3368,7 +3369,7 @@ The code below implements this algorithm.
 31	/*  Find tallest bar in  histogram between start and  end. */
 32	int findindexOfMax(int[]  histogram,  int start,  int end) {
 33		int indexOfMax =  start;
-34		for (int i =  start + 1;   i <= end;  i++)  {
+34		for (int i =  start + 1;  i <= end;  i++)  {
 35			if (histogram[i] > histogram[indexOfMax])  {
 36				indexOfMax  =  i;
 37			}
@@ -3429,16 +3430,16 @@ We've chosen to use a HistogramData object to store this extra information, but 
 18		}
 19
 20		/*  Set  left max  index. */
-21		int maxlndex =  0;
+21		int maxIndex =  0;
 22		for  (int i = 0;  i <  histo.length; i++) {
-23			if (histo[maxlndex]  <   histo[i]) {
-24				maxlndex =  i;
+23			if (histo[maxIndex]  <   histo[i]) {
+24				maxIndex =  i;
 25			}
 26			histogram[i].setLeftMaxindex(maxindex);
 27		}
 28
 29		/*  Set  right max  index. */
-30		maxlndex =  histogram.length -  1;
+30		maxIndex =  histogram.length -  1;
 31		for  (int i = histogram.length -  1;  i >=  0;  i--) {
 32			if (histo[maxindex]  <   histo[i]) {
 33				maxindex =  i;
@@ -3484,14 +3485,14 @@ We've chosen to use a HistogramData object to store this extra information, but 
 73
 74	public   class HistogramData {
 75		private int height;
-76		private int leftMaxlndex  = -1;
+76		private int leftMaxIndex  = -1;
 77		private int rightMaxindex = -1;
 78
 79		public HistogramData(int v)  {height  =  v;  }
 80		public int  getHeight() {return  height;  }
-81		public int  getLeftMaxlndex() { return  leftMaxIndex; }
-82		public void setLeftMaxindex(int idx)  {leftMaxlndex = idx; };
-83		public int  getRightMaxlndex() { return  rightMaxindex; }
+81		public int  getLeftMaxIndex() { return  leftMaxIndex; }
+82		public void setLeftMaxIndex(int idx)  {leftMaxIndex = idx; };
+83		public int  getRightMaxIndex() { return  rightMaxindex; }
 84		public void setRightMaxindex(int idx)  { rightMaxindex  = idx; };
 85	}
 ```
@@ -3692,7 +3693,7 @@ The algorithm is otherwise essentially the same.
 17		}
 18
 19		visited.add(start);
-20		ArrayList<String> words  =  getValidLinkedWords(start,  wildcardToWordlist);
+20		ArrayList<String> words  =  getValidLinkedWords(start,  wildcardToWordList);
 21	
 22		for (String word :  words)  {
 23			LinkedList<String> path =  transform(visited,  word,  stop,   wildcardToWordList);
@@ -3707,7 +3708,7 @@ The algorithm is otherwise essentially the same.
 32
 33	/*  Insert words in  dictionary into mapping from wildcard form  -> word.  */
 34	HashMapList<String,  String>   createWildcardToWordMap(String[]   words)  {
-35		HashMapList<String,  String>  wildcardToWords = new HashMaplist<String,  String>();
+35		HashMapList<String,  String>  wildcardToWords = new HashMapList<String,  String>();
 36		for (String word : words)  {
 37			ArrayList<String> linked =  getWildcardRoots(word);
 38			for (String linkedWord  : linked) {
@@ -3729,7 +3730,7 @@ S2		return words;
 54
 55	/* Return  words that are  one  edit away.  */
 56	ArrayList<String>  getValidLinkedWords(String  word,
-57			HashMaplist<String,   String>  wildcardToWords)  {
+57			HashMapList<String,   String>  wildcardToWords)  {
 58		ArrayList<String> wildcards =  getWildcardRoots(word);
 59		ArrayList<String> linkedWords  =  new ArrayList<String>();
 60		for (String  wildcard : wildcards)  {
@@ -3743,7 +3744,7 @@ S2		return words;
 68		return linkedWords;
 69	}
 70
-71	/*  HashMaplist<String, String> is a  HashMap  that maps from  Strings to
+71	/*  HashMapList<String, String> is a  HashMap  that maps from  Strings to
 72	* ArrayList<String>. See appendix   for  implementation. * /
 ```
 This will work, but we can still make it faster.
@@ -3772,12 +3773,12 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 
 ```java
 1  	LinkedList<String> transform(String  startWord, String  stopWord, String[]  words)  {
-2  		HashMaplist<String,  String> wildcardToWordList =  getWildcardToWordlist(words);
+2  		HashMapList<String,  String> wildcardToWordList =  getWildcardToWordList(words);
 3 
 4  		BFSData sourceData  =  new BFSData(startWord);
 5  		BFSData destData    =  new BFSData(stopWord);
 6 
-7  		while (!sourceData.isFinished() &&   !destData.isFinished())  {
+7  		while (!sourceData.isFinished() &&  !destData.isFinished())  {
 8  			/*  Search  out  from source. */
 9  			String collision =  searchLevel(wildcardToWordList, sourceData,  destData);
 10 			if (collision !=  null) {
@@ -3834,7 +3835,7 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 61  	return pathOne;
 62  }
 63 
-64  /* Methods getWildcardRoots, getWildcardToWordlist, and getValidlinkedWords are
+64  /* Methods getWildcardRoots, getWildcardToWordList, and getValidlinkedWords are
 65   * the same as in the earlier solution. */
 66 
 67  public class BFSData   {
@@ -3853,7 +3854,7 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 80  }
 81 
 82  public class PathNode {
-83  	private  String word =  null;
+83  	private String word =  null;
 84  	private PathNode previousNode  =  null;
 85  	public  PathNode(String word, PathNode previous) {
 86  		this.word =  word;
@@ -3868,7 +3869,7 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 95 	public  LinkedList<String> collapse(boolean startsWithRoot) {
 96 		LinkedList<String>  path  =  new LinkedList<String>();
 97 		PathNode node = this;
-98 		while  (node  != null) {
+98 		while (node  != null) {
 99 			if (startsWithRoot)  {
 100 				path.addlast(node.word);
 101 			} else {
@@ -3880,7 +3881,7 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 107 	}
 108 }
 109 
-110 /* HashMaplist<String, Integer> is a  HashMap  that maps from  Strings to
+110 /* HashMapList<String, Integer> is a  HashMap  that maps from  Strings to
 111 * ArrayList<Integer>.  See  appendix  for  implementation. * /
 ```
 This algorithm's runtime is a bit harder to describe since it depends on what the language looks like, as well as the actual source and destination words. One way of expressing it is that if each word has E words that are one edit away and the source and destination are distance D, the runtime is O(E⁰/²). This is how much work each breadth-first search does.
@@ -4073,8 +4074,8 @@ This solution is O(N⁶), since we iterate through O(N⁴) submatrices and it ta
 19
 20	int sum(int[][] matrix, int rowl,  int coll, int row2,  int col2) {
 21		int sum = 0;
-22		for  (int r =  rowl;  r <= row2;  r++)  {
-23			for  (int c  =   coll; c  <=  col2;   c++) {
+22		for (int r =  rowl;  r <= row2;  r++)  {
+23			for (int c  =   coll; c  <=  col2;   c++) {
 24				sum +=  matrix[r][c];
 25			}
 26		}
@@ -4274,7 +4275,7 @@ Our full code looks like this:
 42		return  best;
 43	}
 44
-45	public   class Range {
+45	public class Range {
 46		public  int start, end,  sum;
 47		public  Range(int start, int end,  int sum) {
 48			this.start =  start;
@@ -4328,9 +4329,9 @@ The code below implements this algorithm. It is long and complex, so we will go 
 First, we do some pre-processing to group words by their lengths. We create an array of tries (one for each word length), but hold off on building the tries until we need them.
 
 
-	1     WordGroup[]   grouplist = WordGroup.createWordGroups(list);
-	2     int maxWordlength   = grouplist.length;
-	3     Trie trielist[]  = new Trie[maxWordlength];
+	1     WordGroup[]   groupList = WordGroup.createWordGroups(list);
+	2     int maxWordlength   = groupList.length;
+	3     Trie trieList[]  = new Trie[maxWordlength];
 
 The maxRectangle method is the "main" part  of our code. It starts  with the  biggest possible  rectangle area (which is maxWordLength²) and tries to build a rectangle of that size. If it fails, it subtracts one from the area and attempts this new, smaller size. The first rectangle that can be successfully built is guaranteed to be the biggest.
 
@@ -4355,14 +4356,14 @@ s  			if (z % i == 0) {
 The makeRectangle method is called by maxRectangle and tries to build a rectangle of a specific length and height.
 ```java
 1 	Rectangle makeRectangle(int length,  int  height)  {
-2 		if (grouplist[length - 1] ==  null  ||   grouplist[height - 1]) {
+2 		if (groupList[length - 1] ==  null  ||   groupList[height - 1]) {
 3 			return null;
 4 		}
 5
 6 		/*    Create  trie for  word length if  we  haven't yet*/
-7 		if (trielist[height - 1] ==   null) {
-8 			LinkedList<String>  words =  grouplist[height - 1].getWords();
-9 			trielist[height - 1]  =  new Trie(words);
+7 		if (trieList[height - 1] ==   null) {
+8 			LinkedList<String>  words =  groupList[height - 1].getWords();
+9 			trieList[height - 1]  =  new Trie(words);
 10		}
 11
 12		return  makePartialRectangle(length, height,  new Rectangle(length));
@@ -4375,22 +4376,22 @@ Otherwise, we check to see if the columns form valid prefixes.  If they do not, 
 But, if everything is okay so far, and all the columns are valid prefixes of words, then we search through all the words of the right length, append each to the current rectangle, and recursively try to build a rectangle off of{current rectangle  with new word  appended}.
 
 ```java
-1 	Rectangle  makePartialRectangle(int 1,  int h,  Rectangle  rectangle) {
+1 	Rectangle  makePartialRectangle(int l,  int h,  Rectangle  rectangle) {
 2 		if (rectangle.height == h)  { // Check if complete  rectangle
-3 			if (rectangle.isComplete(l,  h,  grouplist[h -  1])) {
+3 			if (rectangle.isComplete(l,  h,  groupList[h -  1])) {
 4 				return rectangle;
 5 			}
 6 			return null;
 7 		}
 8
 9 		/*    Compare columns to  trie to  see  if  potentially valid rect*/
-10		if (!rectangle.isPartialOK(l,  trielist[h -  1])) {
+10		if (!rectangle.isPartialOK(l,  trieList[h -  1])) {
 11			return null;
 12		}
 13
 14		/*    Go  through  all words of  the  right length. Add each  one to  the  current partial
 15		*   rectangle,  and attempt  to  build  a rectangle recursively. */
-16		for  (int i = 0;  i <  grouplist[l - 1].length(); i++)  {
+16		for  (int i = 0;  i <  groupList[l - 1].length(); i++)  {
 17			/*    Create  a new rectangle which is this rect + new word.  */
 18			Rectangle  orgPlus  =  rectangle.append(groupList[l - 1].getWord(i));
 19
@@ -4431,7 +4432,7 @@ The Rectangle class represents a partially or fully formed rectangle of words. T
 24
 25		/*Check if all columns are  valid. All  rows are  already known  to  be  valid since
 26		* they  were added directly from dictionary. */
-27		public boolean  isComplete(int l,  int h,  WordGroup  grouplist) {
+27		public boolean  isComplete(int l,  int h,  WordGroup  groupList) {
 28				if (height == h)  {
 29				/*Check if each  column is a word in  the  dictionary. */
 30				for  (int i = 0;  i < l; i++)  {
@@ -4447,7 +4448,7 @@ The Rectangle class represents a partially or fully formed rectangle of words. T
 40
 41		public boolean  isPartialOK(int l,  Trie  trie) {
 42			if (height ==  0)  return true;
-43			for  (inti = 0;  i <   l; i++ ) {
+43			for  (inti = 0;  i <  l; i++) {
 44				String col = getColumn(i);
 45				if (!trie.contains(col)) {
 46					return false;
@@ -4473,13 +4474,13 @@ The lists in WordGroup are created through a static method called createWordGrou
 6 		public  String getWord(int  i) {  return group.get(i);  }
 7 		public  ArrayList<String> getWords()  {  return group;  }
 8
-9 		public   void  addWord  (String s) {
+9 		public void addWord(String s) {
 10			group.add(s);
 11			lookup.put(s,  true);
 12		}
 13
-14		public   static WordGroup[] createWordGroups(String[]  list) {
-15			WordGroup[] grouplist;
+14		public static WordGroup[] createWordGroups(String[]  list) {
+15			WordGroup[] groupList;
 16			int maxWordlength = 0;
 17			/*Find  the  length of  the  longest word*/
 18			for  (int i = 0;  i <   list.length; i++)  {
@@ -4489,18 +4490,18 @@ The lists in WordGroup are created through a static method called createWordGrou
 22			}
 23
 24			/*Group the  words in  the  dictionary into lists of  words of  same length.
-25			* grouplist[i]  will contain a  list of  words,  each  of  length (i + l). */
-26			grouplist = new WordGroup[maxWordlength];
-27			for  (int i = 0;  i <  list.length; i++)  {
+25			* groupList[i]  will contain a  list of  words,  each  of  length (i + l). */
+26			groupList = new WordGroup[maxWordlength];
+27			for (int i = 0;  i <  list.length; i++)  {
 28				/*We  do wordlength  -  1  instead of  just wordlength  since   this is used as
 29				* an  index  and no words are  of  length 0 */
 30				int wordLength =  list[i].length() -  1;
 31				if (groupList[wordLength] ==   null) {
-32					grouplist[wordlength] =  new WordGroup();
+32					groupList[wordlength] =  new WordGroup();
 33				}
 34				groupList[wordLength].addWord(list[i]);
 35			}
-36			return grouplist;
+36			return groupList;
 37		}
 38	}
 ```

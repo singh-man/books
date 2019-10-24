@@ -38,7 +38,7 @@ The merge method operates by copying all the elements from the target array segm
 4   }
 5   
 6   void  mergesort(int[] array, int[]  helper, int  low,  int high)  {
-7       if (low <   high)  {
+7       if (low < high)  {
 8           int middle  =  (low  +  high) / 2;
 9           mergesort(array, helper,  low,  middle); //  Sort  left half
 10          mergesort(array,  helper,  middle + 1,   high); //  Sort  right half
@@ -103,7 +103,7 @@ If we repeatedly partition the array (and its sub-arrays) around an element, the
 10  
 11  int partition(int[] arr, int left,  int right) {
 12      int pivot =  arr[(left + right) I 2];  // Pick  pivot  point
-13      while left <= right) {
+13      while (left <= right) {
 14          // Find element  on left that should  be on right
 15          while (arr[left] < pivot) left++;
 16  
@@ -112,7 +112,7 @@ If we repeatedly partition the array (and its sub-arrays) around an element, the
 19  
 20          // Swap  elements,   and move  left and right indices
 21          if (left <= right) {
-22              swap(arr,   left,  right); // swaps elements
+22              swap(arr, left, right); // swaps elements
 23              left++;
 24              right--;
 25          }
@@ -137,16 +137,16 @@ In binary search, we look for an element x in a sorted array by first comparing 
 Note that although the concept is fairly simple, getting all the details right is far more difficult than you might think. As you study the code below, pay attention to the plus ones and minus ones.
 
 ```java
-1   int  binarySearch(int[] a,   int x)  {
+1   int  binarySearch(int[] a, int x)  {
 2       int low  = 0;
 3       int high = a.length -  1;
 4       int mid;
 5   
 6       while (low <= high) {
-7           mid = (low + high) /    2;
+7           mid = (low + high) / 2;
 8           if (a[mid]  <  x)  {
 9               low  =  mid +  1;
-10          }  else if  (a[mid] >   x)  {
+10          }  else if  (a[mid] > x)  {
 11              high = mid  -  1;
 12          }  else {
 13              return mid;
@@ -158,8 +158,8 @@ Note that although the concept is fairly simple, getting all the details right i
 19  int  binarySearchRecursive(int[] a,  int x,  int low,  int high)   {
 20      if (low > high) return  -1; //  Error
 21  
-22      int mid = (low  + high) /    2;
-23      if  (a[mid] <   x) {
+22      int mid = (low  + high) / 2;
+23      if  (a[mid] < x) {
 24          return  binarySearchRecursive(a, x,  mid + 1,  high);
 25      }  else if (a[mid] >   x) {
 26          return binarySearchRecursive(a, x,  low,  mid -  1);
@@ -257,18 +257,18 @@ The code below implements this algorithm.
 
 ```java
 1   void  sort(String[]  array) {
-2       HashMaplist<String, String>  m aplist =  new HashMaplist<String,  String>();
+2       HashMapList<String, String>  mapList =  new HashMapList<String,  String>();
 3   
 4       /*  Group words by   anagram  */
 5       for (String s : array) {
 6           String key =  sortChars(s);
-7           maplist.put(key,   s);
+7           mapList.put(key,   s);
 8       }
 9   
 10      /*Convert hash table  to array*/
 11      int index =  0;
-12      for (String key : maplist.keySet()) {
-13          ArrayList<String> list = maplist.get(key);
+12      for (String key : mapList.keySet()) {
+13          ArrayList<String> list = mapList.get(key);
 14          for (String t : list) {
 15              array[index] =  t;
 16              index++;
@@ -544,8 +544,8 @@ The following code demonstrates  our algorithm.
 12          bitfield[n / 8] |= 1  << (n  %  8);
 13      }
 14  
-15      for (int i =  0;  i <   bitfield.length;  i++)   {
-16          for (int j = 0;  j <   8;  j++)   {
+15      for (int i =  0;  i < bitfield.length;  i++)   {
+16          for (int j = 0;  j < 8;  j++)   {
 17              /* Retrieves the  individual bits  of  each  byte. When  0 bit is found,   print
 18               *  the   corresponding value.  */
 19              if ((bitfield[i] &  (1  << j)) ==  0)  {
@@ -599,8 +599,8 @@ The below code provides one implementation for this algorithm.
 5       int[]  blocks = getCountPerBlock(filename,  rangeSize);
 6   
 7       /*   Find  a  block   with  a  missing value.  */
-8       int blocklndex  = findBlockWithMissing(blocks, rangeSize);
-9       if (blocklndex  <   0)  return  -1;
+8       int blockIndex  = findBlockWithMissing(blocks, rangeSize);
+9       if (blockIndex  <   0)  return  -1;
 10  
 11      /*  Create  bit vector for  items  within  this range. */
 12      byte[] bitVector =  getBitVectorForRange(filename, blockindex,  rangeSize);
@@ -672,7 +672,7 @@ The below code provides one implementation for this algorithm.
 78  
 79  /*Find a zero within  the bit vector  and return  the index.   */
 80  int findZero(byte[]  bitVector) {
-81      for  (int  i = 0; i <   bitVector.length; i++) {
+81      for  (int  i = 0; i < bitVector.length; i++) {
 82          if (bitVector[i] != ~0) {//If not all ls
 83              int bitindex = findZero(bitVector[i]);
 84              return  i * Byte.SIZE + bitindex;
@@ -699,7 +699,7 @@ Using this bit vector, we can then iterate through the array, flagging  each ele
 When we come across a duplicate element, we print it.
 ```java
 1   void checkDuplicates(int[]   array)  {
-2       BitSet  bs = new   BitSet(32000);
+2       BitSet  bs = new BitSet(32000);
 3       for  (int i = 0; i <  array.length;   i++) {
 4           int num  = array[i];
 5           int num0 = num  -  1;   //bitset starts  at 0, numbers  start  at 1

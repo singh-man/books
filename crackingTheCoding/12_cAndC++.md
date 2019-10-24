@@ -10,7 +10,7 @@ Though C++ classes have similar characteristics to those of other languages, we'
 
 The code below demonstrates the implementation of a basic class with inheritance.
 
-```C
+```c++
 1 	#include <iostream>
 2 	using namespace  std;
 3	
@@ -79,14 +79,14 @@ The destructor cleans up upon object deletion and  is automatically called  when
 
 In an earlier example, we defined p to be of type Student:
 
-```c
+```c++
 1   Student *  p  =  new  Student();
 2   p->aboutMe();
 ```
 
 What would happen if we defined p to be a Person\*, like so?
 
-```c
+```c++
 1   Person *  p  =  new  Student();
 2   p->aboutMe();
 ```
@@ -95,7 +95,7 @@ In this case, "I   am  a  person" would be printed instead. This is because the 
 
 If we want to ensure that the  Student's implementation of about Me is called, we can define aboutMe in the  Person class to be virtual.
 
-```C
+```c++
 1 	class  Person {
 2	    ...
 3 		virtual void  aboutMe() {
@@ -115,7 +115,7 @@ Another usage for virtual functions is when we can't (or don't want to) implemen
 
 In this case, we might want addCourse to be a virtual function defined within Person, with the imple­mentation being left to the subclass.
 
-```c
+```c++
 1 	class Person {
 2 		int  id;// all members  are private by default
 3 		char name[NAME_SIZE];
@@ -153,7 +153,7 @@ Note that by defining addCourse to be a "pure virtual function;· Person is now 
 
 The virtual function naturally introduces the concept of a "virtual destructor". Suppose we wanted to imple­ment a destructor method for Person and Student. A naive solution might look like this:
 
-```C
+```c++
 1 	class  Person {
 2 	public:
 3 		~Person() {
@@ -178,7 +178,7 @@ As in the earlier example, since p is a Person, the destructor for the Person cl
 
 To fix this, we simply define the destructor  for Person to be virtual.
 
-```C
+```c++
 1 	class  Person {
 2 	public:
 3 		virtual ~Person() {
@@ -209,7 +209,7 @@ Deleting  a person.
 
 Functions can specify default values, as shown below. Note that all default parameters must be on the right side of the function declaration,  as there would be no other way to specify how the parameters line up.
 
-```c
+```c++
 1	int func(int a, int b =  3) {
 2		X =  a;
 3		y =  b;
@@ -284,7 +284,7 @@ Performing p++ will skip ahead by  sizeof(int) bytes, such  that the  code outpu
 
 Templates are a way of reusing code to apply the same class to different data types. For example, we might have a list-like data structure which we would like to use for lists of various types. The code below implements this with the ShiftedList class.
 
-```C
+```c++
 1 	template  <class T>class ShiftedList  {
 2 		T* array;
 3 		int  offset,  size;
@@ -310,7 +310,7 @@ Templates are a way of reusing code to apply the same class to different data ty
 23		}
 24	
 25	private:
-26		int  convertlndex(int i) {
+26		int  convertIndex(int i) {
 27			int index  =  (i -  offset) %  size;
 28			while  (index  <   0)  index  +=  size;
 29			return  index;
@@ -348,7 +348,7 @@ step  4 (insert i):  array    {g,   h,  i,   d,  e, f}. p = 3
 
 The code below implements this algorithm.
  
-```c
+```c++
 1 	void  printlast10Lines(char*  fileName)  {
 2 		const  int K   =  10;
 3 		ifstream  file (fileName);
@@ -385,7 +385,7 @@ This is a classic interview question. The only "gotcha" is to try to do it in pl
 
 We will implement this in C.
 
-```c
+```c++
 1 	void reverse(char *str)  {
 2 		char* end =  str;
 3 		char tmp;
@@ -451,7 +451,7 @@ Thus, when we assign the derived class object to the base class pointer, the vpt
 
 Consider the following code.
 
-```c
+```c++
 1 	class Shape  {
 2 	public:
 3 		int edge_length;
@@ -490,7 +490,7 @@ A shallow copy copies all the  member values from one  object to another. A deep
 
 An example of shallow and  deep copy is below.
 
-```c
+```c++
 1 	struct  Test {
 2 		char * ptr;
 3 	};
@@ -536,7 +536,7 @@ If you wanted to declare a volatile variable pointer for volatile memory (both p
 int volatile *  volatile  x;
 ```
 Volatile variables are not optimized, which can be very useful. Imagine this function:
-```c
+```c++
 1   int opt  =  1;
 2   void  Fn(void)   {
 3       start:
@@ -545,7 +545,7 @@ Volatile variables are not optimized, which can be very useful. Imagine this fun
 6   }
 ```
 At first glance, our code appears to loop infinitely. The compiler may try to optimize it to:
-```c
+```c++
 1  void  Fn(void)   {
 2       start:
 3            int opt  =  1;
@@ -556,7 +556,7 @@ At first glance, our code appears to loop infinitely. The compiler may try to op
 This becomes an infinite loop. However, an external operation might write 'O' to the location of variable opt, thus breaking the loop.
 
 To prevent the compiler from performing such optimization, we want to signal that another element of the system could change the variable. We do this using the volatile keyword, as shown below.
-```c
+```c++
 1   volatile int opt  =  1;
 2   void  Fn(void)   {
 3        start:
@@ -575,7 +575,7 @@ SOLUTION
 
 Let's think about why we have virtual methods to start with. Suppose we have the following code:
 
-```c
+```c++
 1 	class Foo {
 2 	public:
 3 		void f();
@@ -609,7 +609,7 @@ SOLUTION
 The algorithm will maintain a mapping from a node address in the original structure to the corresponding node in the new structure. This mapping will allow us to discover previously copied nodes during a traditional depth-first traversal of the structure. Traversals often mark visited nodes-the mark can take many forms and does not necessarily need to be stored in the node.
 
 Thus, we have a simple recursive algorithm:
-```c
+```c++
 1 	typedef map<Node*,  Node*> NodeMap;
 2	
 3 	Node * copy_recursive(Node * cur, NodeMap  & nodeMap)   {
@@ -648,7 +648,7 @@ This is one of those problems that seems at first glance pretty overwhelming, es
 
 In terms of the approach, we need a reference count variable that is incremented when we add a new reference to the object and decremented when we remove a reference. The code should look something like the below pseudocode:
 
-```c
+```c++
 1	template   <class  T>  class SmartPointer {
 2		/* The smart  pointer class needs  pointers to  both  the  object itself and to  the
 3		*  ref count. These must be  pointers, rather than  the  actual object or  ref count
@@ -659,7 +659,7 @@ In terms of the approach, we need a reference count variable that is incremented
 8	}
 ```
 We know we need constructors and a single destructor for this class, so let's add those first.
-```c
+```c++
 1 		SmartPointer(T *  object)  {
 2 			/* We want to set the value of T* obj, and set  the  reference  counter  to  1. */
 3 		}
@@ -678,7 +678,7 @@ We know we need constructors and a single destructor for this class, so let's ad
 16		}
 ```
 There's one additional way that reference scan be created: by setting one SmartPointer equal to another. We'll want to override the equal operator to handle this, but for now, let's sketch the code like this.
-```c
+```c++
 1   onSetEquals(SmartPoint<T>  ptrl, SmartPoint<T> ptr2) {
 2      /*  If ptrl has  an existing value,   decrement  its  reference count.   Then,  copy the
 3       * pointers to  obj  and ref_count over.  Finally,  since   we  created a  new
@@ -686,7 +686,7 @@ There's one additional way that reference scan be created: by setting one SmartP
 5    }
 ```
 Getting just the approach, even without filling in the complicated C++ syntax, would count for a lot. Finishing out the code is now just a matter of filling the details.
-```c
+```c++
 1 	template <class  T>  class  SmartPointer {
 2 		public:
 3 				SmartPointer(T * ptr) {
@@ -762,7 +762,7 @@ We need  to work with these  constraints by requesting  enough  memory that we c
 Suppose we are requesting  a 100-byte chunk of memory, and we want it to start at a memory address that is a multiple of 16. How much extra memory would we need to allocate to ensure that we can do so? We would need to allocate an extra 15 bytes. With these  15 bytes, plus another  100 bytes right after that sequence, we know that we would have a memory address divisible by 16 with space for 100 bytes.
 
 We could then do something like:
-```c
+```c++
 1	void*  aligned_malloc(size_t required_bytes,  size_t  alignment) {
 2		int offset =  alignment  -  1;
 3		void*  p =  (void*)  malloc(required_bytes + offset);
@@ -781,7 +781,7 @@ We can do this by storing, in this "extra" memory, the address of where the full
 Therefore, to guarantee both an aligned address and space for this pointer, we will need to allocate an addi­tional alignment  -  1  +  sizeof(void\*) bytes.
 
 The code below implements this approach.
-```c
+```c++
 1 	void*  aligned_malloc(size_t required_bytes, size  t alignment)  {
 2 		void*  pl;  //  initial block
 3 		void*  p2;  // aligned block  inside initial  block
@@ -817,7 +817,7 @@ As you may know, a two-dimensional array is essentially an array of arrays. Sinc
 The basic idea is to create a one-dimensional array of pointers. Then, for each array index, we create a new one-dimensional array. This gives us a two-dimensional array that can be accessed via array indices.
 
 The code below implements this.
-```c
+```c++
 l	int** my2DA1loc(int  rows,   int cols) {
 2		int**  rowptr;
 3		int i;
@@ -834,7 +834,7 @@ Observe how, in the above code, we've told rowptr where exactly each index shoul
 ![](media/12_11_1.JPG)
 
 To free this memory, we cannot simply  call free on rowptr. We need to make sure  to free not  only the memory from the  first malloc call, but  also each subsequent call.
-```c
+```c++
 1	void  my2DDealloc(int** rowptr,   int  rows) {
 2		for (i =  0; i < rows; i++)  {
 3			free(rowptr[i]);
@@ -849,7 +849,7 @@ Rather  than allocating the  memory in many different blocks  (one  block  for e
 If it seems strange to view the  2D array like this (and it probably does),  remember that this is fundamentally no different than the  first diagram. The only difference is that the  memory is in a contiguous block, so our first five (in this example) elements point elsewhere in the  same block of memory.
 
 To implement this solution, we do the following.
-```c
+```c++
 1 	int** my2DA1loc(int rows,  int cols) {
 2 		int i;
 3 		int  header =  rows   *  sizeof(int*);

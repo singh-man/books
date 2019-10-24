@@ -52,8 +52,8 @@ We have provided simple sample code to implement a stack. Note that a stack can 
 28			return top.data;
 29		}
 30	
-31		public boolean   isEmpty()  {
-32			return top ==    null;
+31		public boolean isEmpty()  {
+32			return top == null;
 33		}
 34	}
 ```
@@ -103,7 +103,7 @@ A queue can also be implemented  with a linked list. In fact, they are essential
 23		}
 24	
 25		public T remove()   {
-26			if (first ==    null) throw  new NoSuchElementException();
+26			if (first == null) throw  new NoSuchElementException();
 27			T data =  first.data;
 28			first  =  first.next;
 29			if (first == null) {
@@ -170,7 +170,7 @@ The code for this solution is below.
 11		}
 12	
 13		/* Push  value onto  stack.  */
-14		public void  push(int stackNum,  int value) throws   FullStackException  {
+14		public void  push(int stackNum,  int value) throws FullStackException  {
 15			/* Check that we have  space  for  the next  element */
 16			if (isFull(stackNum)) {
 17				throw  new FullStackException();
@@ -187,8 +187,8 @@ The code for this solution is below.
 28				throw new EmptyStackException();
 29			}
 30	
-31			int toplndex  =  indexOfTop(stackNum);
-32			int value  =  values[toplndex];  // Get top
+31			int topIndex  =  indexOfTop(stackNum);
+32			int value  =  values[topIndex];  // Get top
 33			values[topindex]  =  0;  // Clear
 34			sizes[stackNum]--;  // Shrink
 35			return  value;
@@ -203,17 +203,17 @@ The code for this solution is below.
 44		}
 45	
 46		/*  Return  if stack  is empty.  */
-47		public  boolean  isEmpty(int stackNum) {
+47		public boolean isEmpty(int stackNum) {
 48			return sizes[stackNum]   ==  0;
 49		}
 50	
 51		/*  Return  if stack  is full. */
-52		public   boolean  isFull(int stackNum) {
+52		public boolean isFull(int stackNum) {
 53			return  sizes[stackNum] ==  stackCapacity;
 54		}
 55	
 56		/*  Returns  index  of  the  top  of  the  stack.  */
-57		private  int  indexOfTop(int stackNum) {
+57		private int indexOfTop(int stackNum) {
 58			int offset =  stackNum * stackCapacity;
 59			int size =  sizes[stackNum];
 60			return offset +  size -  1;
@@ -498,7 +498,7 @@ In this problem, we've been told what our data structure should look like:
 
 ```java
 1	class  SetOfStacks {
-2		ArrayList<Stack>  stacks  =   new ArrayList<Stack>();
+2		ArrayList<Stack>  stacks  = new ArrayList<Stack>();
 3		public void push(int  v)   {  ... }
 4		public int  pop() {...  }
 5	}
@@ -660,7 +660,7 @@ The code below implements this algorithm.
 18  /* Move elements from stackNewest into stackOldest. This is usually done so  that
 19        * we can  do  operations on stackOldest. */
 20 		private  void shiftStacks()  {
-21 			if  (stackOldest.isEmpty()) {
+21 			if (stackOldest.isEmpty()) {
 22 				while (!stackNewest.isEmpty())  {
 23 					stackOldest.push(stackNewest.pop());
 24 				}
@@ -768,7 +768,7 @@ An alternative approach that is simple,  clean  and efficient is to simply  use 
 16		LinkedList<Cat> cats = new  LinkedList<Cat>();
 17		private int order =  0;   // acts  as  timestamp
 18	
-19		public  void  enqueue(Animal a)  {
+19		public void enqueue(Animal a)  {
 20			/* Order is used as a  sort  of timestamp, so   that we  can   compare the  insertion
 21			*  order of a  dog  to a  cat. */
 22			a.setOrder(order);
@@ -778,7 +778,7 @@ An alternative approach that is simple,  clean  and efficient is to simply  use 
 26			else if (a instanceof Cat) cats.addlast((Cat)a);
 27		}
 28	
-29		public  Animal dequeueAny() {
+29		public Animal dequeueAny() {
 30			/* Look  at tops of dog  and   cat  queues, and   pop  the  queue with the  oldest
 31			*  value.  */
 32			if (dogs.size() == 0) {
