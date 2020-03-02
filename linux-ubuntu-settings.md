@@ -156,3 +156,13 @@ sdk install gradle 4.8.1
 	- vlc
 	- gparted
 - ? sudo apt install gnome-tweak-tool
+
+## Intellij modifications
+- Change the compiler from Javac to eclipse
+- Change compiler settings
+	- uncheck "Automatically show first error in editor"
+	- Check "Build Project automatically"
+- Build Tools
+	- Gradle
+		- Build and run using: Intellij IDEA
+		- Tun test using: Choose per test
