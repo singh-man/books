@@ -128,13 +128,13 @@ Often, the expected result is obvious: the right output. However, in some cases,
 Once you have the test cases and results defined, writing the code to implement the test cases should be fairly straightforward.Your code might look something like:
 
 ```java
-1	void testAddThreeSorted() {
-2		MyList list  =  new   MyList();
-3		list.addThreeSorted(3,  1, 2); //  Adds 3 items  in  sorted order
-4		assertEquals(list.getElement(0),  1);
-5		as sertEquals(list.getElement(l), 2);
-6		as sertEquals(list.getElement(2),  3);
-7	}
+1   void testAddThreeSorted() {
+2       MyList list  =  new   MyList();
+3       list.addThreeSorted(3,  1, 2); //  Adds 3 items  in  sorted order
+4       assertEquals(list.getElement(0),  1);
+5       as sertEquals(list.getElement(l), 2);
+6       as sertEquals(list.getElement(2), 3);
+7   }
 ```
 
 ### Troubleshooting Questions
@@ -196,7 +196,7 @@ There are two mistakes in this code.
  
 First, note that an unsigned  int is, by definition, always greater than or equal to zero. The for loop condi­tion will therefore always be true, and it will loop infinitely.
 
-The correct code to print all numbers from 100 to l, is i > 0. If we truly wanted to print zero, we could add an additional printf statement after the for loop.
+The correct code to print all numbers from 100 to 1, is i > 0. If we truly wanted to print zero, we could add an additional printf statement after the for loop.
 ```
 1     unsigned inti;
 2      for (i =  100; i >   0; --i)
@@ -211,7 +211,7 @@ One additional correction is to use %u in place of %d, as we are printing unsign
 This code will now correctly print the list of all numbers from 100 to 1, in descending order.
 
 
-**11.2 		Random Crashes:** You are given the source to an application which crashes when it is run. After running it ten times in a debugger, you find it never crashes in the same place. The application  is single threaded, and uses only the C standard library. What programming errors could be causing this crash? How would you test each one?
+**11.2      Random Crashes:** You are given the source to an application which crashes when it is run. After running it ten times in a debugger, you find it never crashes in the same place. The application  is single threaded, and uses only the C standard library. What programming errors could be causing this crash? How would you test each one?
 
 SOLUTION
 
@@ -235,7 +235,7 @@ Additionally, we may be able to use tools to check for specific situations. For 
 These problems are as much about your brainstorming ability as they are about  your approach. Do you jump all over the place, shouting out random suggestions? Or do you approach it in a logical, structured manner? Hopefully, it's the latter.
 
 
-**11.3 	Chess  Test:** We have the following method  used in a chess game: boolean canMoveTo(int x, int y).This method is part of the Piece class and returns whether or not the piece can move  to position (x, y). Explain how you would test this method. 
+**11.3  Chess  Test:** We have the following method  used in a chess game: boolean canMoveTo(int x, int y).This method is part of the Piece class and returns whether or not the piece can move  to position (x, y). Explain how you would test this method. 
 
 
 SOLUTION

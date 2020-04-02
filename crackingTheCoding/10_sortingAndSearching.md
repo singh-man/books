@@ -132,7 +132,7 @@ Unlike comparison sorting algorithms, which cannot perform better than O(n log(n
 
 When we think of searching algorithms, we generally think of binary search. Indeed, this is a very useful algorithm to study.
 
-In binary search, we look for an element x in a sorted array by first comparing x to the midpoint of the array. If x is less than the midpoint, then we search the left half of the array. If x is greater than the midpoint, then we search the right half of the array. We then repeat this process, treating the left and right halves as subarrays. Again, we compare x to the midpoint of this subarray and then search either its left or right side. We repeat this process until we either find x or the subarray has size O.
+In binary search, we look for an element x in a sorted array by first comparing x to the midpoint of the array. If x is less than the midpoint, then we search the left half of the array. If x is greater than the midpoint, then we search the right half of the array. We then repeat this process, treating the left and right halves as subarrays. Again, we compare x to the midpoint of this subarray and then search either its left or right side. We repeat this process until we either find x or the subarray has size 0.
 
 Note that although the concept is fairly simple, getting all the details right is far more difficult than you might think. As you study the code below, pay attention to the plus ones and minus ones.
 
@@ -162,7 +162,7 @@ Note that although the concept is fairly simple, getting all the details right i
 23      if  (a[mid] < x) {
 24          return  binarySearchRecursive(a, x,  mid + 1,  high);
 25      }  else if (a[mid] >   x) {
-26          return binarySearchRecursive(a, x,  low,  mid -  1);
+26          return binarySearchRecursive(a, x,  low,  mid - 1);
 27      }  else {
 28          return mid;
 29      }
@@ -192,7 +192,7 @@ The only issue with this is that if we insert an element into the front of A, th
 The code below does just that. It works from the back of A and B, moving the largest elements to the back of A.
 
 ```java
-1   void  merge(int[]  a,   int[] b,  int  lastA, int lastB) {
+1   void  merge(int[]  a, int[] b, int lastA, int lastB) {
 2       int indexA  = lastA - 1; /*   Index  of  last  element in array a*/
 3       int indexB  = lastB - 1; /*   Index  of  last element in  array b*/
 4       int indexMerged  = lastB + lastA - 1; /*   end  of  merged array*/
@@ -215,7 +215,7 @@ The code below does just that. It works from the back of A and B, moving the lar
 Note that you don't need to copy the contents of A after running out of elements in B. They are already in place.
 
 
-10.2    Group  Anagrams: Write a method to sort an array ot strings so that all tne anagrnms are next to each other.
+**10.2    Group  Anagrams:** Write a method to sort an array ot strings so that all tne anagrnms are next to each other.
 
 SOLUTION
 
@@ -247,7 +247,7 @@ The code below implements the comparator.
 
 Now, just sort the arrays using this compareTo method instead of the usual one.
 ```
-12   Arrays.sort(array, new AnagramComparator()); This algorithm will take O(n   log(n)) time.
+12   Arrays.sort(array, new AnagramComparator()); This algorithm will take O(n log(n)) time.
 ```
 This may be the best we can do for a general sorting algorithm, but we don't actually need to fully sort the array. We only need to group the strings in the array by anagram.
 
@@ -259,13 +259,13 @@ The code below implements this algorithm.
 1   void  sort(String[]  array) {
 2       HashMapList<String, String>  mapList =  new HashMapList<String,  String>();
 3   
-4       /*  Group words by   anagram  */
+4       /*  Group words by anagram  */
 5       for (String s : array) {
 6           String key =  sortChars(s);
 7           mapList.put(key,   s);
 8       }
 9   
-10      /*Convert hash table  to array*/
+10      /*Convert hash table to array*/
 11      int index =  0;
 12      for (String key : mapList.keySet()) {
 13          ArrayList<String> list = mapList.get(key);
@@ -304,7 +304,7 @@ If this problem smells  like binary search to you, you're  right!
 
 In classic binary search, we compare x with  the  midpoint to figure  out  if x belongs on the  left or the right side. The  complication here is that the  array  is rotated and may  have  an  inflection point. Consider, for example, the  following two arrays:
 ```
-Arrayl:  {10, 15,  20,  0, 5} 
+Arrayl:  {10, 15,  20,  0,  5} 
 Array2:  {50,  5,  20, 30, 40}
 ```
 
@@ -502,7 +502,9 @@ So what do we do? We only bring part of the data into memory.
 
 We'll divide the file into chunks, which are x megabytes  each, where x is the amount of memory we have available. Each chunk is sorted separately and then saved back to the file system.
 
-Once all the chunks are sorted, we merge the chunks, one by one. At the end, we have a fully sorted file. This algorithm is known as external sort.
+Once all the chunks are sorted, we merge the chunks, one by one. At the end, we have a fully sorted file. 
+
+This algorithm is known as external sort.
 
 
 **10.7  Missing Int:** Given an input file with four billion non-negative integers, provide an algorithm to generate an integer that is not contained in the file. Assume you have 1 GB of memory available for this task.
@@ -517,7 +519,7 @@ SOLUTION
 
 ---
 
-There are a total of 2³², or 4 billion, distinct integers possible and 231 non-negative integers. Therefore, we know the input file (assuming it is ints rather than longs) contains some duplicates.
+There are a total of 2³², or 4 billion, distinct integers possible and 2³¹ non-negative integers. Therefore, we know the input file (assuming it is ints rather than longs) contains some duplicates.
 
 We have 1 GB of memory, or 8 billion bits. Thus, with 8 billion bits, we can map all possible integers to a distinct bit with the available memory. The logic is as follows:
 
@@ -547,7 +549,7 @@ The following code demonstrates  our algorithm.
 15      for (int i =  0;  i < bitfield.length;  i++)   {
 16          for (int j = 0;  j < 8;  j++)   {
 17              /* Retrieves the  individual bits  of  each  byte. When  0 bit is found,   print
-18               *  the   corresponding value.  */
+18               *  the corresponding value.  */
 19              if ((bitfield[i] &  (1  << j)) ==  0)  {
 20                  System.out.println (i *  8 + j);
 21                  return;
@@ -593,7 +595,7 @@ These conditions give us a good amount of "wiggle room;" but the nearer to the m
 The below code provides one implementation for this algorithm.
 ```java
 1   int  findOpenNumber(String filename)  throws FileNotFoundException  {
-2       int  rangeSize =   (1  << 20);   // 2A20 bits (2A17  bytes)
+2       int  rangeSize =   (1  << 20);   // 2^20 bits (2^17  bytes)
 3   
 4       /*  Get  count   of  number of  values within each  block.  */
 5       int[]  blocks = getCountPerBlock(filename,  rangeSize);
@@ -640,7 +642,7 @@ The below code provides one implementation for this algorithm.
 46  
 47  /*  Create  a bit vector for  the  values  within  a  specific range. */
 48  byte[] getBitVectorForRange(String filename,  int  blockindex, int rangeSize)
-49      			throws FileNotFoundException  {
+49                  throws FileNotFoundException  {
 50      int startRange = blockindex * rangeSize;
 51      int endRange  =  startRange + rangeSize;
 52      byte[] bitVector  =  new byte[rangeSize / Byte.SIZE];
@@ -673,7 +675,7 @@ The below code provides one implementation for this algorithm.
 79  /*Find a zero within  the bit vector  and return  the index.   */
 80  int findZero(byte[]  bitVector) {
 81      for  (int  i = 0; i < bitVector.length; i++) {
-82          if (bitVector[i] != ~0) {//If not all ls
+82          if (bitVector[i] != ~0) {//If not all 1s
 83              int bitindex = findZero(bitVector[i]);
 84              return  i * Byte.SIZE + bitindex;
 85          }
@@ -721,13 +723,13 @@ When we come across a duplicate element, we print it.
 21      boolean get(int  pos) {
 22          int wordNumber =  (pos >>  5);  // divide by  32
 23          int bitNumber =  (pos &  0x1F);  // mod 32
-24          return (bitset[wordNumber]  &   (1 <<  bitNumber))  !=  0;
+24          return (bitset[wordNumber] & (1 <<  bitNumber))  !=  0;
 25      }
 26  
 27      void set(int  pos)  {
 28          int wordNumber =  (pos >>  5);  // divide by  32
 29          int bitNumber =  (pos &  0x1F);  // mod 32
-30          bitset[wordNumber]   |=  1  <<  bitNumber;
+30          bitset[wordNumber] |=  1  <<  bitNumber;
 31      }
 32  }
 ```
@@ -859,7 +861,7 @@ The code below implements this algorithm.
 
 ```java
 1   Coordinate findElement(int[][]  matrix, Coordinate  origin,  Coordinate  dest, int x) {
-2       if  (!origin. inbounds(matrix) ||  ! dest.inbounds(matrix))  {
+2       if  (!origin.inbounds(matrix) ||  ! dest.inbounds(matrix))  {
 3           return null;
 4       }
 5       if (matrix[origin.row][origin.column] == x) {
@@ -970,7 +972,7 @@ When we move to the right though, we skip over a bunch of elements on the left. 
 
 Rather than counting the size of the left subtree(which would be inefficient), we can track this information as we add new elements to the tree.
 
-Let's walk through an example on the following tree. In the below example, the value in parentheses indi­cates the number of nodes in the left subtree (or, in other words, the rank of the node relative to its subtree).
+Let's walk through an example on the following tree. In the below example, the value in parentheses indi­cates the number of nodes in the left subtree (or, in other words, the rank of the node *relative* to its subtree).
 
 ```
                   20(4)
@@ -1099,7 +1101,7 @@ Before coding, we should clarify the exact algorithm, though.
 
 - Sort the array in ascending order.
 - Iterate through the elements, starting from index 1  (not 0) and jumping two elements at a time.
-- At each element, swap it with the previous element. Since every three elements appear in the order small <=  medium  <=  large, swapping these elements will always put medium as a peak: medium <=  small <=  large.
+- At each element, swap it with the previous element. Since every three elements appear in the order small <=  medium  <=  large, swapping these elements will always put medium as a peak:medium <=  small <=  large.
 
 This approach will ensure that the peaks are in the right place: indexes 1, 3, 5, and so on. As long as the odd-numbered  elements (the peaks) are bigger than the adjacent elements, then the even-numbered elements (the valleys) must be smaller than the adjacent elements.
 

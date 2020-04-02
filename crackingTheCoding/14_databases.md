@@ -9,12 +9,11 @@ If you  profess knowledge of databases, you  might be asked some questions on it
 Implicit and explicit joins are shown below. These two statements  are equivalent, and it's  a matter of personal preference which one you choose. For consistency, we  will stick to the explicit join.
 
 
-| Explicit Join                                    | Implicit Join                       |
-| --                                               | --                                  |
-| 1   SELECT CourseName,   TeacherName             | 1   SELECT CourseName,  TeacherName |
-| 2   FROM  Courses INNER JOIN   Teachers          | 2   FROM   Courses,  Teachers       |
-| 3   ON  Courses.TeacherID  =  Teachers.TeacherID | 3   WHERE  Courses.TeacherID =      |
-|                                                  | 4          Teachers.TeacherID       |
+| Explicit Join                                    | Implicit Join                                     |
+| --                                               | --                                                |
+| 1   SELECT CourseName,   TeacherName             | 1   SELECT CourseName,  TeacherName               |
+| 2   FROM  Courses INNER JOIN   Teachers          | 2   FROM   Courses,  Teachers                     |
+| 3   ON  Courses.TeacherID  =  Teachers.TeacherID | 3   WHERE  Courses.TeacherID = Teachers.TeacherID |
 
 
 ### Denormalized vs. Normalized  Databases
@@ -46,14 +45,14 @@ Implement a query to get a list of all students and how many courses each studen
 2   SELECTStudents.StudentName,   count(*)
 3   FROM Students INNER JOIN StudentCourses
 4   ON Students.StudentID =  StudentCourses.StudentID
-5   GROUP  BY  Students.StudentID
+5   GROUP BY Students.StudentID
 ```
 
 This has three problems:
 
 1.  We have excluded students who are not enrolled in any courses, since StudentCourses only includes enrolled students. We need to change this to a LEFT JOIN.
-2.  Even if we changed it to a LEFT JOIN, the query is still not quite right. Doing count(\*) would return how many items there are in a given group of StudentIDs. Students enrolled in zero courses would still have one item in their group. We need to change this to count the number of CourseIDs in each group: count (StudentCourses.CourseID).
-3.  We've grouped by Students. StudentID, but there are still multiple StudentNames in each group. How will the database know which StudentName to return? Sure, they may all have the same value, but the database doesn't understand that. We need to apply an aggregate function to this, such as first (Students.StudentName).
+2.  Even if we changed it to a LEFT JOIN, the query is still not quite right. Doing `count(*)` would return how many items there are in a given group of StudentIDs. Students enrolled in zero courses would still have one item in their group. We need to change this to count the number of CourseIDs in each group: count `(StudentCourses.CourseID)`.
+3.  We've grouped by `Students.StudentID`, but there are still multiple StudentNames in each group. How will the database know which StudentName to return? Sure, they may all have the same value, but the database doesn't understand that. We need to apply an *aggregate* function to this, such as first `(Students.StudentName)`.
 
 Fixing these issues gets us to this query:
 ```sql
@@ -64,15 +63,15 @@ Fixing these issues gets us to this query:
 5     FROM  Students LEFT JOIN StudentCourses
 6     ON Students.StudentID =  StudentCourses.StudentID
 7     GROUP BY  Students.StudentID
-8   ) T INNER  JOIN Students on T.studentID =  Students.StudentID
+8   ) T INNER JOIN Students on T.studentID =  Students.StudentID
 ```
 Looking at this code, one might ask why we don't just select the student name on line 3 to avoid having to wrap lines 3 through 6 with another query. This (incorrect) solution is shown below.
 ```sql
 1  /* Incorrect Code */
 1  SELECTStudentName, Students.StudentID, count(StudentCourses.CourseID)  as [Cnt]
 2  FROM Students LEFTJOIN StudentCourses
-3  ON  Students.StudentID =  StudentCourses.StudentID
-4  GROUP BY  Students.StudentID
+3  ON Students.StudentID =  StudentCourses.StudentID
+4  GROUP BY Students.StudentID
 ```
 The answer is that we can't do that - at least not exactly as shown. We can only select values that are in an aggregate function or in the GROUP BY clause.
 
@@ -81,8 +80,8 @@ Alternatively, we could resolve the above issues with either of the following st
 1  /* Solution 2:  Add StudentName  to GROUP BY  clause. */
 2  SELECT  StudentName,   Students.StudentID,  count(StudentCourses.CourseID)  as [Cnt]
 3  FROM  Students LEFT JOIN StudentCourses
-4  ON  Students.StudentID =  StudentCourses.StudentID
-5  GROUP  BY  Students.StudentID, Students.StudentName
+4  ON Students.StudentID =  StudentCourses.StudentID
+5  GROUP BY Students.StudentID, Students.StudentName
 ```
 OR
 ```sql
@@ -174,7 +173,7 @@ Questions 1  through 3 refer to the following database schema:
 Note that each apartment can have multiple tenants, and each tenant can have multiple apartments. Each apartment belongs to one building, and each building belongs to one complex.
 
 
-**14.1 	Multiple Apartments:** Write a SQL query to get a list of tenants who are renting more than  one apartment.	
+**14.1  Multiple Apartments:** Write a SQL query to get a list of tenants who are renting more than  one apartment. 
 
 SOLUTION
 
@@ -182,11 +181,11 @@ SOLUTION
 
 To implement this, we can use the HAVING and GROUP   BY clauses and then perform an INNER  JOIN with Tenants.
 ```sql
-1  SELECT  TenantName
-2  FROM   Tenants
-3  INNER  JOIN
-4        (SELECT  TenantID  FROM  AptTenants  GROUP   BY  TenantID  HAVING  count(*)   >   1)  C
-5  ON   Tenants.TenantID = C.TenantID
+1  SELECT TenantName
+2  FROM Tenants
+3  INNER JOIN
+4        (SELECT TenantID FROM AptTenants GROUP BY TenantID HAVING count(*) > 1) C
+5  ON Tenants.TenantID = C.TenantID
 ```
 
 Whenever  you write a GROUP BY clause in an interview  (or in real life), make sure that  anything in the SELECT clause is either an aggregate function or contained within the GROUP BY clause.
@@ -201,20 +200,20 @@ SOLUTION
  
 This problem uses a straightforward join of Requests and Apartments to get a list of building IDs and the number of open requests. Once we have this list, we join it again with the Buildings table.
 ```sql
-1  SELECT  BuildingName,   ISNULL(Count,  0)  as  'Count'
-2  FROM  Buildings
-3    LEFT  JOIN
-4       (SELECT  Apartments.BuildingID,  count(*)  as   'Count'
-5         FROM  Requests   INNER  JOIN Apartments
-6         ON  Requests.AptID  =  Apartments.AptID
-7         WHERE  Requests.Status  =   'Open'
-8         GROUP  BY  Apartments.BuildingID)  ReqCounts
+1  SELECT BuildingName, ISNULL(Count,  0)  as  'Count'
+2  FROM Buildings
+3    LEFT JOIN
+4       (SELECT Apartments.BuildingID,  count(*)  as   'Count'
+5         FROM Requests INNER  JOIN Apartments
+6         ON Requests.AptID  =  Apartments.AptID
+7         WHERE Requests.Status  =   'Open'
+8         GROUP BY  Apartments.BuildingID)  ReqCounts
 9  ON  ReqCounts.BuildingID =  Buildings.BuildingID
 ```
 Queries like this that utilize sub-queries should be thoroughly tested, even when coding by hand. It may be useful to test the inner part of the query first, and then test the outer part.
 
 
-**14.3 	Close All Requests:** Building #11 is undergoing a major renovation. Implement a query to close all requests from apartments in this building. 
+**14.3  Close All Requests:** Building #11 is undergoing a major renovation. Implement a query to close all requests from apartments in this building. 
 
 
 SOLUTION
@@ -229,7 +228,7 @@ UPDATE queries, like SELECT queries, can have WHERE clauses. To implement this q
 ```
 
 
-**14.4 	Joins:** What are the different types of joins? Please explain how they differ and why certain types are better in certain situations. 
+**14.4  Joins:** What are the different types of joins? Please explain how they differ and why certain types are better in certain situations. 
 
 SOLUTION
 
@@ -265,10 +264,10 @@ If we wanted to join Beverage with Calorie-Free Beverages, we would have many op
 
 - INNER JOIN: The result set would contain only the data where the criteria match. In our example, we would get three records: one with a COCACOLA code and two with PEPSI codes.
 - OUTER JOIN: An OUTER  JOIN will always contain the results of INNER JOIN, but it may also contain some records that have no matching record in the other table. OUTER     JOINs are divided into the following subtypes:
-	- LEFT OUTER JOIN, or simply LEFT JOIN: The result will contain all records from the left table.
-	If no matching records were found in the right table, then its fields will contain the NULL values. In our example, we would get four records. In addition to INNER JOIN results, BUDWEISER would be listed, because it was in the left table.
-	- RIGHT OUTER JOIN, or simply RIGHT JOIN: This type of join is the opposite of LEFT  JOIN. It will contain every record from the right table; the missing fields from the left table will be NULL. Note that if we have two tables, A and B, then we can say that the statement A  LEFT JOIN  B is equivalent to the statement B  RIGHT JOIN  A. In our example above, we will get five records. In addition to INNER JOIN results, FRESCA and WATER records will be listed.
-	- FULL OUTER JOIN: This type of join combines the results of the LEFT and RIGHT  JOINS. All records from both tables will be included in the result set, regardless of whether or not a matching record exists in the other table. If no matching record was found, then the corresponding result fields will have a NULL value. In our example, we will get six records.
+    - LEFT OUTER JOIN, or simply LEFT JOIN: The result will contain all records from the left table.
+    If no matching records were found in the right table, then its fields will contain the NULL values. In our example, we would get four records. In addition to INNER JOIN results, BUDWEISER would be listed, because it was in the left table.
+    - RIGHT OUTER JOIN, or simply RIGHT JOIN: This type of join is the opposite of LEFT  JOIN. It will contain every record from the right table; the missing fields from the left table will be NULL. Note that if we have two tables, A and B, then we can say that the statement A  LEFT JOIN  B is equivalent to the statement B  RIGHT JOIN  A. In our example above, we will get five records. In addition to INNER JOIN results, FRESCA and WATER records will be listed.
+    - FULL OUTER JOIN: This type of join combines the results of the LEFT and RIGHT  JOINS. All records from both tables will be included in the result set, regardless of whether or not a matching record exists in the other table. If no matching record was found, then the corresponding result fields will have a NULL value. In our example, we will get six records.
 
 
 **14.5     Denormalization:** What is denormalization? Explain the pros and cons.
@@ -300,7 +299,7 @@ Denormalization, then, strikes  a different compromise. Under denormalization, w
 In a system that demands scalability,  like that of any major tech companies, we almost always use elements of both normalized and denormalized databases.
 
 
-**14.6 		Entity-Relationship Diagram:** Draw an entity-relationship diagram for a database with companies, people, and  professionals (people who work for companies). 
+**14.6      Entity-Relationship Diagram:** Draw an entity-relationship diagram for a database with companies, people, and  professionals (people who work for companies). 
 
 
 SOLUTION
@@ -348,31 +347,31 @@ This database could get arbitrarily more complicated if we wanted to add in prof
 
 Using the Microsoft SQL Server TOP ..... PERCENT function, we might (incorrectly) first try a query like this:
 ```sql
-1  SELECT   TOP  10 PERCENT  AVG(CourseEnrollment.Grade) AS  GPA,
+1  SELECT TOP 10 PERCENT AVG(CourseEnrollment.Grade) AS  GPA,
 2                    CourseEnrollment.StudentID
-3  FROM  CourseEnrollment
-4  GROUP   BY  CourseEnrollment.StudentID
-5  ORDER   BY  AVG(CourseEnrollment.Grade)
+3  FROM CourseEnrollment
+4  GROUP BY CourseEnrollment.StudentID
+5  ORDER BY AVG(CourseEnrollment.Grade)
 ```
 The problem with the above code is that it will return literally the top 10% of rows, when sorted by GPA. Imagine a scenario in which there are 100 students, and the top 15 students all have 4.0 GPAs. The above function will only return 1O of those students, which is not really what we want. In case of a tie, we want to include the students who tied for the top 10% -- even if this means that our honor roll includes more than 10% of the class.
 
 To correct this issue, we can build something similar to this query, but instead first get the GPA cut off.
 ```sql
-1  DECLARE  @GPACutOff  float;
+1  DECLARE @GPACutOff  float;
 2  SET @GPACutOff  = (SELECT  min(GPA) as  'GPAMin' FROM  (
 3                SELECT   TOP  10 PERCENT  AVG(CourseEnrollment.Grade) AS  GPA
 4            FROM  CourseEnrollment
-5            GROUP   BY  CourseEnrollment.StudentID
-6            ORDER  BY  GPA   desc)  Grades);
+5            GROUP BY CourseEnrollment.StudentID
+6            ORDER BY GPA desc)  Grades);
 ```
 Then, once we have @GPACutOff defined, selecting the students  with at least this GPA is reasonably straightforward.
 ```sql
-1  SELECT  StudentName,  GPA
-2  FROM (SELECT   AVG(CourseEnrollment.Grade) AS  GPA,   CourseEnrollment.StudentID
-3              FROM  CourseEnrollment
-4              GROUP   BY  CourseEnrollment.StudentID
-5              HAVING  AVG(CourseEnrollment.Grade)  >= @GPACutOff)   Honors
-6  INNER  JOIN Students  ON   Honors.StudentID  =  Student.StudentID
+1  SELECT StudentName,  GPA
+2  FROM (SELECT AVG(CourseEnrollment.Grade) AS  GPA,   CourseEnrollment.StudentID
+3              FROM CourseEnrollment
+4              GROUP BY  CourseEnrollment.StudentID
+5              HAVING AVG(CourseEnrollment.Grade)  >= @GPACutOff)   Honors
+6  INNER  JOIN Students ON   Honors.StudentID  =  Student.StudentID
 ```
 Be very careful about what implicit assumptions you make. If you look at the above database description, what potentially incorrect assumption  do you see? One is that each course can only be taught  by one professor. At some schools, courses may be taught by multiple professors.
 

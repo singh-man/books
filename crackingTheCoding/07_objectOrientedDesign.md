@@ -120,7 +120,7 @@ Let's assume that your interviewer clarifies that the deck is a standard 52-card
 7   }
 8   
 9   public class Deck <T  extends   Card> {
-10      private ArrayList<T>  cards;//   all cards,   dealt or  not
+10      private ArrayList<T>  cards;   // all cards,   dealt or  not
 11      private int  dealtIndex =  0;  // marks first undealt card
 12  
 13      public void setDeckOfCards(ArrayList<T>  deckOfCards) {... }
@@ -201,7 +201,7 @@ Now, let's say we're building a blackjack game, so we need to know the value of 
 
 22  
 23      public boolean  busted()  { return score() >  21;  }
-24      public boolean  is21() {  return score() ==    21;  }
+24      public boolean  is21() {  return score() ==   21;  }
 25      public boolean  isBlackJack() { ... }
 26  }
 27  
@@ -913,7 +913,7 @@ A potential object-oriented design looks like the following:
 34  
 35      /*  Put  piece  into the  solution,  turn  it appropriately,  and remove from list. */
 36      private void  setEdgeinSolution(LinkedList<Piece> pieces,  Edge edge,  int row,
-37      		int column, Orientation orientation)  {
+37              int column, Orientation orientation)  {
 38          Piece  piece  =  edge.getParentPiece();
 39          piece.setEdgeAsOrientation(edge,  orientation);
 40          pieces.remove(piece);
@@ -965,9 +965,9 @@ The code below outlines this algorithm.
 7       }  else {
 8           /*Get  the  right edge and list to  match.    */
 9           Piece  pieceToMatch =  column ==  0 ?  solution[row -  1][0]  :
-10                                   solution[row][column  -  1];
+10                                                 solution[row][column  -  1];
 11          Orientation  orientationToMatch = column == 0 ? Orientation.BOTTOM : 
-12                                                           Orientation.RIGHT;
+12                                                          Orientation.RIGHT;
 13          Edge edgeToMatch = pieceToMatch.getEdgeWithOrientation(orientationToMatch);
 14  
 15          /*Get  matching  edge.    */
@@ -1073,7 +1073,7 @@ The key objects of the  system will be a concept of users, conversations, and st
 18      public  void approveAddRequest(AddRequest req) {  ... }
 19      public  void rejectAddRequest(AddRequest req)  {   ... }
 20      public  void userSignedOn(String accountName)  {  ... }
-21      public  void userSignedOff(String  accountName)  {  ... }
+21      public  void userSignedOff(String accountName)  {  ... }
 22  }
 ```
 
@@ -1283,12 +1283,12 @@ One possible design for Othello is below.
 20          players[1] =  new  Player(Color.White);
 21      }
 22 
-23      public  static  Game  getinstance() {
+23      public static Game getinstance() {
 24          if (instance ==   null)  instance =  new Game();
 25          return instance;
 26      }
 27 
-28      public  Board getBoard() {
+28      public Board getBoard() {
 29          return board;
 30      }
 31  }
@@ -1349,17 +1349,17 @@ As described earlier, we implement the black and white pieces with the Piece cla
 The Player holds only a very limited amount of information. It does not even hold its own score, but it does have a method one can call to get the score. Player.getScore() will call out to the Game object to retrieve this value.
 
 ```java
-1   public  class Player  {
+1   public class Player  {
 2   
-3       public  Player(Color c)  {  color =  c;}
+3       public Player(Color c)  { color =  c;}
 4   
-5       public  int  getScore() {   ...  }
+5       public int getScore() { ...  }
 6   
 7       public boolean  playPiece(int r,  int  c)  {
 8           return  Game.getlnstance().getBoard().placeColor(r, c,   color);
 9       }
 10  
-11      public Color  getColor() { return  color; }
+11      public Color getColor() { return  color; }
 12  }
 ```
 
@@ -1386,7 +1386,7 @@ Instead, we can just create a member variable head  which points to what should 
 The code below implements this approach.
 
 ```java
-1   public  class  CircularArray<T> {
+1   public class CircularArray<T> {
 2       private T[]  items;
 3       private int head =  0;
 4   
@@ -1394,19 +1394,19 @@ The code below implements this approach.
 6           items = (T[]) new Object[size];
 7       }
 8   
-9       private int  convert(int index) {
+9       private int convert(int index) {
 10          if (index < 0)  {
 11              index += items.length;
 12          }
-13          return (head +  index) % items.length;
+13          return (head + index) % items.length;
 14      }
 15  
-16      public void   rotate(int  shiftRight) {
+16      public void rotate(int  shiftRight) {
 17          head =  convert(shiftRight);
 18      }
 19  
 20      public T  get(int i) {
-21          if (i < 0  ||   i >=  items.length)  {
+21          if (i < 0  || i >=  items.length)  {
 22              throw  new java.lang.IndexOutOfBoundsException("  ...");
 23          }
 24          return items[convert(i)];
@@ -1525,7 +1525,7 @@ It's better to just have a boolean flag for isExposed. We'll do a similar thing 
 9       public Cell(int r, int c)  {  ... }
 10  
 11      /*  Getters and setters for   above variables. */
-12  
+12      ...
 13  
 14      public boolean flip() {
 15          isExposed  =  true;
@@ -1754,7 +1754,7 @@ A file system, in its most simplistic version, consists  of Files and Directorie
 13          lastAccessed =  System.currentTimeMillis();
 14      }
 15  
-15      public boolean   delete() {
+15      public boolean delete() {
 17          if (parent == null) return false;
 18          return parent.deleteEntry(this);
 19      }
@@ -1806,23 +1806,23 @@ A file system, in its most simplistic version, consists  of Files and Directorie
 65  
 66      public  int  numberOfFiles() {
 67          int count  =  0;
-68          for   (Entry  e  :   contents)  {
+68          for (Entry  e : contents)  {
 69              if (e  instanceof Directory) {
 70                  count++;  // Directory counts  as  a  file
 71                  Directory d =  (Directory) e;
 72                  count  +=  d. numberOfFiles();
 73              } else if (e  instanceof File) {
-74  
+74                  count++;
 75              }
 76          }
 77          return count;
 78      }
 79  
-80      public boolean  deleteEntry(Entry entry)  {
+80      public boolean deleteEntry(Entry entry)  {
 81          return contents.remove(entry);
 82      }
 83  
-84      public void  addEntry(Entry entry)  {
+84      public void addEntry(Entry entry)  {
 85          contents.add(entry);
 86      }
 87  
@@ -1854,7 +1854,9 @@ At first, we might think our data structure would look something like this:
 
 Note that iterns is an array of linked lists, where iterns[i] is a linked list of all objects with keys that map to index i (that is, all the objects that collided at i).
 
-This would seem to work until we think more deeply about collisions. Suppose we have a very simple hash function that uses the string length.
+This would seem to work until we think more deeply about collisions. 
+
+Suppose we have a very simple hash function that uses the string length.
 
 ```java
 1    int hashCodeOfKey(K key)  {
@@ -1866,7 +1868,7 @@ The keys jim and bob will map to the same index in the array, even though they a
 
 This is why we need to store both the value and the original key.
 
-One way to do that is to create another object called Ce 11 which pairs keys and values. With this implemen­tation, our linked list is of type Cell.
+One way to do that is to create another object called `Cell` which pairs keys and values. With this implemen­tation, our linked list is of type `Cell`.
 
 The code below uses this implementation.
 

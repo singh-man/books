@@ -40,7 +40,7 @@ For example:
 2       public int  count  =  0;
 3   
 4       public void run()  {
-5           System.out.println("RunnableThread  starting.");
+5           System.out.println("RunnableThread starting.");
 6           try {
 7               while (count <  5)  {
 8                   Thread.sleep(500);
@@ -132,7 +132,7 @@ The keyword synchronized and the lock form the basis for implementing synchroniz
 
 #### Synchronized Methods
 
-Most commonly, we restrict access to shared resources through the use of the synchronized keyword.  It can be applied to methods and code blocks, and restricts multiple threads from executing the code simultaneously on the same object.
+Most commonly, we restrict access to shared resources through the use of the synchronized keyword.  It can be applied to methods and code blocks, and restricts multiple threads from executing the code simultaneously on the *same object*.
 
 To clarify the last point, consider the following code:
 ```java
@@ -173,7 +173,7 @@ Can two instances of MyClass call foo at the same time? It depends. If they have
 7   thread2.start()
 8
 9   /* Same  reference to obj. Only one will be  allowed  to call foo,
-10   *    and the  other will be forced to wait.   */
+10   * and the  other will be forced to wait.   */
 11  MyObject obj =  new MyObject();
 12  MyClass thread1 =  new MyClass(obj,  "1");
 13  MyClass thread2 =  new MyClass(obj,  "2");
@@ -193,8 +193,8 @@ Static methods synchronize on the class lock. The two threads above could not si
 7   }
 8   
 9   public class MyObject {
-10      public static  synchronized void foo(String name) {/* same  as  before */}
-11      public static  synchronized void bar(String name) {/* same as  foo  */}
+10      public static  synchronized void foo(String name) {/* same as before */}
+11      public static  synchronized void bar(String name) {/* same as foo  */}
 12  }
 ```
 
@@ -374,7 +374,7 @@ SOLUTION
 
 ---
 
-First, let's implement a simple simulation of the dining philosophers problem in which we don't concern ourselves with deadlocks. We can implement this solution by having Philosopher extend Thread, and Chopstick call lock. lock() when it is picked up and lock. unlock() when it is put down.
+First, let's implement a simple simulation of the dining philosophers problem in which we don't concern ourselves with deadlocks. We can implement this solution by having Philosopher extend Thread, and Chopstick call lock.lock() when it is picked up and lock.unlock() when it is put down.
 ```java
 1   class  Chopstick {
 2       private Lock lock;
@@ -560,7 +560,7 @@ A locks 2,  waits on  3
 B locks 3,  waits on  5
 C locks 5,  waits on  2
 ```
-We can think about this as a graph, where 2 is connected  to 3, 3 is connected  to 5, and 5 is connected to 2. A deadlock is represented  by a cycle. An edge  (w, v) exists in the graph if a process declares that it will request lock v immediately after lock w. For the earlier example, the following edges would exist in the graph: (1, 2),  (2, 3),  (3, 4),  (1, 3),  (3, 5),  (7, 5),  (5, 9),  (9,  2).The "owner" of the edge does not matter.
+We can think about this as a graph, where 2 is connected  to 3, 3 is connected  to 5, and 5 is connected to 2. A deadlock is represented  by a cycle. An edge  (w, v) exists in the graph if a process declares that it will request lock v immediately after lock w. For the earlier example, the following edges would exist in the graph: (1, 2),  (2, 3),  (3, 4),  (1, 3),  (3, 5),  (7, 5),  (5, 9),  (9,  2). The "owner" of the edge does not matter.
 
 This class will need a declare method, which threads and processes will use to declare what order they will request resources in. This declare method  will iterate through the declare order, adding each contiguous pair of elements (v, w) to the graph. Afterwards, it will check to see if any cycles have been created. If any cycles have been created, it will backtrack, removing these edges from the graph, and then exit.
 
@@ -596,91 +596,91 @@ In the above code, note that we may do several depth-first searches, but touched
 
 The code below provides further details. For simplicity, we assume that all locks and processes (owners) are ordered sequentially.
 ```java
-    class LockFactory {
-        private static LockFactory instance;
-    
-        private int numberOfLocks = 5;   /*default  */
-        private LockNode[] locks;
-        /*  Maps from  a  process or  owner to the   order that  the   owner  claimed   it would
-         * call the   locks in */
-        private HashMap<Integer, LinkedList<LockNode>> lockOrder;
-    
-        private LockFactory(int count) { ...}
-        public static LockFactory getinstance() { return instance; }
-    
-        public static synchronized LockFactory initialize(int count) {
-            if (instance == null) instance = new LockFactory(count);
-            return instance;
-        }
-    
-        public boolean hasCycle(HashMap<Integer, Boolean> touchedNodes,
-                                int[] resourcesinOrder) {
-            /*check  for  a  cycle*/
-            for (int resource : resourcesinOrder) {
-                if (touchedNodes.get(resource) == false) {
-                    LockNode n = locks[resource];
-                    if (n.hasCycle(touchedNodes)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-    
-        /*To prevent  deadlocks, force  the  processes to  declare  upfront what order  they
-         * will  need the  locks  in. Verify  that this order  does  not  create a  deadlock  (a
-         * cycle  in  a  directed graph) */
-        public boolean declare(int ownerId, int[] resourcesinOrder) {
-            HashMap<Integer, Boolean> touchedNodes = new HashMap<Integer, Boolean>();
-    
-            /*add  nodes to  graph*/
-            int index = 1;
-            touchedNodes.put(resourcesinOrder[0], false);
-            for (index = 1; index < resourcesinOrder.length; index++) {
-                LockNode prev = locks[resourcesinOrder[index - 1]];
-                LockNode curr = locks[resourcesinOrder[index]];
-                prev.joinTo(curr);
-                touchedNodes.put(resourcesinOrder[index], false);
-            }
-    
-            /*if we  created a  cycle,  destroy this  resource list and return false*/
-            if (hasCycle(touchedNodes, resourcesinOrder)) {
-                for (int j = 1; j < resourcesinOrder.length; j++) {
-                    LockNode p = locks[resourcesinOrder[j - 1]];
-                    LockNode c = locks[resourcesinOrder[j]];
-                    p.remove(c);
-                }
-                return false;
-            }
-    
-            /* No  cycles detected.  Save the  order   that was declared,  so  that we  can
-             * verify that the  process  is really calling the  locks  in  the  order  it said
-             * it  would. */
-            LinkedList<LockNode> list = new LinkedList<LockNode>();
-            for (int i = 0; i < resourcesinOrder.length; i++) {
-                LockNode resource = locks[resourcesinOrder[i]];
-                list.add(resource);
-            }
-            lockOrder.put(ownerId, list);
-    
-            return true;
-        }
-    
-        /*  Get the  lock,   verifying first that the  process   is really calling the  locks  in
-         * the  order  it said   it would. */
-        public Lock getLock(int ownerId, int resourceID) {
-            LinkedList<LockNode> list = lockOrder.get(ownerId);
-            if (list == null) return null;
-    
-            LockNode head = list.getFirst();
-            if (head.getid() == resourceID) {
-                list.removeFirst();
-                return head.getLock();
-            }
-            return null;
-        }
-    }
-    
+1     class LockFactory {
+2         private static LockFactory instance;
+3     
+4         private int numberOfLocks = 5;   /*default  */
+5         private LockNode[] locks;
+6         /*  Maps from  a  process or  owner to the   order that  the   owner  claimed   it would
+7          * call the   locks in */
+8         private HashMap<Integer, LinkedList<LockNode>> lockOrder;
+9     
+10        private LockFactory(int count) { ...}
+11        public static LockFactory getinstance() { return instance; }
+12    
+13        public static synchronized LockFactory initialize(int count) {
+14            if (instance == null) instance = new LockFactory(count);
+15            return instance;
+16        }
+17    
+18        public boolean hasCycle(HashMap<Integer, Boolean> touchedNodes,
+19                                int[] resourcesinOrder) {
+20            /*check  for  a  cycle*/
+21            for (int resource : resourcesinOrder) {
+22                if (touchedNodes.get(resource) == false) {
+23                    LockNode n = locks[resource];
+24                  if (n.hasCycle(touchedNodes)) {
+25                      return true;
+26                  }
+27              }
+28          }
+29          return false;
+30      }
+31  
+32      /*To prevent  deadlocks, force  the  processes to  declare  upfront what order  they
+33       * will  need the  locks  in. Verify  that this order  does  not  create a  deadlock  (a
+34       * cycle  in  a  directed graph) */
+35      public boolean declare(int ownerId, int[] resourcesinOrder) {
+36          HashMap<Integer, Boolean> touchedNodes = new HashMap<Integer, Boolean>();
+37  
+38          /*add  nodes to  graph*/
+39          int index = 1;
+40          touchedNodes.put(resourcesinOrder[0], false);
+41          for (index = 1; index < resourcesinOrder.length; index++) {
+42              LockNode prev = locks[resourcesinOrder[index - 1]];
+43              LockNode curr = locks[resourcesinOrder[index]];
+44              prev.joinTo(curr);
+45              touchedNodes.put(resourcesinOrder[index], false);
+46          }
+47  
+48          /*if we  created a  cycle,  destroy this  resource list and return false*/
+49          if (hasCycle(touchedNodes, resourcesinOrder)) {
+50              for (int j = 1; j < resourcesinOrder.length; j++) {
+51                  LockNode p = locks[resourcesinOrder[j - 1]];
+52                  LockNode c = locks[resourcesinOrder[j]];
+53                  p.remove(c);
+54              }
+55              return false;
+56          }
+57  
+58          /* No  cycles detected.  Save the  order   that was declared,  so  that we  can
+59           * verify that the  process  is really calling the  locks  in  the  order  it said
+60           * it  would. */
+61          LinkedList<LockNode> list = new LinkedList<LockNode>();
+62            for (int i = 0; i < resourcesinOrder.length; i++) {
+63                LockNode resource = locks[resourcesinOrder[i]];
+64                list.add(resource);
+65            }
+66            lockOrder.put(ownerId, list);
+67    
+68            return true;
+69        }
+70    
+71        /*  Get the  lock,   verifying first that the  process   is really calling the  locks  in
+72         * the  order  it said   it would. */
+73        public Lock getLock(int ownerId, int resourceID) {
+74            LinkedList<LockNode> list = lockOrder.get(ownerId);
+75            if (list == null) return null;
+76    
+77            LockNode head = list.getFirst();
+78            if (head.getid() == resourceID) {
+79                list.removeFirst();
+80                return head.getLock();
+81            }
+82            return null;
+83        }
+84    }
+85    
     public class LockNode {
         public enum VisitState {FRESH, VISITING, VISITED};
     
@@ -738,14 +738,14 @@ The code below provides further details. For simplicity, we assume that all lock
 As always, when you see code this complicated  and lengthy, you wouldn't be expected to write all of it. More likely, you would be asked to sketch out pseudocode and possibly implement one of these methods.
 
 
-15.5    Call In Order: Suppose we have the following code:
+15.5    **Call In Order:** Suppose we have the following code:
 ```java
-public  class  Foo {
-    public  Foo() {   ... }
-    public  void first() {  ... }
-    public  void second() {   ... }
-    public  void third() {   ... }
-}
+1   public  class  Foo {
+2       public  Foo() {   ... }
+3       public  void first() {  ... }
+4       public  void second() {   ... }
+5       public  void third() {   ... }
+6   }
 ```
 The same instance of Foo will be passed to three different threads. ThreadA will call first threadB will call second, and threadC will call third. Design a mechanism to ensure that first is called before second and second is called before third.
 
@@ -899,15 +899,15 @@ To do this multithreaded, we want a structure that looks something like this:
 
 The code for this will look something like:
 ```java
-1	while (true)  {
-2		if (current >  max)   {
-3			return;
-4		}
-5		if (/*  divisibility test */) {
-6			System.out.println(/* print something*/);
-7			current++;
-8		}
-9	}
+1   while (true)  {
+2       if (current >  max)   {
+3           return;
+4       }
+5       if (/*  divisibility test */) {
+6           System.out.println(/* print something*/);
+7           current++;
+8       }
+9   }
 ```
 We'll need to  add some synchronization in the  loop.  Otherwise, the  value  of current could change between lines 2 - 4 and lines 5 - 8, and we can inadvertently exceed the  intended bounds of the  loop. Additionally, incrementing is not  thread-safe.
 
@@ -959,7 +959,7 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 32                  }
 33  
 34                  if ((current %  3  ==  0) == div3  &&
-35                  	(current %  5  ==  0) == div5) {
+35                      (current %  5  ==  0) == div5) {
 36                      print();
 37                      current++;
 38                  }

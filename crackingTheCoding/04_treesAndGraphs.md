@@ -108,9 +108,9 @@ In-order traversal means to "visit" (often,  print)  the left branch, then the c
 ```java
 1  void  inOrderTraversal(TreeNode  node) {
 2       if (node !=  null) {
-3       	inOrderTraversal(node.left);
-4       	visit(node);
-5       	inOrderTraversal(node.right);
+3           inOrderTraversal(node.left);
+4           visit(node);
+5           inOrderTraversal(node.right);
 6      }
 7  }
 ```
@@ -124,7 +124,7 @@ Pre-order traversal visits the current node before its child nodes (hence the na
 
 ```java
 1  void  preOrderTraversal(TreeNode  node)  {
-2  		 if (node !=  null) {
+2        if (node !=  null) {
 3             visit(node);
 4             preOrderTraversal(node.left);
 5             preOrderTraversal(node.right);
@@ -289,7 +289,7 @@ Breadth-first search and depth-first search tend to be used in different scenari
 
 However,  if we want to find the shortest path (or just any path) between two nodes, BFS is generally better. Consider representing all the friendships in the entire world in a graph and trying to find a path of friendships between Ash and Vanessa.
 
-In depth-first search, we could take a path like Ash  ->  Brian  ->    Carleton   ->   Davis   ->   Eric ->  Farah  ->  Gayle   ->  Harry  ->  Isabella ->  John ->  Kari... and then find ourselves very far away. We could go through most of the world without realizing that, in fact, Vanessa is Ash's friend. We will still eventually find the path, but it may take a long time. It also won't find us the shortest path.
+In depth-first search, we could take a path like `Ash -> Brian  -> Carleton -> Davis -> Eric -> Farah -> Gayle -> Harry ->  Isabella -> John ->  Kari...` and then find ourselves very far away. We could go through most of the world without realizing that, in fact, Vanessa is Ash's friend. We will still eventually find the path, but it may take a long time. It also won't find us the shortest path.
 
 In breadth-first search, we would stay close to Ash for as long as possible. We might iterate through many of Ash's friends, but we wouldn't go to his more distant connections until absolutely necessary. If Vanessa is Ash's friend, or his friend-of-a-friend, we'll find this out relatively quickly.
 
@@ -303,14 +303,14 @@ The pseudocode below implements DFS.
 
 ```java
 1    void  search(Node  root) {
-2    	if (root == null) return;
-3    	visit(root);
-4    	root.visited = true;
-5    	for each  (Node n in root.adjacent) {
-6    	     if (n.visited == false) {
-7    	          search(n);
-8    	     }
-9    	}
+2       if (root == null) return;
+3       visit(root);
+4       root.visited = true;
+5       for each  (Node n in root.adjacent) {
+6            if (n.visited == false) {
+7                 search(n);
+8            }
+9       }
 10   }
 ```
 
@@ -447,7 +447,7 @@ The code below implements this algorithm.
 7           return null;
 8       }
 9       int  mid = (start + end) /  2;
-10      TreeNode n = new   TreeNode(arr[mid]);
+10      TreeNode n = new TreeNode(arr[mid]);
 11      n.left  =  createMinimalBST(arr, start,  mid -  1);
 12      n.right =  createMinimalBST(arr, mid +  1, end);
 13      return n;
@@ -470,14 +470,14 @@ We can implement a simple modification of the pre-order traversal algorithm, whe
 
 ```java
 1   void  createLevelLinkedList(TreeNode root, ArrayList<LinkedList<TreeNode>>  lists,
-2   							int level) {
+2                               int level) {
 3       if (root == null) return; // base  case
 4  
 5       LinkedList<TreeNode> list = null;
 6       if (lists.size() == level) { // Level  not  contained in  list
 7           list =  new LinkedList<TreeNode>();
-8           /* Levels  are  always traversed in  order. So,  if this is the  first time  we've
-9           *  visited level i,  we  must have seen  levels 0 through  i -  1.  We   can
+8           /* Levels are always traversed in order. So, if this is the first time  we've
+9           *  visited level i, we  must have seen  levels 0 through  i -  1.  We can
 10          *  therefore safely add the  level at the  end. */
 11          lists.add(list);
 12      }  else {
@@ -537,7 +537,6 @@ However, both solutions require returning O(N) data. The extra O(log N) space us
 
 
 **4.4   Check Balanced:** Implement a function to check if a binary tree is balanced. For the purposes of this question, a balanced tree is defined to be a tree such that the heights of the two subtrees of any node never differ by more than one.
-pg 7 70
 
 SOLUTION
 
@@ -547,17 +546,17 @@ In this question, we've been fortunate enough to be told exactly what balanced m
 
 ```java
 1   int  getHeight(TreeNode root) {
-2       if (root == null) return -1;//    Base  case
+2       if (root == null) return -1; // Base  case
 3       return  Math.max(getHeight(root.left), getHeight(root.right)) + 1;
 4   }
 5  
 6   boolean isBalanced(TreeNode root) {
-7       if (root == null) return true;//    Base  case
+7       if (root == null) return true; // Base  case
 8  
 9       int heightDiff = getHeight(root.left) - getHeight(root.right);
 10      if (Math.abs(heightDiff) >   1)  {
 11          return false;
-12      } else {//Recurse
+12      } else { //Recurse
 13          return isBalanced(root.left) &&  isBalanced(root.right);
 14      }
 15  }
@@ -572,7 +571,7 @@ If we inspect this method, we may notice that getHeight could actually check if 
 This improved algorithm works by checking the height of each subtree as we recurse down from the root. On each node, we recursively get the heights of the left and right subtrees  through  the checkHeight method. If the subtree is balanced, then checkHeight will return the actual height of the subtree. If the subtree  is not balanced, then checkHeight will return an error code. We will immediately break and return an error code from the current call.
 
 
-> What do we use for an error code? The height of a null tree is generally defined to be -1, so that's not a great idea for an error code. Instead, we'll use Integer. MIN_VALUE.
+> What do we use for an error code? The height of a null tree is generally defined to be -1, so that's not a great idea for an error code. Instead, we'll use Integer.MIN_VALUE.
 
 
 The code below implements this algorithm.
@@ -683,7 +682,7 @@ Or, if you're implementing this in C++ or another language that  supports passin
 
 In the second solution, we leverage the definition of the binary search tree.
 
-What does it mean for a tree to be a binary search tree? We know that it must, of course, satisfy the condition left. data <=  current.data <  right.data for each node, but this isn't quite sufficient. Consider the following small tree:
+What does it mean for a tree to be a binary search tree? We know that it must, of course, satisfy the condition `left.data <=  current.data <  right.data` for each node, but this isn't quite sufficient. Consider the following small tree:
 
 ![](media/04_2_1.JPG)
 
@@ -745,7 +744,7 @@ But what if the node doesn't have a right subtree? This is where it gets a bit t
 
 If a node n doesn't have a right subtree, then we are done traversing n's subtree. We need to pick up where we left off with n's parent, which we'll call q.
 
-If n was to the left of q, then the next node we should traverse should be q (again, since left - >  current ->  right).
+If n was to the left of q, then the next node we should traverse should be q (again, since `left ->  current ->  right`).
 
 If n were to the right of q, then we have fully traversed q's subtree as well. We need to traverse upwards from q until we find a node x that we have not fully traversed.  How do we know that we have not fully traversed a node x? We know we have hit this case when we move from a left node to its parent. The left node is fully traversed, but its parent is not.
 
@@ -839,21 +838,21 @@ Yes. Nodes with no incoming edges can be built immediately since they don't depe
 
 Once we've done that, it's irrelevant that some nodes are dependent on d and f since d and f have already been built. We can reflect this new state by removing d and f's outgoing edges.
 
-	build   order: f,  d
+    build   order: f,  d
 
 ![](media/04_7_2.JPG)
 
 
 Next, we know that c, b, and g are free to build since they have no incoming edges. Let's build those and then remove their outgoing edges.
 
-	build  order: f,  d,  c,  b,  g
+    build  order: f,  d,  c,  b,  g
 
 ![](media/04_7_3.JPG)
 
 
 Project a can be built next, so let's do that and remove its outgoing edges. This leaves just e. We build that next, giving us a complete build order.
 
-	build  order:   f, d,  c,  b,  g,  a,  e
+    build  order:   f, d,  c,  b,  g,  a,  e
 
 Did this algorithm work, or did we just get lucky? Let's think about the logic.
 
@@ -878,8 +877,8 @@ Repeat until toBeProcessed is at the end of the buildOrder:
 
 2.  For each child of node:
 
-    - Decrement child. dependencies (the number of incoming edges).
-    - If child. dependencies is zero, add child to end of buildOrder.
+    - Decrement child.dependencies (the number of incoming edges).
+    - If child.dependencies is zero, add child to end of buildOrder.
 
 3.  Increment toBeProcessed.
 
@@ -901,7 +900,7 @@ The code below implements this algorithm.
 13          graph.createNode(project);
 14      }
 15      
-16      for (String[] dependency  :   dependencies)  {
+16      for (String[] dependency : dependencies)  {
 17          String first  = dependency[0];
 18          String second = dependency[1];
 19          graph.addEdge(first,  second);
@@ -1117,7 +1116,7 @@ The code below implements this algorithm.
 45      private State state  =  State.BLANK;
 46      public State getState() {  return state;  }
 47      public void  setState(State st) {  state =   st; }
-48      /*    Duplicate code removed for  brevity*/
+48      /* Duplicate code removed for  brevity */
 49  }
 ```
 
@@ -1187,7 +1186,7 @@ Next, we go to node 10, uncovering the subtree rooted at 15. We check this subtr
 ![](media/04_7_6.JPG)
 
 
-To implement this, we can just traverse upwards from p, storing the parent and the sibling node in a variable. (The sibling node is always a child of parent and refers to the newly uncovered  subtree.) At each iteration, sibling gets set to the old parent's sibling node and parent gets set to parent. parent.
+To implement this, we can just traverse upwards from p, storing the parent and the sibling node in a variable. (The sibling node is always a child of parent and refers to the newly uncovered  subtree.) At each iteration, sibling gets set to the old parent's sibling node and parent gets set to parent.parent.
 
 ```java
 1   TreeNode  commonAncestor(TreeNode root, TreeNode p,  TreeNode q)  {
@@ -1260,11 +1259,11 @@ The code below implements this approach.
 23  boolean covers(TreeNode root, TreeNode p)  {
 24      if (root ==  null) return false;
 25      if (root ==  p)  return true;
-26      return covers(root.left,  p)  ||   covers(root.right,   p);
+26      return covers(root.left,  p) || covers(root.right,   p);
 27  }
 ```
 
-This algorithm runs in O(n) time on a balanced tree. This is because covers is called on 2n nodes in the first call (n nodes for the left side, and n nodes for the right side). After that the algorithm branches left or right, at which point covers will be called on  2n/2  nodes, then  2n/4, and so on. This results in a runtime of O(n).
+This algorithm runs in O(n) time on a balanced tree. This is because covers is called on 2n nodes in the first call (n nodes for the left side, and n nodes for the right side). After that the algorithm branches left or right, at which point covers will be called on  (2n)/2  nodes, then  (2n)/4, and so on. This results in a runtime of O(n).
 
 We know at this point that we cannot do better than that in terms of the asymptotic runtime since we need to potentially look at every node in the tree. However, we may be able to improve it by a constant multiple.
 
@@ -1281,7 +1280,7 @@ We recurse through the entire tree with a function called commonAncestor(TreeNod
 - Returns null, if neither p nor q are in root's subtree. 
 - Else, returns the common ancestor of p and q.
 
-Finding the common ancestor of p and q in the final case is easy. When commonAncestor(n. left, p, q) and commonAncestor(n. right, p,  q) both return non-null values (indicating that p and q were found in different subtrees), then n will be the common ancestor.
+Finding the common ancestor of p and q in the final case is easy. When commonAncestor(n.left, p, q) and commonAncestor(n.right, p,  q) both return non-null values (indicating that p and q were found in different subtrees), then n will be the common ancestor.
 
 The code below offers an initial solution, but it has a bug. Can you find it?
 
@@ -1391,7 +1390,6 @@ EXAMPLE
 ```
 Input:
             2
-
           /   \
         1       3
 
@@ -1422,7 +1420,7 @@ What  else  can  we say? Some  people jump to the  conclusion that everything on
 
 Once  the  50 is inserted, all items less than 50 will be routed to the  left and all items greater than 50 will be routed to the  right. The 60 or the  20 could be inserted first, and it wouldn't matter.
 
-Let's think  about this problem recursively.  If we had all arrays  that could have  created the  subtree rooted at  20  (call this  arraySet20),  and all arrays  that could have  created the  subtree rooted at 60 (call this array5et60), how would that give us the full answer? We could just "weave" each array from array5et20 with each array from arraySet60-and then prepend each array with a 50.
+Let's think  about this problem recursively.  If we had all arrays  that could have  created the  subtree rooted at  20  (call this  arraySet20),  and all arrays  that could have  created the  subtree rooted at 60 (call this arraySet60), how would that give us the full answer? We could just "weave" each array from array5et20 with each array from arraySet60-and then prepend each array with a 50.
 
 Here's what we mean by weaving. We are merging two arrays in all possible ways, while keeping the elements within each array in the same relative order.
 ```
@@ -1488,7 +1486,7 @@ We've chosen to implement it the latter way. Since we're keeping the same refere
 17      for  (LinkedList<Integer> left : leftSeq) {
 18          for  (LinkedList<Integer> right : rightSeq) {
 19              ArrayList<LinkedList<Integer>>  weaved =
-20                 			new ArrayList<LinkedList<Integer>>();
+20                          new ArrayList<LinkedList<Integer>>();
 21              weaveLists(left, right,  weaved, prefix);
 22              result.addAll(weaved);
 23          }
@@ -1858,7 +1856,7 @@ Another way to think about what we're doing is that the initial random number ca
 36      }
 37      public void insertlnOrder(int  d) {/* same  */}
 38      public int size() { return size; }
-39      public  TreeNode find(int d) {/* same   */}
+39      public TreeNode find(int d) {/* same   */}
 40  
 41  }
 ```
@@ -1951,7 +1949,7 @@ In an unbalanced tree, the runtime could be much worse. Consider a tree that is 
 
 ##### Solution #2: Optimized
 
-In analyzing the last solution, we may realize that we repeat some work. For a path such as 10  ->  5   -> 3  ->   -2, we traverse this path (or parts of it) repeatedly. We do it when we start with node  10, then when we go to node 5 (looking at 5, then 3, then  -2), then  when  we go to node  3, and then  finally  when  we go to node -2. Ideally, we'd like to reuse this work.
+In analyzing the last solution, we may realize that we repeat some work. For a path such as `10  ->  5   -> 3  ->   -2`, we traverse this path (or parts of it) repeatedly. We do it when we start with node  10, then when we go to node 5 (looking at 5, then 3, then  -2), then  when  we go to node  3, and then  finally  when  we go to node -2. Ideally, we'd like to reuse this work.
 
 ```
             10
@@ -1980,12 +1978,12 @@ Since we're just looking for the number of paths, we can use a hash table. As we
 
 For example:
 ```
-index:   0       1         2          3            4         5         6       7       8 
+index:   0       1     2     3     4       5     6      7      8 
 ------------------------------------------------------------------------------------------
 value:   10 ->   5  -> 1  -> 2 -> -1  ->  -1  -> 7  ->  1  ->  2 
 sum:     10     15    16    18    17      16    23     24     26
 ```
-The value of runningSum7 is 24. If targetSum is 8, then we'd look up 16 in the hash table. This would have a value of 2 (originating from index 2 and index 5). As we can see above, indexes 3 through 7 and indexes 6 through 7 have sums of 8.
+The value of runningSum₇  is 24. If targetSum is 8, then we'd look up 16 in the hash table. This would have a value of 2 (originating from index 2 and index 5). As we can see above, indexes 3 through 7 and indexes 6 through 7 have sums of 8.
 
 Now that we've settled the algorithm for an array, let's review this on a tree. We take a similar approach.
 
@@ -2006,7 +2004,7 @@ Despite the complexity of deriving this algorithm, the code to implement this is
 3   }
 4  
 5   int countPathsWithSum(TreeNode  node,  int targetSum, int runningSum,
-6   				HashMap<Integer, Integer> pathCount)  {
+6                   HashMap<Integer, Integer> pathCount)  {
 7       if (node  ==  null) return 0;  // Base case
 8  
 9       /*  Count paths   with  sum ending  at the  current node.  */

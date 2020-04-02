@@ -4,7 +4,7 @@
 
 While  there are a large number of recursive problems, many follow similar patterns. A good hint that a problem is recursive is that it can be built off of subproblems.
 
-When you hear a problem beginning with the following statements, it's often (though not always) a good candidate for recursion: "Design an algorithm to compute the nth ..", "Write code to list the first n ..:; "Imple­ment a method to compute all..", and so on.
+When you hear a problem beginning with the following statements, it's often (though not always) a good candidate for recursion: "Design an algorithm to compute the nth ..", "Write code to list the first n ..; "Imple­ment a method to compute all..", and so on.
 
 > Tip: In my experience  coaching  candidates, people  typically have about 50% accuracy in their "this sounds like a recursive problem" instinct. Use that instinct, since that 50% is valuable. But don't be afraid to look at the problem in a different way, even if you initially thought it seemed recursive. There's also a 50% chance that you were wrong.
 
@@ -14,7 +14,7 @@ Practice makes perfect! The more problems you do, the easier it will be to recog
 
 ### How to Approach
 
-Recursive solutions, by definition, are built off of solutions to subproblems. Many times, this will mean simply to compute f(n) by adding something, removing something, or otherwise changing the solution for f ( n-1). In other cases, you might solve the problem  for the first half of the data set, then the second half, and then merge those results.
+Recursive solutions, by definition, are built off of solutions to subproblems. Many times, this will mean simply to compute f(n) by adding something, removing something, or otherwise changing the solution for f(n-1). In other cases, you might solve the problem  for the first half of the data set, then the second half, and then merge those results.
 
 There are many ways you might divide a problem into subproblems. Three of the most common approaches to develop an algorithm are bottom-up, top-down, and half-and-half.
 
@@ -42,7 +42,7 @@ Merge sort is also a "half-and-half" approach. We sort each half of the array an
 
 Recursive algorithms can be very space inefficient. Each recursive call adds a new layer to the stack, which means that if your algorithm recurses to a depth of n, it uses at least O(n) memory.
 
-For this reason, it's often better to implement  a recursive algorithm iteratively. All recursive algorithms can be implemented iteratively, although  sometimes the code to do so is much more complex. Before diving into recursive code, ask yourself how hard it would be to implement  it iteratively, and discuss the tradeoffs with your interviewer.
+For this reason, it's often better to implement  a recursive algorithm iteratively. *All* recursive algorithms can be implemented iteratively, although  sometimes the code to do so is much more complex. Before diving into recursive code, ask yourself how hard it would be to implement  it iteratively, and discuss the tradeoffs with your interviewer.
 
 
 ### Dynamic Programming & Memoization
@@ -77,7 +77,7 @@ We will start with a recursive implementation. Sounds simple, right?
 
 What  is the runtime of this function? Think for a second before you answer.
 
-If you said O(n) or O(n²) (as many people do). think again. Study the code path that the code takes. Drawing the code paths as a tree (that is, the recursion tree) is useful on this and many recursive problems.
+If you said O(n) or O(n²) (as many people do), think again. Study the code path that the code takes. Drawing the code paths as a tree (that is, the recursion tree) is useful on this and many recursive problems.
 
 ```
                          ----------fib(5)----
@@ -93,7 +93,7 @@ If you said O(n) or O(n²) (as many people do). think again. Study the code path
 fib(1)  fib(0)
 ```
 
-Observe that the leaves on the tree are all fib ( 1) and fib( 0). Those signify the base cases.
+Observe that the leaves on the tree are all fib(1) and fib(0). Those signify the base cases.
 
 The total number of nodes in the tree will represent the runtime, since each call only does O(1) work outside of its recursive calls. Therefore, the number of calls is the runtime.
 
@@ -121,7 +121,7 @@ Study the recursion tree. Where do you see identical nodes?
 
 There are lots of identical nodes. For example, fib(3) appears twice and fib(2) appears three times. Why should we recompute  these from scratch each time?
 
-In fact, when we call fib( n), we shouldn't have to do much more than O(n) calls, since there's only O(n) possible values we can throw at fib. Each time we compute fib(i), we should just cache this result and use it later.
+In fact, when we call fib(n), we shouldn't have to do much more than O(n) calls, since there's only O(n) possible values we can throw at fib. Each time we compute fib(i), we should just cache this result and use it later.
 
 This is exactly what memoization is.
 
@@ -208,7 +208,7 @@ Interview Questions
 
 ---
 
-**8.1 		Triple Step:** A child is running up a staircase with n steps and can hop either 1 step, 2 steps, or 3 steps at a time. Implement a method to count how many possible ways the child can run up the stairs.
+**8.1     Triple Step:** A child is running up a staircase with n steps and can hop either 1 step, 2 steps, or 3 steps at a time. Implement a method to count how many possible ways the child can run up the stairs.
 
 SOLUTION
 
@@ -350,7 +350,7 @@ We should look for a faster way.
 
 Often, we can optimize exponential algorithms by finding duplicate work. What work are we repeating?
 
-If  we walk through  the algorithm, we'll see that we are visiting squares multiple times. In fact, we visit each square many, many times. After all, we have re squares but we're doing O(2ʳ⁺ᶜ) work. If we were only visiting each square once, we would probably have an algorithm that was O(re) (unless we were somehow doing a lot of work during each visit).
+If  we walk through  the algorithm, we'll see that we are visiting squares multiple times. In fact, we visit each square many, many times. After all, we have re squares but we're doing O(2ʳ⁺ᶜ) work. If we were only visiting each square once, we would probably have an algorithm that was O(rc) (unless we were somehow doing a lot of work during each visit).
 
 How does our current algorithm work? To find a path to (r, c),  we look for a path to an adjacent coordinate: (r-1, c) or (r, c-1). Of course, if one of those squares is off limits, we ignore it.  Then, we look at their adjacent coordinates: (r-2, c),  (r-1, c-1), (r-1, c-1), and (r, c-2). The spot (r -1, c-1) appears  twice, which means that we're duplicating effort. Ideally, we should remember  that we already visited (r-1, c-1) so that we don't waste our time.
 
@@ -534,26 +534,26 @@ The subsets of {a₁, a₂, ..., aₙ} are also called the powerset, P({a₁, a�
 
 This problem is a good candidate for the Base Case and Build approach. Imagine that we are trying to find all subsets of a set like S = {a₁,    a₂, ... ,  aₙ}. We can start with the Base Case. 
 
-*Base Case*:n =  0.
+*Base Case*: n =  0.
 
 There is just one subset of the empty set: {}.
 
-*Case*:n =   1.
+*Case*: n =   1.
 
 There are two subsets of the set {a₁}: {}, {a₁}.
 
-*Case*:n =  2.
+*Case*: n =  2.
 
 There are four subsets of the set {a₁,  a₂}: {} ,{a₁}, {a₂},{a₁ ,  a₂}.
 
-*Case*:n =  3.
+*Case*: n =  3.
 
 Now here's where things get interesting. We want to find a way of generating the solution for n = 3 based on the prior solutions.
  
 
 What is the difference between the solution for n = 3 and the solution for n  =  2? Let's look at this more deeply:
 ```
-P(2) = { }, {a₁}, {a₂}, {a₁ , a₂}
+P(2) = { }, {a₁}, {a₂}, {a₁, a₂}
 P(3) = { }, {a₁}, {a₂}, {a₃}, {a₁, a₂}, {a₁, a₃}, {a₂, a₃}, {a₁, a₂, a₃}
 ```
 The difference between these solutions  is that P(2) is missing all the subsets containing a3.
@@ -562,13 +562,13 @@ P(3) - P(2) = {a₃}, {a₁, a₃}, {a₂, a₃}, {a₁, a₂, a₃}
 ```
 How can we use P(2) to create P(3)? We can simply clone the subsets in P(2) and add a3  to them: 
 ```
-P(2)      = {}, {a₁}, {a₂}, {a₁, a₂} 
+P(2)      = {} , {a₁}, {a₂}, {a₁, a₂} 
 P(2) + a₃ = {a₃}, {a₁, a₃}, {a₂, a₃), {a₁, a₂, a₃}
 ```
 
 When merged together, the lines above make P(3).
 
-*Case*:n  >   0
+*Case*: n  >   0
 
 Generating P(n) for the general case is just a simple generalization of the above steps. We compute P(n-1), clone the results, and then add aₙ to each of these cloned sets. 
 
@@ -584,7 +584,7 @@ The following code implements this algorithm:
 7       allsubsets =  getSubsets(set,  index + 1);
 8       int item =  set.get(index);
 9       ArrayList<ArrayList<Integer>> moresubsets
-10      new ArrayList<ArrayList<Integer>>();
+10        new ArrayList<ArrayList<Integer>>();
 11      for (ArrayList<Integer> subset : allsubsets) {
 12        ArrayList<Integer>  newsubset =  new ArrayList<Integer>();
 13        newsubset.addAll(subset);  //
@@ -636,7 +636,7 @@ Generating all subsets, then, really just comes down to generating all binary nu
 There's nothing  substantially better or worse about this solution compared  to the first one.
 
 
-**8.5 	Recursive Multiply:**  Write a recursive function to multiply two positive integers without using the * operator  (or / operator). You can use addition, subtraction, and bit shifting, but you should minimize the number of those operations.
+**8.5   Recursive Multiply:**  Write a recursive function to multiply two positive integers without using the * operator  (or / operator). You can use addition, subtraction, and bit shifting, but you should minimize the number of those operations.
 
 SOLUTION
 
@@ -694,15 +694,16 @@ If we observe how the recursion operates, we'll notice that we have duplicated w
 ```
 minProduct(17,  23)
     minProduct(8,   23)
-	 	   minProduct(4,   23)  * 2
-	 		    ...
+       minProduct(4,   23)  * 2
+          ...
   + minProduct(9,   23)
-	 	   minProduct(4,   23)
-	 		    ...
-	 	 + minProduct(S,  23)
+       minProduct(4,   23)
+          ...
+     + minProduct(S,  23)
+          ...
 ```
 
-The second call to minProduct (4, 23) is unaware of the prior call, and so it repeats the same work. We should cache these results.
+The second call to minProduct(4, 23) is unaware of the prior call, and so it repeats the same work. We should cache these results.
 
 ```java
 1   int  minProduct(int a,  int b)  {
@@ -777,7 +778,7 @@ In doing so, we have  an unexpected "win". Our minProduct function just recurses
 This algorithm will run in O(log s) time,  where s is the smaller of the  two numbers.
 
 
-**8.6	Towers of Hanoi:** In the classic problem of the Towers of Hanoi, you have 3 towers and N disks of different sizes which can slide onto any tower. The puzzle starts with disks sorted in ascending order of size from top to bottom (i.e., each disk sits on top of an even larger one). You have the following constraints:
+**8.6 Towers of Hanoi:** In the classic problem of the Towers of Hanoi, you have 3 towers and N disks of different sizes which can slide onto any tower. The puzzle starts with disks sorted in ascending order of size from top to bottom (i.e., each disk sits on top of an even larger one). You have the following constraints:
 
 1. Only one disk can be moved at a time. 
 2. A disk is slid off the top of one tower onto another tower. 
@@ -907,7 +908,7 @@ The following code provides a more detailed implementation of this algorithm, us
 
 Implementing the towers as their own objects is not strictly necessary, but it does help to make the code cleaner in some respects.
 
-**8.7 	Permutations without Dups:** Write a method to compute all permutations of a string of unique characters.
+**8.7   Permutations without Dups:** Write a method to compute all permutations of a string of unique characters.
 
 
 SOLUTION
@@ -981,7 +982,7 @@ We can now implement this algorithm recursively.
 27  }
 ```
 
-##### Approach 2: Building from permutations of all n-1 character substrings.
+**Approach 2: Building from permutations of all n-1 character substrings.**
 
 *Base Case: single-character strings*
 
@@ -1003,9 +1004,9 @@ Here is where the cases get more interesting.  How can we generate all permutati
 Well, in essence, we just need to "try" each character as the first character and then append the permuta­tions.
 ```
 P(a₁a₂a₃) =  {a₁ +  P(a₂a₃)}  +  {a₂ +  P(a₁a₃)} +  {a₃ +  P(a₁a₂)}
-	{a₁ +  P(a₂a₃)} -> a₁a₂a₃, a₁a₃a₂
-	{a₂ +  P(a₁a₃)} -> a₂a₁a₃, a₂a₃a₁
-	{a₃ +  P(a₁a₂)} -> a₃a₁a₂, a₃a₂a₁
+  {a₁ +  P(a₂a₃)} -> a₁a₂a₃, a₁a₃a₂
+  {a₂ +  P(a₁a₃)} -> a₂a₁a₃, a₂a₃a₁
+  {a₃ +  P(a₁a₂)} -> a₃a₁a₂, a₃a₂a₁
 ```
 Now that we can generate all permutations of three-character strings, we can use this to generate permuta­tions of four-character strings.
 ```
@@ -1066,7 +1067,7 @@ Alternatively, instead of passing the permutations back up the stack, we can pus
 For a discussion of the runtime of this algorithm, see Example 12 on page 51.
 
 
-**8.8 	Permutations with  Duplicates:** Write a method to compute all permutations of a string whose characters are not necessarily unique. The list of permutations should not have duplicates. 
+**8.8   Permutations with  Duplicates:** Write a method to compute all permutations of a string whose characters are not necessarily unique. The list of permutations should not have duplicates. 
 
 
 SOLUTION
@@ -1088,17 +1089,17 @@ a->2 |   b->4 |   c->1
 Let's imagine generating a permutation of this string (now represented as a hash table). The first choice we make is whether to use an a, b, or c as the first character. After that, we have a subproblem to solve: find all permutations of the remaining characters, and append those to the already picked "prefix".
 
 ```
-P(a->2 |  b->4 |  c->1) ={a +  P(a->1 |  b->4 |  c->1)} +
-						             {b +  P(a->2 |  b->3 |  c->1)} +
-						             {c +  P(a->2 |  b->4 |  c->0)}
-	P(a->1 | b->4 |  c->1) ={a +  P(a->0 |  b->4 |  c->l)} +
-						              {b +  P(a->1 |  b->3 |  c->1)} +
-							            {c +  P(a->1 |  b->4 |  c->0)}
-	P(a->2 | b->3 |  c->1) ={a +  P(a->1 |  b->3 |  c->l)} +
-							            {b +  P(a->2 |  b->2 |  c->1)} +
-							            {c +  P(a->2 |  b->3 |  c->0)}
-	P(a->2 | b->4 |  c->0) ={a +  P(a->1 |  b->4 |  c->0)} +
-					                {b +  P(a->2 |  b->3 |  c->0)}
+P(a->2 |  b->4 |  c->1) = {a +  P(a->1 |  b->4 |  c->1)} +
+                          {b +  P(a->2 |  b->3 |  c->1)} +
+                          {c +  P(a->2 |  b->4 |  c->0)}
+  P(a->1 | b->4 |  c->1) = {a +  P(a->0 |  b->4 |  c->l)} +
+                           {b +  P(a->1 |  b->3 |  c->1)} +
+                           {c +  P(a->1 |  b->4 |  c->0)}
+  P(a->2 | b->3 |  c->1) = {a +  P(a->1 |  b->3 |  c->l)} +
+                           {b +  P(a->2 |  b->2 |  c->1)} +
+                           {c +  P(a->2 |  b->3 |  c->0)}
+  P(a->2 | b->4 |  c->0) = {a +  P(a->1 |  b->4 |  c->0)} +
+                           {b +  P(a->2 |  b->3 |  c->0)}
 ```
 
 Eventually, we'll get down to no more characters remaining.
@@ -1146,7 +1147,7 @@ The code below implements this algorithm.
 
 In situations where the  string has many duplicates, this algorithm will run a lot faster  than the  earlier  algo­rithm.
 
-**8.9 	Parens:** Implement an algorithm to print  all valid (i.e., properly opened and  closed) combinations of n pairs of parentheses.
+**8.9   Parens:** Implement an algorithm to print  all valid (i.e., properly opened and  closed) combinations of n pairs of parentheses.
 
 EXAMPLE 
 
@@ -1162,7 +1163,7 @@ Our first thought here might be  to  apply a recursive approach where we build  
 
 Let's consider the  solution for n   =  3: 
 ```
-(()())       ((()))      ()(())		(())()      () () () 
+(()())       ((()))      ()(())   (())()      () () () 
 ```
 How might we build this from n   =  2?
 ```
@@ -1295,7 +1296,7 @@ Does this algorithm seem familiar? It should! This is essentially depth-first se
 
 We could alternatively implement this using breadth-first search.
 
-**8.11 	Coins:** Given an infinite number  of quarters  (25 cents), dimes (10  cents), nickels (5 cents), and pennies (1 cent), write code to calculate the number of ways of representing n cents.
+**8.11  Coins:** Given an infinite number  of quarters  (25 cents), dimes (10  cents), nickels (5 cents), and pennies (1 cent), write code to calculate the number of ways of representing n cents.
 
 SOLUTION
 
@@ -1307,20 +1308,20 @@ Let's say n  =  100. We want to compute the number of ways of making change for 
 
 We know that making change for 100 cents will involve either 0, 1, 2, 3, or 4 quarters. So:
 ```
-makeChange(100) = makeChange(100 using 0  quarters)+ 
-				          makeChange(100 using 1  quarter) + 
-				          makeChange(100 using 2 quarters)+ 
-				          makeChange(100 using 3 quarters)+ 
-				          makeChange(100 using 4  quarters)
+makeChange(100) = makeChange(100 using 0 quarters)+ 
+                  makeChange(100 using 1 quarter) + 
+                  makeChange(100 using 2 quarters) + 
+                  makeChange(100 using 3 quarters) + 
+                  makeChange(100 using 4 quarters)
 ```
 Inspecting this further, we can see that some of these problems reduce. For example, makeChange(100 using 1  quarter) will equalmakeChange(75 using 0  quarters). This is because, if we must use exactly one quarter to make change for 100 cents, then our only remaining choices involve making change for the remaining 75 cents.
 
 We can apply the same logic tomakeChange(100 using  2  quarters), makeChange(100  using 3  quarters) andmakeChange(100 using  4  quarters). We have thus reduced the above state­ment to the following.
 ```
-makeChange(100) =  makeChange(100 using 0  quarters)+ 
-				           makeChange(75 using 0  quarters)+ 
-				           makeChange(50 using 0  quarters)+ 
-				           makeChange(25 using 0  quarters)+
+makeChange(100) =  makeChange(100 using 0  quarters) + 
+                   makeChange(75 using 0  quarters) + 
+                   makeChange(50 using 0  quarters) + 
+                   makeChange(25 using 0  quarters) +
                    1
 ```
 
@@ -1331,27 +1332,27 @@ dimes.
 
 Our approach for quarters applies to dimes as well, but we apply this for each of the four of five parts of the above statement. So, for the first part, we get the following statements:
 ```
-makeChange(100 using 0  quarters) = makeChange(100 using 0  quarters,  0 dimes)+ 
-								                    makeChange(l00 using 0  quarters,  1  dime) + 
-								                    makeChange(100 using 0  quarters,  2 dimes) +
-								                    ...
-								                    makeChange(l00  using 0  quarters,  10 dimes)
+makeChange(100 using 0  quarters) = makeChange(100 using 0  quarters,  0 dimes) + 
+                                    makeChange(l00 using 0  quarters,  1  dime) + 
+                                    makeChange(100 using 0  quarters,  2 dimes) +
+                                    ...
+                                    makeChange(l00  using 0  quarters,  10 dimes)
 
 makeChange(75 using 0  quarters) = makeChange(75 using 0  quarters,  0 dimes)  + 
-								                   makeChange(75 using 0  quarters,  1  dime)  + 
-								                   makeChange(75 using 0  quarters,  2 dimes)  +
-								                   ...
-								                   makeChange(75 using 0  quarters,  7  dimes)
+                                   makeChange(75 using 0  quarters,  1  dime)  + 
+                                   makeChange(75 using 0  quarters,  2 dimes)  +
+                                   ...
+                                   makeChange(75 using 0  quarters,  7  dimes)
 
 makeChange(50 using 0  quarters) = makeChange(50 using 0  quarters,  0 dimes)  + 
-								                   makeChange(50 using 0  quarters,  1 dime)   + 
-								                   makeChange(50 using 0  quarters,  2  dimes) + 
-								                   ...
-								                   makeChange(50 using 0  quarters,  5 dimes)
+                                   makeChange(50 using 0  quarters,  1 dime)   + 
+                                   makeChange(50 using 0  quarters,  2  dimes) + 
+                                   ...
+                                   makeChange(50 using 0  quarters,  5 dimes)
 
 make(hange(25 using  0 quarters) = makeChange(25 using 0  quarters,  0 dimes) + 
-								                   makeChange(25 using 0  quarters,  1 dime)  + 
-								                   makeChange(25 using 0  quarters,  2 dimes)
+                                   makeChange(25 using 0  quarters,  1 dime)  + 
+                                   makeChange(25 using 0  quarters,  2 dimes)
 ```
 
 Each one of these, in turn, expands out once we start applying nickels. We end up with a tree-like recursive structure where each call expands out to four or more calls.
@@ -1384,7 +1385,7 @@ We can resolve this issue by storing the previously computed values. We'll need 
 
 ```java
 1   int makeChange(int n)  {
-2     int[] denoms = {25,  10,  5,  1};
+2     int[] denoms = {2, 510,  5,  1};
 3     int[][] map  = new int[n + 1][denoms.length];  //precomputed  vals
 4     return makeChange(n, denoms, 0,  map);
 5   }
@@ -1409,7 +1410,7 @@ We can resolve this issue by storing the previously computed values. We'll need 
 Note that we've used a two-dimensional array of integers to store the previously computed values. This is simpler, but takes up a little extra space. Alternatively, we could use an actual hash table that maps from amount  to a new hash table, which then maps from denom to the precomputed value. There are other alternative data structures as well.
 
 
-**8.12	Eight Queens:** Write an algorithm to print all ways of arranging eight queens on an 8x8 chess board so that none of them share the same row, column, or diagonal. In this case, "diagonal" means all diagonals, not just the two that bisect the board.
+**8.12  Eight Queens:** Write an algorithm to print all ways of arranging eight queens on an 8x8 chess board so that none of them share the same row, column, or diagonal. In this case, "diagonal" means all diagonals, not just the two that bisect the board.
 
 SOLUTION
 
@@ -1424,25 +1425,25 @@ Picture the queen that is placed last, which we'll assume is on row 8. (This is 
 So if we want to know all the valid ways of arranging 8 queens on an 8x8 chess board, it would be:
 ```
 ways to  arrange 8  queens  on an  8x8  board= 
-	ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 0)  + 
-	ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 1)  +
-	ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 2)  +
-	ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 3)  +
-	ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 4)  + 
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 0)  + 
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 1)  +
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 2)  +
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 3)  +
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 4)  + 
   ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 5)  + 
   ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 6)  +
-	ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 7)
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 7)
 ```
 We can compute each one of these using a very similar approach:
 ```
-ways to  arrange 8  queens  on  an  8x8  board  with  queen  at (7,   3)
-	ways to ... with  queens  at (7, 3)  and  (6,  0)  + 
-	ways to ... with  queens  at (7, 3)  and  (6,  1)  + 
-	ways to ... with  queens  at (7, 3)  and  (6,  2)  + 
-	ways to ... with  queens  at (7, 3)  and  (6,  4)  + 
-	ways to ... with  queens  at (7, 3)  and  (6,  5)  +
-	ways to ... with  queens  at (7, 3)  and  (6,  6)  +
-	ways to ... with  queens  at (7, 3)  and  (6,  7) 
+ways to  arrange 8  queens  on  an  8x8  board  with  queen  at (7, 3) = 
+  ways to ... with  queens  at (7, 3)  and  (6, 0)  + 
+  ways to ... with  queens  at (7, 3)  and  (6, 1)  + 
+  ways to ... with  queens  at (7, 3)  and  (6, 2)  + 
+  ways to ... with  queens  at (7, 3)  and  (6, 4)  + 
+  ways to ... with  queens  at (7, 3)  and  (6, 5)  +
+  ways to ... with  queens  at (7, 3)  and  (6, 6)  +
+  ways to ... with  queens  at (7, 3)  and  (6, 7) 
 ```
 Note that we don't need to consider combinations with queens at (7,  3) and (6, 3), since this is a violation of the requirement that every queen is in its own row, column and diagonal.
 
@@ -1465,9 +1466,9 @@ Implementing this is now reasonably straightforward.
 14  }
 15  
 16  /* Check if (row1,   column1)  is a  valid spot  for  a queen by checking  if  there is a
-17  * queen in  the  same column or  diagonal. We  don't need to  check it for  queens in
-18  * the  same row because  the  calling placeQueen only  attempts to  place  one queen at
-19  * a  time.   We  know this row is empty. */
+17   * queen in  the  same column or  diagonal. We  don't need to  check it for  queens in
+18   * the  same row because  the  calling placeQueen only  attempts to  place  one queen at
+19   * a  time.   We  know this row is empty. */
 20  boolean  checkValid(Integer[]  columns,  int row1, int column1) {
 21    for (int row2 =  0;  row2 < row1;  row2++) {
 22      int column2 =  columns[row2];
@@ -1480,7 +1481,7 @@ Implementing this is now reasonably straightforward.
 29      }
 30      
 31      /* Check diagonals: if  the  distance between the  columns equals  the  distance
-32      * between the  rows,  then  they're in  the  same diagonal. */
+32       * between the  rows,  then  they're in  the  same diagonal. */
 33      int columnDistance  =  Math.abs(column2  -  column1);
 34      
 35      /*  row1  >   row2,  so  no need  for  abs  */
@@ -1495,7 +1496,7 @@ Implementing this is now reasonably straightforward.
 
 Observe that since each row can only have one queen, we don't need to store our board as a full 8x8 matrix. We only need a single array where column[r]  =  c indicates that row r has a queen at column c.
 
-**8.13 	Stack of Boxes:** You have a stack of n boxes, with widths w₁, heights h₁, and depths d₁. The boxes cannot be rotated and can only be stacked on top of one another if each box in the stack is strictly larger than the box above it in width, height, and depth. Implement a method to compute the height of the tallest possible stack. The height of a stack is the sum of the heights of each box.
+**8.13  Stack of Boxes:** You have a stack of n boxes, with widths w₁, heights h₁, and depths d₁. The boxes cannot be rotated and can only be stacked on top of one another if each box in the stack is strictly larger than the box above it in width, height, and depth. Implement a method to compute the height of the tallest possible stack. The height of a stack is the sum of the heights of each box.
 
 SOLUTION
 
@@ -1505,7 +1506,7 @@ To tackle this problem, we need to recognize the relationship between the differ
 
 **Solution#1**
 
-Imagine we had the following boxes: b₁,   b₂,••• ,   bₙ. The biggest stack that we can build with all the boxes equals the max of (biggest stack with bottom b₁, biggest stack with bottom b₂ ,   •••, biggest stack with bottom bₙ).That is, if we experimented with each box as a bottom and built the biggest stack possible with each, we would find the biggest stack possible.
+Imagine we had the following boxes: b₁,   b₂,••• ,   bₙ. The biggest stack that we can build with all the boxes equals the max of (biggest stack with bottom b₁, biggest stack with bottom b₂ ,   •••, biggest stack with bottom bₙ). That is, if we experimented with each box as a bottom and built the biggest stack possible with each, we would find the biggest stack possible.
 
 But, how would we find the biggest stack with a particular bottom? Essentially the same way. We experi­ment with different boxes for the second level, and so on for each level.
 
@@ -1548,7 +1549,7 @@ The code below implements this algorithm recursively.
 30  }
 ``` 
 
-The problem in this code is that it gets very inefficient. We try to find the best solution that looks like { b₃, b₄, ••• } even though we may have already found the best solution with b₄ at the bottom. Instead of generating these solutions from scratch, we can cache these results using memoization.
+The problem in this code is that it gets very inefficient. We try to find the best solution that looks like {b₃, b₄, ••• } even though we may have already found the best solution with b₄ at the bottom. Instead of generating these solutions from scratch, we can cache these results using memoization.
 
 ```java
 1   int  createStack(ArrayList<Box> boxes)   {
@@ -1585,7 +1586,7 @@ Because we're only mapping from an index to a height, we can just use an integer
 
 Be very careful here with what each spot in the hash table represents. In this code, stackMap[i] represents the tallest stack with box i at the bottom. Before pulling the value from the hash table, you have to ensure that box i can be placed on top of the current bottom.
 
-It helps to keep the line that recalls from the hash table symmetric with the one that inserts. For example, in this code, we recall from the hash table with bottomindex at the start of the method. We insert into the hash table with bottomindex at the end.
+It helps to keep the line that recalls from the hash table symmetric with the one that inserts. For example, in this code, we recall from the hash table with bottomIndex at the start of the method. We insert into the hash table with bottomIndex at the end.
 
 **Solution #2**
 
@@ -1629,7 +1630,7 @@ We will again use memoization to cache the height of the tallest stack with a pa
 Again, pay close attention to when you recall and insert values into the hash table. It's typically best if these are symmetric, as they are in lines 15 and 16-18.
 
 
-**8.14 	Boolean Evaluation:** Given a boolean expression consisting  of the symbols 0 (false), 1 (true), & (AND), | (OR), and ^ (XOR), and a desired boolean result value result, implement a function to count the number of ways of parenthesizing the expression such that it evaluates to result. The expression should be fully parenthesized (e.g., (0)^(1)) but not extraneously (e.g., (((0))^(1))).
+**8.14  Boolean Evaluation:** Given a boolean expression consisting  of the symbols 0 (false), 1 (true), & (AND), | (OR), and ^ (XOR), and a desired boolean result value result, implement a function to count the number of ways of parenthesizing the expression such that it evaluates to result. The expression should be fully parenthesized (e.g., (0)^(1)) but not extraneously (e.g., `(((0))^(1)))`.
 
 EXAMPLE
 
@@ -1646,19 +1647,19 @@ As in other recursive problems, the key to this problem is to figure out the rel
 
 **Brute Force**
 
-Consider  an  expression  like 0"0&0"111  and  the  target  result  true. How can  we  break  down countEval(0^0&0^1|1,  true) into smaller problems?
+Consider  an  expression  like 0^0&0^111  and  the  target  result  true. How can  we  break  down countEval(0^0&0^1|1,  true) into smaller problems?
 
 We could just essentially iterate through each possible place to put a parenthesis.
 
 ```
-countEval(0A0&0Alll,  true)=
+countEval(0^0&0^1|1,  true)=
      countEval(0^0&0^1|1  where paren  around  char  1,  true)
  +   countEval(0^0&0^1|1  where paren  around  char  3,  true)
  +   countEval(0^0&0^1|1  where paren  around  char  S,  true)
  +   countEval(0^0&0^1|1  where paren  around  char  7,  true)
 ```
 
-Now what? Let's look at just one of those expressions-the paren aroundchar 3. This gives us (0^0)&(0^\1). 
+Now what? Let's look at just one of those expressions-the paren aroundchar 3. This gives us (0^0)&(0^1). 
 
 In order to make that expression true, both the left and right sides must be true. So:
 ```
@@ -1675,29 +1676,29 @@ What happens when we have an "|"(OR)? Or an "^"(XOR)?
 If it's an OR, then either the left or the right side must be true-or both.
 
 ```
-	countEval(left | right,  true) =  countEval(left, true)  * countEval(right,  false)
-										             +  countEval(left, false) * countEval(right,  true)
-										             +  countEval(left, true)  * countEval(right,  true)
+  countEval(left | right,  true) =  countEval(left, true)  * countEval(right,  false)
+                                 +  countEval(left, false) * countEval(right,  true)
+                                 +  countEval(left, true)  * countEval(right,  true)
 ```
 If it's an XOR, then the left or the right side can be true, but not both.
 ```
 countEval(left ^   right, true) =   countEval(left,  true)  *  countEval(right,  false)
-							                  +   countEval(left,  false) *  countEval(right,  true)
+                                +   countEval(left,  false) *  countEval(right,  true)
 ```
 What if we were trying to make the result false instead? We can switch up the logic from above:
 ```
-countEval(left &  right,  false) = countEval(left, true)   * countEval(right,  false)
-								                 + countEval(left,  false) * countEval(right,  true)
-								                 + countEval(left,  false) * countEval(right,  false) 
-countEval(left | right, false) = countEval(left,  false)   * countEval(right,  false)
-countEval(left ^ right, false) = countEval(left,  false)   * countEval(right,  false) 
-							                 +   countEval(left, true)   * countEval(right,  true)
+countEval(left &  right,  false) = countEval(left, true)  * countEval(right,  false)
+                                 + countEval(left, false) * countEval(right,  true)
+                                 + countEval(left, false) * countEval(right,  false) 
+countEval(left | right, false) = countEval(left, false)   * countEval(right,  false)
+countEval(left ^ right, false) = countEval(left, false)   * countEval(right,  false) 
+                               + countEval(left, true)    * countEval(right,  true)
 ```
 
 Alternatively, we can just use the same logic from above and subtract it out from the total number of ways of evaluating the expression.
 ```
-totalEval(left) =  countEval(left,  true)+  countEval(left,  false) 
-totalEval(right) = countEval(right,  true)+    countEval(right,  false) 
+totalEval(left) =  countEval(left,  true) +  countEval(left,  false) 
+totalEval(right) = countEval(right, true) +  countEval(right,  false) 
 totalEval(expression) =  totalEval(left)* totalEval(right)
 countEval(expression,  false) = totalEval(expression)  -  countEval(expression,  true)
 ```
@@ -1744,7 +1745,7 @@ This makes the code a bit more concise.
 37  }
 ```
 
-Note that the tradeoff of computing the false results from the true ones, and of computing the {leftTrue,  rightTrue,  leftFalse,  and  rightFalse} values upfront, is a small amount of extra work in some cases. For example, if we're looking for the ways that an AND (&) can result in true, we never would have needed the leftFalse and rightFalse results. Likewise, if we're looking for the ways that an OR (|) can result in false, we never would have needed the leftTrue and rightTrue results.
+Note that the tradeoff of computing the false results from the true ones, and of computing the `{leftTrue,  rightTrue,  leftFalse,  and  rightFalse}` values upfront, is a small amount of extra work in some cases. For example, if we're looking for the ways that an AND (&) can result in true, we never would have needed the leftFalse and rightFalse results. Likewise, if we're looking for the ways that an OR (|) can result in false, we never would have needed the leftTrue and rightTrue results.
 
 Our current code is blind to what we do and don't actually need to do and instead just computes all of the values. This is probably a reasonable tradeoff to make (especially given the constraints of whiteboard coding) as it makes our code substantially shorter and less tedious to write. Whichever approach you make, you should discuss the tradeoffs with your interviewer.
 

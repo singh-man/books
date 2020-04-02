@@ -22,60 +22,60 @@ Your interviewer may be equally-or more-impressed if you can derive the  answer 
 Overloading is a term used to describe when two  methods have the  same name but differ in the  type or number of arguments.
 
 ```
-1   public  double computeArea(Circle c)  { ... }
-2   public  double computeArea(Square s)  { ... }
+1   public double computeArea(Circle c)  { ... }
+2   public double computeArea(Square s)  { ... }
 ```
 
 Overriding, however, occurs when a method shares the  same name and  function signature as another method in its super class.
 
 ```java
-1 	public  abstract  class  Shape {
-2 		public  void printMe()  {
-3 			System.out.println("I am a  shape.");
-4 		}
-5 		public abstract  double  computeArea();
-6 	}
-7	
-8 	public class Circle extends  Shape {
-9 		private double rad =  5;
-10		public void printMe() {
-11			System.out.println("I am  a  circle.");
-12		}
-13	
-14		public double computeArea()  {
-15			return rad *  rad * 3.15;
-16		}
-17	}
-18	
-19	public class Ambiguous extends  Shape {
-20		private double  area =  10;
-21		public   double  computeArea()  {
-22			return area;
-23		}
-24	}
-25	
-26	public class IntroductionOverriding {
-27		public  static void  main(String[] args)  {
-28			Shape[]  shapes  =  new Shape[2];
-29			Circle circle  =  new Circle();
-30			Ambiguous  ambiguous =  new Ambiguous();
-31	
-32			shapes[0] = circle;
-33			shapes[1] = ambiguous;
-34	
-35			for (Shape  s  : shapes)   {
-36				s.printMe();
-37				System.out.println(s.computeArea());
-38			}
-39		}
-40	}
+1   public  abstract  class  Shape {
+2       public  void printMe()  {
+3           System.out.println("I am a  shape.");
+4       }
+5       public abstract  double  computeArea();
+6   }
+7   
+8   public class Circle extends  Shape {
+9       private double rad =  5;
+10      public void printMe() {
+11          System.out.println("I am  a  circle.");
+12      }
+13  
+14      public double computeArea()  {
+15          return rad *  rad * 3.15;
+16      }
+17  }
+18  
+19  public class Ambiguous extends  Shape {
+20      private double  area =  10;
+21      public   double  computeArea()  {
+22          return area;
+23      }
+24  }
+25  
+26  public class IntroductionOverriding {
+27      public  static void  main(String[] args)  {
+28          Shape[]  shapes  =  new Shape[2];
+29          Circle circle  =  new Circle();
+30          Ambiguous  ambiguous =  new Ambiguous();
+31  
+32          shapes[0] = circle;
+33          shapes[1] = ambiguous;
+34  
+35          for (Shape  s  : shapes)   {
+36              s.printMe();
+37              System.out.println(s.computeArea());
+38          }
+39      }
+40  }
 ```
 
 The above code will print:
 ```
-1    I am  a  circle.
-2    78. 75
-3    I  am  a  shape.
+1    I am a circle.
+2    78.75
+3    I am a shape.
 4    10.0
 ```
 
@@ -96,9 +96,9 @@ ArrayList: An ArrayList is a dynamically resizing array, which grows as you inse
 Vector: A vector is very similar to an ArrayList except that it is synchronized.  Its syntax is almost identical as well.
 
 ```java
-1	Vector<String>  myVect	= new	Vector<String>();
-2	myVect.add("one");		
-3	myVect.add("two");		
+1   Vector<String>  myVect  = new   Vector<String>();
+2   myVect.add("one");      
+3   myVect.add("two");      
 4   system.out.printin(myVect.get(0));
 ```
 LinkedList: LinkedList is, of course, Java's built-in LinkedList class. Though it rarely comes up in an interview, it's useful to study because it demonstrates some of the syntax for an iterator.
@@ -140,7 +140,7 @@ Declaring a constructor private on class A means that you can only access the (p
 This has direct implications for inheritance, since a subclass calls its parent's constructor. The class A can be inherited, but only by its own or its parent's inner classes.
 
 
-**13.2 	Return  from  Finally:**  In Java, does the finally block get executed if we insert a return statement inside the try block of a try-catch-finally?
+**13.2  Return  from  Finally:**  In Java, does the finally block get executed if we insert a return statement inside the try block of a try-catch-finally?
 
 SOLUTION
 
@@ -183,37 +183,37 @@ There is an  optional finally block  after  the  try block  or after  the  catch
 Watch how this plays out in the  example below.
 
 ```java
-1 	public static  String lem() {
-2 		System.out.println("lem");
-3 		return "return from lem";
-4 	}
-5	
-6 	public static  String foo() {
-7 		int X =  0;
-8 		int y =  5;
-9 		try {
-10			System.out.println("start  try");
-11			int b  =   y/x;
-12			System.out.println("end try");
-13			return  "returned  from try";
-14		}  catch (Exception ex)  {
-15			System.out.println("catch");
-16			return lem() +  " | returned from catch";
-17		}  finally {
-18			System.out.println("finally");
-19		}
-20	}
-21	
-22	public static  void bar()  {
-23		System.out.println("start  bar");
-24		String v  =   foo();
-25		System.out.println(v);
-26		System.out.println("end  bar");
-27	}
-28	
-29	public static  void main(String[] args) {
-30		bar();
-31	}
+1   public static  String lem() {
+2       System.out.println("lem");
+3       return "return from lem";
+4   }
+5   
+6   public static  String foo() {
+7       int X =  0;
+8       int y =  5;
+9       try {
+10          System.out.println("start  try");
+11          int b = y/x;
+12          System.out.println("end try");
+13          return  "returned  from try";
+14      }  catch (Exception ex)  {
+15          System.out.println("catch");
+16          return lem() +  " | returned from catch";
+17      }  finally {
+18          System.out.println("finally");
+19      }
+20  }
+21  
+22  public static  void bar()  {
+23      System.out.println("start  bar");
+24      String v = foo();
+25      System.out.println(v);
+26      System.out.println("end  bar");
+27  }
+28  
+29  public static  void main(String[] args) {
+30      bar();
+31  }
 ```
 
 The output for this code is the following:
@@ -232,14 +232,13 @@ Look carefully  at lines 3 to 5 in the  output. The catch block is fully execute
 **finalize()**
 
 The automatic garbage collector calls the finalize() method just before actually destroying the  object. A class can therefore override the  finalize() method from the  Object class in order to define custom behavior during garbage collection.
-```
-1   protected  void  finalize() throws  Throwable {
+```java
+1   protected void finalize() throws Throwable {
 2        /* Close open   files,  release resources, etc */
-3    }
+3   }
 ```
 
 **13.4     Generics vs. Templates:** Explain the  difference between templates in C++ and generics in Java.
-pg/67
 
 SOLUTION
 
@@ -250,13 +249,13 @@ Many programmers consider templates and generics to be essentially equivalent be
 The  implementation of Java  generics is rooted in an idea  of "type erasure". This technique eliminates the parameterized types when source code is translated to the  Java Virtual Machine (JVM) byte code.
 
 For example, suppose you have the Java code below:
-```
+```java
 1     Vector<String>  vector  =  new Vector<String>();
 2     vector.add(new String("hello"));
 3     String str  =  vector.get(0);
 ```
 During compilation, this code is re-written into:
-```
+```java
 1     Vector vector  = new  Vector();
 2     vector.add(new String("hello"));
 3     String  str  =  (String) vector.get(0);
@@ -268,33 +267,35 @@ This is quite different from  C++. In C++, templates are essentially a glorified
 To illustrate this, consider the  code below:
 
 ```c
-1 	/*** MyClass.h  ***/
-2 	template<class T> class MyClass   {
-3 	public:
-4 		static int val;
-5 		MyClass(int v) { val  = v; }
-6 	};
-7	
-8 	/*** MyClass.cpp ***/
-9 	template<typename T>
-10	int MyClass<T>::bar;
-11	
-12	template class  MyClass<Foo>;
-13	template class  MyClass<Bar>;
-14	
-15	/*** main.cpp ***/
-16	MyClass<Foo> * foo1 = new MyClass<Foo>(10);
-17	MyClass<Foo> * foo2 = new MyClass<Foo>(15);
-18	MyClass<Bar> * bar1 = new MyClass<Bar>(20);
-19	MyClass<Bar> * bar2 = new MyClass<Bar>(35);
-20	
-21	int fl =  foo1->val;  //  will equal 15
-22	int f2 =  foo2->val;  //  will equal 15
-23	int bl =  bar1->val;  //  will equal 35
-24	int b2 =  bar2->val;  //  will equal 35
+1   /*** MyClass.h  ***/
+2   template<class T> class MyClass   {
+3   public:
+4       static int val;
+5       MyClass(int v) { val  = v; }
+6   };
+7   
+8   /*** MyClass.cpp ***/
+9   template<typename T>
+10  int MyClass<T>::bar;
+11  
+12  template class  MyClass<Foo>;
+13  template class  MyClass<Bar>;
+14  
+15  /*** main.cpp ***/
+16  MyClass<Foo> * foo1 = new MyClass<Foo>(10);
+17  MyClass<Foo> * foo2 = new MyClass<Foo>(15);
+18  MyClass<Bar> * bar1 = new MyClass<Bar>(20);
+19  MyClass<Bar> * bar2 = new MyClass<Bar>(35);
+20  
+21  int fl =  foo1->val;  //  will equal 15
+22  int f2 =  foo2->val;  //  will equal 15
+23  int bl =  bar1->val;  //  will equal 35
+24  int b2 =  bar2->val;  //  will equal 35
 ```
 
-In Java, static variables are shared across instances of MyClass, regardless of the different type parameters. Java generics and C++ templates have a number of other differences. These include:
+In Java, static variables are shared across instances of MyClass, regardless of the different type parameters. 
+
+Java generics and C++ templates have a number of other differences. These include:
 
 - C++ templates can use primitive types, like int. Java cannot and must instead use Integer.
 - In Java, you can restrict the template's type parameters to be of a certain type. For instance, you might use generics to implement a CardDeck and specify that the type parameter must extend from CardGame.
@@ -311,7 +312,7 @@ SOLUTION
 
 ---
 
-All offer a key->value map and a way to iterate through the keys. The most important distinction between these classes is the time guarantees and the ordering of the keys.
+All offer a `key->value` map and a way to iterate through the keys. The most important distinction between these classes is the time guarantees and the ordering of the keys.
 
 - HashMap offers O(1) lookup and insertion. If you iterate through the keys, though,  the ordering of the keys is essentially arbitrary. It is implemented by an array of linked lists.
 - TreeMap offers O(log N) lookup and insertion. Keys are ordered, so if you need to iterate through the keys in sorted order, you can. This means that keys must implement the Comparable interface. TreeMap is implemented by a Red-Black Tree.
@@ -320,16 +321,16 @@ All offer a key->value map and a way to iterate through the keys. The most impor
 Imagine you passed an empty TreeMap, HashMap, and LinkedHashMap into the following function:
 
 ```java
-1 	void  insertAndPrint(AbstractMap<Integer,   String> map) {
-2 		int[]  array = {1,   -1,   0};
-3 		for (int x  :   array) {
-4 			map.put(x,  Integer.toString(x));
-5 		}
-6	
-7 		for (int k :  map.keySet()) {
-8 			System.out.print(k + ",   ");
-9 		}
-10	}
+1   void  insertAndPrint(AbstractMap<Integer,   String> map) {
+2       int[]  array = {1,   -1,   0};
+3       for (int x  :   array) {
+4           map.put(x,  Integer.toString(x));
+5       }
+6   
+7       for (int k :  map.keySet()) {
+8           System.out.print(k + ",   ");
+9       }
+10  }
 ```
 
 The output for each will look like the results below.
@@ -365,21 +366,21 @@ Object Reflection is a feature in Java that provides a way to get reflective inf
 The code below offers an example of object reflection.
 
 ```java
-1 	/*Parameters */
-2 	Object[] doubleArgs =  new Object[]  { 4.2,  3.9 };
-3	
-4 	/*  Get  class */
-5 	Class rectangleDefinition  =  Class.forName("MyProj.Rectangle");
-6	
-7 	/*  Equivalent: Rectangle rectangle  =  new  Rectangle(4.2, 3.9);  */
-8 	Class[]  doubleArgsClass =  new Clas s[] {double.clas s,  double.class};
-9 	Constructor doubleArgsConstructor =
-10			rectangleDefinition.getConstructor(doubleArgsClass);
-11	Rectangle rectangle  =  (Rectangle) doubleArgsConstructor.newInstance(doubleArgs);
-12	
-13	/*  Equivalent:  Double area  =  rectangle.area();  */
-14	Method  m  =  rectangleDefinition.getDeclaredMethod("area");
-15	Double area  =  (Double) m.invoke(rectangle);
+1   /*Parameters */
+2   Object[] doubleArgs =  new Object[]  { 4.2,  3.9 };
+3   
+4   /*  Get  class */
+5   Class rectangleDefinition  =  Class.forName("MyProj.Rectangle");
+6   
+7   /*  Equivalent: Rectangle rectangle  =  new  Rectangle(4.2, 3.9);  */
+8   Class[]  doubleArgsClass =  new Clas s[] {double.clas s,  double.class};
+9   Constructor doubleArgsConstructor =
+10          rectangleDefinition.getConstructor(doubleArgsClass);
+11  Rectangle rectangle  =  (Rectangle) doubleArgsConstructor.newInstance(doubleArgs);
+12  
+13  /*  Equivalent:  Double area  =  rectangle.area();  */
+14  Method  m  =  rectangleDefinition.getDeclaredMethod("area");
+15  Double area  =  (Double) m.invoke(rectangle);
 ```
 This code does the equivalent of:
 
@@ -397,7 +398,7 @@ Of course, it doesn't seem very useful in the above example, but reflection can 
 3. You can call methods by name when you don't know  the  method in advance. For example, we may  let the user pass  in a class name, parameters for the constructor, and a method name. We can then use this information to create an object and  call a method. Doing  these operations without reflection would require a complex series of if-statements, if it's possible at all.
 
 
-**13.7 	Lambda Expressions:** There is  a  class  Country  that has  methods getContinent() and getPopulation(). Write a function int getPopulation(List\<Country>  countries, String  continent) that computes the total population of a given  continent, given  a list of all countries and the name of a continent.
+**13.7  Lambda Expressions:** There is  a  class  Country  that has  methods getContinent() and getPopulation(). Write a function int getPopulation(List\<Country>  countries, String  continent) that computes the total population of a given  continent, given  a list of all countries and the name of a continent.
 
 SOLUTION
 
@@ -408,15 +409,15 @@ This question really comes in two  parts. First, we need to generate a list of t
 Without lambda expressions, this is fairly straightforward to do.
 
 ```java
-1	int  getPopulation(List<Country> countries,   String  continent)  {
-2		int sum  =  0;
-3		for (Country c : countries)  {
-4			if (c.getContinent().equals(continent))  {
-5				sum  +=  c.getPopulation();
-6			}
-7		}
-8		return sum;
-9	}
+1   int  getPopulation(List<Country> countries,   String  continent)  {
+2       int sum  =  0;
+3       for (Country c : countries)  {
+4           if (c.getContinent().equals(continent))  {
+5               sum  +=  c.getPopulation();
+6           }
+7       }
+8       return sum;
+9   }
 ```
 
 To implement this with  lambda expressions, let's break this up into multiple parts.
@@ -436,25 +437,25 @@ Second, we convert this into a list of populations using map.
 ```
 Third and finally, we compute the sum using reduce.
 ```
-1	int population = populations.reduce(0, (a,  b)   ->  a  + b); 
+1   int population = populations.reduce(0, (a,  b)   ->  a  + b); 
 ```
 This function puts it all together.
 ```java
-1 	int  getPopulation(List<Country> countries,  String  continent)  {
-2 		/* Filter  countries. */
-3 		Stream<Country>  sublist =  countries.stream().filter(
-4 			country  ->  { return country.getContinent().equals(continent); }
-5 		);
-6	
-7 		/* Convert to list of populations. */
-8 		Stream<Integer> populations  =  sublist.map(
-9 			c  ->  c.getPopulation()
-10		) ;
-11	
-12		/* Sum list. */
-13		int  population =  populations.reduce(0, (a,  b) ->  a  +  b);
-14		return  population;
-15	}
+1   int  getPopulation(List<Country> countries,  String  continent)  {
+2       /* Filter  countries. */
+3       Stream<Country>  sublist =  countries.stream().filter(
+4           country  ->  { return country.getContinent().equals(continent); }
+5       );
+6   
+7       /* Convert to list of populations. */
+8       Stream<Integer> populations  =  sublist.map(
+9           c  ->  c.getPopulation()
+10      ) ;
+11  
+12      /* Sum list. */
+13      int  population =  populations.reduce(0, (a,  b) ->  a  +  b);
+14      return  population;
+15  }
 ```
 
 Alternatively, because of the  nature of this specific  problem, we can  actually remove the  filter entirely. The reduce operation can  have  logic that maps the  population of countries not  in the  right  continent to zero. The sum will effectively  disregard countries not  within continent.
@@ -468,7 +469,7 @@ Alternatively, because of the  nature of this specific  problem, we can  actuall
 Lambda functions were  new  to Java 8, so if you don't recognize them, that's probably why. Now is a great time  to learn  about them, though!
 
 
-**13.8     Lambda    Random:** Using Lambda expressions, write a function List\<Integer> getRandomSubset(List\<Integer> list) that returns a random subset of arbitrary size. All subsets (including the empty set) should be equally likely to be chosen.
+**13.8     Lambda    Random:** Using Lambda expressions, write a function `List<Integer> getRandomSubset(List<Integer> list)` that returns a random subset of arbitrary size. All subsets (including the empty set) should be equally likely to be chosen.
  
 SOLUTION
 
@@ -490,7 +491,7 @@ We've got two choices: yes or no. We need to weight the probability of "yes" vs.
 For any specific element, there are as many subsets that contain the element as do not contain it. Consider the following: 
 
 ```
-{}		 {1}
+{}       {1}
 {2}      {1,  2}
 {3}      {1,  3}
 {2,  3}  {1,  2, 3} 
@@ -503,42 +504,42 @@ This means that we can generate  a random subset by iterating through the list a
 
 Without lambda expressions, we can write something like this:
 ```java
-1 	List<Integer>  getRandomSubset(List<Integer> list) {
-2 		List<Integer> subset =  new ArrayList<Integer>();
-3 		Random  random =  new Random();
-4 		for (int item : list) {
-5 			/* Flip   coin.   */
-6 			if (random.nextBoolean())  {
-7 				subset.add(item);
-8 			}
-9 		}
-10		return  subset;
-11	}
+1   List<Integer>  getRandomSubset(List<Integer> list) {
+2       List<Integer> subset =  new ArrayList<Integer>();
+3       Random  random =  new Random();
+4       for (int item : list) {
+5           /* Flip   coin.   */
+6           if (random.nextBoolean())  {
+7               subset.add(item);
+8           }
+9       }
+10      return  subset;
+11  }
 ```
 To implement this approach using lambda expressions, we can do the following:
 ```java
-1	List<Integer>  getRandomSubset(List<Integer> list) {
-2		Random  random =  new Random();
-3		List<Integer> subset =  list.stream().filter(
-4			k  ->  { return  random.nextBoolean(); /*  Flip  coin.  */
-5		}).collect(Collectors.toList());
-6		return  subset;
-7	}
+1   List<Integer>  getRandomSubset(List<Integer> list) {
+2       Random  random =  new Random();
+3       List<Integer> subset =  list.stream().filter(
+4           k  ->  { return  random.nextBoolean(); /*  Flip  coin.  */
+5       }).collect(Collectors.toList());
+6       return  subset;
+7   }
 ```
 Or, we can use a predicate (defined within the class or within the function):
 ```java
-1 	Random  random =  new Random();
-2 	Predicate<Object> flipCoin  =  o  ->  {
-3 		return random.nextBoolean();
-4 	};
-5	
-6 	List<Integer>  getRandomSubset(List<Integer> list) {
-7 		List<Integer> subset =  list.stream().filter(flipCoin).
-8 		collect(Collectors.toList());
-9 		return subset;
-10	}
+1   Random  random =  new Random();
+2   Predicate<Object> flipCoin  =  o  ->  {
+3       return random.nextBoolean();
+4   };
+5   
+6   List<Integer>  getRandomSubset(List<Integer> list) {
+7       List<Integer> subset =  list.stream().filter(flipCoin).
+8       collect(Collectors.toList());
+9       return subset;
+10  }
 ```
-The nice thing about this implementation is that now we can apply the flipCoin predicate in other places.
+The nice thing about this implementation is that now we can apply the `flipCoin` predicate in other places.
 
 
 
