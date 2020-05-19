@@ -4,11 +4,11 @@ author: Manish
 rights:  Creative Commons Non-Commercial Share Alike 3.0
 language: en-US
 ...
-	
+    
 DS Introduction / Cheat Sheet
 =============================
 
-	D:\mani\dev\opt\pandoc-2.1.3\pandoc.exe --toc --toc-depth 6 -s 010_ds_analysis.md 020_ds_javaDS.md 030_ds_bigO_cheatSheet.md 040_ds_algos.md 050_ds_alogs_TSiege.md 060_ds_search_sort.md -o ds_new.epub
+    pandoc.exe --toc --toc-depth 6 -s *.md -o ds_new.epub
 
 Knowing your data structures can help you:
 
@@ -26,11 +26,11 @@ Amortized analysis is a method for analyzing a given algorithm's time complexity
 ### Asymptotic Notations
 
 Classify algorithms according to their performances.
-
+```
 Definition of "big Oh" `O()` `Worst case` -> upper bound
 Definition of "big Omega" `Ω()` `Best case` -> lower bound
 Definition of "big Theta" `Θ()` `Avg case`
-
+```
  > With **Asymptotic Analysis**, we can’t judge which one is better as we ignore constants in Asymptotic Analysis. Also, in Asymptotic analysis, we always talk about input sizes larger than a constant value. It might be possible that those large inputs are never given to your software and an algorithm which is asymptotically slower, always performs better for your particular situation.
 
 | Data Structure                    | Insert   | Delete     | Balance  | Get at index | Search   | Find minimum        | Find maximum        | Space usage |
@@ -94,16 +94,16 @@ This above table is only an approximate summary; for each data structure, there 
 | Algorithm      | Time Complexity |                |                 | Space Complexity |
 | ----           | ----            | ----           | ----            | ----             |
 |                | **Best**        | **Average**    | **Worst**       | **Worst**        |
-| Quicksort      | Ω(n log(n))     | Θ(n log(n))    | O(n^2)          | O(log(n))        |
+| Quicksort      | Ω(n log(n))     | Θ(n log(n))    | O(n²)           | O(log(n))        |
 | Mergesort      | Ω(n log(n))     | Θ(n log(n))    | **O(n log(n))** | O(n)             |
 | Timsort        | Ω(n)            | Θ(n log(n))    | **O(n log(n))** | O(n)             |
 | Heapsort       | Ω(n log(n))     | Θ(n log(n))    | **O(n log(n))** | **O(1)**         |
-| Bubble Sort    | Ω(n)            | Θ(n^2)         | O(n^2)          | **O(1)**         |
-| Insertion Sort | Ω(n)            | Θ(n^2)         | O(n^2)          | **O(1)**         |
-| Selection Sort | Ω(n^2)          | Θ(n^2)         | O(n^2)          | **O(1)**         |
-| Tree Sort      | Ω(n log(n))     | Θ(n log(n))    | O(n^2)          | O(n)             |
+| Bubble Sort    | Ω(n)            | Θ(n²)          | O(n²)           | **O(1)**         |
+| Insertion Sort | Ω(n)            | Θ(n²)          | O(n²)           | **O(1)**         |
+| Selection Sort | Ω(n²)           | Θ(n²)          | O(n²)           | **O(1)**         |
+| Tree Sort      | Ω(n log(n))     | Θ(n log(n))    | O(n²)           | O(n)             |
 | Shell Sort     | Ω(n log(n))     | Θ(n(log(n))^2) | O(n(log(n))^2)  | **O(1)**         |
-| Bucket Sort    | **Ω(n+k)**      | **Θ(n+k)**     | O(n^2)          | O(n)             |
+| Bucket Sort    | **Ω(n+k)**      | **Θ(n+k)**     | O(n²)           | O(n)             |
 | Radix Sort     | **Ω(nk)**       | **Θ(nk)**      | **O(nk)**       | O(n+k)           |
 | Counting Sort  | **Ω(n+k)**      | **Θ(n+k)**     | **O(n+k)**      | O(k)             |
 | Cubesort       | Ω(n)            | Θ(n log(n))    | O(n log(n))     | O(n)             |
@@ -135,15 +135,15 @@ This above table is only an approximate summary; for each data structure, there 
 **Tail recursion?** A recursive function is tail recursive when recursive call is the last thing executed by the function.
 
  1. **Factorial**: n! = n(n-1)! {n > 1} 
- 				   n! = 1 {n = 0}
+                   n! = 1 {n = 0}
 
  1. **Fibonacci**: Fn = F(n-1) + F(n-2) {n > 1}
- 					  = 0 {n = 0}
- 					  = 1 {n = 1}
-	
+                      = 0 {n = 0}
+                      = 1 {n = 1}
+    
    > Fibonacci by recursive can be mad efaster by using **Memonization!** i.e. by memorizing the return of the function calls already done!
 ~~~
- 	 			 F(n)
+                 F(n)
                 /    \
             F(n-1)   F(n-2)
             /   \     /      \
@@ -151,21 +151,21 @@ This above table is only an approximate summary; for each data structure, there 
        /    \
      F(n-3) F(n-4)
 
-	    fib(1)-->1
-	   fib(2)
-	    fib(0)-->0
-	  fib(3)
-	   fib(1)-->1
-	 fib(4)
-	   fib(1)-->1
-	  fib(2)
-	   fib(0)-->0
-	fib(5)
-	   fib(1)-->1
-	  fib(2)
-	   fib(0)-->0
-	 fib(3)
-	  fib(1)-->1
+        fib(1)-->1
+       fib(2)
+        fib(0)-->0
+      fib(3)
+       fib(1)-->1
+     fib(4)
+       fib(1)-->1
+      fib(2)
+       fib(0)-->0
+    fib(5)
+       fib(1)-->1
+      fib(2)
+       fib(0)-->0
+     fib(3)
+      fib(1)-->1
 ~~~
 
  1. **Towers Of Hanoi**
@@ -177,14 +177,14 @@ This above table is only an approximate summary; for each data structure, there 
 ```
 TOH(n, x, y, z)
 {
-	if(n>1) {
-		TOH(n-1, x, z, y);
-		move top disk of 'x' to 'y'
-		TOH(n-1, z, y, x);
-	}
-	else if (n == 1){
-		move disk of x to y;
-	}
+    if(n>1) {
+        TOH(n-1, x, z, y);
+        move top disk of 'x' to 'y'
+        TOH(n-1, z, y, x);
+    }
+    else if (n == 1){
+        move disk of x to y;
+    }
 }
 ```
   Time Complexity `T(n) = 2T(n-1) + 1; (1 is constant)`
@@ -199,95 +199,95 @@ T(n) = (2^n) - 1 with T(0) = 0
 O(2^n)
 ```
 
- 1. **Euclid's** GCD(x, 0) = x and GCD(x, y) = GCD(y, x % y)
+1. **Euclid's** GCD(x, 0) = x and GCD(x, y) = GCD(y, x % y)
 ```java
-	public int GCD(int x, int y) {
-	  if (y == 0) {
-	      return x;
-	  } else {
-	    return GCD(y, x % y);
-	  }
-	}
-```
-
-1. **Euclidean Algorithm** calling either gcd(m,n-m) or gcd(m-n,n) :
-```java
-public static int gcd(int m, int n) {
-	if (m==n) {
-		return n; // basis
-	} else if (m<n) {
-		return gcd(m,n-m); // recursion
-	} else {
-		return gcd(m-n,n); // recursion
-	}
+public int GCD(int x, int y) {
+  if (y == 0) {
+      return x;
+  } else {
+    return GCD(y, x % y);
+  }
 }
 ```
 
-1. **LOG**: log(2, 4) -> 2; log(10, 1000) -> 3
+2. **Euclidean Algorithm** calling either gcd(m,n-m) or gcd(m-n,n) :
+```java
+public static int gcd(int m, int n) {
+    if (m == n) {
+        return n; // basis
+    } else if (m < n) {
+        return gcd(m, n - m); // recursion
+    } else {
+        return gcd(m - n, n); // recursion
+    }
+}
+```
+
+3. **LOG**: log(2, 4) -> 2; log(10, 1000) -> 3
 ```java
 int log(int b, int n ) {
     if (n <= b) {
         return 1;
     } else {
-        return log(b, n/b)+1 ;
+        return log(b, n / b) + 1 ;
     }
 }
 ```
 
-1. **Multiply** -> multiply(2,3 ) -> 6
+4. **Multiply** -> multiply(2,3 ) -> 6
 ```java
 public int multiply(int x, int y) {
-  if (x == 0) {
-    return x;
-  } else {
-    return multiply(x - 1, y) + y;
-  }
+    if (x == 0) {
+        return x;
+    } else {
+        return multiply(x - 1, y) + y;
+    }
 }
 ```
 
-1. **Cumulative Sum**: sum of values fropm 1 to k. sumtok(5) -> 15
+5. **Cumulative Sum**: sum of values fropm 1 to k. sumtok(5) -> 15
 ```java
 public int sumtok(int k) {
-  if (k <= 0) {
-    return 0;
-  } else {
-    return sumtok(k-1) + k;
-  }
+    if (k <= 0) {
+        return 0;
+    } else {
+        return sumtok(k - 1) + k;
+    }
 }
 ```
 
-1. **Add Odd Values**: 
+6. **Add Odd Values**: 
 ```java
 public int addOdd(int n) {
-  if (n <= 0) {
-    return 0;
-  }
-  if (n % 2 != 0) { // Odd value
-    return n + addOdd(n - 1);
-  } else { // Even value
-    return addOdd(n - 1);
-  }
+    if (n <= 0) {
+        return 0;
+    }
+    if (n % 2 != 0) { // Odd value
+        return n + addOdd(n - 1);
+    } else { // Even value
+        return addOdd(n - 1);
+    }
 }
 ```
 
-1. **Sum of the Digits** -> sumOfDigits(1234) -> 10
+7. **Sum of the Digits** -> sumOfDigits(1234) -> 10
 ```java
 int getsum(int n) {
-   return n == 0 ? 0 : n % 10 + getsum(n/10);
+    return n == 0 ? 0 : n % 10 + getsum(n / 10);
 }
 ```
 
-1. **Count Characters** in string "ctcowAt" find no. of A in string
+8. **Count Characters** in string "ctcowAt" find no. of A in string
 ```java
 public int countChr(String str) {
-  if (str.length() == 0) {
-    return 0;
-  }
-  int count = 0;
-  if (str.substring(0, 1).equals("A")) {
-    count = 1;
-  }
-  return count + countChr(str.substring(1, str.length()));
+    if (str.length() == 0) {
+        return 0;
+    }
+    int count = 0;
+    if (str.substring(0, 1).equals("A")) {
+        count = 1;
+    }
+    return count + countChr(str.substring(1, str.length()));
 }
 ```
 
