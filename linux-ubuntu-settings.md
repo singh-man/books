@@ -98,13 +98,15 @@ echo "alias mvn_ist='mvn install -Dmaven.test.skip'" >> ~/.bashrc
 
 ### Install **Misc tools**
 ```sh
-sudo apt install pandoc poppler-utils elinks
+sudo apt install pandoc poppler-utils elinks maxima
 ```
 
 ### Install ffmpeg
 ```sh
 sudo add-apt-repository ppa:jonathonf/ffmpeg-4 && sudo apt-get update && sudo apt-get dist-upgrade
 sudo apt install ffmpeg
+or
+check snap for ffmpeg, sublimetext, vscode
 ```
 
 ### SDKMAN should be last line in bashrc so run this in end Install SDKMAN and Gradle
