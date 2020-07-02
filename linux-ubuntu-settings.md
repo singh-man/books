@@ -168,3 +168,5 @@ sdk install gradle 4.8.1
 	- Gradle
 		- Build and run using: Intellij IDEA
 		- Tun test using: Choose per test
+- Terminal
+	- Shell Path: "C:\Program Files\Git\bin\sh.exe" --login -i 
