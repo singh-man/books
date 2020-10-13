@@ -47,7 +47,7 @@ pip3 install pytest
 echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc && source ~/.bashrc
 ```
 
-#### Install Java 10 or 11
+#### Install Java 11 LTS
 ```sh
 sudo add-apt-repository ppa:linuxuprising/java
 sudo apt update
