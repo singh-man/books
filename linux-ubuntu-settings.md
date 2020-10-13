@@ -30,6 +30,10 @@ Once you make those changes, sign out and sign back in to Windows to ensure the 
 
 It’s a bug with 18.03 and you can easily fix it. Hit CTRL + Shift + ECS to open the task manager, goto the “Services” tab, find the “LxssManager” service and restart it.
 
+**WSL2 not connecting to internet in win version 2004 or in genearl**
+
+Follow the steps https://github.com/microsoft/WSL/issues/5256#issuecomment-666545999
+
 ### Install **dev tools below**
 ```sh
 sudo apt install git nginx openssh-client openssh-server nmap
