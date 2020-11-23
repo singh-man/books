@@ -7,7 +7,8 @@
 sudo apt-get update && sudo apt-get upgrade
 ```
 
-### WSL (only) -> change the mount from /mnt/c/ to /c
+### WSL (only) 
+#### change the mount from /mnt/c/ to /c
 
 > This step is mandatory if using WSL to execute docker commands installed on windows otherwise skip to next section.
 
@@ -33,6 +34,18 @@ It’s a bug with 18.03 and you can easily fix it. Hit CTRL + Shift + ECS to ope
 **WSL2 not connecting to internet in win version 2004 or in genearl**
 
 Follow the steps https://github.com/microsoft/WSL/issues/5256#issuecomment-666545999
+
+#### Fedora 33 WSL 2 on windows 10
+Follow:
+https://dev.to/bowmanjd/install-fedora-on-windows-subsystem-for-linux-wsl-4b26
+
+Below install successfully
+dnf install nano git nmap python3 python3-pip unzip zip maxima elinks -y && pip3 install pytest
+dnf clean all
+
+Trouble: will mess up the /etc/resolv.conf file and then all upgrades and installation will start failing.
+dnf install nginx poppler-utils
+postgres
 
 ### Install **dev tools below**
 ```sh
