@@ -47,11 +47,12 @@ Trouble: will mess up the /etc/resolv.conf file and then all upgrades and instal
 dnf install nginx poppler-utils
 postgres
 
-### Install **dev tools below**
+### Install **below packages**
 ```sh
 sudo apt install git nginx openssh-client openssh-server nmap
 sudo apt install python3-pip
 pip3 install pytest
+sudo apt install pandoc poppler-utils elinks maxima
 # Google for docker-ce, awscli
 ```
 
@@ -59,21 +60,6 @@ pip3 install pytest
 ```sh
 # This step not needed if using WSL 2
 echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc && source ~/.bashrc
-```
-
-#### Install Java 11 LTS
-```sh
-sudo add-apt-repository ppa:linuxuprising/java
-sudo apt update
-sudo apt install oracle-java10-installer
-
-OR
-
-sudo apt install openjdk-11-jdk-headless
-
-# udpate .bashrc "Find Java home dir first"
-echo "JAVA_HOME=/etc/alternatives/<java home dir>/" >> ~./bashrc
-echo "export JAVA_HOME" >> ~./bashrc
 ```
 
 #### Install leiningen
@@ -93,6 +79,7 @@ echo "export LEIN_HOME" >> ~/.bashrc
 #The alias command can be useful if you want to create a 'shortcut' to a command.
 alias lein='$LEIN_HOME/lein.sh'
 ```
+In windows 10 if using Git Bash use .bash_profile present in <user home>. Do note if using visual studio code add JAVA_HOME to .bash_profile so that maven can work.
 
 #### Install Maven
 ```sh
@@ -114,11 +101,6 @@ echo "alias mvn_i='mvn install'" >> ~/.bashrc
 echo "alias mvn_ist='mvn install -Dmaven.test.skip'" >> ~/.bashrc
 ```
 
-### Install **Misc tools**
-```sh
-sudo apt install pandoc poppler-utils elinks maxima
-```
-
 ### Install ffmpeg
 ```sh
 sudo add-apt-repository ppa:jonathonf/ffmpeg-4 && sudo apt-get update && sudo apt-get dist-upgrade
@@ -138,9 +120,8 @@ sdk install gradle 4.8.1
 ```
 
 ### Software to Install
-- sudo apt-get install xubuntu-restricted-extras
+- sudo apt-get install lubuntu-restricted-extras
 - install
-	- arc dark theme
 	- browser
 		- chromium
 		- elinks
