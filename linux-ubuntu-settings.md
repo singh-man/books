@@ -127,26 +127,29 @@ sdk install gradle 4.8.1
 		- elinks
 		- firefox
 		- tor
-	- git
-		- git extensions
 	- IDE
 		- android studio
 		- eclipse
 		- intellij
 		- sublime text
 		- Visual studio code
+		- DBeaver db browser
 	- programming env
 		- git
+		 	- git extensions
 		- gradle
-		- java 10
+		- jdk
 		- lein (clojure)
 		- maxima
 		- nodejs
+		- python3, pip3
+		- MemoryAnalyzer
+		- VisualVM
 	- blender
 	- calibre
 	- cheese
 	- dropbox
-	- gimp
+	- gimp (gmic plugin)
 	- handbrake
 	- libre office
 	- pandoc
