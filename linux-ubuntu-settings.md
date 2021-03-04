@@ -172,3 +172,7 @@ sdk install gradle 4.8.1
 		- Tun test using: Choose per test
 - Terminal
 	- Shell Path: "C:\Program Files\Git\bin\sh.exe" --login -i 
+### Intellij import projects
+How to import existing maven, gradle projects in intellij after git clone.
+
+File -> Project From existing sources -> Import project from external model (maven | gradle) -> Finish -> New Window
