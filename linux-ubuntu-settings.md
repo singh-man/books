@@ -4,7 +4,7 @@
 
 ### Freshly install linux first run
 ```sh
-sudo apt-get update && sudo apt-get upgrade
+sudo apt-get update && sudo apt-get upgrade && sudo apt autoremove
 ```
 
 ### WSL (only) 
@@ -49,7 +49,7 @@ postgres
 
 ### Install **below packages**
 ```sh
-sudo apt install git nginx openssh-client openssh-server nmap
+sudo apt install git nginx openssh-client openssh-server nmap unzip zip
 sudo apt install python3-pip
 pip3 install pytest
 sudo apt install pandoc poppler-utils elinks maxima
@@ -111,8 +111,6 @@ check snap for ffmpeg, sublimetext, vscode
 
 ### SDKMAN should be last line in bashrc so run this in end Install SDKMAN and Gradle
 ```sh
-sudo apt install unzip 
-sudo apt install zip
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk version
@@ -140,7 +138,7 @@ sdk install gradle 4.8.1
 		- gradle
 		- jdk
 		- lein (clojure)
-		- maxima
+		- maxima, wxmaxima
 		- nodejs
 		- python3, pip3
 		- MemoryAnalyzer
