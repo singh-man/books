@@ -173,4 +173,5 @@ sdk install gradle 4.8.1
 ### Intellij import projects
 How to import existing maven, gradle projects in intellij after git clone.
 https://www.jetbrains.com/help/idea/maven-support.html#maven_import_project_start
+
 OR try ==> File -> Project From existing sources -> Import project from external model (maven | gradle) -> Finish -> New Window
