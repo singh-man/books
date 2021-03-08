@@ -172,5 +172,5 @@ sdk install gradle 4.8.1
 	- Shell Path: "C:\Program Files\Git\bin\sh.exe" --login -i 
 ### Intellij import projects
 How to import existing maven, gradle projects in intellij after git clone.
-
-File -> Project From existing sources -> Import project from external model (maven | gradle) -> Finish -> New Window
+https://www.jetbrains.com/help/idea/maven-support.html#maven_import_project_start
+OR try ==> File -> Project From existing sources -> Import project from external model (maven | gradle) -> Finish -> New Window
