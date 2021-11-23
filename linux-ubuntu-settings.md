@@ -104,9 +104,6 @@ echo "alias mvn_ist='mvn install -Dmaven.test.skip'" >> ~/.bashrc
 
 ### Install ffmpeg
 ```sh
-sudo add-apt-repository ppa:jonathonf/ffmpeg-4 && sudo apt-get update && sudo apt-get dist-upgrade
-sudo apt install ffmpeg
-or
 check snap for ffmpeg, sublimetext, vscode
 ```
 
