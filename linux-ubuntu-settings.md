@@ -55,6 +55,7 @@ pip3 install pytest
 sudo apt install pandoc poppler-utils elinks maxima
 # Google for docker-ce, awscli
 ```
+> docker in Linux needs to be run with 'sudo' or else add the user in sudo group. *google how to do that*
 
 ##### If Using WSL to execute commands on docker installed on windows. Do remember to enable TCP daemon from docker settings. |https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly
 ```sh
@@ -108,6 +109,15 @@ sudo apt install ffmpeg
 or
 check snap for ffmpeg, sublimetext, vscode
 ```
+
+### Git and multiple SSH keys
+
+If there are multiple accounts in github or bitbucket all using different keys follow:
+
+https://gist.github.com/aprilmintacpineda/f101bf5fd34f1e6664497cf4b9b9345f
+
+https://psychowhiz.medium.com/configuring-multiple-ssh-keys-for-git-on-the-same-device-41c29320e5fe
+
 
 ### SDKMAN should be last line in bashrc so run this in end Install SDKMAN and Gradle
 ```sh
