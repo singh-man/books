@@ -49,11 +49,29 @@ postgres
 
 ### Install **below packages**
 ```sh
-sudo apt install git nginx openssh-client openssh-server nmap unzip zip
-sudo apt install python3-pip
-pip3 install pytest
-sudo apt install pandoc poppler-utils elinks maxima
-# Google for docker-ce, awscli
+sudo apt install -y git nginx openssh-client openssh-server nmap unzip zip pandoc poppler-utils elinks maxima ripgrep lazygit python3-pip
+pip3 install pytest nnn trash-cli sxiv 
+- ripgrep is used by telescope plugin for neovim
+- trash-cli, sxiv for nnn
+- Google
+-- docker-ce, awscli
+-- neovim (plugins: telescope, treesitter, nvim_cmp, nvim_lsp .....)
+- sdkman (SDKMAN should be last line in bashrc)
+-- java, gradle, maven, lein and others
+-- *SDKMAN doesn't set M2_HOME and JAVA_HOME do set it in .profile*
+- snap (always search snap alternative)
+-- ffmpeg, sublimetext, vscode, dbeaver
+-- don't install docker with snap, it causes volume mounting problem
+
+# udpate .bashrc
+# For WSL ~/.m2/settings.xml add <localRepository>/c/Users/msingh/.m2/repository</localRepository> to point to windows home .m2
+echo "M2_HOME=<path>/apache-maven-3.6.0" >> ~/.bashrc
+echo "export M2_HOME" >> ~/.bashrc
+echo "export M2=$M2_HOME/bin" >> ~/.bashrc
+echo "export PATH=$M2:$PATH" >> ~/.bashrc
+echo "alias mvn_ci='mvn clean install'" >> ~/.bashrc
+echo "alias mvn_ist='mvn install -Dmaven.test.skip'" >> ~/.bashrc
+echo "alias mvn_cist='mvn clean install -Dmaven.test.skip'" >> ~/.bashrc
 ```
 > docker in Linux needs to be run with 'sudo' or else add the user in sudo group. *google how to do that*
 
@@ -63,49 +81,7 @@ sudo apt install pandoc poppler-utils elinks maxima
 echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc && source ~/.bashrc
 ```
 
-#### Install leiningen
-```sh
-cd ~
-mkdir -p dev/opt/lein
-curl -o dev/opt/lein/lein.sh https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
-chmod 755 dev/opt/lein/lein.sh
-
-# udpate .bashrc
-echo "LEIN_HOME=$HOME/dev/opt/lein/" >> ~/.bashrc
-echo "export LEIN_HOME" >> ~/.bashrc
-```
-
-#### .bashrc --> User specific aliases and functions
-```sh
-#The alias command can be useful if you want to create a 'shortcut' to a command.
-alias lein='$LEIN_HOME/lein.sh'
-```
-In windows 10 if using Git Bash use .bash_profile present in <user home>. Do note if using visual studio code add JAVA_HOME to .bash_profile so that maven can work.
-
-#### Install Maven
-```sh
-cd ~
-mkdir -p dev/opt
-wget http://ftp.heanet.ie/mirrors/www.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
-tar -C ./dev/opt -xvf apache-maven-3.6.0-bin.tar.gz 
-rm apache-maven-3.6.0-bin.tar.gz
-
-# udpate .bashrc
-# For WSL ~/.m2/settings.xml add <localRepository>/c/Users/msingh/.m2/repository</localRepository> to point to windows home .m2
-echo "M2_HOME=/home/manish/dev/opt/apache-maven-3.6.0" >> ~/.bashrc
-echo "export M2_HOME" >> ~/.bashrc
-echo "export M2=$M2_HOME/bin" >> ~/.bashrc
-echo "export PATH=$M2:$PATH" >> ~/.bashrc
-echo "alias mvn_ci='mvn clean install'" >> ~/.bashrc
-echo "alias mvn_cist='mvn clean install -Dmaven.test.skip'" >> ~/.bashrc
-echo "alias mvn_i='mvn install'" >> ~/.bashrc
-echo "alias mvn_ist='mvn install -Dmaven.test.skip'" >> ~/.bashrc
-```
-
-### Install ffmpeg
-```sh
-check snap for ffmpeg, sublimetext, vscode
-```
+In windows 10 if using Git Bash use .bash_profile present in \<user home\>. Do note if using visual studio code add JAVA_HOME to .bash_profile so that maven can work.
 
 ### Git and multiple SSH keys
 
@@ -115,14 +91,10 @@ https://gist.github.com/aprilmintacpineda/f101bf5fd34f1e6664497cf4b9b9345f
 
 https://psychowhiz.medium.com/configuring-multiple-ssh-keys-for-git-on-the-same-device-41c29320e5fe
 
-
-### SDKMAN should be last line in bashrc so run this in end Install SDKMAN and Gradle
-```sh
-curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdk version
-sdk install gradle 4.8.1
-```
+### VirutualBox
+- Use bridge adapter so that VM get its own dedicated ip address for easier ssh from anywhere in local network
+- give half of CPU and ample RAM
+- guest additions installation works from inside the ubuntu apt install
 
 ### Software to Install
 - sudo apt-get install lubuntu-restricted-extras
@@ -139,15 +111,11 @@ sdk install gradle 4.8.1
 		- sublime text
 		- Visual studio code
 		- DBeaver db browser
+		- neovim with plugins
 	- programming env
-		- git
-		 	- git extensions
-		- gradle
-		- jdk
-		- lein (clojure)
+	 	- git extensions
 		- maxima, wxmaxima
 		- nodejs
-		- python3, pip3
 		- MemoryAnalyzer
 		- VisualVM
 	- blender
@@ -155,15 +123,13 @@ sdk install gradle 4.8.1
 	- cheese
 	- dropbox
 	- gimp (gmic plugin)
+	- gparted
 	- handbrake
 	- libre office
-	- pandoc
-	- poppler-utils
-	- sigil
+	- shotcut
 	- skype
 	- transmission
 	- vlc
-	- gparted
 - ? sudo apt install gnome-tweak-tool
 
 ## Intellij modifications
