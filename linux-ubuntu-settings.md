@@ -93,6 +93,9 @@ https://psychowhiz.medium.com/configuring-multiple-ssh-keys-for-git-on-the-same-
 OR Try
 
 GIT_SSH_COMMAND
+e.g. GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_example -F /dev/null"
+
+> Make sure git config --list doesn't show remote origin like ~https://~
 
 ### VirutualBox
 - Use bridge adapter so that VM get its own dedicated ip address for easier ssh from anywhere in local network
