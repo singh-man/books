@@ -53,6 +53,7 @@ sudo apt install -y git nginx openssh-client openssh-server nmap unzip zip pando
 pip3 install pytest 
 - ripgrep is used by telescope plugin for neovim
 sudo apt install -y nnn trash-cli sxiv
+- nnn works only on env variables.
 - Google
 -- docker-ce, docker-compose, awscli
 > don't install docker with snap, it causes volume mounting problem
