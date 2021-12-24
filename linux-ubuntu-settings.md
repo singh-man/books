@@ -95,6 +95,12 @@ OR Try
 GIT_SSH_COMMAND
 e.g. export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_example -F /dev/null" than run any git push or merge command
 
+OR better do
+
+```
+git config core.sshCommand "ssh -i ~/.ssh/id_rsa_example -F /dev/null"
+```
+
 > Make sure git config --list doesn't show remote origin like ~https://~ it should be like git@github.com:singh-man/books.git
 
 ### VirutualBox
