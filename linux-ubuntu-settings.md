@@ -50,18 +50,19 @@ postgres
 ### Install **below packages**
 ```sh
 sudo apt install -y git nginx openssh-client openssh-server nmap unzip zip pandoc poppler-utils elinks maxima ripgrep lazygit python3-pip
-pip3 install pytest nnn trash-cli sxiv 
+pip3 install pytest 
 - ripgrep is used by telescope plugin for neovim
-- trash-cli, sxiv for nnn
+sudo apt install -y nnn trash-cli sxiv
 - Google
--- docker-ce, awscli
+-- docker-ce, docker-compose, awscli
+> don't install docker with snap, it causes volume mounting problem
+> docker in Linux needs to be run with 'sudo' or else add the user in sudo group. *google how to do that*
 -- neovim (plugins: telescope, treesitter, nvim_cmp, nvim_lsp .....)
 - sdkman (SDKMAN should be last line in bashrc)
 -- java, gradle, maven, lein and others
 -- *SDKMAN doesn't set M2_HOME and JAVA_HOME do set it in .profile*
 - snap (always search snap alternative)
 -- ffmpeg, sublimetext, vscode, dbeaver
--- don't install docker with snap, it causes volume mounting problem
 
 # udpate .bashrc
 # For WSL ~/.m2/settings.xml add <localRepository>/c/Users/msingh/.m2/repository</localRepository> to point to windows home .m2
@@ -69,11 +70,8 @@ echo "M2_HOME=<path>/apache-maven-3.6.0" >> ~/.bashrc
 echo "export M2_HOME" >> ~/.bashrc
 echo "export M2=$M2_HOME/bin" >> ~/.bashrc
 echo "export PATH=$M2:$PATH" >> ~/.bashrc
-echo "alias mvn_ci='mvn clean install'" >> ~/.bashrc
-echo "alias mvn_ist='mvn install -Dmaven.test.skip'" >> ~/.bashrc
 echo "alias mvn_cist='mvn clean install -Dmaven.test.skip'" >> ~/.bashrc
 ```
-> docker in Linux needs to be run with 'sudo' or else add the user in sudo group. *google how to do that*
 
 ##### If Using WSL to execute commands on docker installed on windows. Do remember to enable TCP daemon from docker settings. |https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly
 ```sh
@@ -90,6 +88,10 @@ If there are multiple accounts in github or bitbucket all using different keys f
 https://gist.github.com/aprilmintacpineda/f101bf5fd34f1e6664497cf4b9b9345f
 
 https://psychowhiz.medium.com/configuring-multiple-ssh-keys-for-git-on-the-same-device-41c29320e5fe
+
+OR Try
+
+GIT_SSH_COMMAND
 
 ### VirutualBox
 - Use bridge adapter so that VM get its own dedicated ip address for easier ssh from anywhere in local network
@@ -143,6 +145,7 @@ https://psychowhiz.medium.com/configuring-multiple-ssh-keys-for-git-on-the-same-
 		- Tun test using: Choose per test
 - Terminal
 	- Shell Path: "C:\Program Files\Git\bin\sh.exe" --login -i 
+
 ### Intellij import projects
 How to import existing maven, gradle projects in intellij after git clone.
 https://www.jetbrains.com/help/idea/maven-support.html#maven_import_project_start
