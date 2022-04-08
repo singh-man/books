@@ -47,6 +47,12 @@ Trouble: will mess up the /etc/resolv.conf file and then all upgrades and instal
 dnf install nginx poppler-utils
 postgres
 
+#### Alpine on WSL 2 on windows 10
+Get the rool filesystem for the alpine from https://alpinelinux.org/downloads/
+Import the new system via wsl --import ......
+> alpine via this way will have root user and root permissions.
+> latest NeoVim if not available in apk compile it by following the NeoVim by source.
+
 ### Install **below packages**
 ```sh
 sudo apt install -y git nginx openssh-client openssh-server nmap unzip zip pandoc poppler-utils elinks maxima ripgrep lazygit python3-pip
