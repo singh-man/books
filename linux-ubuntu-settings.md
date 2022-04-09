@@ -44,14 +44,15 @@ dnf install nano git nmap python3 python3-pip unzip zip maxima elinks -y && pip3
 dnf clean all
 
 Trouble: will mess up the /etc/resolv.conf file and then all upgrades and installation will start failing.
-dnf install nginx poppler-utils
-postgres
+
+dnf install nginx poppler-utils postgres
 
 #### Alpine on WSL 2 on windows 10
-Get the rool filesystem for the alpine from https://alpinelinux.org/downloads/
+Get the root filesystem for the alpine from https://alpinelinux.org/downloads/
 Import the new system via wsl --import ......
 > alpine via this way will have root user and root permissions.
-> latest NeoVim if not available in apk compile it by following the NeoVim by source.
+
+> latest NeoVim if not available in apk compile, it by following the NeoVim by source.
 
 ### Install **below packages**
 ```sh
