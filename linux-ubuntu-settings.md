@@ -52,7 +52,7 @@ Get the root filesystem for the alpine from https://alpinelinux.org/downloads/
 Import the new system via wsl --import ......
 > alpine via this way will have root user and root permissions.
 
-> latest NeoVim if not available in apk compile, it by following the NeoVim by source.
+> latest NeoVim if not available in apk, compile it by following the NeoVim by source.
 
 ### Install **below packages**
 ```sh
