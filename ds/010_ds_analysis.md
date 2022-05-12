@@ -143,29 +143,29 @@ This above table is only an approximate summary; for each data structure, there 
     
    > Fibonacci by recursive can be mad efaster by using **Memonization!** i.e. by memorizing the return of the function calls already done!
 ~~~
-                 F(n)
-                /    \
-            F(n-1)   F(n-2)
-            /   \     /      \
-        F(n-2) F(n-3) F(n-3)  F(n-4)
-       /    \
-     F(n-3) F(n-4)
+             F(n)
+            /    \
+        F(n-1)   F(n-2)
+        /   \     /      \
+    F(n-2) F(n-3) F(n-3)  F(n-4)
+   /    \
+ F(n-3) F(n-4)
 
-        fib(1)-->1
-       fib(2)
-        fib(0)-->0
-      fib(3)
-       fib(1)-->1
-     fib(4)
-       fib(1)-->1
-      fib(2)
-       fib(0)-->0
-    fib(5)
-       fib(1)-->1
-      fib(2)
-       fib(0)-->0
-     fib(3)
-      fib(1)-->1
+    fib(1)-->1
+   fib(2)
+    fib(0)-->0
+  fib(3)
+   fib(1)-->1
+ fib(4)
+   fib(1)-->1
+  fib(2)
+   fib(0)-->0
+fib(5)
+   fib(1)-->1
+  fib(2)
+   fib(0)-->0
+ fib(3)
+  fib(1)-->1
 ~~~
 
  1. **Towers Of Hanoi**
