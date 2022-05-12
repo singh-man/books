@@ -202,18 +202,18 @@ The Configuration class kicks off the runtime portion of Hibernate. It's used to
 
 This first snippet loads the properties and mapping files defined in the hibernate.cfg.xml file and creates the SessionFactory:
 ```java
-	Configuration cfg =new Configuration();
-	SessionFactory factory = cfg.configure().buildSessionFactory();
+Configuration cfg =new Configuration();
+SessionFactory factory = cfg.configure().buildSessionFactory();
 ```
 The configure() method tells Hibernate to load the hibernate.cfg.xml file. Without that, only hibernate.properties would be loaded from the classpath. The Configuration class can also load mapping documents programmatically:
 ```java
-	Configuration cfg = new Configuration();
-	cfg.addFile('com/manning/hq/ch03/Event.hbm.xml');
+Configuration cfg = new Configuration();
+cfg.addFile('com/manning/hq/ch03/Event.hbm.xml');
 ```
 Another alternative is to have Hibernate load the mapping document based on the persistent class. This has the advantage of eliminating hard-coded filenames in the source code. For instance, the following code causes Hibernate to look for a file named com/manning/hq/ Event.hbm.xml in the classpath and load the associated class:
 ```java
-	Configuration cfg =new Configuration();
-	cfg.addClass(com.manning.hq.ch03.Event.class);
+Configuration cfg =new Configuration();
+cfg.addClass(com.manning.hq.ch03.Event.class);
 ```
 Since applications can have tens or hundreds of mapping definitions, listing each definition can quickly become cumbersome. To get around this, the hibernate.cfg.xml file supports adding all mapping files in a JAR file. Suppose your build process creates a JAR file named application.jar, which contains all the classes and mapping definitions required. You then update the hibernate.cfg.xml file:
 
@@ -253,14 +253,14 @@ You could also use a long primitive to store the primary key value. However, usi
 
 Here's the necessary code to persist an Event instance:
 ```java
-	Configuration cfg =new Configuration();
-	SessionFactory factory =cfg.buildSessionFactory();
-	Event event =new Event();
-	//populate the Event instance
-	Session session =factory.openSession();
-	session.saveOrUpdate(event);
-	session.flush();
-	session.close();
+Configuration cfg =new Configuration();
+SessionFactory factory =cfg.buildSessionFactory();
+Event event =new Event();
+//populate the Event instance
+Session session =factory.openSession();
+session.saveOrUpdate(event);
+session.flush();
+session.close();
 ```
 The first two lines create the SessionFactory after loading the configuration file from the classpath. After the Event instance is created and populated, the Session instance, provided by the SessionFactory , persists the Event. The Session is then flushed and closed, which closes the JDBC connection and performs some internal cleanup. That's all there is to persisting objects.
 
@@ -279,20 +279,24 @@ The Session interface allows you to create Query objects to retrieve persistent 
 
 This example returns a collection of all Event instances. Notice that you don't need to provide a select ...clause when returning entire objects:
 
-	Query query =session.createQuery('from Event');
-	List events =query.list();
+```java
+Query query =session.createQuery('from Event');
+List events =query.list();
+```
 
 This query is a little more interesting since we're querying on a property of the Event class:
 
-	Query query =session.createQuery('from Event where name ='+”Opening Presentation”);
-	List events =query.list();
+```java
+Query query =session.createQuery('from Event where name ='+”Opening Presentation”);
+List events =query.list();
+```
 
 We've hardcoded the name value in the query, which isn't optimal. Let's rewrite it:
 ```java
-	Query query =session.createQuery('from Event where name =?', 'Opening Presentation');
-	query.setParameter(0,'Opening Presentation',Hibernate.STRING);
-	List events =query.list();
-```java
+Query query =session.createQuery('from Event where name =?', 'Opening Presentation');
+query.setParameter(0,'Opening Presentation',Hibernate.STRING);
+List events =query.list();
+```
 The question mark in the query string represents the variable, which is similar to the JDBC PreparedStatement interface. The second method parameter is the value bound to the variable, and the third parameter tells Hibernate the type of the value. (The Hibernate class provides constants for the built-in types, such as STRING , INTEGER , and LONG , so they can be referenced programmatically.)
 
 One topic we haven't touched on yet is the cache maintained by the Session. The Session cache tends to cause problems for developers new to Hibernate, so we'll talk about it next.
@@ -301,15 +305,15 @@ One topic we haven't touched on yet is the cache maintained by the Session. The 
 
 One easy way to improve performance within the Hibernate service, as well as your applications, is to cache objects. By caching objects in memory, Hibernate avoids the overhead of retrieving them from the database each time. Other than saving overhead when retrieving objects, the Session cache also impacts saving and updating objects. Let's look at a short code listing:
 ```java
-	Session session =factory.openSession();
-	Event e = (Event)session.load(Event.class,myEventId);
-	e.setName('New Event Name');
-	session.saveOrUpdate(e);
-	//later,with the same Session instance
-	Event e = (Event)session.load(Event.class,myEventId);
-	e.setDuration(180);
-	session.saveOrUpdate(e);
-	session.flush();
+Session session =factory.openSession();
+Event e = (Event)session.load(Event.class,myEventId);
+e.setName('New Event Name');
+session.saveOrUpdate(e);
+//later,with the same Session instance
+Event e = (Event)session.load(Event.class,myEventId);
+e.setDuration(180);
+session.saveOrUpdate(e);
+session.flush();
 ```
 This code first retrieves an Event instance, which the Session caches internally. It then does the following: updates the Event name, saves or updates the Event instance, retrieves the same Event instance (which is stored in the Session cache), updates the duration of the Event,and saves or updates the Event instance. Finally, you flush the Session.
 
@@ -332,15 +336,15 @@ This code opens the Session instance, loads an Event instance with a given ID, c
 
 Any time an object passes through the Session instance, it's added to the Session’s cache. By passes through, we're referring to saving or retrieving the object to and from the database. To see whether an object is contained in the cache, call the Session.contains()method. Objects can be evicted from the cache by calling the Session.evict() method. Let's revisit the previous code, this time evicting the first Event instance:
 ```java
-	Session session = factory.openSession();
-	Event firstEvent = (Event)session.load(Event.class,myEventId);
-	//...perform some operation on firstEvent
-	if (session.contains(firstEvent)){
-	      session.evict(firstEvent);
-	}
-	Event secondEvent = new Event();
-	secondEvent.setId(myEventId);
-	session.save(secondEvent);
+Session session = factory.openSession();
+Event firstEvent = (Event)session.load(Event.class,myEventId);
+//...perform some operation on firstEvent
+if (session.contains(firstEvent)){
+      session.evict(firstEvent);
+}
+Event secondEvent = new Event();
+secondEvent.setId(myEventId);
+session.save(secondEvent);
 ```
 The code first opens the Session instance and loads an Event instance with a given ID. Next, it determines whether the object is contained in the Session cache and evicts the object if necessary. The code then creates a second Event instance with the same ID and successfully saves the second Event instance.
 
@@ -354,19 +358,19 @@ If you're running a standalone application or your application server doesn't su
 
 When you choose a connection pooling service, you must configure it for your environment. Hibernate supports configuring connection pools from the hibernate.cfg.xml file. The connection.provider_class property sets the pooling implementation:
 ```xml
-	<property name='connection.provider_class'>
-	  org.hibernate.connection.C3P0ConnectionProvider
-	</property>
+<property name='connection.provider_class'>
+  org.hibernate.connection.C3P0ConnectionProvider
+</property>
 ```
 Once the provider class is set, the specific properties for the pooling service can also be configured from the hibernate.cfg.xml file:
 ```xml
-	<property name='c3p0.minPoolSize'>
-	  5
-	</property>
-	...
-	<property name='c3p0.timeout'>
-	  1000
-	</property>
+<property name='c3p0.minPoolSize'>
+  5
+</property>
+...
+<property name='c3p0.timeout'>
+  1000
+</property>
 ```
 As you can see, the prefix for the C3P0 configuration parameters is c3p0. Similarly, the prefixes for DBCP and Proxool are dbcp and proxool, respectively. Specific configuration parameters for each pooling service are available in the documentation with each service. Table 1 lists information for the supported connection pools.
 
@@ -390,12 +394,12 @@ Transactions group many operations into a single unit of work. If any operation 
 
 Hibernate needs a way to abstract the various transaction strategies from the environment. Hibernate has its own Transaction class that is accessible from the Session interface, demonstrated here:
 ```java
-	Session session =factory.openSession();
-	Transaction tx =session.beginTransaction();
-	Event event =new Event();
-	//...populate the Event instance
-	session.saveOrUpdate(event);
-	tx.commit();
+Session session =factory.openSession();
+Transaction tx =session.beginTransaction();
+Event event =new Event();
+//...populate the Event instance
+session.saveOrUpdate(event);
+tx.commit();
 ```
 In this example, factory is an initialized SessionFactory instance. This code creates an instance of the org.hibernate.Transaction class and then commits the Transaction instance.
 
@@ -403,12 +407,12 @@ Notice that you don't need to call session.flush(). Committing a transaction aut
 
 The transaction.factory_class property defines the transaction strategy that Hibernate uses. The default setting is to use JDBC transactions since they're the most common. To use JTA transactions, you need to set the following properties in hibernate.cfg.xml:
 ```xml
-	<property name='transaction.factory_class'>
-	    org.hibernate.transaction.JTATransactionFactory
-	</property>
-	<property name='jta.UserTransaction'>
-	    java:comp/UserTransaction
-	</property>
+<property name='transaction.factory_class'>
+    org.hibernate.transaction.JTATransactionFactory
+</property>
+<property name='jta.UserTransaction'>
+    java:comp/UserTransaction
+</property>
 ```
 The transaction.factory_class property tells Hibernate that you'll be using JTA transactions. Currently, the only other option to JTA is JBDC transactions, which is the default. JTA transactions are retrieved from a JNDI URI, which is specified using the jta.User-Transaction property. If you don't know the URI for your specific application server, the default value is java:comp/UserTransaction.
 
@@ -416,16 +420,16 @@ There is some confusion about another property related to JTA transactions: tran
 
 What's the benefit of using JTA transactions? JTA transactions are useful if you have multiple transactional resources, such as a database and a message queue. JTA allows you to treat the disparate transactions as a single transaction. Combining multiple transactions also applies within Hibernate. If you attempt to create multiple transactions from the same Session instance, all of the operations are batched into the first transaction. Let's look at an example that includes two transactions:
 ```java
-	Transaction tx0 =session.beginTransaction();
-	Event event =new Event();
-	//...populate the event instance
-	session.saveOrUpdate(event);
-	Transaction tx1 =session.beginTransaction();
-	Location location =new Location();
-	//...populate the Location instance
-	session.saveOrUpdate(location);
-	tx0.commit();
-	tx1.commit();
+Transaction tx0 =session.beginTransaction();
+Event event =new Event();
+//...populate the event instance
+session.saveOrUpdate(event);
+Transaction tx1 =session.beginTransaction();
+Location location =new Location();
+//...populate the Location instance
+session.saveOrUpdate(location);
+tx0.commit();
+tx1.commit();
 ```
 This example begins by creating a new transaction. The second use of session.beginTransaction()just returns the first transaction instance. session.saveOrUpdate(location)commits the first transaction, and tx0.commit()recommits the first transaction.
 
@@ -458,17 +462,17 @@ This snippet sets the cache provider to the OSCache caching service.
 
 The caching services support the caching of classes as well as collections belonging to persistent classes. For instance, suppose you have a large number of Attendee instances associated with a particular Event instance. Instead of repeatedly fetching the collection of Attendee s, you can cache it. Caching for classes and collections is configured in the mapping files, with the cache element:
 ```xml
-	<class name='Event'table='events'>
-	    <cache usage='read-write'/>
-	    ...
-	</class>
-		
-	Collections can also be cached:
-		
-	<set name='attendees'>
-	    <cache usage='read-write'/>
-	    ...
-	</set>
+<class name='Event'table='events'>
+    <cache usage='read-write'/>
+    ...
+</class>
+    
+Collections can also be cached:
+    
+<set name='attendees'>
+    <cache usage='read-write'/>
+    ...
+</set>
 ```
 Once you've chosen a caching service, what do you, the developer, need to do differently to take advantage of cached objects? Thankfully, you don't have to do anything. Hibernate works with the cache behind the scenes, so concerns about retrieving an outdated object from the cache can be avoided. You only need to select the correct value for the usage attribute.
 
@@ -734,13 +738,13 @@ Scenario: We have two first-rank classes, Foo and Bar which are related to each 
 
 Hibernate Mapping: In Hibernate, this could be mapped as follows:
 ```xml
-	<class name='Foo' table='foo'>
-	     ...
-	     <set role='bars' table='foo_bar'>
-	           <key column='foo_id'/>
-	           <many-to-many column='bar_id' class='Bar'/>
-	     </set>
-	</class>
+<class name='Foo' table='foo'>
+     ...
+     <set role='bars' table='foo_bar'>
+           <key column='foo_id'/>
+           <many-to-many column='bar_id' class='Bar'/>
+     </set>
+</class>
 ```
 Table Schema:
 
@@ -764,13 +768,13 @@ This time we cannot have an extra column on Bar as that would dictate that each 
 **Bidirectionality**: 
 This relationship can be declared both ways, with Bar having getFoos(), by suitable code changes to Bar and the following schema change:
 ```xml
-	<class name='Bar' table='bar'>
-	     ...
-	     <set role='foos' table='foo_bar'>
-	           <key column='bar_id'/>
-	           <many-to-many column='foo_id' class='Foo'/>
-	     </set>
-	</class>
+<class name='Bar' table='bar'>
+     ...
+     <set role='foos' table='foo_bar'>
+           <key column='bar_id'/>
+           <many-to-many column='foo_id' class='Foo'/>
+     </set>
+</class>
 ```
 Now your Bars will know who their Foos are. NB: No extra columns are generated for the bidirectionality.
 
@@ -788,13 +792,13 @@ Scenario: We have one first-rank class, Foo, and a collection of Strings (e.g. p
 Hibernate Mapping: 
 In Hibernate, this could be mapped as follows:
 ```xml
-	<class name='Foo' table='foo'>
-	     ...
-	     <set role='people' table='Person'>
-	           <key column='foo_id'/>
-	          <element column='name' type='string'/>
-	     </set>
-	</class>
+<class name='Foo' table='foo'>
+     ...
+     <set role='people' table='Person'>
+           <key column='foo_id'/>
+          <element column='name' type='string'/>
+     </set>
+</class>
 ```
 Table Schema:
 
@@ -825,16 +829,16 @@ Scenario: We have one first-rank class, Foo, and a collection of Strings (e.g. p
 Hibernate Mapping: 
 In Hibernate, this could be mapped as follows:
 ```xml
-	<set role='names' table='names'>
-	    <key column='id' type='string'>
-	    <generator class='uuid.hex'/> </key>
-	    <element column='name' type='string'/>
-	</set>
-	
-	<class name='Foo' table='foo'>
-	    ...
-	    <collection name='names' column='name_id' role='names'/>
-	</class>
+<set role='names' table='names'>
+    <key column='id' type='string'>
+    <generator class='uuid.hex'/> </key>
+    <element column='name' type='string'/>
+</set>
+
+<class name='Foo' table='foo'>
+    ...
+    <collection name='names' column='name_id' role='names'/>
+</class>
 ```
 Note that a top-level collection needs its own key generator, and that this cannot be of the assigned type since it is never exposed to a calling application. 
 
@@ -865,14 +869,14 @@ Scenario: First rank class Foo has a map containing people's ages indexed by the
 
 Hibernate Mapping: In Hibernate, this could be mapped as follows:
 ```xml
-	<class name='Foo' table='foo'>
-	    ...
-	    <map role='ages'>
-	        <key column='id'/>
-	        <index column='name' type='string'/>
-	        <element column='age' type='string'/>
-	    </map>
-	</class>
+<class name='Foo' table='foo'>
+    ...
+    <map role='ages'>
+        <key column='id'/>
+        <index column='name' type='string'/>
+        <element column='age' type='string'/>
+    </map>
+</class>
 ```
 Table Schema:
 

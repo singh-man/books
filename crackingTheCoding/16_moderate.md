@@ -41,7 +41,7 @@ This line essentially checks if x and y have different values. It will result in
 
 2.  y  =  x ^ y
 ```
-    Or:y = {0 if originally same, 1  if different} ^ {original y}
+Or:y = {0 if originally same, 1  if different} ^ {original y}
 ```
 Observe that XORing a bit with 1  always flips the bit, whereas XORing with 0 will never change it. 
 
@@ -149,10 +149,10 @@ intersection is within line segment 2 and y coordinates)
 What if the two segments represent the same infinite line? In this case, we have to ensure that some portion of their segments  overlap. If we order the line segments by their x locations (start is before end, point 1  is before point 2), then an intersection occurs only if:
 
 ```
-    Assume:
-        start1.x < start2.x && start1.x < end1.x && start2.x < end2.x
-    Then intersection  occurs if:
-        start2 is between start1 and end1
+Assume:
+    start1.x < start2.x && start1.x < end1.x && start2.x < end2.x
+Then intersection  occurs if:
+    start2 is between start1 and end1
 ```
 We can now go ahead and implement this algorithm.
 
@@ -239,6 +239,7 @@ We can now go ahead and implement this algorithm.
 80              this.y = y;
 81          }
 82      }
+83  }
 ```
 For simplicity and compactness (it really makes the code easier to read), we've chosen to make the variables within Point and Line public. You can discuss with your interviewer the advantages and disadvantages of this choice.
 

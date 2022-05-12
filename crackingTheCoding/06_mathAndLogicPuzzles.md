@@ -286,9 +286,9 @@ We can generalize this to the full solution: take one pill from Bottle #1, two p
 
 This formula will tell you the bottle number:
 ```
-    weight - 210 grams
-    ------------------
-        0.l grams
+weight - 210 grams
+------------------
+    0.1 grams
 ```
 
 So, if the set of pills weighed 211.3 grams, then Bottle #13 would have the heavy pills.
@@ -343,7 +343,7 @@ Adding these together, we get:
 
 Which game should you play?
 
-You should play Game 1  if P ( Game   1)  >   P (Game   2):
+You should play Game 1  if P (Game   1)  >   P (Game   2):
 ```
 p  >  3p² - 2p³.
 1  >  3p  - 2p²

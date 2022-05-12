@@ -17,16 +17,16 @@ Eclipse RCP plugin
 
 3. tom → tom-client
 ```
-	cstool
-		model
-			PROP_DIRTY = true // Either in this or super class
-			save() and validate()
-			addPropertyChangeListener(Property)
-			model directly calls facade
-	
-		editor
-			while populating the field
-			Refer directly to model (has an instance of model; either it creates model or fetched from some shared resource) and it uses databinding concept to bindthe SWT → observeSelection to update the model 
+cstool
+    model
+        PROP_DIRTY = true // Either in this or super class
+        save() and validate()
+        addPropertyChangeListener(Property)
+        model directly calls facade
+
+    editor
+        while populating the field
+        Refer directly to model (has an instance of model; either it creates model or fetched from some shared resource) and it uses databinding concept to bindthe SWT → observeSelection to update the model 
 ```
 4. tom-proxy
 
@@ -342,9 +342,9 @@ public PropertiesViewPanel(DefaultController controller) {
 // ‹editor-fold defaultstate='collapsed' desc=' Local Initialization '›
 
 /**
-	* Used to provide local initialization of Swing components
-	* outside of the NetBeans automatic code generator
-	*/
+  * Used to provide local initialization of Swing components
+  * outside of the NetBeans automatic code generator
+  */
 public void localInitialization() {
 
 	opacitySpinner.setModel(new SpinnerNumberModel(100, 0, 100, 1));
@@ -366,9 +366,7 @@ public void localInitialization() {
 		public void changedUpdate(DocumentEvent e) {
 			textDocumentChanged(e);
 		}
-
 	});
-
 }
 
 // ‹/editor-fold›
@@ -432,7 +430,7 @@ The final portion consists of the GUI event listeners. Code Sample 7 contains li
 Code Sample 7
 ```java
 // ‹editor-fold defaultstate='collapsed' desc=' GUI Event Handling Code '›
-//  Code omitted
+// Code omitted
 private void yPositionTextFieldFocusLost(java.awt.event.FocusEvent evt) {
 	try {
 		controller.changeElementYPosition(
@@ -451,8 +449,8 @@ private void yPositionTextFieldActionPerformed(java.awt.event.ActionEvent evt) {
 	}
 }
 
-//  Code omitted -- code for xPosition
-//  is nearly the same as for yPosition.
+// Code omitted -- code for xPosition
+// is nearly the same as for yPosition.
 
 private void changeFontButtonActionPerformed(java.awt.event.ActionEvent evt) {
 

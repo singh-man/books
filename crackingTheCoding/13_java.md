@@ -218,13 +218,13 @@ Watch how this plays out in the  example below.
 
 The output for this code is the following:
 ```
-1      start bar
-2      start try
-3      catch
-4      lem
-5      finally
-6      return from lem | returned from catch
-7      end bar
+1   start bar
+2   start try
+3   catch
+4   lem
+5   finally
+6   return from lem | returned from catch
+7   end bar
 ```
 Look carefully  at lines 3 to 5 in the  output. The catch block is fully executed (including the  function call in the return statement), then the  finally block, and then the  function actually returns.
 

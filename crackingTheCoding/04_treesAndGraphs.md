@@ -1440,24 +1440,24 @@ To implement this, we'll store each as linked lists. This will make it easy to a
 
 It works something like this:
 ```
-    weave(first,  second,   prefix):
-        weave({1,   2},  {3,   4},  {})
-            weave({2},   {3,   4},   {1})
-                weave({},   {3,   4},   {1, 2})
-                    {1,   2,   3,  4}
-                weave({2},   {4},  {1,   3})
-                    weave({},   {4},   {1,   3,  2})
-                        {1,   3,  2,  4}
-                    weave({2},   {},   {1, 3,  4})
-                        {1, 3,  4,   2}
-            weave({l,  2},  {4},   {3})
-                weave({2},  {4},   {3,   1})
-                    weave({},   {4},   {3,   1,   2})
-                        {3,   1,   2,  4}
-                    weave({2},   {},   {3,   1,   4})
-                        {3,   1,  4,   2}
-                weave({1,  2},  {},   {3,   4})
-                    {3,   4,   1,   2}
+weave(first,  second,   prefix):
+    weave({1,   2},  {3,   4},  {})
+        weave({2},   {3,   4},   {1})
+            weave({},   {3,   4},   {1, 2})
+                {1,   2,   3,  4}
+            weave({2},   {4},  {1,   3})
+                weave({},   {4},   {1,   3,  2})
+                    {1,   3,  2,  4}
+                weave({2},   {},   {1, 3,  4})
+                    {1, 3,  4,   2}
+        weave({l,  2},  {4},   {3})
+            weave({2},  {4},   {3,   1})
+                weave({},   {4},   {3,   1,   2})
+                    {3,   1,   2,  4}
+                weave({2},   {},   {3,   1,   4})
+                    {3,   1,  4,   2}
+            weave({1,  2},  {},   {3,   4})
+                {3,   4,   1,   2}
 ```
 
 Now, let's think through the implementation of removing, say, 1 from {1,   2} and recursing. We need to be careful about modifying this list, since a later recursive call (e.g., weave({1, 2}, {4}, {3})) might need the 1 still in {1,  2}.
@@ -1559,9 +1559,9 @@ What about a pre-order traversal? This  is a bit more promising.  At least in th
 Unfortunately, trees with different structures could still have the same pre-order traversal.
 
 ```
-        3        3
-       /          \
-      4             4
+    3        3
+   /          \
+  4             4
 ```
 There's a simple  fix though. We can store NULL nodes in the pre-order traversal string as a special character, like an 'X'. (We'll  assume that the binary trees contain only integers.)The left tree would have the traversal { 3,   4,   X} and the right tree will have the traversal { 3,   X,  4}.
 

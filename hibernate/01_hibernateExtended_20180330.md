@@ -58,20 +58,20 @@ Now, I don't actually like the saveOrUpdate method. I mean, I love using it, but
 
 Take a look at the following code snippet:
 ```java
-	Session session=HibernateUtil.beginTransaction();
-	User user = new User();
-	user.setPassword('abc123');
-	session.save(user);
+Session session=HibernateUtil.beginTransaction();
+User user = new User();
+user.setPassword('abc123');
+session.save(user);
 
-	user.setLoginName('mj');
-	user.setPassword('abc123');
-	user.setEncryptedPassword('zab012');
-	user.setEmailAddress('mj@scja.com');
-	user.setLastAccessTime(new java.util.Date());
-	user.setRegistrationDate(new java.util.GregorianCalendar());
-	user.setVerified(Boolean.FALSE);
+user.setLoginName('mj');
+user.setPassword('abc123');
+user.setEncryptedPassword('zab012');
+user.setEmailAddress('mj@scja.com');
+user.setLastAccessTime(new java.util.Date());
+user.setRegistrationDate(new java.util.GregorianCalendar());
+user.setVerified(Boolean.FALSE);
 
-    HibernateUtil.commitTransaction();
+HibernateUtil.commitTransaction();
 ```
 Notice that in this code snippet, an instance of the user class is created, the password is set to abc123, and then the save method of the Hibernate Session is passed the instance. The call to the save method triggers the following SQL statement to be executed against the database:
 
@@ -89,22 +89,22 @@ I often see developers that are new to Hibernate constantly calling the saveOrUp
 
 The following piece of code needlessly calls the saveOrUpdate method after instance variables have been updated. This is totally unnecessary, as the User instance was already associated with the Hibernate Session through the original call to saveOrUpdate.
 ```java
-	hibernateSession.getTransaction();
-	User user = new User();
-	hibernateSession.saveOrUpdate(user);
-	user.setLoginName('mj');
-	user.setPassword('abc123');
-	hibernateSession.saveOrUpdate(user); /*BAD!*/
-	hibernateSession.getTransaction().commit();
+hibernateSession.getTransaction();
+User user = new User();
+hibernateSession.saveOrUpdate(user);
+user.setLoginName('mj');
+user.setPassword('abc123');
+hibernateSession.saveOrUpdate(user); /*BAD!*/
+hibernateSession.getTransaction().commit();
 ```
 With the first call to saveOrUpdate, the instance named u becomes associated with the Hibernate session. From that point on, you can mess around with the user instance as much as you want, and Hibernate will take care of the persistence. You can initialize, update, change, and modify any instance variable of the user instance that you want, and Hibernate will save the final state of the instance once the transaction has been committed..
 ```java
-	hibernateSession.getTransaction();
-	User user = new User();
-	hibernateSession.saveOrUpdate(user);
-	user.setLoginName('mj');
-	user.setPassword('abc123');
-	hibernateSession.getTransaction().commit();
+hibernateSession.getTransaction();
+User user = new User();
+hibernateSession.saveOrUpdate(user);
+user.setLoginName('mj');
+user.setPassword('abc123');
+hibernateSession.getTransaction().commit();
 ```
 ##### Loading Instances and the Hibernate Session
 
@@ -114,12 +114,12 @@ Note that the load method is intended to be used when you know an instance actua
 
 Calling the load or get method on the Hibernate Session in order to obtain a persistent object from the database not only provides you access to the instance of interest, but it also associates that instance with the Hibernate Session. Take a look at the following code, which pulls an instance of a User out of the Hibernate Session.
 ```java
-	Session hibernateSession = this.getCurrentSession();
-	hibernateSession.beginTransaction();
-	User u = (User)hibernateSession.get(User.class, 2);
-	u.setLoginName('Joey');
-	u.setPassword('Shabidew');
-	hibernateSession.getTransaction().commit();
+Session hibernateSession = this.getCurrentSession();
+hibernateSession.beginTransaction();
+User u = (User)hibernateSession.get(User.class, 2);
+u.setLoginName('Joey');
+u.setPassword('Shabidew');
+hibernateSession.getTransaction().commit();
 ```
 Notice that after updating the properties of the instance, namely the loginName and password, that we simply ask the Hibernate Session to commit the transaction, which will in turn, update the database. There is no need to call the saveOrUpdate method after changing the attributes of the instance, because the instance is already associated with the Hibernate Session, and as a result, any changes to the state of the persistent instance will be updated in the database.
 
@@ -164,16 +164,16 @@ A persistent instance is one that not only exists in your application code, but 
 
 Okay, so we have a great appreciation for the fact that as soon as an instance has been associated with a Hibernate Session, Hibernate will take responsibility for the persistent state of that object until the current transaction is committed. But what happens after the transaction is committed? For example, take a look at the following code:
 ```java
-	Session session=HibernateUtil.beginTransaction();
-	User user = new User();
-	user.setLoginName('mj');
-	user.setPassword('aaaaaa');
-	session.save(user);
-	 
-	user.setPassword('bbbbbb');
-		
-	HibernateUtil.commitTransaction();
-	user.setPassword('cccccc')
+Session session=HibernateUtil.beginTransaction();
+User user = new User();
+user.setLoginName('mj');
+user.setPassword('aaaaaa');
+session.save(user);
+ 
+user.setPassword('bbbbbb');
+    
+HibernateUtil.commitTransaction();
+user.setPassword('cccccc')
 ```
 So, if you peaked into the database after running this code snippet, what would the value of the password be for the associated database record? Would it be aaaaaa, bbbbbb or cccccc? The answer is bbbbbb, since the instance is first persisted to the database with the value aaaaaa, then, as the transaction is committed, the password is updated to bbbbbb. But when the final Java based update to the password field is done, there is no open transaction, and Hibernate has no context with which it can update the user's password to cccccc.
 
@@ -183,15 +183,15 @@ After the transaction has been committed, the User instance is said to be a deta
 
 Sometimes you may have an instance whose persistent state is being managed by the Hibernate Session, but then, for some reason, you want to shake that instance free of Hibernate's grasp. If you can't wait for a transaction to commit and have the instance naturally become detached, you can explicitly detach an instance from the Hibernate Session by simply calling the evict method of the Session, just as I do in this following snippet of code:
 ```java
-	Session session=HibernateUtil.beginTransaction();
-		
-	User user = new User();
-	user.setLoginName('mj');
-	user.setPassword('aaaaaa');
-	session.save(user);
-	session.evict(user);
-	user.setPassword('bbbbbb');
-	HibernateUtil.commitTransaction();
+Session session=HibernateUtil.beginTransaction();
+    
+User user = new User();
+user.setLoginName('mj');
+user.setPassword('aaaaaa');
+session.save(user);
+session.evict(user);
+user.setPassword('bbbbbb');
+HibernateUtil.commitTransaction();
 ```
 So, after the transaction is committed in this snippet of code, what value would the password column for the user's corresponding database record be? Would it be null, aaaaaa or bbbbbb? Well, the correct answer is aaaaaa.
 
@@ -203,17 +203,17 @@ Once you start mixing and matching persistent and detached objects within your c
 
 For example, take a look at the following code that creates two instances, user1 and user2, based on the same, identical, database record. What do you think the output of the code snippet would be?
 ```java
-	Session session=HibernateUtil.beginTransaction();
-		
-	User user1 = new User();  
-	user1.setPassword('aaaaaa');
-	Long id = (Long)session.save(user1);
-	session.evict(user1);
-	User user2 = (User)session.get(User.class, id);
-		
-	System.out.print('The instances are the same: ');
-	System.out.println( user1.equals(user2));
-	HibernateUtil.commitTransaction();
+Session session=HibernateUtil.beginTransaction();
+    
+User user1 = new User();  
+user1.setPassword('aaaaaa');
+Long id = (Long)session.save(user1);
+session.evict(user1);
+User user2 = (User)session.get(User.class, id);
+    
+System.out.print('The instances are the same: ');
+System.out.println( user1.equals(user2));
+HibernateUtil.commitTransaction();
 ```
 Since both instances of the User class are based on the same database record, they will have all of their properties set to the same values, which means the two objects are essentially the same, but the comparison of the two objects returns false. It's somewhat non-intuitive, but if you know what's going on under the covers of the Java Virtual Machine, it actually makes sense.
 
@@ -223,25 +223,25 @@ By default, when you compare two instances using .equals(), the compiler simply 
 
 So, as we have seen, the following code snippet creates two instances, user1 and user2, both of which share the same set of properties, but with the main difference being the fact that user1 becomes a detached object after the evict(user1); method is called, whereas the instance user2 is a persistent object right up until the point that the transaction gets committed. Here's the code:
 ```java
-	Session session=HibernateUtil.beginTransaction();
-	User user1 = new User();
-	user1.setPassword('aaaaaa');
-	Long id = (Long)session.save(user1);
-	session.evict(user1);
-	User user2 = (User)session.get(User.class, id);
-	HibernateUtil.commitTransaction();
+Session session=HibernateUtil.beginTransaction();
+User user1 = new User();
+user1.setPassword('aaaaaa');
+Long id = (Long)session.save(user1);
+session.evict(user1);
+User user2 = (User)session.get(User.class, id);
+HibernateUtil.commitTransaction();
 ```
 Now, what do you think would happen if you changed some values in the detached instance, user1, and then tried to use the Hibernate Session to update that instance, considering the fact that user2, an instance that shares its id with user1, is already associated with the Hibernate Session? What would happen if you tried to run the following code:
 ```java
-	Session session=HibernateUtil.beginTransaction();
-	User user1 = new User();
-	user1.setPassword('aaaaaa');
-	Long id = (Long)session.save(user1);
-	session.evict(user1);
-	User user2 = (User)session.get(User.class, id);
-	user1.setVerified(true);
-	session.saveOrUpdate(user1);
-	HibernateUtil.commitTransaction();
+Session session=HibernateUtil.beginTransaction();
+User user1 = new User();
+user1.setPassword('aaaaaa');
+Long id = (Long)session.save(user1);
+session.evict(user1);
+User user2 = (User)session.get(User.class, id);
+user1.setVerified(true);
+session.saveOrUpdate(user1);
+HibernateUtil.commitTransaction();
 ```
 Well, here's another rule that Hibernate strictly enforces: only one instance of a class with a given unique primary key can be associated with the Session at a time. In this case, if we try to re-associate the evicted user1 with the Hibernate Session, Hibernate will kick out to us aNonUniqueObjectException, indicating that it is already managing an instance that represents that particular database record. So, Hibernate will gladly manage your unique instances, but fundamentally, it is that primary key that makes an object unique, and the developer must be careful not to add a second, non-unique instance of a class to an active Hibernate Session.
 
@@ -255,20 +255,20 @@ Any time we commit a transaction, the possibility of an exception being thrown l
 
 Finally, you can either re-throw the HibernateException, or potentially, throw a custom application exception that will be appropriately handled by an upper application layer, providing an appropriately formatted error message to the end user.
 ```java
-	try {
-		Session hibernateSession = this.getCurrentSession();
-		hibernateSession.beginTransaction();
-		User u = (User)hibernateSession.get(User.class, 2);
-		hibernateSession.evict(u); /* u is now detached */
-		u.setLoginName('Joey');
-		u.setPassword('shabidew');
-		hibernateSession.getTransaction().commit();
-	} catch (HibernateException e) {
-		e.printStackTrace();
-		hibernateSession.getTransaction().rollback();
-		hibernateSession.close();
-		throw e;
-	}
+try {
+    Session hibernateSession = this.getCurrentSession();
+    hibernateSession.beginTransaction();
+    User u = (User)hibernateSession.get(User.class, 2);
+    hibernateSession.evict(u); /* u is now detached */
+    u.setLoginName('Joey');
+    u.setPassword('shabidew');
+    hibernateSession.getTransaction().commit();
+} catch (HibernateException e) {
+    e.printStackTrace();
+    hibernateSession.getTransaction().rollback();
+    hibernateSession.close();
+    throw e;
+}
 ```
 ##### In Summary
 
@@ -318,7 +318,7 @@ unique-key is defined on level property in hibernate - however it is table level
 Table with column a.b and c can have unique-keys
 
 1. column a, b
-1. column b,c
+1. column b, c
 
 This is imposible define in hibernate - you can add two unique_key attributes for b property
 
@@ -330,22 +330,22 @@ You are strongly encouraged to use a surrogate primary key on your tables, i.e. 
 
 If Hibernate were to generate your database schema from your mapped domain classes this natural key would be used to generate a unique index for the table.
 ```xml
-	<properties name='uniqueCombination' unique='false'>
-		<property name='serviceCollectionName' type='string' not-null='true' column='service_collection_name' />
-		<property name='serviceName' type='string' not-null='true' column='service_name' />
-	</properties>
+<properties name='uniqueCombination' unique='false'>
+    <property name='serviceCollectionName' type='string' not-null='true' column='service_collection_name' />
+    <property name='serviceName' type='string' not-null='true' column='service_name' />
+</properties>
 
 //OR
 
-	<natural-id>
-		<property name='serviceCollectionName' type='string' column='service_collection_name' />
-		<property name='serviceName' type='string' not-null='true' column='service_name' />
-	</natural-id>
+<natural-id>
+    <property name='serviceCollectionName' type='string' column='service_collection_name' />
+    <property name='serviceName' type='string' not-null='true' column='service_name' />
+</natural-id>
 
-	<properties name='lrt_bps_bpr_acs_uk' unique='true'>
-	    <many-to-one name='activitySummary' column='bps_acs_id' class='xyz.ActivitySummary' unique-key='lrt_bps_bpr_acs_uk'/>
-	    <many-to-one name='bestPractice' column='bps_bpr_id' class='xyz.BestPractice' unique-key='lrt_bps_bpr_acs_uk'/>
-	</properties>
+<properties name='lrt_bps_bpr_acs_uk' unique='true'>
+    <many-to-one name='activitySummary' column='bps_acs_id' class='xyz.ActivitySummary' unique-key='lrt_bps_bpr_acs_uk'/>
+    <many-to-one name='bestPractice' column='bps_bpr_id' class='xyz.BestPractice' unique-key='lrt_bps_bpr_acs_uk'/>
+</properties>
 ```
 ##### One or two things about hibearate Criterion
 

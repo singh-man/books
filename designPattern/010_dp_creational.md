@@ -53,97 +53,100 @@ The SingletonExample class is an example of a typical singleton class. It contai
 
 [SingletonExample.java](http://www.avajava.com/tutorials/design-patterns/singleton-pattern/SingletonExample.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class SingletonExample {
-		
-		private static SingletonExample singletonExample = null;
-		
-		private SingletonExample() {
-		}
-		
-		public static SingletonExample getInstance() {
-			if (singletonExample == null) {
-				singletonExample = new SingletonExample();
-			}
-			return singletonExample;
-		}
-		
-		public void sayHello() {
-			System.out.println("Hello");
-		}
-	}
+public class SingletonExample {
+    
+    private static SingletonExample singletonExample = null;
+    
+    private SingletonExample() {
+    }
+    
+    public static SingletonExample getInstance() {
+        if (singletonExample == null) {
+            singletonExample = new SingletonExample();
+        }
+        return singletonExample;
+    }
+    
+    public void sayHello() {
+        System.out.println("Hello");
+    }
+}
 ```
 The Demo class obtains a SingletonExample singleton class via the call to the static SingletonExample.getInstance(). We call the sayHello() method on the singleton class. Executing the Demo class outputs "Hello" to standard output.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/singleton-pattern/Demo.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class Demo {
-		
-		public static void main(String[]args) {
-			SingletonExample singletonExample = SingletonExample.getInstance();
-			singletonExample.sayHello();
-		}
-		
-	}
+public class Demo {
+    
+    public static void main(String[]args) {
+        SingletonExample singletonExample = SingletonExample.getInstance();
+        singletonExample.sayHello();
+    }
+    
+}
 ```
 Singleton classes are a useful way of concentrating access to particular resources into a single class instance.
 
 **“Double Checked Locking”**
 ```java
-	class Singleton
-	{
-		private volatile static Singleton obj;
+class Singleton
+{
+    private volatile static Singleton obj;
 
-		private Singleton() {}
+    private Singleton() {}
 
-		public static Singleton getInstance()
-		{
-			if (obj == null)
-			{
-		            // To make thread safe
-				synchronized (Singleton.class)
-				{
-		            // check again as multiple threads
-		            // can reach above step
-					if (obj==null)
-						obj = new Singleton();
-				}
-			}
-			return obj;
-		}
-	}
+    public static Singleton getInstance()
+    {
+        if (obj == null)
+        {
+                // To make thread safe
+            synchronized (Singleton.class)
+            {
+                // check again as multiple threads
+                // can reach above step
+                if (obj==null)
+                    obj = new Singleton();
+            }
+        }
+        return obj;
+    }
+}
 ```
 **Block reflection** -> Enums
 
 Cloning -> override Cloneable and throw exception
 
-	@Override	
-	protected Object clone() throws CloneNotSupportedException 
-	{
-		return super.clone();
-	}
-
+```java
+@Override	
+protected Object clone() throws CloneNotSupportedException 
+{
+    return super.clone();
+}
+```
 **Block Serilizable**
 
-	class Singleton implements Serializable 
-	{
-		// public instance initialized when loading the class
-		public static Singleton instance = new Singleton();
+```java
+class Singleton implements Serializable 
+{
+    // public instance initialized when loading the class
+    public static Singleton instance = new Singleton();
 
-		private Singleton() 
-		{
-		 // private constructor
-		}
+    private Singleton() 
+    {
+     // private constructor
+    }
 
-		// implement readResolve method
-		protected Object readResolve()
-		{
-			return instance;
-		}
-	}
+    // implement readResolve method
+    protected Object readResolve()
+    {
+        return instance;
+    }
+}
+```
 
 ### Factory Pattern
 
@@ -155,73 +158,81 @@ As a simple example, let's create an AnimalFactory class that will return an ani
 
 [Animal.java](http://www.avajava.com/tutorials/design-patterns/factory-pattern/Animal.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public abstract class Animal {
-		public abstract String makeSound();
-	}
+public abstract class Animal {
+    public abstract String makeSound();
+}
+```
 
 The Dog class is a subclass of Animal. It implements makeSound() to return "Woof".
 
 [Dog.java](http://www.avajava.com/tutorials/design-patterns/factory-pattern/Dog.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public class Dog extends Animal {		
-		
-		@Override 
-		public String makeSound() {
-			return "Woof";
-		}
-	}
+public class Dog extends Animal {		
+    
+    @Override 
+    public String makeSound() {
+        return "Woof";
+    }
+}
+```
 
 The Cat class is a subclass of Animal. It implements makeSound() to return 'Meow'.
 
 [Cat.java](http://www.avajava.com/tutorials/design-patterns/factory-pattern/Cat.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public class Cat extends Animal {		
-		
-		@Override
-		public String makeSound() {
-			return 'Meow';
-		}
-	}
+public class Cat extends Animal {		
+    
+    @Override
+    public String makeSound() {
+        return 'Meow';
+    }
+}
+```
 
 Now, let's implement our factory. We will call our factory's object creation method getAnimal. This method takes a String as a parameter. If the String is 'canine', it returns a Dog object. Otherwise, it returns a Cat object.
 
 [AnimalFactory.java](http://www.avajava.com/tutorials/design-patterns/factory-pattern/AnimalFactory.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public class AnimalFactory {		
-		
-		public Animal getAnimal(String type) {
-			if ('canine'.equals(type)) {
-				return new Dog();
-			} else {
-				return new Cat();
-			}
-		}
-	}
+public class AnimalFactory {		
+    
+    public Animal getAnimal(String type) {
+        if ('canine'.equals(type)) {
+            return new Dog();
+        } else {
+            return new Cat();
+        }
+    }
+}
+```
 
 The Demo class demonstrates the use of our factory. It creates an AnimalFactory factory. The factory creates an Animal object and then another Animal object. The first object is a Cat and the second object is a Dog. The output of each object's makeSound() method is displayed.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/factory-pattern/Demo.java)
 ```java
-	package com.cakes;
-	
-	public class Demo {
-		
-		public static void main(String[] args) {
-			AnimalFactory animalFactory = new AnimalFactory();
-			Animal a1 = animalFactory.getAnimal("feline");
-			System.out.println("a1 sound: " + a1.makeSound());
-			Animal a2 = animalFactory.getAnimal("canine");
-			System.out.println("a2 sound: " + a2.makeSound());
-		}
-	}
+package com.cakes;
+
+public class Demo {
+    
+    public static void main(String[] args) {
+        AnimalFactory animalFactory = new AnimalFactory();
+        Animal a1 = animalFactory.getAnimal("feline");
+        System.out.println("a1 sound: " + a1.makeSound());
+        Animal a2 = animalFactory.getAnimal("canine");
+        System.out.println("a2 sound: " + a2.makeSound());
+    }
+}
 ```
 The console output is shown here.
 
@@ -275,120 +286,136 @@ SpeciesFactory is an abstract class with the getAnimal() abstract method. This m
 
 [SpeciesFactory.java](http://www.avajava.com/tutorials/design-patterns/abstract-factory-pattern/SpeciesFactory.java)
 
-	package com.cakes;
-	
-	import com.cakes.animals.Animal;
+```java
+package com.cakes;
 
-	public abstract class SpeciesFactory {	
-		public abstract Animal getAnimal(String type);
-	}
+import com.cakes.animals.Animal;
+
+public abstract class SpeciesFactory {	
+    public abstract Animal getAnimal(String type);
+}
+```
 
 MammalFactory implements getAnimal(). It returns an Animal, which is either a Dog or a Cat.
 
 [MammalFactory.java](http://www.avajava.com/tutorials/design-patterns/abstract-factory-pattern/MammalFactory.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	import com.cakes.animals.Animal;
-	import com.cakes.animals.Cat;
-	import com.cakes.animals.Dog;
+import com.cakes.animals.Animal;
+import com.cakes.animals.Cat;
+import com.cakes.animals.Dog;
 
-	public class MammalFactory extends SpeciesFactory {		
-		@Override 
-		public Animal getAnimal(String type) {
-			if ("dog".equals(type)) {
-				return new Dog();
-			} else {
-				return new Cat();
-			}
-		}
-	}
+public class MammalFactory extends SpeciesFactory {		
+    @Override 
+    public Animal getAnimal(String type) {
+        if ("dog".equals(type)) {
+            return new Dog();
+        } else {
+            return new Cat();
+        }
+    }
+}
+```
 
 ReptileFactory implements getAnimal(). It returns an Animal, which is either a Snake or a Tyrannosaurus.
 
 [ReptileFactory.java](http://www.avajava.com/tutorials/design-patterns/abstract-factory-pattern/ReptileFactory.java)
 
-	package com.cakes;
-	import com.cakes.animals.Animal;
-	import com.cakes.animals.Snake;
-	import com.cakes.animals.Tyrannosaurus;
+```java
+package com.cakes;
+import com.cakes.animals.Animal;
+import com.cakes.animals.Snake;
+import com.cakes.animals.Tyrannosaurus;
 
-	public class ReptileFactory extends SpeciesFactory {
-		@Override	
-		public Animal getAnimal(String type) {
-			if ("snake".equals(type)) {
-				return new Snake();
-			} else {
-				return new Tyrannosaurus();
-			}
-		}
-	}
+public class ReptileFactory extends SpeciesFactory {
+    @Override	
+    public Animal getAnimal(String type) {
+        if ("snake".equals(type)) {
+            return new Snake();
+        } else {
+            return new Tyrannosaurus();
+        }
+    }
+}
+```
 
 Animal is an abstract class with the makeSound() abstract method. Subclasses of Animal implement the makeSound() method.
 
 [Animal.java](http://www.avajava.com/tutorials/design-patterns/abstract-factory-pattern/Animal.java)
 
-	package com.cakes.animals;
-	
-	public abstract class Animal {
-		public abstract String makeSound();
-	}
+```java
+package com.cakes.animals;
+
+public abstract class Animal {
+    public abstract String makeSound();
+}
+```
 
 The Cat class is shown here.
 
 [Cat.java](http://www.avajava.com/tutorials/design-patterns/abstract-factory-pattern/Cat.java)
 
-	package com.cakes.animals;
-	
-	public class Cat extends Animal {
-		
-		@Override	
-		public String makeSound() {
-			return "Meow";
-		}
-	}
+```java
+package com.cakes.animals;
+
+public class Cat extends Animal {
+    
+    @Override	
+    public String makeSound() {
+        return "Meow";
+    }
+}
+```
 
 The Dog class is shown here.
 
 [Dog.java](http://www.avajava.com/tutorials/design-patterns/abstract-factory-pattern/Dog.java)
 
-	package com.cakes.animals;
-	
-	public class Dog extends Animal {
-		
-		@Override	
-		public String makeSound() {
-			return "Woof";
-		}
-	}
+```java
+package com.cakes.animals;
+
+public class Dog extends Animal {
+    
+    @Override	
+    public String makeSound() {
+        return "Woof";
+    }
+}
+```
 
 The Snake class is shown here.
 
 [Snake.java](http://www.avajava.com/tutorials/design-patterns/abstract-factory-pattern/Snake.java)
 
-	package com.cakes.animals;
-	
-	public class Snake extends Animal {
-		
-		@Override	
-		public String makeSound() {
-			return "Hiss";
-		}
-	}
+```java
+package com.cakes.animals;
+
+public class Snake extends Animal {
+    
+    @Override	
+    public String makeSound() {
+        return "Hiss";
+    }
+}
+```
 
 The Tyrannosaurus class is shown here.
 
 [Tyrannosaurus.java](http://www.avajava.com/tutorials/design-patterns/abstract-factory-pattern/Tyrannosaurus.java)
 
-	package com.cakes.animals;
-	
-	public class Tyrannosaurus extends Animal {
-		
-		@Override	
-		public String makeSound() {
-			return "Roar";
-		}
-	}
+```java
+package com.cakes.animals;
+
+public class Tyrannosaurus extends Animal {
+    
+    @Override	
+    public String makeSound() {
+        return "Roar";
+    }
+}
+```
 
 The Demo class contains our main() method. It creates an AbstractFactory object. From the AbstractFactory, we obtain a SpeciesFactory (a ReptileFactory) and get two Animal objects (Tyrannosaurus and Snake) from the SpeciesFactory. After this, we obtain another SpeciesFactory (a MammalFactory) and then obtain two more Animal objects (Dog and Cat).
 
@@ -489,18 +516,20 @@ Our Builder interface is MealBuilder. It features methods used to build a meal a
 
 [MealBuilder.java](http://www.avajava.com/tutorials/design-patterns/builder-pattern/MealBuilder.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public interface MealBuilder {		
-		public void buildDrink();
+public interface MealBuilder {		
+    public void buildDrink();
 
-		public void buildMainCourse();
+    public void buildMainCourse();
 
-		public void buildSide();
+    public void buildSide();
 
-		public Meal getMeal();
+    public Meal getMeal();
 
-	}
+}
+```
 
 Our first Concrete Builder is ItalianMealBuilder. Its constructor creates a meal. Its methods are implemented to build the various parts of the meal. It returns the meal via getMeal().
 
@@ -574,25 +603,27 @@ Our Director class is MealDirector. It takes a MealBuilder as a parameter in its
 
 [MealDirector.java](http://www.avajava.com/tutorials/design-patterns/builder-pattern/MealDirector.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public class MealDirector {
-		private MealBuilder mealBuilder = null;
+public class MealDirector {
+    private MealBuilder mealBuilder = null;
 
-		public MealDirector(MealBuilder mealBuilder) {
-			this.mealBuilder = mealBuilder;
-		}
+    public MealDirector(MealBuilder mealBuilder) {
+        this.mealBuilder = mealBuilder;
+    }
 
-		public void constructMeal() {
-			mealBuilder.buildDrink();
-			mealBuilder.buildMainCourse();
-			mealBuilder.buildSide();
-		}
+    public void constructMeal() {
+        mealBuilder.buildDrink();
+        mealBuilder.buildMainCourse();
+        mealBuilder.buildSide();
+    }
 
-		public Meal getMeal() {
-			return mealBuilder.getMeal();
-		}
-	}
+    public Meal getMeal() {
+        return mealBuilder.getMeal();
+    }
+}
+```
 
 The Demo class lets us demonstrate our builder pattern. First, our director builds an Italian meal. An ItalianMealBuilder is passed to the MealDirector's constructor. The meal is constructed via mealDirector.constructMeal(). The meal is obtained from mealDirector via mealDirector.getMeal(). The Italian meal is displayed. After this, we perform the same process to build and display a Japanese meal.
 
@@ -634,59 +665,65 @@ However, we can implement our own prototype pattern. To do so, We'll create a Pr
 
 [Prototype.java](http://www.avajava.com/tutorials/design-patterns/prototype-pattern/Prototype.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public interface Prototype {
-		public Prototype doClone();
-	}
+public interface Prototype {
+    public Prototype doClone();
+}
+```
 
 The Person class implements the doClone() method. This method creates a new Person object and clones the name field. It returns the newly cloned Person object.
 
 [Person.java](http://www.avajava.com/tutorials/design-patterns/prototype-pattern/Person.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public class Person implements Prototype {
-		
-		String name;
+public class Person implements Prototype {
+    
+    String name;
 
-		public Person(String name) {
-			this.name = name;
-		}
+    public Person(String name) {
+        this.name = name;
+    }
 
-		@Override
-		public Prototype doClone() {
-			return new Person(name);
-		}
+    @Override
+    public Prototype doClone() {
+        return new Person(name);
+    }
 
-		public String toString() {
-			return "This person is named " + name;
-		}
-	}
+    public String toString() {
+        return "This person is named " + name;
+    }
+}
+```
 
 The Dog class also implements the doClone() method. This method creates a new Dog object and clones the sound field. The cloned Dog object is returned.
 
 [Dog.java](http://www.avajava.com/tutorials/design-patterns/prototype-pattern/Dog.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public class Dog implements Prototype {
-		
-		String sound;
+public class Dog implements Prototype {
+    
+    String sound;
 
-		public Dog(String sound) {
-			this.sound = sound;
-		}
+    public Dog(String sound) {
+        this.sound = sound;
+    }
 
-		@Override
-		public Prototype doClone() {
-			return new Dog(sound);
-		}
+    @Override
+    public Prototype doClone() {
+        return new Dog(sound);
+    }
 
-		public String toString() {
-			return "This dog says " + sound;
-		}
-	}
+    public String toString() {
+        return "This dog says " + sound;
+    }
+}
+```
 
 The Demo class creates a Person object and then clones it to a second Person object. It then creates a Dog object and clones it to a second Dog object.
 

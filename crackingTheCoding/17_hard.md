@@ -122,7 +122,7 @@ Suppose we have an algorithm that can pull a random set of m elements from an ar
 We can  first pull a random set  of size m from  the  first n - 1 elements. Then,  we just need to decide if array[n] should be inserted into  our subset (which  would require pulling out  a random element from it). An easy way to do this is to pick a random number k from 0 through n. If k  <  m, then insert array[n] into  subset[k]. This will both "fairly" (i.e., with proportional probability) insert  array[n] into the  subset and "fairly" remove a random element from the  subset.
 
 The pseudocode for this recursive algorithm would look like this:
-```
+```java
 1   int[] pickMRecursively(int[]  original, int m,  int i) {
 2       if (i + 1  ==  m)  { // Base   case
 3           /*  return first  m   elements of original  */
@@ -556,8 +556,8 @@ EXAMPLE
 
 Input:
 ```
-    Names: John (15), Jon (12), Chris  (13), Kris (4), Christopher (19)
-    Synonyms: (Jon, John), (John, Johnny), (Chris,  Kris), (Chris,  Christopher) 
+Names: John (15), Jon (12), Chris  (13), Kris (4), Christopher (19)
+Synonyms: (Jon, John), (John, Johnny), (Chris,  Kris), (Chris,  Christopher) 
 ```
 Output: John (27), Kris (36)
 

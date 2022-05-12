@@ -10,98 +10,98 @@ Here is an example of the template method pattern. Meal is an abstract class wit
 
 [Meal.java](http://www.avajava.com/tutorials/design-patterns/template-method-pattern/Meal.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public abstract class Meal {// template method
+public abstract class Meal {// template method
 
-		public final void doMeal() {
-			prepareIngredients();
-			cook();
-			eat();
-			cleanUp();
-		}
+    public final void doMeal() {
+        prepareIngredients();
+        cook();
+        eat();
+        cleanUp();
+    }
 
-		public abstract void prepareIngredients();
+    public abstract void prepareIngredients();
 
-		public abstract void cook();
+    public abstract void cook();
 
-		public void eat() {
-			System.out.println("Mmm, that's good");
-		}
+    public void eat() {
+        System.out.println("Mmm, that's good");
+    }
 
-		public abstract void cleanUp();
-	}
+    public abstract void cleanUp();
+}
 ```
 The HamburgerMeal class extends Meal and implements Meal's three abstract methods.
 
 [HamburgerMeal.java](http://www.avajava.com/tutorials/design-patterns/template-method-pattern/HamburgerMeal.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class HamburgerMeal extends Meal {
-		
-		@Override
-		public void prepareIngredients() {
-			System.out.println("Getting burgers, buns, and french fries");
-		}
+public class HamburgerMeal extends Meal {
+    
+    @Override
+    public void prepareIngredients() {
+        System.out.println("Getting burgers, buns, and french fries");
+    }
 
-		@Override
-		public void cook() {
-			System.out.println("Cooking burgers on grill and fries in oven");
-		}
+    @Override
+    public void cook() {
+        System.out.println("Cooking burgers on grill and fries in oven");
+    }
 
-		@Override
-		public void cleanUp() {
-			System.out.println("Throwing away paper plates");
-		}
-	}
+    @Override
+    public void cleanUp() {
+        System.out.println("Throwing away paper plates");
+    }
+}
 ```
 The TacoMeal class implements Meal's three abstract methods and also
 overrides the eat() method.
 
 [TacoMeal.java](http://www.avajava.com/tutorials/design-patterns/template-method-pattern/TacoMeal.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class TacoMeal extends Meal {
-		
-		@Override
-		public void prepareIngredients() {
-			System.out.println("Getting ground beef and shells");
-		}
+public class TacoMeal extends Meal {
+    
+    @Override
+    public void prepareIngredients() {
+        System.out.println("Getting ground beef and shells");
+    }
 
-		@Override
-		public void cook() {
-			System.out.println("Cooking ground beef in pan");
-		}
+    @Override
+    public void cook() {
+        System.out.println("Cooking ground beef in pan");
+    }
 
-		@Override
-		public void eat() {
-			System.out.println("The tacos are tasty");
-		}
+    @Override
+    public void eat() {
+        System.out.println("The tacos are tasty");
+    }
 
-		@Override
-		public void cleanUp() {
-			System.out.println("Doing the dishes");
-		}
-	}
+    @Override
+    public void cleanUp() {
+        System.out.println("Doing the dishes");
+    }
+}
 ```
 The Demo class creates a HamburgerMeal object and calls its doMeal() method. It creates a TacoMeal object and calls doMeal() on the TacoMeal object.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/template-method-pattern/Demo.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class Demo {
-		
-		public static void main(String[] args) {
-			Meal meal1 = new HamburgerMeal();
-			meal1.doMeal();
-			System.out.println();
-			Meal meal2 = new TacoMeal();
-			meal2.doMeal();
-		}
-	}
+public class Demo {
+    
+    public static void main(String[] args) {
+        Meal meal1 = new HamburgerMeal();
+        meal1.doMeal();
+        System.out.println();
+        Meal meal2 = new TacoMeal();
+        meal2.doMeal();
+    }
+}
 ```
 The console output of the execution of Demo is shown here.
 
@@ -131,186 +131,186 @@ The Mediator has references to the two buyers, the seller, and the converter. It
 
 [Mediator.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/Mediator.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class Mediator {
-		Buyer swedishBuyer;
+public class Mediator {
+    Buyer swedishBuyer;
 
-		Buyer frenchBuyer;
+    Buyer frenchBuyer;
 
-		AmericanSeller americanSeller;
+    AmericanSeller americanSeller;
 
-		DollarConverter dollarConverter;
+    DollarConverter dollarConverter;
 
-		public Mediator() {}
+    public Mediator() {}
 
-		public void registerSwedishBuyer(SwedishBuyer swedishBuyer) {
-			this.swedishBuyer = swedishBuyer;
-		}
+    public void registerSwedishBuyer(SwedishBuyer swedishBuyer) {
+        this.swedishBuyer = swedishBuyer;
+    }
 
-		public void registerFrenchBuyer(FrenchBuyer frenchBuyer) {
-			this.frenchBuyer = frenchBuyer;
-		}
+    public void registerFrenchBuyer(FrenchBuyer frenchBuyer) {
+        this.frenchBuyer = frenchBuyer;
+    }
 
-		public void registerAmericanSeller(AmericanSeller americanSeller) {
-			this.americanSeller = americanSeller;
-		}
+    public void registerAmericanSeller(AmericanSeller americanSeller) {
+        this.americanSeller = americanSeller;
+    }
 
-		public void registerDollarConverter(DollarConverter dollarConverter) {
-			this.dollarConverter = dollarConverter;
-		}
+    public void registerDollarConverter(DollarConverter dollarConverter) {
+        this.dollarConverter = dollarConverter;
+    }
 
-		public boolean placeBid(float bid, String unitOfCurrency) {
-			float dollarAmount = dollarConverter.convertCurrencyToDollars(bid, unitOfCurrency);
-			return americanSeller.isBidAccepted(dollarAmount);
-		}
-	}
+    public boolean placeBid(float bid, String unitOfCurrency) {
+        float dollarAmount = dollarConverter.convertCurrencyToDollars(bid, unitOfCurrency);
+        return americanSeller.isBidAccepted(dollarAmount);
+    }
+}
 ```
 Here is the Buyer class. The SwedishBuyer and FrenchBuyer classes are subclasses of Buyer. The buyer has a unit of currency as a field, and it also has a reference to the mediator. The Buyer class has a attemptToPurchase() method. This method submits a bid to the mediator's placeBid() method. It returns the mediator's response.
 
 [Buyer.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/Buyer.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class Buyer {
-		Mediator mediator;
+public class Buyer {
+    Mediator mediator;
 
-		String unitOfCurrency;
+    String unitOfCurrency;
 
-		public Buyer(Mediator mediator, String unitOfCurrency) {
-			this.mediator = mediator;
-			this.unitOfCurrency = unitOfCurrency;
-		}
+    public Buyer(Mediator mediator, String unitOfCurrency) {
+        this.mediator = mediator;
+        this.unitOfCurrency = unitOfCurrency;
+    }
 
-		public boolean attemptToPurchase(float bid) {
-			System.out.println("Buyer attempting a bid of " + bid + " " + unitOfCurrency);
-			return mediator.placeBid(bid, unitOfCurrency);
-		}
-	}
+    public boolean attemptToPurchase(float bid) {
+        System.out.println("Buyer attempting a bid of " + bid + " " + unitOfCurrency);
+        return mediator.placeBid(bid, unitOfCurrency);
+    }
+}
 ```
 The SwedishBuyer class is a subclass of Buyer. In the constructor, we set the unitOfCurrency to be "krona". We also register the SwedishBuyer with the mediator so that the mediator knows about the SwedishBuyer object.
 
 [SwedishBuyer.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/SwedishBuyer.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class SwedishBuyer extends Buyer {
-		public SwedishBuyer(Mediator mediator) {
-			super(mediator, "krona");
-			this.mediator.registerSwedishBuyer(this);
-		}
-	}
+public class SwedishBuyer extends Buyer {
+    public SwedishBuyer(Mediator mediator) {
+        super(mediator, "krona");
+        this.mediator.registerSwedishBuyer(this);
+    }
+}
 ```
 The FrenchBuyer class is similar to the SwedishBuyer class, except the unitOfCurrency is "euro", and it registers with the mediator as the FrenchBuyer.
 
 [FrenchBuyer.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/FrenchBuyer.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class FrenchBuyer extends Buyer {
-		public FrenchBuyer(Mediator mediator) {
-			super(mediator, "euro");
-			this.mediator.registerFrenchBuyer(this);
-		}
-	}
+public class FrenchBuyer extends Buyer {
+    public FrenchBuyer(Mediator mediator) {
+        super(mediator, "euro");
+        this.mediator.registerFrenchBuyer(this);
+    }
+}
 ```
 In the constructor of the AmericanSeller class, the class gets a reference to the mediator and the priceInDollars gets set. This is the price of some good being sold. The seller registers with the mediator as the AmericanSeller. The seller's isBidAccepted() method takes a bid (in dollars). If the bid is over the price (in dollars), the bid is accepted and true is returned. Otherwise, false is returned.
 
 [AmericanSeller.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/AmericanSeller.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class AmericanSeller {
-		Mediator mediator;
+public class AmericanSeller {
+    Mediator mediator;
 
-		float priceInDollars;
+    float priceInDollars;
 
-		public AmericanSeller(Mediator mediator, float priceInDollars) {
-			this.mediator = mediator;
-			this.priceInDollars = priceInDollars;
-			this.mediator.registerAmericanSeller(this);
-		}
+    public AmericanSeller(Mediator mediator, float priceInDollars) {
+        this.mediator = mediator;
+        this.priceInDollars = priceInDollars;
+        this.mediator.registerAmericanSeller(this);
+    }
 
-		public boolean isBidAccepted(float bidInDollars) {
-			if (bidInDollars >= priceInDollars) {
-				System.out.println("Seller accepts the bid of " + bidInDollars + "dollars\n");
-				return true;
-			} else {
-				System.out.println("Seller rejects the bid of " + bidInDollars + "dollars\n");
-				return false;
-			}
-		}
-	}
+    public boolean isBidAccepted(float bidInDollars) {
+        if (bidInDollars >= priceInDollars) {
+            System.out.println("Seller accepts the bid of " + bidInDollars + "dollars\n");
+            return true;
+        } else {
+            System.out.println("Seller rejects the bid of " + bidInDollars + "dollars\n");
+            return false;
+        }
+    }
+}
 ```
 The DollarConverter class is another colleague class. When created, it gets a reference to the mediator and registers itself with the mediator as the DollarConverter. This class has methods to convert amounts in euros and kronor to dollars.
 
 [DollarConverter.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/DollarConverter.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class DollarConverter {
+public class DollarConverter {
 
-		Mediator mediator;
+    Mediator mediator;
 
-		public static final float DOLLAR_UNIT = 1.0f;
+    public static final float DOLLAR_UNIT = 1.0f;
 
-		public static final float EURO_UNIT = 0.7f;
+    public static final float EURO_UNIT = 0.7f;
 
-		public static final float KRONA_UNIT = 8.0f;
+    public static final float KRONA_UNIT = 8.0f;
 
-		public DollarConverter(Mediator mediator) {
-			this.mediator = mediator;
-			mediator.registerDollarConverter(this);
-		}
+    public DollarConverter(Mediator mediator) {
+        this.mediator = mediator;
+        mediator.registerDollarConverter(this);
+    }
 
-		private float convertEurosToDollars(float euros) {
-			float dollars = euros * (DOLLAR_UNIT / EURO_UNIT);
-			System.out.println("Converting " + euros + " euros to " + dollars + " dollars");
-			return dollars;
-		}
+    private float convertEurosToDollars(float euros) {
+        float dollars = euros * (DOLLAR_UNIT / EURO_UNIT);
+        System.out.println("Converting " + euros + " euros to " + dollars + " dollars");
+        return dollars;
+    }
 
-		private float convertKronorToDollars(float kronor) {
-			float dollars = kronor * (DOLLAR_UNIT / KRONA_UNIT);
-			System.out.println("Converting " + kronor + " kronor to " + dollars + " dollars");
-			return dollars;
-		}
+    private float convertKronorToDollars(float kronor) {
+        float dollars = kronor * (DOLLAR_UNIT / KRONA_UNIT);
+        System.out.println("Converting " + kronor + " kronor to " + dollars + " dollars");
+        return dollars;
+    }
 
-		public float convertCurrencyToDollars(float amount, String unitOfCurrency) {
-			if ("krona".equalsIgnoreCase(unitOfCurrency)) {
-				return convertKronorToDollars(amount);
-			} else {
-				return convertEurosToDollars(amount);
-			}
-		}
-	}
+    public float convertCurrencyToDollars(float amount, String unitOfCurrency) {
+        if ("krona".equalsIgnoreCase(unitOfCurrency)) {
+            return convertKronorToDollars(amount);
+        } else {
+            return convertEurosToDollars(amount);
+        }
+    }
+}
 ```
 The Demo class demonstrates our mediator pattern. It creates a SwedishBuyer object and a FrenchBuyer object. It creates an AmericanSeller object with a selling price set to 10 dollars. It then creates a DollarConverter. All of these objects register themselves with the mediator in their constructors. The Swedish buyer starts with a bid of 55 kronor and keeps bidding up in increments of 15 kronor until the bid is accepted. The French buyer starts bidding at 3 euros and keeps bidding in increments of 1.50 euros until the bid is accepted.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/mediator-pattern/Demo.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class Demo {
-		public static void main(String[] args) {
-			Mediator mediator = new Mediator();
-			Buyer swedishBuyer = new SwedishBuyer(mediator);
-			Buyer frenchBuyer = new FrenchBuyer(mediator);
-			float sellingPriceInDollars = 10.0f;
-			AmericanSeller americanSeller = new AmericanSeller(mediator, sellingPriceInDollars);
-			DollarConverter dollarConverter = new DollarConverter(mediator);
-			float swedishBidInKronor = 55.0f;
+public class Demo {
+    public static void main(String[] args) {
+        Mediator mediator = new Mediator();
+        Buyer swedishBuyer = new SwedishBuyer(mediator);
+        Buyer frenchBuyer = new FrenchBuyer(mediator);
+        float sellingPriceInDollars = 10.0f;
+        AmericanSeller americanSeller = new AmericanSeller(mediator, sellingPriceInDollars);
+        DollarConverter dollarConverter = new DollarConverter(mediator);
+        float swedishBidInKronor = 55.0f;
 
-			while (!swedishBuyer.attemptToPurchase(swedishBidInKronor)) {
-				swedishBidInKronor += 15.0f;
-			}
+        while (!swedishBuyer.attemptToPurchase(swedishBidInKronor)) {
+            swedishBidInKronor += 15.0f;
+        }
 
-			float frenchBidInEuros = 3.0f;
+        float frenchBidInEuros = 3.0f;
 
-			while (!frenchBuyer.attemptToPurchase(frenchBidInEuros)) {
-				frenchBidInEuros += 1.5f;
-			}
-		}
-	}
+        while (!frenchBuyer.attemptToPurchase(frenchBidInEuros)) {
+            frenchBidInEuros += 1.5f;
+        }
+    }
+}
 ```
 The console output of the execution of Demo is shown here.
 
@@ -356,27 +356,29 @@ Now, lets look at an example of the chain of responsibility pattern. Rather than
 
 [PlanetHandler.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/PlanetHandler.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public abstract class PlanetHandler {
-		PlanetHandler successor;
+public abstract class PlanetHandler {
+    PlanetHandler successor;
 
-		public void setSuccessor(PlanetHandler successor) {
-			this.successor = successor;
-		}
+    public void setSuccessor(PlanetHandler successor) {
+        this.successor = successor;
+    }
 
-		public abstract void handleRequest(PlanetEnum request);
-	}
+    public abstract void handleRequest(PlanetEnum request);
+}
 ```
 This example will utilize an enum of the planets called PlanetEnum.
 
 [PlanetEnum.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/PlanetEnum.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public enum PlanetEnum {
-		MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE;
-	}
+public enum PlanetEnum {
+    MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE;
+}
+```
 
 MercuryHandler subclasses PlanetHandler and implements the
 handleRequest() method. If the request is a PlanetEnum.MERCURY, it will
@@ -385,87 +387,87 @@ handler's successor if the successor exists.
 
 [MercuryHandler.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/MercuryHandler.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class MercuryHandler extends PlanetHandler {
-		
-		public void handleRequest(PlanetEnum request) {
-			if (request == PlanetEnum.MERCURY) {
-				System.out.println("MercuryHandler handles " + request);
-				System.out.println("Mercury is hot.\n");
-			} else {
-				System.out.println("MercuryHandler doesn't handle " + request);
-				if (successor != null) {successor.handleRequest(request);
-				}
-			}
-		}
-	}
+public class MercuryHandler extends PlanetHandler {
+    
+    public void handleRequest(PlanetEnum request) {
+        if (request == PlanetEnum.MERCURY) {
+            System.out.println("MercuryHandler handles " + request);
+            System.out.println("Mercury is hot.\n");
+        } else {
+            System.out.println("MercuryHandler doesn't handle " + request);
+            if (successor != null) {successor.handleRequest(request);
+            }
+        }
+    }
+}
 ```
 VenusHandler is similar to MercuryHandler, except it handles PlanetEnum.VENUS requests.
 
 [VenusHandler.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/VenusHandler.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class VenusHandler extends PlanetHandler {
-		public void handleRequest(PlanetEnum request) {
-			if (request == PlanetEnum.VENUS) {
-				System.out.println("VenusHandler handles " + request);
-				System.out.println("Venus is poisonous.\n");
-			} else {
-				System.out.println("VenusHandler doesn't handle " + request);
-				if (successor != null) {
-					successor.handleRequest(request);
-				}
-			}
-		}
-	}
+public class VenusHandler extends PlanetHandler {
+    public void handleRequest(PlanetEnum request) {
+        if (request == PlanetEnum.VENUS) {
+            System.out.println("VenusHandler handles " + request);
+            System.out.println("Venus is poisonous.\n");
+        } else {
+            System.out.println("VenusHandler doesn't handle " + request);
+            if (successor != null) {
+                successor.handleRequest(request);
+            }
+        }
+    }
+}
 ```
 EarthHandler similarly handles PlanetEnum.EARTH requests.
 
 [EarthHandler.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/EarthHandler.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class EarthHandler extends PlanetHandler {
-		public void handleRequest(PlanetEnum request) {
-			if (request == PlanetEnum.EARTH) {
-				System.out.println("EarthHandler handles " + request);
-				System.out.println("Earth is comfortable.\n");
-			} else {
-				System.out.println("EarthHandler doesn't handle " + request);
+public class EarthHandler extends PlanetHandler {
+    public void handleRequest(PlanetEnum request) {
+        if (request == PlanetEnum.EARTH) {
+            System.out.println("EarthHandler handles " + request);
+            System.out.println("Earth is comfortable.\n");
+        } else {
+            System.out.println("EarthHandler doesn't handle " + request);
 
-				if (successor != null) {
-					successor.handleRequest(request);
-				}
-			}
-		}
-	}
+            if (successor != null) {
+                successor.handleRequest(request);
+            }
+        }
+    }
+}
 ```
 The Demo class is the client class. It creates the chain of handlers, starting with MercuryHandler, then VenusHandler, and then EarthHandler. The setUpChain() method returns the chain to main() via a PlanetHandler reference. Four requests are made of the chain, where the requests are VENUS, MERCURY, EARTH, and JUPITER.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/Demo.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class Demo {
-		public static void main(String[] args) {
-			PlanetHandler chain = setUpChain();
-			chain.handleRequest(PlanetEnum.VENUS);
-			chain.handleRequest(PlanetEnum.MERCURY);
-			chain.handleRequest(PlanetEnum.EARTH);
-			chain.handleRequest(PlanetEnum.JUPITER);
-		}
+public class Demo {
+    public static void main(String[] args) {
+        PlanetHandler chain = setUpChain();
+        chain.handleRequest(PlanetEnum.VENUS);
+        chain.handleRequest(PlanetEnum.MERCURY);
+        chain.handleRequest(PlanetEnum.EARTH);
+        chain.handleRequest(PlanetEnum.JUPITER);
+    }
 
-		public static PlanetHandler setUpChain() {
-			PlanetHandler mercuryHandler = new MercuryHandler();
-			PlanetHandler venusHandler = new VenusHandler();
-			PlanetHandler earthHandler = new EarthHandler();
-			mercuryHandler.setSuccessor(venusHandler);
-			venusHandler.setSuccessor(earthHandler);
-			return mercuryHandler;
-		}
-	}
+    public static PlanetHandler setUpChain() {
+        PlanetHandler mercuryHandler = new MercuryHandler();
+        PlanetHandler venusHandler = new VenusHandler();
+        PlanetHandler earthHandler = new EarthHandler();
+        mercuryHandler.setSuccessor(venusHandler);
+        venusHandler.setSuccessor(earthHandler);
+        return mercuryHandler;
+    }
+}
 ```
 The console output of the execution of Demo is shown here. Notice that if a handler can not handle the request, it passes the request on to the next handler.
 
@@ -553,118 +555,120 @@ the EventBus.
 
 [WeatherSubject.java](http://www.avajava.com/tutorials/design-patterns/observer-pattern/WeatherSubject.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public interface WeatherSubject {
-		public void addObserver(WeatherObserver weatherObserver);
+public interface WeatherSubject {
+    public void addObserver(WeatherObserver weatherObserver);
 
-		public void removeObserver(WeatherObserver weatherObserver);
+    public void removeObserver(WeatherObserver weatherObserver);
 
-		public void doNotify();
-	}
+    public void doNotify();
+}
 ```
 We'll also create an interface for the observers called
 WeatherObserver. It features one method, a doUpdate() method.
 
 [WeatherObserver.java](http://www.avajava.com/tutorials/design-patterns/observer-pattern/WeatherObserver.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public interface WeatherObserver {
-		public void doUpdate(int temperature);
-	}
+public interface WeatherObserver {
+    public void doUpdate(int temperature);
+}
+```
 
 The WeatherStation class implements WeatherSubject. It is our subject class. It maintains a set of WeatherObservers which are added via addObserver() and removed via removeObserver(). When WeatherSubject's state changes via setTemperature(), the doNotify() method is called, which contacts all the WeatherObservers with the temperature via their doUpdate() methods.
 
 [WeatherStation.java](http://www.avajava.com/tutorials/design-patterns/observer-pattern/WeatherStation.java)
 ```java
-	package com.cakes;
-	import java.util.HashSet;
-	import java.util.Iterator;
-	import java.util.Set;
+package com.cakes;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
-	public class WeatherStation implements WeatherSubject {
-		Set<WeatherObserver> weatherObservers;
+public class WeatherStation implements WeatherSubject {
+    Set<WeatherObserver> weatherObservers;
 
-		int temperature;
+    int temperature;
 
-		public WeatherStation(int temperature) {
-			weatherObservers = new HashSet<WeatherObserver>();
-			this.temperature = temperature;
-		}
+    public WeatherStation(int temperature) {
+        weatherObservers = new HashSet<WeatherObserver>();
+        this.temperature = temperature;
+    }
 
-		@Override
-		public void addObserver(WeatherObserver weatherObserver) {
-			weatherObservers.add(weatherObserver);
-		}
+    @Override
+    public void addObserver(WeatherObserver weatherObserver) {
+        weatherObservers.add(weatherObserver);
+    }
 
-		@Override
-		public void removeObserver(WeatherObserver weatherObserver) {
-			weatherObservers.remove(weatherObserver);
-		}
+    @Override
+    public void removeObserver(WeatherObserver weatherObserver) {
+        weatherObservers.remove(weatherObserver);
+    }
 
-		@Override
-		public void doNotify() {
-			Iterator<WeatherObserver> it = weatherObservers.iterator();
+    @Override
+    public void doNotify() {
+        Iterator<WeatherObserver> it = weatherObservers.iterator();
 
-			while (it.hasNext()) {
-				WeatherObserver weatherObserver = it.next();
-				weatherObserver.doUpdate(temperature);
-			}
-		}
+        while (it.hasNext()) {
+            WeatherObserver weatherObserver = it.next();
+            weatherObserver.doUpdate(temperature);
+        }
+    }
 
-		public void setTemperature(int newTemperature) {
-			System.out.println("\nWeather station setting temperature to " + newTemperature);
-			temperature = newTemperature;
-			doNotify();
-		}
-	}
+    public void setTemperature(int newTemperature) {
+        System.out.println("\nWeather station setting temperature to " + newTemperature);
+        temperature = newTemperature;
+        doNotify();
+    }
+}
 ```
 WeatherCustomer1 is an observer that implements WeatherObserver. Its doUpdate() method gets the current temperature from the WeatherStation and displays it.
 
 [WeatherCustomer1.java](http://www.avajava.com/tutorials/design-patterns/observer-pattern/WeatherCustomer1.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class WeatherCustomer1 implements WeatherObserver {
-		
-		@Override
-		public void doUpdate(int temperature) {
-			System.out.println("Weather customer 1 just found out the temperature is:" + temperature);
-		}
-	}
+public class WeatherCustomer1 implements WeatherObserver {
+    
+    @Override
+    public void doUpdate(int temperature) {
+        System.out.println("Weather customer 1 just found out the temperature is:" + temperature);
+    }
+}
 ```
 WeatherCustomer2 performs similar functionality as WeatherCustomer1.
 
 [WeatherCustomer2.java](http://www.avajava.com/tutorials/design-patterns/observer-pattern/WeatherCustomer2.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class WeatherCustomer2 implements WeatherObserver {
-		@Override
-		public void doUpdate(int temperature) {
-			System.out.println("Weather customer 2 just found out the temperature is:" + temperature);
-		}
-	}
+public class WeatherCustomer2 implements WeatherObserver {
+    @Override
+    public void doUpdate(int temperature) {
+        System.out.println("Weather customer 2 just found out the temperature is:" + temperature);
+    }
+}
 ```
 The Demo class demonstrates the observer pattern. It creates a WeatherStation and then a WeatherCustomer1 and a WeatherCustomer2. The two customers are added as observers to the weather station. Then the setTemperature() method of the weather station is called. This changes the state of the weather station and the customers are notified of this temperature update. Next, the WeatherCustomer1 object is removed from the station's collection of observers. Then, the setTemperature() method is called again. This results in the notification of the WeatherCustomer2 object.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/observer-pattern/Demo.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class Demo {
-		public static void main(String[] args) {
-			WeatherStation weatherStation = new WeatherStation(33);
-			WeatherCustomer1 wc1 = new WeatherCustomer1();
-			WeatherCustomer2 wc2 = new WeatherCustomer2();
-			weatherStation.addObserver(wc1);
-			weatherStation.addObserver(wc2);
-			weatherStation.setTemperature(34);
-			weatherStation.removeObserver(wc1);
-			weatherStation.setTemperature(35);
-		}
-	}
+public class Demo {
+    public static void main(String[] args) {
+        WeatherStation weatherStation = new WeatherStation(33);
+        WeatherCustomer1 wc1 = new WeatherCustomer1();
+        WeatherCustomer2 wc2 = new WeatherCustomer2();
+        weatherStation.addObserver(wc1);
+        weatherStation.addObserver(wc2);
+        weatherStation.setTemperature(34);
+        weatherStation.removeObserver(wc1);
+        weatherStation.setTemperature(35);
+    }
+}
 ```
 The console output of executing Demo is shown here.
 
@@ -690,74 +694,76 @@ Here is an example of the strategy pattern. First, We'll define a Strategy inter
 
 [Strategy.java](http://www.avajava.com/tutorials/design-patterns/strategy-pattern/Strategy.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public interface Strategy {
-		boolean checkTemperature(int temperatureInF);
-	}
+public interface Strategy {
+    boolean checkTemperature(int temperatureInF);
+}
+```
 
 The HikeStrategy class is a concrete strategy class that implements the Strategy interface. The checkTemperature method is implemented so that if the temperature is between 50 and 90, it returns true. Otherwise it returns false.
 
 [HikeStrategy.java](http://www.avajava.com/tutorials/design-patterns/strategy-pattern/HikeStrategy.java)(behaviour)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class HikeStrategy implements Strategy {
-		@Override
-		public boolean checkTemperature(int temperatureInF) {
-			if ((temperatureInF >= 50) && (temperatureInF <= 90)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
+public class HikeStrategy implements Strategy {
+    @Override
+    public boolean checkTemperature(int temperatureInF) {
+        if ((temperatureInF >= 50) && (temperatureInF <= 90)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
 ```
 The SkiStrategy implements the Strategy interface. If the temperature is 32 or less, the checkTemperature method returns true. Otherwise it returns false.
 
 [SkiStrategy.java](http://www.avajava.com/tutorials/design-patterns/strategy-pattern/SkiStrategy.java)(behaviour)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class SkiStrategy implements Strategy {
-		@Override
-		public boolean checkTemperature(int temperatureInF) {
-			if (temperatureInF <= 32) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
+public class SkiStrategy implements Strategy {
+    @Override
+    public boolean checkTemperature(int temperatureInF) {
+        if (temperatureInF <= 32) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
 ```
 The Context class contains a temperature and a reference to a Strategy. The Strategy can be changed, resulting in different behavior that operates on the same data in the Context. The result of this can be obtained from the Context via the getResult() method.
 
 [Context.java](http://www.avajava.com/tutorials/design-patterns/strategy-pattern/Context.java)(integrates the data i.e temp(can be a java class) and behavior i.e Strategy)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class Context {
-		int temperatureInF;
+public class Context {
+    int temperatureInF;
 
-		Strategy strategy;
+    Strategy strategy;
 
-		public Context(int temperatureInF, Strategy strategy) {
-			this.temperatureInF = temperatureInF;
-			this.strategy = strategy;
-		}
+    public Context(int temperatureInF, Strategy strategy) {
+        this.temperatureInF = temperatureInF;
+        this.strategy = strategy;
+    }
 
-		public void setStrategy(Strategy strategy) {
-			this.strategy = strategy;
-		}
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
 
-		public int getTemperatureInF() {
-			return temperatureInF;
-		}
+    public int getTemperatureInF() {
+        return temperatureInF;
+    }
 
-		public boolean getResult() {//invoker of behaviour
-			return strategy.checkTemperature(temperatureInF);
-		}
-	}
+    public boolean getResult() {//invoker of behaviour
+        return strategy.checkTemperature(temperatureInF);
+    }
+}
 ```
 The Demo class creates a Context object with a temperature of 60 and with a SkiStrategy. It displays the temperature from the context and whether that temperature is OK for skiing. After that, it sets the Strategy in the Context to HikeStrategy. It then displays the temperature from the context and whether that temperature is OK for hiking.
 
@@ -833,95 +839,95 @@ Here is an example of the command pattern. We have a Command interface with an e
 
 [Command.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/Command.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public interface Command {
-		public void execute();//encapsulates the action of Receiver
-	}
+public interface Command {
+    public void execute();//encapsulates the action of Receiver
+}
 ```
 LunchCommand implements Command. It contains a reference to Lunch, a receiver. Its execute() method invokes the appropriate action on the receiver.
 
 [LunchCommand.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/LunchCommand.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class LunchCommand implements Command {
-		Lunch lunch;// Receiver
+public class LunchCommand implements Command {
+    Lunch lunch;// Receiver
 
-		public LunchCommand(Lunch lunch) {
-			this.lunch = lunch;
-		}
+    public LunchCommand(Lunch lunch) {
+        this.lunch = lunch;
+    }
 
-		@Override
-		public void execute() {
-			lunch.makeLunch();//receiver action is encapsulated
-		}
-	}
+    @Override
+    public void execute() {
+        lunch.makeLunch();//receiver action is encapsulated
+    }
+}
 ```
 The DinnerCommand is similar to LunchCommand. It contains a reference to Dinner, a receiver. Its execute() method invokes the makeDinner() action of the Dinner object.
 
 [DinnerCommand.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/DinnerCommand.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class DinnerCommand implements Command {
-		Dinner dinner;
+public class DinnerCommand implements Command {
+    Dinner dinner;
 
-		public DinnerCommand(Dinner dinner) {
-			this.dinner = dinner;
-		}
+    public DinnerCommand(Dinner dinner) {
+        this.dinner = dinner;
+    }
 
-		@Override
-		public void execute() {
-			dinner.makeDinner();
-		}
-	}
+    @Override
+    public void execute() {
+        dinner.makeDinner();
+    }
+}
 ```
 Lunch is a receiver.
 
 [Lunch.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/Lunch.java)(Receiver)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class Lunch {
-		public void makeLunch() {
-			System.out.println("Lunch is being made");
-		}
-	}
+public class Lunch {
+    public void makeLunch() {
+        System.out.println("Lunch is being made");
+    }
+}
 ```
 Dinner is also a receiver.
 
 [Dinner.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/Dinner.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class Dinner {
-		public void makeDinner() {
-			System.out.println("Dinner is being made");
-		}
-	}
+public class Dinner {
+    public void makeDinner() {
+        System.out.println("Dinner is being made");
+    }
+}
 ```
 MealInvoker is the invoker class. It contains a reference to the Command to invoke. Its invoke() method calls the execute() method of the Command.
 
 [MealInvoker.java](http://www.avajava.com/tutorials/design-patterns/command-pattern/MealInvoker.java)(Invoker will call the execute of Command)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class MealInvoker {
-		Command command;
+public class MealInvoker {
+    Command command;
 
-		public MealInvoker(Command command) {
-			this.command = command;
-		}
+    public MealInvoker(Command command) {
+        this.command = command;
+    }
 
-		public void setCommand(Command command) {
-			this.command = command;
-		}
+    public void setCommand(Command command) {
+        this.command = command;
+    }
 
-		public void invoke() {
-			command.execute();
-		}
-	}
+    public void invoke() {
+        command.execute();
+    }
+}
 ```
 The Demo class demonstrates the command pattern. It instantiates a Lunch (receiver) object and creates a LunchCommand (concrete command) with the Lunch. The LunchCommand is referenced by a Command interface reference. Next, we perform the same procedure on the Dinner and DinnerCommand objects. After this, we create a MealInvoker object with lunchCommand, and we call the invoke() method of mealInvoker. After this, we set mealInvoker's command to dinnerCommand, and once again call invoke() on mealInvoker.
 
@@ -959,14 +965,16 @@ Lets look at an example of the state pattern. First off, We'll define the Emotio
 
 [EmotionalState.java](http://www.avajava.com/tutorials/design-patterns/state-pattern/EmotionalState.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	// State
-	public interface EmotionalState {
-		public String sayHello();
+// State
+public interface EmotionalState {
+    public String sayHello();
 
-		public String sayGoodbye();
-	}
+    public String sayGoodbye();
+}
+```
 
 The HappyState class is a Concrete State that implements sayHello() and sayGoodbye() of EmotionalState. These messages are cheerful (representing a happy state).
 
@@ -1082,47 +1090,49 @@ Lets illustrate the visitor pattern with an example. First, We'll define a Numbe
 
 [NumberVisitor.java](http://www.avajava.com/tutorials/design-patterns/visitor-pattern/NumberVisitor.java)
 ```java
-	package com.cakes;
-	import java.util.List;
+package com.cakes;
+import java.util.List;
 
-	public interface NumberVisitor {
-		public void visit(TwoElement twoElement);
+public interface NumberVisitor {
+    public void visit(TwoElement twoElement);
 
-		public void visit(ThreeElement threeElement);
+    public void visit(ThreeElement threeElement);
 
-		public void visit(List<NumberElement> elementList);
-	}
+    public void visit(List<NumberElement> elementList);
+}
 ```
 All of the elements classes to be visited will implement the NumberElement interface. This interface has a single method that takes a NumberVisitor as an argument.
 
 [NumberElement.java](http://www.avajava.com/tutorials/design-patterns/visitor-pattern/NumberElement.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public interface NumberElement {
-		public void accept(NumberVisitor visitor);
-	}
+public interface NumberElement {
+    public void accept(NumberVisitor visitor);
+}
+```
 
 Lets create a TwoElement class that implements NumberElement. It has two int fields. Its accept() method calls the visitor's visit() method with 'this'. The operator to be performed on TwoElement is performed by the visitor.
 
 [TwoElement.java](http://www.avajava.com/tutorials/design-patterns/visitor-pattern/TwoElement.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class TwoElement implements NumberElement {
-		int a;
-		int b;
+public class TwoElement implements NumberElement {
+    int a;
+    int b;
 
-		public TwoElement(int a, int b) {
-			this.a = a;
-			this.b = b;
-		}
+    public TwoElement(int a, int b) {
+        this.a = a;
+        this.b = b;
+    }
 
-		@Override
-		public void accept(NumberVisitor visitor) {
-			visitor.visit(this);
-		}
-	}
+    @Override
+    public void accept(NumberVisitor visitor) {
+        visitor.visit(this);
+    }
+}
 ```
 The ThreeElement class is similar to TwoElement, except that it has three int fields.
 
@@ -1268,105 +1278,107 @@ Lets look at an example of this. We have an Item class, which represents an item
 
 [Item.java](http://www.avajava.com/tutorials/design-patterns/iterator-pattern/Item.java)
 
-	package com.cakes;
+```java
+package com.cakes;
 
-	public class Item {String name;
+public class Item {String name;
 
-		float price;
+    float price;
 
-		public Item(String name, float price) {
-			this.name = name;
-			this.price = price;
-		}
+    public Item(String name, float price) {
+        this.name = name;
+        this.price = price;
+    }
 
-		public String toString() {
-			return name + ": \$" + price;
-		}
-	}
+    public String toString() {
+        return name + ": \$" + price;
+    }
+}
+```
 
 Here is the Menu class. It has a list of menu items of type Item. Items can be added via the addItem() method. The iterator() method returns an iterator of menu items. The MenuIterator class is an inner class of Menu that implements the Iterator interface for Item objects. It contains basic implementations of the hasNext(), next(), and remove() methods.
 
 [Menu.java](http://www.avajava.com/tutorials/design-patterns/iterator-pattern/Menu.java)
 ```java
-	package com.cakes;
-	import java.util.ArrayList;
-	import java.util.Iterator;
-	import java.util.List;
+package com.cakes;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-	public class Menu {List<Item> menuItems;
+public class Menu {List<Item> menuItems;
 
-		public Menu() {
-			menuItems = new ArrayList<Item>();
-		}
+    public Menu() {
+        menuItems = new ArrayList<Item>();
+    }
 
-		public void addItem(Item item) {
-			menuItems.add(item);
-		}
+    public void addItem(Item item) {
+        menuItems.add(item);
+    }
 
-		public Iterator<Item> iterator() {
-			return new MenuIterator();
-		}
+    public Iterator<Item> iterator() {
+        return new MenuIterator();
+    }
 
-		class MenuIterator implements Iterator<Item> {
-			int currentIndex = 0;
+    class MenuIterator implements Iterator<Item> {
+        int currentIndex = 0;
 
-			@Override
-			public boolean hasNext() {
-				if (currentIndex >= menuItems.size()) {
-					return false;
-				} else {
-					return true;
-				}
-			}
+        @Override
+        public boolean hasNext() {
+            if (currentIndex >= menuItems.size()) {
+                return false;
+            } else {
+                return true;
+            }
+        }
 
-			@Override
-			public Item next() {
-				return menuItems.get(currentIndex++);
-			}
+        @Override
+        public Item next() {
+            return menuItems.get(currentIndex++);
+        }
 
-			@Override
-			public void remove() {
-				menuItems.remove(\--currentIndex);
-			}
-		}
-	}
+        @Override
+        public void remove() {
+            menuItems.remove(\--currentIndex);
+        }
+    }
+}
 ```
 The Demo class demonstrates the iterator pattern. It creates three items and adds them to the menu object. Next, it gets an Item iterator from the menu object and iterates over the items in the menu. After this, it calls remove() to remove the last item obtained by the iterator. Following this, it gets a new iterator object from the menu and once again iterates over the menu items.
 
 [Demo.java](http://www.avajava.com/tutorials/design-patterns/iterator-pattern/Demo.java)
 ```java
-	package com.cakes;
-	import java.util.Iterator;
+package com.cakes;
+import java.util.Iterator;
 
-	public class Demo {
-		
-		public static void main(String[] args) {
-			Item i1 = new Item("spaghetti", 7.50f);
-			Item i2 = new Item("hamburger", 6.00f);
-			Item i3 = new Item("chicken sandwich", 6.50f);
-			Menu menu = new Menu();
-			menu.addItem(i1);
-			menu.addItem(i2);
-			menu.addItem(i3);
-			System.out.println("Displaying Menu:");
-			Iterator<Item> iterator = menu.iterator();
+public class Demo {
+    
+    public static void main(String[] args) {
+        Item i1 = new Item("spaghetti", 7.50f);
+        Item i2 = new Item("hamburger", 6.00f);
+        Item i3 = new Item("chicken sandwich", 6.50f);
+        Menu menu = new Menu();
+        menu.addItem(i1);
+        menu.addItem(i2);
+        menu.addItem(i3);
+        System.out.println("Displaying Menu:");
+        Iterator<Item> iterator = menu.iterator();
 
-			while (iterator.hasNext()) {
-				Item item = iterator.next();
-				System.out.println(item);
-			}
+        while (iterator.hasNext()) {
+            Item item = iterator.next();
+            System.out.println(item);
+        }
 
-			System.out.println("\nRemoving last item returned");
-			iterator.remove();
-			System.out.println("\nDisplaying Menu:");
-			iterator = menu.iterator();
+        System.out.println("\nRemoving last item returned");
+        iterator.remove();
+        System.out.println("\nDisplaying Menu:");
+        iterator = menu.iterator();
 
-			while (iterator.hasNext()) {
-				Item item = iterator.next();
-				System.out.println(item);
-			}
-		}
-	}
+        while (iterator.hasNext()) {
+            Item item = iterator.next();
+            System.out.println(item);
+        }
+    }
+}
 ```
 The console output is shown here.
 
@@ -1403,109 +1415,109 @@ The restore() method of DietInfo is used to restore the state of the DietInfo. T
 
 [DietInfo.java](http://www.avajava.com/tutorials/design-patterns/memento-pattern/DietInfo.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	// originator - object whose state we want to save
+// originator - object whose state we want to save
 
-	public class DietInfo {
-		String personName;
+public class DietInfo {
+    String personName;
 
-		int dayNumber;
+    int dayNumber;
 
-		int weight;
+    int weight;
 
-		public DietInfo(String personName, int dayNumber, int weight) {
-			this.personName = personName;
-			this.dayNumber = dayNumber;
-			this.weight = weight;
-		}
+    public DietInfo(String personName, int dayNumber, int weight) {
+        this.personName = personName;
+        this.dayNumber = dayNumber;
+        this.weight = weight;
+    }
 
-		public String toString() {
-			return "Name: " + personName + ", day number: " + dayNumber + ", weight: " + weight;
-		}
+    public String toString() {
+        return "Name: " + personName + ", day number: " + dayNumber + ", weight: " + weight;
+    }
 
-		public void setDayNumberAndWeight(int dayNumber, int weight) {
-			this.dayNumber = dayNumber;
-			this.weight = weight;
-		}
+    public void setDayNumberAndWeight(int dayNumber, int weight) {
+        this.dayNumber = dayNumber;
+        this.weight = weight;
+    }
 
-		public Memento save() {
-			return new Memento(personName, dayNumber, weight);
-		}
+    public Memento save() {
+        return new Memento(personName, dayNumber, weight);
+    }
 
-		public void restore(Object objMemento) {
-			Memento memento = (Memento) objMemento;
-			personName = memento.mementoPersonName;
-			dayNumber = memento.mementoDayNumber;
-			weight = memento.mementoWeight;
-		}
+    public void restore(Object objMemento) {
+        Memento memento = (Memento) objMemento;
+        personName = memento.mementoPersonName;
+        dayNumber = memento.mementoDayNumber;
+        weight = memento.mementoWeight;
+    }
 
-		// memento - object that stores the saved state of the originator
+    // memento - object that stores the saved state of the originator
 
-		private class Memento {String mementoPersonName;
+    private class Memento {String mementoPersonName;
 
-			int mementoDayNumber;
+        int mementoDayNumber;
 
-			int mementoWeight;
+        int mementoWeight;
 
-			public Memento(String personName, int dayNumber, int weight) {
-				mementoPersonName = personName;
-				mementoDayNumber = dayNumber;
-				mementoWeight = weight;
-			}
-		}
-	}
+        public Memento(String personName, int dayNumber, int weight) {
+            mementoPersonName = personName;
+            mementoDayNumber = dayNumber;
+            mementoWeight = weight;
+        }
+    }
+}
 ```
 DietInfoCaretaker is the caretaker class that is used to store the state (ie, the memento) of a DietInfo object (ie, the originator). The memento is stored as an object since DietInfo.Memento is not visible to the caretaker. This protects the integrity of the data stored in the Memento object. The caretaker's saveState() method saves the state of the DietInfo object. The caretaker's restoreState() method restores the state of the DietInfo object.
 
 [DietInfoCaretaker.java](http://www.avajava.com/tutorials/design-patterns/memento-pattern/DietInfoCaretaker.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	// caretaker - saves and restores a DietInfo object's state via a memento
+// caretaker - saves and restores a DietInfo object's state via a memento
 
-	// note that DietInfo.Memento isn't visible to the caretaker so we need to cast the memento to Object
+// note that DietInfo.Memento isn't visible to the caretaker so we need to cast the memento to Object
 
-	public class DietInfoCaretaker {
-		Object objMemento;
+public class DietInfoCaretaker {
+    Object objMemento;
 
-		public void saveState(DietInfo dietInfo) {
-			objMemento = dietInfo.save();
-		}
+    public void saveState(DietInfo dietInfo) {
+        objMemento = dietInfo.save();
+    }
 
-		public void restoreState(DietInfo dietInfo) {
-			dietInfo.restore(objMemento);
-		}
-	}
+    public void restoreState(DietInfo dietInfo) {
+        dietInfo.restore(objMemento);
+    }
+}
 ```
 The MementoDemo class demonstrates the memento pattern. It creates a caretaker and then a DietInfo object. The DietInfo object's state is changed and displayed. At one point, the caretaker saves the state of the DietInfo object. After this, the DietInfo object's state is further changed and displayed. After this, the caretaker restores the state of the DietInfo object. We verify this restoration by displaying the DietInfo object's state.
 
 [MementoDemo.java](http://www.avajava.com/tutorials/design-patterns/memento-pattern/MementoDemo.java)
 ```java
-	package com.cakes;
+package com.cakes;
 
-	public class MementoDemo {
+public class MementoDemo {
 
-		public static void main(String[] args) {
-			// caretaker
-			DietInfoCaretaker dietInfoCaretaker = new DietInfoCaretaker();
+    public static void main(String[] args) {
+        // caretaker
+        DietInfoCaretaker dietInfoCaretaker = new DietInfoCaretaker();
 
-			// originator
-			DietInfo dietInfo = new DietInfo("Fred", 1, 100);
-			System.out.println(dietInfo);
-			dietInfo.setDayNumberAndWeight(2, 99);
-			System.out.println(dietInfo);
-			System.out.println("Saving state.");
-			dietInfoCaretaker.saveState(dietInfo);
-			dietInfo.setDayNumberAndWeight(3, 98);
-			System.out.println(dietInfo);
-			dietInfo.setDayNumberAndWeight(4, 97);
-			System.out.println(dietInfo);
-			System.out.println("Restoring saved state.");
-			dietInfoCaretaker.restoreState(dietInfo);
-			System.out.println(dietInfo);
-		}
-	}
+        // originator
+        DietInfo dietInfo = new DietInfo("Fred", 1, 100);
+        System.out.println(dietInfo);
+        dietInfo.setDayNumberAndWeight(2, 99);
+        System.out.println(dietInfo);
+        System.out.println("Saving state.");
+        dietInfoCaretaker.saveState(dietInfo);
+        dietInfo.setDayNumberAndWeight(3, 98);
+        System.out.println(dietInfo);
+        dietInfo.setDayNumberAndWeight(4, 97);
+        System.out.println(dietInfo);
+        System.out.println("Restoring saved state.");
+        dietInfoCaretaker.restoreState(dietInfo);
+        System.out.println(dietInfo);
+    }
+}
 ```
 The console output of the execution of MementoDemo is shown here. Notice how the state changes, and how we are able to save and restore the state of the originator via the caretaker's reference to the memento.
 

@@ -199,8 +199,8 @@ First, note that an unsigned  int is, by definition, always greater than or equa
 The correct code to print all numbers from 100 to 1, is i > 0. If we truly wanted to print zero, we could add an additional printf statement after the for loop.
 ```
 1     unsigned inti;
-2      for (i =  100; i >   0; --i)
-3           printf("%d\n",  i);
+2      for (i =  100; i >  0; --i)
+3           printf("%d\n", i);
 ```
 One additional correction is to use %u in place of %d, as we are printing unsigned  int.
 ```

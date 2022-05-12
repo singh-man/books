@@ -202,12 +202,12 @@ Before the servlet description
 
 <!-- also apply to another servlet -->
 ```xml
-    <filter-mapping>
-    <filter-name>MyFilter</filter-name>
-    <servlet-name>xxx</servlet-name>
-    </filter-mapping>
-    ...
-    </web-app>
+<filter-mapping>
+<filter-name>MyFilter</filter-name>
+<servlet-name>xxx</servlet-name>
+</filter-mapping>
+...
+</web-app>
 ```
 You may use filter mapping and servlet mapping in web.xml file to diable the invoker servlet to apply the filter. 
 
@@ -256,6 +256,15 @@ In the J2EE server, the client tier may make several calls to retrieve data from
 Let's say that you have a remote banking system. If the user has five requests one time, you should design your system to give response once, not five times. You may need to group all return values from these five requests to an object carrier and then return to client just once. Once the client program receives the instance of this object, it invokes the accessors and gets value to display. The total network traffic for one user just once. 
 
 
+##### Circuit Breaker Pattern
+
+To be used for fault tolerant (not service down which means a slow service because it will hold the threads and threads timeout can not solve the issue completely).
+
+AWS and other cloud providers use exponentianl back-off.
+
+Its better to provide a healthcheck endpoint for microservice to aid in decision making.
+
+In the case of fault tolrenat use multiple services.
 
 #### Miscellaneous Pattern
   
@@ -296,4 +305,5 @@ payload: form data
 For details see http://www.xfront.com/files/rest.html 
 
 Return to top
+
 
