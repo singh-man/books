@@ -1,8 +1,3 @@
-TSiege
-======
-
-[TSiege/The Technical Interview Cheat Sheet.md](https://github.com/TSiege/Tech-Interview-Cheat-Sheet)
-
 # Tech Interview Cheat Sheet
 
 This list is meant to be both a quick guide and reference for further research into these topics. It's basically a summary of that comp sci course you never took or forgot about, so there's no way it can cover everything in depth.
@@ -113,7 +108,9 @@ Big-Theta refers to the tight bound of time or space complexity of an algorithm.
 - Indexing:         Linked Lists: `O(n)`
 - Search:           Linked Lists: `O(n)`
 - Optimized Search: Linked Lists: `O(n)`
-- Insertion:        Linked Lists: `O(1)`
+- Append:           Linked Lists: `O(1)`
+- Prepend:          Linked Lists: `O(1)`
+- Insertion:        Linked Lists: `O(n)`
 
 
 ### <a id="hash"></a> Hash Table or Hash Map
@@ -301,9 +298,9 @@ This algorithm never needed to compare all the differences to one another, savin
 - Very simple to implement.
 
 #### Time Complexity
-- Best Case Sort: Merge Sort: `O(n^2)`
-- Average Case Sort: Merge Sort: `O(n^2)`
-- Worst Case Sort: Merge Sort: `O(n^2)`
+- Best Case Sort: `O(n^2)`
+- Average Case Sort: `O(n^2)`
+- Worst Case Sort: `O(n^2)`
 
 #### Space Complexity
 - Worst Case: `O(1)`
@@ -311,7 +308,7 @@ This algorithm never needed to compare all the differences to one another, savin
 #### Visualization
 ![#](https://upload.wikimedia.org/wikipedia/commons/9/94/Selection-Sort-Animation.gif)
 
-[(source: Wikipedia, _Insertion Sort_)](https://en.wikipedia.org/wiki/Selection_sort)
+[(source: Wikipedia, _Selection Sort_)](https://en.wikipedia.org/wiki/Selection_sort)
 
 ### <a id="insertion-sort"></a>Insertion Sort
 #### Definition
@@ -323,12 +320,12 @@ This algorithm never needed to compare all the differences to one another, savin
 
 #### What you need to know
 - Inefficient for large data sets, but can be faster for than other algorithms for small ones.
-- Although it has an `O(n^2)`, in practice it slightly less since its comparison scheme only requires checking place if its smaller than its neighbor.
+- Although it has an `O(n^2)` time complexity, in practice it is slightly less since its comparison scheme only requires checking place if it is smaller than its neighbor.
 
 #### Time Complexity
-- Best Case Sort: Merge Sort: `O(n)`
-- Average Case Sort: Merge Sort: `O(n^2)`
-- Worst Case Sort: Merge Sort: `O(n^2)`
+- Best Case: `O(n)`
+- Average Case: `O(n^2)`
+- Worst Case: `O(n^2)`
 
 #### Space Complexity
 - Worst Case: `O(n)`
@@ -394,7 +391,3 @@ This algorithm never needed to compare all the differences to one another, savin
 
 ## <a id="additional-resources"></a>Additional Resources
 [Khan Academy's Algorithm Course](https://www.khanacademy.org/computing/computer-science/algorithms)
-
-
-
-<!--Start Fragment-->
