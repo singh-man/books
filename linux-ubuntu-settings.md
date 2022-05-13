@@ -68,6 +68,7 @@ sudo apt install -y nnn trash-cli sxiv
 -- neovim (plugins: telescope, treesitter, nvim_cmp, nvim_lsp .....)
 - sdkman (SDKMAN should be last line in bashrc)
 -- java, gradle, maven, lein and others
+>>> SDKMAN on windows use git bash and make a copy of 7z.exe as zip.exe; than export 7z root folder path as PATH.
 -- *SDKMAN doesn't set M2_HOME and JAVA_HOME do set it in .profile*
 - snap (always search snap alternative)
 -- ffmpeg, sublimetext, vscode, dbeaver
