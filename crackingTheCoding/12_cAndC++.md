@@ -783,21 +783,21 @@ Therefore, to guarantee both an aligned address and space for this pointer, we w
 The code below implements this approach.
 ```c++
 1   void*  aligned_malloc(size_t required_bytes, size  t alignment)  {
-2       void*  pl;  //  initial block
+2       void*  p1;  //  initial block
 3       void*  p2;  // aligned block  inside initial  block
 4       int offset =  alignment -  1  + sizeof(void*);
-5       if ((pl = (void*)malloc(required_bytes  + offset))      NULL)  {
+5       if ((p1 = (void*)malloc(required_bytes  + offset))      NULL)  {
 6           return NULL;
 7       }
-8       p2 =  (void*)(((size_t)(pl) + offset) &  = (alignment  -  1));
-9       ((void  **)p2)[-1]  =  pl;
+8       p2 =  (void*)(((size_t)(p1) + offset) &  = (alignment  -  1));
+9       ((void  **)p2)[-1]  =  p1;
 10      return p2;
 11  }
 12
 13  void  aligned_free(void *p2)  {
 14      /* for   consistency,  we  use  the  same names as  aligned_malloc*/
-15      void*  pl  =  ((void**)p2)[-1];
-16      free(pl);
+15      void*  p1  =  ((void**)p2)[-1];
+16      free(p1);
 17  }
 ```
 

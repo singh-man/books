@@ -78,9 +78,9 @@ Additionally,  if you implement this code in C, C++ or another  language that re
 
 The "runner" (or second pointer) technique  is used in many linked list problems. The runner technique means that you iterate through the linked list with two pointers simultaneously, with one ahead of the other. The "fast" node might be ahead by a fixed amount, or it might be hopping multiple nodes for each one node that the "slow" node iterates through.
 
-For example, suppose you had a linked list `a₁ - >a₂ ->....->aₙ -> b₁->b₂->...->bₙ`  and you wanted to rearrange it into `a₁ ->b₁ ->a₂ - >b₂ -> ...- >aₙ - >bₙ`. You do not know the length of the linked list (but you do know that the length is an even number).
+For example, suppose you had a linked list `a₁ ->a₂ ->....->aₙ -> b₁->b₂->...->bₙ`  and you wanted to rearrange it into `a₁ ->b₁ ->a₂ - >b₂ -> ...->aₙ ->bₙ`. You do not know the length of the linked list (but you do know that the length is an even number).
 
-You could have one pointer pl (the fast pointer) move  every two elements for every one move that p2 makes. When pl hits the end of the linked list, p2 will be at the midpoint. Then, move pl back to the front and begin "weaving" the elements. On each iteration, p2 selects an element and inserts it after pl.
+You could have one pointer p1 (the fast pointer) move  every two elements for every one move that p2 makes. When p1 hits the end of the linked list, p2 will be at the midpoint. Then, move pl back to the front and begin "weaving" the elements. On each iteration, p2 selects an element and inserts it after p1.
 
 
 ### Recursive  Problems
@@ -105,7 +105,7 @@ SOLUTION
 
 ---
 
-In order to remove duplicates from a linked list, we  need to be able to track duplicates. A simple hash table will work well  here.
+In order to remove duplicates from a linked list, we need to be able to track duplicates. A simple hash table will work well  here.
 
 In the below solution, we  simply iterate through the linked list, adding each element to a hash table. When we  discover a duplicate element, we remove the element and continue iterating. We can do this all in one pass since we are using a linked list.
 
@@ -248,7 +248,7 @@ There are a number of other solutions that we haven't addressed. We could store 
 
 **Solution #3: Iterative**
 
-A more optimal, but less straightforward, solution is to imp1ement this iteratively. We can use two pointers, pl and p2. We place them k nodes apart in the linked list by putting p2 at the beginning and moving p1 k nodes into the list. Then, when we move them at the same pace, p1 will hit the end of the linked list after LENGTH  - k steps. At that point, p2  will be LENGTH  - k nodes into the list, or k nodes from the end.
+A more optimal, but less straightforward, solution is to implement this iteratively. We can use two pointers, p1 and p2. We place them k nodes apart in the linked list by putting p2 at the beginning and moving p1 k nodes into the list. Then, when we move them at the same pace, p1 will hit the end of the linked list after LENGTH  - k steps. At that point, p2  will be LENGTH  - k nodes into the list, or k nodes from the end.
 
 The code below implements this algorithm.
 
