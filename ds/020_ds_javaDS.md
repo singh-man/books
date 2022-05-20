@@ -86,7 +86,7 @@ Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
 
  > - HashTable is legacy avoid use.
  > - TreeMap -> Tree ds so no hashcode/equals; Comparable/Comparator instead
- > - HashMap -> uses hashCode() and then equals() -> java 1.8  collision rsolution is changed to BST after a threshold from LinkedList as used in prior versions.
+ > - HashMap -> uses hashCode() and then equals() -> java 1.8  collision resolution is changed to BST after a threshold from LinkedList as used in prior versions.
  > - ConcurrentHashMap API states that its iterators do not throw ConcurrentModificationException. This is because its iterators reflect the state of the hash table at point of the creation of the iterator. This is as if its iterators work with a hash table snapshot:
 
 

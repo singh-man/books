@@ -24,11 +24,11 @@ The code below implements a very basic singly linked list.
 
 ```java
 1   class Node {
-2       Node next =  null;
+2       Node next = null;
 3       int data;
 4   
 5       public Node(int d)  {
-6           data =  d;
+6           data = d;
 7       }
 8   
 9       void  appendToTail(int d)  {
@@ -56,7 +56,7 @@ Deleting a node from a linked list is fairly straightforward. Given a node n, we
 Additionally,  if you implement this code in C, C++ or another  language that requires the developer to do memory management, you should consider if the removed node should be deallocated.
 
 ```java
-1   Node deleteNode(Node head,   int d)  {
+1   Node deleteNode(Node head, int d)  {
 2       Node n  =  head;
 3   
 4       if (n.data == d)  {
@@ -111,16 +111,16 @@ In the below solution, we  simply iterate through the linked list, adding each e
 
 ```java
 1   void deleteDups(LinkedListNode n)  {
-2       HashSet<Integer>  set =  new  HashSet<Integer>();
-3       LinkedListNode previous  =  null;
-4       while (n  !=  null) {
-5           if  (set.contains(n.data)) {
-6               previous.next =  n.next;
-7           }  else {
-8               set.add(n.data);
-9               previous =  n;
+2       HashSet<Integer>  set = new HashSet<Integer>();
+3       LinkedListNode previous = null;
+4       while (n != null) {
+5           if (set.contains(n.data)) {
+6              previous.next = n.next;
+7           } else {
+8              set.add(n.data);
+9              previous = n;
 10          }
-11          n =  n.next;
+11          n = n.next;
 12      }
 13  }
 ```
@@ -132,19 +132,19 @@ The  above solution takes O(N) time, where N is the number of elements in the li
 If we don't have a buffer, we can iterate with two pointers: current which iterates through the linked list, and runner which checks all subsequent nodes for duplicates.
 
 ```java
-1   void deleteDups(LinkedListNode   head)  {
-2       LinkedListNode  current =  head;
+1   void deleteDups(LinkedListNode head)  {
+2       LinkedListNode current = head;
 3       while (current !=  null) {
-4           /* Remove  all future  nodes that  have the same value */
-5           LinkedListNode runner  =  current;
+4           /* Remove all future nodes that have the same value */
+5           LinkedListNode runner = current;
 6           while (runner.next  !=  null) {
-7               if  (runner.next.data ==  current.data) {
+7               if (runner.next.data == current.data) {
 8                   runner.next = runner.next.next;
 9               } else {
-10                  runner  =   runner.next;
+10                  runner = runner.next;
 11              }
 12          }
-13          current  = current.next;
+13          current = current.next;
 14      }
 15  }
 ```
@@ -178,14 +178,14 @@ One way to do this is to change the problem to simply printing the kth to last e
 
 ```java
 1   int  printKthToLast(LinkedListNode head, int k)  {
-2       if  (head == null) {
+2       if (head == null) {
 3           return 0;
 4       }
 5       int index = printKthToLast(head.next,  k)  + 1;
 6       if (index == k)  {
-7           System.out.println(k +   "th to last node is " +  head.data);
+7           System.out.println(k + "th to last node is " + head.data);
 8       }
-9       return  index;
+9       return index;
 10  }
 ```
 
@@ -196,21 +196,21 @@ Of course, this is only a valid solution if the interviewer says it is valid.
 A second way to solve this is to use C++ and to pass values by reference. This allows us to return the node value, but also update the counter by passing a pointer to it.
 
 ```c++
-1   node*  nthToLast(node*  head, int k, int&  i) {
-2       if (head ==    NULL)  {
+1   node* nthToLast(node* head, int k, int& i) {
+2       if (head == NULL)  {
 3           return NULL;
 4       }
-5       node*  nd  =  nthToLast(head->next,  k,  i);
-6       i = i +  1;
-7       if (i == k)  {
+5       node* nd = nthToLast(head->next,  k,  i);
+6       i = i + 1;
+7       if (i == k) {
 8           return head;
 9       }
 10      return nd;
 11  }
 12  
-13  node*  nthToLast(node*  head,   int k)  {
-14      int i =  0;
-15      return  nthToLast(head, k,  i);
+13  node* nthToLast(node*  head, int k)  {
+14      int i = 0;
+15      return nthToLast(head, k,  i);
 16  }
 ```
 

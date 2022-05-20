@@ -36,10 +36,10 @@ In some languages, arrays (often called lists in this case) are automatically re
 When you need an array-like data structure that offers dynamic resizing, you would usually use an ArrayList. An ArrayList is an array that resizes itself as needed while still providing O(1) access. A typical implementation is that when the array is full, the array doubles in size. Each doubling takes O(n) time, but happens so rarely that its amortized insertion time is still O(1).
 
 ```java
-1  ArrayList<String>  merge(String[]  words,   String[] more)  {
-2      ArrayList<String> sentence =  new ArrayList<String>();
-3      for (String w : words)  sentence.add(w);
-4      for (String w : more)  sentence.add(w);
+1  ArrayList<String> merge(String[] words, String[] more) {
+2      ArrayList<String> sentence = new ArrayList<String>();
+3      for (String w : words) sentence.add(w);
+4      for (String w : more) sentence.add(w);
 5      return sentence;
 6  }
 ```
@@ -51,13 +51,13 @@ This is an essential data structure for interviews. Be sure you are comfortable 
 Suppose you have an array of size N. We can work backwards to compute how many elements we copied at each capacity increase. Observe that when we increase the array to K elements, the array was previously half that size. Therefore, we needed to copy K/2 elements.
 
 ```
-final  capacity increase  :  n/2  elements to  copy
-previous capacity increase:  n/4  elements to  copy
-previous capacity increase:  n/8  elements to  copy 
+final  capacity increase  :  n/2   elements to  copy
+previous capacity increase:  n/4   elements to  copy
+previous capacity increase:  n/8   elements to  copy 
 previous capacity increase:  n/16  elements to  copy
 ...
 second  capacity increase :  2 elements to  copy 
-first capacity increase   :  1  element to  copy
+first capacity increase   :  1 element  to  copy
 ```
 
 > Therefore, the total number of copies to insert N elements is roughly N/2 + N/4 + N/8 + ... + 2 + 1, which is just less than N.
@@ -804,7 +804,7 @@ This code is below:
 11      }
 12      
 13      // Check   if first column   has a  zero
-14      for (int i = 0; i <   matrix.length; i++) {
+14      for (int i = 0; i < matrix.length; i++) {
 15          if (matrix[i][0] ==    0) {
 16              colHasZero = true;
 17              break;
@@ -812,7 +812,7 @@ This code is below:
 19      }
 20      
 21      // Check   for zeros in the rest  of the array
-22      for (int i =  1; i <   matrix.length; i++) {
+22      for (int i =  1; i < matrix.length; i++) {
 23          for (int j =  1; j < matrix[0].length; j++) {
 24              if  (matrix[iJ[jJ ==  0) {
 25                  matrix[i][0] =  0;
@@ -830,7 +830,7 @@ This code is below:
 37      
 38      // Nullify  columns based on  values in  first row
 39      for (int j = 1; j < matrix[0].length; j++) {
-40          if (matrix[0][j] ==    0) {
+40          if (matrix[0][j] == 0) {
 41              nullifyColumn(matrix,  j);
 42          }
 43      }
@@ -850,7 +850,7 @@ This code is below:
 This code has  a lot of "do  this for the  rows, then the  equivalent action for the  column". In an interview, you could abbreviate this code by adding comments and TODOs that explain that the next chunk of code looks the  same as the  earlier code,  but  using rows. This would allow you to focus  on the  most important parts of the  algorithm.
 
 
-**1.9   String Rotation:** Assume you have a method isSub5tring which checks if one word is a substring of another. Given two strings, s1 and s2, write code to check if s2 is a rotation of s1 using only one call to isSub5tring (e.g., "waterbottle" is a rotation of "erbottlewat").
+**1.9   String Rotation:** Assume you have a method isSubString which checks if one word is a substring of another. Given two strings, s1 and s2, write code to check if s2 is a rotation of s1 using only one call to isSub5tring (e.g., "waterbottle" is a rotation of "erbottlewat").
 
 SOLUTION
 

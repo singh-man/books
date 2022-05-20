@@ -4,10 +4,9 @@
 
 While  there are a large number of recursive problems, many follow similar patterns. A good hint that a problem is recursive is that it can be built off of subproblems.
 
-When you hear a problem beginning with the following statements, it's often (though not always) a good candidate for recursion: "Design an algorithm to compute the nth ..", "Write code to list the first n ..; "Imple­ment a method to compute all..", and so on.
+When you hear a problem beginning with the following statements, it's often (though not always) a good candidate for recursion: "Design an algorithm to compute the nth ..", "Write code to list the first n ..; "Implement a method to compute all..", and so on.
 
 > Tip: In my experience  coaching  candidates, people  typically have about 50% accuracy in their "this sounds like a recursive problem" instinct. Use that instinct, since that 50% is valuable. But don't be afraid to look at the problem in a different way, even if you initially thought it seemed recursive. There's also a 50% chance that you were wrong.
-
 
 Practice makes perfect! The more problems you do, the easier it will be to recognize recursive problems.
 
@@ -80,11 +79,11 @@ What  is the runtime of this function? Think for a second before you answer.
 If you said O(n) or O(n²) (as many people do), think again. Study the code path that the code takes. Drawing the code paths as a tree (that is, the recursion tree) is useful on this and many recursive problems.
 
 ```
-                         ----------fib(5)----
-                        /                    \
-                       /                      \
-                      /                        \
-               fib(4)                           fib(3)     
+                         ----------fib(5)------
+                        /                      \
+                       /                        \
+                      /                          \
+               fib(4)                             fib(3)     
               /      \                          /   \     
         fib(3)        fib(2)                fib(2)   fib(1)
          /   \        /     \               /  \
@@ -170,13 +169,13 @@ First, we compute fib(1) and fib(0), which are already known from the base cases
 2     if (n  ==  0)  return 0;
 3     else if (n  == 1)  return 1;
 4 
-5     int[] memo  =  new int[n];
-6     memo[0] =  0;
-7     memo[1] =  1;
-8     for  (int i = 2;  i <   n;  i++)  {
-9       memo[i] =  memo[i - 1]  +  memo[i - 2];
+5     int[] memo = new int[n];
+6     memo[0] = 0;
+7     memo[1] = 1;
+8     for (int i = 2;  i < n; i++)  {
+9       memo[i] = memo[i - 1] + memo[i - 2];
 10    }
-11    return memo[n - 1]  +  memo[n  -  2];
+11    return memo[n - 1] + memo[n - 2];
 12  }
 ```
 
@@ -187,7 +186,7 @@ If you really think about how this works, you only use memo[i] for memo[i+l] and
 2     if (n  == 0)  return 0;
 3     int a =  0;
 4     int b =  1;
-5     for  (int i =  2;  i < n;  i++)  {
+5     for  (int i = 2; i < n; i++)  {
 6       int c = a  +  b;
 7       a = b;
 8       b = c;
@@ -196,7 +195,7 @@ If you really think about how this works, you only use memo[i] for memo[i+l] and
 11  }
 ```
 
-This is basically storing the results from the last two Fibonacci values into a and b. At each iteration, we compute the next value (c   =  a  +  b) and then move (b,  c  =  a  +  b) into (a, b).
+This is basically storing the results from the last two Fibonacci values into a and b. At each iteration, we compute the next value (c = a + b) and then move (b,  c  = a + b) into (a, b).
 
 This explanation might seem like overkill for such a simple problem, but truly understanding this process will make more difficult problems much easier. Going through the problems in this chapter, many of which use dynamic programming, will help solidify your understanding.
 
@@ -216,8 +215,7 @@ SOLUTION
 
 Let's think about this with the following question: What is the very last step that is done?
 
-The very last hop the child makes-the one that lands her on the nth step-was either a 3-step hop, a
-2-step hop, or a 1-step hop.
+The very last hop the child makes-the one that lands her on the nth step-was either a 3-step hop, a 2-step hop, or a 1-step hop.
 
 How many ways then are there to get up to the nth step? We don't know yet, but we can relate it to some subproblems.
 
@@ -273,21 +271,21 @@ Typically we use  a HashMap\<Integer, Integer> for a cache. In this case,  the  
 
 ```java
 1   int countWays(int n)  {
-2     int[] memo =  new  int[n + 1];
+2     int[] memo =  new int[n + 1];
 3     Arrays.fill(memo, -1);
-4     return countWays(n,  memo);
+4     return countWays(n, memo);
 5   }
 6 
-7   int countWays(int n,  int[] memo)  {
+7   int countWays(int n, int[] memo)  {
 8     if (n <   0) {
 9       return 0;
 10    }  else if (n ==  0) {
 11      return 1;
-12    }  else if (memo[n]  > -1) {
+12    }  else if (memo[n] > -1) {
 13      return memo[n];
 14    }  else {
-15      memo[n] = countWays(n - 1,  memo) +  countWays(n -  2,  memo) +
-16                            countWays(n  -  3,   memo);
+15      memo[n] = countWays(n - 1, memo) + countWays(n - 2, memo) +
+16                            countWays(n - 3, memo);
 17      return memo[n];
 18    }
 19  }
@@ -309,7 +307,7 @@ If we picture this grid, the only way to move to spot (r, c) is by moving to one
 How do we find a path to those spots? To find a path to (r-1, c) or (r, c-1), we need to move to one of its adjacent cells. So, we need to find a path to a spot adjacent to (r-1, c), which are coordinates (r-2, c) and (r-1, c-1). or a spot adjacent to (r, c-1), which are spots (r-1, c-1) and ( r.c-2). Observe that we list the point (r-1, c-1) twice; we'll discuss that issue later.
 
 
-> Tip: A lot of people use the variable names x and y when dealing with two-dimensional arrays. This can actually cause some bugs. People tend to think about x as the first coordinate in the matrix and y as the second coordinate (e.g., matrix[x][y]). But, this isn't really correct. The first coordinate is usually thought of as the row number,  which is in fact they value (it goes vertically!). You should write matrix[y][x].  Or, just make your life easier by using r (row) and c (column) instead.
+> Tip: A lot of people use the variable names x and y when dealing with two-dimensional arrays. This can actually cause some bugs. People tend to think about x as the first coordinate in the matrix and y as the second coordinate (e.g., matrix[x][y]). But, this isn't really correct. The first coordinate is usually thought of as the row number, which is in fact they value (it goes vertically!). You should write matrix[y][x]. Or, just make your life easier by using r (row) and c (column) instead.
 
 
 So then, to find a path from the origin, we just work backwards like this. Starting from the last cell, we try to find a path to each of its adjacent cells. The recursive code below implements this algorithm.
@@ -326,16 +324,16 @@ So then, to find a path from the origin, we just work backwards like this. Start
 9 
 10  boolean  getPath(boolean[][] maze, int row,  int col, ArrayList<Point> path)  {
 11    /*  If out  of  bounds or  not  available,  return.*/
-12    if (col  < 0 || row < 0 ||  !maze[row][col]) {
+12    if (col < 0 || row < 0 || !maze[row][col]) {
 13      return false;
 14    }
 15  
-16    boolean  isAtOrigin   = (row  == 0)  &&   (col == 0);
+16    boolean  isAtOrigin = (row  == 0) && (col == 0);
 17  
 18    /*  If there's a path  from the  start to  here, add my location. */
-19    if (isAtOrigin  ||  getPath(maze, row,  col - 1,  path)  ||
-20            getPath(maze, row -  1,  col, path)) {
-21      Point p =  new Point(row, col);
+19    if (isAtOrigin || getPath(maze, row,  col - 1,  path)  ||
+20            getPath(maze, row - 1, col, path)) {
+21      Point p = new Point(row, col);
 22      path.add(p);
 23      return true;
 24    }
@@ -384,8 +382,8 @@ This is what the dynamic programming algorithm below does.
 25    boolean isAtOrigin = (row == 0)  && (col == 0);
 26  
 27    /* If there's a  path  from  start to my  current location,  add  my   location.*/
-28    if (isAtOrigin || getPath(maze,  row,  col  -  1,  path, failedPoints) ||
-29                      getPath(maze,  row -  1,   col,  path, failedPoints))  {
+28    if (isAtOrigin || getPath(maze, row,  col - 1, path, failedPoints) ||
+29                      getPath(maze, row -  1, col, path, failedPoints))  {
 30      path.add(p);
 31      return true;
 32    }
@@ -410,7 +408,7 @@ SOLUTION
 Immediately, the brute force solution should jump to mind-and there's no shame in mentioning it. We simply iterate through the array, looking for an element which matches this condition.
 
 ```java
-1   int  magicSlow(int[] array)  {
+1   int magicSlow(int[] array)  {
 2     for (int i = 0;  i < array.length;  i++)  {
 3       if (array[i] == i) {
 4         return i;
@@ -440,8 +438,8 @@ Why couldn't the magic index be on the left side? Observe that when we move from
 We continue to apply this recursive algorithm, developing code that looks very much like binary search.
 
 ```java
-1   int  magicFast(int[]  array)  {
-2     return  magicFast(array, 0,  array.length -  1);
+1   int magicFast(int[] array)  {
+2     return  magicFast(array, 0, array.length -  1);
 3   }
 4   
 5   int  magicFast(int[] array, int start, int end)  {
@@ -449,12 +447,12 @@ We continue to apply this recursive algorithm, developing code that looks very m
 7       return -1;
 8     }
 9     int mid =  (start + end) /  2;
-10    if (array[mid] ==   mid)  {
+10    if (array[mid] == mid) {
 11      return mid;
-12    }  else if (array[mid]  >   mid) {
-13      return  magicFast(array,  start,  mid  -  1);
+12    }  else if (array[mid]  > mid) {
+13      return  magicFast(array, start, mid - 1);
 14    }  else {
-15      return magicFast(array, mid +  1,  end);
+15      return magicFast(array, mid + 1, end);
 16    }
 17  }
 ```
@@ -482,7 +480,7 @@ The general pattern is that  we compare midIndex and midValue for equality  firs
 The code  below implements this algorithm.
 
 ```java
-1   int magicFast(int[]  array) {
+1   int magicFast(int[] array) {
 2     return magicFast(array, 0,  array.length  -  1);
 3   }
 4 
@@ -496,15 +494,15 @@ The code  below implements this algorithm.
 12    }
 13  
 14    /* Search  left */
-15    int leftIndex =  Math.min(midindex  -  1,  midValue);
-16    int left = magicFast(array,  start, leftIndex);
-17    if (left >=  0) {
+15    int leftIndex =  Math.min(midindex - 1, midValue);
+16    int left = magicFast(array, start, leftIndex);
+17    if (left >= 0) {
 18      return left;
 19    }
 20  
 21    /*  Search right */
-22    int rightIndex = Math.max(midindex  +  1,  midValue);
-23    int right = magicFast(array, rightIndex,  end);
+22    int rightIndex = Math.max(midindex + 1, midValue);
+23    int right = magicFast(array, rightIndex, end);
 24  
 25    return right;
 26  }
@@ -532,26 +530,25 @@ The subsets of {a₁, a₂, ..., aₙ} are also called the powerset, P({a₁, a�
 
 **Solution #1: Recursion**
 
-This problem is a good candidate for the Base Case and Build approach. Imagine that we are trying to find all subsets of a set like S = {a₁,    a₂, ... ,  aₙ}. We can start with the Base Case. 
+This problem is a good candidate for the Base Case and Build approach. Imagine that we are trying to find all subsets of a set like S = {a₁, a₂, ..., aₙ}. We can start with the Base Case. 
 
 *Base Case*: n =  0.
 
 There is just one subset of the empty set: {}.
 
-*Case*: n =   1.
+*Case*: n = 1.
 
-There are two subsets of the set {a₁}: {}, {a₁}.
+There are two subsets of the set {a₁}:{}, {a₁}.
 
-*Case*: n =  2.
+*Case*: n = 2.
 
-There are four subsets of the set {a₁,  a₂}: {} ,{a₁}, {a₂},{a₁ ,  a₂}.
+There are four subsets of the set {a₁, a₂}: {} ,{a₁}, {a₂},{a₁, a₂}.
 
-*Case*: n =  3.
+*Case*: n = 3.
 
 Now here's where things get interesting. We want to find a way of generating the solution for n = 3 based on the prior solutions.
  
-
-What is the difference between the solution for n = 3 and the solution for n  =  2? Let's look at this more deeply:
+What is the difference between the solution for n = 3 and the solution for n = 2? Let's look at this more deeply:
 ```
 P(2) = { }, {a₁}, {a₂}, {a₁, a₂}
 P(3) = { }, {a₁}, {a₂}, {a₃}, {a₁, a₂}, {a₁, a₃}, {a₂, a₃}, {a₁, a₂, a₃}
@@ -577,13 +574,13 @@ The following code implements this algorithm:
 ```java
 1   ArrayList<ArrayList<Integer>> getSubsets(ArrayList<Integer> set,  int  index) {
 2     ArrayList<ArrayList<Integer>> allsubsets;
-3     if (set.size() ==  index) { //Base  case   -  add  empty set
+3     if (set.size() == index) { //Base  case   -  add  empty set
 4       allsubsets =  new ArrayList<ArrayList<Integer>>();
 5       allsubsets.add(new ArrayList<Integer>());  // Empty set
 6     }  else {
 7       allsubsets =  getSubsets(set,  index + 1);
 8       int item =  set.get(index);
-9       ArrayList<ArrayList<Integer>> moresubsets
+9       ArrayList<ArrayList<Integer>> moresubsets = 
 10        new ArrayList<ArrayList<Integer>>();
 11      for (ArrayList<Integer> subset : allsubsets) {
 12        ArrayList<Integer>  newsubset =  new ArrayList<Integer>();
@@ -614,14 +611,14 @@ Generating all subsets, then, really just comes down to generating all binary nu
 2     ArrayList<ArrayList<Integer>> allsubsets =  new ArrayList<ArrayList<Integer>>();
 3     int max =  1 << set.size(); /* Compute 2^n */
 4     for (int k  = 0;  k < max; k++) {
-5       ArrayList<Integer> subset =  convertintToSet(k, set);
+5       ArrayList<Integer> subset = convertintToSet(k, set);
 6       allsubsets.add(subset);
 7     }
 8     return allsubsets;
 9   }
 10  
 11  ArrayList<Integer> convertlntToSet(int x, ArrayList<Integer> set) {
-12    ArrayList<Integer> subset =  new  ArrayList<Integer>();
+12    ArrayList<Integer> subset = new ArrayList<Integer>();
 13    int  index =  0;
 14    for (int  k = x; k > 0; k >>= 1) {
 15      if ((k & 1) == 1) {
@@ -675,8 +672,8 @@ Of course, this "doubling" only works if the number is in fact even. When it's n
 12    }
 13  
 14    /*  Compute  half. If uneven, compute other half. If  even,  double it. */
-15    int s  = smaller  >>  1; // Divide  by 2
-16    int side1 = minProduct(s,  bigger);
+15    int s  = smaller >> 1; // Divide  by 2
+16    int side1 = minProduct(s, bigger);
 17    int side2  = side1;
 18    if  (smaller % 2  == 1) {
 19      side2  = minProductHelper(smaller - s,  bigger);
@@ -714,7 +711,7 @@ The second call to minProduct(4, 23) is unaware of the prior call, and so it rep
 6     return  minProduct(smaller, bigger,  memo);
 7   }
 8 
-9   int  minProduct(int smaller,  int  bigger, int[]   memo)  {
+9   int  minProduct(int smaller, int bigger, int[] memo)  {
 10    if (smaller == 0)  {
 11      return 0;
 12    }  else if (smaller == 1)  {
@@ -724,7 +721,7 @@ The second call to minProduct(4, 23) is unaware of the prior call, and so it rep
 16    }
 17  
 18    /*  Compute  half. If uneven, compute other half. If even,  double  it.  */
-19    int s = smaller  >>  1;   // Divide  by  2
+19    int s = smaller >> 1; // Divide  by  2
 20    int side1 = minProduct(s, bigger, memo);  // Compute half
 21    int side2 = side1;
 22    if (smaller % 2  == 1) {
@@ -829,7 +826,7 @@ Case n = 3. Can we move Disk 1, 2, and  3 from Tower 1 to Tower 3? Yes.
 2. Move Disk 3 to Tower  3.
 3. Move Disk 1 and Disk 2 to Tower 3. We already know how to do this-just repeat what we did in Step 1. 
 
-Case n =  4. Can we move Disk 1, 2, 3 and 4 from Tower 1 to Tower 3? Yes.
+Case n = 4. Can we move Disk 1, 2, 3 and 4 from Tower 1 to Tower 3? Yes.
 
 1. Move Disks 1, 2, and 3 to Tower 2. We know how to do that from the earlier examples.
 2. Move Disk 4 to Tower 3.
@@ -840,9 +837,9 @@ Remember that the labels of Tower 2 and Tower 3 aren't important. They're equiva
 This approach leads to a natural recursive algorithm. In each part, we are doing the following steps, outlined below with pseudocode:
 
 ```java
-1   moveDisks(int  n,  Tower origin,  Tower destination,  Tower buffer) {
+1   moveDisks(int n, Tower origin, Tower destination, Tower buffer) {
 2     /*  Base case  */
-3     if (n  <=  0)  return;
+3     if (n <= 0)  return;
 4 
 5     /*  move  top  n - 1 disks from origin to buffer, using  destination as  a  buffer.  */
 6     moveDisks(n - 1,  origin, buffer, destination);
@@ -865,7 +862,7 @@ The following code provides a more detailed implementation of this algorithm, us
 5       towers[i] =  new Tower(i);
 6     }
 7 
-8     for  (int i = n - 1;  i >=  0;  i--) {
+8     for  (int i = n - 1; i >= 0;  i--) {
 9       towers[0].add(i);
 10    }
 11    towers[0].moveDisks(n, towers[2],  towers[1]);
@@ -966,7 +963,7 @@ We can now implement this algorithm recursively.
 11    String remainder =  str.substring(1); // remove the   first char
 12    ArrayList<String> words =  getPerms(remainder);
 13    for (String word : words)   {
-14      for (int =  0; <= word.length();   ++)  {
+14      for (int j =  0; j <= word.length(); j++)  {
 15        String s =  insertCharAt(word, first, j);
 16        permutations.add(s);
 17      }
@@ -993,20 +990,20 @@ P(a₁)  =  a₁
 
 *Case: two-character strings*
 ```
-P(a₁a₂)  =  a₁a₂ and  a₂a₁ .
-P(a₂a₃)  =  a₂a₃ and  a₃a₂ .
-P(a₁a₃)  =  a₁a₃ and  a₃a₁ .
+P(a₁a₂)  =  a₁a₂ and  a₂a₁.
+P(a₂a₃)  =  a₂a₃ and  a₃a₂.
+P(a₁a₃)  =  a₁a₃ and  a₃a₁.
 ```
 *Case: three-character strings*
 
-Here is where the cases get more interesting.  How can we generate all permutations of three-character strings, such as a₁a₂a₃,  given the permutations of two-character strings?
+Here is where the cases get more interesting. How can we generate all permutations of three-character strings, such as a₁a₂a₃, given the permutations of two-character strings?
 
 Well, in essence, we just need to "try" each character as the first character and then append the permuta­tions.
 ```
-P(a₁a₂a₃) =  {a₁ +  P(a₂a₃)}  +  {a₂ +  P(a₁a₃)} +  {a₃ +  P(a₁a₂)}
-  {a₁ +  P(a₂a₃)} -> a₁a₂a₃, a₁a₃a₂
-  {a₂ +  P(a₁a₃)} -> a₂a₁a₃, a₂a₃a₁
-  {a₃ +  P(a₁a₂)} -> a₃a₁a₂, a₃a₂a₁
+P(a₁a₂a₃) = {a₁ + P(a₂a₃)} + {a₂ + P(a₁a₃)} + {a₃ + P(a₁a₂)}
+  {a₁ + P(a₂a₃)} -> a₁a₂a₃, a₁a₃a₂
+  {a₂ + P(a₁a₃)} -> a₂a₁a₃, a₂a₃a₁
+  {a₃ + P(a₁a₂)} -> a₃a₁a₂, a₃a₂a₁
 ```
 Now that we can generate all permutations of three-character strings, we can use this to generate permuta­tions of four-character strings.
 ```
@@ -1019,7 +1016,7 @@ This is now a fairly straightforward algorithm to implement.
 2     int len = remainder.length();
 3     ArrayList<String> result = new ArrayList<Str1ng>();
 4 
-5     /* Base case.   */
+5     /* Base case. */
 6     if (len == 0)  {
 7       result.add(""); // Be  sure  to  return empty string!
 8       return result;
@@ -1084,22 +1081,22 @@ Ideally, we would like to only create the unique permutations, rather than creat
 
 We can start with computing the count of each letter (easy enough to get this-just use a hash table). For a string such as aabbbbc, this would be:
 ```
-a->2 |   b->4 |   c->1
+a->2 | b->4 | c->1
 ```
 Let's imagine generating a permutation of this string (now represented as a hash table). The first choice we make is whether to use an a, b, or c as the first character. After that, we have a subproblem to solve: find all permutations of the remaining characters, and append those to the already picked "prefix".
 
 ```
-P(a->2 |  b->4 |  c->1) = {a +  P(a->1 |  b->4 |  c->1)} +
-                          {b +  P(a->2 |  b->3 |  c->1)} +
-                          {c +  P(a->2 |  b->4 |  c->0)}
-  P(a->1 | b->4 |  c->1) = {a +  P(a->0 |  b->4 |  c->l)} +
-                           {b +  P(a->1 |  b->3 |  c->1)} +
-                           {c +  P(a->1 |  b->4 |  c->0)}
-  P(a->2 | b->3 |  c->1) = {a +  P(a->1 |  b->3 |  c->l)} +
-                           {b +  P(a->2 |  b->2 |  c->1)} +
-                           {c +  P(a->2 |  b->3 |  c->0)}
-  P(a->2 | b->4 |  c->0) = {a +  P(a->1 |  b->4 |  c->0)} +
-                           {b +  P(a->2 |  b->3 |  c->0)}
+P(a->2 |  b->4 |  c->1) = {a +  P(a->1 | b->4 | c->1)} +
+                          {b +  P(a->2 | b->3 | c->1)} +
+                          {c +  P(a->2 | b->4 | c->0)}
+  P(a->1 | b->4 |  c->1) = {a +  P(a->0 | b->4 | c->l)} +
+                           {b +  P(a->1 | b->3 | c->1)} +
+                           {c +  P(a->1 | b->4 | c->0)}
+  P(a->2 | b->3 |  c->1) = {a +  P(a->1 | b->3 | c->l)} +
+                           {b +  P(a->2 | b->2 | c->1)} +
+                           {c +  P(a->2 | b->3 | c->0)}
+  P(a->2 | b->4 |  c->0) = {a +  P(a->1 | b->4 | c->0)} +
+                           {b +  P(a->2 | b->3 | c->0)}
 ```
 
 Eventually, we'll get down to no more characters remaining.
@@ -1108,21 +1105,21 @@ The code below implements this algorithm.
 
 ```java
 1   ArrayList<String> printPerms(String s) {
-2     ArrayList<String> result  = new ArrayList<String>();
-3     HashMap<Character, Integer> map  =  buildFreqTable(s);
-4     printPerms(map, "",  s.length(), result);
-5     return  result;
+2     ArrayList<String> result = new ArrayList<String>();
+3     HashMap<Character, Integer> map = buildFreqTable(s);
+4     printPerms(map, "", s.length(), result);
+5     return result;
 6   }
 7   
 8   HashMap<Character, Integer> buildFreqTable(String s) {
-9     HashMap<Character, Integer> map =  new HashMap<Character,   Integer>();
-10    for  (char c  :   s.toCharArray()) {
+9     HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+10    for (char c : s.toCharArray()) {
 11      if (!map.containsKey(c)) {
 12        map.put(c, 0);
 13      }
-14      map.put(c, map.get(c) +  1);
+14      map.put(c, map.get(c) + 1);
 15    }
-16    return  map;
+16    return map;
 17  }
 18  
 19  void printPerms(HashMap<Character,  Integer> map,  String  prefix, int remaining,
@@ -1134,9 +1131,9 @@ The code below implements this algorithm.
 25    }
 26  
 27    /* Try remaining letters for  next char,  and generate remaining permutations. */
-28    for  (Character c : map.keySet()) {
+28    for (Character c : map.keySet()) {
 29      int count =  map.get(c);
-39      if  (count >  0) {
+39      if (count >  0) {
 31        map.put(c, count - 1);
 32        printPerms(map, prefix  +  c,  remaining - 1, result);
 33        map.put(c, count);
@@ -1194,9 +1191,9 @@ If we're going to apply this approach, we'll need to check for duplicate values 
 4       set.add("");
 5     }  else {
 6       Set<String> prev =  generateParens(remaining - 1);
-7       for (String str  :   prev) {
-8         for (int i = 0;   i <   str.length();  i++) {
-9           if (str.charAt(i) ==   '(') {
+7       for (String str : prev) {
+8         for (int i = 0; i < str.length(); i++) {
+9           if (str.charAt(i) ==  '(') {
 10            String s  =  insertlnside(str, i);
 11            /* Add s to set if it's not  already in  there. Note: HashSet
 12             * automatically  checks for  duplicates before adding, so  an explicit
@@ -1274,8 +1271,8 @@ We can implement this algorithm recursively:
 5     return PaintFill(screen, r,  c,  screen[r][c],  ncolor);
 6   }
 7   
-8   boolean PaintFill(Color[][] screen, int r,  int  c,  Color  ocolor,  Color  ncolor) {
-9     if (r < 0  || r >=  screen.length  ||  c  <   0 || c  >=  screen[0].length) {
+8   boolean PaintFill(Color[][] screen, int r, int c, Color ocolor, Color ncolor) {
+9     if (r < 0 || r >= screen.length || c <  0 || c >= screen[0].length) {
 10      return false;
 11    }
 12  
@@ -1338,9 +1335,9 @@ makeChange(100 using 0  quarters) = makeChange(100 using 0  quarters,  0 dimes) 
                                     ...
                                     makeChange(l00  using 0  quarters,  10 dimes)
 
-makeChange(75 using 0  quarters) = makeChange(75 using 0  quarters,  0 dimes)  + 
-                                   makeChange(75 using 0  quarters,  1  dime)  + 
-                                   makeChange(75 using 0  quarters,  2 dimes)  +
+makeChange(75 using 0  quarters) = makeChange(75 using 0  quarters,  0 dimes) + 
+                                   makeChange(75 using 0  quarters,  1  dime) + 
+                                   makeChange(75 using 0  quarters,  2 dimes) +
                                    ...
                                    makeChange(75 using 0  quarters,  7  dimes)
 
@@ -1363,44 +1360,44 @@ This leads to a recursive algorithm that looks like this:
 
 ```java
 1   int makeChange(int  amount,  int[] denoms, int index)   {
-2     if (index >=  denoms.length -  1)  return 1;    //last denom
-3     int denomAmount  denoms[index];
+2     if (index >=  denoms.length -  1)  return 1; //last denom
+3     int denomAmount = denoms[index];
 4     int ways = 0;
-5     for  (int i = 0;  i *  denomAmount   <=  amount; i++)  {
-6       int amountRemaining  = amount -  i *  denomAmount;
-7       ways +=  makeChange(amountRemaining,  denoms, index  +  1);
+5     for (int i = 0; i * denomAmount <= amount; i++)  {
+6       int amountRemaining = amount - i * denomAmount;
+7       ways += makeChange(amountRemaining, denoms, index + 1);
 8     }
 9     return ways;
 10  }
 11  
 12  int makeChange(int n)  {
-13    int[] denoms = {25,  10,  5,  1};
+13    int[] denoms = {25, 10, 5, 1};
 14    return makeChange(n, denoms, 0);
 15  }
 ```
 
 This works, but it's not as optimal as it could be. The issue is that we will be recursively calling makeChange several times for the same values of amount and index.
 
-We can resolve this issue by storing the previously computed values. We'll need to store a mapping from each pair (amount,   index) to the precomputed result.
+We can resolve this issue by storing the previously computed values. We'll need to store a mapping from each pair (amount, index) to the precomputed result.
 
 ```java
 1   int makeChange(int n)  {
-2     int[] denoms = {2, 510,  5,  1};
+2     int[] denoms = {2, 510, 5, 1};
 3     int[][] map  = new int[n + 1][denoms.length];  //precomputed  vals
-4     return makeChange(n, denoms, 0,  map);
+4     return makeChange(n, denoms, 0, map);
 5   }
 6 
-7   int makeChange(int amount,  int[] denoms, int index,   int[][] map) {
+7   int makeChange(int amount, int[] denoms, int index, int[][] map) {
 8     if (map[amount][index]   >  0)  {//retrieve  value
 9       return map[amount][index];
 10    }
 11    if (index >= denoms.length - 1)  return 1;    //one  denom  remaining
-12    int denomAmount  denoms[index];
+12    int denomAmount = denoms[index];
 13    int ways =  0;
-14    for  (int i =  0;  i *  denomAmount    <=  amount; i++)  {
+14    for  (int i =  0;  i *  denomAmount <= amount; i++)  {
 15      //go  to  next  denom, assuming i coins  of  denomAmount
-16      int amountRemaining  = amount -  i *  denomAmount;
-17      ways += makeChange(amountRemaining,  denoms, index  +  1,  map);
+16      int amountRemaining  = amount -  i * denomAmount;
+17      ways += makeChange(amountRemaining, denoms, index + 1, map);
 18    }
 19    map[amount][index] =  ways;
 20    return ways;
@@ -1425,24 +1422,24 @@ Picture the queen that is placed last, which we'll assume is on row 8. (This is 
 So if we want to know all the valid ways of arranging 8 queens on an 8x8 chess board, it would be:
 ```
 ways to  arrange 8  queens  on an  8x8  board= 
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 0)  + 
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 1)  +
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 2)  +
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 3)  +
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 4)  + 
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 5)  + 
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 6)  +
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 0) + 
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 1) +
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 2) +
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 3) +
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 4) + 
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 5) + 
+  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 6) +
   ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 7)
 ```
 We can compute each one of these using a very similar approach:
 ```
 ways to  arrange 8  queens  on  an  8x8  board  with  queen  at (7, 3) = 
-  ways to ... with  queens  at (7, 3)  and  (6, 0)  + 
-  ways to ... with  queens  at (7, 3)  and  (6, 1)  + 
-  ways to ... with  queens  at (7, 3)  and  (6, 2)  + 
-  ways to ... with  queens  at (7, 3)  and  (6, 4)  + 
-  ways to ... with  queens  at (7, 3)  and  (6, 5)  +
-  ways to ... with  queens  at (7, 3)  and  (6, 6)  +
+  ways to ... with  queens  at (7, 3)  and  (6, 0) + 
+  ways to ... with  queens  at (7, 3)  and  (6, 1) + 
+  ways to ... with  queens  at (7, 3)  and  (6, 2) + 
+  ways to ... with  queens  at (7, 3)  and  (6, 4) + 
+  ways to ... with  queens  at (7, 3)  and  (6, 5) +
+  ways to ... with  queens  at (7, 3)  and  (6, 6) +
   ways to ... with  queens  at (7, 3)  and  (6, 7) 
 ```
 Note that we don't need to consider combinations with queens at (7,  3) and (6, 3), since this is a violation of the requirement that every queen is in its own row, column and diagonal.
@@ -1450,7 +1447,7 @@ Note that we don't need to consider combinations with queens at (7,  3) and (6, 
 Implementing this is now reasonably straightforward.
 
 ```java
-1   int GRID_SIZE   =  8;
+1   int GRID_SIZE = 8;
 2 
 3   void  placeQueens(int row, Integer[] columns, ArrayList<Integer[]> results)  {
 4     if (row == GRID_SIZE)  {//Found  valid placement
@@ -1458,17 +1455,17 @@ Implementing this is now reasonably straightforward.
 6     }  else {
 7       for (int col = 0;  col < GRID_SIZE;  col++)  {
 8         if (checkValid(columns,  row,  col)) {
-9           columns[row]  = col;     // Place  queen
-10          placeQueens(row + 1,  columns,  results);
+9           columns[row]  = col; // Place  queen
+10          placeQueens(row + 1, columns, results);
 11        }
 12      }
 13    }
 14  }
 15  
-16  /* Check if (row1,   column1)  is a  valid spot  for  a queen by checking  if  there is a
+16  /* Check if (row1, column1)  is a  valid spot  for  a queen by checking  if  there is a
 17   * queen in  the  same column or  diagonal. We  don't need to  check it for  queens in
 18   * the  same row because  the  calling placeQueen only  attempts to  place  one queen at
-19   * a  time.   We  know this row is empty. */
+19   * a  time. We  know this row is empty. */
 20  boolean  checkValid(Integer[]  columns,  int row1, int column1) {
 21    for (int row2 =  0;  row2 < row1;  row2++) {
 22      int column2 =  columns[row2];
@@ -1510,7 +1507,7 @@ Imagine we had the following boxes: b₁,   b₂,••• ,   bₙ. The biggest
 
 But, how would we find the biggest stack with a particular bottom? Essentially the same way. We experi­ment with different boxes for the second level, and so on for each level.
 
-Of course, we only experiment with valid boxes. If b₅ is bigger than b₁, then there's no point in trying to build a stack that looks like {b₁,  b₅, ... }. We already know b₁ can't be below b₅.
+Of course, we only experiment with valid boxes. If b₅ is bigger than b₁, then there's no point in trying to build a stack that looks like {b₁,  b₅, ...}. We already know b₁ can't be below b₅.
 
 We can perform a small optimization here. The requirements of this problem stipulate that the lower boxes must be strictly greater than the higher boxes in all dimensions. Therefore, if we sort (descending order) the boxes on a dimension-any dimension-then we know we don't have to look backwards in the list. The box b1 cannot be on top of box b₅, since its height (or whatever dimension we sorted on) is greater than b₅'s height.
 
@@ -1541,9 +1538,9 @@ The code below implements this algorithm recursively.
 22    return maxHeight;
 23  }
 24  
-25  class BoxComparator implements  Comparator<Box>  , {
+25  class BoxComparator implements Comparator<Box> {
 26    @Override
-27    public int compare(Box x,   Box y) {
+27    public int compare(Box x, Box y) {
 28      return y.height -  x.height;
 29    }
 30  }
@@ -1558,19 +1555,19 @@ The problem in this code is that it gets very inefficient. We try to find the be
 4     int[] stackMap =  new int[boxes.size()];
 5     for (int i = 0;  i < boxes.size();  i++)   {
 6       int height = createStack(boxes,  i, stackMap);
-7       maxHeight  = Math.max(maxHeight,   height);
+7       maxHeight  = Math.max(maxHeight, height);
 8     }
 9     return maxHeight;
 10  }
 11  
 12  int createStack(ArrayList<Box>  boxes, int  bottomIndex, int[] stackMap)   {
-13    if (bottomIndex  <   boxes.size() && stackMap[bottomIndex]  >   0)  {
+13    if (bottomIndex < boxes.size() && stackMap[bottomIndex]  > 0)  {
 14      return stackMap[bottomIndex];
 15    }
 16  
 17    Box bottom  =  boxes.get(bottomIndex);
 18    int maxHeight =  0;
-19    for (int i =  bottomIndex + 1;  i <   boxes.size();  i++)   {
+19    for (int i =  bottomIndex + 1;  i <  boxes.size();  i++) {
 20      if (boxes.get(i).canBeAbove(bottom)) {
 21        int height =  createStack(boxes, i, stackMap);
 22        maxHeight  =  Math.max(height,  maxHeight);
@@ -1635,8 +1632,8 @@ Again, pay close attention to when you recall and insert values into the hash ta
 EXAMPLE
 
 ```
-countEval("l^0|0|1",  false) ->  2 
-countEval("0&0&0&1^1|0",   true)-> 10 
+countEval("1^0|0|1", false) ->  2 
+countEval("0&0&0&1^1|0", true)-> 10 
 ```
 
 SOLUTION
@@ -1652,7 +1649,7 @@ Consider  an  expression  like 0^0&0^111  and  the  target  result  true. How ca
 We could just essentially iterate through each possible place to put a parenthesis.
 
 ```
-countEval(0^0&0^1|1,  true)=
+countEval(0^0&0^1|1, true) =
      countEval(0^0&0^1|1  where paren  around  char  1,  true)
  +   countEval(0^0&0^1|1  where paren  around  char  3,  true)
  +   countEval(0^0&0^1|1  where paren  around  char  S,  true)
@@ -1665,7 +1662,7 @@ In order to make that expression true, both the left and right sides must be tru
 ```
 left= "0^0"
 right =  "0^1|1"
-countEval(left &  right, true) = countEval(left,  true) *  countEval(right,  true)
+countEval(left & right, true) = countEval(left, true) * countEval(right, true)
 ```
 The reason we multiply the results of the left and right sides is that each result from the two sides can be paired up with each other to form a unique combination.
 
@@ -1697,8 +1694,8 @@ countEval(left ^ right, false) = countEval(left, false)   * countEval(right,  fa
 
 Alternatively, we can just use the same logic from above and subtract it out from the total number of ways of evaluating the expression.
 ```
-totalEval(left) =  countEval(left,  true) +  countEval(left,  false) 
-totalEval(right) = countEval(right, true) +  countEval(right,  false) 
+totalEval(left) =  countEval(left,  true) + countEval(left,  false) 
+totalEval(right) = countEval(right, true) + countEval(right, false) 
 totalEval(expression) =  totalEval(left)* totalEval(right)
 countEval(expression,  false) = totalEval(expression)  -  countEval(expression,  true)
 ```
@@ -1727,8 +1724,8 @@ This makes the code a bit more concise.
 19      if (c  == '^')  { // required: one true  and one false
 20        totalTrue = leftTrue *  rightFalse + leftFalse * rightTrue;
 21      }  else  if (c  == '&') {//required:  both true
-22        totalTrue  =   leftTrue *  rightTrue;
-23      }  else  if (c  ==   '|') {  // required: anything  but  both  false
+22        totalTrue  =  leftTrue *  rightTrue;
+23      }  else  if (c  ==  '|') {  // required: anything  but  both  false
 24        totalTrue  = leftTrue * rightTrue + leftFalse * rightTrue +
 25          leftTrue *  rightFalse;
 26      }
@@ -1786,19 +1783,19 @@ We can do  this  by  using memoization,  or  a hash table. We just  need to  sto
 17  
 18      int  totalTrue =  0;
 19      if (c == '^') {
-20        totalTrue =  leftTrue *  rightFalse +  leftFalse *  rightTrue;
+20        totalTrue =  leftTrue * rightFalse + leftFalse * rightTrue;
 21      } else if  (c == '&')  {
 22        totalTrue  =  leftTrue * rightTrue;
 23      } else if (c == '|') {
-24        totalTrue = leftTrue * rightTrue   +  leftFalse *  rightTrue  +
+24        totalTrue = leftTrue * rightTrue + leftFalse * rightTrue  +
 25                    leftTrue * rightFalse;
 26      }
 27  
-28      int subways  =  result  ?  totalTrue : total  -  totalTrue;
+28      int subways = result ? totalTrue : total - totalTrue;
 29      ways += subways;
 30    }
 31  
-32    memo.put(result + s,  ways);
+32    memo.put(result + s, ways);
 33    return ways;
 34  }
 ```
@@ -1813,6 +1810,6 @@ Cₙ =    (2n)!
      ((n + 1)!n!)
 ```
 
-We could  use  this to compute the  total ways of evaluating the  expression. Then,  rather  than  computing leftTrue and  leftFalse, we just  compute one of those and  calculate the  other  using  the  Catalan numbers.  We would do the same thing for the right side.
+We could  use  this to compute the  total ways of evaluating the  expression. Then,  rather  than  computing leftTrue and leftFalse, we just  compute one of those and  calculate the  other  using  the  Catalan numbers.  We would do the same thing for the right side.
 
 
