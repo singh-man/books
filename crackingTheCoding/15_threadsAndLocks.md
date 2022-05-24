@@ -211,7 +211,7 @@ Thread  2.bar(): ending
 Similarly, a block of code can be synchronized. This operates very similarly to synchronizing a method.
 
 ```java
-1   public  class MyClass extends Thread  {
+1   public class MyClass extends Thread  {
 2       ...
 3       public  void run() {
 4           myObj.foo(name);
@@ -384,7 +384,7 @@ First, let's implement a simple simulation of the dining philosophers problem in
 6       }
 7   
 8       public void  pickUp() {
-9           void  lock.lock();
+9           lock.lock();
 10      }
 11  
 12      public void  putDown()  {
@@ -508,7 +508,7 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Eac
 32      }
 33  
 34      public void run()  {
-35          for (int i = 0;   i <   bites;  i++) {
+35          for (int i = 0; i < bites; i++) {
 36              eat();
 37          }
 38      }
@@ -666,7 +666,7 @@ The code below provides further details. For simplicity, we assume that all lock
 68            return true;
 69        }
 70    
-71        /*  Get the  lock,   verifying first that the  process   is really calling the  locks  in
+71        /*  Get the lock, verifying first that the process is really calling the locks in
 72         * the  order  it said   it would. */
 73        public Lock getLock(int ownerId, int resourceID) {
 74            LinkedList<LockNode> list = lockOrder.get(ownerId);
@@ -681,58 +681,59 @@ The code below provides further details. For simplicity, we assume that all lock
 83        }
 84    }
 85    
-    public class LockNode {
-        public enum VisitState {FRESH, VISITING, VISITED};
-    
-        private ArrayList<LockNode> children;
-        private int lockId;
-        private Lock lock;
-        private int maxLocks;
-    
-        public LockNode(int id, int max) {  ...}
-    
-        /*  Join  "this" to  "node",  checking  that it doesn't create a  cycle  */
-        public void joinTo(LockNode node) { children.add(node); }
-        public void remove(LockNode node) { children.remove(node); }
-    
-        /*  Check for  a  cycle  by doing  a  depth-first-search. */
-        public boolean hasCycle(HashMap<Integer, Boolean> touchedNodes) {
-            VisitState[] visited = new VisitState[maxLocks];
-            for (int i = 0; i < maxlocks; i++) {
-                visited[i] = VisitState.FRESH;
-            }
-            return hasCycle(visited, touchedNodes);
-        }
-    
-        private boolean hasCycle(VisitState[] visited,
-                                 HashMap<Integer, Boolean> touchedNodes) {
-            if (touchedNodes.containsKey(lockId)) {
-                touchedNodes.put(lockId, true);
-            }
-    
-            if (visited[lockId] == VisitState.VISITING) {
-                /* We  looped  back to  this node while  still visiting it,  so  we  know  there's
-                 * a  cycle. */
-                return true;
-            } else if (visited[lockId] == VisitState.FRESH) {
-                visited[lockId] = VisitState.VISITING;
-                for (LockNode n : children) {
-                    if (n.hasCycle(visited, touchedNodes)) {
-                        return true;
-                    }
-                }
-                visited[lockId] VisitState.VISITED;
-            }
-            return false;
-        }
-    
-        public Lock getlock() {
-            if (lock == null) lock = new Reentrantlock();
-            return lock;
-        }
-    
-        public int getld() { return lockId; }
-    } 
+86
+87  public class LockNode {
+88    public enum VisitState {FRESH, VISITING, VISITED};
+89   
+90      private ArrayList<LockNode> children;
+91      private int lockId;
+92      private Lock lock;
+93      private int maxLocks;
+94    
+95      public LockNode(int id, int max) {  ...}
+96    
+97      /*  Join  "this" to  "node",  checking  that it doesn't create a  cycle  */
+98      public void joinTo(LockNode node) { children.add(node); }
+99      public void remove(LockNode node) { children.remove(node); }
+100    
+101     /*  Check for  a  cycle  by doing  a  depth-first-search. */
+102     public boolean hasCycle(HashMap<Integer, Boolean> touchedNodes) {
+103         VisitState[] visited = new VisitState[maxLocks];
+104         for (int i = 0; i < maxlocks; i++) {
+105              visited[i] = VisitState.FRESH;
+106         }
+107         return hasCycle(visited, touchedNodes);
+108     }
+109    
+110     private boolean hasCycle(VisitState[] visited,
+111                              HashMap<Integer, Boolean> touchedNodes) {
+112         if (touchedNodes.containsKey(lockId)) {
+113             touchedNodes.put(lockId, true);
+114         }
+115 
+116         if (visited[lockId] == VisitState.VISITING) {
+117             /* We  looped  back to  this node while  still visiting it,  so  we  know  there's
+118              * a  cycle. */
+119             return true;
+120         } else if (visited[lockId] == VisitState.FRESH) {
+121             visited[lockId] = VisitState.VISITING;
+122             for (LockNode n : children) {
+123                 if (n.hasCycle(visited, touchedNodes)) {
+124                     return true;
+125                 }
+126             }
+127             visited[lockId] VisitState.VISITED;
+128         }
+129         return false;
+130     }
+131    
+132     public Lock getlock() {
+133         if (lock == null) lock = new Reentrantlock();
+134         return lock;
+135     }
+136 
+137     public int getld() { return lockId; }
+138 } 
 ```
 
 As always, when you see code this complicated  and lengthy, you wouldn't be expected to write all of it. More likely, you would be asked to sketch out pseudocode and possibly implement one of these methods.
@@ -778,7 +779,7 @@ What about using a lock to do something like the below code?
 19          }  catch ( ...) {   . . . }
 20      }
 21  
-22      public   void  second()  {
+22      public  void  second()  {
 23          try {
 24              lock1.lock();  // wait  until finished with  first()
 25              lock1.unlock();
@@ -788,7 +789,7 @@ What about using a lock to do something like the below code?
 29          }  catch  (...)  {  ... }
 30      }
 31  
-32      public void  third() {
+32      public void third() {
 33          try {
 34              lock2.lock();  // wait  until finished with  third()
 35              lock2.unlock();
@@ -808,8 +809,8 @@ Instead, we can replicate this behavior with semaphores. The logic is identical.
 3   
 4       public Foo()  {
 5           try {
-6               sem1  = new  Semaphore(l);
-7               sem2  = new  Semaphore(l);
+6               sem1  = new  Semaphore(1);
+7               sem2  = new  Semaphore(1);
 8               
 9               sem1.acquire();
 10              sem2.acquire();
@@ -874,9 +875,9 @@ Although this problem (in the single threaded version) shouldn't be hard, a lot 
 
 In actuality, the best way to do it, considering readability and efficiency, is just the straightforward way.
 ```java
-1   void  fizzbuzz(int n)  {
-2       for (int i =  1;   i <=  n;  i++)  {
-3           if (i % 3  == 0  && i % 5  ==  0) {
+1   void  fizzbuzz(int n) {
+2       for (int i =  1; i <= n; i++)  {
+3           if (i % 3 == 0 && i % 5 == 0) {
 4               System.out.println("FizzBuzz");
 5           }  else if (i % 3  ==  0)  {
 6               System.out.println("Fizz");
@@ -911,7 +912,7 @@ The code for this will look something like:
 ```
 We'll need to  add some synchronization in the  loop.  Otherwise, the  value  of current could change between lines 2 - 4 and lines 5 - 8, and we can inadvertently exceed the  intended bounds of the  loop. Additionally, incrementing is not  thread-safe.
 
-To actually implement this concept, there are  many possibilities. One  possibility is to have four  entirely separate thread classes that share a reference to the current variable (which can be wrapped in an object).
+To actually implement this concept, there are  many possibilities. One possibility is to have four  entirely separate thread classes that share a reference to the current variable (which can be wrapped in an object).
 
 The  loop  for each thread is substantially similar. They just have different target values for the  divisibility checks, and different print values.
 
@@ -929,7 +930,7 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 2                   new FizzBuzzThread(true, false, n, "Fizz"),
 3                   new FizzBuzzThread(false, true, n, "Buzz"),
 4                   new NumberThread(false, false, n)};
-5   for  (Thread  thread : threads) {
+5   for (Thread  thread : threads) {
 6       thread.start();
 7   }
 8   
@@ -958,8 +959,8 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 31                      return;
 32                  }
 33  
-34                  if ((current %  3  ==  0) == div3  &&
-35                      (current %  5  ==  0) == div5) {
+34                  if ((current % 3 == 0) == div3  &&
+35                      (current % 5 == 0) == div5) {
 36                      print();
 37                      current++;
 38                  }
@@ -969,8 +970,8 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 42  }
 43  
 44  public class NumberThread extends FizzBuzzThread  {
-45      public NumberThread(boolean div3,   boolean  div5,   int max) {
-46          super(div3, div5,  max, null);
+45      public NumberThread(boolean div3, boolean div5, int max) {
+46          super(div3, div5, max, null);
 47      }
 48  
 49      public void print() {
@@ -997,21 +998,21 @@ Alternatively, if we're working in a language which supports this (Java 8 and ma
 12      private static Object lock  =  new Object();
 13      protected static int current =  1;
 14      private int max;
-15      private  Predicate<Integer> validate;
-16      private  Function<Integer, String>   printer;
+15      private Predicate<Integer> validate;
+16      private Function<Integer, String> printer;
 17      int X = 1;
 18  
 19      public FBThread(Predicate<Integer> validate,
-20                      Function<Integer,  String>   printer, int max) {
-21          this.validate =  validate;
+20                      Function<Integer, String> printer, int max) {
+21          this.validate = validate;
 22          this.printer = printer;
-23          this.max  =   max;
+23          this.max = max;
 24      }
 25  
 26      public void run() {
 27          while (true) {
 28              synchronized (lock) {
-29                  if (current >  max) {
+29                  if (current > max) {
 30                      return;
 31                  }
 32                  if (validate.test(current)) {
