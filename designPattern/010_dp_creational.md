@@ -148,7 +148,7 @@ class Singleton implements Serializable
 }
 ```
 **Inner Static Helper Class**
-```
+```java
 public class BillPughSingleton {
 
     private BillPughSingleton(){}
