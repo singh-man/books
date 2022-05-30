@@ -49,27 +49,27 @@ Data Structure and sorting charts
 
 These is just a basic set, we have lot of other data structures as well,
 
-   - Linear 
-       - Index Based 
-           - Arrays 
-       - Non Index Based 
-           - List 
-           - Queue 
-           - Stack 
-    - Non Linear 
-        - Hash Tables
-        - Set
-        - Priority Queue
-        - Tree
-        - Balanced
-            - Red Black Tree
-            - AVL Tree
-            - Splay Tree
-        - Non Balanced
-            - Binary Tree
-            - Binary Search Tree
-            - B Tree
-            - Trie
+  - Linear 
+      - Index Based 
+          - Arrays 
+      - Non Index Based 
+          - List 
+          - Queue 
+          - Stack 
+   - Non Linear 
+       - Hash Tables
+       - Set
+       - Priority Queue
+       - Tree
+       - Balanced
+           - Red Black Tree
+           - AVL Tree
+           - Splay Tree
+       - Non Balanced
+           - Binary Tree
+           - Binary Search Tree
+           - B Tree
+           - Trie
 
 
 ### Choosing the right Data Structure

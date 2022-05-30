@@ -121,7 +121,7 @@ Map <I>
     HashMap
     SortedMap <I>
         TreeMap
-````
+```
 
 ```
              +----------->Collection <I> <----+^-----------------------+
