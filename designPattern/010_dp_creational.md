@@ -45,7 +45,7 @@ Design patterns are a popular topic in software development. A design pattern is
 - Iterator Pattern
 - Memento Pattern
 
-### Singleton Pattern
+#### Singleton Pattern
 
 A singleton is a class that is instantiated only once. This is typically accomplished by creating a static field in the class representing the class. A static method exists on the class to obtain the instance of the class and is typically named something such as getInstance(). The creation of the object referenced by the static field can be done either when the class is initialized or the first time that getInstance() is called. The singleton class typically has a private constructor to prevent the singleton class from being instantiated via a constructor. Rather, the instance of the singleton is obtained via the static getInstance() method.
 
@@ -163,7 +163,7 @@ public class BillPughSingleton {
 }
 ```
 Notice
-### Factory Pattern
+#### Factory Pattern
 
 The factory pattern (also known as the factory method pattern) is a creational design pattern. A factory is a Java class that is used to encapsulate object creation code. A factory class instantiates and returns a particular type of object based on data passed to the factory. The different types of objects that are returned from a factory typically are subclasses of a common parent class.
 
@@ -270,7 +270,7 @@ AnimalFactory animalFactory = AnimalFactory.getAnimalFactoryInstance();
 ```
 In this example, AnimalFactory.getAnimalFactoryInstance() would be implemented to return a static AnimalFactory object. This results in a single factory being instantiated and used rather than requiring a new factory to be instantiated each time the factory needs to be used.
 
-### Abstract Factory Pattern
+#### Abstract Factory Pattern
 
 The abstract factory pattern is a creational design pattern. An abstract factory is a factory that returns factories. Why is this layer of abstraction useful? A normal factory can be used to create sets of related objects. An abstract factory returns factories. Thus, an abstract factory is used to return factories that can be used to create sets of related objects.
 
@@ -470,7 +470,7 @@ objects. The console output is shown here.
 
 Notice the use of polymorphism. We obtain different factories via the common SpeciesFactory superclass. We also obtain different animals via the common Animal superclass.
 
-### Builder Pattern
+#### Builder Pattern
 
 The builder pattern is a creational design pattern used to assemble complex objects. With the builder pattern, the same object construction process can be used to create different objects. The builder has 4 main parts: a Builder, Concrete Builders, a Director, and a Product.
 
@@ -670,7 +670,7 @@ The console output of executing Demo is shown here.
 
 Notice that if we'd like to create a new type of meal, we can do so by implementing a new Concrete Builder (ie, SwedishMealBuilder, FrenchMealBuilder, etc), which we'd pass to the MealDirector. If we'd like the meal to be constructed of different parts (ie, no drink), we can alter the construction process in MealDirector. Thus, construction process has been separated to the Director, and the data representation is controlled by the Concrete Builders that implement the Builder interface.
 
-### Prototype Pattern
+#### Prototype Pattern
 
 The prototype pattern is a creational design pattern. In the prototype pattern, a new object is created by cloning an existing object. In Java, the clone() method is an implementation of this design pattern. The prototype pattern can be a useful way of creating copies of objects. One example of how this can be useful is if an original object is created with a resource such as a data stream that may not be available at the time that a clone of the object is needed. Another example is if the original object creation involves a significant time commitment, such as reading data from a database or over a network. An added benefit of the prototype pattern is that it can reduce class proliferation in a project by avoiding factory proliferation.
 
