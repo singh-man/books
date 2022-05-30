@@ -180,33 +180,32 @@ The important thing to note here is that because we used a **Array** to back our
 
 Imagine it like this:
 ```
-    A –→ B ←–––– C → D ↔ E
-    ↑    ↕     ↙ ↑     ↘
-    F –→ G → H ← I ––––→ J
-         ↓     ↘ ↑
-         K       L
+A –→ B ←–––– C → D ↔ E
+↑    ↕     ↙ ↑     ↘
+F –→ G → H ← I ––––→ J
+     ↓     ↘ ↑
+     K       L
 ```
 We have a bunch of "nodes" (A, B, C, D, ...) that are connected with lines.
 
 These nodes are going to look like this:
 
 ```
-    Node {
-      value: ...,
-      lines: [(Node), (Node), ...]
-    }
-
+Node {
+  value: ...,
+  lines: [(Node), (Node), ...]
+}
 ```
 The entire graph will look like this:
 
 ```
-    Graph {
-      nodes: [
-        Node {...},
-        Node {...},
-        ...
-      ]
-    }
+Graph {
+  nodes: [
+    Node {...},
+    Node {...},
+    ...
+  ]
+}
 ```
   - Funtions
     - addNode(value)
@@ -226,16 +225,18 @@ The basic idea of a linked list is similar to a graph. You have nodes that point
 
 Visualizing them as a JSON-like structure looks like this:
     
-    {
-      value: 1,
-      next: {
-        value: 2,
-        next: {
-          value: 3,
-          next: {...}
-        }
-      }
+```
+{
+  value: 1,
+  next: {
+    value: 2,
+    next: {
+      value: 3,
+      next: {...}
     }
+  }
+}
+```
     
   - Functions
     - get(position)
@@ -247,8 +248,7 @@ Visualizing them as a JSON-like structure looks like this:
 
   - Binary Trees:
 
-      AA Tree, AVL Tree, Binary Search Tree, Binary Tree, Cartesian Tree,
-      left child/right sibling tree, order statistic tree, Pagoda, ...
+      AA Tree, AVL Tree, Binary Search Tree, Binary Tree, Cartesian Tree, left child/right sibling tree, order statistic tree, Pagoda, ...
 
   - B Trees: are multiway trees, commonly used in external storage, in which nodes correspond to blocks on the disk. 
 
@@ -256,8 +256,7 @@ Visualizing them as a JSON-like structure looks like this:
 
   - Heaps:
 
-      Heap, Binary Heap, Weak Heap, Binomial Heap, Fibonacci Heap, Leonardo
-      Heap, 2-3 Heap, Soft Heap, Pairing Heap, Leftist Heap, Treap, ...
+      Heap, Binary Heap, Weak Heap, Binomial Heap, Fibonacci Heap, Leonardo Heap, 2-3 Heap, Soft Heap, Pairing Heap, Leftist Heap, Treap, ...
 
   - Trees:
 
@@ -269,8 +268,7 @@ Visualizing them as a JSON-like structure looks like this:
 
   - Space Partitioning Trees:
 
-      Segment Tree, Interval Tree, Range Tree, Bin, Kd Tree, Quadtree,
-      Octree, Z-Order, UB-Tree, R-Tree, X-Tree, Metric Tree, Cover Tree, ...
+      Segment Tree, Interval Tree, Range Tree, Bin, Kd Tree, Quadtree, Octree, Z-Order, UB-Tree, R-Tree, X-Tree, Metric Tree, Cover Tree, ...
 
   - Application-Specific Trees:
 
@@ -280,16 +278,16 @@ Visualizing them as a JSON-like structure looks like this:
 Trees are much like graphs or linked lists except they are "unidirectional". All this means is that they can't have loops of references.
 
 ```
-        Tree:         Not a Tree:
-      
-          A                 A
-        ↙   ↘             ↗   ↘
-      B       C         B ←–––– C
+  Tree:         Not a Tree:
 
-      Unequal Ordered Trees
-        A          A
-       / \        / \
-      B   C  !=  C   B
+    A                 A
+  ↙   ↘             ↗   ↘
+B       C         B ←–––– C
+
+Unequal Ordered Trees
+  A          A
+ / \        / \
+B   C  !=  C   B
           |      |
           D      D
 ```
@@ -332,6 +330,18 @@ A tree is said to be full if all of its internal nodes have the same degree and 
   - In Order Traversal
   - Post order Traversal
 ```java
+Node mirror(Node node) {
+    if (node == null) return node;
+
+    Node left = mirror(node.left);
+    Node right = mirror(node.right);
+    // Swap nodes
+    node.left = right;
+    node.right = left;
+
+    return node;
+}
+
 class BinaryTree {
     // Root of Binary Tree
     Node root;
