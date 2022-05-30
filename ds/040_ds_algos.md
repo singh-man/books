@@ -179,24 +179,27 @@ The important thing to note here is that because we used a **Array** to back our
 
 
 Imagine it like this:
-
+```
     A –→ B ←–––– C → D ↔ E
     ↑    ↕     ↙ ↑     ↘
     F –→ G → H ← I ––––→ J
          ↓     ↘ ↑
          K       L
-
+```
 We have a bunch of "nodes" (A, B, C, D, ...) that are connected with lines.
 
 These nodes are going to look like this:
 
+```
     Node {
       value: ...,
       lines: [(Node), (Node), ...]
     }
 
+```
 The entire graph will look like this:
 
+```
     Graph {
       nodes: [
         Node {...},
@@ -204,7 +207,7 @@ The entire graph will look like this:
         ...
       ]
     }
-
+```
   - Funtions
     - addNode(value)
     - find
@@ -276,7 +279,7 @@ Visualizing them as a JSON-like structure looks like this:
 
 Trees are much like graphs or linked lists except they are "unidirectional". All this means is that they can't have loops of references.
 
-      
+```
         Tree:         Not a Tree:
       
           A                 A
@@ -289,7 +292,7 @@ Trees are much like graphs or linked lists except they are "unidirectional". All
       B   C  !=  C   B
           |      |
           D      D
-
+```
 
 If you can draw a loop between connected nodes in a tree... well, you don't have a tree.
 
@@ -325,14 +328,40 @@ A tree is said to be full if all of its internal nodes have the same degree and 
 #### Tree Traversal
 
  1. The level order traversal **BFS** -> use queue
- 1. The Preorder Traversal **DFS** -> recursion or Stack
+ 1. The Preorder Traversal **DFS** -> recursion which represents **Stack**
   - In Order Traversal
   - Post order Traversal
-
+```java
+class BinaryTree {
+    // Root of Binary Tree
+    Node root;
+ 
+    BinaryTree() { root = null; }
+ 
+    void printPostorder(Node node) {
+        if (node == null) return;
+        printPostorder(node.left);
+        printPostorder(node.right);
+        System.out.print(node.key + " ");
+    }
+ 
+    void printInorder(Node node) {
+        if (node == null) return;
+        printInorder(node.left);
+        System.out.print(node.key + " ");
+        printInorder(node.right);
+    }
+ 
+    void printPreorder(Node node) {
+        if (node == null) return;
+        System.out.print(node.key + " ");
+        printPreorder(node.left);
+        printPreorder(node.right);
+    }
+```
 #### Heap
 
-  Priority queues can be implemented as an ordered array or as a heap. Insertion into an ordered array is slow, but deletion is fast. With the heap implementation, both insertion and deletion take O(logN) time.
-
+Priority queues can be implemented as an ordered array or as a heap. Insertion into an ordered array is slow, but deletion is fast. With the heap implementation, both insertion and deletion take O(logN) time.
 
  - Max Heap
  - Min Heap
@@ -365,13 +394,13 @@ And turning it into a tree starting from the center.
 
 This makes the traversal to find a value very efficient. Say we're trying to find the number 5 in our tree:
 
-    
-            (4)         <--- 5 > 4, so move right.
-          /     \
-         2        (6)    <--- 5 < 6, so move left.
-       /   \     /   \
-      1     3  (5)    7 <--- We've reached 5!
-    
+```    
+       (4)         <--- 5 > 4, so move right.
+    /      \
+   2        (6)    <--- 5 < 6, so move left.
+ /   \     /   \
+1     3  (5)    7  <--- We've reached 5!
+```    
  Notice how we only had to do 3 checks to reach the number 5. If we were to expand this tree to 1000 items. We'd go:
 
     500 -> 250 -> 125 -> 62 -> 31 -> 15 -> 7 -> 3 -> 4 -> 5
