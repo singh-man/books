@@ -328,7 +328,7 @@ A tree is said to be full if all of its internal nodes have the same degree and 
  1. The level order traversal **BFS** -> use queue
  1. The Preorder Traversal **DFS** -> recursion which represents **Stack**
   - In Order Traversal
-  - Post order Traversal
+  - Post order Traversal --> This is also the bootom up, means all child nodes L, R than at last parent node.
 ```java
 Node mirror(Node node) {
     if (node == null) return node;
