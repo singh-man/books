@@ -225,7 +225,7 @@ public static int gcd(int m, int n) {
 
 3. **LOG**: log(2, 4) -> 2; log(10, 1000) -> 3
 ```java
-int log(int b, int n ) {
+int log(int b, int n) {
     if (n <= b) {
         return 1;
     } else {
@@ -234,7 +234,7 @@ int log(int b, int n ) {
 }
 ```
 
-4. **Multiply** -> multiply(2,3 ) -> 6
+4. **Multiply** -> multiply(2, 3) -> 6
 ```java
 public int multiply(int x, int y) {
     if (x == 0) {
