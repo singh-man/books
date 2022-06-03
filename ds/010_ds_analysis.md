@@ -290,6 +290,9 @@ public int countChr(String str) {
     return count + countChr(str.substring(1, str.length()));
 }
 ```
-
+9. Find max width of binary tree
+```java
+Queue
+```
 
 <!--Start Fragment-->
