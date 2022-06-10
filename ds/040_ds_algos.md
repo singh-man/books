@@ -11,30 +11,34 @@ Data structures are implemented with algorithms, and algorithms are implemented 
 
 For example, there are an absurd number of algorithms for sorting a set of unordered items:
 
-    Insertion Sort, Selection Sort, Merge Sort, Bubble Sort, Heap Sort,
-    Quick Sort, Shell Sort, Timsort, Bucket Sort, Radix Sort, ...
+```
+Insertion Sort, Selection Sort, Merge Sort, Bubble Sort, Heap Sort,
+Quick Sort, Shell Sort, Timsort, Bucket Sort, Radix Sort, ...
+```
 
 Every single one of them will be better for *something*. So you'll need to make a decision based on what your needs are and for that you'll need a way of comparing them, a way to measure them.
 
- When we compare the performance of algorithms we use a rough measurement of their average and worst-case performance using something called "Big-O". 
+When we compare the performance of algorithms we use a rough measurement of their average and worst-case performance using something called "Big-O". 
 
-	/*** ===================================================================== ***\
-	 ** - BIG-O NOTATION ------------------------------------------------------ **
-	 * ========================================================================= *
-	 *           a           b                                 d                 *
-	 *           a         b    O(N^2)                      d                    *
-	 *     O(N!) a        b                O(N log N)    d                    c  *
-	 *           a      b                            d                 c         *
-	 *          a      b                          d             c        O(N)    *
-	 *          a    b                         d         c                       *
-	 *          a  b                       d      c                              *
-	 *         a  b                     d  c                                     *
-	 *         ab                   c                          O(1)              *
-	 *  e    e    e    e    ec   d    e    e    e    e    e     e    e    e      *
-	 *      ba        c      d                                                   *
-	 *    ba   c        d                       f    f    f    f    f    f    f  *
-	 ** cadf    f d    f    f    f    f    f       O(log N)                     **
-	\*** ===================================================================== ***/
+```
+/*** ===================================================================== ***\
+ ** - BIG-O NOTATION ------------------------------------------------------ **
+ * ========================================================================= *
+ *           a           b                                 d                 *
+ *           a         b    O(N^2)                      d                    *
+ *     O(N!) a        b                O(N log N)    d                    c  *
+ *           a      b                            d                 c         *
+ *          a      b                          d             c        O(N)    *
+ *          a    b                         d         c                       *
+ *          a  b                       d      c                              *
+ *         a  b                     d  c                                     *
+ *         ab                   c                          O(1)              *
+ *  e    e    e    e    ec   d    e    e    e    e    e     e    e    e      *
+ *      ba        c      d                                                   *
+ *    ba   c        d                       f    f    f    f    f    f    f  *
+ ** cadf    f d    f    f    f    f    f       O(log N)                     **
+\*** ===================================================================== ***/
+```
 
 Big-O Notation is a way of roughly measuring the performance of algorithms in order to compare one against another when discussing them.
 
@@ -156,9 +160,9 @@ Data Strucutre that don't uses memory directly
 
 ### STACKS
 
-  Often implemented as an array or a linked list. 
+Often implemented as an array or a linked list. 
   
-  Array is efficient because the most recently inserted item is placed at the end of the array. If the stack will contain a lot of data and the amount can’t be predicted accurately in advance (as when recursion is implemented as a stack), a linked list is a better choice.
+Array is efficient because the most recently inserted item is placed at the end of the array. If the stack will contain a lot of data and the amount can’t be predicted accurately in advance (as when recursion is implemented as a stack), a linked list is a better choice.
 
   - Functions
     - push(value)
@@ -168,7 +172,7 @@ Data Strucutre that don't uses memory directly
 
 ### QUEUES
 
-  Queues can be implemented as arrays or linked lists
+Queues can be implemented as arrays or linked lists
 
   - Functions
     - enqueue(value)
@@ -179,7 +183,6 @@ The important thing to note here is that because we used a **Array** to back our
 
 
 ### GRAPHS
-
 
 Imagine it like this:
 ```
@@ -291,13 +294,13 @@ Unequal Ordered Trees
   A          A
  / \        / \
 B   C  !=  C   B
-          |      |
-          D      D
+           |   |
+           D   D
 ```
 
 If you can draw a loop between connected nodes in a tree... well, you don't have a tree.
 
- Trees have many different uses, they can be used to optimize searching or sorting. They can organize programs better. 
+Trees have many different uses, they can be used to optimize searching or sorting. They can organize programs better. 
 
 Extremely simple tree structure. It doesn't have any special rules to it and looks something like this:
 
@@ -352,20 +355,20 @@ Imagine taking a sequence of numbers:
      1  2  3  4  5  6  7
 
 And turning it into a tree starting from the center.
+   
+          4
+       /     \
+    2           6
+  /   \       /   \
+ 1     3     5     7
+-^--^--^--^--^--^--^-
+ 1  2  3  4  5  6  7
 ```    
-              4
-           /     \
-        2           6
-      /   \       /   \
-     1     3     5     7
-    -^--^--^--^--^--^--^-
-     1  2  3  4  5  6  7
-```    
- This is how a binary tree works. Each node can have two children:
+This is how a binary tree works. Each node can have two children:
    - Left: Less than parent node's value.
    - Right: Greater than parent node's value.
 
-  > Note: In order to make this work all values must be unique in the tree.
+> Note: In order to make this work all values must be unique in the tree.
 
 This makes the traversal to find a value very efficient. Say we're trying to find the number 5 in our tree:
 
@@ -376,12 +379,12 @@ This makes the traversal to find a value very efficient. Say we're trying to fin
  /   \     /   \
 1     3  (5)    7  <--- We've reached 5!
 ```    
- Notice how we only had to do 3 checks to reach the number 5. If we were to expand this tree to 1000 items. We'd go:
+Notice how we only had to do 3 checks to reach the number 5. If we were to expand this tree to 1000 items. We'd go:
 
     500 -> 250 -> 125 -> 62 -> 31 -> 15 -> 7 -> 3 -> 4 -> 5
     Only 10 checks for 1000 items!
 
-  > The other important thing about binary search trees is that they are similar to linked lists in the sense that you only need to update the immediately surrounding items when adding or removing a value.
+ > The other important thing about binary search trees is that they are similar to linked lists in the sense that you only need to update the immediately surrounding items when adding or removing a value.
 
   - Functions
     - contains(value)

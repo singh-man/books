@@ -168,16 +168,16 @@ fib(5)
   fib(1)-->1
 ~~~
 
- 1. **Towers Of Hanoi**
+1. **Towers Of Hanoi**
   The general solution to the Towers of Hanoi game is naturally recursive:
   - Part I: Move the smaller n–1 disks from peg A to peg B.
   - Part II: Move the remaining disk from peg A to peg C.
   - Part III: Move the smaller n–1 disks from peg B to peg C.
   Problem Statement: Move all the n disk from tower x to tower y using tower z.
-```
+
 https://github.com/singh-man/projecs/blob/master/ds/src/main/java/HanoiTowers.java
-```
-  Time Complexity `T(n) = 2T(n-1) + 1; (1 is constant)`
+
+Time Complexity `T(n) = 2T(n-1) + 1; (1 is constant)`
 ```
 T(n) = 2*T(n-1) + 1
 T(n) = 2 * ( 2 * T(n-2) + 1) + 1
@@ -214,9 +214,8 @@ public static int gcd(int m, int n) {
 ```
 
 3. **LOG**: log(2, 4) -> 2; log(10, 1000) -> 3
-```java
 https://github.com/singh-man/projecs/blob/master/ds/src/main/java/Number_DecimalToBinaryMisc.java
-```
+
 
 4. **Multiply** -> multiply(2, 3) -> 6
 ```java
@@ -230,15 +229,10 @@ public int multiply(int x, int y) {
 ```
 
 5. **Cumulative Sum**: sum of values fropm 1 to k. sumtok(5) -> 15
-```java
 https://github.com/singh-man/projecs/blob/master/ds/src/main/java/Number_DecimalToBinaryMisc.java
-```
 
 6. **Add Odd Values**: 
-```java
 https://github.com/singh-man/projecs/blob/master/ds/src/main/java/Number_DecimalToBinaryMisc.java
-
-```
 
 7. **Sum of the Digits** -> sumOfDigits(1234) -> 10
 ```java
@@ -260,6 +254,7 @@ public int countChr(String str) {
     return count + countChr(str.substring(1, str.length()));
 }
 ```
+
 9. Find max width of binary tree
 ```java
 Queue
