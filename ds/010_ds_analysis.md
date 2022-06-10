@@ -141,7 +141,7 @@ This above table is only an approximate summary; for each data structure, there 
                       = 0 {n = 0}
                       = 1 {n = 1}
     
-   > Fibonacci by recursive can be mad efaster by using **Memonization!** i.e. by memorizing the return of the function calls already done!
+> Fibonacci by recursive can be made faster by using **Memonization!** i.e. by memorizing the return of the function calls already done!
 ~~~
              F(n)
             /    \
@@ -175,17 +175,7 @@ fib(5)
   - Part III: Move the smaller n–1 disks from peg B to peg C.
   Problem Statement: Move all the n disk from tower x to tower y using tower z.
 ```
-TOH(n, x, y, z)
-{
-    if(n>1) {
-        TOH(n-1, x, z, y);
-        move top disk of 'x' to 'y'
-        TOH(n-1, z, y, x);
-    }
-    else if (n == 1){
-        move disk of x to y;
-    }
-}
+https://github.com/singh-man/projecs/blob/master/ds/src/main/java/HanoiTowers.java
 ```
   Time Complexity `T(n) = 2T(n-1) + 1; (1 is constant)`
 ```
@@ -225,13 +215,7 @@ public static int gcd(int m, int n) {
 
 3. **LOG**: log(2, 4) -> 2; log(10, 1000) -> 3
 ```java
-int log(int b, int n) {
-    if (n <= b) {
-        return 1;
-    } else {
-        return log(b, n / b) + 1 ;
-    }
-}
+https://github.com/singh-man/projecs/blob/master/ds/src/main/java/Number_DecimalToBinaryMisc.java
 ```
 
 4. **Multiply** -> multiply(2, 3) -> 6
@@ -247,27 +231,13 @@ public int multiply(int x, int y) {
 
 5. **Cumulative Sum**: sum of values fropm 1 to k. sumtok(5) -> 15
 ```java
-public int sumtok(int k) {
-    if (k <= 0) {
-        return 0;
-    } else {
-        return sumtok(k - 1) + k;
-    }
-}
+https://github.com/singh-man/projecs/blob/master/ds/src/main/java/Number_DecimalToBinaryMisc.java
 ```
 
 6. **Add Odd Values**: 
 ```java
-public int addOdd(int n) {
-    if (n <= 0) {
-        return 0;
-    }
-    if (n % 2 != 0) { // Odd value
-        return n + addOdd(n - 1);
-    } else { // Even value
-        return addOdd(n - 1);
-    }
-}
+https://github.com/singh-man/projecs/blob/master/ds/src/main/java/Number_DecimalToBinaryMisc.java
+
 ```
 
 7. **Sum of the Digits** -> sumOfDigits(1234) -> 10

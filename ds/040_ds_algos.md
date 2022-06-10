@@ -77,7 +77,10 @@ As you can see, even for relatively small sets of data you could do a *lot* of e
 
 With data structures, you can perform 4 primary types of actions:
 
-	Accessing, Searching, Inserting, and Deleting.
+```
+Accessing, Searching, Inserting, and Deleting.
+
+```
 
 It is important to note that data structures may be good at one action but bad at another.
  
@@ -329,47 +332,8 @@ A tree is said to be full if all of its internal nodes have the same degree and 
  1. The Preorder Traversal **DFS** -> recursion which represents **Stack**
   - In Order Traversal
   - Post order Traversal --> This is also the bootom up, means all child nodes L, R than at last parent node.
-```java
-Node mirror(Node node) {
-    if (node == null) return node;
+https://github.com/singh-man/projecs/blob/master/ds/src/main/java/TTraversalAndMirror.java
 
-    Node left = mirror(node.left);
-    Node right = mirror(node.right);
-    // Swap nodes
-    node.left = right;
-    node.right = left;
-
-    return node;
-}
-
-class BinaryTree {
-    // Root of Binary Tree
-    Node root;
- 
-    BinaryTree() { root = null; }
- 
-    void printPostorder(Node node) {
-        if (node == null) return;
-        printPostorder(node.left);
-        printPostorder(node.right);
-        System.out.print(node.key + " ");
-    }
- 
-    void printInorder(Node node) {
-        if (node == null) return;
-        printInorder(node.left);
-        System.out.print(node.key + " ");
-        printInorder(node.right);
-    }
- 
-    void printPreorder(Node node) {
-        if (node == null) return;
-        System.out.print(node.key + " ");
-        printPreorder(node.left);
-        printPreorder(node.right);
-    }
-}
-```
 #### Heap
 
 Priority queues can be implemented as an ordered array or as a heap. Insertion into an ordered array is slow, but deletion is fast. With the heap implementation, both insertion and deletion take O(logN) time.
