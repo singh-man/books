@@ -169,11 +169,11 @@ fib(5)
 ~~~
 
 1. **Towers Of Hanoi**
-  The general solution to the Towers of Hanoi game is naturally recursive:
+The general solution to the Towers of Hanoi game is naturally recursive:
   - Part I: Move the smaller n–1 disks from peg A to peg B.
   - Part II: Move the remaining disk from peg A to peg C.
   - Part III: Move the smaller n–1 disks from peg B to peg C.
-  Problem Statement: Move all the n disk from tower x to tower y using tower z.
+Problem Statement: Move all the n disk from tower x to tower y using tower z.
 
 https://github.com/singh-man/projecs/blob/master/ds/src/main/java/HanoiTowers.java
 
@@ -189,7 +189,7 @@ T(n) = (2^n) - 1 with T(0) = 0
 O(2^n)
 ```
 
-1. **Euclid's** GCD(x, 0) = x and GCD(x, y) = GCD(y, x % y)
+2. **Euclid's** GCD(x, 0) = x and GCD(x, y) = GCD(y, x % y)
 ```java
 public int GCD(int x, int y) {
   if (y == 0) {
@@ -199,8 +199,7 @@ public int GCD(int x, int y) {
   }
 }
 ```
-
-2. **Euclidean Algorithm** calling either gcd(m,n-m) or gcd(m-n,n) :
+3. **Euclidean Algorithm** calling either gcd(m,n-m) or gcd(m-n,n) :
 ```java
 public static int gcd(int m, int n) {
     if (m == n) {
@@ -212,12 +211,10 @@ public static int gcd(int m, int n) {
     }
 }
 ```
-
-3. **LOG**: log(2, 4) -> 2; log(10, 1000) -> 3
+4. **LOG**: log(2, 4) -> 2; log(10, 1000) -> 3
 https://github.com/singh-man/projecs/blob/master/ds/src/main/java/Number_DecimalToBinaryMisc.java
 
-
-4. **Multiply** -> multiply(2, 3) -> 6
+5. **Multiply** -> multiply(2, 3) -> 6
 ```java
 public int multiply(int x, int y) {
     if (x == 0) {
@@ -227,21 +224,19 @@ public int multiply(int x, int y) {
     }
 }
 ```
-
-5. **Cumulative Sum**: sum of values fropm 1 to k. sumtok(5) -> 15
+6. **Cumulative Sum**: sum of values fropm 1 to k. sumtok(5) -> 15
 https://github.com/singh-man/projecs/blob/master/ds/src/main/java/Number_DecimalToBinaryMisc.java
 
-6. **Add Odd Values**: 
+7. **Add Odd Values**: 
 https://github.com/singh-man/projecs/blob/master/ds/src/main/java/Number_DecimalToBinaryMisc.java
 
-7. **Sum of the Digits** -> sumOfDigits(1234) -> 10
+8. **Sum of the Digits** -> sumOfDigits(1234) -> 10
 ```java
 int getsum(int n) {
     return n == 0 ? 0 : n % 10 + getsum(n / 10);
 }
 ```
-
-8. **Count Characters** in string "ctcowAt" find no. of A in string
+9. **Count Characters** in string "ctcowAt" find no. of A in string
 ```java
 public int countChr(String str) {
     if (str.length() == 0) {
@@ -254,8 +249,7 @@ public int countChr(String str) {
     return count + countChr(str.substring(1, str.length()));
 }
 ```
-
-9. Find max width of binary tree
+10. Find max width of binary tree
 ```java
 Queue
 ```
