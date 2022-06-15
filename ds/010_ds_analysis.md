@@ -212,6 +212,7 @@ public static int gcd(int m, int n) {
 }
 ```
 4. **LOG**: log(2, 4) -> 2; log(10, 1000) -> 3
+
 https://github.com/singh-man/projecs/blob/master/ds/src/main/java/Number_DecimalToBinaryMisc.java
 
 5. **Multiply** -> multiply(2, 3) -> 6
@@ -225,9 +226,11 @@ public int multiply(int x, int y) {
 }
 ```
 6. **Cumulative Sum**: sum of values fropm 1 to k. sumtok(5) -> 15
+
 https://github.com/singh-man/projecs/blob/master/ds/src/main/java/Number_DecimalToBinaryMisc.java
 
 7. **Add Odd Values**: 
+
 https://github.com/singh-man/projecs/blob/master/ds/src/main/java/Number_DecimalToBinaryMisc.java
 
 8. **Sum of the Digits** -> sumOfDigits(1234) -> 10
