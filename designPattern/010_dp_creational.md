@@ -116,33 +116,29 @@ class Singleton
     }
 }
 ```
-**Block reflection** -> Enums
+**Block reflection** -> Enums also clone() method of Enum class throws CloneNotSupportedException
 
 Cloning -> override Cloneable and throw exception
 
 ```java
 @Override	
-protected Object clone() throws CloneNotSupportedException 
-{
+protected Object clone() throws CloneNotSupportedException {
     return super.clone();
 }
 ```
 **Block Serilizable**
 
 ```java
-class Singleton implements Serializable 
-{
+class Singleton implements Serializable {
     // public instance initialized when loading the class
     public static Singleton instance = new Singleton();
 
-    private Singleton() 
-    {
+    private Singleton() {
      // private constructor
     }
 
     // implement readResolve method
-    protected Object readResolve()
-    {
+    protected Object readResolve() {
         return instance;
     }
 }
@@ -151,13 +147,13 @@ class Singleton implements Serializable
 ```java
 public class BillPughSingleton {
 
-    private BillPughSingleton(){}
+    private BillPughSingleton() {}
     
-    private static class SingletonHelper{
+    private static class SingletonHelper {
         private static final BillPughSingleton INSTANCE = new BillPughSingleton();
     }
     
-    public static BillPughSingleton getInstance(){
+    public static BillPughSingleton getInstance() {
         return SingletonHelper.INSTANCE;
     }
 }
