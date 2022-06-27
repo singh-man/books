@@ -175,7 +175,7 @@ The general solution to the Towers of Hanoi game is naturally recursive:
   - Part III: Move the smaller n–1 disks from peg B to peg C.
 Problem Statement: Move all the n disk from tower x to tower y using tower z.
 
-https://github.com/singh-man/projecs/blob/master/ds/src/main/java/HanoiTowers.java
+https://github.com/singh-man/ds/blob/master/ds/src/main/java/HanoiTowers.java
 
 Time Complexity `T(n) = 2T(n-1) + 1; (1 is constant)`
 ```
@@ -213,23 +213,23 @@ public static int gcd(int m, int n) {
 ```
 4. **LOG**: log(2, 4) -> 2; log(10, 1000) -> 3
 
-https://github.com/singh-man/projecs/blob/master/ds/src/main/java/number/Log.java
+https://github.com/singh-man/ds/blob/main/src/main/java/number/Log.java
 
 5. **Multiply** -> multiply(2, 3) -> 6
 
-https://github.com/singh-man/projecs/blob/master/ds/src/main/java/number/Multiply.java
+https://github.com/singh-man/ds/blob/master/ds/src/main/java/number/Multiply.java
 
 6. **Cumulative Sum**: sum of values fropm 1 to k. sumtok(5) -> 15
 
-https://github.com/singh-man/projecs/blob/master/ds/src/main/java/number/SumOfN.java
+https://github.com/singh-man/ds/blob/master/ds/src/main/java/number/SumOfN.java
 
 7. **Add Odd Values**: 
 
-https://github.com/singh-man/projecs/blob/master/ds/src/main/java/number/AddOddValues.java
+https://github.com/singh-man/ds/blob/master/ds/src/main/java/number/AddOddValues.java
 
 8. **Sum of the Digits** -> sumOfDigits(1234) -> 10
 
-https://github.com/singh-man/projecs/blob/master/ds/src/main/java/number/SumOfDigits.java
+https://github.com/singh-man/ds/blob/master/ds/src/main/java/number/SumOfDigits.java
 
 9. **Count Characters** in string "ctcowAt" find no. of A in string
 ```java

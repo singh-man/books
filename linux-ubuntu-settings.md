@@ -163,6 +163,8 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_example -F /dev/null"
 		- Tun test using: Choose per test
 - Terminal
 	- Shell Path: "C:\Program Files\Git\bin\sh.exe" --login -i 
+- WSL2
+    - Open Module Settings -> Project -> make sure it only has the JDK in wsl2 only remove anyother JDK.
 
 ### Intellij import projects
 How to import existing maven, gradle projects in intellij after git clone.
