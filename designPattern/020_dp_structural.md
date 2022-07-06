@@ -681,7 +681,9 @@ The bridge pattern can be demonstrated with an example. Suppose we have a Vehicl
 ```java
 package com.cakes;
 
-public abstract class Vehicle {Engine engine;
+public abstract class Vehicle {
+
+    Engine engine;
 
     int weightInKilos;
 

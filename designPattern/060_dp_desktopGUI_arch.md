@@ -141,31 +141,31 @@ public class TextElementModel extends AbstractModel {}
 
 	//  Accessors
 	public String getText() {
-		return text;
+        return text;
 	}
 
 	public void setText(String text) {
 
-		String oldText = this.text;
-		this.text = text;
+        String oldText = this.text;
+        this.text = text;
 
-		firePropertyChange(
-			DefaultController.ELEMENT_TEXT_PROPERTY,
-			oldText, text);
+        firePropertyChange(
+            DefaultController.ELEMENT_TEXT_PROPERTY,
+            oldText, text);
 	}
 
 	public Font getFont() {
-		return font;
+        return font;
 	}
 
 	public void setFont(Font font) {
 
-		Font oldFont = this.font;
-		this.font = font;
+        Font oldFont = this.font;
+        this.font = font;
 
-		firePropertyChange(
-			DefaultController.ELEMENT_FONT_PROPERTY,
-			oldFont, font);
+        firePropertyChange(
+            DefaultController.ELEMENT_FONT_PROPERTY,
+            oldFont, font);
 	}
 
 	//  The remaining accessors for properties are omitted.
@@ -176,26 +176,24 @@ public class TextElementModel extends AbstractModel {}
 
 Code Sample 2
 ```java
-public abstract class AbstractModel
-{
+public abstract class AbstractModel {
 
 	protected PropertyChangeSupport propertyChangeSupport;
 
-	public AbstractModel()
-	{
-		propertyChangeSupport = new PropertyChangeSupport(this);
+	public AbstractModel() {
+        propertyChangeSupport = new PropertyChangeSupport(this);
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		propertyChangeSupport.addPropertyChangeListener(listener);
+        propertyChangeSupport.addPropertyChangeListener(listener);
 	}
 
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		propertyChangeSupport.removePropertyChangeListener(listener);
+        propertyChangeSupport.removePropertyChangeListener(listener);
 	}
 
 	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-		propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
 	}
 }
 ```
@@ -211,8 +209,8 @@ public abstract class AbstractController implements PropertyChangeListener {
 	private ArrayList<abstractmodel> registeredModels;
 
 	public AbstractController() {
-		registeredViews = new ArrayList<abstractviewpanel>();
-		registeredModels = new ArrayList<abstractmodel>();
+        registeredViews = new ArrayList<abstractviewpanel>();
+        registeredModels = new ArrayList<abstractmodel>();
 	}
 
 
@@ -247,17 +245,17 @@ public abstract class AbstractController implements PropertyChangeListener {
 	}
 
 	/**
-		* This is a convenience method that subclasses can call upon
-		* to fire property changes back to the models. This method
-		* uses reflection to inspect each of the model classes
-		* to determine whether it is the owner of the property
-		* in question. If it isn't, a NoSuchMethodException is thrown,
-		* which the method ignores.
-		*
-		* @param propertyName = The name of the property.
-		* @param newValue = An object that represents the new value
-		* of the property.
-		*/
+	* This is a convenience method that subclasses can call upon
+	* to fire property changes back to the models. This method
+	* uses reflection to inspect each of the model classes
+	* to determine whether it is the owner of the property
+	* in question. If it isn't, a NoSuchMethodException is thrown,
+	* which the method ignores.
+	*
+	* @param propertyName = The name of the property.
+	* @param newValue = An object that represents the new value
+	* of the property.
+	*/
 	protected void setModelProperty(String propertyName, Object newValue) {
 
 		for (AbstractModel model: registeredModels) {
@@ -265,8 +263,8 @@ public abstract class AbstractController implements PropertyChangeListener {
 
 				Method method = model.getClass().
 					getMethod('set'+propertyName, new Class[] {
-														newValue.getClass()
-													}
+										newValue.getClass()
+									}
 								);
 				method.invoke(model, newValue);
 
@@ -285,8 +283,7 @@ Code Sample 4 shows the source code for the default controller class. This class
 
 Code Sample 4
 ```java
-public class DefaultController extends AbstractController
-{
+public class DefaultController extends AbstractController {
 
 	public static final String ELEMENT_TEXT_PROPERTY = 'Text';
 	public static final String ELEMENT_FONT_PROPERTY = 'Font';
@@ -342,9 +339,9 @@ public PropertiesViewPanel(DefaultController controller) {
 // ‹editor-fold defaultstate='collapsed' desc=' Local Initialization '›
 
 /**
-  * Used to provide local initialization of Swing components
-  * outside of the NetBeans automatic code generator
-  */
+* Used to provide local initialization of Swing components
+* outside of the NetBeans automatic code generator
+*/
 public void localInitialization() {
 
 	opacitySpinner.setModel(new SpinnerNumberModel(100, 0, 100, 1));
@@ -388,31 +385,21 @@ public void modelPropertyChange(final PropertyChangeEvent evt) {
 				DefaultController.ELEMENT_X_PROPERTY)) {
 		String newStringValue = evt.getNewValue().toString();
 		xPositionTextField.setText(newStringValue);
-	} else if
-		(evt.getPropertyName().equals(
-				DefaultController.ELEMENT_Y_PROPERTY)) {
+	} else if (evt.getPropertyName().equals(DefaultController.ELEMENT_Y_PROPERTY)) {
 		String newStringValue = evt.getNewValue().toString();
 		yPositionTextField.setText(newStringValue);
-	} else if
-		(evt.getPropertyName().equals(
-				DefaultController.ELEMENT_OPACITY_PROPERTY)) {
+	} else if (evt.getPropertyName().equals(DefaultController.ELEMENT_OPACITY_PROPERTY)) {
 		int newIntegerValue = (Integer)evt.getNewValue();
 		opacitySpinner.setValue(newIntegerValue);
 		opacitySlider.setValue(newIntegerValue);
-	} else if
-		(evt.getPropertyName().equals(
-				DefaultController.ELEMENT_ROTATION_PROPERTY)) {
+	} else if (evt.getPropertyName().equals(DefaultController.ELEMENT_ROTATION_PROPERTY)) {
 		int newIntegerValue = (Integer)evt.getNewValue();
 		rotationSpinner.setValue(newIntegerValue);
 		rotationSlider.setValue(newIntegerValue);
-	} else if
-		(evt.getPropertyName().equals(
-				DefaultController.ELEMENT_TEXT_PROPERTY)) {
+	} else if (evt.getPropertyName().equals(DefaultController.ELEMENT_TEXT_PROPERTY)) {
 		String newStringValue = evt.getNewValue().toString();
 		text.setText(newStringValue);
-	} else if
-		(evt.getPropertyName().equals(
-				DefaultController.ELEMENT_FONT_PROPERTY)) {
+	} else if (evt.getPropertyName().equals(DefaultController.ELEMENT_FONT_PROPERTY)) {
 		Font f = (Font)evt.getNewValue();
 		String fontString = f.getFontName() + ' ' + f.getSize();
 		font.setText(fontString);

@@ -397,7 +397,8 @@ public class MercuryHandler extends PlanetHandler {
             System.out.println("Mercury is hot.\n");
         } else {
             System.out.println("MercuryHandler doesn't handle " + request);
-            if (successor != null) {successor.handleRequest(request);
+            if (successor != null) {
+                successor.handleRequest(request);
             }
         }
     }
@@ -1146,13 +1147,14 @@ public class ThreeElement implements NumberElement {
 	int c;
 
 	public ThreeElement(int a, int b, int c) {
-		this.a = a;
-		this.b = b;
-		this.c = c;
+        this.a = a;
+        this.b = b;
+        this.c = c;
 	}
 
 	@Override
-	public void accept(NumberVisitor visitor) {visitor.visit(this);
+	public void accept(NumberVisitor visitor) {
+        visitor.visit(this);
 	}
 }
 ```
@@ -1395,7 +1397,7 @@ The console output is shown here.
 	spaghetti: \$7.5
 	hamburger: \$6.0
 
- >> Note that since the menu utilizes a Java collection, we could have used an iterator obtained for the menu list rather than write our own iterator as an inner class.
+ > Note that since the menu utilizes a Java collection, we could have used an iterator obtained for the menu list rather than write our own iterator as an inner class.
 
 ### Memento Pattern
 

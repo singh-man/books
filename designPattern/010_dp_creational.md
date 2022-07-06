@@ -93,19 +93,15 @@ Singleton classes are a useful way of concentrating access to particular resourc
 
 **“Double Checked Locking”**
 ```java
-class Singleton
-{
+class Singleton {
     private volatile static Singleton obj;
 
     private Singleton() {}
 
-    public static Singleton getInstance()
-    {
-        if (obj == null)
-        {
-                // To make thread safe
-            synchronized (Singleton.class)
-            {
+    public static Singleton getInstance()     {
+        if (obj == null)         {
+            // To make thread safe
+            synchronized (Singleton.class) {
                 // check again as multiple threads
                 // can reach above step
                 if (obj==null)

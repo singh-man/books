@@ -226,7 +226,7 @@ Where to use & benefits
    - Simplify the lookup process 
    - Improve the performance 
    - Related patterns include 
-      - Singlton combined with service locator to make sure only one lookup object exists. 
+      - Singleton combined with service locator to make sure only one lookup object exists. 
 
 Example
 
