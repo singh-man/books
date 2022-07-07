@@ -594,7 +594,7 @@ public class WeatherStation implements WeatherSubject {
     int temperature;
 
     public WeatherStation(int temperature) {
-        weatherObservers = new HashSet<WeatherObserver>();
+        weatherObservers = new HashSet<>();
         this.temperature = temperature;
     }
 
@@ -773,23 +773,21 @@ The Demo class creates a Context object with a temperature of 60 and with a SkiS
 package com.cakes;
 
 public class Demo {
-	public static void main(String[] args) {
-		int temperatureInF = 60;
+    public static void main(String[] args) {
+        int temperatureInF = 60;
 
-		Strategy skiStrategy = new SkiStrategy();
+        Strategy skiStrategy = new SkiStrategy();
 
-		Context context = new Context(temperatureInF, skiStrategy);
+        Context context = new Context(temperatureInF, skiStrategy);
 
-		System.out.println("Is the temperature (" + context.getTemperatureInF() + "F) good for skiing? " +
-		context.getResult());
+        System.out.println("Is the temperature (" + context.getTemperatureInF() + "F) good for skiing? " + context.getResult());
 
-		Strategy hikeStrategy = new HikeStrategy();
+        Strategy hikeStrategy = new HikeStrategy();
 
-		context.setStrategy(hikeStrategy);
+        context.setStrategy(hikeStrategy);
 
-		System.out.println("Is the temperature (" + context.getTemperatureInF() + "F) good for hiking? " +
-		context.getResult());
-	}
+        System.out.println("Is the temperature (" + context.getTemperatureInF() + "F) good for hiking? " + context.getResult());
+    }
 }
 ```
 The console output of executing Demo is shown here.
@@ -937,16 +935,16 @@ The Demo class demonstrates the command pattern. It instantiates a Lunch (receiv
 package com.cakes;
 
 public class Demo {
-	public static void main(String[] args) {
-		Lunch lunch = new Lunch(); // receiver
-		Command lunchCommand = new LunchCommand(lunch); // concrete command
-		Dinner dinner = new Dinner(); // receiver
-		Command dinnerCommand = new DinnerCommand(dinner); // concrete command
-		MealInvoker mealInvoker = new MealInvoker(lunchCommand); // invoker
-		mealInvoker.invoke();
-		mealInvoker.setCommand(dinnerCommand);
-		mealInvoker.invoke();
-	}
+    public static void main(String[] args) {
+        Lunch lunch = new Lunch(); // receiver
+        Command lunchCommand = new LunchCommand(lunch); // concrete command
+        Dinner dinner = new Dinner(); // receiver
+        Command dinnerCommand = new DinnerCommand(dinner); // concrete command
+        MealInvoker mealInvoker = new MealInvoker(lunchCommand); // invoker
+        mealInvoker.invoke();
+        mealInvoker.setCommand(dinnerCommand);
+        mealInvoker.invoke();
+    }
 }
 ```
 The console output of the execution of Demo is shown here.
@@ -984,18 +982,17 @@ The HappyState class is a Concrete State that implements sayHello() and sayGoodb
 package com.cakes;
 
 // Concrete State
-
 public class HappyState implements EmotionalState {
-	
-	@Override
-	public String sayGoodbye() {
-		return "Bye, friend!";
-	}
 
-	@Override
-	public String sayHello() {
-		return "Hello, friend!";
-	}
+    @Override
+    public String sayGoodbye() {
+        return "Bye, friend!";
+    }
+
+    @Override
+    public String sayHello() {
+        return "Hello, friend!";
+    }
 }
 ```
 The SadState class also implements the EmotionalState interface. The messages are sad (representing a sad state).
@@ -1005,18 +1002,17 @@ The SadState class also implements the EmotionalState interface. The messages ar
 package com.cakes;
 
 //Concrete State
-
 public class SadState implements EmotionalState {
-	
-	@Override
-	public String sayGoodbye() {
-		return "Bye. Sniff, sniff.";
-	}
 
-	@Override
-	public String sayHello() {
-		return "Hello. Sniff, sniff.";
-	}
+    @Override
+    public String sayGoodbye() {
+        return "Bye. Sniff, sniff.";
+    }
+
+    @Override
+    public String sayHello() {
+        return "Hello. Sniff, sniff.";
+    }
 }
 ```
 The Person class is the Context class. It contains an EmotionalState reference to a concrete state. In this example, we have Person implement the EmotionalState reference, and we pass the calls to Person's sayHello() and sayGoodbye() methods on to the corresponding methods on the emotionalState reference. As a result of this, a Person object behaves differently depending on the state of Person (ie, the current EmotionalState reference).
@@ -1027,26 +1023,26 @@ package com.cakes;
 
 // Context
 public class Person implements EmotionalState {
-	
-	EmotionalState emotionalState;
 
-	public Person(EmotionalState emotionalState) {
-		this.emotionalState = emotionalState;
-	}
+    EmotionalState emotionalState;
 
-	public void setEmotionalState(EmotionalState emotionalState) {
-		this.emotionalState = emotionalState;
-	}
+    public Person(EmotionalState emotionalState) {
+        this.emotionalState = emotionalState;
+    }
 
-	@Override
-	public String sayGoodbye() {
-		return emotionalState.sayGoodbye();
-	}
+    public void setEmotionalState(EmotionalState emotionalState) {
+        this.emotionalState = emotionalState;
+    }
 
-	@Override
-	public String sayHello() {
-		return emotionalState.sayHello();
-	}
+    @Override
+    public String sayGoodbye() {
+        return emotionalState.sayGoodbye();
+    }
+
+    @Override
+    public String sayHello() {
+        return emotionalState.sayHello();
+    }
 }
 ```
 The Demo class demonstrates the state pattern. First, it creates a Person object with a HappyState object. We display the results of sayHello() and sayGoodbyte() when the person object is in the happy state. Next, we change the person object's state with a SadState object. We display the results of sayHello() and sayGoodbyte(), and we see that in the sad state, the person object's behavior is different.
@@ -1056,14 +1052,14 @@ The Demo class demonstrates the state pattern. First, it creates a Person object
 package com.cakes;
 
 public class Demo {
-	public static void main(String[] args) {
-		Person person = new Person(new HappyState());
-		System.out.println("Hello in happy state: " + person.sayHello());
-		System.out.println("Goodbye in happy state: " + person.sayGoodbye());
-		person.setEmotionalState(new SadState());
-		System.out.println("Hello in sad state: " + person.sayHello());
-		System.out.println("Goodbye in sad state: " + person.sayGoodbye());
-	}
+    public static void main(String[] args) {
+        Person person = new Person(new HappyState());
+        System.out.println("Hello in happy state: " + person.sayHello());
+        System.out.println("Goodbye in happy state: " + person.sayGoodbye());
+        person.setEmotionalState(new SadState());
+        System.out.println("Hello in sad state: " + person.sayHello());
+        System.out.println("Goodbye in sad state: " + person.sayGoodbye());
+    }
 }
 ```
 The console output of executing Demo is shown here.
@@ -1142,20 +1138,20 @@ The ThreeElement class is similar to TwoElement, except that it has three int fi
 package com.cakes;
 
 public class ThreeElement implements NumberElement {
-	int a;
-	int b;
-	int c;
+    int a;
+    int b;
+    int c;
 
-	public ThreeElement(int a, int b, int c) {
+    public ThreeElement(int a, int b, int c) {
         this.a = a;
         this.b = b;
         this.c = c;
-	}
+    }
 
-	@Override
-	public void accept(NumberVisitor visitor) {
+    @Override
+    public void accept(NumberVisitor visitor) {
         visitor.visit(this);
-	}
+    }
 }
 ```
 Now, lets create a visitor called SumVisitor that implements the NumberVisitor interface. For TwoElement and ThreeElement objects, this visitor will sum up the int fields. For a List of NumElements (ie, TwoElement and ThreeElement objects), this visitor will iterate over the elements and call their accept() methods. As a result of this, the visitor will perform visit operations on all the TwoElement and ThreeElement objects that make up the list, since the call to accept() in turn calls the visitor's visit methods for the TwoElement and ThreeElement objects.
@@ -1166,26 +1162,26 @@ package com.cakes;
 import java.util.List;
 
 public class SumVisitor implements NumberVisitor {
-	
-	@Override
-	public void visit(TwoElement twoElement) {
-		int sum = twoElement.a + twoElement.b;
-		System.out.println(twoElement.a + "+" + twoElement.b + "=" + sum);
-	}
 
-	@Override
-	public void visit(ThreeElement threeElement) {
-		int sum = threeElement.a + threeElement.b + threeElement.c;
-		System.out.println(threeElement.a + "+" + threeElement.b + "+" +
-		threeElement.c + "=" + sum);
-	}
+    @Override
+    public void visit(TwoElement twoElement) {
+        int sum = twoElement.a + twoElement.b;
+        System.out.println(twoElement.a + "+" + twoElement.b + "=" + sum);
+    }
 
-	@Override
-	public void visit(List<NumberElement> elementList) {
-		for (NumberElement ne : elementList) {
-			ne.accept(this);
-		}
-	}
+    @Override
+    public void visit(ThreeElement threeElement) {
+        int sum = threeElement.a + threeElement.b + threeElement.c;
+        System.out.println(threeElement.a + "+" + threeElement.b + "+" +
+                threeElement.c + "=" + sum);
+    }
+
+    @Override
+    public void visit(List<NumberElement> elementList) {
+        for (NumberElement ne : elementList) {
+            ne.accept(this);
+        }
+    }
 }
 ```
 Here is another visitor, TotalSumVisitor. In addition to summing up the int fields and displaying the sum, this visitor will keep track of the total sums of all the elements that are visited.
@@ -1196,32 +1192,33 @@ package com.cakes;
 import java.util.List;
 
 public class TotalSumVisitor implements NumberVisitor {
-	int totalSum = 0;
+    int totalSum = 0;
 
-	@Override
-	public void visit(TwoElement twoElement) {
-		int sum = twoElement.a + twoElement.b;
-		System.out.println("Adding " + twoElement.a + "+" + twoElement.b + "=" + sum + " to total");
-		totalSum += sum;
-	}
+    @Override
+    public void visit(TwoElement twoElement) {
+        int sum = twoElement.a + twoElement.b;
+        System.out.println("Adding " + twoElement.a + "+" + twoElement.b + "=" + sum + " to total");
+        totalSum += sum;
+    }
 
-	@Override
-	public void visit(ThreeElement threeElement) {
-		int sum = threeElement.a + threeElement.b + threeElement.c;
-		System.out.println("Adding " + threeElement.a + "+" + threeElement.b + "+" + threeElement.c + "=" + sum + " to total");
-		totalSum += sum;
-	}
+    @Override
+    public void visit(ThreeElement threeElement) {
+        int sum = threeElement.a + threeElement.b + threeElement.c;
+        System.out.println(
+                "Adding " + threeElement.a + "+" + threeElement.b + "+" + threeElement.c + "=" + sum + " to total");
+        totalSum += sum;
+    }
 
-	@Override
-	public void visit(List<NumberElement> elementList) {
-		for (NumberElement ne : elementList) {
-			ne.accept(this);
-		}
-	}
+    @Override
+    public void visit(List<NumberElement> elementList) {
+        for (NumberElement ne : elementList) {
+            ne.accept(this);
+        }
+    }
 
-	public int getTotalSum() {
-		return totalSum;
-	}
+    public int getTotalSum() {
+        return totalSum;
+    }
 }
 ```
 Lets see the visitor pattern in action. The Demo class creates two TwoElement objects and one ThreeElement object. It creates a list of NumberElements and adds the TwoElement object and the ThreeElement object to the list. Next, we create a SumVisitor and we visit the list with the SumVisitor. After this, we create a TotalSumVisitor and visit the list with the TotalSumVisitor. We display the total sum via the call to TotalSumVisitor's getTotalSum() method.
@@ -1233,23 +1230,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Demo {
-	
-	public static void main(String[] args) {
-		TwoElement two1 = new TwoElement(3, 3);
-		TwoElement two2 = new TwoElement(2, 7);
-		ThreeElement three1 = new ThreeElement(3, 4, 5);
-		List<NumberElement> numberElements = new ArrayList<NumberElement>();
-		numberElements.add(two1);
-		numberElements.add(two2);
-		numberElements.add(three1);
-		System.out.println("Visiting element list with SumVisitor");
-		NumberVisitor sumVisitor = new SumVisitor();
-		sumVisitor.visit(numberElements);
-		System.out.println("\nVisiting element list with TotalSumVisitor");
-		TotalSumVisitor totalSumVisitor = new TotalSumVisitor();
-		totalSumVisitor.visit(numberElements);
-		System.out.println("Total sum:" + totalSumVisitor.getTotalSum());
-	}
+
+    public static void main(String[] args) {
+        TwoElement two1 = new TwoElement(3, 3);
+        TwoElement two2 = new TwoElement(2, 7);
+        ThreeElement three1 = new ThreeElement(3, 4, 5);
+        List<NumberElement> numberElements = new ArrayList<>();
+        numberElements.add(two1);
+        numberElements.add(two2);
+        numberElements.add(three1);
+        System.out.println("Visiting element list with SumVisitor");
+        NumberVisitor sumVisitor = new SumVisitor();
+        sumVisitor.visit(numberElements);
+        System.out.println("\nVisiting element list with TotalSumVisitor");
+        TotalSumVisitor totalSumVisitor = new TotalSumVisitor();
+        totalSumVisitor.visit(numberElements);
+        System.out.println("Total sum:" + totalSumVisitor.getTotalSum());
+    }
 }
 ```
 The console output of executing Demo is shown here.
@@ -1307,10 +1304,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Menu {List<Item> menuItems;
+public class Menu {
+
+    List<Item> menuItems;
 
     public Menu() {
-        menuItems = new ArrayList<Item>();
+        menuItems = new ArrayList<>();
     }
 
     public void addItem(Item item) {

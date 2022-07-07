@@ -12,8 +12,8 @@ Eclipse RCP plugin
 
 2. mas
    
-	   apps → tom-server (dependent on tom-common for DTO's and facade interfaces)
-	   		has all the facade implementations. Facades handle the DTO's here
+   apps → tom-server (dependent on tom-common for DTO's and facade interfaces)
+   		has all the facade implementations. Facades handle the DTO's here
 
 3. tom → tom-client
 ```
@@ -115,61 +115,56 @@ This section of the article shows you how to put this design into practice, star
 
 Code Sample 1
 ```java
-public class TextElementModel extends AbstractModel {}
+public class TextElementModel extends AbstractModel {
 
-	private String text;
-	private Font font;
-	private Integer x;
-	private Integer y;
-	private Integer opacity;
-	private Integer rotation;
+    private String text;
+    private Font font;
+    private Integer x;
+    private Integer y;
+    private Integer opacity;
+    private Integer rotation;
 
-	/**
-	 * Provides the means to set or reset the model to
-	 * a default state
-	 */
-	public void initDefault() {
+    /**
+     * Provides the means to set or reset the model to a default state
+     */
+    public void initDefault() {
+        setOpacity(89);
+        setRotation(0);
+        setText('Sample Text');
+        setFont(new Font('Arial', Font.BOLD, 24));
+        setX(50);
+        setY(50);
+    }
 
-		setOpacity(89);
-		setRotation(0);
-		setText('Sample Text');
-		setFont(new Font('Arial', Font.BOLD, 24));
-		setX(50);
-		setY(50);
-
-	}
-
-	//  Accessors
-	public String getText() {
+    // Accessors
+    public String getText() {
         return text;
-	}
+    }
 
-	public void setText(String text) {
+    public void setText(String text) {
 
         String oldText = this.text;
         this.text = text;
 
         firePropertyChange(
-            DefaultController.ELEMENT_TEXT_PROPERTY,
-            oldText, text);
-	}
+                DefaultController.ELEMENT_TEXT_PROPERTY,
+                oldText, text);
+    }
 
-	public Font getFont() {
+    public Font getFont() {
         return font;
-	}
+    }
 
-	public void setFont(Font font) {
+    public void setFont(Font font) {
 
         Font oldFont = this.font;
         this.font = font;
 
         firePropertyChange(
-            DefaultController.ELEMENT_FONT_PROPERTY,
-            oldFont, font);
-	}
-
-	//  The remaining accessors for properties are omitted.
-
+                DefaultController.ELEMENT_FONT_PROPERTY,
+                oldFont, font);
+    }
+    // The remaining accessors for properties are omitted.
 }
 ```
  > Note that the rest of the accessors follow the standard JavaBeans model, although they are omitted in Code Sample 1. For reference, Code Sample 2 shows the underlying AbstractModel class, which simply uses the javax.beans.PropertyChangeSupport class to register, deregister, and notify interested listeners of changes to the model.
@@ -178,23 +173,23 @@ Code Sample 2
 ```java
 public abstract class AbstractModel {
 
-	protected PropertyChangeSupport propertyChangeSupport;
+    protected PropertyChangeSupport propertyChangeSupport;
 
-	public AbstractModel() {
+    public AbstractModel() {
         propertyChangeSupport = new PropertyChangeSupport(this);
-	}
+    }
 
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
-	}
+    }
 
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
-	}
+    }
 
-	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-	}
+    }
 }
 ```
 
@@ -205,74 +200,71 @@ Code Sample 3
 ```java
 public abstract class AbstractController implements PropertyChangeListener {
 
-	private ArrayList<abstractviewpanel> registeredViews;
-	private ArrayList<abstractmodel> registeredModels;
+    private ArrayList<abstractviewpanel> registeredViews;
+    private ArrayList<abstractmodel> registeredModels;
 
-	public AbstractController() {
-        registeredViews = new ArrayList<abstractviewpanel>();
-        registeredModels = new ArrayList<abstractmodel>();
-	}
+    public AbstractController() {
+        registeredViews = new ArrayList<>();
+        registeredModels = new ArrayList<>();
+    }
 
+    public void addModel(AbstractModel model) {
+        registeredModels.add(model);
+        model.addPropertyChangeListener(this);
+    }
 
-	public void addModel(AbstractModel model) {
-		registeredModels.add(model);
-		model.addPropertyChangeListener(this);
-	}
+    public void removeModel(AbstractModel model) {
+        registeredModels.remove(model);
+        model.removePropertyChangeListener(this);
+    }
 
-	public void removeModel(AbstractModel model) {
-		registeredModels.remove(model);
-		model.removePropertyChangeListener(this);
-	}
+    public void addView(AbstractViewPanel view) {
+        registeredViews.add(view);
+    }
 
-	public void addView(AbstractViewPanel view) {
-		registeredViews.add(view);
-	}
+    public void removeView(AbstractViewPanel view) {
+        registeredViews.remove(view);
+    }
 
-	public void removeView(AbstractViewPanel view) {
-		registeredViews.remove(view);
-	}
+    // Use this to observe property changes from registered models
+    // and propagate them on to all the views.
 
+    public void propertyChange(PropertyChangeEvent evt) {
 
-	//  Use this to observe property changes from registered models
-	//  and propagate them on to all the views.
+        for (AbstractViewPanel view : registeredViews) {
+            view.modelPropertyChange(evt);
+        }
+    }
 
+    /**
+    * This is a convenience method that subclasses can call upon
+    * to fire property changes back to the models. This method
+    * uses reflection to inspect each of the model classes
+    * to determine whether it is the owner of the property
+    * in question. If it isn't, a NoSuchMethodException is thrown,
+    * which the method ignores.
+    *
+    * @param propertyName = The name of the property.
+    * @param newValue = An object that represents the new value
+    * of the property.
+    */
+    protected void setModelProperty(String propertyName, Object newValue) {
 
-	public void propertyChange(PropertyChangeEvent evt) {
+        for (AbstractModel model: registeredModels) {
+            try {
 
-		for (AbstractViewPanel view: registeredViews) {
-			view.modelPropertyChange(evt);
-		}
-	}
+                Method method = model.getClass().
+                    getMethod('set'+propertyName, new Class[] {
+                                        newValue.getClass()
+                                    }
+                                );
+                method.invoke(model, newValue);
 
-	/**
-	* This is a convenience method that subclasses can call upon
-	* to fire property changes back to the models. This method
-	* uses reflection to inspect each of the model classes
-	* to determine whether it is the owner of the property
-	* in question. If it isn't, a NoSuchMethodException is thrown,
-	* which the method ignores.
-	*
-	* @param propertyName = The name of the property.
-	* @param newValue = An object that represents the new value
-	* of the property.
-	*/
-	protected void setModelProperty(String propertyName, Object newValue) {
-
-		for (AbstractModel model: registeredModels) {
-			try {
-
-				Method method = model.getClass().
-					getMethod('set'+propertyName, new Class[] {
-										newValue.getClass()
-									}
-								);
-				method.invoke(model, newValue);
-
-			} catch (Exception ex) {
-				//  Handle exception.
-			}
-		}
-	}
+            } catch (Exception ex) {
+                //  Handle exception.
+            }
+        }
+    }
 }
 ```
 The AbstractController class contains two ArrayList objects, which are used to keep track of the models and views that are registered. Note that whenever a model is registered, the controller also registers itself as a property change listener on the model. This way, whenever a model changes its state, the propertyChange() method is called and the controller will pass this event on to the appropriate views.
@@ -419,21 +411,21 @@ Code Sample 7
 // ‹editor-fold defaultstate='collapsed' desc=' GUI Event Handling Code '›
 // Code omitted
 private void yPositionTextFieldFocusLost(java.awt.event.FocusEvent evt) {
-	try {
-		controller.changeElementYPosition(
-			Integer.parseInt(yPositionTextField.getText()));
-	} catch (Exception e) {
-		//  Handle exception.
-	}
+    try {
+        controller.changeElementYPosition(
+                Integer.parseInt(yPositionTextField.getText()));
+    } catch (Exception e) {
+        // Handle exception.
+    }
 }
 
 private void yPositionTextFieldActionPerformed(java.awt.event.ActionEvent evt) {
-	try {
-		controller.changeElementYPosition(
-			Integer.parseInt(yPositionTextField.getText()));
-	} catch (Exception e) {
-		//  Handle exception.
-	}
+    try {
+        controller.changeElementYPosition(
+                Integer.parseInt(yPositionTextField.getText()));
+    } catch (Exception e) {
+        // Handle exception.
+    }
 }
 
 // Code omitted -- code for xPosition
@@ -441,42 +433,41 @@ private void yPositionTextFieldActionPerformed(java.awt.event.ActionEvent evt) {
 
 private void changeFontButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
-	JFontChooserDialog fontChooser = new
-		JFontChooserDialog((Dialog)this.getTopLevelAncestor());
-	fontChooser.setSelectedFont(currentFont);
-	fontChooser.setVisible(true);
+    JFontChooserDialog fontChooser = new JFontChooserDialog((Dialog) this.getTopLevelAncestor());
+    fontChooser.setSelectedFont(currentFont);
+    fontChooser.setVisible(true);
 
-	Font returnedFont = fontChooser.getSelectedFont();
-	if (returnedFont != null) {
-		controller.changeElementFont(returnedFont);
-	}
+    Font returnedFont = fontChooser.getSelectedFont();
+    if (returnedFont != null) {
+        controller.changeElementFont(returnedFont);
+    }
 }
 
 private void opacitySliderStateChanged(javax.swing.event.ChangeEvent evt) {
-	controller.changeElementOpacity((int)opacitySlider.getValue());
+    controller.changeElementOpacity((int) opacitySlider.getValue());
 }
 
 private void rotationSliderStateChanged(javax.swing.event.ChangeEvent evt) {
-	controller.changeElementRotation((int)rotationSlider.getValue());
+    controller.changeElementRotation((int) rotationSlider.getValue());
 }
 
 private void opacitySpinnerStateChanged(javax.swing.event.ChangeEvent evt) {
-	controller.changeElementOpacity((Integer)opacitySpinner.getValue());
+    controller.changeElementOpacity((Integer) opacitySpinner.getValue());
 }
 
 private void rotationSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {
-	controller.changeElementRotation((Integer)rotationSpinner.getValue());
+    controller.changeElementRotation((Integer) rotationSpinner.getValue());
 }
 
 private void textDocumentChanged(DocumentEvent evt) {
 
-	Document document = evt.getDocument();
-	try {
-		controller.changeElementText(document.getText(0,
-		document.getLength()));
-	} catch (BadLocationException ex) {
-		//  Handle exception.
-	}
+    Document document = evt.getDocument();
+    try {
+        controller.changeElementText(document.getText(0,
+                document.getLength()));
+    } catch (BadLocationException ex) {
+        // Handle exception.
+    }
 }
 
 // ‹/editor-fold›
@@ -512,15 +503,15 @@ Code Sample 8
 ```java
 public void modelPropertyChange(final PropertyChangeEvent evt) {
 
-	if (evt.getPropertyName().equals(DefaultController.ELEMENT_X_PROPERTY)) {
+    if (evt.getPropertyName().equals(DefaultController.ELEMENT_X_PROPERTY)) {
 
-		String newStringValue = evt.getNewValue().toString();
-		if (!xPositionTextField.getText().equals(newStringValue))
-			xPositionTextField.setText(newStringValue);
+        String newStringValue = evt.getNewValue().toString();
+        if (!xPositionTextField.getText().equals(newStringValue))
+            xPositionTextField.setText(newStringValue);
 
-	}
+    }
 
-	//  Remaining code omitted
+    // Remaining code omitted
 
 }
 ```

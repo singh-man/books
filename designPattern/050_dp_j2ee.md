@@ -157,20 +157,20 @@ import javax.servlet.http.*;
 
 public class MyFilter implements Filter {
 
-    public void doFilter(ServletRequest request, ServletResponse resonse, FilterChain chain) throws ServletException, IOException {
-                //work on request and response
-                chain.doFilter(request, response);
+    public void doFilter(ServletRequest request, ServletResponse resonse, FilterChain chain)
+            throws ServletException, IOException {
+        // work on request and response
+        chain.doFilter(request, response);
     }
 
     public void init(FilterConfig config) throws ServletException {
-        //work on config
+        // work on config
     }
 
     public void destroy() {
-        //work on clean up
+        // work on clean up
     }
-
-}	
+}
 ```
 Register and filter mapping 
 
@@ -182,21 +182,21 @@ Register and filter mapping
 
 Before the servlet description
 
-    <filter>
-        <filter-name>MyFilter</filter-name>
-            <display-name>MyCoolFilter</display-name>
-            <description>This is my cool filter</description>
-        <filter-class>somePackage.MyFilter</filter-class>
-        <init-param>
-            <param-name>yyy</param-name>
-            <param-value>/xxx/zzz</param-value>
-        </init-param>
-    </filter>
+<filter>
+    <filter-name>MyFilter</filter-name>
+        <display-name>MyCoolFilter</display-name>
+        <description>This is my cool filter</description>
+    <filter-class>somePackage.MyFilter</filter-class>
+    <init-param>
+        <param-name>yyy</param-name>
+        <param-value>/xxx/zzz</param-value>
+    </init-param>
+</filter>
 
-    <filter-mapping>
-        <filter-name>MyFilter</filter-name>
-        <url-pattern>/xxx.jsp</url-pattern>
-    </filter-mapping>
+<filter-mapping>
+    <filter-name>MyFilter</filter-name>
+    <url-pattern>/xxx.jsp</url-pattern>
+</filter-mapping>
 ```
 
 

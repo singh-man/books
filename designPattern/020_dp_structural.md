@@ -233,7 +233,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Composite implements Component {
-    List<Component> components = new ArrayList<Component>();
+    List<Component> components = new ArrayList<>();
 
     @Override
     public void sayHello() {
@@ -501,7 +501,7 @@ public class FlyweightFactory {
     private Map<String, Flyweight> flyweightPool;
 
     private FlyweightFactory() {
-        flyweightPool = new HashMap<String, Flyweight>();
+        flyweightPool = new HashMap<>();
     }
 
     public static FlyweightFactory getInstance() {

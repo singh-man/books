@@ -433,21 +433,19 @@ import com.cakes.animals.Animal;
 
 public class Demo {
 
-	public static void main(String[] args) {
-		AbstractFactory abstractFactory = new AbstractFactory();
-		SpeciesFactory speciesFactory1 =
-		abstractFactory.getSpeciesFactory("reptile");
-		Animal a1 = speciesFactory1.getAnimal("tyrannosaurus");
-		System.out.println("a1 sound: " + a1.makeSound());
-		Animal a2 = speciesFactory1.getAnimal("snake");
-		System.out.println("a2 sound: " + a2.makeSound());
-		SpeciesFactory speciesFactory2 =
-		abstractFactory.getSpeciesFactory("mammal");
-		Animal a3 = speciesFactory2.getAnimal("dog");
-		System.out.println("a3 sound: " + a3.makeSound());
-		Animal a4 = speciesFactory2.getAnimal("cat");
-		System.out.println("a4 sound: " + a4.makeSound());
-	}
+    public static void main(String[] args) {
+        AbstractFactory abstractFactory = new AbstractFactory();
+        SpeciesFactory speciesFactory1 = abstractFactory.getSpeciesFactory("reptile");
+        Animal a1 = speciesFactory1.getAnimal("tyrannosaurus");
+        System.out.println("a1 sound: " + a1.makeSound());
+        Animal a2 = speciesFactory1.getAnimal("snake");
+        System.out.println("a2 sound: " + a2.makeSound());
+        SpeciesFactory speciesFactory2 = abstractFactory.getSpeciesFactory("mammal");
+        Animal a3 = speciesFactory2.getAnimal("dog");
+        System.out.println("a3 sound: " + a3.makeSound());
+        Animal a4 = speciesFactory2.getAnimal("cat");
+        System.out.println("a4 sound: " + a4.makeSound());
+    }
 }
 ```
 Executing the Demo class displays the sounds made by the four Animal
@@ -483,40 +481,40 @@ First off, our Product will be a Meal class, which represents food items in a me
 package com.cakes;
 
 public class Meal {
-	
-	private String drink;
 
-	private String mainCourse;
+    private String drink;
 
-	private String side;
+    private String mainCourse;
 
-	public String getDrink() {
-		return drink;
-	}
+    private String side;
 
-	public void setDrink(String drink) {
-		this.drink = drink;
-	}
+    public String getDrink() {
+        return drink;
+    }
 
-	public String getMainCourse() {
-		return mainCourse;
-	}
+    public void setDrink(String drink) {
+        this.drink = drink;
+    }
 
-	public void setMainCourse(String mainCourse) {
-		this.mainCourse = mainCourse;
-	}
+    public String getMainCourse() {
+        return mainCourse;
+    }
 
-	public String getSide() {
-		return side;
-	}
+    public void setMainCourse(String mainCourse) {
+        this.mainCourse = mainCourse;
+    }
 
-	public void setSide(String side) {
-		this.side = side;
-	}
+    public String getSide() {
+        return side;
+    }
 
-	public String toString() {
-		return 'drink:' + drink + ', main course:' + mainCourse + ', side:' + side;
-	}
+    public void setSide(String side) {
+        this.side = side;
+    }
+
+    public String toString() {
+        return 'drink:' + drink + ', main course:' + mainCourse + ', side:' + side;
+    }
 }
 ```
 Our Builder interface is MealBuilder. It features methods used to build a meal and a method to retrieve the meal.
@@ -544,32 +542,32 @@ Our first Concrete Builder is ItalianMealBuilder. Its constructor creates a meal
 ```java
 package com.cakes;
 
-public class ItalianMealBuilder implements MealBuilder {		
-	private Meal meal;
+public class ItalianMealBuilder implements MealBuilder {
+    private Meal meal;
 
-	public ItalianMealBuilder() {
-		meal = new Meal();
-	}
+    public ItalianMealBuilder() {
+        meal = new Meal();
+    }
 
-	@Override 
-	public void buildDrink() {
-		meal.setDrink("red wine");
-	}
+    @Override
+    public void buildDrink() {
+        meal.setDrink("red wine");
+    }
 
-	@Override 
-	public void buildMainCourse() {
-		meal.setMainCourse("pizza");
-	}
+    @Override
+    public void buildMainCourse() {
+        meal.setMainCourse("pizza");
+    }
 
-	@Override 
-	public void buildSide() {
-		meal.setSide("bread");
-	}
+    @Override
+    public void buildSide() {
+        meal.setSide("bread");
+    }
 
-	@Override 
-	public Meal getMeal() {
-		return meal;
-	}
+    @Override
+    public Meal getMeal() {
+        return meal;
+    }
 }
 ```
 Our second Concrete Builder is JapaneseMealBuilder. Its constructor creates a meal. Its methods are implemented to build the various parts of a Japanese meal. It returns the meal via getMeal().
@@ -579,31 +577,31 @@ Our second Concrete Builder is JapaneseMealBuilder. Its constructor creates a me
 package com.cakes;
 
 public class JapaneseMealBuilder implements MealBuilder {
-	private Meal meal;
+    private Meal meal;
 
-	public JapaneseMealBuilder() {
-		meal = new Meal();
-	}
+    public JapaneseMealBuilder() {
+        meal = new Meal();
+    }
 
-	@Override
-	public void buildDrink() {
-		meal.setDrink("sake");
-	}
+    @Override
+    public void buildDrink() {
+        meal.setDrink("sake");
+    }
 
-	@Override
-	public void buildMainCourse() {
-		meal.setMainCourse("chicken teriyaki");
-	}
+    @Override
+    public void buildMainCourse() {
+        meal.setMainCourse("chicken teriyaki");
+    }
 
-	@Override
-	public void buildSide() {
-		meal.setSide("miso soup");
-	}
+    @Override
+    public void buildSide() {
+        meal.setSide("miso soup");
+    }
 
-	@Override
-	public Meal getMeal() {
-		return meal;
-	}
+    @Override
+    public Meal getMeal() {
+        return meal;
+    }
 }
 ```
 Our Director class is MealDirector. It takes a MealBuilder as a parameter in its constructor. Thus, a different type of meal will be assembled by the MealDirector depending on the Concrete Builder passed in to the constructor. The assembly of the meal (Product) takes place in the constructMeal() method of the Director. This method spells out the parts of the meal that will be assembled.
@@ -639,18 +637,18 @@ The Demo class lets us demonstrate our builder pattern. First, our director buil
 package com.cakes;
 
 public class Demo {
-	public static void main(String[] args) {
-		MealBuilder mealBuilder = new ItalianMealBuilder();
-		MealDirector mealDirector = new MealDirector(mealBuilder);
-		mealDirector.constructMeal();
-		Meal meal = mealDirector.getMeal();
-		System.out.println("meal is: " + meal);
-		mealBuilder = new JapaneseMealBuilder();
-		mealDirector = new MealDirector(mealBuilder);
-		mealDirector.constructMeal();
-		meal = mealDirector.getMeal();
-		System.out.println("meal is: " + meal);
-	}
+    public static void main(String[] args) {
+        MealBuilder mealBuilder = new ItalianMealBuilder();
+        MealDirector mealDirector = new MealDirector(mealBuilder);
+        mealDirector.constructMeal();
+        Meal meal = mealDirector.getMeal();
+        System.out.println("meal is: " + meal);
+        mealBuilder = new JapaneseMealBuilder();
+        mealDirector = new MealDirector(mealBuilder);
+        mealDirector.constructMeal();
+        meal = mealDirector.getMeal();
+        System.out.println("meal is: " + meal);
+    }
 }
 ```
 The console output of executing Demo is shown here.
@@ -739,17 +737,17 @@ The Demo class creates a Person object and then clones it to a second Person obj
 package com.cakes;
 
 public class Demo {
-	
-	public static void main(String[] args) {
-		Person person1 = new Person("Fred");
-		System.out.println("person 1:" + person1);
-		Person person2 = (Person) person1.doClone();
-		System.out.println("person 2:" + person2);
-		Dog dog1 = new Dog("Wooof!");
-		System.out.println("dog 1:" + dog1);
-		Dog dog2 = (Dog) dog1.doClone();
-		System.out.println("dog 2:" + dog2);
-	}
+
+    public static void main(String[] args) {
+        Person person1 = new Person("Fred");
+        System.out.println("person 1:" + person1);
+        Person person2 = (Person) person1.doClone();
+        System.out.println("person 2:" + person2);
+        Dog dog1 = new Dog("Wooof!");
+        System.out.println("dog 1:" + dog1);
+        Dog dog2 = (Dog) dog1.doClone();
+        System.out.println("dog 2:" + dog2);
+    }
 }
 ```
 The console output of executing Demo is shown here.
