@@ -287,27 +287,27 @@ public class DefaultController extends AbstractController {
 	//  Code omitted
 
 	public void changeElementText(String newText) {
-		setModelProperty(ELEMENT_TEXT_PROPERTY, newText);
+        setModelProperty(ELEMENT_TEXT_PROPERTY, newText);
 	}
 
 	public void changeElementFont(Font newFont) {
-		setModelProperty(ELEMENT_FONT_PROPERTY, newFont);
+        setModelProperty(ELEMENT_FONT_PROPERTY, newFont);
 	}
 
 	public void changeElementXPosition(int newX) {
-		setModelProperty(ELEMENT_X_PROPERTY, newX);
+        setModelProperty(ELEMENT_X_PROPERTY, newX);
 	}
 
 	public void changeElementYPosition(int newY) {
-		setModelProperty(ELEMENT_Y_PROPERTY, newY);
+        setModelProperty(ELEMENT_Y_PROPERTY, newY);
 	}
 
 	public void changeElementOpacity(int newOpacity) {
-		setModelProperty(ELEMENT_OPACITY_PROPERTY, newOpacity);
+        setModelProperty(ELEMENT_OPACITY_PROPERTY, newOpacity);
 	}
 
 	public void changeElementRotation(int newRotation) {
-		setModelProperty(ELEMENT_ROTATION_PROPERTY, newRotation);
+        setModelProperty(ELEMENT_ROTATION_PROPERTY, newRotation);
 	}
 }
 ```
