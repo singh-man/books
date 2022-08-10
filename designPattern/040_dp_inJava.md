@@ -10,6 +10,10 @@ Design Patterns in Java
 - **Visibility principle**: This principle allows the child class loader to see all the classes loaded by the parent ClassLoader. But the parent class loader cannot see classes loaded by the child class loader.
 - **Uniqueness principle**: It allows to load a class once(following delegation principle). It ensures that child ClassLoader doesn’t reload the class, which is already loaded by the parent.
 
+OR
+
+custome class loader by ```extends ClassLoader```
+
 
 ### Important design patterns
   - Singleton
