@@ -2,6 +2,15 @@
 Design Patterns in Java
 =======================
 
+### JVM class loading
+
+![](media/jvm_classLoading.png)
+
+- **Delegation hierarchy principle**: Following this principle, it forwards the request for class loading to the parent class loader. It only loads the class if the parent does not find or load the class.
+- **Visibility principle**: This principle allows the child class loader to see all the classes loaded by the parent ClassLoader. But the parent class loader cannot see classes loaded by the child class loader.
+- **Uniqueness principle**: It allows to load a class once(following delegation principle). It ensures that child ClassLoader doesn’t reload the class, which is already loaded by the parent.
+
+
 ### Important design patterns
   - Singleton
   - Builder ( While Writing Unit Tests )
