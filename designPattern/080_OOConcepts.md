@@ -6,7 +6,7 @@ OO Concepts
 ### OO Defination
 
 #### Encapsulation
-(funny term) takes the part that vary and encapsulate it so that it will not effect the other things. Here's another way to think about this principle: take the parts that vary and encapsulate them, so that later you can alter or extend the parts what vary without affecting those that dont and then remember to program to an interfaces (provide a constructor or setter/getter injection to provide the concrete object).
+(funny term) takes the part that vary and encapsulate it so that it will not effect the other things. Here's another way to think about this principle: take the parts that vary and encapsulate them, so that later you can alter or extend the parts what vary without affecting those that don't and then remember to program to an interfaces (provide a constructor or setter/getter injection to provide the concrete object).
 
 Encapsulation is literally a way to design so that object will never go into invalid state or at least make it to fail fast
 
