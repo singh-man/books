@@ -31,7 +31,7 @@ if and only if there exist constants *d* > 0 and *C* such that
  
 |*f*(*x*)| ≤ *C* |*g*(*x*)|	for all *x* with |*x-a*| < *d*.
 
-The  first  definition  is  the  only one  used  in  computer  science  (where typically only positive functions with a natural number n as argument are considered; the absolute values can then be ignored), while both usages appear in mathematics.
+The  first  definition  is  the  only one  used  in  computer  science  (where typically only positive functions with a natural number *n* as argument are considered; the absolute values can then be ignored), while both usages appear in mathematics.
 
 Here is a list of classes of functions that are commonly encountered when analyzing algorithms. The slower growing functions are listed first. *c* is some arbitrary constant.
 
@@ -71,11 +71,11 @@ Another point of sloppiness is that the parameter whose asymptotic behaviour is 
 
 ### Related Notations
 
-In addition to the big O notations, another Landau symbol is used in mathematics: the little o. Informally, *f*(*x*) = o(*g*(*x*)) means that f grows much slower than g and is insignificant in comparison.
+In addition to the big O notations, another Landau symbol is used in mathematics: the little o. Informally, *f*(*x*) = o(*g*(*x*)) means that *f* grows much slower than *g* and is insignificant in comparison.
 
 Formally, we write *f*(*x*) = o(*g*(*x*)) (for x -> ∞) if and only if for every C>0 there exists a real number N such that for all *x* > *N* we have |*f*(*x*)| < C |*g*(*x*)|; if *g*(*x*) ≠ 0, this  is equivalent to lim x→∞   *f*(*x*)/*g*(*x*) = 0.
 
-Also, if *a* is some real number, we write *f*(*x*) = o(*g*(*x*)) for x -> a if and only if for every *C*>0 there exists a positive real number d such that for all x with |*x - a*| < *d*
+Also, if *a* is some real number, we write *f*(*x*) = o(*g*(*x*)) for *x* -> *a* if and only if for every *C*>0 there exists a positive real number d such that for all x with |*x - a*| < *d*
 
 we have |*f*(*x*)| < *C* |*g*(*x*)|; if *g*(*x*) ≠ 0, this is equivalent to lim x→a *f*(*x*)/*g*(*x*) = 0. 
 
@@ -127,24 +127,24 @@ The time required by a function/procedure is proportional to the number of "basi
 - one read (of a primitive type: integer, float, character, boolean)
 - one write (of a primitive type: integer, float, character, boolean)
 
-Some functions/procedures perform the same number of operations every time they are called. For example, StackSize in the Stack implementation always returns the number of elements  currently  in  the  stack  or  states  that  the  stack  is  empty,  then  we  say that StackSize takes **constant time**.
+Some functions/procedures perform the same number of operations every time they are called. For example, StackSize in the Stack implementation always returns the number of elements  currently  in  the  stack  or  states  that  the  stack  is  empty,  then  we  say that StackSize takes ***constant time***.
 
 Other functions/ procedures may perform different numbers of operations, depending on the value of a parameter. For example, in the BubbleSort algorithm, the number of elements in the array, determines the number of operations performed by the algorithm. This parameter (number of elements) is called the ***problem size/ input size***.
  
-When  we  are  trying  to  find  the  complexity  of  the  function/  procedure/  algorithm/ program,  we  are  not  interested  in  the  exact  number  of  operations  that  are  being performed. Instead, we are interested in the relation of the ***number of operations to the problem size.***
+When  we  are  trying  to  find  the  complexity  of  the  function/  procedure/  algorithm/ program,  we  are  ***not***  interested  in  the  ***exact***  number  of  operations  that  are  being performed. Instead, we are interested in the relation of the ***number of operations to the problem size.***
 
-Typically, we are usually interested in the ***worst case***: what is the maximum number of operations that might be performed for a given problem size. For example, inserting an element into an array, we have to move the current element and all of the elements that come after it one place to the right in the array. In the worst case, inserting at the beginning of the array, ***all*** of the elements in the array must be moved. Therefore, in the worst case, the time for insertion is proportional to the number of elements in the array, and we say that the worst-case time for the insertion operation is linear in the number of elements  in  the  array. For a linear-time algorithm, if the problem size doubles, the number of operations also doubles.
+Typically, we are usually interested in the ***worst case***: what is the maximum number of operations that might be performed for a given problem size. For example, inserting an element into an array, we have to move the current element and all of the elements that come after it one place to the right in the array. In the worst case, inserting at the beginning of the array, ***all*** of the elements in the array must be moved. Therefore, in the worst case, the time for insertion is proportional to the number of elements in the array, and we say that the worst-case time for the insertion operation is ***linear*** in the number of elements  in  the  array. For a linear-time algorithm, if the problem size doubles, the number of operations also doubles.
 
 
 #### Big-O notation
 
-We express complexity using big-O notation. 
+We express complexity using **big-O notation**. 
 
 For a problem of size N:
 
 - a constant-time algorithm is "order 1": O(1)
 - a linear-time algorithm is "order N": O(N)
-- a quadratic-time algorithm is "order N squared": O(N2)
+- a quadratic-time algorithm is "order N squared": O(N²)
 
 Note  that  the  big-O  expressions  do  not  have  constants  or  low-order  terms.  This  is because, when N gets large enough, constants and low-order terms don't matter (a constant-time algorithm will be faster than a linear-time algorithm, which will be faster than a quadratic-time algorithm).
 
@@ -166,7 +166,7 @@ This is because for all values of N greater than 2:
 
 	3 * N² + 5 <= 4 * N²
 
-T(N) is not O(N), because whatever constant c and value n₀ you choose, There is always a value of N > n₀ such that (3 * N² + 5) > (c * N)
+T(N) is **not** O(N), because whatever constant c and value n₀ you choose, There is always a value of N > n₀ such that (3 * N² + 5) > (c * N)
 
 
 
@@ -189,7 +189,7 @@ The total time is found by adding the times for all statements:
 
 	total time = time(statement 1) + time(statement 2) + ... + time(statement k) 
 
-If each statement is "simple" (only involves basic operations) then the time for each statement is constant and the total time is also constant: O(1).
+If each statement is "simple" (only involves basic operations) then the time for each statement is constant and the total time is also constant: **O(1)**.
 
 
 **If-Then-Else**
@@ -234,7 +234,7 @@ In a common special case where the stopping condition of the inner loop is J < N
 
 #### Statements with function/ procedure calls
 
-When a statement involves a function/ procedure call, the complexity of the statement includes the complexity of the function/ procedure. Assume that you know that function/ procedure f takes constant time, and that function/procedure g takes time proportional to (linear in) the value of its parameter k. Then the statements below have the time complexities indicated.
+When a statement involves a function/ procedure call, the complexity of the statement includes the complexity of the function/ procedure. Assume that you know that function/ procedure *f* takes constant time, and that function/procedure *g* takes time proportional to (linear in) the value of its parameter *k*. Then the statements below have the time complexities indicated.
 
 	f(k) has O(1)
 	g(k) has O(k)
