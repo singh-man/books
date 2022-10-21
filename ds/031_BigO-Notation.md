@@ -1,7 +1,7 @@
 Big O notation
 ==============
 
-**Big O notation** (with a capital letter O, not a zero), also called Landau's symbol, is a symbolism used in complexity theory, computer science, and mathematics to describe the asymptotic behavior of functions. Basically, it tells you how fast a function grows or declines.
+**Big O notation** (with a capital letter O, not a zero), also called **Landau's symbol**, is a symbolism used in complexity theory, computer science, and mathematics to describe the asymptotic behavior of functions. Basically, it tells you how fast a function grows or declines.
 
 *Landau's symbol* comes from the name of the German number theoretician Edmund Landau who invented the notation. The letter O is used because the rate of growth of a function is also called its *order*.
 
@@ -9,11 +9,11 @@ For example, when analyzing some algorithm, one might find that the time (or the
 
 In  mathematics,  it  is  often  important  to  get  a  handle  on  the  error  term  of  an approximation. For instance, people will write
 
-eˣ = 1 + x + x²/2 + O(x³)  for x -> 0
+	eˣ = 1 + x + x²/2 + O(x³)  for x -> 0
 
 to express the fact that the error is smaller in absolute value than some constant times x³ if x is close enough to 0.
 
-For the formal definition, suppose f*(*x*)* and *g*(*x*) are two functions defined on some subset of the real numbers. We write
+For the formal definition, suppose *f*(*x*)* and *g*(*x*) are two functions defined on some subset of the real numbers. We write
 
 *f*(*x*) = O(*g*(*x*))
 
@@ -73,7 +73,7 @@ Another point of sloppiness is that the parameter whose asymptotic behaviour is 
 
 In addition to the big O notations, another Landau symbol is used in mathematics: the little o. Informally, *f*(*x*) = o(*g*(*x*)) means that f grows much slower than g and is insignificant in comparison.
 
-Formally, we write *f*(*x*) = o(*g*(*x*)) (for x -> ∞) if and only if for every C>0 there exists a real number N such that for all x > N we have |*f*(*x*)| < C |*g*(*x*)|; if *g*(*x*) ≠ 0, this  is equivalent to lim ₓ→\∞   *f*(*x*)/*g*(*x*) = 0.
+Formally, we write *f*(*x*) = o(*g*(*x*)) (for x -> ∞) if and only if for every C>0 there exists a real number N such that for all *x* > *N* we have |*f*(*x*)| < C |*g*(*x*)|; if *g*(*x*) ≠ 0, this  is equivalent to lim x→∞   *f*(*x*)/*g*(*x*) = 0.
 
 Also, if *a* is some real number, we write *f*(*x*) = o(*g*(*x*)) for x -> a if and only if for every *C*>0 there exists a positive real number d such that for all x with |*x - a*| < *d*
 
@@ -138,7 +138,9 @@ Typically, we are usually interested in the ***worst case***: what is the maximu
 
 #### Big-O notation
 
-We express complexity using big-O notation. For a problem of size N:
+We express complexity using big-O notation. 
+
+For a problem of size N:
 
 - a constant-time algorithm is "order 1": O(1)
 - a linear-time algorithm is "order N": O(N)
@@ -148,21 +150,21 @@ Note  that  the  big-O  expressions  do  not  have  constants  or  low-order  te
 
 Formal definition:
 
-A function T(N) is O(F(N)) if for some constant c and for values of N greater than some value n0:
+A function T(N) is O(F(N)) if for some constant c and for values of N greater than some value n₀:
 
-T(N) <= c * F(N)
+	T(N) <= c * F(N)
 
 The idea is that T(N) is the ***exact*** complexity of a procedure/function/algorithm as a function of the problem size N, and that F(N) is an upper-bound on that complexity (i.e., the actual time/space or whatever for a problem of size N will be no worse than F(N)).
 
 In practice, we want the smallest F(N) -- the ***least*** upper bound on the actual complexity. For example, consider:
  
-T(N) = 3 * N² + 5.
+	T(N) = 3 * N² + 5.
 
 We can show that T(N) is O(N²) by choosing c = 4 and n₀ = 2. 
 
 This is because for all values of N greater than 2:
 
-3 * N² + 5 <= 4 * N²
+	3 * N² + 5 <= 4 * N²
 
 T(N) is not O(N), because whatever constant c and value n₀ you choose, There is always a value of N > n₀ such that (3 * N² + 5) > (c * N)
 
@@ -230,7 +232,7 @@ The outer loop executes N times. Every time the outer loop executes, the inner l
 In a common special case where the stopping condition of the inner loop is J < N instead of J < M (i.e., the inner loop also executes N times), the total complexity for the two loops is O(N²).
 
 
-**Statements with function/ procedure calls**
+#### Statements with function/ procedure calls
 
 When a statement involves a function/ procedure call, the complexity of the statement includes the complexity of the function/ procedure. Assume that you know that function/ procedure f takes constant time, and that function/procedure g takes time proportional to (linear in) the value of its parameter k. Then the statements below have the time complexities indicated.
 
