@@ -47,11 +47,11 @@ Here is a list of classes of functions that are commonly encountered when analyz
 | O(*cⁿ*)        | exponential     |
 
 
-Note that O(*nᶜ*) and O(*cⁿ*) are very different. The latter grows much, much faster, no matter how big the constant *c* is. A function that grows faster than any power of n is called *superpolynomial*. One that grows slower than an exponential function of the form cⁿ  is called *subexponential*. An algorithm can require time that is both superpolynomial and subexponential; examples of this include the fastest algorithms known for integer factorization.
+Note that O(*nᶜ*) and O(*cⁿ*) are very different. The latter grows much, much faster, no matter how big the constant *c* is. A function that grows faster than any power of *n* is called *superpolynomial*. One that grows slower than an exponential function of the form cⁿ  is called *subexponential*. An algorithm can require time that is both superpolynomial and subexponential; examples of this include the fastest algorithms known for integer factorization.
 
 Note, too, that O(log *n*) is exactly the same as O(log(*nᶜ*)). The logarithms differ only by a constant factor, and the big O notation ignores that. Similarly, logs with different constant bases are equivalent.
 
-The above list is useful because of the following fact: if a function f(n) is a sum of functions, one of which grows faster than the others, then the faster growing one determines the order of f(n).
+The above list is useful because of the following fact: if a function f(n) is a sum of functions, one of which grows faster than the others, then the faster growing one determines the order of *f*(*n*).
 
 Example: If *f(n)* = 10 log(*n*) + 5 (log(*n*))3 + 7*n* + 3*n²* + 6*n³*, then *f(n)* = O(*n³*).
 
