@@ -53,7 +53,7 @@ Note, too, that O(log *n*) is exactly the same as O(log(*nᶜ*)). The logarithms
 
 The above list is useful because of the following fact: if a function *f*(*n*) is a sum of functions, one of which grows faster than the others, then the faster growing one determines the order of *f*(*n*).
 
-Example: If *f(n)* = 10 log(*n*) + 5 (log(*n*))3 + 7*n* + 3*n²* + 6*n³*, then *f(n)* = O(*n³*).
+Example: If *f(n)* = 10 log(*n*) + 5 (log(*n*))³ + 7*n* + 3*n²* + 6*n³*, then *f(n)* = O(*n³*).
 
 One caveat here: the number of summands has to be constant and may not depend on n. This notation can also be used with multiple variables and with other expressions on the right side of the equal sign. The notation:
 
