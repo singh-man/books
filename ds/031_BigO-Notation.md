@@ -13,11 +13,11 @@ In  mathematics,  it  is  often  important  to  get  a  handle  on  the  error  
 
 to express the fact that the error is smaller in absolute value than some constant times x³ if x is close enough to 0.
 
-For the formal definition, suppose *f*(*x*)* and *g*(*x*) are two functions defined on some subset of the real numbers. We write
+For the formal definition, suppose *f*(*x*) and *g*(*x*) are two functions defined on some subset of the real numbers. We write
 
 *f*(*x*) = O(*g*(*x*))
 
-(or f*(*x*) = O(*g*(*x*)) for *x* -> ∞ to be more precise) if and only if there exist constants *N* and *C* such that
+(or *f*(*x*) = O(*g*(*x*)) for *x* -> ∞ to be more precise) if and only if there exist constants *N* and *C* such that
 
 |*f*(*x*)| ≤ C |*g*(*x*)|	for all *x*>*N*.
 
