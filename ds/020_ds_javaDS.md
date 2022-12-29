@@ -69,7 +69,7 @@ Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
     HashTable -> sunchronized, no null key, 
         Properties
     HashMap -> not synchronized, one null key
-    LinkedHashMap
+        LinkedHashMap
     EnumMap
     IdentityHashMap -> uses == 
     WeakHashMap
@@ -117,8 +117,8 @@ Collection <I>
 
 Map <I>
     HahsTable    
-    LinkedHashMap    
     HashMap
+        LinkedHashMap    
     SortedMap <I>
         TreeMap
 ```
