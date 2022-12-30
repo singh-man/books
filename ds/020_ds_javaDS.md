@@ -33,7 +33,7 @@ Iterable
                     TreeSet -> Tree ds (sorted) so no hashcode/equals; Comparable/Comparator instead
                     ConcurrentSkipListSet
             HashSet -> backed by HashMap
-            LinkedHashSet -> Ordered
+                LinkedHashSet -> Ordered
             EnumSet
             CopyOnWriteArraySet
         List<I> -> add(i, x), get(ith)
@@ -106,7 +106,7 @@ Collection <I>
         SortedSet <I>
             TreeSet
         HashSet 
-        LinkedHashSet
+            LinkedHashSet
     List <I>
         ArrayList
         Vector
@@ -150,7 +150,7 @@ HashSet LinkedHashSet    TreeSet      ArrayList   Vector    LinkedList    Priori
    |         |                |          |
    |         |                |          |
    +         |                +          +
-HahsTable    +inkedHashMap    HashMap    TreeMap
+HahsTable    LinkedHashMap    HashMap    TreeMap
 ```
 
 
