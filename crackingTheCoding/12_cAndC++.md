@@ -12,43 +12,43 @@ The code below demonstrates the implementation of a basic class with inheritance
 
 ```c++
 1   #include <iostream>
-2   using namespace  std;
+2   using namespace std;
 3   
-4   #define NAME_SIZE  50 // Defines a macro
+4   #define NAME_SIZE 50 // Defines a macro
 5   
 6   class Person {
-7   int id;  // all members  are private  by default
+7   int id; // all members are private by default
 8       char name[NAME_SIZE];
 9   
 10  public:
 11      void aboutMe() {
-12          cout << "I  am  a person.";
+12          cout << "I am a person.";
 13      }
 14  } ;
 15  
-16  class  Student : public  Person {
+16  class Student : public Person {
 17  public:
 18      void aboutMe() {
-19          cout <<  "I  am  a student.";
+19          cout << "I am a student.";
 20      }
 21  };
 22  
 23  int main() {
-24      Student *  p = new   Student();
-25      p->aboutMe(); // prints  "I  am  a student."
-26      delete  p; // Important! Make sure to delete  allocated  memory.
-27      return  0;
+24      Student * p = new Student();
+25      p->aboutMe(); // prints "I am a student."
+26      delete p; // Important! Make sure to delete allocated memory.
+27      return 0;
 28  }
 ```
 
-All data members and  methods are  private by  default in C++. One  can  modify  this  by introducing the keyword public.
+All data members and methods are private by default in C++. One can modify this by introducing the keyword public.
 
 
 ### Constructors and Destructors
 
-The constructor of a class  is automatically called  upon an object's creation. If no constructor is defined, the compiler automatically generates one  called  the  Default  Constructor.  Alternatively, we can define our own constructor.
+The constructor of a class is automatically called upon an object's creation. If no constructor is defined, the compiler automatically generates one called the Default Constructor. Alternatively, we can define our own constructor.
 
-If you just need to initialize primitive types,  a simple way to do it is this:
+If you just need to initialize primitive types, a simple way to do it is this:
 
 ```C
 1   Person(int a) {
@@ -56,7 +56,7 @@ If you just need to initialize primitive types,  a simple way to do it is this:
 3   }
 ```
 
-This works for primitive types,  but  you might instead want to do this:
+This works for primitive types, but you might instead want to do this:
 
 ```C
 1   Person(int a) : id(a) {
@@ -80,14 +80,14 @@ The destructor cleans up upon object deletion and  is automatically called  when
 In an earlier example, we defined p to be of type Student:
 
 ```c++
-1   Student *  p  =  new  Student();
+1   Student * p = new Student();
 2   p->aboutMe();
 ```
 
 What would happen if we defined p to be a Person\*, like so?
 
 ```c++
-1   Person *  p  =  new  Student();
+1   Person * p = new Student();
 2   p->aboutMe();
 ```
 
@@ -96,17 +96,17 @@ In this case, "I   am  a  person" would be printed instead. This is because the 
 If we want to ensure that the  Student's implementation of about Me is called, we can define aboutMe in the  Person class to be virtual.
 
 ```c++
-1   class  Person {
+1   class Person {
 2       ...
-3       virtual void  aboutMe() {
-4           cout <<  "I am a  person.";
+3       virtual void aboutMe() {
+4           cout << "I am a person.";
 5       }
 6   };
 7   
-8   class  Student :   public  Person {
+8   class Student : public Person {
 9   public:
-10      void  aboutMe() {
-11          cout <<  "I am a  student.";
+10      void aboutMe() {
+11          cout << "I am a student.";
 12      }
 13  } ;
 ```
@@ -117,30 +117,30 @@ In this case, we might want addCourse to be a virtual function defined within Pe
 
 ```c++
 1   class Person {
-2       int  id;// all members  are private by default
+2       int id;// all members are private by default
 3       char name[NAME_SIZE];
 4   public:
-5       virtual  void aboutMe() {
-6           cout <<  "I  am a  person." <<  endl;
+5       virtual void aboutMe() {
+6           cout << "I am a person." << endl;
 7       }
-8       virtual  bool addCourse(string s) =  0;
+8       virtual bool addCourse(string s) = 0;
 9   };
 10  
 11  class Student : public Person {
 12  public:
 13      void aboutMe() {
-14          cout <<  "I  am a  student." <<  endl;
+14          cout << "I am a student." << endl;
 15      }
 16  
 17      bool addCourse(string s) {
-18          cout <<  "Added course " << s <<  "to student." <<  endl;
+18          cout << "Added course " << s << "to student." << endl;
 19          return true;
 20      }
 21  };
 22  
-23  int  main() {
-24      Person *  p  = new  Student();
-25      p->aboutMe();  //  prints  "I am a  student."
+23  int main() {
+24      Person * p = new Student();
+25      p->aboutMe(); // prints "I am a student."
 26      p->addCourse("History");
 27      delete p;
 28  }
@@ -154,23 +154,23 @@ Note that by defining addCourse to be a "pure virtual function;· Person is now 
 The virtual function naturally introduces the concept of a "virtual destructor". Suppose we wanted to imple­ment a destructor method for Person and Student. A naive solution might look like this:
 
 ```c++
-1   class  Person {
+1   class Person {
 2   public:
 3       ~Person() {
 4           cout << "Deleting a person." << endl;
 5       }
 6   };
 7   
-8   class Student  :  public Person   {
+8   class Student : public Person {
 9   public:
 10      ~student() {
-11          cout << "Deleting  a student."  << endl;
+11          cout << "Deleting a student." << endl;
 12      }
 13  } ;
 14  
-15  int  main() {
-16      Person *  p   =  new  Student();
-17      delete  p; //  prints "Deleting  a person."
+15  int main() {
+16      Person * p = new Student();
+17      delete p; // prints "Deleting a person."
 18  }
 ```
 
@@ -179,23 +179,23 @@ As in the earlier example, since p is a Person, the destructor for the Person cl
 To fix this, we simply define the destructor  for Person to be virtual.
 
 ```c++
-1   class  Person {
+1   class Person {
 2   public:
 3       virtual ~Person() {
-4           cout << "Deleting  a person."  << endl;
+4           cout << "Deleting a person." << endl;
 5       }
 6   };
 7   
-8   class  Student :  public  Person {
+8   class Student : public Person {
 9   public:
 10      ~student() {
-11          cout << "Deleting  a student."  < <   endl;
+11          cout << "Deleting a student." < < endl;
 12      }
 13  } ;
 14  
-15  int  main() {
-16      Person *  p  =  new  Student();
-17      delete  p;
+15  int main() {
+16      Person * p = new Student();
+17      delete p;
 18  }
 ```
 
@@ -210,14 +210,14 @@ Deleting  a person.
 Functions can specify default values, as shown below. Note that all default parameters must be on the right side of the function declaration,  as there would be no other way to specify how the parameters line up.
 
 ```c++
-1   int func(int a, int b =  3) {
-2       X =  a;
-3       y =  b;
-4       return  a +  b;
+1   int func(int a, int b = 3) {
+2       X = a;
+3       y = b;
+4       return a + b;
 5   }
 6   
 7   w = func(4);
-8   z = func(4,  5);
+8   z = func(4, 5);
 ```
 
 ### Operator Overloading

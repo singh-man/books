@@ -32,47 +32,47 @@ Merge sort divides the array in half, sorts each of those halves, and then merge
 The merge method operates by copying all the elements from the target array segment into a helper array, keeping track of where the start of the left and right halves should be (helperLeft and helperRight). We then iterate through helper, copying the smaller element from each half into the array. At the end, we copy any remaining elements into the target array.
 
 ```java
-1   void  mergesort(int[]  array)  {
-2       int[]  helper =  new int[array.length];
-3       mergesort(array, helper,  0,  array.length -  1);
+1   void mergesort(int[] array) {
+2       int[] helper = new int[array.length];
+3       mergesort(array, helper, 0, array.length - 1);
 4   }
 5   
-6   void  mergesort(int[] array, int[]  helper, int  low,  int high)  {
-7       if (low < high)  {
-8           int middle  =  (low  +  high) / 2;
-9           mergesort(array, helper,  low,  middle); //  Sort  left half
-10          mergesort(array,  helper,  middle + 1,   high); //  Sort  right half
-11          merge(array, helper,  low,  middle,  high); //  Merge them
+6   void mergesort(int[] array, int[] helper, int low, int high) {
+7       if (low < high) {
+8           int middle = (low + high) / 2;
+9           mergesort(array, helper, low, middle); // Sort left half
+10          mergesort(array, helper, middle + 1, high); // Sort right half
+11          merge(array, helper, low, middle, high); // Merge them
 12      }
 13  }
 14  
-15  void  merge(int[] array, int[]  helper, int  low,  int middle,  int high)   {
-16      /*    Copy both  halves  into a helper array*/
-17      for  (int i = low;  i <=  high;   i++)  {
-18          helper[i] =  array[i];
+15  void merge(int[] array, int[] helper, int low, int middle, int high) {
+16      /* Copy both halves into a helper array*/
+17      for (int i = low; i <= high; i++) {
+18          helper[i] = array[i];
 19      }
 20  
-21      int helperLeft =  low;
-22      int helperRight = middle  + 1;
-23      int current =  low;
+21      int helperLeft = low;
+22      int helperRight = middle + 1;
+23      int current = low;
 24  
-25      /* Iterate through  helper array.  Compare  the  left and  right half,  copying back
-26      * the  smaller element  from the  two halves  into the  original  array. */
-27      while  (helperLeft <= middle  &&   helperRight <= high)  {
-28          if  (helper[helperLeft] <=  helper[helperRight]) {
-29              array[current] =  helper[helperLeft];
+25      /* Iterate through helper array. Compare the left and right half, copying back
+26      * the smaller element from the two halves into the original array. */
+27      while (helperLeft <= middle && helperRight <= high) {
+28          if  (helper[helperLeft] <= helper[helperRight]) {
+29              array[current] = helper[helperLeft];
 30              helperLeft++;
-31          }  else {//If right element  is smaller than  left element
-32              array[current]  =  helper[helperRight];
+31          }  else {//If right element is smaller than left element
+32              array[current] = helper[helperRight];
 33              helperRight++;
 34          }
 35          current++;
 36      }
 37  
-38      /* Copy  the  rest of  the  left side  of  the  array into the  target array */
-39      int  remaining = middle  -  helperLeft;
-40      for  (int i = 0;  i <=  remaining;   i++)  {
-41          array[current +  i] = helper[helperLeft +  i];
+38      /* Copy the rest of the left side of the array into the target array */
+39      int remaining = middle - helperLeft;
+40      for (int i = 0; i <= remaining; i++) {
+41          array[current + i] = helper[helperLeft + i];
 42      }
 43  }
 ```
@@ -91,26 +91,26 @@ In quick sort we pick a random element and partition the array, such that all nu
 If we repeatedly partition the array (and its sub-arrays) around an element, the array will eventually become sorted. However, as the partitioned element is not guaranteed to be the median (or anywhere near the median), our sorting could be very slow. This is the reason for the O(n²) worst case runtime.
 
 ```java
-1   void  quickSort(int[] arr,  int left,  int right) {
-2       int index  =  partition(arr, left,  right);
-3       if (left < index  -  1)   { // Sort  left half
-4           quickSort(arr, left,  index  - 1);
+1   void quickSort(int[] arr, int left, int right) {
+2       int index = partition(arr, left, right);
+3       if (left < index - 1) { // Sort left half
+4           quickSort(arr, left, index - 1);
 5       }
-5       if (index < right) { // Sort  right half
-7           quickSort(arr,  index,   right);
+5       if (index < right) { // Sort right half
+7           quickSort(arr, index, right);
 3       }
 9   }
 10  
-11  int partition(int[] arr, int left,  int right) {
-12      int pivot =  arr[(left + right) I 2];  // Pick  pivot  point
+11  int partition(int[] arr, int left, int right) {
+12      int pivot = arr[(left + right) / 2]; // Pick pivot point
 13      while (left <= right) {
-14          // Find element  on left that should  be on right
+14          // Find element on left that should be on right
 15          while (arr[left] < pivot) left++;
 16  
-17          // Find element  on right that should  be on left
-18          while (arr[right] >   pivot) right--;
+17          // Find element on right that should be on left
+18          while (arr[right] > pivot) right--;
 19  
-20          // Swap  elements,   and move  left and right indices
+20          // Swap elements, and move left and right indices
 21          if (left <= right) {
 22              swap(arr, left, right); // swaps elements
 23              left++;
@@ -137,32 +137,32 @@ In binary search, we look for an element x in a sorted array by first comparing 
 Note that although the concept is fairly simple, getting all the details right is far more difficult than you might think. As you study the code below, pay attention to the plus ones and minus ones.
 
 ```java
-1   int  binarySearch(int[] a, int x)  {
+1   int binarySearch(int[] a, int x) {
 2       int low  = 0;
-3       int high = a.length -  1;
+3       int high = a.length - 1;
 4       int mid;
 5   
 6       while (low <= high) {
 7           mid = (low + high) / 2;
-8           if (a[mid]  <  x)  {
-9               low  =  mid +  1;
-10          }  else if  (a[mid] > x)  {
-11              high = mid  -  1;
+8           if (a[mid] < x) {
+9               low = mid + 1;
+10          }  else if (a[mid] > x) {
+11              high = mid - 1;
 12          }  else {
 13              return mid;
 14          }
 15      }
-16      return -1; //  Error
+16      return -1; // Error
 17  }
 18  
-19  int  binarySearchRecursive(int[] a,  int x,  int low,  int high)   {
-20      if (low > high) return  -1; //  Error
+19  int binarySearchRecursive(int[] a, int x, int low, int high) {
+20      if (low > high) return -1; // Error
 21  
-22      int mid = (low  + high) / 2;
-23      if  (a[mid] < x) {
-24          return  binarySearchRecursive(a, x,  mid + 1,  high);
-25      }  else if (a[mid] >   x) {
-26          return binarySearchRecursive(a, x,  low,  mid - 1);
+22      int mid = (low + high) / 2;
+23      if (a[mid] < x) {
+24          return binarySearchRecursive(a, x, mid + 1, high);
+25      }  else if (a[mid] > x) {
+26          return binarySearchRecursive(a, x, low, mid - 1);
 27      }  else {
 28          return mid;
 29      }
@@ -192,22 +192,22 @@ The only issue with this is that if we insert an element into the front of A, th
 The code below does just that. It works from the back of A and B, moving the largest elements to the back of A.
 
 ```java
-1   void  merge(int[]  a, int[] b, int lastA, int lastB) {
-2       int indexA  = lastA - 1; /*   Index  of  last  element in array a*/
-3       int indexB  = lastB - 1; /*   Index  of  last element in  array b*/
-4       int indexMerged  = lastB + lastA - 1; /*   end  of  merged array*/
+1   void merge(int[] a, int[] b, int lastA, int lastB) {
+2       int indexA = lastA - 1; /* Index of last element in array a*/
+3       int indexB = lastB - 1; /* Index of last element in array b*/
+4       int indexMerged = lastB + lastA - 1; /* end of merged array*/
 5   
-6       /*   Merge a  and  b,  starting from  the  last element in each*/
-7       while (indexB  >=  0)  {
-8           /*   end  of  a  is >  than  end  of  b*/
-9           if (indexA  >=  0 &&   a[indexA]  >   b[indexB])  {
-10              a[indexMerged] = a[indexA];//    copy  element
+6       /* Merge a and b, starting from the last element in each*/
+7       while (indexB >= 0) {
+8           /* end of a is > than end of b*/
+9           if (indexA >= 0 && a[indexA] > b[indexB]) {
+10              a[indexMerged] = a[indexA];// copyelement
 11              indexA - -;
 12          }  else {
-13              a[indexMerged] = b[indexB]; //  copy  element
+13              a[indexMerged] = b[indexB]; // copy element
 14              indexB--;
 15          }
-16          indexMerged--; //  move indices
+16          indexMerged--; // move indices
 17      }
 18  }
 ```
@@ -232,14 +232,14 @@ What's the easiest way of checking if two words are anagrams? We could count the
 The code below implements the comparator.
 
 ```java
-1   class AnagramComparator implements  Comparator<String>  {
-2       public String sortChars(String s)  {
-3           char[]  content =  s.toCharArray();
+1   class AnagramComparator implements Comparator<String> {
+2       public String sortChars(String s) {
+3           char[] content = s.toCharArray();
 4           Arrays.sort(content);
 5           return new String(content);
 6       }
 7   
-8       public  int  compare(String s1,  String s2)   {
+8       public int compare(String s1, String s2) {
 9           return sortChars(s1).compareTo(sortChars(s2));
 10      }
 11  }
@@ -256,34 +256,34 @@ We can do this by using a hash table which maps from the sorted version of a wor
 The code below implements this algorithm.
 
 ```java
-1   void  sort(String[]  array) {
-2       HashMapList<String, String>  mapList =  new HashMapList<String,  String>();
+1   void sort(String[] array) {
+2       HashMapList<String, String> mapList = new HashMapList<String, String>();
 3   
-4       /*  Group words by anagram  */
+4       /* Group words by anagram */
 5       for (String s : array) {
-6           String key =  sortChars(s);
-7           mapList.put(key,   s);
+6           String key = sortChars(s);
+7           mapList.put(key, s);
 8       }
 9   
 10      /*Convert hash table to array*/
-11      int index =  0;
+11      int index = 0;
 12      for (String key : mapList.keySet()) {
 13          ArrayList<String> list = mapList.get(key);
 14          for (String t : list) {
-15              array[index] =  t;
+15              array[index] = t;
 16              index++;
 17          }
 18      }
 19  }
 20  
-21  String sortChars(String  s)  {
-22      char[]  content =  s.toCharArray();
+21  String sortChars(String s) {
+22      char[] content = s.toCharArray();
 23      Arrays.sort(content);
-24      return new  String(content);
+24      return new String(content);
 25  }
 26  
-27  /*HashMapList<String, Integer>  is  a  HashMap  that maps  from  Strings to
-28  * ArrayList<Integer>.  See   appendix for  implementation. * /
+27  /*HashMapList<String, Integer> is a HashMap that maps from Strings to
+28  * ArrayList<Integer>. See appendix for implementation. * /
 ```
 
 You may notice that the  algorithm above is a modification of bucket sort.
@@ -292,8 +292,8 @@ You may notice that the  algorithm above is a modification of bucket sort.
 
 EXAMPLE
 ```
-Input: find 5 in {15, 16,  19,  20,  25,  1,  3,  4,  5,  7,  10,  14} 
-Output: 8 (the index of 5 in the  array)
+Input: find 5 in {15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14} 
+Output: 8 (the index of 5 in the array)
 ```
 
 SOLUTION
@@ -322,37 +322,37 @@ The tricky condition is if the left and the middle are identical, as in the exam
 Otherwise, we have no choice but to search both halves.
 
 ```java
-1   int search(int a[], int left,  int right, int x)  {
-2       int mid =  (left + right) / 2;
-3       if (x == a[mid])   {//Found  element
+1   int search(int a[], int left, int right, int x) {
+2       int mid = (left + right) / 2;
+3       if (x == a[mid]) {//Found element
 4           return mid;
 5       }
 6       if (right < left) {
 7           return -1;
 8       }
 9   
-10      /* Either  the  left or  right half must be normally  ordered.   Find  out  which side
-11      * is normally  ordered,   and then  use  the  normally  ordered  half to  figure out
-12      * which side   to  search  to  find x. */
-13      if (a[left] <  a[mid])   {//Left is normally  ordered.
-14          if (x  >=  a[left] &&  x <  a[mid])   {
-15              return search(a, left,  mid -  1,  x); //  Search  left
+10      /* Either the left or right half must be normally ordered. Find out which side
+11      * is normally ordered, and then use the normally ordered half to figure out
+12      * which side to search to find x. */
+13      if (a[left] < a[mid]) {//Left is normally ordered.
+14          if (x >= a[left] && x < a[mid]) {
+15              return search(a, left, mid - 1, x); // Search left
 16          }  else {
-17              return search(a, mid +  1,  right, x); //  Search  right
+17              return search(a, mid + 1, right, x); // Search right
 18          }
-19      }  else if (a[mid] <  a[left]) { //Right  is normally  ordered.
-20          if (x  >  a[mid]  &&   x <=  a[right]) {
-21              return search(a, mid +  1,  right, x); //  Search  right
-22          }  else   {
-23              return search(a, left,  mid -  1,  x); //  Search  left
+19      }  else if (a[mid] < a[left]) { //Right is normally ordered.
+20          if (x > a[mid] && x <= a[right]) {
+21              return search(a, mid + 1, right, x); // Search right
+22          }  else {
+23              return search(a, left, mid - 1, x); // Search left
 24          }
-25      }  else if (a[left] ==  a[mid])   {//Left or  right half is all  repeats
-26          if (a[mid] != a[right]) {//If right is different, search  it
-27              return search(a, mid +  1,  right,  x); //  search   right
-28          }  else {//Else,  we  have  to  search  both  halves
-29              int result =  search(a, left,  mid -  1,  x); //  Search  left
-30              if (result == -1)  {
-31                  return search(a, mid +  1,  right, x); //  Search  right
+25      }  else if (a[left] == a[mid]) {//Left or right half is all repeats
+26          if (a[mid] != a[right]) {//If right is different, search it
+27              return search(a, mid + 1, right, x); // search right
+28          }  else {//Else, we have to search both halves
+29              int result = search(a, left, mid - 1, x); // Search left
+30              if (result == -1) {
+31                  return search(a, mid + 1, right, x); // Search right
 32              }  else {
 33                  return result;
 34              }
@@ -393,24 +393,24 @@ Once we find the length, we just perform a (mostly) normal binary search. I say 
 There's one more little tweak. Recall that the way we figure out the length is by calling elementAt and comparing it to -1. If, in the process, the element is bigger than the value x (the one we're searching for), we'll jump over to the binary search part early.
 
 ```java
-1   int  search(Listy list, int value)   {
-2       int index =  1;
+1   int search(Listy list, int value) {
+2       int index = 1;
 3       while (list.elementAt(index) != -1 && list.elementAt(index) < value) {
-4           index  *= 2;
+4           index *= 2;
 5       }
-6       return binarySearch(list, value, index / 2,  index);
+6       return binarySearch(list, value, index / 2, index);
 7   }
 8   
-9   int  binarySearch(Listy list,  int value,   int low,  int high)   {
+9   int binarySearch(Listy list, int value, int low, int high) {
 10      int mid;
 11  
-12      while (low <= high)   {
-13          mid =  (low + high) /  2;
-14          int middle  =  list.elementAt(mid);
-15          if (middle  >  value  ||  middle  ==   -1)  {
-16              high  =  mid - 1;
-17          }  else if (middle  <   value)   {
-18              low =  mid +  1;
+12      while (low <= high) {
+13          mid = (low + high) / 2;
+14          int middle = list.elementAt(mid);
+15          if (middle > value || middle == -1) {
+16              high = mid - 1;
+17          }  else if (middle < value) {
+18              low = mid + 1;
 19          }  else {
 20              return mid;
 21          }
@@ -441,45 +441,45 @@ With empty strings interspersed, we can implement a simple modification of binar
 The recursive code below to solve this problem can easily be modified to be iterative. We provide such an implementation in the code attachment.
 
 ```java
-1   int  search(String[] strings,  String str, int first,  int last) {
-2       if (first > last) return  -1;
-3       /* Move  mid to the   middle  */
-4       int mid =  (last + first) / 2;
+1   int search(String[] strings, String str, int first, int last) {
+2       if (first > last) return -1;
+3       /* Move mid to the middle */
+4       int mid = (last + first) / 2;
 5   
-6       /* If mid is empty,  find closest non-empty  string. */
-7       if (strings[mid].isEmpty())  {
-8           int left  = mid -  1;
-9           int right = mid +  1;
-10          while  (true) {
-11              if (left < first &&   right > last) {
+6       /* If mid is empty, find closest non-empty string. */
+7       if (strings[mid].isEmpty()) {
+8           int left  = mid - 1;
+9           int right = mid + 1;
+10          while (true) {
+11              if (left < first && right > last) {
 12                  return -1;
-13              }  else if (right <= last &&  !strings[right].isEmpty()) {
-14                  mid =  right;
+13              }  else if (right <= last && !strings[right].isEmpty()) {
+14                  mid = right;
 15                  break;
-16              }  else if (left >= first &&  !strings[left].isEmpty()) {
-17                  mid =  left;
+16              }  else if (left >= first && !strings[left].isEmpty()) {
+17                  mid = left;
 18                  break;
 19              }
 20              right++;
-21              left - - ;
+21              left-- ;
 22          }
 23      }
 24  
-25      /*   Check for   string,  and recurse if necessary*/
-26      if (str.equals(strings[mid])) {//Found  it!
+25      /* Check for string, and recurse if necessary*/
+26      if (str.equals(strings[mid])) {//Found it!
 27          return mid;
-28      }  else if (strings[mid].compareTo(str) <  0)  {//Search  right
+28      }  else if (strings[mid].compareTo(str) < 0) {//Search right
 29          return search(strings, str, mid + 1, last);
-30      }  else {//Search  left
-31          return search(strings, str, first, mid -  1);
+30      }  else {//Search left
+31          return search(strings, str, first, mid - 1);
 32      }
 33  }
 34  
-35  int  search(String[] strings,  String str)  {
-36      if (strings == null || str == null  || str == "") {
+35  int search(String[] strings, String str) {
+36      if (strings == null || str == null || str == "") {
 37          return -1;
 38      }
-39      return search(strings, str,  0,  strings.length -  1);
+39      return search(strings, str, 0, strings.length - 1);
 40  }
 ```
 The worst-case runtime for this algorithm is O(n).  In fact, it's impossible to have an algorithm for this problem that is better than O(n) in the worst case. After all, you could have an array of all empty strings except for one non-empty  string. There is no "smart" way to find this non-empty  string. In the worst case, you will need to look at every element in the array.
@@ -532,26 +532,26 @@ We have 1 GB of memory, or 8 billion bits. Thus, with 8 billion bits, we can map
 The following code demonstrates  our algorithm.
 
 ```java
-1   long numberOfInts =  ((long) Integer.MAX_VALUE)  + 1;
-2   byte[] bitfield  = new byte [(int) (numberOfInts / 8)];
-3   String  filename = .....
+1   long numberOfInts = ((long) Integer.MAX_VALUE) + 1;
+2   byte[] bitfield = new byte [(int) (numberOfInts / 8)];
+3   String filename = .....
 4   
-5   void  findOpenNumber() throws FileNotFoundException  {
-6       Scanner in =  new Scanner(new FileReader(filename));
+5   void findOpenNumber() throws FileNotFoundException {
+6       Scanner in = new Scanner(new FileReader(filename));
 7       while (in.hasNextInt()) {
-8           int n  =  in.nextInt();
-9           /* Finds the corresponding number in the bitfield by using the OR  operator to
-10           * set the nth bit of a byte (e.g., 10  would correspond to  the 2nd bit of
-11           * index 2 in the  byte   array). */
-12          bitfield[n / 8] |= 1  << (n  %  8);
+8           int n = in.nextInt();
+9           /* Finds the corresponding number in the bitfield by using the OR operator to
+10           * set the nth bit of a byte (e.g., 10 would correspond to the 2nd bit of
+11           * index 2 in the byte array). */
+12          bitfield[n / 8] |= 1 << (n % 8);
 13      }
 14  
-15      for (int i =  0;  i < bitfield.length;  i++)   {
-16          for (int j = 0;  j < 8;  j++)   {
-17              /* Retrieves the  individual bits  of  each  byte. When  0 bit is found,   print
-18               *  the corresponding value.  */
-19              if ((bitfield[i] &  (1  << j)) ==  0)  {
-20                  System.out.println (i *  8 + j);
+15      for (int i = 0; i < bitfield.length; i++) {
+16          for (int j = 0; j < 8; j++) {
+17              /* Retrieves the individual bits of each byte. When 0 bit is found, print
+18               * the corresponding value. */
+19              if ((bitfield[i] & (1 << j)) == 0) {
+20                  System.out.println (i * 8 + j);
 21                  return;
 22              }
 23          }
@@ -594,35 +594,35 @@ These conditions give us a good amount of "wiggle room;" but the nearer to the m
 
 The below code provides one implementation for this algorithm.
 ```java
-1   int  findOpenNumber(String filename)  throws FileNotFoundException  {
-2       int  rangeSize =   (1  << 20);   // 2^20 bits (2^17  bytes)
+1   int findOpenNumber(String filename) throws FileNotFoundException {
+2       int rangeSize = (1 << 20); // 2^20 bits (2^17 bytes)
 3   
-4       /*  Get  count   of  number of  values within each  block.  */
-5       int[]  blocks = getCountPerBlock(filename,  rangeSize);
+4       /* Get count of number of values within each block. */
+5       int[] blocks = getCountPerBlock(filename, rangeSize);
 6   
-7       /*   Find  a  block   with  a  missing value.  */
-8       int blockIndex  = findBlockWithMissing(blocks, rangeSize);
-9       if (blockIndex  <   0)  return  -1;
+7       /* Find a block with a missing value. */
+8       int blockIndex = findBlockWithMissing(blocks, rangeSize);
+9       if (blockIndex < 0) return -1;
 10  
-11      /*  Create  bit vector for  items  within  this range. */
-12      byte[] bitVector =  getBitVectorForRange(filename, blockindex,  rangeSize);
+11      /* Create bit vector for items within this range. */
+12      byte[] bitVector = getBitVectorForRange(filename, blockindex, rangeSize);
 13  
-14      /*  Find  a zero  in  the  bit vector */
-15      int offset    findZero(bitVector);
-16      if (offset < 0)  return -1;
+14      /* Find a zero in the bit vector */
+15      int offset findZero(bitVector);
+16      if (offset < 0) return -1;
 17  
-18      /*  Compute  missing  value. */
+18      /* Compute missing value. */
 19      return blockindex * rangeSize + offset;
 20  }
 21  
-22  /*  Get count  of  items  within  each range. */
-23  int[] getCountPerBlock(String filename,  int  rangeSize)
-24  throws  FileNotFoundException  {
-25      int arraySize =  Integer.MAX_VALUE  / rangeSize + 1;
-26      int[] blocks  =  new int[arraySize];
+22  /* Get count of items within each range. */
+23  int[] getCountPerBlock(String filename, int rangeSize)
+24  throws FileNotFoundException {
+25      int arraySize = Integer.MAX_VALUE / rangeSize + 1;
+26      int[] blocks  = new int[arraySize];
 27  
-28      Scanner in =  new Scanner  (new FileReader(filename));
-29      while  (in.hasNextint()) {
+28      Scanner in = new Scanner (new FileReader(filename));
+29      while (in.hasNextint()) {
 30          int value = in.nextint();
 31          blocks[value / rangeSize]++;
 32      }
@@ -630,9 +630,9 @@ The below code provides one implementation for this algorithm.
 34      return blocks;
 35  }
 36  
-37  /*  Find a block  whose count  is low.  */
-38  int findBlockWithMissing(int[] blocks,   int  rangeSize) {
-39      for  (int i = 0;  i <  blocks.length;  i++)  {
+37  /* Find a block whose count is low. */
+38  int findBlockWithMissing(int[] blocks, int rangeSize) {
+39      for (int i = 0; i < blocks.length; i++) {
 40          if (blocks[i] < rangeSize) {
 41              return i;
 42          }
@@ -640,47 +640,47 @@ The below code provides one implementation for this algorithm.
 44      return -1;
 45  }
 46  
-47  /*  Create  a bit vector for  the  values  within  a  specific range. */
-48  byte[] getBitVectorForRange(String filename,  int  blockindex, int rangeSize)
-49                  throws FileNotFoundException  {
+47  /* Create a bit vector for the values within a specific range. */
+48  byte[] getBitVectorForRange(String filename, int blockindex, int rangeSize)
+49                  throws FileNotFoundException {
 50      int startRange = blockindex * rangeSize;
-51      int endRange  =  startRange + rangeSize;
-52      byte[] bitVector  =  new byte[rangeSize / Byte.SIZE];
+51      int endRange = startRange + rangeSize;
+52      byte[] bitVector = new byte[rangeSize / Byte.SIZE];
 53  
-54      Scanner  in  = new Scanner(new FileReader(filename));
+54      Scanner in = new Scanner(new FileReader(filename));
 55      while (in.hasNextint()) {
-56          int value  =  in.nextint();
-57          /*  If the  number is inside the  block  that's missing  numbers,  we  record   it */
-58          if  (startRange <=     value  &&   value  < endRange) {
-59              int offset =  value  -  startRange;
-60              int mask  =  (1  << (offset %  Byte.SIZE));
-61              bitVector[offset / Byte.SIZE]  |= mask;
+56          int value = in.nextint();
+57          /* If the number is inside the block that's missing numbers, we record it */
+58          if  (startRange <= value && value < endRange) {
+59              int offset = value - startRange;
+60              int mask = (1 << (offset % Byte.SIZE));
+61              bitVector[offset / Byte.SIZE] |= mask;
 62          }
 63      }
 64      in.close();
 65      return bitVector;
 66  }
 67  
-68  /*Find  bit index that  is  0 within  byte.   */
-69  int findZero(byte  b) {
-70      for (int i = 0; i <  Byte.SIZE; i++) {
-71          int mask = 1  <<  i;
-72          if ((b & mask) ==  0) {
-73              return  i;
+68  /*Find bit index that is 0 within byte. */
+69  int findZero(byte b) {
+70      for (int i = 0; i < Byte.SIZE; i++) {
+71          int mask = 1 << i;
+72          if ((b & mask) == 0) {
+73              return i;
 74          }
 75      }
-76      return  -1;
+76      return -1;
 77  }
 78  
-79  /*Find a zero within  the bit vector  and return  the index.   */
-80  int findZero(byte[]  bitVector) {
-81      for  (int  i = 0; i < bitVector.length; i++) {
+79  /*Find a zero within the bit vector and return the index. */
+80  int findZero(byte[] bitVector) {
+81      for (int i = 0; i < bitVector.length; i++) {
 82          if (bitVector[i] != ~0) {//If not all 1s
 83              int bitindex = findZero(bitVector[i]);
-84              return  i * Byte.SIZE + bitindex;
+84              return i * Byte.SIZE + bitindex;
 85          }
 86      }
-87      return  -1;
+87      return -1;
 88  }
 ```
 
@@ -700,36 +700,36 @@ Using this bit vector, we can then iterate through the array, flagging  each ele
 
 When we come across a duplicate element, we print it.
 ```java
-1   void checkDuplicates(int[]   array)  {
-2       BitSet  bs = new BitSet(32000);
-3       for  (int i = 0; i <  array.length;   i++) {
+1   void checkDuplicates(int[] array) {
+2       BitSet bs = new BitSet(32000);
+3       for (int i = 0; i < array.length; i++) {
 4           int num  = array[i];
-5           int num0 = num  -  1;   //bitset starts  at 0, numbers  start  at 1
+5           int num0 = num - 1; //bitset starts at 0, numbers start at 1
 6           if (bs.get(num0)) {
 7               System.out.println(num);
-8           }  else  {
+8           }  else {
 9               bs.sgt(num0);
 10          }
 11      }
 12  }
 13  
-14  class  BitSet {
+14  class BitSet {
 15      int[] bitset;
 16  
-17      public BitSet(int  size)  {
-18          bitset =  new  int[(size >>  5)   +  1); // divide by  32
+17      public BitSet(int size) {
+18          bitset = new int[(size >> 5) + 1); // divide by 32
 19      }
 20  
-21      boolean get(int  pos) {
-22          int wordNumber =  (pos >>  5);  // divide by  32
-23          int bitNumber =  (pos &  0x1F);  // mod 32
-24          return (bitset[wordNumber] & (1 <<  bitNumber))  !=  0;
+21      boolean get(int pos) {
+22          int wordNumber = (pos >> 5); // divide by 32
+23          int bitNumber  = (pos & 0x1F); // mod 32
+24          return (bitset[wordNumber] & (1 << bitNumber)) != 0;
 25      }
 26  
-27      void set(int  pos)  {
-28          int wordNumber =  (pos >>  5);  // divide by  32
-29          int bitNumber =  (pos &  0x1F);  // mod 32
-30          bitset[wordNumber] |=  1  <<  bitNumber;
+27      void set(int pos) {
+28          int wordNumber = (pos >> 5); // divide by 32
+29          int bitNumber  = (pos & 0x1F); // mod 32
+30          bitset[wordNumber] |= 1 << bitNumber;
 31      }
 32  }
 ```
@@ -790,12 +790,12 @@ The code below implements this elimination algorithm.
 
 ```java
 1   boolean findElement(int[][] matrix, int elem) {
-2       int row =  0;
-3       int col =  matrix[0].length - 1;
-4       while (row <   matrix.length &&   col >= 0)  {
-5           if (matrix[row][col] ==  elem) {
+2       int row = 0;
+3       int col = matrix[0].length - 1;
+4       while (row < matrix.length && col >= 0) {
+5           if (matrix[row][col] == elem) {
 6               return true;
-7           } else if (matrix[row][col] >   elem) {
+7           } else if (matrix[row][col] > elem) {
 8               col--;
 9           } else {
 10              row++;
@@ -860,8 +860,8 @@ Observe that since the diagonal is sorted, we can efficiently search it using bi
 The code below implements this algorithm.
 
 ```java
-1   Coordinate findElement(int[][]  matrix, Coordinate  origin,  Coordinate  dest, int x) {
-2       if  (!origin.inbounds(matrix) ||  ! dest.inbounds(matrix))  {
+1   Coordinate findElement(int[][] matrix, Coordinate origin, Coordinate dest, int x) {
+2       if (!origin.inbounds(matrix) || !dest.inbounds(matrix)) {
 3           return null;
 4       }
 5       if (matrix[origin.row][origin.column] == x) {
@@ -870,39 +870,39 @@ The code below implements this algorithm.
 8           return null;
 9       }
 10  
-11      /* Set  start to  start of  diagonal and end to  the  end of  the  diagonal. Since  the
-12      * grid   may  not  be square,   the  end of  the  diagonal may  not  equal  dest. */
+11      /* Set start to start of diagonal and end to the end of the diagonal. Since the
+12       * grid may not be square, the end of the diagonal may not equal dest. */
 13      Coordinate start = (Coordinate) origin.clone();
-14      int  diagDist =  Math.min(dest.row - origin.row, dest.column - origin.column);
-15      Coordinate end =  new Coordinate(start.row + diagDist, start.column + diagDist);
-16      Coordinate p =  new Coordinate(0,  0);
+14      int diagDist = Math.min(dest.row - origin.row, dest.column - origin.column);
+15      Coordinate end = new Coordinate(start.row + diagDist, start.column + diagDist);
+16      Coordinate p = new Coordinate(0, 0);
 17      
-18      /* Do  binary  search  on the  diagonal,  looking  for  the  first element>  x */
-19      while  (start.isBefore(end)) {
-20          p.setToAverage(start,  end);
+18      /* Do binary search on the diagonal, looking for the first element > x */
+19      while (start.isBefore(end)) {
+20          p.setToAverage(start, end);
 21          if (x > matrix[p.row][p.column]) {
-22              start.row =  p.row  + 1;
-23              start.column =  p.column + 1;
+22              start.row = p.row + 1;
+23              start.column = p.column + 1;
 24          }  else {
-25              end.row  =  p.row  -  1;
-26              end.column  =  p.column  -  1;
+25              end.row = p.row - 1;
+26              end.column = p.column - 1;
 27          }
 28      }
 29      
-30      /* Split the  grid   into quadrants. Search  the  bottom left and the  top  right. */
-31      return partitionAndSearch(matrix, origin,  dest,  start, x);
+30      /* Split the grid into quadrants. Search the bottom left and the top right. */
+31      return partitionAndSearch(matrix, origin, dest, start, x);
 32   }
 33  
-34   Coordinate  partitionAndSearch(int[][]  matrix, Coordinate   origin, Coordinate  dest,
-35                      Coordinate   pivot, int x)  {
-36       Coordinate lowerLeftOrigin  =  new Coordinate(pivot.row, origin.column);
-37       Coordinate lowerLeftDest    =  new Coordinate(dest.row,  pivot.column -  1);
-38       Coordinate upperRightOrigin =  new Coordinate(origin.row,  pivot.column);
-39       Coordinate upperRightDest   =  new Coordinate(pivot.row -  1,  dest.column);
+34   Coordinate partitionAndSearch(int[][] matrix, Coordinate origin, Coordinate dest,
+35                      Coordinate pivot, int x) {
+36       Coordinate lowerLeftOrigin  = new Coordinate(pivot.row, origin.column);
+37       Coordinate lowerLeftDest    = new Coordinate(dest.row, pivot.column - 1);
+38       Coordinate upperRightOrigin = new Coordinate(origin.row, pivot.column);
+39       Coordinate upperRightDest   = new Coordinate(pivot.row - 1, dest.column);
 40   
-41       Coordinate lowerLeft =  findElement(matrix,  lowerLeftOrigin,  lowerLeftDest, x);
-42       if  (lowerleft ==  null) {
-43           return  findElement(matrix,  upperRightOrigin, upperRightDest, x);
+41       Coordinate lowerLeft = findElement(matrix, lowerLeftOrigin, lowerLeftDest, x);
+42       if (lowerleft == null) {
+43           return findElement(matrix, upperRightOrigin, upperRightDest, x);
 44       }
 45       return lowerleft;
 46   }
@@ -913,29 +913,29 @@ The code below implements this algorithm.
 51       return  findElement(matrix, origin,  dest,  x);
 52   }
 53   
-54   public class Coordinate  implements  Cloneable  {
-55       public int row,  column;
-56       public  Coordinate(int r,  int  c)  {
-57           row =  r;
-58           column =  c;
+54   public class Coordinate implements Cloneable {
+55       public int row, column;
+56       public Coordinate(int r, int c) {
+57           row = r;
+58           column = c;
 59       }
 60   
-61       public boolean inbounds(int[][]  matrix) {
-62           return  row >=  0 &&   column >=  0 &&
-63           row <  matrix.length &&  column <  matrix[0].length;
+61       public boolean inbounds(int[][] matrix) {
+62           return row >= 0 && column >= 0 &&
+63           row < matrix.length && column < matrix[0].length;
 64       }
 65   
-66       public boolean  isBefore(Coordinate p)  {
-67           return row <=  p.row  &&   column <=  p.column;
+66       public boolean isBefore(Coordinate p) {
+67           return row <= p.row && column <= p.column;
 68       }
 69   
-70       public Object  clone() {
-71           return new Coordinate(row,  column);
+70       public Object clone() {
+71           return new Coordinate(row, column);
 72       }
 73   
-74       public void  setToAverage(Coordinate  min,  Coordinate  max) {
-75           row =  (min.row  + max.row) /  2;
-76           column =  (min.column + max.column) /  2;
+74       public void setToAverage(Coordinate min, Coordinate max) {
+75           row = (min.row + max.row) / 2;
+76           column = (min.column + max.column) / 2;
 77       }
 78   }
 ```
@@ -1002,50 +1002,50 @@ Recursively, the algorithm is the following:
 ```
 The full code for this is below.
 ```java
-1   RankNode root =  null;
+1   RankNode root = null;
 2   
-3   void  track(int number)  {
+3   void track(int number) {
 4       if (root == null) {
-5           root =  new RankNode(number);
+5           root = new RankNode(number);
 6       }  else {
 7           root.insert(number);
 8       }
 9   }
 10  
-11  int getRankOfNumber(int number)  {
+11  int getRankOfNumber(int number) {
 12      return root.getRank(number);
 13  }
 14  
 15  
-16  public  class RankNode {
-17      public int left_size  =  0;
+16  public class RankNode {
+17      public int left_size = 0;
 18      public RankNode left, right;
-19      public int data =  0;
-20      public RankNode(int d)  {
-21          data =  d;
+19      public int data = 0;
+20      public RankNode(int d) {
+21          data = d;
 22      }
 23  
-24      public void  insert(int d)  {
-25          if (d  <=  data) {
-26              if (left !=  null)  left.insert(d);
+24      public void insert(int d) {
+25          if (d <= data) {
+26              if (left != null) left.insert(d);
 27              else left = new RankNode(d);
 28              left_size++;
 29          }  else {
-30              if (right !=  null)  right.insert(d);
-31              else right  = new  RankNode(d);
+30              if (right != null) right.insert(d);
+31              else right = new RankNode(d);
 32          }
 33      }
 34  
-35      public int getRank(int ct)  {
-36          if (d ==  data) {
+35      public int getRank(int ct) {
+36          if (d == data) {
 37              return left_size;
-38          }  else if (d <   data) {
-39              if (left ==  null)  return -1;
+38          }  else if (d < data) {
+39              if (left == null) return -1;
 40              else return left.getRank(d);
 41          }  else {
-42              int  right_rank =  right  ==  null ?  -1 : right.getRank(d);
-43              if (right_rank ==  -1) return -1;
-44              else return left_size + 1 +  right_rank;
+42              int right_rank = right == null ? -1 : right.getRank(d);
+43              if (right_rank == -1) return -1;
+44              else return left_size + 1 + right_rank;
 45          }
 46      }
 47  }
@@ -1108,17 +1108,17 @@ This approach will ensure that the peaks are in the right place: indexes 1, 3, 5
 The code to implement this is below.
 
 ```java
-1   void  sortValleyPeak(int[] array) {
+1   void sortValleyPeak(int[] array) {
 2       Arrays.sort(array);
-3       for (int i = 1;  i <  array.length;  i += 2)  {
-4           swap(array,  i -  1,   i);
+3       for (int i = 1; i < array.length; i += 2) {
+4           swap(array, i - 1, i);
 5       }
 6   }
 7   
-8   void  swap(int[] array, int left, int right) {
-9       int temp =  array[left];
+8   void swap(int[] array, int left, int right) {
+9       int temp = array[left];
 10      array[left] = array[right];
-11      array[right] =  temp;
+11      array[right] = temp;
 12  }
 ```
 
@@ -1161,23 +1161,23 @@ As we noted before, if we make sure the peaks are in the right place then we kno
 
 The code to implement this is below.
 ```java
-1   void  sortValleyPeak(int[] array) {
-2       for (int i = 1;  i <   array.length;  i += 2)  {
-3           int  biggestindex = maxindex(array,  i - 1, i, i + 1);
+1   void sortValleyPeak(int[] array) {
+2       for (int i = 1; i < array.length; i += 2) {
+3           int biggestindex = maxindex(array, i - 1, i, i + 1);
 4           if (i != biggestindex) {
-5               swap(array,  i,  biggestindex);
+5               swap(array, i, biggestindex);
 6           }
 7       }
 8   }
 9   
-10  int  maxindex(int[] array, int  a,   int b,  int c)  {
+10  int maxindex(int[] array, int a, int b, int c) {
 11      int len = array.length;
-12      int aValue = a >= 0  &&   a  <   len ?  array[a] : Integer.MIN_VALUE;
-13      int bValue = b >=  0 &&   b  <   len ?  array[b] : Integer.MIN_VALUE;
-14      int cValue = c >=  0 &&   c  <   len ?  array[c] : Integer.MIN_VALUE;
+12      int aValue = a >= 0 && a < len ? array[a] : Integer.MIN_VALUE;
+13      int bValue = b >= 0 && b < len ? array[b] : Integer.MIN_VALUE;
+14      int cValue = c >= 0 && c < len ? array[c] : Integer.MIN_VALUE;
 15  
-16      int max =  Math.max(aValue,   Math.max(bValue,   cValue));
-17      if (aValue ==  max) return a;
+16      int max = Math.max(aValue, Math.max(bValue, cValue));
+17      if (aValue == max) return a;
 18      else if (bValue == max) return b;
 19      else return c;
 20  }

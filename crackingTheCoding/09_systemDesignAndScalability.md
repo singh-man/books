@@ -386,51 +386,51 @@ Alternatively, I  could do what's called a bidirectional breadth-first search. T
 In the implementation, we'll use two classes to help us. BFSData holds the data we need for a breadth-first search, such as the isVisited hash table and the toVisit queue. PathNode will represent the path as we're searching it, storing each Person and the previousNode we visited in this path.
 
 ```java
-1   LinkedList<Person> findPathBiBFS(HashMap<Integer,  Person> people,   int source,
+1   LinkedList<Person> findPathBiBFS(HashMap<Integer, Person> people, int source,
 2                                   int destination) {
-3       BFSData sourceData =  new BFSData(people.get(source));
-4       BFSData destData   =  new BFSData(people.get(destination));
+3       BFSData sourceData = new BFSData(people.get(source));
+4       BFSData destData   = new BFSData(people.get(destination));
 5   
 6       while (!sourceData.isFinished() && !destData.isFinished()) {
-7           /*Search  out  from source.*/
-8           Person  collision =  searchLevel(people,  sourceData,   destData);
+7           /*Search out from source.*/
+8           Person collision = searchLevel(people, sourceData, destData);
 9           if (collision != null) {
-10              return  mergePaths(sourceData, destData,  collision.getID());
+10              return mergePaths(sourceData, destData, collision.getID());
 11          }
 12  
-13          /*Search  out  from destination.*/
-14          collision =  searchLevel(people,  destData,  sourceData);
+13          /*Search out from destination.*/
+14          collision = searchLevel(people, destData, sourceData);
 15          if (collision != null) {
-16              return  mergePaths(sourceData, destData,  collision.getID());
+16              return mergePaths(sourceData, destData, collision.getID());
 17          }
 18      }
 19      return null;
 20  }
 21  
-22  /*Search   one level and return collision, if any.*/
-23  Person  searchLevel(HashMap<Integer,  Person> people,   BFSData  primary,
+22  /*Search one level and return collision, if any.*/
+23  Person searchLevel(HashMap<Integer, Person> people, BFSData primary,
 24                      BFSData secondary) {
-25      /*We  only  want to  search  one level at a time. Count how  many  nodes  are
-26      * currently  in  the  primary's level and only  do that many  nodes.  We'll  continue
-27      * to  add nodes to  the  end. */
-28      int count  = primary.toVisit.size();
-29      for  (int i =  0;  i < count;   i++)  {
-30          /*Pull out  first node.*/
-31          PathNode pathNode =  primary.toVisit.poll();
-32          int  personld = pathNode.getPerson().getID();
+25      /*We only want to search one level at a time. Count how many nodes are
+26      * currently in the primary's level and only do that many nodes. We'll continue
+27      * to add nodes to the end. */
+28      int count = primary.toVisit.size();
+29      for (int i = 0; i < count; i++) {
+30          /*Pull out first node.*/
+31          PathNode pathNode = primary.toVisit.poll();
+32          int personld = pathNode.getPerson().getID();
 33  
 34          /* Check if it's already been visited. */
 35          if (secondary.visited.containsKey(personid)) {
-36              return  pathNode.getPerson();
+36              return pathNode.getPerson();
 37          }
 38  
-39          /*   Add friends to  queue.  */
-40          Person  person  =  pathNode.getPerson();
+39          /* Add friends to queue. */
+40          Person person = pathNode.getPerson();
 41          ArrayList<Integer> friends = person.getFriends();
-42          for  (int friendid : friends) {
+42          for (int friendid : friends) {
 43              if (!primary.visited.containsKey(friendid)) {
-44                  Person  friend =  people.get(friendld);
-45                  PathNode next  =  new PathNode(friend,  pathNode);
+44                  Person friend = people.get(friendld);
+45                  PathNode next = new PathNode(friend, pathNode);
 46                  primary.visited.put(friendld, next);
 47                  primary.toVisit.add(next);
 48              }
@@ -439,31 +439,31 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 51      return null;
 52  }
 53  
-54  /* Merge paths  where searches met at connection. */
-55  LinkedList<Person> mergePaths(BFSData bfs1, BFSData bfs2, int  connection) {
-56      PathNode end1 = bfs1.visited.get(connection); // endl  -> source
-57      PathNode end2 = bfs2.visited.get(connection);  // end2 -> dest
-58      LinkedList<Person> pathOne =  end1.collapse(false);
-59      LinkedList<Person> pathTwo =  end2.collapse(true);  // reverse
-60      pathTwo.removeFirst();  // remove connection
-61      pathOne.addAll(pathTwo);  // add second  path
+54  /* Merge paths where searches met at connection. */
+55  LinkedList<Person> mergePaths(BFSData bfs1, BFSData bfs2, int connection) {
+56      PathNode end1 = bfs1.visited.get(connection); // end1 -> source
+57      PathNode end2 = bfs2.visited.get(connection); // end2 -> dest
+58      LinkedList<Person> pathOne = end1.collapse(false);
+59      LinkedList<Person> pathTwo = end2.collapse(true); // reverse
+60      pathTwo.removeFirst(); // remove connection
+61      pathOne.addAll(pathTwo); // add second path
 62      return pathOne;
 63  }
 64  
 65  class PathNode {
-66      private Person  person  =  null;
-67      private PathNode previousNode  =  null;
-68      public PathNode(Person  p,  PathNode previous) {
-69          person  =  p;
+66      private Person person = null;
+67      private PathNode previousNode = null;
+68      public PathNode(Person p, PathNode previous) {
+69          person = p;
 70          previousNode = previous;
 71      }
 72      
-73      public Person  getPerson() {  return person;  }
+73      public Person getPerson() { return person; }
 74      
-75      public  LinkedList<Person> collapse(boolean  startsWithRoot) {
-76          LinkedList<Person> path =  new LinkedList<Person>();
+75      public LinkedList<Person> collapse(boolean startsWithRoot) {
+76          LinkedList<Person> path = new LinkedList<Person>();
 77          PathNode node = this;
-78          while  (node  != null) {
+78          while (node != null) {
 79              if (startsWithRoot) {
 80                  path.addlast(node.person);
 81              }  else {
@@ -475,18 +475,18 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 87      }
 88  }
 89  
-90  class BFSData   {
-91      public Queue<PathNode> toVisit =  new LinkedList<PathNode>();
+90  class BFSData {
+91      public Queue<PathNode> toVisit = new LinkedList<PathNode>();
 92      public HashMap<Integer, PathNode> visited = 
-93                      new HashMap<Integer,  PathNode>();
+93                      new HashMap<Integer, PathNode>();
 94      
 95      public BFSData(Person root) {
-96          PathNode sourcePath =  new PathNode(root,  null);
+96          PathNode sourcePath = new PathNode(root, null);
 97          toVisit.add(sourcePath);
-98          visited.put(root.getID(),   sourcePath);
+98          visited.put(root.getID(), sourcePath);
 99      }
 100     
-101     public boolean  isFinished() {
+101     public boolean isFinished() {
 102         return toVisit.isEmpty();
 103     }
 104 }
@@ -524,41 +524,41 @@ When we deal with a service the size of Linkedln or Facebook, we cannot possibly
 The code below outlines this process. We've defined a class Server, which holds a list of all the machines, and a class Machine, which represents a single machine. Both classes have hash tables to efficiently lookup data.
 
 ```java
-1   class  Server {
-2       HashMap<Integer, Machine>  machines =  new HashMap<Integer,   Machine>();
-3       HashMap<Integer, Integer> personToMachineMap =  new HashMap<Integer,   Integer>();
+1   class Server {
+2       HashMap<Integer, Machine> machines = new HashMap<Integer, Machine>();
+3       HashMap<Integer, Integer> personToMachineMap = new HashMap<Integer, Integer>();
 4   
-5       public  Machine getMachineWithid(int machineID) {
-6           return  machines.get(machineID);
+5       public Machine getMachineWithid(int machineID) {
+6           return machines.get(machineID);
 7       }
 8   
-9       public  int getMachineIDForUser(int  personID) {
-10          Integer  machineID  =  personToMachineMap.get(personID);
-11          return  machineID  == null ?  -1 : machineID;
+9       public int getMachineIDForUser(int personID) {
+10          Integer machineID = personToMachineMap.get(personID);
+11          return machineID == null ? -1 : machineID;
 12      }
 13  
-14      public  Person getPersonWithID(int  personID) {
-15          Integer  machineID =  personToMachineMap.get(personID);
-16          if (machineID ==  null) return  null;
+14      public Person getPersonWithID(int personID) {
+15          Integer machineID = personToMachineMap.get(personID);
+16          if (machineID == null) return null;
 17  
-18          Machine machine =  getMachineWithid(machineID);
-19          if (machine ==  null) return  null;
+18          Machine machine = getMachineWithid(machineID);
+19          if (machine == null) return null;
 20  
-21          return  machine.getPersonWithID(personID);
+21          return machine.getPersonWithID(personID);
 22      }
 23  }
 24  
-25  class  Person {
-26      private ArrayList<Integer> friends =  new ArrayList<Integer>();
+25  class Person {
+26      private ArrayList<Integer> friends = new ArrayList<Integer>();
 27      private int personID;
 28      private String info;
 29  
-30      public Person(int id)  { this.personID = id; }
-31      public String getinfo()  {  return  info;  }
-32      public void setinfo(String info) {this.info  =  info; }
-33      public ArrayList<Integer> getFriends()  {return  friends; }
-34      public int getID() {return  personID;}
-35      public void addFriend(int id)  {friends.add(id); }
+30      public Person(int id) { this.personID = id; }
+31      public String getinfo() { return info; }
+32      public void setinfo(String info) {this.info = info; }
+33      public ArrayList<Integer> getFriends() {return friends; }
+34      public int getID() {return personID;}
+35      public void addFriend(int id) {friends.add(id); }
 36  }
 ```
 
@@ -705,45 +705,45 @@ For illustrative  purposes, abbreviated code for the cache is below. The code at
 
 ```java
 1   public class Cache {
-2       public static int MAX   SIZE =  10;
-3       public Node head,  tail;
-4       public HashMap<String, Node>  map;
-5       public int size =  0;
+2       public static int MAX SIZE = 10;
+3       public Node head, tail;
+4       public HashMap<String, Node> map;
+5       public int size = 0;
 6   
-7       public Cache()  {
-8           map =  new HashMap<String, Node>();
+7       public Cache() {
+8           map = new HashMap<String, Node>();
 9       }
 10  
-11      /*Moves node to  front of  linked   list  */
-12      public void  moveToFront(Node node)  {...  }
-13      public void  moveToFront(String  query)  {...   }
+11      /*Moves node to front of linked list */
+12      public void moveToFront(Node node) {... }
+13      public void moveToFront(String query) {... }
 14  
-15      /*Removes node from linked list  */
-16      public void  removeFromlinkedList(Node node)  {...  }
+15      /*Removes node from linked list */
+16      public void removeFromlinkedList(Node node) {... }
 17  
-18      /*   Gets  results from cache,  and updates  linked list  */
-19      public String[]  getResults(String query)  {
-20          if (!map.containsKey(query))  return null;
+18      /* Gets results from cache, and updates linked list */
+19      public String[] getResults(String query) {
+20          if (!map.containsKey(query)) return null;
 21  
-22          Node node =  map.get(query);
-23          moveToFront(node);   //update  freshness
+22          Node node = map.get(query);
+23          moveToFront(node); //update freshness
 24          return node.results;
 25      }
 26  
-27      /* Inserts results  into linked list and hash   */
-28      public void insertResults(String query, String[] results)  {
-29          if (map.containsKey(query))  {//update  values
-30              Node node =  map.get(query);
-31              node.results =  results;
-32              moveToFront(node);    //update  freshness
+27      /* Inserts results into linked list and hash */
+28      public void insertResults(String query, String[] results) {
+29          if (map.containsKey(query)) {//update values
+30              Node node = map.get(query);
+31              node.results = results;
+32              moveToFront(node); //update freshness
 33              return;
 34          }
 35  
-36          Node node =  new Node(query,  results);
+36          Node node = new Node(query, results);
 37          moveToFront(node);
-38          map.put(query,  node);
+38          map.put(query, node);
 39  
-40          if (size > MAX_SIZE)  {
+40          if (size > MAX_SIZE) {
 41              map.remove(tail.query);
 42              removeFromLinkedList(tail);
 43          }

@@ -27,17 +27,17 @@ The code below implements a very basic singly linked list.
 2       Node next = null;
 3       int data;
 4   
-5       public Node(int d)  {
+5       public Node(int d) {
 6           data = d;
 7       }
 8   
-9       void  appendToTail(int d)  {
+9       void appendToTail(int d) {
 10          Node end = new Node(d);
-11          Node n  =  this;
-12          while (n.next  != null) {
-13              n  =  n.next;
+11          Node n = this;
+12          while (n.next != null) {
+13              n = n.next;
 14          }
-15          n.next =  end;
+15          n.next = end;
 16      }
 17  }
 ``` 
@@ -56,17 +56,17 @@ Deleting a node from a linked list is fairly straightforward. Given a node n, we
 Additionally,  if you implement this code in C, C++ or another  language that requires the developer to do memory management, you should consider if the removed node should be deallocated.
 
 ```java
-1   Node deleteNode(Node head, int d)  {
-2       Node n  =  head;
+1   Node deleteNode(Node head, int d) {
+2       Node n = head;
 3   
-4       if (n.data == d)  {
-5           return head.next; /*moved  head*/
+4       if (n.data == d) {
+5           return head.next; /*moved head*/
 6       }
 7   
-8       while   (n.next  != null)  {
-9           if  (n.next.data == d)  {
+8       while (n.next != null) {
+9           if (n.next.data == d) {
 10              n.next = n.next.next;
-11              return head;   /* head  didn't change*/
+11              return head; /* head didn't change*/
 12          }
 13          n = n.next;
 14      }
@@ -83,7 +83,7 @@ For example, suppose you had a linked list `a₁ ->a₂ ->....->aₙ -> b₁->b�
 You could have one pointer p1 (the fast pointer) move  every two elements for every one move that p2 makes. When p1 hits the end of the linked list, p2 will be at the midpoint. Then, move pl back to the front and begin "weaving" the elements. On each iteration, p2 selects an element and inserts it after p1.
 
 
-### Recursive  Problems
+### Recursive Problems
 
 A number of linked list problems rely on recursion. If you're having trouble solving a linked list problem, you should explore if a recursive approach will work. We won't go into depth on recursion here, since a later chapter is devoted to it.
 
@@ -105,13 +105,13 @@ SOLUTION
 
 ---
 
-In order to remove duplicates from a linked list, we need to be able to track duplicates. A simple hash table will work well  here.
+In order to remove duplicates from a linked list, we need to be able to track duplicates. A simple hash table will work well here.
 
-In the below solution, we  simply iterate through the linked list, adding each element to a hash table. When we  discover a duplicate element, we remove the element and continue iterating. We can do this all in one pass since we are using a linked list.
+In the below solution, we simply iterate through the linked list, adding each element to a hash table. When we discover a duplicate element, we remove the element and continue iterating. We can do this all in one pass since we are using a linked list.
 
 ```java
-1   void deleteDups(LinkedListNode n)  {
-2       HashSet<Integer>  set = new HashSet<Integer>();
+1   void deleteDups(LinkedListNode n) {
+2       HashSet<Integer> set = new HashSet<Integer>();
 3       LinkedListNode previous = null;
 4       while (n != null) {
 5           if (set.contains(n.data)) {
@@ -132,12 +132,12 @@ The  above solution takes O(N) time, where N is the number of elements in the li
 If we don't have a buffer, we can iterate with two pointers: current which iterates through the linked list, and runner which checks all subsequent nodes for duplicates.
 
 ```java
-1   void deleteDups(LinkedListNode head)  {
+1   void deleteDups(LinkedListNode head) {
 2       LinkedListNode current = head;
-3       while (current !=  null) {
+3       while (current != null) {
 4           /* Remove all future nodes that have the same value */
 5           LinkedListNode runner = current;
-6           while (runner.next  !=  null) {
+6           while (runner.next != null) {
 7               if (runner.next.data == current.data) {
 8                   runner.next = runner.next.next;
 9               } else {
@@ -177,12 +177,12 @@ Implementing this is short and sweet-provided we have a way of "passing back" an
 One way to do this is to change the problem to simply printing the kth to last element. Then, we can pass back the value of the counter simply through return values.
 
 ```java
-1   int  printKthToLast(LinkedListNode head, int k)  {
+1   int printKthToLast(LinkedListNode head, int k) {
 2       if (head == null) {
 3           return 0;
 4       }
-5       int index = printKthToLast(head.next,  k)  + 1;
-6       if (index == k)  {
+5       int index = printKthToLast(head.next, k) + 1;
+6       if (index == k) {
 7           System.out.println(k + "th to last node is " + head.data);
 8       }
 9       return index;
@@ -197,10 +197,10 @@ A second way to solve this is to use C++ and to pass values by reference. This a
 
 ```c++
 1   node* nthToLast(node* head, int k, int& i) {
-2       if (head == NULL)  {
+2       if (head == NULL) {
 3           return NULL;
 4       }
-5       node* nd = nthToLast(head->next,  k,  i);
+5       node* nd = nthToLast(head->next, k, i);
 6       i = i + 1;
 7       if (i == k) {
 8           return head;
@@ -208,9 +208,9 @@ A second way to solve this is to use C++ and to pass values by reference. This a
 10      return nd;
 11  }
 12  
-13  node* nthToLast(node*  head, int k)  {
+13  node* nthToLast(node* head, int k) {
 14      int i = 0;
-15      return nthToLast(head, k,  i);
+15      return nthToLast(head, k, i);
 16  }
 ```
 
@@ -219,23 +219,23 @@ A second way to solve this is to use C++ and to pass values by reference. This a
 We described earlier that the issue was that we couldn't simultaneously return a counter and an index. If we wrap the counter value with simple class (or even a single element  array), we can mimic passing by reference.
 
 ```java
-1   class Index  {
+1   class Index {
 2       public int value = 0;
 3   }
 4   
-5   LinkedListNode kthTolast(LinkedListNode  head,   int k)  {
-6       Index  idx  = new Index();
-7       return kthToLast(head, k,   idx);
+5   LinkedListNode kthToLast(LinkedListNode head, int k) {
+6       Index idx = new Index();
+7       return kthToLast(head, k, idx);
 8   }
 9   
-10  LinkedListNode kthToLast(LinkedListNode head, int k, Index  idx) {
-11      if  (head == null) {
+10  LinkedListNode kthToLast(LinkedListNode head, int k, Index idx) {
+11      if (head == null) {
 12          return null;
 13      }
-14      LinkedListNode  node  =  kthToLast(head.next,  k,   idx);
-15      idx.value =  idx.value + 1;
-16      if  (idx.value == k)  {
-17          return  head;
+14      LinkedListNode node = kthToLast(head.next, k, idx);
+15      idx.value = idx.value + 1;
+16      if (idx.value == k) {
+17          return head;
 18      }
 19      return node;
 20  }
@@ -257,9 +257,9 @@ The code below implements this algorithm.
 2       LinkedListNode p1 = head;
 3       LinkedListNode p2 = head;
 4   
-5       /*  Move  p1  k nodes  into the  list.*/
+5       /* Move p1 k nodes into the list.*/
 6       for (int i = 0; i < k; i++) {
-7           if (p1 == null) return null;  // Out of  bounds
+7           if (p1 == null) return null; // Out of bounds
 8           p1 = p1.next;
 9       }
 10  
@@ -292,13 +292,13 @@ In this problem, you are not given access to the head of the linked list. You on
 The code below implements this algorithm.
 
 ```java
-1   boolean  deleteNode(LinkedListNode  n)  {
-2       if (n  ==  null  || n.next ==  null)  {
-3           return false;  // Failure
+1   boolean deleteNode(LinkedListNode n) {
+2       if (n == null || n.next == null) {
+3           return false; // Failure
 4       }
-5       LinkedListNode next  =  n.next;
-6       n.data =  next.data;
-7       n.next =  next.next;
+5       LinkedListNode next = n.next;
+6       n.data = next.data;
+7       n.next = next.next;
 8       return true;
 9   }
 ```
@@ -327,7 +327,7 @@ We iterate through the linked list, inserting elements into our before list or o
 This approach is mostly "stable" in that elements stay in their original order, other than the necessary move­ment around the partition. The code below implements this approach.
 
 ```java
-1   /*Pass in the head  of  the   linked list and  the   value  to partition around*/
+1   /*Pass in the head of the linked list and the value to partition around*/
 2   LinkedListNode partition(LinkedListNode node, int x) {
 3       LinkedListNode beforeStart = null;
 4       LinkedListNode beforeEnd = null;
@@ -348,7 +348,7 @@ This approach is mostly "stable" in that elements stay in their original order, 
 19                  beforeEnd = node;
 20              }
 21          } else {
-22              /* Insert node  into end  of  after list*/
+22              /* Insert node into end of after list*/
 23              if (afterStart == null) {
 24                  afterStart = node;
 25                  afterEnd = afterStart;
@@ -376,26 +376,26 @@ If we  don't care  about making the elements of the list "stable"  (which  there
 In this approach, we start a "new" list (using the existing nodes). Elements bigger than the pivot element are put  at the tail and  elements smaller are put  at the head. Each time we insert  an element, we update either the head or tail.
 
 ```java
-1   LinkedListNode  partition(LinkedListNode node, int  x)   {
+1   LinkedListNode partition(LinkedListNode node, int x) {
 2       LinkedListNode head = node;
 3       LinkedListNode tail = node;
 4   
-5       while  (node !=  null)  {
-6           LinkedListNode next  = node.next;
-7           if (node.data <   x)   {
+5       while (node != null) {
+6           LinkedListNode next = node.next;
+7           if (node.data < x) {
 8               /* Insert node at head. */
-9               node.next =  head;
-10              head =  node;
-11          }  else  {
-12              /*  Insert node at tail. */
+9               node.next = head;
+10              head = node;
+11          }  else {
+12              /* Insert node at tail. */
 13              tail.next = node;
 14              tail = node;
 15          }
-16          node =  next;
+16          node = next;
 17      }
 18      tail.next = null;
 19  
-20      // The  head  has   changed,  so  we  need to  return it to the user.
+20      // The head has changed, so we need to return it to the user.
 21      return head;
 22  }
 ```
@@ -460,30 +460,30 @@ List: 2 -> 1 -> 9.
 The code below implements this algorithm.
 
 ```java
-l   LinkedListNode addLists(LinkedListNode l1, LinkedListNode l2, int  carry) {
-2       if (l1 == null &&  l2 == null  && carry == 0) {
+l   LinkedListNode addLists(LinkedListNode l1, LinkedListNode l2, int carry) {
+2       if (l1 == null && l2 == null && carry == 0) {
 3           return null;
 4       }
 5   
-6       LinkedListNode result = new  LinkedListNode();
-7       int  value =  carry;
-8       if (l1 !=  null)  {
-9           value +=  l1.data;
+6       LinkedListNode result = new LinkedListNode();
+7       int value = carry;
+8       if (l1 != null)  {
+9           value += l1.data;
 10      }
-11      if (l2 !=  null)  {
-12          value +=  l2.data;
+11      if (l2 != null) {
+12          value += l2.data;
 13      }
 14  
-15      result.data = value % 10; /* Second digit of  number */
+15      result.data = value % 10; /* Second digit of number */
 16  
-17      /*Recurse  */
+17      /*Recurse */
 18      if (l1 != null || l2 != null) {
-19          LinkedListNode  more = addLists(l1 == null ?  null : l1.next,
+19          LinkedListNode more = addLists(l1 == null ? null : l1.next,
 20                                  l2 == null ? null : l2.next,
-21                                  value >= 10 ?  1 : 0);
+21                                  value >= 10 ? 1 : 0);
 22          result.setNext(more);
 23      }
-24      return  result;
+24      return result;
 25  }
 ```
 
@@ -508,7 +508,7 @@ The code below implements this algorithm.
 7       int len1 = length(l1);
 8       int len2 = length(l2);
 9   
-10      /* Pad the shorter  list with zeros  -  see note (1) */
+10      /* Pad the shorter list with zeros - see note (1) */
 11      if (len1 < len2) {
 12          l1 = padList(l1, len2 - len1);
 13      } else {
@@ -519,7 +519,7 @@ The code below implements this algorithm.
 18      PartialSum sum = addListsHelper(l1, l2);
 19  
 20      /* If there was a carry value left over, insert this at the front of the list.st.
-21      * Otherwise,  just  return  the linked  list. */
+21      * Otherwise, just return the linked list. */
 22      if (sum.carry == 0) {
 23          return sum.sum;
 24      } else {
@@ -533,22 +533,22 @@ The code below implements this algorithm.
 32          PartialSum sum = new PartialSum();
 33          return sum;
 34      }
-35      /*    Add  smaller digits  recursively*/
+35      /* Add smaller digits recursively*/
 36      PartialSum sum = addListsHelper(l1.next, l2.next);
 37  
-38      /*    Add  carry  to  current data*/
+38      /*  Add carry to current data*/
 39      int val = sum.carry + l1.data + l2.data;
 40  
-41      /*    Insert sum of  current digits*/
+41      /* Insert sum of current digits*/
 42      LinkedListNode full_result = insertBefore(sum.sum, val % 10);
 43  
-44      /*    Return  sum so  far,  and the  carry   value*/
+44      /* Return sum so far, and the carry value*/
 45      sum.sum = full_result;
 46      sum.carry = val / 10;
 47      return sum;
 48  }
 49  
-50  /* Pad the  list with  zeros*/
+50  /* Pad the list with zeros*/
 51  LinkedListNode padList(LinkedListNode l, int padding) {
 52      LinkedListNode head = l;
 53      for (int i = 0; i < padding; i++) {
@@ -557,7 +557,7 @@ The code below implements this algorithm.
 56      return head;
 57  }
 58  
-59  /*    Helper  function to  insert node in  the  front of  a linked list*/
+59  /* Helper function to insert node in the front of a linked list*/
 60  LinkedListNode insertBefore(LinkedListNode list, int data) {
 61      LinkedListNode node = new LinkedListNode(data);
 62      if (list != null) {
@@ -587,31 +587,31 @@ Our first solution is to reverse the linked list and compare the reversed list t
 Note that when we compare the linked list to the reversed list, we only actually need to compare the first half of the list.  If the first half of the normal list matches the first half of the reversed list, then the second half of the normal list must match the second half of the reversed list.
 
 ```java
-1   boolean  isPalindrome(LinkedListNode head)  {
-2       LinkedListNode reversed =  reverseAndClone(head);
+1   boolean isPalindrome(LinkedListNode head) {
+2       LinkedListNode reversed = reverseAndClone(head);
 3       return isEqual(head, reversed);
 4   }
 5   
-6   LinkedListNode reverseAndClone(LinkedListNode  node)  {
+6   LinkedListNode reverseAndClone(LinkedListNode node) {
 7       LinkedListNode head = null;
-8       while (node  != null) {
-9           LinkedListNode n =  new LinkedListNode(node.data); // Clone
+8       while (node != null) {
+9           LinkedListNode n = new LinkedListNode(node.data); // Clone
 10          n.next = head;
-11          head   = n;
-12          node   = node.next;
+11          head = n;
+12          node = node.next;
 13      }
 14      return head;
 15  }
 16  
-17  boolean isEqual(LinkedListNode one,  LinkedListNode  two)  {
+17  boolean isEqual(LinkedListNode one, LinkedListNode two) {
 18      while (one != null && two != null) {
-19          if (one.data  != two.data)  {
+19          if (one.data != two.data) {
 20              return false;
 21          }
 22          one = one.next;
 23          two = two.next;
 24      }
-25      return one == null && two ==  null;
+25      return one == null && two == null;
 26  }
 ```
 
@@ -631,34 +631,34 @@ If we don't know the size of the linked list, we can iterate through the linked 
 Now, we simply iterate through the rest of the linked list. At each iteration, we compare the node to the top of the stack. If we complete the iteration without finding a difference, then the linked list is a palindrome.
 
 ```java
-1   boolean isPalindrome(LinkedListNode head)   {
+1   boolean isPalindrome(LinkedListNode head) {
 2       LinkedListNode fast = head;
-3       LinkedListNode slow =  head;
+3       LinkedListNode slow = head;
 4   
 5       Stack<Integer> stack = new Stack<Integer>();
 6   
-7       /* Push elements from  first  half of  linked list onto   stack. When  fast  runner
+7       /* Push elements from first half of linked list onto stack. When fast runner
 8       * (which is moving at 2x speed) reaches the end of the linked list, then we
-9       *  know we're at the   middle */
-10      while (fast != null &&  fast.next != null) {
+9       * know we're at the middle */
+10      while (fast != null && fast.next != null) {
 11          stack.push(slow.data);
-12          slow  =   slow.next;
+12          slow = slow.next;
 13          fast = fast.next.next;
 14      }
 15  
-16      /* Has odd number of  elements,  so  skip the  middle  element*/
+16      /* Has odd number of elements, so skip the middle element*/
 17      if (fast != null) {
-18          slow =  slow.next;
+18          slow = slow.next;
 19      }
 20  
 21      while (slow != null) {
-22          int top =  stack.pop().intValue();
+22          int top = stack.pop().intValue();
 23  
-24          /*   If  values are   different, then   it's not   a  palindrome*/
+24          /* If values are different, then it's not a palindrome*/
 25          if (top != slow.data) {
 26              return false;
 27          }
-28          slow =  slow.next;
+28          slow = slow.next;
 29      }
 30      return true;
 31  }
@@ -675,11 +675,11 @@ Now, like many linked list problems, you can approach this problem recursively. 
 In order to apply this approach, we first need to know when we've reached the middle element, as this will form our base case. We can do this by passing in length  -  2 for the length each time. When the length equals 0 or 1, we're at the center of the linked list. This is because the length is reduced by 2 each time. Once we've recursed N/2 times, length will be down to 0.
 
 ```java
-1  recurse(Node n,  int length) {
-2       if  (length == 0  || length == 1)  {
-3            return  [something]; // At  middle
+1  recurse(Node n, int length) {
+2       if (length == 0 || length == 1) {
+3            return [something]; // At middle
 4       }
-5       recurse(n.next,  length -  2);
+5       recurse(n.next, length - 2);
 6    ...
 7  }
 ```
@@ -720,7 +720,7 @@ But wait, you might ask, sometimes we said we'll return a boolean value, and som
 It's both. We create a simple class with two members, a boolean and a node, and return an instance of that class.
 
 ```java
-1  class Result  {
+1  class Result {
 2      public LinkedListNode node;
 3      public boolean result;
 4  }
@@ -742,32 +742,32 @@ The example below illustrates the parameters and return values from this sample 
 
 Implementing this code is now just a matter of filling in the details.
 ```java
-1   boolean  isPalindrome(LinkedListNode head)  {
+1   boolean isPalindrome(LinkedListNode head) {
 2       int length = lengthOfList(head);
-3       Result  p = isPalindromeRecurse(head,  length);
+3       Result p = isPalindromeRecurse(head, length);
 4       return p.result;
 5   }
 6   
 7   Result isPalindromeRecurse(LinkedListNode head, int length) {
-8       if (head == null || length <= 0) {  // Even number of  nodes
+8       if (head == null || length <= 0) { // Even number of nodes
 9           return new Result(head, true);
-10      } else if (length == 1) {  // Odd number of  nodes
+10      } else if (length == 1) { // Odd number of nodes
 11          return new Result(head.next, true);
 12      }
 13  
 14      /* Recurse on sublist. */
 15      Result res = isPalindromeRecurse(head.next, length - 2);
 16  
-17      /* If child calls are  not  a palindrome,   pass  back up
-18      * a  failure.*/
+17      /* If child calls are not a palindrome, pass back up
+18       * a failure.*/
 19      if (!res.result || res.node == null) {
 20          return res;
 21      }
 22  
-23      /* Check if matches  corresponding node on other side.  */
+23      /* Check if matches corresponding node on other side. */
 24      res.result = (head.data == res.node.data);
 25  
-26      /* Return  corresponding   node.  */
+26      /* Return corresponding node. */
 27      res.node = res.node.next;
 28  
 29      return res;
@@ -788,7 +788,7 @@ Some of you might be wondering why we went through all this effort to create a s
 However, if we were implementing this in C or C++, we could have passed in a double pointer.
 
 ```c++
-1   bool isPalindromeRecurse(Node  head,  int length, Node** next)   {
+1   bool isPalindromeRecurse(Node head, int length, Node** next) {
 2       ...
 3   }
 ```
@@ -853,63 +853,63 @@ We now have a multistep process.
 5. Now, traverse on each linked  list until the  pointers are the  same. The implementation for this is below.
 
 ```java
-1   LinkedListNode findintersection(LinkedListNode  list1, LinkedListNode list2) {
-2       if (list1 ==  null  || list2 == null) return null;
+1   LinkedListNode findintersection(LinkedListNode list1, LinkedListNode list2) {
+2       if (list1 == null || list2 == null) return null;
 3   
-4       /* Get   tail and  sizes. */
-5       Result result1  = getTailAndSize(list1);
-6       Result result2  = getTailAndSize(list2);
+4       /* Get tail and sizes. */
+5       Result result1 = getTailAndSize(list1);
+6       Result result2 = getTailAndSize(list2);
 7   
-8       /* If different tail  nodes, then  there's no  intersection. */
-9       if (result1.tail !=  result2.tail) {
+8       /* If different tail nodes, then there's no intersection. */
+9       if (result1.tail != result2.tail) {
 10          return null;
 11      }
 12  
-13      /* Set pointers to the start  of  each linked  list. */
-14      LinkedListNode shorter =  result1.size < result2.size ?  list1 : list2;
-15      LinkedListNode longer  =  result1.size < result2.size ?  list2 : list1;
+13      /* Set pointers to the start of each linked list. */
+14      LinkedListNode shorter = result1.size < result2.size ? list1 : list2;
+15      LinkedListNode longer  = result1.size < result2.size ? list2 : list1;
 16  
 17      /* Advance the pointer for the longer linked list by difference in lengths. */
-18      longer = getKthNode(longer,  Math.abs(result1.size -  result2.size));
+18      longer = getKthNode(longer, Math.abs(result1.size - result2.size));
 19  
-20      /* Move both pointers until  you  have  a  collision. */
-21      while (shorter  !=  longer) {
+20      /* Move both pointers until you have a collision. */
+21      while (shorter != longer) {
 22          shorter = shorter.next;
 23          longer  = longer.next;
 24      }
 25  
-26      /* Return either  one. */
+26      /* Return either one. */
 27      return longer;
 28  }
 29  
-30  class  Result {
+30  class Result {
 31      public LinkedListNode tail;
-32      public int  size;
-33      public Result(LinkedListNode tail,  int size) {
-34          this.tail =  tail;
-35          this.size =  size;
+32      public int size;
+33      public Result(LinkedListNode tail, int size) {
+34          this.tail = tail;
+35          this.size = size;
 36      }
 37  }
 38  
-39  Result  getTailAndSize(LinkedListNode list) {
+39  Result getTailAndSize(LinkedListNode list) {
 40      if (list == null) return null;
 41  
 42      int size = 1;
-43      LinkedListNode  current =  list;
+43      LinkedListNode current = list;
 44      while (current.next != null) {
 45          size++;
 46          current = current.next;
 47      }
-48      return new Result(current,   size);
+48      return new Result(current, size);
 49  }
 50  
-51  LinkedListNode getKthNode(LinkedListNode  head,  int k)  {
-52      LinkedListNode current =  head;
+51  LinkedListNode getKthNode(LinkedListNode head, int k) {
+52      LinkedListNode current = head;
 53      while (k > 0 && current != null) {
-54          current =  current.next;
+54          current = current.next;
 55          k--;
 56      }
-57      return  current;
+57      return current;
 58  }
 ```
 
@@ -989,34 +989,34 @@ Our algorithm is derived directly from parts 1, 2 and 3.
 The code below implements this algorithm.
 
 ```java
-1   LinkedListNode FindBeginning(LinkedListNode  head)  {
-2       LinkedListNode slow  = head;
-3       LinkedListNode fast  = head;
+1   LinkedListNode FindBeginning(LinkedListNode head) {
+2       LinkedListNode slow = head;
+3       LinkedListNode fast = head;
 4   
 5       /* Find meeting point. This will be LOOP_SIZE - k steps into the linked list. */
-6       while (fast !=  null &&   fast.next !=  null) {
-7           slow =  slow.next;
-8           fast =  fast.next.next;
+6       while (fast != null && fast.next != null) {
+7           slow = slow.next;
+8           fast = fast.next.next;
 9           if (slow == fast) {//Collision
 10              break;
 11          }
 12      }
 13  
-14      /*   Error check  -  no meeting  point,  and  therefore no  loop*/
-15      if (fast == null || fast.next == null)  {
+14      /* Error check - no meeting point, and therefore no loop*/
+15      if (fast == null || fast.next == null) {
 16          return null;
 17      }
 18  
-19      /* Move slow to Head. Keep fast at Meeting  Point. Each are   k steps from  the
-20      * Loop Start. If they move at the same pace, they must meet  at Loop Start . */
-21      slow  =  head;
-22      while (slow !=  fast) {
+19      /* Move slow to Head. Keep fast at Meeting Point. Each are k steps from the
+20       * Loop Start. If they move at the same pace, they must meet at Loop Start . */
+21      slow = head;
+22      while (slow != fast) {
 23          slow = slow.next;
 24          fast = fast.next;
 25      }
 26  
-27      /* Both  now point to the   start of  the   loop. */
-28      return fast;
+27      /* Both now point to the start of the loop. */
+28SS    return fast;
 29  }
 ```
 

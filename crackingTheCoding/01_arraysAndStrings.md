@@ -217,7 +217,7 @@ We can also use the definition of a permutation-two words with the same characte
 6       int[] letters = new int[128]; // Assumption
 7   
 8       char[] s_array = s.toCharArray();
-9       for  (char c : s_array) { // count number of each char in s.
+9       for (char c : s_array) { // count number of each char in s.
 10          letters[c]++;
 11      }
 12  
@@ -270,7 +270,7 @@ The code below implements this algorithm.
 13              str[index - 2] = '2';
 14              str[index - 3] = '%';
 15              index = index - 3;
-16          }  else {
+16          } else {
 17              str[index - 1] = str[i];
 18              index--;
 19          }
@@ -870,12 +870,12 @@ So, we need to check  if there's a way to split s1 into x and y such that xy = s
 And this is precisely how we solve the problem: simply do isSubstring(s1s1,  s2). The code below implements this algorithm.
 
 ```java
-1   boolean  isRotation(String s1,  String s2)  {
-2       int len =  s1.length();
-3       /*  Check that s1 and s2 are  equal  length and not  empty*/
-4       if (len == s2.length() && len > 0)  {
-5           /*  Concatenate  s1 and s1 within new  buffer  */
-6           String s1s1 =  s1 + s1;
+1   boolean isRotation(String s1, String s2) {
+2       int len = s1.length();
+3       /* Check that s1 and s2 are equal length and not empty*/
+4       if (len == s2.length() && len > 0) {
+5           /* Concatenate s1 and s1 within new buffer */
+6           String s1s1 = s1 + s1;
 7           return isSubstring(s1s1, s2);
 8       }
 9       return false;

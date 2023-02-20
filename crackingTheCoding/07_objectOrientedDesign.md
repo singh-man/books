@@ -62,11 +62,11 @@ Be careful  you don't fall into a trap of constantly trying to find the "right" 
 The Singleton pattern ensures that a class has only one instance and ensures access to the instance through the application.  It can be useful in cases where you have a "global" object with exactly one instance. For example, we may want to implement Restaurant such that it has exactly one instance of Restaurant.
 
 ```java
-1   public class Restaurant  {
-2       private static Restaurant _instance =  null;
-3       protected Restaurant()  {  ... }
-4       public static Restaurant  getlnstance()  {
-5           if (_instance ==  null) {
+1   public class Restaurant {
+2       private static Restaurant _instance = null;
+3       protected Restaurant() { ... }
+4       public static Restaurant getlnstance() {
+5           if (_instance == null) {
 6               _instance =  new Restaurant();
 7           }
 8           return _instance;
@@ -83,10 +83,10 @@ The Factory Method offers an interface for creating an instance of a class, with
 
 ```java
 1   public class CardGame {
-2       public static  CardGame createCardGame(GameType type) {
-3           if (type == GameType.Poker)  {
+2       public static CardGame createCardGame(GameType type) {
+3           if (type == GameType.Poker) {
 4               return new PokerGame();
-5           }  else if (type == GameType.BlackJack)   {
+5           }  else if (type == GameType.BlackJack) {
 6               return new BlackJackGame();
 7           }
 8           return null;
@@ -112,61 +112,61 @@ Let's assume that your interviewer clarifies that the deck is a standard 52-card
 
 ```java
 1   public enum Suit {
-2       Club (0),  Diamond  (1),  Heart (2), Spade (3);
+2       Club (0), Diamond (1), Heart (2), Spade (3);
 3       private int value;
-4       private Suit(int v)  { value  =  v; }
-5       public  int  getValue() { return  value; }
-6       public  static Suit  getSuitFromValue(int value)  {... }
+4       private Suit(int v) { value = v; }
+5       public int getValue() { return value; }
+6       public static Suit getSuitFromValue(int value) {... }
 7   }
 8   
-9   public class Deck <T  extends   Card> {
-10      private ArrayList<T>  cards;   // all cards,   dealt or  not
-11      private int  dealtIndex =  0;  // marks first undealt card
+9   public class Deck <T extends Card> {
+10      private ArrayList<T> cards; // all cards, dealt or not
+11      private int dealtIndex = 0; // marks first undealt card
 12  
-13      public void setDeckOfCards(ArrayList<T>  deckOfCards) {... }
+13      public void setDeckOfCards(ArrayList<T> deckOfCards) {... }
 14  
 15      public void shuffle() {... }
 16      public int remainingCards() {
-17          return cards.size()  -  dealtIndex;
+17          return cards.size() - dealtIndex;
 18      }
-19      public T[]  dealHand(int  number) {... }
-20      public T  dealCard()  {... }
+19      public T[] dealHand(int number) {... }
+20      public T dealCard() {... }
 21  }
 22  
 23  public abstract class Card {
-24      private boolean  available =  true;
+24      private boolean available = true;
 25  
-26      /* number or  face  that's on card  -  a number 2 through  10,  or  11 for  Jack,   12 for
-27       * Queen,  13 for   King,  or  1 for  Ace */
+26      /* number or face that's on card - a number 2 through 10, or 11 for Jack, 12 for
+27       * Queen, 13 for King, or 1 for Ace */
 28      protected int faceValue;
 29      protected Suit suit;
 30  
-31      public Card(int c,  Suit  s) {
-32          faceValue  =  c;
-33          suit =  s;
+31      public Card(int c, Suit s) {
+32          faceValue = c;
+33          suit = s;
 34      }
 35  
 36      public abstract int value();
-37      public Suit  suit() {return  suit;}
+37      public Suit suit() {return suit;}
 38  
-39      /*  Checks if the  card  is available to  be given  out  to  someone */
-40      public boolean  isAvailable() {return  available;  }
-41      public void  markUnavailable() {available  =  false; }
-42      public void  markAvailable()  {available  =   true; }
+39      /* Checks if the card is available to be given out to someone */
+40      public boolean isAvailable() {return available; }
+41      public void markUnavailable() {available = false; }
+42      public void markAvailable() {available = true; }
 43  }
 44  
-45  public class Hand <T  extends  Card> {
-46      protected  ArrayList<T> cards  =  new ArrayList<T>();
+45  public class Hand <T extends Card> {
+46      protected ArrayList<T> cards = new ArrayList<T>();
 47  
 48      public int score() {
-49          int score  =  0;
-50          for  (T  card   :   cards) {
-51              score  += card.value();
+49          int score = 0;
+50          for (T card : cards) {
+51              score += card.value();
 52          }
 53          return score;
 54      }
 55  
-56      public void  addCard(T card)   {
+56      public void addCard(T card) {
 57          cards.add(card);
 58      }
 59  }
@@ -177,58 +177,58 @@ In the above code, we have implemented Deck with generics but restricted the typ
 Now, let's say we're building a blackjack game, so we need to know the value of the cards. Face cards are 10 and an ace is 11 (most of the time, but that's the job of the Hand class, not the following class).
 
 ```java
-1   public class BlackJackHand extends  Hand<BlackJackCard>  {
-2       /* There are  multiple possible  scores for  a  blackjack hand,  since   aces  have
-3       * multiple values.  Return  the  highest possible score  that's under  21,  or  the
-4       * lowest  score  that's  over. */
+1   public class BlackJackHand extends Hand<BlackJackCard> {
+2       /* There are multiple possible scores for a blackjack hand, since aces have
+3        * multiple values. Return the highest possible score that's under 21, or the
+4        * lowest score that's over. */
 5       public int score() {
-6           ArrayList<Integer> scores =  possibleScores();
-7           int maxUnder =  Integer.MIN_VALUE;
-8           int minOver =   Integer.MAX_VALUE;
-9           for  (int score   :   scores) {
-10              if (score > 21 &&   score  < minOver) {
-11                  minOver =  score;
-12              }  else if (score <= 21 &&   score >  maxUnder) {
-13                  maxUnder   =  score;
+6           ArrayList<Integer> scores = possibleScores();
+7           int maxUnder = Integer.MIN_VALUE;
+8           int minOver  = Integer.MAX_VALUE;
+9           for (int score : scores) {
+10              if (score > 21 && score < minOver) {
+11                  minOver = score;
+12              } else if (score <= 21 && score > maxUnder) {
+13                  maxUnder = score;
 14              }
 15          }
-16          return maxUnder == Integer.MIN_VALUE  ?  minOver  :  maxUnder;
+16          return maxUnder == Integer.MIN_VALUE ? minOver : maxUnder;
 17      }
 18  
-19      /* return a  list of  all poss ible  scores   this hand could  have  (evaluating each
-20      *  ace  as  both  1  and  11 */
-21      private  ArrayList<Integer> possibleScores() { ... }
+19      /* return a list of all poss ible scores this hand could have (evaluating each
+20       * ace as both 1 and 11 */
+21      private ArrayList<Integer> possibleScores() { ... }
 
 22  
-23      public boolean  busted()  { return score() >  21;  }
-24      public boolean  is21() {  return score() ==   21;  }
-25      public boolean  isBlackJack() { ... }
+23      public boolean busted() { return score() > 21; }
+24      public boolean is21() { return score() == 21; }
+25      public boolean isBlackJack() { ... }
 26  }
 27  
-28  public  class  BlackJackCard extends   Card  {
-29      public BlackJackCard(int c,   Suit s)  {  super(c,   s);}
-30      public int  value()  {
+28  public class BlackJackCard extends Card {
+29      public BlackJackCard(int c, Suit s) { super(c, s);}
+30      public int value() {
 31          if (isAce()) return 1;
-32          else if (faceValue >= 11  &&   faceValue  <=  13)  return 10;
+32          else if (faceValue >= 11 && faceValue <= 13) return 10;
 33          else return faceValue;
 34      }
 35  
 36      public int minValue() {
 37          if (isAce()) return 1;
-38          else return  v alue();
+38          else return value();
 39      }
 40      
-41      public int maxValue()  {
+41      public int maxValue() {
 42          if (isAce()) return 11;
 43          else return value();
 44      }
 45      
 46      public boolean isAce() {
-47          return  faceValue == 1;
+47          return faceValue == 1;
 48      }
 49      
-50      public boolean isFaceCard()  {
-51          return  faceValue >= 11  &&   faceValue  <= 13;
+50      public boolean isFaceCard() {
+51          return faceValue >= 11 && faceValue <= 13;
 52      }
 53 }
 ```
@@ -257,84 +257,84 @@ We'll go through each of the classes below in detail.
 CallHandler represents the body of the program, and all calls are funneled first through it.
 
 ```java
-1   public class  CallHandler {
-2       /*  3 levels of  employees:  respondents,  managers,  directors. */
-3       private final int LEVELS =  3;
+1   public class CallHandler {
+2       /* 3 levels of employees: respondents, managers, directors. */
+3       private final int LEVELS = 3;
 4   
-5       /*  Initialize 10 respondents,  4 managers,  and 2 directors. */
+5       /* Initialize 10 respondents, 4 managers, and 2 directors. */
 6       private final int NUM_RESPONDENTS = 10;
 7       private final int NUM_MANAGERS = 4;
-8       private final int NUM_DIRECTORS =  2;
+8       private final int NUM_DIRECTORS = 2;
 9   
-10      /* List of  employees,  by level.
+10      /* List of employees, by level.
 11       * employeeLevels[0] = respondents
 12       * employeeLevels[1] = managers
 13       * employeeLevels[2] = directors
 14       */
 15      List<List<Employee>> employeeLevels;
 16  
-17      /*  queues  for  each  call's rank  */
+17      /* queues for each call's rank */
 18      List<List<Call>> callQueues;
 19  
-20      public CallHandler() {  ... }
+20      public CallHandler() { ... }
 21  
-22      /*  Gets  the  first available employee who  can handle  this call.*/
-23      public Employee getHandlerForCall(Call call) {  ... }
+22      /* Gets the first available employee who can handle this call.*/
+23      public Employee getHandlerForCall(Call call) { ... }
 24  
-25      /*  Routes  the  call to  an available employee,  or  saves  in  a  queue if no employee
-26      * is available. */
-27      public void  dispatchCall(Caller caller)  {
+25      /* Routes the call to an available employee, or saves in a queue if no employee
+26       * is available. */
+27      public void dispatchCall(Caller caller) {
 28          Call call = new Call(caller);
 29          dispatchCall(call);
 30      }
 31  
-32      /*  Routes  the  call to  an available employee,  or  saves  in  a  queue if no employee
-33      * is available. */
-34      public void  dispatchCall(Call call)  {
-35          /*  Try to  route the  call to  an employee with  minimal rank. */
-36          Employee emp =  getHandlerForCall(call);
+32      /* Routes the call to an available employee, or saves in a queue if no employee
+33       * is available. */
+34      public void dispatchCall(Call call) {
+35          /* Try to route the call to an employee with minimal rank. */
+36          Employee emp = getHandlerForCall(call);
 37          if (emp != null) {
 38              emp.receiveCall(call);
 39              call.setHandler(emp);
 40          }  else {
-41              /*  Place  the  call into   corresponding call  queue according  to  its rank.  */
-42              call.reply("Please wait  for   free employee to  reply");
+41              /* Place the call into corresponding call queue according to its rank. */
+42              call.reply("Please wait for free employee to reply");
 43              callQueues.get(call.getRank().getValue()).add(call);
 44          }
 45      }
 46  
-47      /*An  employee got  free. Look for  a waiting   call that employee can serve.  Return
-48      * true  if we  assigned a  call, false otherwise. */
-49      public boolean  assignCall(Employee emp) {... }
+47      /* An employee got free. Look for a waiting call that employee can serve. Return
+48       * true if we assigned a call, false otherwise. */
+49      public boolean assignCall(Employee emp) {... }
 50  }
 ```
 
 Call represents a call from a user. A call has a minimum rank and is assigned to the first employee who can handle it.
 
 ```java
-1   public class  Call  {
-2       /*Minimal rank of  employee who can handle  this call.*/
+1   public class Call {
+2       /* Minimal rank of employee who can handle this call.*/
 3       private Rank rank;
 4   
-5       /*Person   who  is calling.*/
+5       /* Person who is calling.*/
 6       private Caller caller;
 7   
-8       /*Employee who  is handling  call.*/
+8       /* Employee who is handling call.*/
 9       private Employee handler;
 10  
-11      public Call(Caller  c)  {
-12          rank  =  Rank.Responder;
-13          caller =  c;
+11      public Call(Caller c) {
+12          rank = Rank.Responder;
+13          caller = c;
 14      }
 15  
-16      /*Set employee who  is handling  call.*/
-17      public void  setHandler(Employee  e)  {handler = e; }
+16      /* Set employee who is handling call.*/
+17      public void setHandler(Employee e) {handler = e; }
 18  
-19      public void reply(String message)  {... }
-20      public Rank getRank()  {return  rank;}
-21      public void setRank(Rank r)   {rank  =  r; }
-22      public Rank incrementRank()  {... }
-23      public void disconnect()  {  ... }
+19      public void reply(String message) {... }
+20      public Rank getRank() {return rank;}
+21      public void setRank(Rank r) {rank = r; }
+22      public Rank incrementRank() {... }
+23      public void disconnect() { ... }
 24  }
 ```
 
@@ -342,28 +342,28 @@ Employee is a super class for the Director, Manager, and Respondent classes. It 
 
 ```java
 1   abstract class Employee {
-2       private Call  currentCall =  null;
+2       private Call currentCall = null;
 3       protected Rank rank;
 4   
-5       public Employee(CallHandler  handler)   { ... }
+5       public Employee(CallHandler handler) { ... }
 6   
-7       /*Start the  conversation*/
-8       public void receiveCall(Call call)  {  ... }
+7       /*Start the conversation*/
+8       public void receiveCall(Call call) { ... }
 9   
-10      /*the issue is  resolved, finish the  call*/
-11      public void callCompleted()  {  ... }
+10      /*the issue is resolved, finish the call*/
+11      public void callCompleted() { ... }
 12  
-13      /*The issue has  not  been resolved. Escalate the  call, and assign a new call to
-14      * the  employee. */
-15      public void  escalateAndReassign()  { ... }
+13      /*The issue has not been resolved. Escalate the call, and assign a new call to
+14       * the employee. */
+15      public void escalateAndReassign() { ... }
 16  
-17      /*Assign  a new call to  an employee,  if the  employee is free.*/
-18      public boolean assignNewCall()   {  ... }
+17      /*Assign a new call to an employee, if the employee is free.*/
+18      public boolean assignNewCall() { ... }
 19  
-20      /*Returns  whether  or  not  the  employee is free.*/
-21      public boolean isFree()  { return currentCall ==  null;  }
+20      /*Returns whether or not the employee is free.*/
+21      public boolean isFree() { return currentCall == null; }
 22  
-23      public Rank getRank()  {  return rank; }
+23      public Rank getRank() { return rank; }
 24  }
 25
 ```
@@ -371,21 +371,21 @@ Employee is a super class for the Director, Manager, and Respondent classes. It 
 The Respondent, Director, and Manager classes are now just simple extensions of the  Employee class.
 
 ```java
-1   class  Director extends Employee {
-2       public Director()  {
-3           rank =  Rank.Director;
+1   class Director extends Employee {
+2       public Director() {
+3           rank = Rank.Director;
 4       }
 5   }
 6   
-7   class Manager extends  Employee {
-8       public Manager()  {
-9           rank  =  Rank.Manager;
+7   class Manager extends Employee {
+8       public Manager() {
+9           rank = Rank.Manager;
 10      }
 11  }
 12  
-13  class Respondent  extends  Employee {
-14      public  Respondent() {
-15          rank  =  Rank.Responder;
+13  class Respondent extends Employee {
+14      public Respondent() {
+15          rank = Rank.Responder;
 16      }
 17  }
 ```
@@ -434,57 +434,57 @@ Each of the main system components  translates roughly to an object, and each ac
 The Jukebox class represents the body of the problem. Many of the interactions between the components of the system, or between the system and the user, are channeled through here.
 
 ```java
-1   public class Jukebox  {
-2       private CDPlayer  cdPlayer;
-3       private User  user;
+1   public class Jukebox {
+2       private CDPlayer cdPlayer;
+3       private User user;
 4       private Set<CD> cdCollection;
 5       private SongSelector ts;
 6   
-7       public Jukebox(CDPlayer  cdPlayer,  User  user,  Set<CD>  cdCollection,
-8                   SongSelector ts) {  ....   }
+7       public Jukebox(CDPlayer cdPlayer, User user, Set<CD> cdCollection,
+8                   SongSelector ts) { .... }
 9   
-10      public Song getCurrentSong()  {  return  ts.getCurrentSong(); }
-11      public void setUser(User  u)  {  this.user =  u;}
+10      public Song getCurrentSong() { return ts.getCurrentSong(); }
+11      public void setUser(User u) { this.user = u;}
 12  }
 ```
 
 Like a real CD player, the CDP layer class supports storing just one CD at a time. The CDs that are not in play are stored in the jukebox.
 
 ```java
-1   public class CDPlayer  {
+1   public class CDPlayer {
 2       private Playlist p;
-3       private CD  c;
+3       private CD c;
 4   
 5       /*Constructors.*/
-6       public CDPlayer(CD c,   Playlist p)  {...}
-7       public CDPlayer(Playlist p)  {  this.p =  p;}
-8       public CDPlayer(CD c)  {  this.c =  c;}
+6       public CDPlayer(CD c, Playlist p) {...}
+7       public CDPlayer(Playlist p) { this.p = p;}
+8       public CDPlayer(CD c) { this.c = c;}
 9   
 10      /*Play song*/
-11      public void  playSong(Song s)  {  ... }
+11      public void playSong(Song s) { ... }
 12  
-13      /*Getters and  setters*/
-14      public Playlist  getPlaylist()  { return p;}
-15      public void  setPlaylist(Playlist p)  {  this.p =  p;}
+13      /*Getters and setters*/
+14      public Playlist getPlaylist() { return p;}
+15      public void setPlaylist(Playlist p) { this.p = p;}
 16  
-17      public CD   getCD()  {  return c; }
-18      public void setCD(CD c)  { this.c =  c; }
+17      public CD getCD() { return c; }
+18      public void setCD(CD c) { this.c = c; }
 19  }
 ```
 
 The Playlist manages the current and next songs to play. It is essentially a wrapper class for a queue and offers some additional methods for convenience.
 
 ```java
-1   public class Playlist  {
-2       private Song  song;
+1   public class Playlist {
+2       private Song song;
 3       private Queue<Song> queue;
-4       public  Playlist(Song  song, Queue<Song>   queue) {
+4       public Playlist(Song song, Queue<Song> queue) {
 5   
 6       }
-7       public Song getNextSToPlay()  {
-8           return  queue.peek();
+7       public Song getNextSToPlay() {
+8           return queue.peek();
 9       }
-10      public  void queueUpSong(Song  s) {
+10      public void queueUpSong(Song s) {
 11          queue.add(s);
 12      }
 13  }
@@ -493,20 +493,20 @@ The Playlist manages the current and next songs to play. It is essentially a wra
 The classes  for CD, Song, and  User are all fairly straightforward. They consist mainly  of member variables and  getters and  setters.
 
 ```java
-1   public  class CD   {/*  data for id,  artist, songs, etc  */}
+1   public class CD {/* data for id, artist, songs, etc */}
 2   
-3   public  class Song   {/*  data for id,  CD  (could be  null), title,  length,  etc  */}
+3   public class Song {/* data for id, CD (could be null), title, length, etc */}
 4   
-5   public  class  User {
-6       private String  name;
-7       public String  getName() { return name;}
-8       public void setName(String name)   {   this.name = name;}
+5   public class User {
+6       private String name;
+7       public String getName() { return name;}
+8       public void setName(String name) { this.name = name;}
 9       public long getID() { return ID;}
-10      public void setID(long  iD) {ID = iD;}
+10      public void setID(long iD) {ID = iD;}
 11      private long ID;
-12      public User(String name,   long iD) {  ... }
+12      public User(String name, long iD) { ... }
 13      public User getUser() { return this;}
-14      public static  User addUser(String  name,   long iD) {  ... }
+14      public static User addUser(String name, long iD) { ... }
 15  }
 ```
 
@@ -534,126 +534,126 @@ For our purposes right now, we'll make the  following assumptions. We made these
 In the below implementation, we have created an abstract class Vehicle, from which Car, Bus, and Motorcycle inherit. To handle the different parking spot sizes, we have just one class ParkingSpot which has a member variable indicating the size. 
 
 ```java
-1   public enum  VehicleSize {  Motorcycle,   Compact, Large }
+1   public enum VehicleSize { Motorcycle, Compact, Large }
 2   
-3   public abstract class Vehicle  {
-4       protected ArrayList<ParkingSpot> parkingSpots  = new ArrayList<ParkingSpot>();
+3   public abstract class Vehicle {
+4       protected ArrayList<ParkingSpot> parkingSpots = new ArrayList<ParkingSpot>();
 5       protected String licensePlate;
 6       protected int spotsNeeded;
 7       protected VehicleSize size;
 8   
-9       public int getSpotsNeeded() {  return spotsNeeded;   }
-10      public VehicleSize getSize()  {  return size;  }
+9       public int getSpotsNeeded() { return spotsNeeded; }
+10      public VehicleSize getSize() { return size; }
 11  
-12      /*  Park  vehicle in  this spot  (among others, potentially) */
-13      public void parkinSpot(ParkingSpot s)  {  parkingSpots.add(s);  }
+12      /* Park vehicle in this spot (among others, potentially) */
+13      public void parkinSpot(ParkingSpot s) { parkingSpots.add(s); }
 14  
-15      /*  Remove  car  from spot,  and notify spot  that it's gone */
-16      public void clearSpots() {  ... }
+15      /* Remove car from spot, and notify spot that it's gone */
+16      public void clearSpots() { ... }
 17  
-18      /* Checks if the  spot  is big  enough for  the  vehicle (and  is  available). This
-19      * compares the  SIZE only. It does  not  check if it has  enough spots. */
+18      /* Checks if the spot is big enough for the vehicle (and is available). This
+19      * compares the SIZE only. It does not check if it has enough spots. */
 20      public abstract boolean canFitInSpot(ParkingSpot spot);
 21  }
 22  
-23      public class  Bus extends  Vehicle  {
+23      public class Bus extends Vehicle {
 24          public Bus() {
-25          spotsNeeded  =  5;
-26          size =  VehicleSize.Large;
+25          spotsNeeded = 5;
+26          size = VehicleSize.Large;
 27      }
 28  
-29      /*  Checks if the  spot  is a  Large.  Doesn't  check num  of  spots  */
-30      public boolean  canFitInSpot(ParkingSpot spot)  {             }
+29      /* Checks if the spot is a Large. Doesn't check num of spots */
+30      public boolean canFitInSpot(ParkingSpot spot) {        }
 31  }
 32  
-33  public class Car extends  Vehicle  {
+33  public class Car extends Vehicle {
 34      public Car() {
-35          spotsNeeded  =  1;
-36          size =  VehicleSize.Compact;
+35          spotsNeeded = 1;
+36          size = VehicleSize.Compact;
 37      }
 38  
-39      /*  Checks if the  spot  is a Compact  or  a Large.  */
-40      public boolean  canFitInSpot(ParkingSpot spot)  {  ... }
+39      /* Checks if the spot is a Compact or a Large. */
+40      public boolean canFitInSpot(ParkingSpot spot) { ... }
 41  }
 42  
-43  public class Motorcycle  extends  Vehicle  {
-44      public  Motorcycle() {
-45          spotsNeeded  =  1;
-46          size =  VehicleSize.Motorcycle;
+43  public class Motorcycle extends Vehicle {
+44      public Motorcycle() {
+45          spotsNeeded = 1;
+46          size = VehicleSize.Motorcycle;
 47      }
 48  
-49      public   boolean  canFitInSpot(ParkingSpot spot)  {  ... }
+49      public boolean canFitInSpot(ParkingSpot spot) { ... }
 50  }
 ```
 
 The ParkingLot class is essentially a wrapper class for an array of Levels. By implementing it this way, we are able to separate out logic that deals with actually finding free spots and parking cars out from the broader actions of the ParkingLot. If we didn't do it this way, we would need to hold parking spots in some sort of double array (or hash table which maps from a level number to the list of spots).  It's cleaner to just separate ParkingLot from Level.
 
 ```java
-1   public class ParkingLot  {
-2       private Level[]   levels;
-3       private final int NUM_LEVELS  =  5;
+1   public class ParkingLot {
+2       private Level[] levels;
+3       private final int NUM_LEVELS = 5;
 4   
-5       public ParkingLot() {  ... }
+5       public ParkingLot() { ... }
 6   
-7       /*  Park the  vehicle in  a  spot  (or   multiple spots).  Return  false if failed. */
-8       public boolean  parkVehicle(Vehicle vehicle)  {  ... }
+7       /* Park the vehicle in a spot (or multiple spots). Return false if failed. */
+8       public boolean parkVehicle(Vehicle vehicle) { ... }
 9   }
 10  
-11  /*  Represents a  level   in  a parking  garage  */
-12  public class  Level {
+11  /* Represents a level in a parking garage */
+12  public class Level {
 13      private int floor;
-14      private  ParkingSpot[] spots;
-15      private int  availableSpots =  0; // number of  free  spots
-16      private static  final int SPOTS_PER_ROW  =   10;
+14      private ParkingSpot[] spots;
+15      private int availableSpots = 0; // number of free spots
+16      private static final int SPOTS_PER_ROW = 10;
 17  
-18      public Level(int flr,  int  numberSpots)  { ... }
+18      public Level(int flr, int numberSpots) { ... }
 19  
-20      public int availableSpots() {  return availableSpots;  }
+20      public int availableSpots() { return availableSpots; }
 21  
-22      /*  Find a  place   to  park  this vehicle. Return  false if  failed. */
-23      public boolean  parkVehicle(Vehicle vehicle)  { ... }
+22      /* Find a place to park this vehicle. Return false if failed. */
+23      public boolean parkVehicle(Vehicle vehicle) { ... }
 24  
-25      /*  Park  a  vehicle starting at the  spot  spotNumber, and continuing until
-26      *  vehicle.spotsNeeded. */
-27      private boolean  parkStartingAtSpot(int  num, Vehicle  v)  { ... }
+25      /* Park a vehicle starting at the spot spotNumber, and continuing until
+26       * vehicle.spotsNeeded. */
+27      private boolean parkStartingAtSpot(int num, Vehicle v) { ... }
 28  
-29      /*  Find  a  spot  to  park  this vehicle. Return  index  of  spot,  or  -1 on failure. */
-30      private  int  findAvailableSpots(Vehicle vehicle)  { ... }
+29      /* Find a spot to park this vehicle. Return index of spot, or -1 on failure. */
+30      private int findAvailableSpots(Vehicle vehicle) { ... }
 31  
-32      /*  When  a  car  was removed from the  spot,  increment  availableSpots */
-33      public void  spotFreed() {  availableSpots++; }
+32      /* When a car was removed from the spot, increment availableSpots */
+33      public void spotFreed() { availableSpots++; }
 34  }
 ```
 
 The ParkingSpot is implemented by having just a variable which represents the size of the spot. We could have implemented this by having classes for LargeSpot, CompactSpot, and MotorcycleSpot which inherit from ParkingSpot, but this is probably overkill. The spots probably do not have different behaviors, other than their sizes.
 
 ```java
-1   public class  ParkingSpot  {
-2       private Vehicle  vehicle;
+1   public class ParkingSpot {
+2       private Vehicle vehicle;
 3       private VehicleSize spotSize;
 4       private int row;
 5       private int spotNumber;
 6       private Level level;
 7   
-8       public  ParkingSpot(Level lvl, int r,  int n,  VehicleSize   s) {...}
+8       public ParkingSpot(Level lvl, int r, int n, VehicleSize s) {...}
 9   
-10      public boolean  isAvailable() {  return  vehicle == null; }
+10      public boolean isAvailable() { return vehicle == null; }
 11  
-12      /* Check   if the spot is b ig  enough  and   is available */
-13      public boolean canFitVehicle(Vehicle vehicle)  {  ... }
+12      /* Check if the spot is big enough and is available */
+13      public boolean canFitVehicle(Vehicle vehicle) { ... }
 14  
-15      /* Park vehicle in this  spot. */
-16      public boolean park(Vehicle  v)   {           }
+15      /* Park vehicle in this spot. */
+16      public boolean park(Vehicle v) {           }
 17  
-18      public int  getRow()  {  return row;   }
-19      public int  getSpotNumber()  {  return spotNumber;  }
+18      public int getRow() { return row; }
+19      public int getSpotNumber() { return spotNumber; }
 20  
-21      /* Remove  vehicle from   spot,  and   notify level that a  new  spot is available  */
-22      public  void removeVehicle() {  ... }
+21      /* Remove vehicle from spot, and notify level that a new spot is available */
+22      public void removeVehicle() { ... }
 23  }
 ```
 
-A full implementation of this  code,  including executable test  code,  is provided in the  downloadable code attachment.
+A full implementation of this code,  including executable test code,  is provided in the downloadable code attachment.
 
  
 **7.5         Online Book Reader:** Design the data structures for an online book reader system.
@@ -676,7 +676,7 @@ To implement these operations we may  require many other functions, like get, se
 The class OnlineReaderSystem represents the body of our program. We could implement the class such that it stores information about all the books, deals with user  management, and  refreshes the  display,  but that would make this class rather hefty.  Instead, we've chosen to tear off these components into  Library, UserManager, and  Display classes.
 
 ```java
-1   public  class  OnlineReaderSystem {
+1   public class OnlineReaderSystem {
 2       private Library library;
 3       private UserManager userManager;
 4       private Display display;
@@ -684,25 +684,25 @@ The class OnlineReaderSystem represents the body of our program. We could implem
 6       private Book activeBook;
 7       private User activeUser;
 8   
-9       public  OnlineReaderSystem() {
-10          userManager  =  new  UserManager();
-11          library =  new  Library();
-12          display =  new  Display();
+9       public OnlineReaderSystem() {
+10          userManager = new UserManager();
+11          library = new Library();
+12          display = new Display();
 13      }
 14  
-15      public Library getLibrary()  {  return library; }
-16      public UserManager getUserManager()  {  return userManager;}
-17      public Display  getDisplay() { return display; }
+15      public Library getLibrary() { return library; }
+16      public UserManager getUserManager() { return userManager;}
+17      public Display getDisplay() { return display; }
 18  
-19      public Book getActiveBook() {  return  activeBook; }
-20      public void setActiveBook(Book book)  {
-21          activeBook =  book;
+19      public Book getActiveBook() { return activeBook; }
+20      public void setActiveBook(Book book) {
+21          activeBook = book;
 22          display.displayBook(book);
 23      }
 24  
-25      public User getActiveUser() {  return activeUser; }
-26      public void setActiveUser(User user)  {
-27          activeUser =  user;
+25      public User getActiveUser() { return activeUser; }
+26      public void setActiveUser(User user) {
+27          activeUser = user;
 28          display.displayuser(user);
 29      }
 30  }
@@ -711,20 +711,20 @@ The class OnlineReaderSystem represents the body of our program. We could implem
 We then implement separate classes to handle the user manager, the library, and the display components.
 
 ```java
-1   public class  Library   {
-2       private HashMap<Integer, Book>  books;
+1   public class Library {
+2       private HashMap<Integer, Book> books;
 3   
-4       public Book addBook(int  id,   String details)  {
+4       public Book addBook(int id, String details) {
 5           if (books.containsKey(id)) {
 6               return null;
 7           }
-8           Book book =  new Book(id,  details);
-9           books.put(id,  book);
-10          return  book;
+8           Book book = new Book(id, details);
+9           books.put(id, book);
+10          return book;
 11      }
 12  
-13      public boolean  remove(Book b)  {  return remove(b.getID()); }
-14      public boolean  remove(int id)  {
+13      public boolean remove(Book b) { return remove(b.getID()); }
+14      public boolean remove(int id) {
 15          if (!books.containsKey(id)) {
 16              return false;
 17          }
@@ -740,18 +740,18 @@ We then implement separate classes to handle the user manager, the library, and 
 27  public class UserManager {
 28      private HashMap<Integer, User> users;
 29  
-30      public User addUser(int id,   String details, int accountType)  {
-31          if (users.containsKey(id))  {
+30      public User addUser(int id, String details, int accountType) {
+31          if (users.containsKey(id)) {
 32              return null;
 33          }
-34          User  user  =  new User(id, details,  accountType);
-35          users.put(id,  user);
+34          User user = new User(id, details, accountType);
+35          users.put(id, user);
 36          return user;
 37      }
 38  
 39      public User find(int id) { return users.get(id); }
-40      public boolean remove(User u)  { return remove(u.getID()); }
-41      public boolean remove(int id)  {
+40      public boolean remove(User u) { return remove(u.getID()); }
+41      public boolean remove(int id) {
 42          if (!users.containsKey(id)) {
 43              return false;
 44          }
@@ -760,19 +760,19 @@ We then implement separate classes to handle the user manager, the library, and 
 47      }
 48  }
 49  
-50  public   class Display  {
+50  public class Display {
 51      private Book activeBook;
 52      private User activeuser;
-53      private int pageNumber   =  0;
+53      private int pageNumber = 0;
 54  
-55      public void displayUser(User user)  {
-56          activeUser =  user;
+55      public void displayUser(User user) {
+56          activeUser = user;
 57          refreshUsername();
 58      }
 59  
 60      public void displayBook(Book book) {
-61          pageNumber  =  0;
-62          activeBook  =  book;
+61          pageNumber = 0;
+62          activeBook = book;
 63  
 64          refreshTitle();
 65          refreshDetails();
@@ -784,15 +784,15 @@ We then implement separate classes to handle the user manager, the library, and 
 71          refreshPage();
 72      }
 73  
-74      public   void  turnPageBackward()  {
+74      public void turnPageBackward() {
 75          pageNumber--;
 76          refreshPage();
 77      }
 78  
-79      public void  refreshUsername()  {/* updates  username display*/}
-80      public void  refreshTitle() {/*  updates  title display*/}
-81      public void  refreshDetails() {/*  updates  details  display*/ }
-82      public void  refreshPage() {/*  updated  page display*/}
+79      public void refreshUsername() {/* updates username display*/}
+80      public void refreshTitle() {/* updates title display*/}
+81      public void refreshDetails() {/* updates details display*/ }
+82      public void refreshPage() {/* updated page display*/}
 83  }
 ```
 
@@ -800,45 +800,45 @@ The classes for User and Book simply hold data and provide little true functiona
 
 ```java
 1   public class Book {
-2       private int  bookId;
+2       private int bookId;
 3       private String details;
 4   
-5       public Book(int  id,   String det) {
-6           bookId  =  id;
-7           details =  det;
+5       public Book(int id,  String det) {
+6           bookId = id;
+7           details = det;
 8       }
 9   
-10      public  int  getID() { return  bookId; }
-11      public  void  setID(int id) {  bookId  = id; }
-12      public  String getDetails()  { return details;  }
-13      public  void  setDetails(String d)  { details  =  d };
+10      public int getID() { return bookId; }
+11      public void setID(int id) { bookId = id; }
+12      public String getDetails() { return details; }
+13      public void setDetails(String d) { details = d };
 14  }
 15  
-16  public class User   {
+16  public class User {
 17      private int userId;
 18      private String details;
 19      private int accountType;
 20  
-21      public  void renewMembership()  {  }
+21      public void renewMembership() { }
 22  
-23      public User(int id, String details,  int  accountType)  {
+23      public User(int id, String details, int accountType) {
 24          userId = id;
-25          this.details =  details;
-26          this.accountType =  accountType;
+25          this.details = details;
+26          this.accountType = accountType;
 27      }
 28  
-29      /* Getters and  setters */
+29      /* Getters and setters */
 30      public int getID() { return userId; }
-31      public void setID(int  id)  { userId = id; }
-32      public String getDetails()  {
+31      public void setID(int id) { userId = id; }
+32      public String getDetails() {
 33          return details;
 34      }
 35  
-36      public void setDetails(String  details)  {
-37          this.details =  details;
+36      public void setDetails(String details) {
+37          this.details = details;
 38      }
-39      public int getAccountType()  {  return accountType }
-40      public void setAccountType(int t) {  accountType  = t; }
+39      public int getAccountType() { return accountType }
+40      public void setAccountType(int t) { accountType = t; }
 41  }
 ```
 
@@ -877,73 +877,73 @@ Edge will have just its shape and a pointer back to its parent piece. It will no
 A potential object-oriented design looks like the following:
 
 ```java
-1   public  enum  Orientation {
-2       LEFT, TOP, RIGHT, BOTTOM;  //  Should stay in  this  order
+1   public enum Orientation {
+2       LEFT, TOP, RIGHT, BOTTOM; // Should stay in this order
 3   
-4       public  Orientation getOpposite()  {
+4       public Orientation getOpposite() {
 5           switch (this) {
-6           case LEFT: return  RIGHT;
-7           case RIGHT:  return  LEFT;
-8           case TOP:  return  BOTTOM;
-9           case BOTTOM:  return  TOP;
-10          default: return  null;
+6           case LEFT: return RIGHT;
+7           case RIGHT: return LEFT;
+8           case TOP: return BOTTOM;
+9           case BOTTOM: return TOP;
+10          default: return null;
 11          }
 12      }
 13  }
 14  
-15  public  enum  Shape   {
-16      INNER,  OUTER,  FLAT;
+15  public enum Shape {
+16      INNER, OUTER, FLAT;
 17  
-18      public  Shape getOpposite()  {
+18      public Shape getOpposite() {
 19          switch (this) {
-20          case INNER:  return  OUTER;
-21          case OUTER:  return  INNER;
-22          default:  return  null;
+20          case INNER: return OUTER;
+21          case OUTER: return INNER;
+22          default: return null;
 23          }
 24      }
 25  }
 26  
-27  public   class Puzzle  {
-28      private  LinkedList<Piece> pieces;  /*  Remaining pieces to  put  away. */
+27  public class Puzzle {
+28      private LinkedList<Piece> pieces; /* Remaining pieces to put away. */
 29      private Piece[][] solution;
 30      private int size;
 31  
-32      public   Puzzle(int  size,   LinkedList<Piece> pieces)  {  ... }
+32      public Puzzle(int size, LinkedList<Piece> pieces) { ... }
 33  
 34  
-35      /*  Put  piece  into the  solution,  turn  it appropriately,  and remove from list. */
-36      private void  setEdgeinSolution(LinkedList<Piece> pieces,  Edge edge,  int row,
-37              int column, Orientation orientation)  {
-38          Piece  piece  =  edge.getParentPiece();
-39          piece.setEdgeAsOrientation(edge,  orientation);
+35      /* Put piece into the solution, turn it appropriately, and remove from list. */
+36      private void setEdgeinSolution(LinkedList<Piece> pieces, Edge edge, int row,
+37              int column, Orientation orientation) {
+38          Piece piece = edge.getParentPiece();
+39          piece.setEdgeAsOrientation(edge, orientation);
 40          pieces.remove(piece);
-41          solution[row][column]  =  piece;
+41          solution[row][column] = piece;
 42      }
 43  
-44      /*  Find the  matching piece  in  piecesToSearch  and insert it at row,  column. */
-45      private boolean  fitNextEdge(LinkedList<Piece> piecesToSearch,   int row,  int col);
+44      /* Find the matching piece in piecesToSearch and insert it at row, column. */
+45      private boolean fitNextEdge(LinkedList<Piece> piecesToSearch, int row, int col);
 46  
-48      /*  Solve  puzzle.  */
-48      public  boolean  solve() {  ... }
+48      /* Solve puzzle. */
+48      public boolean solve() { ... }
 49  }
 50  
-51  public   class Piece  {
-52      private HashMap<Orientation,  Edge> edges     new HashMap<Orientation,  Edge>();
+51  public class Piece {
+52      private HashMap<Orientation, Edge> edges new HashMap<Orientation, Edge>();
 53  
-54      public Piece(Edge[]   edgeList) {  ... }
+54      public Piece(Edge[] edgeList) { ... }
 55  
-56      /*  Rotate  edges  by  "numberRotations". */
-57      public void rotateEdgesBy(int numberRotations)  {  ... }
+56      /* Rotate edges by "numberRotations". */
+57      public void rotateEdgesBy(int numberRotations) { ... }
 58  
-59      public boolean  isCorner() { ... }
-60      public boolean  isBorder() { ... }
+59      public boolean isCorner() { ... }
+60      public boolean isBorder() { ... }
 61  }
 62  
-63  public   class Edge {
+63  public class Edge {
 64      private Shape shape;
 65      private Piece parentPiece;
-66      public  Edge(Shape shape)  {  ... }
-67      public  boolean  fitsWith(Edge edge)  {  ... }
+66      public Edge(Shape shape) { ... }
+67      public boolean fitsWith(Edge edge) { ... }
 68  }
 ```
 
@@ -956,45 +956,45 @@ Once we've done that, we'll pick an arbitrary corner piece and put it in the top
 The code below outlines this algorithm.
 
 ```java
-1   /*Find  the  matching  piece  within   piecesToSearch  and insert it at row,  column. */
-2   boolean  fitNextEdge(LinkedList<Piece> piecesToSearch, int  row,  int column)  {
-3       if (row == 0 &&   column == 0)  {//On top  left  corner, just put  in  a piece
-4           Piece  p =  piecesToSearch.remove();
+1   /*Find the matching piece within piecesToSearch and insert it at row, column. */
+2   boolean fitNextEdge(LinkedList<Piece> piecesToSearch, int row, int column) {
+3       if (row == 0 && column == 0) {//On top left corner, just put in a piece
+4           Piece p = piecesToSearch.remove();
 5           orientTopleftCorner(p);
 6           solution[0][0] = p;
 7       }  else {
-8           /*Get  the  right edge and list to  match.    */
-9           Piece  pieceToMatch =  column ==  0 ?  solution[row -  1][0]  :
-10                                                 solution[row][column  -  1];
+8           /*Get the right edge and list to match. */
+9           Piece pieceToMatch = column == 0 ? solution[row - 1][0] :
+10                                                 solution[row][column - 1];
 11          Orientation  orientationToMatch = column == 0 ? Orientation.BOTTOM : 
 12                                                          Orientation.RIGHT;
 13          Edge edgeToMatch = pieceToMatch.getEdgeWithOrientation(orientationToMatch);
 14  
-15          /*Get  matching  edge.    */
-16          Edge edge =  getMatchingEdge(edgeToMatch, piecesToSearch);
-17          if (edge  ==  null) return false;   //Can't  solve
+15          /*Get matching edge. */
+16          Edge edge = getMatchingEdge(edgeToMatch, piecesToSearch);
+17          if (edge == null) return false; //Can't solve
 18  
-19          /*Insert piece  and edge.    */
-20          Orientation orientation  = orientationToMatch.getOpposite();
-21          setEdgeinSolution(piecesToSearch,  edge,  row,  column,  orientation);
+19          /*Insert piece and edge. */
+20          Orientation orientation = orientationToMatch.getOpposite();
+21          setEdgeInSolution(piecesToSearch, edge, row, column, orientation);
 22      }
 23      return true;
 24  }
 25  
-26  boolean  solve() {
-27      /*Group pieces.   */
-28      LinkedList<Piece> cornerPieces = new  LinkedList<Piece>();
-29      LinkedList<Piece> borderPieces = new  LinkedList<Piece>();
-30      LinkedList<Piece> insidePieces = new  LinkedList<Piece>();
-31      groupPieces(cornerPieces,  borderPieces,  insidePieces);
+26  boolean solve() {
+27      /*Group pieces. */
+28      LinkedList<Piece> cornerPieces = new LinkedList<Piece>();
+29      LinkedList<Piece> borderPieces = new LinkedList<Piece>();
+30      LinkedList<Piece> insidePieces = new LinkedList<Piece>();
+31      groupPieces(cornerPieces, borderPieces, insidePieces);
 32  
-33      /*Walk through  puzzle,   finding the  piece   that joins the  previous one.    */
-34      solution = new  Piece[size][size];
-35      for  (int row =  0;  row <  size;  row++) {
-36          for  (int column =  0;  column <  size; column++) {
-37              LinkedList<Piece> piecesToSearch  =  getPieceListToSearch(cornerPieces,
-38                  borderPieces, insidePieces,  row,  column);
-39              if (!fitNextEdge(piecesToSearch,  row,  column))  {
+33      /*Walk through puzzle, finding the piece that joins the previous one. */
+34      solution = new Piece[size][size];
+35      for (int row = 0; row < size; row++) {
+36          for (int column = 0; column < size; column++) {
+37              LinkedList<Piece> piecesToSearch = getPieceListToSearch(cornerPieces,
+38                  borderPieces, insidePieces, row, column);
+39              if (!fitNextEdge(piecesToSearch, row, column)) {
 40                  return false;
 41              }
 42          }
@@ -1052,28 +1052,28 @@ The server will consist of a set of machines. Data will be split across machines
 The key objects of the  system will be a concept of users, conversations, and status messages. We've implemented a UserManager class. If we were  looking more at the  networking aspects of the problem, or a different component, we might have instead dived into those objects.
 
 ```java
-1   /*  UserManager serves as a  central place for core user actions. */
-1   public class UserManager  {
-2       private static UserManager  instance;
-3       /* maps  from   a  user id to a  user */
-4       private HashMap<Integer,  User>   usersByid;
+1   /* UserManager serves as a central place for core user actions. */
+1   public class UserManager {
+2       private static UserManager instance;
+3       /* maps from a user id to a user */
+4       private HashMap<Integer, User> usersByid;
 5   
-6       /* maps  from   an  account name  to a  user */
-7       private HashMap<String,  User>   usersByAccountName;
+6       /* maps from an account name to a user */
+7       private HashMap<String, User> usersByAccountName;
 8   
-9       /* maps  from   the user id to an  online user */
-10      private HashMap<Integer,  User>   onlineUsers;
+9       /* maps from the user id to an online user */
+10      private HashMap<Integer, User> onlineUsers;
 11  
-12      public static  UserManager getinstance() {
-13          if (instance == null) instance =  new  UserManager();
+12      public static UserManager getinstance() {
+13          if (instance == null) instance = new UserManager();
 14          return instance;
 15      }
 16  
-17      public  void addUser(User fromUser, String  toAccountName)  {  ... }
-18      public  void approveAddRequest(AddRequest req) {  ... }
-19      public  void rejectAddRequest(AddRequest req)  {   ... }
-20      public  void userSignedOn(String accountName)  {  ... }
-21      public  void userSignedOff(String accountName)  {  ... }
+17      public void addUser(User fromUser, String toAccountName) { ... }
+18      public void approveAddRequest(AddRequest req) { ... }
+19      public void rejectAddRequest(AddRequest req) { ... }
+20      public void userSignedOn(String accountName) { ... }
+21      public void userSignedOff(String accountName) { ... }
 22  }
 ```
 
@@ -1089,108 +1089,108 @@ The method sentAddRequest in the  User class  is called by UserManager to add an
 Again, this is just one way of designing these interactions. It is not the only way, or even the only "good" way.
 
 ```java
-1   public  class  User {
+1   public class User {
 2       private int id;
-3       private UserStatus status  =  null;
+3       private UserStatus status = null;
 4   
-5       /* maps  from   the other participant's  user id to the chat */
-6       private HashMap<Integer, PrivateChat>  privateChats;
+5       /* maps from the other participant's user id to the chat */
+6       private HashMap<Integer, PrivateChat> privateChats;
 7   
-8       /* list of group chats  */
+8       /* list of group chats */
 9       private ArrayList<GroupChat> groupChats;
 10  
-11      /*  maps from the  other person's user  id  to  the  add request */
+11      /* maps from the other person's user id to the add request */
 12      private HashMap<Integer, AddRequest> receivedAddRequests;
 13  
-14      /*  maps from the  other person's user  id  to  the  add request */
-15      private HashMap<Integer, AddRequest>  sentAddRequests;
+14      /* maps from the other person's user id to the add request */
+15      private HashMap<Integer, AddRequest> sentAddRequests;
 16  
-17      /*  maps from the  user  id  to  user  object */
+17      /* maps from the user id to user object */
 18      private HashMap<Integer, User> contacts;
 19  
 20      private String accountName;
 21      private String fullName;
 22  
-23      public User(int id,   String accountName, String fullName)  {  ... }
-24      public boolean  sendMessageToUser(User to,   String content) {  ... }
-25      public boolean  sendMessageToGroupChat(int id,   String cnt) {...}
-26      public void  setStatus(UserStatus status)  {            }
-27      public UserStatus getStatus()  {  ... }
-28      public boolean  addContact(User   user)   {  ... }
-29      public void  receivedAddRequest(AddRequest req)  {  ... }
-30      public void  sentAddRequest(AddRequest req)  {  ... }
-31      public void  removeAddRequest(AddRequest  req)   {  ... }
-32      public void  requestAddUser(String accountName) {  ... }
-33      public void  addConversation(PrivateChat conversation)  {         }
-34      public void  addConversation(GroupChat  conversation) {   ... }
-35      public int getid() {  ... }
-36      public String getAccountName() {   ... }
-37      public String getFullName()  {  ... }
+23      public User(int id, String accountName, String fullName) { ... }
+24      public boolean sendMessageToUser(User to, String content) { ... }
+25      public boolean sendMessageToGroupChat(int id, String cnt) {...}
+26      public void setStatus(UserStatus status) {            }
+27      public UserStatus getStatus() { ... }
+28      public boolean addContact(User user) { ... }
+29      public void receivedAddRequest(AddRequest req) { ... }
+30      public void sentAddRequest(AddRequest req) { ... }
+31      public void removeAddRequest(AddRequest req) { ... }
+32      public void requestAddUser(String accountName) { ... }
+33      public void addConversation(PrivateChat conversation) {         }
+34      public void addConversation(GroupChat conversation) { ... }
+35      public int getid() { ... }
+36      public String getAccountName() { ... }
+37      public String getFullName() { ... }
 38  }
 ```
 
 The Conversation class is implemented  as an abstract class, since all Conversations must be either a GroupChat or a PrivateChat, and since these two classes each have their own functionality.
 
 ```java
-1   public abstract  class  Conversation {
+1   public abstract class Conversation {
 2       protected ArrayList<User> participants;
 3       protected int id;
-4       protected ArrayList<Message>   messages;
+4       protected ArrayList<Message> messages;
 5   
-6       public ArrayList<Message>   getMessages()  {  ... }
-7       public boolean  addMessage(Message m)  {  ... }
-8       public int getid() {  ... }
+6       public ArrayList<Message> getMessages() { ... }
+7       public boolean addMessage(Message m) { ... }
+8       public int getid() { ... }
 9   }
 10  
-11  public class GroupChat extends  Conversation {
-12      public void  removeParticipant(User user)  {  ... }
-13      public void  addParticipant(User user)   {  ... }
+11  public class GroupChat extends Conversation {
+12      public void removeParticipant(User user) { ... }
+13      public void addParticipant(User user) { ... }
 14  }
 15  
-16  public class  PrivateChat extends  Conversation   {
-17      public PrivateChat(User userl,  User user2)   {...
-18      public User getOtherParticipant(User primary)   {  ... }
+16  public class PrivateChat extends Conversation {
+17      public PrivateChat(User userl, User user2) {...
+18      public User getOtherParticipant(User primary) { ... }
 19  }
 20  
-21  public   class Message {
+21  public class Message {
 22      private String content;
 23      private Date date;
-24      public  Message(String content,  Date date) {  ... }
-25      public  String  getContent() {  ... }
-26      public  Date getDate()  {  ... }
+24      public Message(String content, Date date) { ... }
+25      public String getContent() { ... }
+26      public Date getDate() { ... }
 27  }
 ```
 
 AddRequest and UserStatus are simple classes with little functionality. Their main  purpose is to group data that other classes will act upon.
 
 ```java
-1   public class AddRequest  {
-2       private  User fromUser;
-3       private  User toUser;
-4       private  Date date;
+1   public class AddRequest {
+2       private User fromUser;
+3       private User toUser;
+4       private Date date;
 5       RequestStatus status;
 6   
-7       public  AddRequest(User from,  User to,   Date date)   {  ... }
-8       public  RequestStatus getStatus()  {  ... }
-9       public  User getFromUser() {  ... }
-10      public  User getToUser()  {  ... }
-11      public  Date getDate()  {  ... }
+7       public AddRequest(User from, User to, Date date) { ... }
+8       public RequestStatus getStatus() { ... }
+9       public User getFromUser() { ... }
+10      public User getToUser() { ... }
+11      public Date getDate() { ... }
 12  }
 13  
-14  public class  UserStatus {
+14  public class UserStatus {
 15      private String message;
-16      private UserStatusType  type;
-17      public  UserStatus(UserStatusType type,  String  message) {  ... }
-18      public  UserStatusType getStatusType()  {  ... }
-19      public  String  getMessage() {  ... }
+16      private UserStatusType type;
+17      public UserStatus(UserStatusType type, String message) { ... }
+18      public UserStatusType getStatusType() { ... }
+19      public String getMessage() { ... }
 20  }
 21  
-22  public enum  UserStatusType  {
-23      Offline,  Away, Idle,  Available, Busy
+22  public enum UserStatusType {
+23      Offline, Away, Idle, Available, Busy
 24  }
 25  
-26  public enum  RequestStatus {
-27      Unread,  Read,   Accepted, Rejected
+26  public enum RequestStatus {
+27      Unread, Read, Accepted, Rejected
 28  }
 ```
 
@@ -1261,30 +1261,30 @@ However, making Game a singleton means it can only be instantiated once. Can we 
 One possible design for Othello is below.
 
 ```java
-1   public enum  Direction  {
-2       left, right,  up, down
+1   public enum Direction {
+2       left, right, up, down
 3   }
 4  
-5   public enum  Color {
+5   public enum Color {
 6       White, Black
 7   }
 8  
-9   public  class Game  {
+9   public class Game {
 10      private Player[] players;
-11      private static  Game  ins tance;
+11      private static Game ins tance;
 12      private Board board;
-13      private final int  ROWS = 10;
-14      private final int  COLUMNS = 10;
+13      private final int ROWS = 10;
+14      private final int COLUMNS = 10;
 15 
-15      private Game()   {
-17          board = new Board(ROWS,   COLUMNS);
+15      private Game() {
+17          board = new Board(ROWS, COLUMNS);
 18          players = new Player[2];
-19          players[0] =  new  Player(Color.Black);
-20          players[1] =  new  Player(Color.White);
+19          players[0] = new Player(Color.Black);
+20          players[1] = new Player(Color.White);
 21      }
 22 
 23      public static Game getinstance() {
-24          if (instance ==   null)  instance =  new Game();
+24          if (instance == null) instance = new Game();
 25          return instance;
 26      }
 27 
@@ -1300,66 +1300,66 @@ The Board class manages the actual pieces themselves.  It does not handle much o
 1   public class Board {
 2       private int blackCount = 0;
 3       private int whiteCount = 0;
-4       private Piece[][]  board;
+4       private Piece[][] board;
 5
-6       public Board(int rows,  int columns)  {
+6       public Board(int rows, int columns) {
 7           board = new Piece[rows][columns];
 8       }
 9 
-10      public void  initialize() {
-11          /*  initialize  center black  and white  pieces   */
+10      public void initialize() {
+11          /* initialize center black and white pieces */
 12      }
 13
-14      /*  Attempt to  place  a piece  of  color   color   at (row,  column).  Return  true if we
+14      /* Attempt to place a piece of color color at (row, column). Return true if we
 15       * were successful. */
-16      public boolean  placeColor(int row,  int column, Color color)  {
+16      public boolean placeColor(int row, int column, Color color) {
 17          ...
 18      }
 19
-20      /*  Flips  pieces   starting at (row,  column) and proceeding  in  direction d. */
-21      private int flipSection(int row,  int column,  Color  color,  Direction d)  { ...  }
+20      /* Flips pieces starting at (row, column) and proceeding in direction d. */
+21      private int flipSection(int row, int column, Color color, Direction d) { ... }
 22
-23      public int getScoreForColor(Color c)  {
-24          if (c  ==  Color.Black) return  blackCount;
-25          else  return whiteCount;
+23      public int getScoreForColor(Color c) {
+24          if (c == Color.Black) return blackCount;
+25          else return whiteCount;
 26      }
 27
-28      /* Update board  with  additional newPieces pieces   of  color   newColor. Decrease
-29       * score  of  opposite color.  */
-30      public void  updateScore(Color  newColor,  int newPieces)  { ... }
+28      /* Update board with additional newPieces pieces of color newColor. Decrease
+29       * score of opposite color. */
+30      public void updateScore(Color newColor, int newPieces) { ... }
 31  }
 ``` 
 
 As described earlier, we implement the black and white pieces with the Piece class, which has a simple Color variable representing whether it is a black or white piece.
 
 ```java
-1   public class Piece  {
-2       private Color  color;
-3       public Piece(Color c)  {  color  = c; }
+1   public class Piece {
+2       private Color color;
+3       public Piece(Color c) { color = c; }
 4   
-5       public void  flip() {
-6           if (color ==  Color.Black) color  =  Color.White;
-7           else color =  Color.Black;
+5       public void flip() {
+6           if (color == Color.Black) color = Color.White;
+7           else color = Color.Black;
 8       }
 9   
-10      public Color  getColor() {  return color; }
+10      public Color getColor() { return color; }
 11  }
 ```
 
 The Player holds only a very limited amount of information. It does not even hold its own score, but it does have a method one can call to get the score. Player.getScore() will call out to the Game object to retrieve this value.
 
 ```java
-1   public class Player  {
+1   public class Player {
 2   
-3       public Player(Color c)  { color =  c;}
+3       public Player(Color c) { color = c;}
 4   
-5       public int getScore() { ...  }
+5       public int getScore() { ... }
 6   
-7       public boolean  playPiece(int r,  int  c)  {
-8           return  Game.getlnstance().getBoard().placeColor(r, c,   color);
+7       public boolean playPiece(int r, int c) {
+8           return Game.getlnstance().getBoard().placeColor(r, c, color);
 9       }
 10  
-11      public Color getColor() { return  color; }
+11      public Color getColor() { return color; }
 12  }
 ```
 
@@ -1387,32 +1387,32 @@ The code below implements this approach.
 
 ```java
 1   public class CircularArray<T> {
-2       private T[]  items;
-3       private int head =  0;
+2       private T[] items;
+3       private int head = 0;
 4   
-5       public CircularArray(int size)  {
+5       public CircularArray(int size) {
 6           items = (T[]) new Object[size];
 7       }
 8   
 9       private int convert(int index) {
-10          if (index < 0)  {
+10          if (index < 0) {
 11              index += items.length;
 12          }
 13          return (head + index) % items.length;
 14      }
 15  
-16      public void rotate(int  shiftRight) {
-17          head =  convert(shiftRight);
+16      public void rotate(int shiftRight) {
+17          head = convert(shiftRight);
 18      }
 19  
-20      public T  get(int i) {
-21          if (i < 0  || i >=  items.length)  {
-22              throw  new java.lang.IndexOutOfBoundsException("  ...");
+20      public T get(int i) {
+21          if (i < 0 || i >= items.length) {
+22              throw new java.lang.IndexOutOfBoundsException(" ...");
 23          }
 24          return items[convert(i)];
 25      }
 26  
-27      public  void  set(int i, Titem)  {
+27      public void set(int i, Titem) {
 28          items[convert(i)] = item;
 29      }
 30  }
@@ -1446,37 +1446,37 @@ Once we've done the above items, the for loop will "magically" work.
 In the code below, we have removed the aspects of CircularArray which were identical to the earlier implementation.
 
 ```java
-1   public  class  CircularArray<T> implements   Iterable<T>  {
+1   public class CircularArray<T> implements Iterable<T> {
 2       ...
-3       public  Iterator<T> iterator() {
+3       public Iterator<T> iterator() {
 4           return new CircularArrayiterator<T>(this);
 5       }
 6   
-7       private class CircularArrayiterator<TI> implements   Iterator<TI> {
-8           /* current reflects  the   offset from  the  rotated head,   not   from  the   actual
-9            * start of  the   raw  array.  */
-10          private int current =   -1;
+7       private class CircularArrayiterator<TI> implements Iterator<TI> {
+8           /* current reflects the offset from the rotated head, not from the actual
+9            * start of the raw array. */
+10          private int current = -1;
 11          private TI[] _items;
 12  
-13          public  CircularArrayiterator(CircularArray<TI>  array) {
-14              items   =  array.items;
+13          public CircularArrayiterator(CircularArray<TI> array) {
+14              items = array.items;
 15          }
 16  
 17          @Override
-18          public  boolean hasNext() {
-19              return _current <  items.length -  1;
+18          public boolean hasNext() {
+19              return _current < items.length - 1;
 20          }
 21  
 22          @Override
-23          public TI  next() {
+23          public TI next() {
 24              _current++;
-25              TI  item  =  (TI) _items[convert(_current)];
-26              return  item;
+25              TI item = (TI) _items[convert(_current)];
+26              return item;
 27          }
 28  
 29          @Override
-30          public  void  remove()   {
-31              throw  new UnsupportedOperationException("...");
+30          public void remove() {
+31              throw new UnsupportedOperationException("...");
 32          }
 33      }
 34  }
@@ -1514,32 +1514,32 @@ We also need to store state for whether the cell is exposed or not. We probably 
 It's better to just have a boolean flag for isExposed. We'll do a similar thing for isGuess.
 
 ```java
-1   public class Cell  {
+1   public class Cell {
 2       private int row;
 3       private int column;
-4       private boolean  isBomb;
+4       private boolean isBomb;
 5       private int number;
-6       private boolean  isExposed  =  false;
-7       private boolean  isGuess  =  false;
+6       private boolean isExposed = false;
+7       private boolean isGuess = false;
 8   
-9       public Cell(int r, int c)  {  ... }
+9       public Cell(int r, int c) { ... }
 10  
-11      /*  Getters and setters for   above variables. */
+11      /* Getters and setters for above variables. */
 12      ...
 13  
 14      public boolean flip() {
-15          isExposed  =  true;
-16          return  !isBomb;
+15          isExposed = true;
+16          return !isBomb;
 17      }
 18  
-19      public boolean toggleGuess()  {
-20          if (!isExposed)  {
-21              isGuess  =  !isGuess;
+19      public boolean toggleGuess() {
+20          if (!isExposed) {
+21              isGuess = !isGuess;
 22          }
-23          return  isGuess;
+23          return isGuess;
 24      }
 25  
-26      /*  Full   code can be found  in  downloadable  code solutions.  */
+26      /* Full code can be found in downloadable code solutions. */
 27  }
 ```
 
@@ -1562,34 +1562,34 @@ We'll also use a GamePlay class  to hold the  move  that  the  player  plays. We
 The basic skeleton of this class might  look something like this:
 
 ```java
-1   public class  Board   {
+1   public class Board {
 2       private int nRows;
 3       private int nColumns;
-4       private int nBombs  =  0;
+4       private int nBombs = 0;
 5       private Cell[][] cells;
-6       private Cell[]  bombs;
+6       private Cell[] bombs;
 7       private int numUnexposedRemaining;
 8   
-9       public Board(int r,  int  c,  int  b)   { ... }
+9       public Board(int r, int c, int b) { ... }
 10  
-11      private void initializeBoard()   {  ...}
-12      private boolean flipCell(Cell cell)  { ... }
-13      public void expandBlank(Cell cell)  { ... }
-14      public UserPlayResult playFlip(UserPlay play)  { ...}
-15      public int  getNumRemaining()   {  return numUnexposedRemaining;   }
+11      private void initializeBoard() { ...}
+12      private boolean flipCell(Cell cell) { ... }
+13      public void expandBlank(Cell cell) { ... }
+14      public UserPlayResult playFlip(UserPlay play) { ...}
+15      public int getNumRemaining() { return numUnexposedRemaining; }
 16  }
 17  
-18  public  class  UserPlay {
+18  public class UserPlay {
 19      private int row;
-20      private  int  column;
-21      private  boolean isGuess;
-22      /*  constructor, getters,  setters. */
+20      private int column;
+21      private boolean isGuess;
+22      /* constructor, getters, setters. */
 23  }
 24  
-25  public class  UserPlayResult {
-26      private  boolean successful;
-27      private Game.GameState  resultingState;
-28      /*  constructor, getters, setters.  */
+25  public class UserPlayResult {
+26      private boolean successful;
+27      private Game.GameState resultingState;
+28      /* constructor, getters, setters. */
 29  }
 ```
 
@@ -1598,20 +1598,20 @@ The basic skeleton of this class might  look something like this:
 The Game class will store references to the  board and hold the game state.  It also takes  the user input and sends  it off to Board.
 
 ```java
-1   public class  Game {
-2       public  enum GameState {  WON,    LOST,  RUNNING}
+1   public class Game {
+2       public enum GameState { WON, LOST, RUNNING}
 3   
-4       private  Board board;
-5       private  int   rows;
-6       private  int   columns;
-7       private  int   bombs;
-8       private  GameState state;
+4       private Board board;
+5       private int rows;
+6       private int columns;
+7       private int bombs;
+8       private GameState state;
 9   
-10      public Game(int  r, int c,  int b)  {  ... }
+10      public Game(int r, int c, int b) { ... }
 11  
-12      public  boolean initialize() {  ... }
-13      public  boolean start()  {   ... }
-14      private boolean playGame()  { ... } // Loops until game is over.
+12      public boolean initialize() { ... }
+13      public boolean start() { ... }
+14      private boolean playGame() { ... } // Loops until game is over.
 15  }
 ```
 
@@ -1632,27 +1632,27 @@ Shuffling an array operates  by iterating through the array from i = 0 through N
 To shuffle a grid, we do a very similar thing, just converting the index into a row and column location.
 
 ```java
-1   void  shuffleBoard()  {
-2       int nCells =  nRows *  nColumns ;
-3       Random  random =  new  Random();
-4       for (int index1 =  0;  index1 <   nCells;  index1++) {
-5           int index2  =  index1 + random.nextint(nCells  -  index1);
-6           if (index1 != index2)  {
-7               /* Get  cell at  index1.  */
-8               int row1  =  index1 / nColumns;
-9               int column1  =  (index1 -  row1  *  nColumns)  %  nColumns;
-10              Cell cell1 =  cells[row1][column1];
+1   void shuffleBoard() {
+2       int nCells = nRows * nColumns ;
+3       Random random = new Random();
+4       for (int index1 = 0; index1 < nCells; index1++) {
+5           int index2 = index1 + random.nextint(nCells - index1);
+6           if (index1 != index2) {
+7               /* Get cell at index1. */
+8               int row1 = index1 / nColumns;
+9               int column1 = (index1 - row1 * nColumns) % nColumns;
+10              Cell cell1 = cells[row1][column1];
 11  
-12              /* Get  cell at  index2. */
-13              int row2 =  index2   / nColumns;
-14              int column2 =  (index2 -  row2 *  nColumns)  %  nColumns;
-15              Cell cell2 =  cells[row2][column2] ;
+12              /* Get cell at index2. */
+13              int row2 = index2 / nColumns;
+14              int column2 = (index2 - row2 * nColumns) % nColumns;
+15              Cell cell2 = cells[row2][column2] ;
 16  
-17              /* Swap.  */
-18              cells[row1][column1] =  cell2;
-19              cell2.setRowAndColumn(row1,   column1);
-20              cells[row2][column2] =  cell1;
-21              cell1.setRowAndColumn(row2,   column2);
+17              /* Swap. */
+18              cells[row1][column1] = cell2;
+19              cell2.setRowAndColumn(row1, column1);
+20              cells[row2][column2] = cell1;
+21              cell1.setRowAndColumn(row2, column2);
 22          }
 23      }
 24  }
@@ -1665,21 +1665,21 @@ Once the bombs have been placed, we need to set the values of the numbered cells
 Instead, we can go to each bomb and increment each cell around it. For example,  cells with 3 bombs will get incrementNumber called three times on them and will wind up with a number of 3.
 
 ```java
-1   /* Set  the  cells around the  bombs  to the  right number. Although the  bombs have
-2   * been shuffled,  the  reference in  the  bombs array  is still to  same object. */
-3   void  setNumberedCells() {
-4       int[][] deltas =  {  // Offsets of  8 surrounding cells
-5           {-1,  -1},  { -1,  0},   {-1,  1},
-6           { 0,  -1},               { 0,  1},
-7           { 1,  -1},  {  1,  0},   { 1,  1}
+1   /* Set the cells around the bombs to the right number. Although the bombs have
+2    * been shuffled, the reference in the bombs array is still to same object. */
+3   void setNumberedCells() {
+4       int[][] deltas = { // Offsets of 8 surrounding cells
+5           {-1, -1}, {-1, 0}, {-1, 1},
+6           { 0, -1},          { 0, 1},
+7           { 1, -1}, { 1, 0}, { 1, 1}
 8       };
-9       for  (Cell bomb :  bombs) {
-10          int row =  bomb.getRow();
-11          int col =  bomb.getColumn();
-12          for  (int[] delta :   deltas) {
-13              int r = row +  delta[0];
-14              int c = col +  delta[1];
-15              if (inBounds(r,  c))   {
+9       for (Cell bomb : bombs) {
+10          int row = bomb.getRow();
+11          int col = bomb.getColumn();
+12          for (int[] delta : deltas) {
+13              int r = row + delta[0];
+14              int c = col + delta[1];
+15              if (inBounds(r, c)) {
 16                  cells[r][c].incrementNumber();
 17              }
 18          }
@@ -1693,26 +1693,26 @@ Expanding the blank region could be done either iteratively or recursively. We i
 You can think about this algorithm like this: each blank cell is surrounded by either blank cells or numbered cells (never a bomb). All need to be flipped. But, if you're flipping a blank cell, you also need to add the blank cells to a queue, to flip their neighboring cells.
 
 ```java
-1   void  expandBlank(Cell  cell) {
-2       int[][]  deltas =  {
-3           {-1,  -1},  { -1, 0},  { -1,  1},
-4           { 0,  -1},             {  0,  1},
-5           { 1,  -1},  { 1,  0},  {  1,  1}
+1   void expandBlank(Cell cell) {
+2       int[][] deltas = {
+3           {-1, -1}, {-1, 0}, {-1,  1},
+4           { 0, -1},          { 0,  1},
+5           { 1, -1}, { 1, 0}, { 1,  1}
 6       };
 7   
-8       Queue<Cell> toExplore  =  new LinkedList<Cell>();
+8       Queue<Cell> toExplore = new LinkedList<Cell>();
 9       toExplore.add(cell);
 10  
 11      while (!toExplore.isEmpty()) {
-12          Cell  current =  toExplore.remove();
+12          Cell current = toExplore.remove();
 13  
-14          for  (int[]  delta :   deltas) {
-15              int r =  current.getRow() +  delta[0];
-16              int c =  current.getColumn()  + delta[1];
+14          for (int[] delta : deltas) {
+15              int r = current.getRow() + delta[0];
+16              int c = current.getColumn() + delta[1];
 17  
-18              if (inBounds(r,  c))   {
-19                  Cell  neighbor  =  cells[r][c];
-20                  if (flipCell(neighbor) &&   neighbor.isBlank()) {
+18              if (inBounds(r, c)) {
+19                  Cell neighbor = cells[r][c];
+20                  if (flipCell(neighbor) && neighbor.isBlank()) {
 21                      toExplore.add(neighbor);
 22                  }
 23              }
@@ -1739,19 +1739,19 @@ However, there's no need to panic. If we think through the components  of a file
 A file system, in its most simplistic version, consists  of Files and Directories. Each Directory contains a set of Files and Directories. Since Files and Directories share so many characteristics, we've implemented them such that they inherit from the same class, Entry.
 
 ```java
-1   public abstract class  Entry  {
+1   public abstract class Entry {
 2       protected Directory parent;
-3       protected long  created;
-4       protected long  lastUpdated;
-5       protected long  lastAccessed;
+3       protected long created;
+4       protected long lastUpdated;
+5       protected long lastAccessed;
 6       protected String name;
 7   
-8       public Entry(String n,   Directory p)  {
-9           name =  n;
-10          parent =  p;
-11          created =  System.currentTimeMillis();
+8       public Entry(String n, Directory p) {
+9           name = n;
+10          parent = p;
+11          created = System.currentTimeMillis();
 12          lastUpdated = System.currentTimeMillis();
-13          lastAccessed =  System.currentTimeMillis();
+13          lastAccessed = System.currentTimeMillis();
 14      }
 15  
 15      public boolean delete() {
@@ -1761,72 +1761,72 @@ A file system, in its most simplistic version, consists  of Files and Directorie
 20  
 21      public abstract int size();
 22  
-23      public String getFullPath()  {
+23      public String getFullPath() {
 24          if (parent == null) return name;
-25          else return  parent. getFullPath()  + "/" + name;
+25          else return parent. getFullPath() + "/" + name;
 26      }
 27  
-28      /*  Getters and setters.  */
-29      public long  getcreationTime()  {  return created; }
-30      public long  getLastUpdatedTime()  { return lastUpdated; }
-31      public long  getLastAccessedTime() { return lastAccessed; }
-32      public void  changeName(String n)  { name  =  n; }
-33      public String getName() {return  name;}
+28      /* Getters and setters. */
+29      public long getcreationTime() { return created; }
+30      public long getLastUpdatedTime() { return lastUpdated; }
+31      public long getLastAccessedTime() { return lastAccessed; }
+32      public void changeName(String n) { name = n; }
+33      public String getName() {return name;}
 34  }
 35  
-36  public class File   extends  Entry  {
+36  public class File extends Entry {
 37      private String content;
 38      private int size;
 39  
-40      public File(String  n,  Directory p,  int sz)  {
-41          super(n,  p);
-42          size =  sz;
+40      public File(String n, Directory p, int sz) {
+41          super(n, p);
+42          size = sz;
 43      }
 44  
-45      public int size() {  return size; }
-46      public String getContents() {return  content; }
-47      public void  setContents(String c)  {content  =  c;}
+45      public int size() { return size; }
+46      public String getContents() {return content; }
+47      public void setContents(String c) {content = c;}
 48  }
 49  
-50  public class  Directory extends  Entry  {
+50  public class Directory extends Entry {
 51      protected ArrayList<Entry> contents;
 52  
-53      public Directory(String n,  Directory p)  {
-54          super(n,  p);
-55          contents =  new ArrayList<Entry>();
+53      public Directory(String n, Directory p) {
+54          super(n, p);
+55          contents = new ArrayList<Entry>();
 56      }
 57  
 58      public int size() {
-59          int size =  0;
-60          for  (Entry  e  :   contents) {
-61              size +=  e.size();
+59          int size = 0;
+60          for (Entry e : contents) {
+61              size += e.size();
 62          }
 63          return size;
 64      }
 65  
-66      public  int  numberOfFiles() {
-67          int count  =  0;
-68          for (Entry  e : contents)  {
-69              if (e  instanceof Directory) {
-70                  count++;  // Directory counts  as  a  file
-71                  Directory d =  (Directory) e;
-72                  count  +=  d. numberOfFiles();
-73              } else if (e  instanceof File) {
+66      public int numberOfFiles() {
+67          int count = 0;
+68          for (Entry e : contents) {
+69              if (e instanceof Directory) {
+70                  count++; // Directory counts as a file
+71                  Directory d = (Directory) e;
+72                  count += d. numberOfFiles();
+73              } else if (e instanceof File) {
 74                  count++;
 75              }
 76          }
 77          return count;
 78      }
 79  
-80      public boolean deleteEntry(Entry entry)  {
+80      public boolean deleteEntry(Entry entry) {
 81          return contents.remove(entry);
 82      }
 83  
-84      public void addEntry(Entry entry)  {
+84      public void addEntry(Entry entry) {
 85          contents.add(entry);
 86      }
 87  
-88      protected  ArrayList<Entry> getContents()   {  return  contents; }
+88      protected ArrayList<Entry> getContents() { return contents; }
 89  }
 ```
 
@@ -1845,10 +1845,10 @@ Suppose we are implementing a hash table that looks like Hash\<K,   V>. That is,
 At first, we might think our data structure would look something like this:
 
 ```java
-1   class Hash<K, V>  {
-2        LinkedList<V>[]  items;
-3        public void  put(K  key,   V  value) { ... }
-4        public V  get(K  key)  { ... }
+1   class Hash<K, V> {
+2        LinkedList<V>[] items;
+3        public void put(K key, V value) { ... }
+4        public V get(K key) { ... }
 5   }
 ```
 
@@ -1859,8 +1859,8 @@ This would seem to work until we think more deeply about collisions.
 Suppose we have a very simple hash function that uses the string length.
 
 ```java
-1    int hashCodeOfKey(K key)  {
-2        return key.to5tring().length()  %  items.length;
+1    int hashCodeOfKey(K key) {
+2        return key.to5tring().length() % items.length;
 3    }
 ```
 
@@ -1874,8 +1874,8 @@ The code below uses this implementation.
 
 ```java
 1   public class Hasher<K, V> {
-2       /* Linked  list node  class. Used only  within hash  table. No  one  else  should get
-3        *  access to  this. Implemented  as  doubly  linked list. */
+2       /* Linked list node class. Used only within hash table. No one else should get
+3        * access to this. Implemented as doubly linked list. */
 4       private static class LinkedListNode<K, V> {
 5           public LinkedListNode<K, V> next;
 6           public LinkedListNode<K, V> prev;
@@ -1890,20 +1890,20 @@ The code below uses this implementation.
 15  
 16      private ArrayList<LinkedListNode<K, V>> arr;
 17      public Hasher(int capacity) {
-18          /*  Create  list of  linked   lists at a  particular size. Fill list  with  null
-19           * values,  as  it's the  only  way to  make  the  array the  desired size. */
+18          /* Create list of linked lists at a particular size. Fill list with null
+19           * values, as it's the only way to make the array the desired size. */
 20          arr = newArrayList < LinkedListNode <K, V>>();
-21          arr.ensureCapacity(capacity);  // Optional  optimization
+21          arr.ensureCapacity(capacity); // Optional optimization
 22          for (int i = 0; i < capacity; i++) {
 23              arr.add(null);
 24          }
 25      }
 26  
-27      /*  Insert key and value  into hash table. */
+27      /* Insert key and value into hash table. */
 28      public void put(K key, V value) {
 29          LinkedListNode<K, V> node = getNodeForKey(key);
-30          if (node != null) {//Already  there
-31              node.value = value;   // just update  the  value.
+30          if (node != null) {//Already there
+31              node.value = value; // just update the value.
 32              return;
 33          }
 34  
@@ -1916,13 +1916,13 @@ The code below uses this implementation.
 41          arr.set(index, node);
 42      }
 43  
-44      /*  Remove  node for  key.  */
+44      /* Remove node for key. */
 45      public void remove(K key) {
 46          LinkedListNode<K, V> node = getNodeForKey(key);
 47          if (node.prev != null) {
 48              node.prev.next = node.next;
 49          } else {
-50              /*  Removing  head  -  update. */
+50              /* Removing head - update. */
 51              int hashKey = getindexForKey(key);
 52              arr.set(hashKey, node.next);
 53          }
@@ -1932,13 +1932,13 @@ The code below uses this implementation.
 57          }
 58      }
 59  
-60      /*  Get value  for  key.  */
+60      /* Get value for key. */
 61      public V get(K key) {
 62          LinkedListNode<K, V> node = getNodeForKey(key);
 63          return node == null ? null : node.value;
 64      }
 65  
-66      /*  Get linked   list node associated with  a  given  key.  */
+66      /* Get linked list node associated with a given key. */
 67      private LinkedListNode<K, V> getNodeForKey(K key) {
 68          int index = getindexForKey(key);
 69          LinkedListNode<K, V> current = arr.get(index);
@@ -1951,7 +1951,7 @@ The code below uses this implementation.
 76          return null;
 77      }
 78  
-79      /* Really   naive   function to  map  a  key to an index. */
+79      /* Really naive function to map a key to an index. */
 80      public int getindexForKey(K key) {
 81          return Math.abs(key.hashCode() % arr.size());
 82      }

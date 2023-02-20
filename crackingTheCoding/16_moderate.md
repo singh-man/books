@@ -19,7 +19,7 @@ First, we briefly set a to diff, which is the right side of the above  number li
 
 The code below implements this.
 ```
-1   //Example  for a  = 9,   b  = 4 
+1   //Example  for a  = 9,  b  = 4 
 2   a = a - b; // a = 9  -  4 = 5
 3   b = a + b; // b = 5  +  4 = 9
 4   a = b - a; // a = 9  -  5
@@ -98,7 +98,7 @@ If we're doing the operation repeatedly, then we can probably afford to take som
 ```java
 1   HashMap<String, Integer> setupDictionary(String[] book)  {
 2       HashMap<String,  Integer> table  =
-3               new HashMap<String,   Integer>();
+3               new HashMap<String,  Integer>();
 4       for (String word : book)  {
 5           word =  word.toLowerCase();
 6           if (word.trim() != "") {
@@ -157,8 +157,8 @@ Then intersection  occurs if:
 We can now go ahead and implement this algorithm.
 
 ```java
-1   Point  intersection(Point start1, Point  end1,   Point  start2, Point  end2)  {
-2       /* Rearranging  these so  that, in order of x values: start  is before   end and
+1   Point  intersection(Point start1, Point end1, Point  start2, Point end2)  {
+2       /* Rearranging  these so  that, in order of x values: start  is before end and
 3        * point 1 is before point 2. This  will make some of the later logic simpler. */
 4       if (start1.x >  end1.x) swap(start1, end1);
 5       if (start2.x >  end2.x) swap(start2, end2);
@@ -204,12 +204,12 @@ We can now go ahead and implement this algorithm.
 45  }
 46  
 47  /*  Checks if middle is between start and end.  */
-48  boolean  isBetween(Point start, Point   middle,  Point  end)  {
-49      return  isBetween(start.x,  middle.x, end.x) &&
-50              isBetween(start.y,  middle.y, end.y);
+48  boolean  isBetween(Point start, Point middle, Point end)  {
+49      return  isBetween(start.x, middle.x, end.x) &&
+50              isBetween(start.y, middle.y, end.y);
 51  }
 52  
-53  /*  Swap coordinates of  point   one and two.  */
+53  /*  Swap coordinates of point one and two.  */
 54  void  swap(Point one, Point two)  {
 55      double  x =  one.x;
 56      double  y =  one.y;
@@ -264,7 +264,7 @@ There are a few major design decisions to consider:
 
 There are only 3⁹ or about 20,000, tic-tac-toe boards (assuming a 3x3 board). Therefore, we can represent our tic-tac-toe board as an int, with each digit representing a piece (0 means Empty, 1  means Red, 2 means Blue). We set up a hash table or array in advance with all possible boards as keys and the value indicating who has won. Our function then is simply this:
 ```java
-1   Piece hasWon(int   board) {
+1   Piece hasWon(int board) {
 2       return  winnerHashtable[board];
 3   }
 ```
@@ -274,10 +274,10 @@ To convert a board (represented by a char array) to an int, we can use what is e
 2   
 3   int  convertBoardToint(Piece[][] board) {
 4       int sum =  0;
-5       for (int i =  0;  i < board.length;  i++)   {
-6           for (int j = 0;  j < board[i].length; j++)   {
-7               /*   Each  value   in enum has  an  integer  associated with  it. We
-8                *  can  just use  that.  */
+5       for (int i =  0;  i < board.length;  i++) {
+6           for (int j = 0;  j < board[i].length; j++) {
+7               /* Each value in enum has  an  integer  associated with  it. We
+8                * can  just use  that.  */
 9               int value  =  board[i][j].ordinal();
 10              sum = sum *  3 + value;
 11          }
@@ -301,15 +301,15 @@ If we know the very last move that was made (and we've been checking for a winne
 5   
 6       if (piece == Piece.Empty) return  Piece.Empty;
 7   
-8       if (hasWonRow(board,  row)  || hasWonColumn(board,  column))   {
+8       if (hasWonRow(board,  row)  || hasWonColumn(board,  column)) {
 9           return piece;
 10      }
 11  
-12      if (row  == column && haswonDiagonal(board,  1))   {
+12      if (row  == column && haswonDiagonal(board,  1)) {
 13          return  piece;
 14      }
 15  
-16      if (row == (board.length - column - 1)  && hasWonDiagonal(board, -1))   {
+16      if (row == (board.length - column - 1)  && hasWonDiagonal(board, -1)) {
 17          return piece;
 18      }
 19  
@@ -317,7 +317,7 @@ If we know the very last move that was made (and we've been checking for a winne
 21  }
 22  
 23  boolean hasWonRow(Piece[][] board,  int row)  {
-24      for (int c  = 1;  c  <   board[row].length;  c++)  {
+24      for (int c = 1; c < board[row].length; c++)  {
 25          if (board[row][c] != board[row][0]) {
 26              return false;
 27          }
@@ -337,8 +337,8 @@ If we know the very last move that was made (and we've been checking for a winne
 41  boolean  hasWonDiagonal(Piece[][]  board, int direction) {
 42      int row =  0;
 43      int column =  direction == 1 ? 0 : board.length  -  1;
-44      Piece  first = board[0][column];
-45      for  (int i = 0;  i <   board.length;  i++)  {
+44      Piece first = board[0][column];
+45      for  (int i = 0;  i < board.length;  i++)  {
 46          if (board[row][column] != first) {
 47              return false;
 48          }
@@ -359,7 +359,7 @@ If we really only want to implement a solution for a 3x3 board, the code is rela
 The code below checks each row, column, and diagonal to see if there is a winner.
 ```java
 1   Piece  hasWon(Piece[][]  board)  {
-2       for  (int i = 0;  i <   board.length;  i++)  {
+2       for  (int i = 0;  i < board.length;  i++)  {
 3           /*  Check Rows  */
 4           if (hasWinner(board[i][0],  board[i][1],  board[i][2])) {
 5               return board[i][0];
@@ -383,11 +383,11 @@ The code below checks each row, column, and diagonal to see if there is a winner
 23      return  Piece.Empty;
 24   }
 25
-26   boolean  hasWinner(Piece  p1, Piece  p2,  Piece  p3)  {
-27      if (p1 ==  Piece.Empty)  {
+26   boolean  hasWinner(Piece p1, Piece p2, Piece p3)  {
+27      if (p1 == Piece.Empty)  {
 28            return  false;
 29      }
-30      return p1 == p2 && p2 ==  p3;
+30      return p1 == p2 && p2 == p3;
 31   }
 ```
 This is an okay solution in that it's relatively easy to understand what is going on. The problem is that the values are hard coded. It's easy to accidentally type the wrong indices.
@@ -409,7 +409,7 @@ The most obvious way is through a series of nested for-loops.
 4       Piece  first;
 5
 6       /*  Check rows.  */
-7       for (int i = 0;  i <   size;  i++)  {
+7       for (int i = 0;  i < size;  i++)  {
 8           first =  board[i][0];
 9           if (first == Piece.Empty)  continue;
 10          for (int j =  1; j < size; j++)  {

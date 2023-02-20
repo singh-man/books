@@ -78,16 +78,16 @@ In an arithmetic right shift, we shift values to the right but fill in the new b
 What do you think these functions would do on parameters x = -93242 and count = 40?
 
 ```java
-1   int repeatedArithmeticShift(int  x, int count) {
-2       for (int i = 0; i <  count; i++) {
-3           x >>= 1; // Arith  metic   shift by1
+1   int repeatedArithmeticShift(int x, int count) {
+2       for (int i = 0; i < count; i++) {
+3           x >>= 1; // Arith metic shift by1
 4       }
 5       return x;
 6   }
 7   
-8   int repeatedLogicalShift(int  x, int count) {
-9       for (inti =   0; i <  count; i++) {
-10          x >>>= 1; // Logical  shift by1
+8   int repeatedLogicalShift(int x, int count) {
+9       for (int i = 0; i < count; i++) {
+10          x >>>= 1; // Logical shift by1
 11      }
 12      return x;
 13  }
@@ -108,8 +108,8 @@ The following operations are very important to know, but do not simply memorize 
 This method shifts 1 over by i bits, creating a value that looks like 00010000. By performing an AND with num, we clear all bits other  than the  bit at bit i. Finally, we compare that to 0. If that new value is not zero, then  bit i must have a 1. Otherwise,  bit i is a 0.
 
 ```java
-1   boolean  getBit(int num, int i) {
-2         return (( num &  (1 << i)) != 0);
+1   boolean getBit(int num, int i) {
+2         return (( num & (1 << i)) != 0);
 3   }
 ```
 
@@ -119,7 +119,7 @@ Set Bit shifts  1 over by i  bits, creating a value like 00010000. By performing
 
 ```java
 1   int setBit(int num, int i) {
-2       return num | (  1  << i);
+2       return num | ( 1 << i);
 3   }
 ```
 
@@ -129,26 +129,26 @@ This method operates in almost the reverse of setBit. First, we create a number 
 
 ```java
 1   int clearBit(int num, int i) {
-2       int mask =  ~(1  << i);
-3       return num &  mask;
+2       int mask = ~(1 << i);
+3       return num & mask;
 4   }
 ```
 
-To clear all bits from the most significant bit through i (inclusive), we create a mask with a 1 at the ith bit (1 <<  i). Then, we subtract 1 from it, giving us a sequence of 0s followed by i 1s. We then AND our number with this mask to leave just the last i bits.
+To clear all bits from the most significant bit through i (inclusive), we create a mask with a 1 at the ith bit (1 << i). Then, we subtract 1 from it, giving us a sequence of 0s followed by i 1s. We then AND our number with this mask to leave just the last i bits.
 
 ```java
-1   int  clearBitsMSBthroughI(int num, int i) {
-2       int mask =  (1  << i) - 1;
-3       return num &   mask;
+1   int clearBitsMSBthroughI(int num, int i) {
+2       int mask = (1 << i) - 1;
+3       return num & mask;
 4   }
 ```
 
 To clear all bits from i through 0 (inclusive), we take a sequence of all 1s (which is -1) and shift it left by i + 1 bits. This gives us a sequence of 1s (in the most significant bits) followed by i 0 bits.
 
 ```java
-1   int  clearBitsithrough0(int num, int i) {
-2       int mask =  (-1 << (i + 1));
-3       return num &   mask;
+1   int clearBitsithrough0(int num, int i) {
+2       int mask = (-1 << (i + 1));
+3       return num & mask;
 4   }
 ```
 
@@ -157,10 +157,10 @@ To clear all bits from i through 0 (inclusive), we take a sequence of all 1s (wh
 To set the ith bit to a value v, we first clear the bit at position i by using a mask that looks like 11101111. Then, we shift the intended  value, v, left by i bits. This will create a number with bit i equal to v and all other bits equal to 0. Finally, we OR these two numbers, updating the ith bit if v is 1 and leaving it as 0 otherwise.
 
 ```java
-1   int  updateBit(int num, int i, boolean  bitIs1) {
-2       int value =  bitIs1 ?  1 : 0;
-3       int mask =  ~(1  << i);
-4       return (num &   mask)  |  (value << i);
+1   int updateBit(int num, int i, boolean bitIs1) {
+2       int value = bitIs1 ? 1 : 0;
+3       int mask  = ~(1 << i);
+4       return (num & mask) | (value << i);
 5   }
 ```
 
@@ -192,25 +192,25 @@ This problem can be approached in three key steps:
 
 The trickiest part is Step  1. How do we clear the  bits in N? We can do this with a mask. This mask will have all 1s, except for 0s in the  bits j through i. We create this mask  by creating the  left half of the  mask first, and then the  right half.
 ```java
-1   int  updateBits(int n, int  m,  int i, int j) {
-2       /* Create a mask to clear bits i through j in n. EXAMPLE: i = 2, j = 4.  Result
-3       *  should  be  11100011.  For   simplicity, we'll use just  8  bits  for the  example. */
-4       int  allOnes =  -0;  // will  equal sequence of all ls
+1   int updateBits(int n, int m, int i, int j) {
+2       /* Create a mask to clear bits i through j in n. EXAMPLE: i = 2, j = 4. Result
+3        * should be 11100011. For simplicity, we'll use just 8 bits for the example. */
+4       int allOnes = -0; // will equal sequence of all 1s
 5   
-6       // 1s  before position j,  then 0s. left =  11100000
-7       int left = allOnes <<  (j +  1);
+6       // 1s before position j, then 0s. left = 11100000
+7       int left = allOnes << (j + 1);
 8   
-9       // 1's after position i.  right =  00000011
-10      int right =  ((1 <<  i) -   1);
+9       // 1's after position i. right = 00000011
+10      int right = ((1 << i) - 1);
 11  
-12      //All 1s,  except for 0s   between i and  j. mask       11100011
+12      // All 1s, except for 0s between i and j. mask 11100011
 13      int mask = left | right;
 14  
-15      /* Clear bits  j through i then put min there  */
-16      int  n_cleared =  n  &  mask; //  Clear bits j through i.
-17      int  m_shifted =  m  <<  i; //  Move m   into  correct position.
+15      /* Clear bits j through i then put min there */
+16      int n_cleared = n & mask; // Clear bits j through i.
+17      int m_shifted = m << i; // Move m into correct position.
 18  
-19      return n_cleared | m_shifted; // OR  them, and we're done!
+19      return n_cleared | m_shifted; // OR them, and we're done!
 20  }
 ```
 In a problem like this (and many bit manipulation problems), you should make sure to thoroughly test your code. It's extremely easy to wind up with off-by-one errors.
@@ -238,54 +238,54 @@ r = 2₁₀ * n
 ```
 If r  >= 1, then we know that n had a 1 right after the decimal point. By doing this continuously, we can check every digit.
 ```java
-1   String  printBinary(double num)  {
-2       if (num  >=  1 ||  num <=  0) {
-3           return  "ERROR";
+1   String printBinary(double num) {
+2       if (num >= 1 || num <= 0) {
+3           return "ERROR";
 4       }
 5   
-6       StringBuilder binary = new  StringBuilder();
+6       StringBuilder binary = new StringBuilder();
 7       binary.append(".");
-8       while  (num  >  0) {
-9           /* Setting  a limit on length:  32  characters  */
-10          if (binary.length() >=  32) {
-11              return  "ERROR";
+8       while (num > 0) {
+9           /* Setting a limit on length: 32 characters */
+10          if (binary.length() >= 32) {
+11              return "ERROR";
 12          }
 13  
-14          double r = num *  2;
-15          if (r >=  1) {
+14          double r = num * 2;
+15          if (r >= 1) {
 16              binary.append(l);
-17              num  =  r -  1;
-18          }  else  {
+17              num = r - 1;
+18          }  else {
 19              binary.append(0);
-20              num  =  r;
+20              num = r;
 21          }
 22      }
-23      return  binary.toString();
+23      return binary.toString();
 24  }
 ```
 
 Alternatively, rather than multiplying the number  by two and comparing it to 1, we can compare  the number to .5, then .25, and so on. The code below demonstrates this approach.
 ```java
-1   String  printBinary2(double num) {
-2       if (num >=  1 ||   num <=  0)  {
+1   String printBinary2(double num) {
+2       if (num >= 1 || num <= 0) {
 3           return "ERROR";
 4       }
 5   
-6       StringBuilder binary  = new StringBuilder();
+6       StringBuilder binary = new StringBuilder();
 7       double frac = 0.5;
 8       binary.append(".");
-9       while  (num >  0)  {
-10          /* Setting a  limit on  length:  32 characters */
-11          if (binary.length() > 32)  {
+9       while (num > 0) {
+10          /* Setting a limit on length: 32 characters */
+11          if (binary.length() > 32) {
 12              return "ERROR";
 13          }
-14          if (num >=  frac) {
+14          if (num >= frac) {
 15              binary.append(1);
-15              num -=  frac;
+15              num -= frac;
 17          }  else {
 18              binary.append(0);
 19          }
-20          frac /=  2;
+20          frac /= 2;
 21      }
 22      return binary.toString();
 23  }
@@ -316,54 +316,54 @@ One approach is to convert an integer into an array that reflects the lengths of
 
 Once we have this, we just walk through the array. At each 0s sequence, then we consider merging the adjacent 1s sequences if the 0s sequence has length 1.
 ```java
-1   int longestSequence(int n)  {
-2       if (n  ==  -1)  return Integer.BYTES * 8;
-3       ArrayList<Integer> sequences  =  getAlternatingSequences(n);
+1   int longestSequence(int n) {
+2       if (n == -1) return Integer.BYTES * 8;
+3       ArrayList<Integer> sequences = getAlternatingSequences(n);
 4       return findLongestSequence(sequences);
 5   }
 6   
-7   /* Return  a list of  the  sizes of  the  sequences.   The sequence  starts off  with  the
-8   * number of  0s  (which  might  be 0)  and then  alternates with  the  counts  of  each
-9   * value. */
-10  ArrayList<Integer>  getAlternatingSequences(int n)  {
-11      ArrayList<Integer>  sequences  =  new ArrayList<Integer>();
+7   /* Return a list of the sizes of the sequences. The sequence starts off with the
+8    * number of 0s (which might be 0) and then alternates with the counts of each
+9    * value. */
+10  ArrayList<Integer> getAlternatingSequences(int n) {
+11      ArrayList<Integer> sequences = new ArrayList<Integer>();
 12      
 13      int searchingFor = 0;
-14      int counter =  0;
+14      int counter = 0;
 15      
-16      for (int i =  0;  i < Integer.BYTES * 8;  i++)  {
-17          if ((n  &  1)  != searchingFor)  {
+16      for (int i = 0; i < Integer.BYTES * 8; i++) {
+17          if ((n & 1) != searchingFor) {
 18              sequences.add(counter);
-19              searchingFor =  n &  1; // Flip  1 to  0 or  0 to  1
-20              counter   =  0;
+19              searchingFor = n & 1; // Flip 1 to 0 or 0 to 1
+20              counter = 0;
 21          }
 22          counter++;
-23          n >>>=  1;
+23          n >>>= 1;
 24      }
 25      sequences.add(counter);
 26      
-27      return  sequences;
+27      return sequences;
 28  }
 29  
-30  /* Given the  lengths of  alternating sequences  of  0s  and ls, find  the  longest one
-31  * we  can build.  */
-32  int  findlongestSequence(ArrayList<Integer> seq)  {
+30  /* Given the lengths of alternating sequences of 0s and 1s, find the longest one
+31   * we can build. */
+32  int findlongestSequence(ArrayList<Integer> seq) {
 33      int maxSeq = 1;
 34      
-35      for (int i = 0;  i <  seq.size(); i += 2)   {
-36          int zerosSeq  =  seq.get(i);
-37          int onesSeqRight =  i -  1 >=  0 ? seq.get(i - 1)  : 0;
-38          int onesSeqLeft = i +  1 <  seq.size() ?   seq.get(i +  1) : 0;
+35      for (int i = 0; i < seq.size(); i += 2) {
+36          int zerosSeq = seq.get(i);
+37          int onesSeqRight = i - 1 >= 0 ? seq.get(i - 1) : 0;
+38          int onesSeqLeft = i + 1 < seq.size() ? seq.get(i + 1) : 0;
 39          
-40          int thisSeq =  0;
-41          if (zerosSeq == 1)  {//Can  merge
-42              thisSeq = onesSeqLeft  +  1 + onesSeqRight;
+40          int thisSeq = 0;
+41          if (zerosSeq == 1) {//Can merge
+42              thisSeq = onesSeqLeft + 1 + onesSeqRight;
 43          } if (zerosSeq > 1) {//Just add a zero to either side
 44              thisSeq = 1 + Math.max(onesSeqRight, onesSeqLeft);
 45          } else if (zerosSeq == 0) {//No zero, but take either side
 46              thisSeq = Math.max(onesSeqRight, onesSeqLeft);
 47          }
-48          maxSeq =  Math.max(thisSeq,   maxSeq);
+48          maxSeq = Math.max(thisSeq, maxSeq);
 49      }
 50      
 51      return maxSeq;
@@ -389,23 +389,23 @@ Therefore, we can just walk through the integer doing this, tracking the current
 
 Update max Length  as we go.
 ```java
-1   int flipBit(int a)  {
-2       /* If all ls, this is already  the  longest sequence.  */
-3       if  (~a == 0)  return Integer.BYTES *  8;
+1   int flipBit(int a) {
+2       /* If all 1s, this is already the longest sequence. */
+3       if (~a == 0) return Integer.BYTES * 8;
 4   
-5       int currentLength =   0;
-6       int previousLength =  0;
-7       int maxLength =   1;  //  We   can always have  a sequence of  at least one  1
-8       while (a !=  0)  {
-9           if ((a  &   1) ==  1)  {  //  Current  bit is a 1
+5       int currentLength  = 0;
+6       int previousLength = 0;
+7       int maxLength = 1; // We can always have a sequence of at least one 1
+8       while (a != 0) {
+9           if ((a & 1) == 1) { // Current bit is a 1
 10              currentLength++;
-11          }  else if ((a  &   1)  == 0)  {  //  Current  bit is a 0
-12              /* Update to  0 (if next  bit is  0)  or  currentLength (if  next  bit is 1). */
-13              previousLength =  (a & 2) == 0 ? 0  : currentLength;
-14              currentLength =  0;
+11          }  else if ((a & 1) == 0) { // Current bit is a 0
+12              /* Update to 0 (if next bit is 0) or currentLength (if next bit is 1). */
+13              previousLength = (a & 2) == 0 ? 0 : currentLength;
+14              currentLength = 0;
 15          }
-16          maxLength = Math.max(previousLength + currentLength + 1,  maxLength);
-17          a >>>=  1;
+16          maxLength = Math.max(previousLength + currentLength + 1, maxLength);
+17          a >>>= 1;
 18      }
 19      return maxLength;
 20  }
@@ -495,32 +495,32 @@ We have now arrived at the smallest number  bigger than n with the same number  
 
 The code for getNext is below.
 ```java
-1   int  getNext(int n)  {
-2       /* Compute  c0 and  c1  */
+1   int getNext(int n) {
+2       /* Compute c0 and c1 */
 3       int c  = n;
 4       int c0 = 0;
 5       int c1 = 0;
-6       while (((c & 1) ==   0)  &&   (c != 0))  {
+6       while (((c & 1) == 0) && (c != 0)) {
 7           c0++;
-8           c  >>= l;
+8           c >>= l;
 9       }
 10  
-11      while ((c & 1) == 1)   {
+11      while ((c & 1) == 1) {
 12          c1++;
 13          c >>= 1;
 14      }
 15  
-16      /* Error:  if n ==  11..1100...00,  then there  is  no  bigger number  with  the same
-17      * number  of ls. */
-18      if (c0 + c1 ==  31 || c0 + c1 ==  0)  {
-19          return  -1;
+16      /* Error: if n == 11..1100...00, then there is no bigger number with the same
+17       * number of 1s. */
+18      if (c0 + c1 == 31 || c0 + c1 == 0) {
+19          return -1;
 20      }
 21  
-22      int p =  c0  + c1; //  position  of  rightmost  non - trailing  zero
+22      int p = c0 + c1; // position of rightmost non - trailing zero
 23  
-24      n |= (1 <<  p);  //  Flip  rightmost  non-trailing zero
-25      n &=  ~((1 <<  p) - 1);  //  c1ear all bits  to  the right of  p
-26      n |= (1 << (c1 -  1))  - 1;  //  Insert   (c1-1) ones on the right.
+24      n |= (1 << p); // Flip rightmost non-trailing zero
+25      n &= ~((1 << p) - 1); // clear all bits to the right of p
+26      n |= (1 << (c1 - 1)) - 1; // Insert (c1-1) ones on the right.
 27      return n;
 28  }
 ```
@@ -569,27 +569,27 @@ n   |=  c;
 ```
 The code to implement this is below.
 ```java
-1   int getPrev(int n)  {
+1   int getPrev(int n) {
 2       int temp = n;
-3       int c0 =  0;
-4       int c1 =  0;
+3       int c0 = 0;
+4       int c1 = 0;
 5       while (temp & 1 == 1) {
 6           c1++;
 7           temp >>= 1;
 8       }
 9   
-10      if (temp ==  0)  return  -1;
+10      if (temp == 0) return -1;
 11  
-12      while (((temp & 1) == 0) &&   (temp !=  0)) {
+12      while (((temp & 1) == 0) &&  (temp != 0)) {
 13          c0++;
 14          temp >>= 1;
 15      }
 16  
-17      int p  =  c0  +  c1; // position of rightmost non-trailing  one
-18      n  &=  ((~0) <<  (p +  1)); // clears from bit  p  onwards
+17      int p = c0 + c1; // position of rightmost non-trailing one
+18      n &= ((~0) << (p + 1)); // clears from bit p onwards
 19  
-20      int  mask = (1 <<  (c1 +  1)) -  1;  // Sequence  of (c1+l)  ones
-21      n   |=  mask << (c0  -  1);
+20      int mask = (1 << (c1 + 1)) - 1; // Sequence of (c1+l) ones
+21      n |= mask << (c0 - 1);
 22  
 23      return n;
 24  }
@@ -621,9 +621,9 @@ next =  n  +  (2ᶜ⁰ - 1) + 1 + (2ᶜ¹⁻¹ - 1)
 ```
 The best part  is that,  using a little bit manipulation, it's simple to code.
 ```java
-1   int  getNextArith(int n) {
-2        /* ... same   calculation for c0  and   c1  as before       */
-3        return n  +  (1 <<  c0) +  (1 <<  (c1 -  1))  -  1;
+1   int getNextArith(int n) {
+2        /* ... same calculation for c0 and c1 as before */
+3        return n + (1 << c0) + (1 << (c1 - 1)) - 1;
 4   }
 ```
 
@@ -650,9 +650,9 @@ next =  n  -  (2ᶜ¹  -  1) -  1  -  (2ᶜ⁰⁻¹ -  1).
 ```
 Again, this is very easy to implement.
 ```java
-1   int getPrevArith(int n)  {
-2       /* ... same calculation for c0  and  c1 as  before ... */
-3       return n  -  (1  << c1) -  (1  << (c0  -  1)) + 1;
+1   int getPrevArith(int n) {
+2       /* ... same calculation for c0 and c1 as before ... */
+3       return n - (1 << c1) - (1 << (c0 - 1)) + 1;
 4   }
 ```
 Whew! Don't worry, you wouldn't be expected to get all this in an interview-at least not without a lot of help from the interviewer.
@@ -718,24 +718,24 @@ This seemingly complex problem is actually rather straightforward. To approach t
 
 Each 1 in the XOR represents a bit that is different between A and B. Therefore, to check the number of bits that are different between A and B, we simply  need to count the number of bits in A^B that are 1.
 ```java
-1   int  bitSwapRequired(int a,  int b)  {
-2       int count  = 0;
-3       for  (int c =  a ^ b; c != 0;  c =  c >> 1)  {
-4           count += c &  1;
+1   int bitSwapRequired(int a, int b) {
+2       int count = 0;
+3       for (int c = a ^ b; c != 0; c = c >> 1) {
+4           count += c & 1;
 5       }
-6       return  count;
+6       return count;
 7   }
 ```
 This code is good, but we can make it a bit better. Rather than simply shifting c repeatedly while checking the least significant bit, we can continuously  flip the least significant bit and count how long it takes c to reach 0. The operation c =  c & (c -  1) will clear the least significant bit in c. 
 
 The code below utilizes this approach.
 ```java
-1   int bitSwapRequired(int a,  int b)  {
-2       int count  = 0;
-3       for (int c = a ^ b; c  != 0;  c =  c & (c - 1))  {
+1   int bitSwapRequired(int a, int b) {
+2       int count = 0;
+3       for (int c = a ^ b; c != 0; c = c & (c - 1)) {
 4           count++;
 5       }
-6       return  count;
+6       return count;
 7   }
 ```
 The above code is one of those bit manipulation problems that comes up sometimes in interviews. Though it'd be hard to come up with it on the spot if you've  never seen it before, it is useful to remember the trick for your interviews.
@@ -754,8 +754,8 @@ We can approach this as operating on the odds bits first, and then the even bits
 
 This takes a total of five instructions. The code below implements this approach.
 ```java
-1  int swapOddEvenBits(int  x)  {
-2     return ( ((x  &  0xaaaaaaaa)  >>> 1) | ((x  &  0x55555555) <<  1)  );
+1  int swapOddEvenBits(int x) {
+2     return ( ((x & 0xaaaaaaaa) >>> 1) | ((x & 0x55555555) << 1) );
 3  }
 ```
 Note that we use the logical right shift, instead of the arithmetic right shift. This is because we want the sign bit to be filled with a zero.
@@ -767,7 +767,7 @@ We've implemented the code above for 32-bit integers in Java. If you were workin
 
 The method signature should look something like:
 
-drawLine(byte[]  screen,   int width,   int x1, int x2,  int y)
+```drawLine(byte[] screen, int width, int x1, int x2, int y)```
 
 
 SOLUTION
@@ -778,40 +778,40 @@ A naive solution to the problem is straightforward: iterate in a for loop from x
 
 A better solution is to recognize that if x1 and x2 are far away from each other, several full bytes will be contained between them. These full bytes can be set one at a time by doing screen[byte_pos] = 0xFF. The residual start and end of the line can be set using masks.
 ```java
-1   void  drawLine(byte[]  screen,   int width,   int x1, int x2,  int y)  {
-2       int start_offset =  x1 %   8;
-3       int first_full_byte =  x1 / 8;
-4       if (start_offset !=  0)  {
+1   void drawLine(byte[] screen, int width, int x1, int x2, int y) {
+2       int start_offset = x1 % 8;
+3       int first_full_byte = x1 / 8;
+4       if (start_offset != 0) {
 5           first_full_byte++;
 6       }
 7       
-8       int end_offset =  x2 %  8;
-9       int last_full_byte =  x2 / 8;
-10      if (end_offset  !=  7)  {
+8       int end_offset = x2 % 8;
+9       int last_full_byte = x2 / 8;
+10      if (end_offset != 7) {
 11          last_full_byte--;
 12      }
 13      
-14      // Set  full bytes
-15      for  (int b =  first_full_byte;  b <= last_full_byte;  b++) {
-16          screen[(width / 8)  *  y + b]  =  (byte) 0xFF;
+14      // Set full bytes
+15      for (int b = first_full_byte; b <= last_full_byte; b++) {
+16          screen[(width / 8) * y + b] = (byte) 0xFF;
 17      }
 18      
-19      // Create  masks for  start and end of  line
-20      byte start_mask =  (byte) (0xFF >> start_offset);
-21      byte end_mask =  (byte) ~(0xFF >> (end_offset +  1));
+19      // Create masks for start and end of line
+20      byte start_mask = (byte) (0xFF >> start_offset);
+21      byte end_mask   = (byte) ~(0xFF >> (end_offset + 1));
 22      
-23      // Set  start and end of  line
-24      if ((x1 / 8)  ==  (x2  / 8))   {  // x1 and x2 are  in  the  same byte
-25          byte  mask =  (byte)  (start_mask &  end_mask);
-26          screen[(width /  8)  *  y + (x1 / 8)]   |= mask;
+23      // Set start and end of line
+24      if ((x1 / 8) == (x2 / 8)) { // x1 and x2 are in the same byte
+25          byte mask = (byte) (start_mask & end_mask);
+26          screen[(width / 8) * y + (x1 / 8)] |= mask;
 27      }  else {
-28          if (start_offset != 0)  {
-29              int byte_number = (width /  8)  *  y + first_full_byte -  1;
-30              screen[byte_number]  |=  start_mask;
+28          if (start_offset != 0) {
+29              int byte_number = (width / 8) * y + first_full_byte - 1;
+30              screen[byte_number] |= start_mask;
 31          }
-32          if  (end_offset != 7)  {
-33              int byte_number = (width /  8)  *  y +  last_full_byte + 1;
-34              screen[byte_number]  |= end_mask;
+32          if (end_offset != 7) {
+33              int byte_number = (width / 8) * y + last_full_byte + 1;
+34              screen[byte_number] |= end_mask;
 35          }
 36      }
 37  }

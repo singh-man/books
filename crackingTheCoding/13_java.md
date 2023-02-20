@@ -29,41 +29,41 @@ Overloading is a term used to describe when two  methods have the  same name but
 Overriding, however, occurs when a method shares the  same name and  function signature as another method in its super class.
 
 ```java
-1   public  abstract  class  Shape {
-2       public  void printMe()  {
-3           System.out.println("I am a  shape.");
+1   public abstract class Shape {
+2       public void printMe() {
+3           System.out.println("I am a shape.");
 4       }
-5       public abstract  double  computeArea();
+5       public abstract double computeArea();
 6   }
 7   
-8   public class Circle extends  Shape {
-9       private double rad =  5;
+8   public class Circle extends Shape {
+9       private double rad = 5;
 10      public void printMe() {
-11          System.out.println("I am  a  circle.");
+11          System.out.println("I am a circle.");
 12      }
 13  
-14      public double computeArea()  {
-15          return rad *  rad * 3.15;
+14      public double computeArea() {
+15          return rad * rad * 3.15;
 16      }
 17  }
 18  
-19  public class Ambiguous extends  Shape {
-20      private double  area =  10;
-21      public   double  computeArea()  {
+19  public class Ambiguous extends Shape {
+20      private double area = 10;
+21      public double computeArea() {
 22          return area;
 23      }
 24  }
 25  
 26  public class IntroductionOverriding {
-27      public  static void  main(String[] args)  {
-28          Shape[]  shapes  =  new Shape[2];
-29          Circle circle  =  new Circle();
-30          Ambiguous  ambiguous =  new Ambiguous();
+27      public static void main(String[] args) {
+28          Shape[] shapes = new Shape[2];
+29          Circle circle  = new Circle();
+30          Ambiguous ambiguous = new Ambiguous();
 31  
 32          shapes[0] = circle;
 33          shapes[1] = ambiguous;
 34  
-35          for (Shape  s  : shapes)   {
+35          for (Shape s : shapes) {
 36              s.printMe();
 37              System.out.println(s.computeArea());
 38          }
@@ -88,7 +88,7 @@ Java's collection framework is incredibly useful, and you will see it used throu
 
 ArrayList: An ArrayList is a dynamically resizing array, which grows as you insert elements.
 ```java
-1   ArrayList<String> myArr =  new ArrayList<String>();
+1   ArrayList<String> myArr = new ArrayList<String>();
 2   myArr.add("one");
 3   myArr.add("two");
 4   System.out.println(myArr.get(0));  /* prints <one> */
@@ -96,24 +96,24 @@ ArrayList: An ArrayList is a dynamically resizing array, which grows as you inse
 Vector: A vector is very similar to an ArrayList except that it is synchronized.  Its syntax is almost identical as well.
 
 ```java
-1   Vector<String>  myVect  = new   Vector<String>();
+1   Vector<String> myVect = new Vector<String>();
 2   myVect.add("one");      
 3   myVect.add("two");      
 4   system.out.printin(myVect.get(0));
 ```
 LinkedList: LinkedList is, of course, Java's built-in LinkedList class. Though it rarely comes up in an interview, it's useful to study because it demonstrates some of the syntax for an iterator.
 ```java
-1   LinkedList<String> myLinkedList  = new LinkedList<String>();
+1   LinkedList<String> myLinkedList = new LinkedList<String>();
 2   myLinkedList.add("two");
 3   myLinkedList.addFirst("one");
-4   Iterator<String> iter  =  myLinkedList.iterator();
+4   Iterator<String> iter = myLinkedList.iterator();
 5   while (iter.hasNext()) {
 6        System.out.println(iter.next());
 7   }
 ```
 HashMap: The HashMap collection is widely used, both in interviews and in the real world. We've provided a snippet of the syntax below.
 ```java
-1   HashMap<String, String> map =  new HashMap<String,  String>();
+1   HashMap<String, String> map = new HashMap<String, String>();
 2   map.put("one", "uno");
 3   map.put("two",  "dos");
 4   System.out.println(map. get("one"));
@@ -183,35 +183,35 @@ There is an  optional finally block  after  the  try block  or after  the  catch
 Watch how this plays out in the  example below.
 
 ```java
-1   public static  String lem() {
+1   public static String lem() {
 2       System.out.println("lem");
 3       return "return from lem";
 4   }
 5   
-6   public static  String foo() {
-7       int X =  0;
-8       int y =  5;
+6   public static String foo() {
+7       int X = 0;
+8       int y = 5;
 9       try {
-10          System.out.println("start  try");
+10          System.out.println("start try");
 11          int b = y/x;
 12          System.out.println("end try");
-13          return  "returned  from try";
-14      }  catch (Exception ex)  {
+13          return "returned from try";
+14      }  catch (Exception ex) {
 15          System.out.println("catch");
-16          return lem() +  " | returned from catch";
+16          return lem() + " | returned from catch";
 17      }  finally {
 18          System.out.println("finally");
 19      }
 20  }
 21  
-22  public static  void bar()  {
-23      System.out.println("start  bar");
+22  public static void bar() {
+23      System.out.println("start bar");
 24      String v = foo();
 25      System.out.println(v);
-26      System.out.println("end  bar");
+26      System.out.println("end bar");
 27  }
 28  
-29  public static  void main(String[] args) {
+29  public static void main(String[] args) {
 30      bar();
 31  }
 ```
@@ -234,7 +234,7 @@ Look carefully  at lines 3 to 5 in the  output. The catch block is fully execute
 The automatic garbage collector calls the finalize() method just before actually destroying the  object. A class can therefore override the  finalize() method from the  Object class in order to define custom behavior during garbage collection.
 ```java
 1   protected void finalize() throws Throwable {
-2        /* Close open   files,  release resources, etc */
+2        /* Close open files, release resources, etc */
 3   }
 ```
 
@@ -250,15 +250,15 @@ The  implementation of Java  generics is rooted in an idea  of "type erasure". T
 
 For example, suppose you have the Java code below:
 ```java
-1     Vector<String>  vector  =  new Vector<String>();
+1     Vector<String> vector = new Vector<String>();
 2     vector.add(new String("hello"));
-3     String str  =  vector.get(0);
+3     String str = vector.get(0);
 ```
 During compilation, this code is re-written into:
 ```java
-1     Vector vector  = new  Vector();
+1     Vector vector = new Vector();
 2     vector.add(new String("hello"));
-3     String  str  =  (String) vector.get(0);
+3     String str = (String) vector.get(0);
 ```
 The use of Java generics didn't really change much about our capabilities; it just made things a bit prettier. For this reason, Java generics are sometimes called "syntactic sugar".
 
@@ -267,19 +267,19 @@ This is quite different from  C++. In C++, templates are essentially a glorified
 To illustrate this, consider the  code below:
 
 ```c
-1   /*** MyClass.h  ***/
-2   template<class T> class MyClass   {
+1   /*** MyClass.h ***/
+2   template<class T> class MyClass {
 3   public:
 4       static int val;
-5       MyClass(int v) { val  = v; }
+5       MyClass(int v) { val = v; }
 6   };
 7   
 8   /*** MyClass.cpp ***/
 9   template<typename T>
 10  int MyClass<T>::bar;
 11  
-12  template class  MyClass<Foo>;
-13  template class  MyClass<Bar>;
+12  template class MyClass<Foo>;
+13  template class MyClass<Bar>;
 14  
 15  /*** main.cpp ***/
 16  MyClass<Foo> * foo1 = new MyClass<Foo>(10);
@@ -287,10 +287,10 @@ To illustrate this, consider the  code below:
 18  MyClass<Bar> * bar1 = new MyClass<Bar>(20);
 19  MyClass<Bar> * bar2 = new MyClass<Bar>(35);
 20  
-21  int fl =  foo1->val;  //  will equal 15
-22  int f2 =  foo2->val;  //  will equal 15
-23  int bl =  bar1->val;  //  will equal 35
-24  int b2 =  bar2->val;  //  will equal 35
+21  int fl = foo1->val; // will equal 15
+22  int f2 = foo2->val; // will equal 15
+23  int bl = bar1->val; // will equal 35
+24  int b2 = bar2->val; // will equal 35
 ```
 
 In Java, static variables are shared across instances of MyClass, regardless of the different type parameters. 
@@ -321,14 +321,14 @@ All offer a `key->value` map and a way to iterate through the keys. The most imp
 Imagine you passed an empty TreeMap, HashMap, and LinkedHashMap into the following function:
 
 ```java
-1   void  insertAndPrint(AbstractMap<Integer,   String> map) {
-2       int[]  array = {1,   -1,   0};
-3       for (int x  :   array) {
-4           map.put(x,  Integer.toString(x));
+1   void insertAndPrint(AbstractMap<Integer, String> map) {
+2       int[] array = {1, -1, 0};
+3       for (int x : array) {
+4           map.put(x, Integer.toString(x));
 5       }
 6   
-7       for (int k :  map.keySet()) {
-8           System.out.print(k + ",   ");
+7       for (int k : map.keySet()) {
+8           System.out.print(k + ", ");
 9       }
 10  }
 ```
@@ -367,26 +367,26 @@ The code below offers an example of object reflection.
 
 ```java
 1   /*Parameters */
-2   Object[] doubleArgs =  new Object[]  { 4.2,  3.9 };
+2   Object[] doubleArgs = new Object[] { 4.2, 3.9 };
 3   
-4   /*  Get  class */
-5   Class rectangleDefinition  =  Class.forName("MyProj.Rectangle");
+4   /* Get class */
+5   Class rectangleDefinition = Class.forName("MyProj.Rectangle");
 6   
-7   /*  Equivalent: Rectangle rectangle  =  new  Rectangle(4.2, 3.9);  */
-8   Class[]  doubleArgsClass =  new Clas s[] {double.clas s,  double.class};
+7   /* Equivalent: Rectangle rectangle = new Rectangle(4.2, 3.9); */
+8   Class[] doubleArgsClass = new Clas s[] {double.clas s, double.class};
 9   Constructor doubleArgsConstructor =
 10          rectangleDefinition.getConstructor(doubleArgsClass);
-11  Rectangle rectangle  =  (Rectangle) doubleArgsConstructor.newInstance(doubleArgs);
+11  Rectangle rectangle = (Rectangle) doubleArgsConstructor.newInstance(doubleArgs);
 12  
-13  /*  Equivalent:  Double area  =  rectangle.area();  */
-14  Method  m  =  rectangleDefinition.getDeclaredMethod("area");
-15  Double area  =  (Double) m.invoke(rectangle);
+13  /* Equivalent: Double area = rectangle.area(); */
+14  Method m = rectangleDefinition.getDeclaredMethod("area");
+15  Double area = (Double) m.invoke(rectangle);
 ```
 This code does the equivalent of:
 
 ```java
-1   Rectangle rectangle  =  new Rectangle(4.2, 3.9);
-2   Double area  =  rectangle.area();
+1   Rectangle rectangle = new Rectangle(4.2, 3.9);
+2   Double area = rectangle.area();
 ```
 
 **Why Is Object Reflection Useful?**
@@ -409,11 +409,11 @@ This question really comes in two  parts. First, we need to generate a list of t
 Without lambda expressions, this is fairly straightforward to do.
 
 ```java
-1   int  getPopulation(List<Country> countries,   String  continent)  {
-2       int sum  =  0;
-3       for (Country c : countries)  {
-4           if (c.getContinent().equals(continent))  {
-5               sum  +=  c.getPopulation();
+1   int getPopulation(List<Country> countries, String continent) {
+2       int sum = 0;
+3       for (Country c : countries) {
+4           if (c.getContinent().equals(continent)) {
+5               sum += c.getPopulation();
 6           }
 7       }
 8       return sum;
@@ -425,14 +425,14 @@ To implement this with  lambda expressions, let's break this up into multiple pa
 First, we use filter to get a list of the countries in the specified continent.
 
 ```java
-1   Stream<Country> northAmerica  =  countries.stream().filter(
-2        country  ->  { return country.getContinent().equals(continent); }
+1   Stream<Country> northAmerica = countries.stream().filter(
+2        country -> { return country.getContinent().equals(continent); }
 3   );
 ```
 Second, we convert this into a list of populations using map.
 ```java
-1   Stream<Integer> populations  =  northAmerica.map(
-2        c ->   c.getPopulation()
+1   Stream<Integer> populations = northAmerica.map(
+2        c -> c.getPopulation()
 3   );
 ```
 Third and finally, we compute the sum using reduce.
@@ -441,29 +441,29 @@ Third and finally, we compute the sum using reduce.
 ```
 This function puts it all together.
 ```java
-1   int  getPopulation(List<Country> countries,  String  continent)  {
-2       /* Filter  countries. */
-3       Stream<Country>  sublist =  countries.stream().filter(
-4           country  ->  { return country.getContinent().equals(continent); }
+1   int getPopulation(List<Country> countries, String continent) {
+2       /* Filter countries. */
+3       Stream<Country> sublist = countries.stream().filter(
+4           country -> { return country.getContinent().equals(continent); }
 5       );
 6   
 7       /* Convert to list of populations. */
-8       Stream<Integer> populations  =  sublist.map(
-9           c  ->  c.getPopulation()
+8       Stream<Integer> populations = sublist.map(
+9           c -> c.getPopulation()
 10      ) ;
 11  
 12      /* Sum list. */
-13      int  population =  populations.reduce(0, (a,  b) ->  a  +  b);
-14      return  population;
+13      int population = populations.reduce(0, (a, b) -> a + b);
+14      return population;
 15  }
 ```
 
 Alternatively, because of the  nature of this specific  problem, we can  actually remove the  filter entirely. The reduce operation can  have  logic that maps the  population of countries not  in the  right  continent to zero. The sum will effectively  disregard countries not  within continent.
 ```java
-1  int  getPopulation(List<Country> countries,  String  continent)  {
-2        Stream<Integer> populations  =  countries.stream().map(
+1  int getPopulation(List<Country> countries, String continent) {
+2        Stream<Integer> populations = countries.stream().map(
 3              c -> c.getContinent().equals(continent) ? c.getPopulation() : 0);
-4        return populations.reduce(0, (a,  b) ->  a  +  b);
+4        return populations.reduce(0, (a, b) -> a + b);
 5  }
 ```
 Lambda functions were  new  to Java 8, so if you don't recognize them, that's probably why. Now is a great time  to learn  about them, though!
@@ -504,37 +504,37 @@ This means that we can generate  a random subset by iterating through the list a
 
 Without lambda expressions, we can write something like this:
 ```java
-1   List<Integer>  getRandomSubset(List<Integer> list) {
-2       List<Integer> subset =  new ArrayList<Integer>();
-3       Random  random =  new Random();
+1   List<Integer> getRandomSubset(List<Integer> list) {
+2       List<Integer> subset = new ArrayList<Integer>();
+3       Random random = new Random();
 4       for (int item : list) {
-5           /* Flip   coin.   */
-6           if (random.nextBoolean())  {
+5           /* Flip coin. */
+6           if (random.nextBoolean()) {
 7               subset.add(item);
 8           }
 9       }
-10      return  subset;
+10      return subset;
 11  }
 ```
 To implement this approach using lambda expressions, we can do the following:
 ```java
-1   List<Integer>  getRandomSubset(List<Integer> list) {
-2       Random  random =  new Random();
-3       List<Integer> subset =  list.stream().filter(
-4           k  ->  { return  random.nextBoolean(); /*  Flip  coin.  */
+1   List<Integer> getRandomSubset(List<Integer> list) {
+2       Random random = new Random();
+3       List<Integer> subset = list.stream().filter(
+4           k -> { return random.nextBoolean(); /* Flip coin. */
 5       }).collect(Collectors.toList());
-6       return  subset;
+6       return subset;
 7   }
 ```
 Or, we can use a predicate (defined within the class or within the function):
 ```java
-1   Random  random =  new Random();
-2   Predicate<Object> flipCoin  =  o  ->  {
+1   Random random = new Random();
+2   Predicate<Object> flipCoin = o -> {
 3       return random.nextBoolean();
 4   };
 5   
-6   List<Integer>  getRandomSubset(List<Integer> list) {
-7       List<Integer> subset =  list.stream().filter(flipCoin).
+6   List<Integer> getRandomSubset(List<Integer> list) {
+7       List<Integer> subset = list.stream().filter(flipCoin).
 8       collect(Collectors.toList());
 9       return subset;
 10  }

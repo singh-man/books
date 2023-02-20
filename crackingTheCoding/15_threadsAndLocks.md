@@ -23,7 +23,7 @@ We will cover both of these below.
 
 The Runnable interface has the following very simple structure.
 ```java
-1   public  interface  Runnable  {
+1   public interface Runnable {
 2       void run();
 3   }
 ```
@@ -36,33 +36,33 @@ To create and use a thread using this interface, we do the following:
 
 For example:
 ```java
-1   public class  RunnableThreadExample  implements   Runnable  {
-2       public int  count  =  0;
+1   public class RunnableThreadExample implements Runnable {
+2       public int count = 0;
 3   
-4       public void run()  {
+4       public void run() {
 5           System.out.println("RunnableThread starting.");
 6           try {
-7               while (count <  5)  {
+7               while (count < 5) {
 8                   Thread.sleep(500);
 9                   count++;
 10              }
-11          }  catch  (InterruptedException exc)  {
-12              System.out.println("RunnableThread  interrupted.");
+11          }  catch (InterruptedException exc) {
+12              System.out.println("RunnableThread interrupted.");
 13          }
 14          system.out.println("RunnableThread terminating.");
 15      }
 16  }
 17  
-18  public static void  main(String[]  args)   {
-19      RunnableThreadExample instance =  new RunnableThreadExample();
-20      Thread thread =  new Thread(instance);
+18  public static void main(String[] args) {
+19      RunnableThreadExample instance = new RunnableThreadExample();
+20      Thread thread = new Thread(instance);
 21      thread.start();
 22  
-23      /*  waits  until above thread counts  to  5 (slowly)  */
-24      while (instance.count  != 5)   {
+23      /* waits until above thread counts to 5 (slowly) */
+24      while (instance.count != 5) {
 25          try {
 26              Thread.sleep(250);
-27          }  catch  (InterruptedException exc)  {
+27          }  catch (InterruptedException exc) {
 28              exc.printStackTrace();
 29          }
 30      }
@@ -80,30 +80,30 @@ The below code provides an example of this.
 
 ```java
 1   public class ThreadExample extends Thread {
-2       int count  =  0;
+2       int count = 0;
 3   
-4       public void run()   {
-5           System.out.println("Thread  starting.");
-6           try  {
-7               while (count <  5)  {
+4       public void run() {
+5           System.out.println("Thread starting.");
+6           try {
+7               while (count < 5) {
 8                   Thread.sleep(500);
 9                   System.out.println("In Thread, count is " + count);
 10                  count++;
 11              }
-12          }  catch (InterruptedException exc)  {
+12          }  catch (InterruptedException exc) {
 13              System.out.println("Thread interrupted.");
 14          }
-15          System.out.println("Thread  terminating.");
+15          System.out.println("Thread terminating.");
 16      }
 17  }
 18  
-19  public  class  ExampleB {
-20      public static void main(String args[])  {
-21          ThreadExample instance  =  new ThreadExample();
+19  public class ExampleB {
+20      public static void main(String args[]) {
+21          ThreadExample instance = new ThreadExample();
 22          instance.start();
 23  
-24          while (instance.count !=  5) {
-25              try  {
+24          while (instance.count != 5) {
+25              try {
 26                  Thread.sleep(250);
 27              }  catch (InterruptedException exc) {
 28                  exc.printStackTrace();
@@ -136,47 +136,47 @@ Most commonly, we restrict access to shared resources through the use of the syn
 
 To clarify the last point, consider the following code:
 ```java
-1   public  class  MyClass extends Thread  {
-2       private  String  name;
-3       private  MyObject  myObj;
+1   public class MyClass extends Thread {
+2       private String name;
+3       private MyObject myObj;
 4   
-5       public  MyClass(MyObject obj,  String  n) {
-6           name   =  n;
-7           myObj  =  obj;
+5       public MyClass(MyObject obj, String n) {
+6           name  = n;
+7           myObj = obj;
 8       }
 9   
-10      public void  run() {
+10      public void run() {
 11          myObj.foo(name);
 12      }
 13  }
 14  
-15  public class  MyObject {
-16      public synchronized void  foo(String name) {
+15  public class MyObject {
+16      public synchronized void foo(String name) {
 17          try {
 18              System.out.println("Thread " + name + ".foo(): starting");
 19              Thread.sleep(3000);
-20              System.out.println("Thread " + name + ".foo():  ending");
-21          } catch  (InterruptedException  exc)  {
-22              System.out.println("Thread " + name + ":  interrupted.");
+20              System.out.println("Thread " + name + ".foo(): ending");
+21          } catch (InterruptedException exc) {
+22              System.out.println("Thread " + name + ": interrupted.");
 23          }
 24      }
 25  }
 ```
 Can two instances of MyClass call foo at the same time? It depends. If they have the same instance of MyObject, then no. But, if they hold different references, then the answer is yes.
 ```java
-1    /*   Difference references  -  both  threads can  call  MyObject.foo() */
-2   MyObject objl  =  new MyObject();
-3   MyObject obj2  =  new MyObject();
-4   MyClass thread1 =  new MyClass(obj1,  "1");
-5   MyClass thread2 =  new MyClass(obj2,  "2");
+1    /* Difference references - both threads can call MyObject.foo() */
+2   MyObject objl   = new MyObject();
+3   MyObject obj2   = new MyObject();
+4   MyClass thread1 = new MyClass(obj1, "1");
+5   MyClass thread2 = new MyClass(obj2, "2");
 6   thread1.start();
 7   thread2.start()
 8
-9   /* Same  reference to obj. Only one will be  allowed  to call foo,
-10   * and the  other will be forced to wait.   */
-11  MyObject obj =  new MyObject();
-12  MyClass thread1 =  new MyClass(obj,  "1");
-13  MyClass thread2 =  new MyClass(obj,  "2");
+9   /* Same reference to obj. Only one will be allowed to call foo,
+10   * and the other will be forced to wait. */
+11  MyObject obj = new MyObject();
+12  MyClass thread1 = new MyClass(obj, "1");
+13  MyClass thread2 = new MyClass(obj, "2");
 14  thread1.start()
 15  thread2.start()
 ```
@@ -184,17 +184,17 @@ Can two instances of MyClass call foo at the same time? It depends. If they have
 Static methods synchronize on the class lock. The two threads above could not simultaneously execute synchronized static methods on the same class, even if one is calling foo and the other is calling bar.
 
 ```java
-1   public class MyClass extends Thread   {
+1   public class MyClass extends Thread {
 2       ...
-3       public void  run() {
-4           if (name.equals("1"))  MyObject.foo(name);
+3       public void run() {
+4           if (name.equals("1")) MyObject.foo(name);
 5           else if (name.equals("2")) MyObject.bar(name);
 6       }
 7   }
 8   
 9   public class MyObject {
-10      public static  synchronized void foo(String name) {/* same as before */}
-11      public static  synchronized void bar(String name) {/* same as foo  */}
+10      public static synchronized void foo(String name) {/* same as before */}
+11      public static synchronized void bar(String name) {/* same as foo */}
 12  }
 ```
 
@@ -211,14 +211,14 @@ Thread  2.bar(): ending
 Similarly, a block of code can be synchronized. This operates very similarly to synchronizing a method.
 
 ```java
-1   public class MyClass extends Thread  {
+1   public class MyClass extends Thread {
 2       ...
-3       public  void run() {
+3       public void run() {
 4           myObj.foo(name);
 5       }
 6   }
-7   public  class MyObject {
-8       public  void foo(String  name)  {
+7   public class MyObject {
+8       public void foo(String name) {
 9           synchronized (this) {
 10              ....
 11          }
@@ -236,38 +236,38 @@ For more granular control, we can utilize a lock. A lock (or monitor) is used to
 A common use case for locks is when a resource is accessed from multiple places, but should be only accessed by one thread at a time. This case is demonstrated in the code below.
 
 ```java
-1   public  class LockedATM   {
+1   public class LockedATM {
 2       private Lock lock;
-3       private int  balance =  100;
+3       private int balance = 100;
 4   
-5       public  LockedATM() {
-6           lock = new  Reentrantlock();
+5       public LockedATM() {
+6           lock = new Reentrantlock();
 7       }
 8   
-9       public  int  withdraw(int value) {
+9       public int withdraw(int value) {
 10          lock.lock();
-11          int  temp = balance;
+11          int temp = balance;
 12          try {
 13              Thread.sleep(100);
-14              temp =  temp  -  value;
+14              temp = temp - value;
 15              Thread.sleep(100);
-16              balance =  temp;
+16              balance = temp;
 17          }   catch (InterruptedException e) { }
 18          lock.unlock();
 19          return temp;
 20      }
 21  
-22      public  int  deposit(int  value) {
+22      public int deposit(int value) {
 23          lock. lock();
-24          int  temp = balance;
+24          int temp = balance;
 25          try {
 26              Thread.sleep(100);
-27              temp =  temp +  value;
+27              temp = temp + value;
 28              Thread.sleep(300);
-29              balance =  temp;
-30          } catch (InterruptedException e)  {          }
+29              balance = temp;
+30          } catch (InterruptedException e) {          }
 31          lock.unlock();
-32          return  temp;
+32          return temp;
 33      }
 34  }
 ```
@@ -376,51 +376,51 @@ SOLUTION
 
 First, let's implement a simple simulation of the dining philosophers problem in which we don't concern ourselves with deadlocks. We can implement this solution by having Philosopher extend Thread, and Chopstick call lock.lock() when it is picked up and lock.unlock() when it is put down.
 ```java
-1   class  Chopstick {
+1   class Chopstick {
 2       private Lock lock;
 3   
-4       public Chopstick()  {
-5           lock  =  new Reentrantlock();
+4       public Chopstick() {
+5           lock = new Reentrantlock();
 6       }
 7   
-8       public void  pickUp() {
+8       public void pickUp() {
 9           lock.lock();
 10      }
 11  
-12      public void  putDown()  {
+12      public void putDown() {
 13          lock.unlock();
 14      }
 15  }
 16  
-17  class  Philosopher extends Thread  {
-18      private int bites =  10;
+17  class Philosopher extends Thread {
+18      private int bites = 10;
 19      private Chopstick left, right;
 20  
-21      public  Philosopher(Chopstick left, Chopstick right)  {
+21      public Philosopher(Chopstick left, Chopstick right) {
 22          this.left  = left;
 23          this.right = right;
 24      }
 25  
-26      public void  eat() {
+26      public void eat() {
 27          pickup();
 28          chew();
 29          putDown();
 30      }
 31  
-32      public void pickUp()  {
+32      public void pickUp() {
 33          left.pickup();
 34          right.pickUp();
 35      }
 36  
-37      public void chew()  {}
+37      public void chew() {}
 38  
 39      public void putDown() {
 40          right.putDown();
 41          left.putDown();
 42      }
 43  
-44      public void  run() {
-45          for (int i = 0;  i < bites; i++)  {
+44      public void run() {
+45          for (int i = 0; i < bites; i++) {
 46              eat();
 47          }
 48      }
@@ -434,26 +434,26 @@ Running the above code may lead to a deadlock if all the philosophers have a lef
 
 To prevent deadlocks, we can implement a strategy where a philosopher will put down his left chopstick if he is unable to obtain the right one.
 ```java
-1   public class Chopstick  {
-2       /*  same as  before   */
+1   public class Chopstick {
+2       /* same as before */
 3   
-4       public boolean  pickUp()  {
+4       public boolean pickUp() {
 5           return lock.trylock();
 6       }
 7   }
 8   
-9   public class  Philosopher extends.Thread {
-10      /*  same as  before  */
+9   public class Philosopher extends.Thread {
+10      /* same as before */
 11  
-12      public void  eat() {
+12      public void eat() {
 13          if (pickUp()) {
 14              chew();
 15              putDown();
 16          }
 17      }
 18  
-19      public boolean  pickUp()  {
-20          /*  attempt  to pick  up */
+19      public boolean pickUp() {
+20          /* attempt to pick up */
 21          if (!left.pickup()) {
 22              return false;
 23          }
@@ -474,22 +474,22 @@ One issue  with  this is that if all the  philosophers were  perfectly synchroni
 
 Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Each philosopher attempts to pick up the  lower numbered chopstick first. This essentially means that each philosopher goes for the  left chopstick before right one  (assuming that's the  way you labeled it), except for the  last philosopher who does this in reverse. This will break the cycle.
 ```java
-1   public class  Philosopher  extends Thread {
-2       private int bites =  10;
+1   public class Philosopher extends Thread {
+2       private int bites = 10;
 3       private Chopstick lower, higher;
 4       private int index;
-5       public Philosopher(int  i, Chopstick left, Chopstick right) {
-6           index =  i;
-7           if (left.getNumber() <   right.getNumber()) {
-8               this.lower = left;
-9               this.higher =  right;
+5       public Philosopher(int i, Chopstick left, Chopstick right) {
+6           index = i;
+7           if (left.getNumber() < right.getNumber()) {
+8               this.lower  = left;
+9               this.higher = right;
 10          } else {
-11              this.lower =  right;
-12              this.higher =  left;
+11              this.lower  = right;
+12              this.higher = left;
 13          }
 14      }
 15  
-16      public void eat()  {
+16      public void eat() {
 17          pickup();
 18          chew();
 19          putDown();
@@ -500,14 +500,14 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Eac
 24          higher.pickup();
 25      }
 26  
-27      public void chew() {  ... }
+27      public void chew() { ... }
 28  
 29      public void putDown() {
 30          higher.putDown();
 31          lower.putDown();
 32      }
 33  
-34      public void run()  {
+34      public void run() {
 35          for (int i = 0; i < bites; i++) {
 36              eat();
 37          }
@@ -516,22 +516,22 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Eac
 40  
 41  public class Chopstick {
 42      private Lock lock;
-43      private int  number;
+43      private int number;
 44  
-45      public Chopstick(int  n)  {
-46          lock =  new Reentrantlock();
-47          this.number =  n;
+45      public Chopstick(int n) {
+46          lock = new Reentrantlock();
+47          this.number = n;
 48      }
 49  
 50      public void pickup() {
 51          lock.lock();
 52      }
 53  
-54      public void putDown()  {
+54      public void putDown() {
 55          lock.unlock();
 56      }
 57  
-58      public int getNumber()   {
+58      public int getNumber() {
 59          return number;
 60      }
 61  }
@@ -599,10 +599,10 @@ The code below provides further details. For simplicity, we assume that all lock
 1     class LockFactory {
 2         private static LockFactory instance;
 3     
-4         private int numberOfLocks = 5;   /*default  */
+4         private int numberOfLocks = 5; /*default */
 5         private LockNode[] locks;
-6         /*  Maps from  a  process or  owner to the   order that  the   owner  claimed   it would
-7          * call the   locks in */
+6         /* Maps from a process or owner to the order that the owner claimed it would
+7          * call the locks in */
 8         private HashMap<Integer, LinkedList<LockNode>> lockOrder;
 9     
 10        private LockFactory(int count) { ...}
@@ -627,13 +627,13 @@ The code below provides further details. For simplicity, we assume that all lock
 29          return false;
 30      }
 31  
-32      /*To prevent  deadlocks, force  the  processes to  declare  upfront what order  they
-33       * will  need the  locks  in. Verify  that this order  does  not  create a  deadlock  (a
-34       * cycle  in  a  directed graph) */
+32      /* To prevent deadlocks, force the processes to declare upfront what order they
+33       * will need the locks in. Verify that this order does not create a deadlock (a
+34       * cycle in a directed graph) */
 35      public boolean declare(int ownerId, int[] resourcesinOrder) {
 36          HashMap<Integer, Boolean> touchedNodes = new HashMap<Integer, Boolean>();
 37  
-38          /*add  nodes to  graph*/
+38          /*add nodes to graph*/
 39          int index = 1;
 40          touchedNodes.put(resourcesinOrder[0], false);
 41          for (index = 1; index < resourcesinOrder.length; index++) {
@@ -643,7 +643,7 @@ The code below provides further details. For simplicity, we assume that all lock
 45              touchedNodes.put(resourcesinOrder[index], false);
 46          }
 47  
-48          /*if we  created a  cycle,  destroy this  resource list and return false*/
+48          /*if we created a cycle, destroy this resource list and return false*/
 49          if (hasCycle(touchedNodes, resourcesinOrder)) {
 50              for (int j = 1; j < resourcesinOrder.length; j++) {
 51                  LockNode p = locks[resourcesinOrder[j - 1]];
@@ -653,9 +653,9 @@ The code below provides further details. For simplicity, we assume that all lock
 55              return false;
 56          }
 57  
-58          /* No  cycles detected.  Save the  order   that was declared,  so  that we  can
-59           * verify that the  process  is really calling the  locks  in  the  order  it said
-60           * it  would. */
+58          /* No cycles detected. Save the order that was declared, so that we can
+59           * verify that the process is really calling the locks in the order it said
+60           * it would. */
 61          LinkedList<LockNode> list = new LinkedList<LockNode>();
 62            for (int i = 0; i < resourcesinOrder.length; i++) {
 63                LockNode resource = locks[resourcesinOrder[i]];
@@ -666,8 +666,8 @@ The code below provides further details. For simplicity, we assume that all lock
 68            return true;
 69        }
 70    
-71        /*  Get the lock, verifying first that the process is really calling the locks in
-72         * the  order  it said   it would. */
+71        /* Get the lock, verifying first that the process is really calling the locks in
+72         * the order it said it would. */
 73        public Lock getLock(int ownerId, int resourceID) {
 74            LinkedList<LockNode> list = lockOrder.get(ownerId);
 75            if (list == null) return null;
@@ -690,13 +690,13 @@ The code below provides further details. For simplicity, we assume that all lock
 92      private Lock lock;
 93      private int maxLocks;
 94    
-95      public LockNode(int id, int max) {  ...}
+95      public LockNode(int id, int max) { ...}
 96    
-97      /*  Join  "this" to  "node",  checking  that it doesn't create a  cycle  */
+97      /* Join "this" to "node", checking that it doesn't create a cycle */
 98      public void joinTo(LockNode node) { children.add(node); }
 99      public void remove(LockNode node) { children.remove(node); }
 100    
-101     /*  Check for  a  cycle  by doing  a  depth-first-search. */
+101     /* Check for a cycle by doing a depth-first-search. */
 102     public boolean hasCycle(HashMap<Integer, Boolean> touchedNodes) {
 103         VisitState[] visited = new VisitState[maxLocks];
 104         for (int i = 0; i < maxlocks; i++) {
@@ -712,8 +712,8 @@ The code below provides further details. For simplicity, we assume that all lock
 114         }
 115 
 116         if (visited[lockId] == VisitState.VISITING) {
-117             /* We  looped  back to  this node while  still visiting it,  so  we  know  there's
-118              * a  cycle. */
+117             /* We looped back to this node while still visiting it, so we know there's
+118              * a cycle. */
 119             return true;
 120         } else if (visited[lockId] == VisitState.FRESH) {
 121             visited[lockId] = VisitState.VISITING;
@@ -741,11 +741,11 @@ As always, when you see code this complicated  and lengthy, you wouldn't be expe
 
 15.5    **Call In Order:** Suppose we have the following code:
 ```java
-1   public  class  Foo {
-2       public  Foo() {   ... }
-3       public  void first() {  ... }
-4       public  void second() {   ... }
-5       public  void third() {   ... }
+1   public class Foo {
+2       public Foo() { ... }
+3       public void first() { ... }
+4       public void second() { ... }
+5       public void third() { ... }
 6   }
 ```
 The same instance of Foo will be passed to three different threads. ThreadA will call first threadB will call second, and threadC will call third. Design a mechanism to ensure that first is called before second and second is called before third.
@@ -758,43 +758,43 @@ The general logic is to check if first() has completed before executing second()
 
 What about using a lock to do something like the below code?
 ```java
-1   public  class  FooBad   {
-2       public  int  pauseTime =  1000;
-3       public  Reentrantlock lock1,  lock2;
+1   public class FooBad {
+2       public int pauseTime = 1000;
+3       public Reentrantlock lock1, lock2;
 4   
-5       public  FooBad() {
+5       public FooBad() {
 6           try {
 7               lock1 = new Reentrantlock();
 8               lock2 = new Reentrantlock();
 9   
 10              lock1.lock();
 11              lock2.lock();
-12          }  catch (...) {  ... }
+12          }  catch (...) { ... }
 13      }
 14  
 15      public void first() {
-16          try  {
+16          try {
 17              ...
-18              lock1.unlock();  //  mark finished  with first()
-19          }  catch ( ...) {   . . . }
+18              lock1.unlock(); // mark finished with first()
+19          }  catch ( ...) { . . . }
 20      }
 21  
-22      public  void  second()  {
+22      public void second() {
 23          try {
-24              lock1.lock();  // wait  until finished with  first()
+24              lock1.lock(); // wait until finished with first()
 25              lock1.unlock();
 26              ...
 27  
-28              lock2.unlock();  // mark finished with  second()
-29          }  catch  (...)  {  ... }
+28              lock2.unlock(); // mark finished with second()
+29          }  catch (...) { ... }
 30      }
 31  
 32      public void third() {
 33          try {
-34              lock2.lock();  // wait  until finished with  third()
+34              lock2.lock(); // wait until finished with third()
 35              lock2.unlock();
 36  
-37          }  catch  (...)  {  ... }
+37          }  catch (...) { ... }
 38      }
 39  }
 ``` 
@@ -805,40 +805,40 @@ This code won't actually quite work due to the concept of lock ownership. One th
 Instead, we can replicate this behavior with semaphores. The logic is identical.
 ```java
 1   public class Foo {
-2       public Semaphore sem1,  sem2;
+2       public Semaphore sem1, sem2;
 3   
 4       public Foo()  {
 5           try {
-6               sem1  = new  Semaphore(1);
-7               sem2  = new  Semaphore(1);
+6               sem1 = new Semaphore(1);
+7               sem2 = new Semaphore(1);
 8               
 9               sem1.acquire();
 10              sem2.acquire();
-11          } catch  (...)  {  ... }
+11          } catch (...) { ... }
 12      }
 13  
-14      public   void  first() {
+14      public void first() {
 15          try {
 16              ...
 17              sem1.release();
-18          }  catch  (...)  {  ... }
+18          }  catch (...) { ... }
 19      }
 20  
-21      public void  second() {
+21      public void second() {
 22          try {
 23              sem1.acquire();
 24              sem1.release();
 25              ...
 26              sem2.release();
-27          }  catch  (...)  {  ... }
+27          }  catch (...) { ... }
 28      }
 29  
-30      public void  third() {
+30      public void third() {
 31          try {
 32              sem2.acquire();
 33              sem2.release();
 34              ...
-35          }   catch  (...) {  ...   }
+35          }   catch (...) { ... }
 36      }
 37  }
 ```
@@ -875,13 +875,13 @@ Although this problem (in the single threaded version) shouldn't be hard, a lot 
 
 In actuality, the best way to do it, considering readability and efficiency, is just the straightforward way.
 ```java
-1   void  fizzbuzz(int n) {
-2       for (int i =  1; i <= n; i++)  {
+1   void fizzbuzz(int n) {
+2       for (int i = 1; i <= n; i++) {
 3           if (i % 3 == 0 && i % 5 == 0) {
 4               System.out.println("FizzBuzz");
-5           }  else if (i % 3  ==  0)  {
+5           }  else if (i % 3 == 0) {
 6               System.out.println("Fizz");
-7           }  else if (i % 5  ==  0) {
+7           }  else if (i % 5 == 0) {
 8               System.out.println("Buzz");
 9           }  else {
 10              System.out.println(i);
@@ -900,11 +900,11 @@ To do this multithreaded, we want a structure that looks something like this:
 
 The code for this will look something like:
 ```java
-1   while (true)  {
-2       if (current >  max)   {
+1   while (true) {
+2       if (current > max)  {
 3           return;
 4       }
-5       if (/*  divisibility test */) {
+5       if (/* divisibility test */) {
 6           System.out.println(/* print something*/);
 7           current++;
 8       }
@@ -926,7 +926,7 @@ For the most part, this can be handled by taking in "target" parameters and the 
 
 We can implement a FizzBuzzThread class which handles most of this. A NumberThread  class can extend FizzBuzzThread and override the print method.
 ```java
-1   Thread[] threads =  {new FizzBuzzThread(true, true, n, "FizzBuzz"),
+1   Thread[] threads = {new FizzBuzzThread(true, true, n, "FizzBuzz"),
 2                   new FizzBuzzThread(true, false, n, "Fizz"),
 3                   new FizzBuzzThread(false, true, n, "Buzz"),
 4                   new NumberThread(false, false, n)};
@@ -934,18 +934,18 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 6       thread.start();
 7   }
 8   
-9   public class FizzBuzzThread extends  Thread {
+9   public class FizzBuzzThread extends Thread {
 10      private static Object lock = new Object();
-11      protected static int current =  1;
+11      protected static int current = 1;
 12      private int max;
 13      private boolean div3, div5;
 14      private String toPrint;
 15  
-16      public  FizzBuzzThread(boolean div3, boolean  div5, int max, String toPrint)  {
-17          this.div3 =  div3;
-18          this.div5 =  div5;
-19          this.max  =  max;
-20          this.toPrint =  toPrint;
+16      public FizzBuzzThread(boolean div3, boolean div5, int max, String toPrint) {
+17          this.div3 = div3;
+18          this.div5 = div5;
+19          this.max  = max;
+20          this.toPrint = toPrint;
 21      }
 22  
 23      public void print() {
@@ -954,12 +954,12 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 26  
 27      public void run() {
 28          while (true) {
-29              synchronized (lock)  {
+29              synchronized (lock) {
 30                  if (current > max) {
 31                      return;
 32                  }
 33  
-34                  if ((current % 3 == 0) == div3  &&
+34                  if ((current % 3 == 0) == div3 &&
 35                      (current % 5 == 0) == div5) {
 36                      print();
 37                      current++;
@@ -969,7 +969,7 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 41      }
 42  }
 43  
-44  public class NumberThread extends FizzBuzzThread  {
+44  public class NumberThread extends FizzBuzzThread {
 45      public NumberThread(boolean div3, boolean div5, int max) {
 46          super(div3, div5, max, null);
 47      }
@@ -984,19 +984,19 @@ Observe that we need to put the comparison of current and max before the if stat
 
 Alternatively, if we're working in a language which supports this (Java 8 and many other languages do), we can pass in a validate method and a print method as parameters. 
 ```java
-1   int n =  100;
+1   int n = 100;
 2   Thread[] threads = {
-3       new FBThread(i -> i %  3 == 0 && i % 5 == 0, i -> "FizzBuzz", n),
-4       new FBThread(i -> i %  3 == 0 && i % 5 != 0, i -> "Fizz", n),
-5       new FBThread(i -> i %  3 != 0 && i % 5 == 0, i -> "Buzz", n),
-6       new FBThread(i -> i %  3 != 0 && i % 5 != 0, i -> Integer.toString(i), n)};
+3       new FBThread(i -> i % 3 == 0 && i % 5 == 0, i -> "FizzBuzz", n),
+4       new FBThread(i -> i % 3 == 0 && i % 5 != 0, i -> "Fizz", n),
+5       new FBThread(i -> i % 3 != 0 && i % 5 == 0, i -> "Buzz", n),
+6       new FBThread(i -> i % 3 != 0 && i % 5 != 0, i -> Integer.toString(i), n)};
 7   for  (Thread thread : threads) {
 8       thread.start();
 9   }
 10  
 11  public class FBThread extends Thread {
-12      private static Object lock  =  new Object();
-13      protected static int current =  1;
+12      private static Object lock = new Object();
+13      protected static int current = 1;
 14      private int max;
 15      private Predicate<Integer> validate;
 16      private Function<Integer, String> printer;

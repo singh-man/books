@@ -67,10 +67,10 @@ Let's walk through an approach to compute the nth Fibonacci number.
 We will start with a recursive implementation. Sounds simple, right?
 
 ```java
-1 int  fibonacci(int i) {
+1 int fibonacci(int i) {
 2   if (i == 0) return 0;
 3   if (i == 1) return 1;
-4   return fibonacci(i -  1) +  fibonacci(i - 2);
+4   return fibonacci(i - 1) + fibonacci(i - 2);
 5 }
 ```
 
@@ -127,15 +127,15 @@ This is exactly what memoization is.
 With just a small modification, we can tweak this function to run in O(n) time. We simply cache the results of fibonacci(i) between calls.
 
 ```java
-1   int  fibonacci(int n)  {
+1   int fibonacci(int n) {
 2     return fibonacci(n, new int[n + 1]);
 3   }
 4 
-5   int  fibonacci(int i,  int[]  memo) {
-6     if (i == 0  || i ==  1)  return i;
+5   int fibonacci(int i, int[] memo) {
+6     if (i == 0 || i == 1) return i;
 7 
-8     if (memo[i]  ==  0)  {
-9       memo[i]  =  fibonacci(i -  1,  memo) +  fibonacci(i -  2,  memo);
+8     if (memo[i] == 0) {
+9       memo[i] = fibonacci(i - 1, memo) + fibonacci(i - 2, memo);
 10    }
 11    return memo[i];
 12  }
@@ -165,14 +165,14 @@ We can also take this approach and implement it with bottom-up dynamic programmi
 First, we compute fib(1) and fib(0), which are already known from the base cases. Then we use those to compute fib(2). Then we use the prior answers to compute fib(3), then fib(4), and so on.
 
 ```java
-1   int fibonacci(int n)  {
-2     if (n  ==  0)  return 0;
-3     else if (n  == 1)  return 1;
+1   int fibonacci(int n) {
+2     if (n == 0) return 0;
+3     else if (n == 1) return 1;
 4 
 5     int[] memo = new int[n];
 6     memo[0] = 0;
 7     memo[1] = 1;
-8     for (int i = 2;  i < n; i++)  {
+8     for (int i = 2; i < n; i++) {
 9       memo[i] = memo[i - 1] + memo[i - 2];
 10    }
 11    return memo[n - 1] + memo[n - 2];
@@ -182,12 +182,12 @@ First, we compute fib(1) and fib(0), which are already known from the base cases
 If you really think about how this works, you only use memo[i] for memo[i+l] and memo[i+2]. You don't need it after that. Therefore, we can get rid of the memo table and just store a few variables.
 
 ```java
-1   int  fibonacci(int n)  {
-2     if (n  == 0)  return 0;
-3     int a =  0;
-4     int b =  1;
-5     for  (int i = 2; i < n; i++)  {
-6       int c = a  +  b;
+1   int fibonacci(int n) {
+2     if (n == 0) return 0;
+3     int a = 0;
+4     int b = 1;
+5     for (int i = 2; i < n; i++) {
+6       int c = a + b;
 7       a = b;
 8       b = c;
 9     }
@@ -247,13 +247,13 @@ However, it's a lot easier to define it as 1. If you defined it as 0, then you w
 A simple implementation of this code is below.
 
 ```java
-1   int countWays(int n)  {
-2     if (n <   0) {
+1   int countWays(int n) {
+2     if (n < 0) {
 3       return 0;
-4     }  else if  (n  ==  0) {
-5       return  1;
+4     }  else if (n == 0) {
+5       return 1;
 6     }  else {
-7       return countWays(n - 1) +  countWays(n - 2) +  countWays(n - 3);
+7       return countWays(n - 1) + countWays(n - 2) + countWays(n - 3);
 8     }
 9   }
 ```
@@ -270,16 +270,16 @@ Essentially, if we've seen this value of n before, return the cached value. Each
 Typically we use  a HashMap\<Integer, Integer> for a cache. In this case,  the  keys  will be  exactly  1 through n. It's more compact to use an integer array.
 
 ```java
-1   int countWays(int n)  {
-2     int[] memo =  new int[n + 1];
+1   int countWays(int n) {
+2     int[] memo = new int[n + 1];
 3     Arrays.fill(memo, -1);
 4     return countWays(n, memo);
 5   }
 6 
-7   int countWays(int n, int[] memo)  {
-8     if (n <   0) {
+7   int countWays(int n, int[] memo) {
+8     if (n < 0) {
 9       return 0;
-10    }  else if (n ==  0) {
+10    }  else if (n == 0) {
 11      return 1;
 12    }  else if (memo[n] > -1) {
 13      return memo[n];
@@ -314,24 +314,24 @@ So then, to find a path from the origin, we just work backwards like this. Start
 
 ```java
 1   ArrayList<Point> getPath(boolean[][] maze) {
-2     if (maze ==  null || maze.length == 0) return null;
-3     ArrayList<Point> path  =  new ArrayList<Point>();
-4     if (getPath(maze,  maze.length - 1,  maze[0].length - 1, path)) {
+2     if (maze == null || maze.length == 0) return null;
+3     ArrayList<Point> path = new ArrayList<Point>();
+4     if (getPath(maze, maze.length - 1, maze[0].length - 1, path)) {
 5       return path;
 6     }
 7     return null;
 8   }
 9 
-10  boolean  getPath(boolean[][] maze, int row,  int col, ArrayList<Point> path)  {
-11    /*  If out  of  bounds or  not  available,  return.*/
+10  boolean getPath(boolean[][] maze, int row, int col, ArrayList<Point> path) {
+11    /* If out of bounds or not available, return.*/
 12    if (col < 0 || row < 0 || !maze[row][col]) {
 13      return false;
 14    }
 15  
-16    boolean  isAtOrigin = (row  == 0) && (col == 0);
+16    boolean isAtOrigin = (row == 0) && (col == 0);
 17  
-18    /*  If there's a path  from the  start to  here, add my location. */
-19    if (isAtOrigin || getPath(maze, row,  col - 1,  path)  ||
+18    /* If there's a path from the start to here, add my location. */
+19    if (isAtOrigin || getPath(maze, row, col - 1, path) ||
 20            getPath(maze, row - 1, col, path)) {
 21      Point p = new Point(row, col);
 22      path.add(p);
@@ -355,40 +355,40 @@ How does our current algorithm work? To find a path to (r, c),  we look for a pa
 This is what the dynamic programming algorithm below does.
 
 ```java
-1   ArrayList<Point> getPath(boolean[][]  maze)  {
-2     if (maze  == null  || maze.length ==  0)  return null;
-3     ArrayList<Point>  path = new  ArrayList<Point>();
-4     HashSet<Point> failedPoints =  new HashSet<Point>();
-5     if (getPath(maze,  maze.length  -  1,   maze[0].length  -  1, path, failedPoints))  {
+1   ArrayList<Point> getPath(boolean[][] maze) {
+2     if (maze == null || maze.length == 0) return null;
+3     ArrayList<Point> path = new ArrayList<Point>();
+4     HashSet<Point> failedPoints = new HashSet<Point>();
+5     if (getPath(maze, maze.length - 1, maze[0].length - 1, path, failedPoints)) {
 6       return path;
 7     }
 8     return null;
 9   }
 10  
-11  boolean  getPath(boolean[][] maze,  int row,  int  col,  ArrayList<Point> path,
-12                HashSet<Point>  failedPoints) {
-13    /* If out  of  bounds  or  not   available,  return.*/
-14    if (col < 0  ||  row < 0 ||  !maze[row][col])  {
+11  boolean getPath(boolean[][] maze, int row, int col, ArrayList<Point> path,
+12                HashSet<Point> failedPoints) {
+13    /* If out of bounds or not available, return.*/
+14    if (col < 0 || row < 0 || !maze[row][col]) {
 15      return false;
 16    }
 17  
-18    Point p =  new Point(row,  col);
+18    Point p = new Point(row, col);
 19  
-20    /* If we've  already visited this  cell,  return. */
+20    /* If we've already visited this cell, return. */
 21    if (failedPoints.contains(p)) {
 22      return false;
 23    }
 24  
-25    boolean isAtOrigin = (row == 0)  && (col == 0);
+25    boolean isAtOrigin = (row == 0) && (col == 0);
 26  
-27    /* If there's a  path  from  start to my  current location,  add  my   location.*/
-28    if (isAtOrigin || getPath(maze, row,  col - 1, path, failedPoints) ||
-29                      getPath(maze, row -  1, col, path, failedPoints))  {
+27    /* If there's a path from start to my current location, add my location.*/
+28    if (isAtOrigin || getPath(maze, row, col - 1, path, failedPoints) ||
+29                      getPath(maze, row - 1, col, path, failedPoints)) {
 30      path.add(p);
 31      return true;
 32    }
 33  
-34    failedPoints.add(p);  // Cache result
+34    failedPoints.add(p); // Cache result
 35    return false;
 36  }
 ```
@@ -408,8 +408,8 @@ SOLUTION
 Immediately, the brute force solution should jump to mind-and there's no shame in mentioning it. We simply iterate through the array, looking for an element which matches this condition.
 
 ```java
-1   int magicSlow(int[] array)  {
-2     for (int i = 0;  i < array.length;  i++)  {
+1   int magicSlow(int[] array) {
+2     for (int i = 0; i < array.length; i++) {
 3       if (array[i] == i) {
 4         return i;
 5       }
@@ -438,19 +438,19 @@ Why couldn't the magic index be on the left side? Observe that when we move from
 We continue to apply this recursive algorithm, developing code that looks very much like binary search.
 
 ```java
-1   int magicFast(int[] array)  {
-2     return  magicFast(array, 0, array.length -  1);
+1   int magicFast(int[] array) {
+2     return magicFast(array, 0, array.length - 1);
 3   }
 4   
-5   int  magicFast(int[] array, int start, int end)  {
-6     if (end <  start) {
+5   int magicFast(int[] array, int start, int end) {
+6     if (end < start) {
 7       return -1;
 8     }
-9     int mid =  (start + end) /  2;
+9     int mid = (start + end) / 2;
 10    if (array[mid] == mid) {
 11      return mid;
-12    }  else if (array[mid]  > mid) {
-13      return  magicFast(array, start, mid - 1);
+12    }  else if (array[mid] > mid) {
+13      return magicFast(array, start, mid - 1);
 14    }  else {
 15      return magicFast(array, mid + 1, end);
 16    }
@@ -481,26 +481,26 @@ The code  below implements this algorithm.
 
 ```java
 1   int magicFast(int[] array) {
-2     return magicFast(array, 0,  array.length  -  1);
+2     return magicFast(array, 0, array.length - 1);
 3   }
 4 
-5   int  magicFast(int[] array, int start,  int end) {
-6     if (end <  start)  return -1;
+5   int magicFast(int[] array, int start, int end) {
+6     if (end < start) return -1;
 7 
-8     int midindex = (start +  end) / 2;
-9     int midValue =  array[midindex];
-10    if (midValue == midindex)  {
+8     int midindex = (start + end) / 2;
+9     int midValue = array[midindex];
+10    if (midValue == midindex) {
 11      return midindex;
 12    }
 13  
-14    /* Search  left */
-15    int leftIndex =  Math.min(midindex - 1, midValue);
+14    /* Search left */
+15    int leftIndex = Math.min(midindex - 1, midValue);
 16    int left = magicFast(array, start, leftIndex);
 17    if (left >= 0) {
 18      return left;
 19    }
 20  
-21    /*  Search right */
+21    /* Search right */
 22    int rightIndex = Math.max(midindex + 1, midValue);
 23    int right = magicFast(array, rightIndex, end);
 24  
@@ -572,19 +572,19 @@ Generating P(n) for the general case is just a simple generalization of the abov
 The following code implements this algorithm:
 
 ```java
-1   ArrayList<ArrayList<Integer>> getSubsets(ArrayList<Integer> set,  int  index) {
+1   ArrayList<ArrayList<Integer>> getSubsets(ArrayList<Integer> set, int index) {
 2     ArrayList<ArrayList<Integer>> allsubsets;
-3     if (set.size() == index) { //Base  case   -  add  empty set
-4       allsubsets =  new ArrayList<ArrayList<Integer>>();
-5       allsubsets.add(new ArrayList<Integer>());  // Empty set
+3     if (set.size() == index) { //Base case - add empty set
+4       allsubsets = new ArrayList<ArrayList<Integer>>();
+5       allsubsets.add(new ArrayList<Integer>()); // Empty set
 6     }  else {
-7       allsubsets =  getSubsets(set,  index + 1);
-8       int item =  set.get(index);
+7       allsubsets = getSubsets(set, index + 1);
+8       int item = set.get(index);
 9       ArrayList<ArrayList<Integer>> moresubsets = 
 10        new ArrayList<ArrayList<Integer>>();
 11      for (ArrayList<Integer> subset : allsubsets) {
-12        ArrayList<Integer>  newsubset =  new ArrayList<Integer>();
-13        newsubset.addAll(subset);  //
+12        ArrayList<Integer> newsubset = new ArrayList<Integer>();
+13        newsubset.addAll(subset); //
 14        newsubset.add(item);
 15        moresubsets.add(newsubset);
 16      }
@@ -607,10 +607,10 @@ This gives us 2ⁿ possible subsets. How can we iterate through all possible seq
 Generating all subsets, then, really just comes down to generating all binary numbers (that is, all integers). We iterate through  all numbers from 0 to 2ⁿ (exclusive) and translate the binary representation  of the numbers into a set. Easy!
 
 ```java
-1   ArrayList<ArrayList<Integer>>  getSubsets2(ArrayList<Integer> set)  {
-2     ArrayList<ArrayList<Integer>> allsubsets =  new ArrayList<ArrayList<Integer>>();
-3     int max =  1 << set.size(); /* Compute 2^n */
-4     for (int k  = 0;  k < max; k++) {
+1   ArrayList<ArrayList<Integer>> getSubsets2(ArrayList<Integer> set) {
+2     ArrayList<ArrayList<Integer>> allsubsets = new ArrayList<ArrayList<Integer>>();
+3     int max = 1 << set.size(); /* Compute 2^n */
+4     for (int k = 0; k < max; k++) {
 5       ArrayList<Integer> subset = convertintToSet(k, set);
 6       allsubsets.add(subset);
 7     }
@@ -619,8 +619,8 @@ Generating all subsets, then, really just comes down to generating all binary nu
 10  
 11  ArrayList<Integer> convertlntToSet(int x, ArrayList<Integer> set) {
 12    ArrayList<Integer> subset = new ArrayList<Integer>();
-13    int  index =  0;
-14    for (int  k = x; k > 0; k >>= 1) {
+13    int index = 0;
+14    for (int k = x; k > 0; k >>= 1) {
 15      if ((k & 1) == 1) {
 16        subs et.add(set.get(index));
 17      }
@@ -658,28 +658,28 @@ Alternatively, we could count half the squares and then double  it (by adding th
 Of course, this "doubling" only works if the number is in fact even. When it's not even, we need to do the counting/summing from scratch.
 
 ```java
-1   int  minProduct(int a, int  b) {
-2     int bigger =  a < b ? b : a;
+1   int minProduct(int a, int b) {
+2     int bigger  = a < b ? b : a;
 3     int smaller = a < b ? a : b;
-4     return  minProductHelper(smaller, bigger);
+4     return minProductHelper(smaller, bigger);
 5   }
 6 
-7   int  minProductHelper(int smaller,  int  bigger)  {
-8     if (smaller ==  0) { //  0 x bigger  = 0
+7   int minProductHelper(int smaller, int bigger) {
+8     if (smaller == 0) { // 0 x bigger = 0
 9       return 0;
-10    }  else if (smaller ==  1)  {  // 1 x bigger      bigger
+10    }  else if (smaller == 1) { // 1 x bigger bigger
 11      return bigger;
 12    }
 13  
-14    /*  Compute  half. If uneven, compute other half. If  even,  double it. */
-15    int s  = smaller >> 1; // Divide  by 2
+14    /* Compute half. If uneven, compute other half. If even, double it. */
+15    int s = smaller >> 1; // Divide by 2
 16    int side1 = minProduct(s, bigger);
-17    int side2  = side1;
-18    if  (smaller % 2  == 1) {
-19      side2  = minProductHelper(smaller - s,  bigger);
+17    int side2 = side1;
+18    if (smaller % 2 == 1) {
+19      side2 = minProductHelper(smaller - s, bigger);
 20    }
 21  
-22    return side1 +  side2;
+22    return side1 + side2;
 23  }
 ```
 
@@ -689,47 +689,47 @@ Can we do better? Yes.
 
 If we observe how the recursion operates, we'll notice that we have duplicated work. Consider this example:
 ```
-minProduct(17,  23)
-    minProduct(8,   23)
-       minProduct(4,   23)  * 2
+minProduct(17, 23)
+    minProduct(8, 23)
+       minProduct(4, 23) * 2
           ...
-  + minProduct(9,   23)
-       minProduct(4,   23)
+  + minProduct(9, 23)
+       minProduct(4, 23)
           ...
-     + minProduct(S,  23)
+     + minProduct(S, 23)
           ...
 ```
 
 The second call to minProduct(4, 23) is unaware of the prior call, and so it repeats the same work. We should cache these results.
 
 ```java
-1   int  minProduct(int a,  int b)  {
+1   int minProduct(int a, int b) {
 2     int bigger  = a < b ? b : a;
 3     int smaller = a < b ? a : b;
 4 
-5     int memo[] =  new  int[smaller + 1];
-6     return  minProduct(smaller, bigger,  memo);
+5     int memo[] = new int[smaller + 1];
+6     return minProduct(smaller, bigger, memo);
 7   }
 8 
-9   int  minProduct(int smaller, int bigger, int[] memo)  {
-10    if (smaller == 0)  {
+9   int minProduct(int smaller, int bigger, int[] memo) {
+10    if (smaller == 0) {
 11      return 0;
-12    }  else if (smaller == 1)  {
+12    }  else if (smaller == 1) {
 13      return bigger;
-14    }  else if (memo[smaller]  >  0)  {
+14    }  else if (memo[smaller] > 0) {
 15      return memo[smaller];
 16    }
 17  
-18    /*  Compute  half. If uneven, compute other half. If even,  double  it.  */
-19    int s = smaller >> 1; // Divide  by  2
-20    int side1 = minProduct(s, bigger, memo);  // Compute half
+18    /* Compute half. If uneven, compute other half. If even, double it. */
+19    int s = smaller >> 1; // Divide by 2
+20    int side1 = minProduct(s, bigger, memo); // Compute half
 21    int side2 = side1;
-22    if (smaller % 2  == 1) {
-23      side2 = minProduct(smaller - s,  bigger, memo);
+22    if (smaller % 2 == 1) {
+23      side2 = minProduct(smaller - s, bigger, memo);
 24    }
 25  
-26    /* Sum and  cache. */
-27    memo[smaller]  =  side1 +  side2;
+26    /* Sum and cache. */
+27    memo[smaller] = side1 + side2;
 28    return memo[smaller];
 29  }
 ```
@@ -751,23 +751,23 @@ The logic in this final solution is that, on even numbers, we just divide smalle
 In doing so, we have  an unexpected "win". Our minProduct function just recurses straight downwards, with increasingly small  numbers each time.  It will never  repeat the  same call, so there's no need to cache any information.
 
 ```java
-1   int  minProduct(int a,  int  b)   {
-2     int bigger = a < b ? b :  a;
+1   int minProduct(int a, int b) {
+2     int bigger = a < b ? b : a;
 3     int smaller = a < b ? a : b;
-4     return  minProductHelper(smaller, bigger);
+4     return minProductHelper(smaller, bigger);
 5   }
 6 
-7   int  minProductHelper(int smaller,  int  bigger) {
-8     if (smaller == 0)  return  0;
-9     else if (smaller == 1)  return  bigger;
+7   int minProductHelper(int smaller, int bigger) {
+8     if (smaller == 0) return 0;
+9     else if (smaller == 1) return bigger;
 10  
-11    int s = smaller >>  1;   // Divide by  2
-12    int halfProd  = minProductHelper(s,   bigger);
+11    int s = smaller >> 1; // Divide by 2
+12    int halfProd = minProductHelper(s, bigger);
 13  
-14    if  (smaller % 2 == 0)  {
-15      return  halfProd +  halfProd;
+14    if (smaller % 2 == 0) {
+15      return halfProd + halfProd;
 16    }  else {
-17      return  halfProd +  halfProd + bigger;
+17      return halfProd + halfProd + bigger;
 18    }
 19  }
 ```
@@ -838,66 +838,66 @@ This approach leads to a natural recursive algorithm. In each part, we are doing
 
 ```java
 1   moveDisks(int n, Tower origin, Tower destination, Tower buffer) {
-2     /*  Base case  */
-3     if (n <= 0)  return;
+2     /* Base case */
+3     if (n <= 0) return;
 4 
-5     /*  move  top  n - 1 disks from origin to buffer, using  destination as  a  buffer.  */
-6     moveDisks(n - 1,  origin, buffer, destination);
+5     /* move top n - 1 disks from origin to buffer, using destination as a buffer. */
+6     moveDisks(n - 1, origin, buffer, destination);
 7 
-8     /*  move  top  from origin to  destination*/
-9     moveTop(origin,  destination);
+8     /* move top from origin to destination*/
+9     moveTop(origin, destination);
 10  
-11    /*  move  top  n  -  1  disks from buffer to  destination, using  origin as  a buffer. */
-12    moveDisks(n - 1,  buffer, destination, origin);
+11    /* move top n - 1 disks from buffer to destination, using origin as a buffer. */
+12    moveDisks(n - 1, buffer, destination, origin);
 13  }
 ```
 
 The following code provides a more detailed implementation of this algorithm, using concepts of object-oriented design.
 
 ```java
-1   void  main(String[] args) {
-2     int n =  3;
-3     Tower[]  towers  =  new Tower[n];
-4     for  (int i = 0;  i < 3;  i++)  {
-5       towers[i] =  new Tower(i);
+1   void main(String[] args) {
+2     int n = 3;
+3     Tower[] towers = new Tower[n];
+4     for (int i = 0; i < 3; i++) {
+5       towers[i] = new Tower(i);
 6     }
 7 
-8     for  (int i = n - 1; i >= 0;  i--) {
+8     for (int i = n - 1; i >= 0; i--) {
 9       towers[0].add(i);
 10    }
-11    towers[0].moveDisks(n, towers[2],  towers[1]);
+11    towers[0].moveDisks(n, towers[2], towers[1]);
 12  }
 13  
 14  class Tower {
 15    private Stack<Integer> disks;
 16    private int index;
-17    public  Tower(int  i) {
-18      disks =  new Stack<Integer>();
-19      index =  i;
+17    public Tower(int i) {
+18      disks = new Stack<Integer>();
+19      index = i;
 20    }
 21  
 22    public int index() {
-23      return  index;
+23      return index;
 24    }
 25  
-26    public void add(int d)  {
-27      if (!disks.isEmpty() && disks.peek() <=  d)  {
-28        System.out.println("Error  placing disk" + d);
+26    public void add(int d) {
+27      if (!disks.isEmpty() && disks.peek() <= d) {
+28        System.out.println("Error placing disk" + d);
 29      }  else {
 30        disks.push(d);
 31      }
 32    }
 33  
-34    public void moveTopTo(Tower  t) {
-35      int top =  disks.pop();
+34    public void moveTopTo(Tower t) {
+35     int top = disks.pop();
 36      t.add(top);
 37    }
 38  
-39    public void moveDisks(int  n,  Tower destination,  Tower buffer) {
-40      if (n  >  0)  {
-41        moveDisks(n  -  1,  buffer,  destination);
+39    public void moveDisks(int n, Tower destination, Tower buffer) {
+40      if (n > 0) {
+41        moveDisks(n - 1, buffer, destination);
 42        moveTopTo(destination);
-43        buffer.moveDisks(n  - 1,  destination,  this);
+43        buffer.moveDisks(n - 1, destination, this);
 44      }
 45    }
 46  }
@@ -950,32 +950,32 @@ a₃a₂a₁ -> a₄a₃a₂a₁, a₃a₄a₂a₁, a₃a₂a₄a₁, a₃a₂a�
 We can now implement this algorithm recursively.
 
 ```java
-1   ArrayList<String>  getPerms(String str) {
+1   ArrayList<String> getPerms(String str) {
 2     if (str == null) return null;
 3 
-4     ArrayList<String> permutations =  new ArrayList<String>();
-5     if (str.length() == 0)  {//base  case
+4     ArrayList<String> permutations = new ArrayList<String>();
+5     if (str.length() == 0) {//base case
 6       permutations. add('"');
-7       return  permutations;
+7       return permutations;
 8     }
 9   
-10    char  first = str.charAt(0); // get  the   first char
-11    String remainder =  str.substring(1); // remove the   first char
-12    ArrayList<String> words =  getPerms(remainder);
-13    for (String word : words)   {
-14      for (int j =  0; j <= word.length(); j++)  {
-15        String s =  insertCharAt(word, first, j);
+10    char first = str.charAt(0); // get the first char
+11    String remainder = str.substring(1); // remove the first char
+12    ArrayList<String> words = getPerms(remainder);
+13    for (String word : words) {
+14      for (int j = 0; j <= word.length(); j++) {
+15        String s = insertCharAt(word, first, j);
 16        permutations.add(s);
 17      }
 18    }
 19    return permutations;
 20  }
 21  
-22  /* Insert char   c  at  index i in word. */
+22  /* Insert char c at index i in word. */
 23  String insertCharAt(String word, char c, int i) {
-24    String start =  word.substring(0,  i);
-25    String end =  word.substring(i);
-26    return start + c  +  end;
+24    String start = word.substring(0, i);
+25    String end = word.substring(i);
+26    return start + c + end;
 27  }
 ```
 
@@ -1012,25 +1012,25 @@ P(a₁a₂a₃a₄) = {a₁+ P(a₂a₃a₄)} + {a₂+ P(a₁a₃a₄)}  +  {a�
 This is now a fairly straightforward algorithm to implement.
 
 ```java
-1   ArrayList<String>  getPerms(String  remainder)  {
+1   ArrayList<String> getPerms(String remainder) {
 2     int len = remainder.length();
 3     ArrayList<String> result = new ArrayList<Str1ng>();
 4 
 5     /* Base case. */
-6     if (len == 0)  {
-7       result.add(""); // Be  sure  to  return empty string!
+6     if (len == 0) {
+7       result.add(""); // Be sure to return empty string!
 8       return result;
 9     }
 10  
 11  
-12    for   (int i = 0;  i < len;   i++)  {
-13      /*  Remove  char  i and find  permutations of  remaining  chars.*/
-14      String before =  remainder.substring(0,  i);
-15      String after  =  remainder.substring(i + 1,  len);
-16      ArrayList<String> partials =  getPerms(before +  after);
+12    for (int i = 0; i < len; i++) {
+13      /* Remove char i and find permutations of remaining chars.*/
+14      String before = remainder.substring(0, i);
+15      String after = remainder.substring(i + 1, len);
+16      ArrayList<String> partials = getPerms(before + after);
 17  
-18      /*  Prepend  char  i to  each  permutation.*/
-19      for  (String s  :   partials) {
+18      /* Prepend char i to each permutation.*/
+19      for (String s : partials) {
 20        result.add(remainder.charAt(i) + s);
 21      }
 22    }
@@ -1042,21 +1042,21 @@ This is now a fairly straightforward algorithm to implement.
 Alternatively, instead of passing the permutations back up the stack, we can push the prefix down the stack. When we get to the bottom (base case), prefix holds a full permutation.
 
 ```java
-1   ArrayList<String>  getPerms(String str) {
-2     ArrayList<String> result  =  new ArrayList<String>();
-3     getPerms("",  str, result);
+1   ArrayList<String> getPerms(String str) {
+2     ArrayList<String> result = new ArrayList<String>();
+3     getPerms("", str, result);
 4     return result;
 5   }
 6 
-7   void  getPerms(String prefix,  String remainder,   ArrayList<String> result) {
-8     if (remainder.length() == 0)  result.add(prefix);
+7   void getPerms(String prefix, String remainder, ArrayList<String> result) {
+8     if (remainder.length() == 0) result.add(prefix);
 9 
-10    int len  =  remainder.length();
-11    for  (int i = 0;  i < len;   i++)  {
-12      String before  =  remainder.substring(0,  i);
-13      String after  =  remainder.substring(i +  1,  len);
-14      char  c =  remainder.charAt(i);
-15      getPerms(prefix +  c,  before  +  after, result);
+10    int len = remainder.length();
+11    for (int i = 0; i < len; i++) {
+12      String before = remainder.substring(0, i);
+13      String after = remainder.substring(i + 1, len);
+14      char c = remainder.charAt(i);
+15      getPerms(prefix + c, before + after, result);
 16    }
 17  }
 ```
@@ -1122,20 +1122,20 @@ The code below implements this algorithm.
 16    return map;
 17  }
 18  
-19  void printPerms(HashMap<Character,  Integer> map,  String  prefix, int remaining,
-20    ArrayList<String>  result) {
+19  void printPerms(HashMap<Character, Integer> map, String prefix, int remaining,
+20    ArrayList<String> result) {
 21    /* Base case. Permutation has been completed. */
 22    if (remaining == 0) {
 23      result.add(prefix);
 24      return;
 25    }
 26  
-27    /* Try remaining letters for  next char,  and generate remaining permutations. */
+27    /* Try remaining letters for next char, and generate remaining permutations. */
 28    for (Character c : map.keySet()) {
-29      int count =  map.get(c);
-39      if (count >  0) {
+29      int count = map.get(c);
+39      if (count > 0) {
 31        map.put(c, count - 1);
-32        printPerms(map, prefix  +  c,  remaining - 1, result);
+32        printPerms(map, prefix + c, remaining - 1, result);
 33        map.put(c, count);
 34      }
 35    }
@@ -1185,19 +1185,19 @@ But wait-we have some duplicate pairs listed. The string ()(()) is listed twice.
 If we're going to apply this approach, we'll need to check for duplicate values  before adding a string to our list.
 
 ```java
-1   Set<String> generateParens(int  remaining) {
-2     Set<String> set = new  HashSet<String>();
-3     if (remaining ==  0) {
+1   Set<String> generateParens(int remaining) {
+2     Set<String> set = new HashSet<String>();
+3     if (remaining == 0) {
 4       set.add("");
 5     }  else {
-6       Set<String> prev =  generateParens(remaining - 1);
+6       Set<String> prev = generateParens(remaining - 1);
 7       for (String str : prev) {
 8         for (int i = 0; i < str.length(); i++) {
-9           if (str.charAt(i) ==  '(') {
-10            String s  =  insertlnside(str, i);
-11            /* Add s to set if it's not  already in  there. Note: HashSet
-12             * automatically  checks for  duplicates before adding, so  an explicit
-13             * check is not  necessary. */
+9           if (str.charAt(i) == '(') {
+10            String s = insertlnside(str, i);
+11            /* Add s to set if it's not already in there. Note: HashSet
+12             * automatically checks for duplicates before adding, so an explicit
+13             * check is not necessary. */
 14            set.add(s);
 15          }
 16         }
@@ -1207,10 +1207,10 @@ If we're going to apply this approach, we'll need to check for duplicate values 
 20     return set;
 21  }
 22  
-23  String insertlnside(String str,  int leftIndex) {
-24    String left  =  str.substring(0,  leftIndex + 1);
-25    String right =  str.substring(leftindex + 1,  str.length());
-26    return left  + "()" + right;
+23  String insertlnside(String str, int leftIndex) {
+24    String left = str.substring(0, leftIndex + 1);
+25    String right = str.substring(leftindex + 1, str.length());
+26    return left + "()" + right;
 27  }
 ```
 
@@ -1227,25 +1227,25 @@ On each recursive call, we have the index for a particular character in the stri
 So, we simply keep track of the number of left and right parentheses allowed. If there are left parens remaining,  we'll insert a left paren and recurse. If there are more right parens remaining than left (i.e., if there are more left parens in use than right parens), then we'll insert a right paren and recurse.
 
 ```java
-1   void  addParen(ArrayList<String> list, int leftRem,  int rightRem,  char[] str,
-2                 int index)   {
-3     if (leftRem  < 0 || rightRem < leftRem)  return;//invalid  state
+1   void addParen(ArrayList<String> list, int leftRem, int rightRem, char[] str,
+2                 int index) { 
+3     if (leftRem < 0 || rightRem < leftRem) return;//invalid state
 4   
-5     if (leftRem  == 0 &&  rightRem ==  0)  {/*Out  of  left and right  parentheses  */
+5     if (leftRem == 0 && rightRem == 0) {/*Out of left and right parentheses */
 6       list.add(String.copyValueOf(str));
 7     }  else {
-8       str[index] =  '(';//Add  left and recurse
-9       addParen(list,  leftRem  -  1,  rightRem,  str, index  + 1);
+8       str[index] = '(';//Add left and recurse 
+9       addParen(list, leftRem - 1, rightRem, str, index + 1);
 10  
-11      str[index] =  ')';//Add  right and recurse
-12      addParen(list,  leftRem,   rightRem  -  1,  str, index  + 1);
+11      str[index] = ')';//Add right and recurse
+12      addParen(list, leftRem, rightRem - 1, str, index + 1);
 13    }
 14  }
 15  
-16  ArrayList<String> generateParens(int  count)  {
-17    char[] str  =  new char[count * 2];
-18    ArrayList<String> list =  new ArrayList<String>();
-19    addParen(list, count, count,   str, 0);
+16  ArrayList<String> generateParens(int count) {
+17    char[] str = new char[count * 2];
+18    ArrayList<String> list = new ArrayList<String>();
+19    addParen(list, count, count, str, 0);
 20    return list;
 21  }
 ```
@@ -1264,24 +1264,24 @@ First, let's visualize how this method  works. When we call paintFill (i.e., "cl
 We can implement this algorithm recursively:
 
 ```java
-1   enum Color { Black,   White,   Red,  Yellow,  Green}
+1   enum Color { Black, White, Red, Yellow, Green}
 2   
-3   boolean PaintFill(Color[][] screen, int  r,  int  c,  Color  ncolor) {
+3   boolean PaintFill(Color[][] screen, int r, int c, Color ncolor) {
 4     if (screen[r][c] == ncolor) return false;
-5     return PaintFill(screen, r,  c,  screen[r][c],  ncolor);
+5     return PaintFill(screen, r, c, screen[r][c], ncolor);
 6   }
 7   
 8   boolean PaintFill(Color[][] screen, int r, int c, Color ocolor, Color ncolor) {
-9     if (r < 0 || r >= screen.length || c <  0 || c >= screen[0].length) {
+9     if (r < 0 || r >= screen.length || c < 0 || c >= screen[0].length) {
 10      return false;
 11    }
 12  
 13    if (screen[r][c] == ocolor) {
 14      screen[r][c] = ncolor;
-15      PaintFill(screen, r - 1, c,  ocolor, ncolor); // up
-16      PaintFill(screen, r + 1, c,  ocolor, ncolor); // down
-17      PaintFill(screen, r, c - 1,  ocolor, ncolor); // left
-18      PaintFill(screen, r, c + 1,  ocolor, ncolor); // right
+15      PaintFill(screen, r - 1, c, ocolor, ncolor); // up
+16      PaintFill(screen, r + 1, c, ocolor, ncolor); // down
+17      PaintFill(screen, r, c - 1, ocolor, ncolor); // left
+18      PaintFill(screen, r, c + 1, ocolor, ncolor); // right
 19    }
 20    return true;
 21  }
@@ -1359,18 +1359,18 @@ The base case of our recursion is the fully reduced  statement. For example,  ma
 This leads to a recursive algorithm that looks like this:
 
 ```java
-1   int makeChange(int  amount,  int[] denoms, int index)   {
-2     if (index >=  denoms.length -  1)  return 1; //last denom
+1   int makeChange(int amount, int[] denoms, int index) {
+2     if (index >= denoms.length - 1) return 1; //last denom
 3     int denomAmount = denoms[index];
 4     int ways = 0;
-5     for (int i = 0; i * denomAmount <= amount; i++)  {
+5     for (int i = 0; i * denomAmount <= amount; i++) {
 6       int amountRemaining = amount - i * denomAmount;
 7       ways += makeChange(amountRemaining, denoms, index + 1);
 8     }
 9     return ways;
 10  }
 11  
-12  int makeChange(int n)  {
+12  int makeChange(int n) {
 13    int[] denoms = {25, 10, 5, 1};
 14    return makeChange(n, denoms, 0);
 15  }
@@ -1381,25 +1381,25 @@ This works, but it's not as optimal as it could be. The issue is that we will be
 We can resolve this issue by storing the previously computed values. We'll need to store a mapping from each pair (amount, index) to the precomputed result.
 
 ```java
-1   int makeChange(int n)  {
+1   int makeChange(int n) {
 2     int[] denoms = {2, 510, 5, 1};
-3     int[][] map  = new int[n + 1][denoms.length];  //precomputed  vals
+3     int[][] map = new int[n + 1][denoms.length]; //precomputed vals
 4     return makeChange(n, denoms, 0, map);
 5   }
 6 
 7   int makeChange(int amount, int[] denoms, int index, int[][] map) {
-8     if (map[amount][index]   >  0)  {//retrieve  value
+8     if (map[amount][index] > 0) {//retrieve value
 9       return map[amount][index];
 10    }
-11    if (index >= denoms.length - 1)  return 1;    //one  denom  remaining
+11    if (index >= denoms.length - 1) return 1; //one denom remaining
 12    int denomAmount = denoms[index];
-13    int ways =  0;
-14    for  (int i =  0;  i *  denomAmount <= amount; i++)  {
-15      //go  to  next  denom, assuming i coins  of  denomAmount
-16      int amountRemaining  = amount -  i * denomAmount;
+13    int ways = 0;
+14    for (int i = 0; i * denomAmount <= amount; i++) {
+15      //go to next denom, assuming i coins of denomAmount
+16      int amountRemaining = amount - i * denomAmount;
 17      ways += makeChange(amountRemaining, denoms, index + 1, map);
 18    }
-19    map[amount][index] =  ways;
+19    map[amount][index] = ways;
 20    return ways;
 21  }
 ```
@@ -1449,41 +1449,41 @@ Implementing this is now reasonably straightforward.
 ```java
 1   int GRID_SIZE = 8;
 2 
-3   void  placeQueens(int row, Integer[] columns, ArrayList<Integer[]> results)  {
-4     if (row == GRID_SIZE)  {//Found  valid placement
+3   void placeQueens(int row, Integer[] columns, ArrayList<Integer[]> results) {
+4     if (row == GRID_SIZE) {//Found valid placement
 5       results.add(columns.clone());
 6     }  else {
-7       for (int col = 0;  col < GRID_SIZE;  col++)  {
-8         if (checkValid(columns,  row,  col)) {
-9           columns[row]  = col; // Place  queen
+7       for (int col = 0; col < GRID_SIZE; col++) {
+8         if (checkValid(columns, row, col)) {
+9           columns[row] = col; // Place queen
 10          placeQueens(row + 1, columns, results);
 11        }
 12      }
 13    }
 14  }
 15  
-16  /* Check if (row1, column1)  is a  valid spot  for  a queen by checking  if  there is a
-17   * queen in  the  same column or  diagonal. We  don't need to  check it for  queens in
-18   * the  same row because  the  calling placeQueen only  attempts to  place  one queen at
-19   * a  time. We  know this row is empty. */
-20  boolean  checkValid(Integer[]  columns,  int row1, int column1) {
-21    for (int row2 =  0;  row2 < row1;  row2++) {
-22      int column2 =  columns[row2];
-23      /*  Check if (row2,  column2) invalidates (row1,   column1)  as  a
-24      * queen spot. */
+16  /* Check if (row1, column1) is a valid spot for a queen by checking if there is a
+17   * queen in the same column or diagonal. We don't need to check it for queens in
+18   * the same row because the calling placeQueen only attempts to place one queen at
+19   * a time. We know this row is empty. */
+20  boolean checkValid(Integer[] columns, int row1, int column1) {
+21    for (int row2 = 0; row2 < row1; row2++) {
+22      int column2 = columns[row2];
+23      /* Check if (row2, column2) invalidates (row1, column1) as a
+24       * queen spot. */
 25      
-26      /*  Check if rows have a  queen in  the  same column */
-27      if (column1  ==  column2) {
+26      /* Check if rows have a queen in the same column */
+27      if (column1 == column2) {
 28        return false;
 29      }
 30      
-31      /* Check diagonals: if  the  distance between the  columns equals  the  distance
-32       * between the  rows,  then  they're in  the  same diagonal. */
-33      int columnDistance  =  Math.abs(column2  -  column1);
+31      /* Check diagonals: if the distance between the columns equals the distance
+32       * between the rows, then they're in the same diagonal. */
+33      int columnDistance = Math.abs(column2 - column1);
 34      
-35      /*  row1  >   row2,  so  no need  for  abs  */
-36      int rowDistance  =  row1  -  row2;
-37      if (columnDistance  ==  rowDistance)   {
+35      /* row1 > row2, so no need for abs */
+36      int rowDistance = row1 - row2;
+37      if (columnDistance == rowDistance) {
 38        return false;
 39      }
 40    }
@@ -1514,34 +1514,34 @@ We can perform a small optimization here. The requirements of this problem stipu
 The code below implements this algorithm recursively.
 
 ```java
-1   int createStack(ArrayList<Box>  boxes)  {
-2     /*  Sort  in  decending  order  by height. */
-3     Collections.sort(boxes,  new BoxComparator());
-4     int maxHeight =  0;
-5     for  (int i = 0;  i < boxes.size();  i++)  {
-6       int height =  createStack(boxes,  i);
-7       maxHeight =  Math.max(maxHeight, height);
+1   int createStack(ArrayList<Box> boxes) {
+2     /* Sort in decending order by height. */
+3     Collections.sort(boxes, new BoxComparator());
+4     int maxHeight = 0;
+5     for (int i = 0; i < boxes.size(); i++) {
+6       int height = createStack(boxes, i);
+7       maxHeight = Math.max(maxHeight, height);
 8     }
 9     return maxHeight;
 10  }
 11  
-12  int createStack(ArrayList<Box>  boxes,  int bottomindex)  {
-13    Box bottom =  boxes.get(bottomindex);
-14    int maxHeight =  0;
-15    for  (inti =  bottomIndex  + 1; i <  boxes.size();  i++)  {
-16      if (boxes.get(i).canBeAbove(bottom))  {
-17        int height =  createStack(boxes,  i);
-18        maxHeight =  Math.max(height,  maxHeight);
+12  int createStack(ArrayList<Box> boxes, int bottomindex) {
+13    Box bottom = boxes.get(bottomindex);
+14    int maxHeight = 0;
+15    for (inti = bottomIndex + 1; i < boxes.size(); i++) {
+16      if (boxes.get(i).canBeAbove(bottom)) {
+17        int height = createStack(boxes, i);
+18        maxHeight = Math.max(height, maxHeight);
 19      }
 20    }
-21    maxHeight +=  bottom.height;
+21    maxHeight += bottom.height;
 22    return maxHeight;
 23  }
 24  
 25  class BoxComparator implements Comparator<Box> {
 26    @Override
 27    public int compare(Box x, Box y) {
-28      return y.height -  x.height;
+28      return y.height - x.height;
 29    }
 30  }
 ``` 
@@ -1549,32 +1549,32 @@ The code below implements this algorithm recursively.
 The problem in this code is that it gets very inefficient. We try to find the best solution that looks like {b₃, b₄, ••• } even though we may have already found the best solution with b₄ at the bottom. Instead of generating these solutions from scratch, we can cache these results using memoization.
 
 ```java
-1   int  createStack(ArrayList<Box> boxes)   {
-2     Collections.sort(boxes,  new BoxComparator());
-3     int maxHeight  =  0;
-4     int[] stackMap =  new int[boxes.size()];
-5     for (int i = 0;  i < boxes.size();  i++)   {
-6       int height = createStack(boxes,  i, stackMap);
-7       maxHeight  = Math.max(maxHeight, height);
+1   int createStack(ArrayList<Box> boxes) {
+2     Collections.sort(boxes, new BoxComparator());
+3     int maxHeight = 0;
+4     int[] stackMap = new int[boxes.size()];
+5     for (int i = 0; i < boxes.size(); i++) {
+6       int height = createStack(boxes, i, stackMap);
+7       maxHeight = Math.max(maxHeight, height);
 8     }
 9     return maxHeight;
 10  }
 11  
-12  int createStack(ArrayList<Box>  boxes, int  bottomIndex, int[] stackMap)   {
-13    if (bottomIndex < boxes.size() && stackMap[bottomIndex]  > 0)  {
+12  int createStack(ArrayList<Box> boxes, int bottomIndex, int[] stackMap) {
+13    if (bottomIndex < boxes.size() && stackMap[bottomIndex] > 0) {
 14      return stackMap[bottomIndex];
 15    }
 16  
-17    Box bottom  =  boxes.get(bottomIndex);
-18    int maxHeight =  0;
-19    for (int i =  bottomIndex + 1;  i <  boxes.size();  i++) {
+17    Box bottom = boxes.get(bottomIndex);
+18    int maxHeight = 0;
+19    for (int i = bottomIndex + 1; i < boxes.size(); i++) {
 20      if (boxes.get(i).canBeAbove(bottom)) {
-21        int height =  createStack(boxes, i, stackMap);
-22        maxHeight  =  Math.max(height,  maxHeight);
+21        int height = createStack(boxes, i, stackMap);
+22        maxHeight  = Math.max(height, maxHeight);
 23      }
 24    }
 25    maxHeight += bottom.height;
-26    stackMap[bottomIndex]  =  maxHeight;
+26    stackMap[bottomIndex] = maxHeight;
 27    return maxHeight;
 28  }
 ```
@@ -1596,31 +1596,31 @@ Then, we choose whether or not to put box 1 in the stack. Take one recursive pat
 We will again use memoization to cache the height of the tallest stack with a particular bottom.
 
 ```java
-1   int  createStack(ArrayList<Box> boxes)   {
-2     Collections.sort(boxes,  new BoxComparator());
+1   int createStack(ArrayList<Box> boxes) {
+2     Collections.sort(boxes, new BoxComparator());
 3     int[] stackMap = new int[boxes.size()];
-4     return createStack(boxes, null,  0,   stackMap);
+4     return createStack(boxes, null, 0, stackMap);
 5   }
 6   
-7   int  createStack(ArrayList<Box> boxes, Box bottom, int offset, int[]  stackMap)   {
-8     if (offset >= boxes.size()) return 0;  // Base case
+7   int createStack(ArrayList<Box> boxes, Box bottom, int offset, int[] stackMap) {
+8     if (offset >= boxes.size()) return 0; // Base case
 9   
-10    /*height with  this bottom*/
-11    Box newBottom =  boxes.get(offset);
+10    /*height with this bottom*/
+11    Box newBottom = boxes.get(offset);
 12    int heightWithBottom = 0;
-13    if (bottom == null  || newBottom.canBeAbove(bottom))  {
-14      if (stackMap[offset] == 0)  {
+13    if (bottom == null || newBottom.canBeAbove(bottom)) {
+14      if (stackMap[offset] == 0) {
 15        stackMap[offset] = createStack(boxes, newBottom, offset + 1, stackMap);
 16        stackMap[offset] += newBottom.height;
 17      }
-18      heightWithBottom =  stackMap[offset];
+18      heightWithBottom = stackMap[offset];
 19    }
 20  
-21    /*without this  bottom*/
-22    int  heightWithoutBottom createStack(boxes, bottom, offset + 1, stackMap);
+21    /*without this bottom*/
+22    int heightWithoutBottom createStack(boxes, bottom, offset + 1, stackMap);
 23  
-24    /* Return  better of  two  options. */
-25    return Math.max(heightWithBottom,  heightWithoutBottom);
+24    /* Return better of two options. */
+25    return Math.max(heightWithBottom, heightWithoutBottom);
 26  }
 ```
 
@@ -1703,42 +1703,42 @@ countEval(expression,  false) = totalEval(expression)  -  countEval(expression, 
 This makes the code a bit more concise.
 
 ```java
-1   int  countEval(String s,  boolean  result) {
-2     if (s.length() == 0)  return  0;
-3     if (s.length() == 1)  return  stringToBool(s) == result ? 1 : 0;
+1   int countEval(String s, boolean result) {
+2     if (s.length() == 0) return 0;
+3     if (s.length() == 1) return stringToBool(s) == result ? 1 : 0;
 4   
-5     int ways =  0;
-6     for   (int i = 1;  i < s.length();  i += 2)  {
-7       char  c = s.charAt(i);
-8       String left = s.substring(0,  i);
-9       String right = s.substring(i + 1,  s.length());
+5     int ways = 0;
+6     for (int i = 1; i < s.length(); i += 2) {
+7       char c = s.charAt(i);
+8       String left = s.substring(0, i);
+9       String right = s.substring(i + 1, s.length());
 10  
-11      /* Evaluate  each side  for   each result. */
-12      int leftTrue =  countEval(left, true);
+11      /* Evaluate each side for each result. */
+12      int leftTrue = countEval(left, true);
 13      int leftFalse = countEval(left, false);
 14      int rightTrue = countEval(right, true);
-15      int  rightFalse = countEval(right,  false);
-16      int total =  (leftTrue + leftFalse) *  (rightTrue + rightFalse);
+15      int rightFalse = countEval(right, false);
+16      int total = (leftTrue + leftFalse) * (rightTrue + rightFalse);
 17  
-18      int  totalTrue =  0;
-19      if (c  == '^')  { // required: one true  and one false
-20        totalTrue = leftTrue *  rightFalse + leftFalse * rightTrue;
-21      }  else  if (c  == '&') {//required:  both true
-22        totalTrue  =  leftTrue *  rightTrue;
-23      }  else  if (c  ==  '|') {  // required: anything  but  both  false
-24        totalTrue  = leftTrue * rightTrue + leftFalse * rightTrue +
-25          leftTrue *  rightFalse;
+18      int totalTrue = 0;
+19      if (c == '^') { // required: one true and one false
+20        totalTrue = leftTrue * rightFalse + leftFalse * rightTrue;
+21      }  else if (c == '&') {//required: both true
+22        totalTrue = leftTrue * rightTrue;
+23      }  else if (c == '|') { // required: anything but both false
+24        totalTrue = leftTrue * rightTrue + leftFalse * rightTrue +
+25          leftTrue * rightFalse;
 26      }
 27  
-28      int subways =  result ?  totalTrue  : total  -  totalTrue;
-29      ways +=  subways;
+28      int subways = result ? totalTrue : total - totalTrue;
+29      ways += subways;
 30    }
 31  
 32    return ways;
 33  }
 34  
-35  boolean stringToBool(String  c)  {
-36    return c.equals("1")  ?   true :  false;
+35  boolean stringToBool(String c) {
+36    return c.equals("1") ? true : false;
 37  }
 ```
 
@@ -1764,30 +1764,30 @@ Although these two expressions are different, they have a similar component: (0^
 We can do  this  by  using memoization,  or  a hash table. We just  need to  store the  result of countEval (expression, result) for each expression and result. If we see an expression that we've calculated before, we just return it from the cache.
 
 ```java
-1   int  countEval(String s,  boolean result,  HashMap<String, Integer>  memo)  {
-2     if (s.length() == 0)  return  0;
-3     if (s.length() == 1)  return  stringToBool(s) == result ?  1 :   0;
-4     if (memo.containsKey(result  + s))  return memo.get(result   +   s);
+1   int countEval(String s, boolean result, HashMap<String, Integer> memo) {
+2     if (s.length() == 0) return 0;
+3     if (s.length() == 1) return stringToBool(s) == result ? 1 : 0;
+4     if (memo.containsKey(result + s)) return memo.get(result + s);
 5   
 6     int ways = 0;
 7   
-8     for  (int i = 1;  i  <  s.length();  i +=   2) {
-9       char c  =  s.charAt(i);
-10      String left      =  s.substring(0,  i);
-11      String right     =  s.substring(i  +  1,  s.length());
-12      int   leftTrue   =  countEval(left, true,  memo);
-13      int   leftFalse  =  countEval(left, false,  memo);
-14      int   rightTrue  =  countEval(right, true,  memo);
-15      int   rightFalse =  countEval(right, false,   memo);
-16      int   total = (leftTrue +  leftFalse) *   (rightTrue +  rightFalse);
+8     for (int i = 1; i < s.length(); i += 2) {
+9       char c = s.charAt(i);
+10      String left      = s.substring(0, i);
+11      String right     = s.substring(i + 1, s.length());
+12      int   leftTrue   = countEval(left, true, memo);
+13      int   leftFalse  = countEval(left, false, memo);
+14      int   rightTrue  = countEval(right, true, memo);
+15      int   rightFalse = countEval(right, false, memo);
+16      int   total = (leftTrue + leftFalse) * (rightTrue + rightFalse);
 17  
-18      int  totalTrue =  0;
+18      int totalTrue = 0;
 19      if (c == '^') {
-20        totalTrue =  leftTrue * rightFalse + leftFalse * rightTrue;
-21      } else if  (c == '&')  {
-22        totalTrue  =  leftTrue * rightTrue;
+20        totalTrue = leftTrue * rightFalse + leftFalse * rightTrue;
+21      } else if (c == '&') {
+22        totalTrue = leftTrue * rightTrue;
 23      } else if (c == '|') {
-24        totalTrue = leftTrue * rightTrue + leftFalse * rightTrue  +
+24        totalTrue = leftTrue * rightTrue + leftFalse * rightTrue +
 25                    leftTrue * rightFalse;
 26      }
 27  

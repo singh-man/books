@@ -129,8 +129,8 @@ Once you have the test cases and results defined, writing the code to implement 
 
 ```java
 1   void testAddThreeSorted() {
-2       MyList list  =  new   MyList();
-3       list.addThreeSorted(3,  1, 2); //  Adds 3 items  in  sorted order
+2       MyList list = new MyList();
+3       list.addThreeSorted(3, 1, 2); // Adds 3 items in sorted order
 4       assertEquals(list.getElement(0),  1);
 5       as sertEquals(list.getElement(l), 2);
 6       as sertEquals(list.getElement(2), 3);
