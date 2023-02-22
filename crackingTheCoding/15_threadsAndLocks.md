@@ -353,7 +353,7 @@ To summarize, an iteration of the game is played with the following steps:
 
 The key is that the delivery of a data token induces a context switch. Let Tₔ  and Tᵣ be the time it takes to deliver and receive a data token, respectively, and let Tc be the amount of time spent in a context switch. At step 2, P₁ records the timestamp of the delivery of the token, and at step 9, it records the timestamp of the response. The amount of time elapsed, T, between these events may be expressed by:
 
-    T =  2  *  (Tₔ   + T꜀   + Tᵣ )
+    T =  2  *  (Tₔ  + T꜀  + Tᵣ)
 
 This formula arises because of the following events: P₁ sends a token (3), the CPU context switches (4), P₂ receives it (5).  P₂ then sends the response token (6), the CPU context switches (7), and finally P₁ receives it (8). 
 
@@ -572,7 +572,7 @@ The pseudocode for this special case cycle detection looks like this:
 ```
 1   boolean checkForCycle(locks[] locks)  {
 2       touchedNodes  = hash  table(lock  ->  boolean)
-3       initialize  touchedNodes  to false for each  lock   in locks
+3       initialize  touchedNodes  to false for each  lock  in locks
 4       for each  (lock x in  process.locks)  {
 5           if (touchedNodes[x] == false) {
 6               if (hasCycle(x, touchedNodes)) {
@@ -583,11 +583,11 @@ The pseudocode for this special case cycle detection looks like this:
 11      return false;
 12  }
 13  
-14  boolean hasCycle(node x,  touchedNodes)   {
+14  boolean hasCycle(node x,  touchedNodes)  {
 15      touchedNodes[r]  =  true;
 16      if (x.state == VISITING) {
 17          return true;
-18      } else if (x.state == FRESH)   {
+18      } else if (x.state == FRESH)  {
 19          ... (see full code  below)
 20      }
 21  }
@@ -615,7 +615,7 @@ The code below provides further details. For simplicity, we assume that all lock
 17    
 18        public boolean hasCycle(HashMap<Integer, Boolean> touchedNodes,
 19                                int[] resourcesinOrder) {
-20            /*check  for  a  cycle*/
+20            /*check for a cycle*/
 21            for (int resource : resourcesinOrder) {
 22                if (touchedNodes.get(resource) == false) {
 23                    LockNode n = locks[resource];
@@ -807,7 +807,7 @@ Instead, we can replicate this behavior with semaphores. The logic is identical.
 1   public class Foo {
 2       public Semaphore sem1, sem2;
 3   
-4       public Foo()  {
+4       public Foo() {
 5           try {
 6               sem1 = new Semaphore(1);
 7               sem2 = new Semaphore(1);
@@ -901,7 +901,7 @@ To do this multithreaded, we want a structure that looks something like this:
 The code for this will look something like:
 ```java
 1   while (true) {
-2       if (current > max)  {
+2       if (current > max) {
 3           return;
 4       }
 5       if (/* divisibility test */) {

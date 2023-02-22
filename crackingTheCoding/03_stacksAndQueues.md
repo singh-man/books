@@ -221,7 +221,7 @@ The code for this solution is below.
 62  }
 ```
 
-If we had additional information about the expected usages of the stacks, then we could modify this algo­rithm accordingly.  For example,  if we expected Stack  1  to have many more elements than Stack 2, we could allocate more space to Stack 1  and less space to Stack 2.
+If we had additional information about the expected usages of the stacks, then we could modify this algorithm accordingly.  For example,  if we expected Stack  1  to have many more elements than Stack 2, we could allocate more space to Stack 1  and less space to Stack 2.
 
 **Approach 2: Flexible Divisions**
 
@@ -370,8 +370,8 @@ Please note that the code for this solution is far more complex than would be ap
 136 
 137     /* Adjust index to be within the range of 0 -> length - 1. */
 138     private int adjustIndex(int index) {
-139         /* Java's mod operator can return neg values. For example, (-11% 5) l
-140          * return -1, not 4. We actually want the value to be 4 (since re
+139         /* Java's mod operator can return neg values. For example, (-11 % 5) will
+140          * return -1, not 4. We actually want the value to be 4 (since we're wrapping
 141          * around the index). */
 142         int max = values.length;
 143         return ((index % max) + max) % max;
@@ -620,7 +620,7 @@ You could make an argument  that, rather than "rolling over", we should be okay 
 80  }
 ```
 
-This problem is not conceptually that tough, but it requires a lot of code to implement it fully. Your inter­viewer would not ask you to implement the entire code.
+This problem is not conceptually that tough, but it requires a lot of code to implement it fully. Your interviewer would not ask you to implement the entire code.
 
 A good strategy on problems like this is to separate code into other methods, like a leftShift method that popAt  can call. This will make your code cleaner and give you the opportunity to lay down the skeleton of the code before dealing with some of the details.
 

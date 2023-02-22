@@ -532,7 +532,7 @@ The subsets of {a₁, a₂, ..., aₙ} are also called the powerset, P({a₁, a�
 
 This problem is a good candidate for the Base Case and Build approach. Imagine that we are trying to find all subsets of a set like S = {a₁, a₂, ..., aₙ}. We can start with the Base Case. 
 
-*Base Case*: n =  0.
+*Base Case*: n = 0.
 
 There is just one subset of the empty set: {}.
 
@@ -553,11 +553,11 @@ What is the difference between the solution for n = 3 and the solution for n = 2
 P(2) = { }, {a₁}, {a₂}, {a₁, a₂}
 P(3) = { }, {a₁}, {a₂}, {a₃}, {a₁, a₂}, {a₁, a₃}, {a₂, a₃}, {a₁, a₂, a₃}
 ```
-The difference between these solutions  is that P(2) is missing all the subsets containing a3.
+The difference between these solutions is that P(2) is missing all the subsets containing a3.
 ```
 P(3) - P(2) = {a₃}, {a₁, a₃}, {a₂, a₃}, {a₁, a₂, a₃}
 ```
-How can we use P(2) to create P(3)? We can simply clone the subsets in P(2) and add a3  to them: 
+How can we use P(2) to create P(3)? We can simply clone the subsets in P(2) and add a₃  to them: 
 ```
 P(2)      = {} , {a₁}, {a₂}, {a₁, a₂} 
 P(2) + a₃ = {a₃}, {a₁, a₃}, {a₂, a₃), {a₁, a₂, a₃}
@@ -742,7 +742,7 @@ One  thing we might notice when we look at this code is that  a call to minProdu
 
 This is unnecessary. Instead, we can do:
 ```
-minProduct(31, 35) =  2  *  minProduct(15, 35) +  35
+minProduct(31, 35) =  2  *  minProduct(15, 35) + 35
 ```
 After all, since 31 = 2\*15+1, then 31x35 = 2\*15\*35+35.
 
@@ -806,7 +806,7 @@ This problem sounds like a good candidate for the Base Case and Build approach.
 +----+-----------------------+---------------+--------------------------+--------------+
 ```
 
-Let's start with the smallest possible example: n =  1.
+Let's start with the smallest possible example: n = 1.
 
 Case n =  1. Can we move Disk 1 from Tower 1 to Tower 3? Yes.
 
@@ -920,7 +920,7 @@ Like in many recursive problems, the Base Case and Build approach will be useful
 
 The only permutation of a₁ is the string a₁. So: 
 ```
-P(a₁)  = a₁
+P(a₁) = a₁
 ```
 *Case: permutations of* a₁a₂
 ```
@@ -990,9 +990,9 @@ P(a₁)  =  a₁
 
 *Case: two-character strings*
 ```
-P(a₁a₂)  =  a₁a₂ and  a₂a₁.
-P(a₂a₃)  =  a₂a₃ and  a₃a₂.
-P(a₁a₃)  =  a₁a₃ and  a₃a₁.
+P(a₁a₂)  =  a₁a₂  and  a₂a₁.
+P(a₂a₃)  =  a₂a₃  and  a₃a₂.
+P(a₁a₃)  =  a₁a₃  and  a₃a₁.
 ```
 *Case: three-character strings*
 
@@ -1086,17 +1086,17 @@ a->2 | b->4 | c->1
 Let's imagine generating a permutation of this string (now represented as a hash table). The first choice we make is whether to use an a, b, or c as the first character. After that, we have a subproblem to solve: find all permutations of the remaining characters, and append those to the already picked "prefix".
 
 ```
-P(a->2 |  b->4 |  c->1) = {a +  P(a->1 | b->4 | c->1)} +
-                          {b +  P(a->2 | b->3 | c->1)} +
-                          {c +  P(a->2 | b->4 | c->0)}
-  P(a->1 | b->4 |  c->1) = {a +  P(a->0 | b->4 | c->l)} +
-                           {b +  P(a->1 | b->3 | c->1)} +
-                           {c +  P(a->1 | b->4 | c->0)}
-  P(a->2 | b->3 |  c->1) = {a +  P(a->1 | b->3 | c->l)} +
-                           {b +  P(a->2 | b->2 | c->1)} +
-                           {c +  P(a->2 | b->3 | c->0)}
-  P(a->2 | b->4 |  c->0) = {a +  P(a->1 | b->4 | c->0)} +
-                           {b +  P(a->2 | b->3 | c->0)}
+P(a->2 |  b->4 |  c->1) = {a + P(a->1 | b->4 | c->1)} +
+                          {b + P(a->2 | b->3 | c->1)} +
+                          {c + P(a->2 | b->4 | c->0)}
+  P(a->1 | b->4 |  c->1) = {a + P(a->0 | b->4 | c->l)} +
+                           {b + P(a->1 | b->3 | c->1)} +
+                           {c + P(a->1 | b->4 | c->0)}
+  P(a->2 | b->3 |  c->1) = {a + P(a->1 | b->3 | c->l)} +
+                           {b + P(a->2 | b->2 | c->1)} +
+                           {c + P(a->2 | b->3 | c->0)}
+  P(a->2 | b->4 |  c->0) = {a + P(a->1 | b->4 | c->0)} +
+                           {b + P(a->2 | b->3 | c->0)}
 ```
 
 Eventually, we'll get down to no more characters remaining.
@@ -1142,7 +1142,7 @@ The code below implements this algorithm.
 36  }
 ```
 
-In situations where the  string has many duplicates, this algorithm will run a lot faster  than the  earlier  algo­rithm.
+In situations where the  string has many duplicates, this algorithm will run a lot faster  than the  earlier  algorithm.
 
 **8.9   Parens:** Implement an algorithm to print  all valid (i.e., properly opened and  closed) combinations of n pairs of parentheses.
 
@@ -1172,12 +1172,12 @@ We can  do this by inserting a pair of parentheses inside  every existing pair o
 So, we have the following:
 
 ```
-(()) ->  (()()) /* inserted pair after  1st left  paren*/
-     ->  ((())) /* inserted pair after  2nd  left paren*/
-     ->  ()(()) /* inserted pair at  beginning of string*/ 
-() ()->  (())() /* inserted pair after 1st left  paren*/ 
-     ->  ()(()) /* inserted pair after  2nd  left paren*/ 
-     ->  ()()() /* inserted pair at  beginning of string*/ 
+(()) ->  (()()) /* inserted pair after 1st left paren*/
+     ->  ((())) /* inserted pair after 2nd left paren*/
+     ->  ()(()) /* inserted pair at beginning of string*/ 
+() ()->  (())() /* inserted pair after 1st left paren*/ 
+     ->  ()(()) /* inserted pair after 2nd left paren*/ 
+     ->  ()()() /* inserted pair at beginning of string*/ 
 ```
  
 But wait-we have some duplicate pairs listed. The string ()(()) is listed twice.
@@ -1315,10 +1315,10 @@ Inspecting this further, we can see that some of these problems reduce. For exam
 
 We can apply the same logic tomakeChange(100 using  2  quarters), makeChange(100  using 3  quarters) andmakeChange(100 using  4  quarters). We have thus reduced the above state­ment to the following.
 ```
-makeChange(100) =  makeChange(100 using 0  quarters) + 
-                   makeChange(75 using 0  quarters) + 
-                   makeChange(50 using 0  quarters) + 
-                   makeChange(25 using 0  quarters) +
+makeChange(100) =  makeChange(100 using 0 quarters) + 
+                   makeChange(75 using 0 quarters) + 
+                   makeChange(50 using 0 quarters) + 
+                   makeChange(25 using 0 quarters) +
                    1
 ```
 
@@ -1329,27 +1329,27 @@ dimes.
 
 Our approach for quarters applies to dimes as well, but we apply this for each of the four of five parts of the above statement. So, for the first part, we get the following statements:
 ```
-makeChange(100 using 0  quarters) = makeChange(100 using 0  quarters,  0 dimes) + 
-                                    makeChange(l00 using 0  quarters,  1  dime) + 
-                                    makeChange(100 using 0  quarters,  2 dimes) +
-                                    ...
-                                    makeChange(l00  using 0  quarters,  10 dimes)
-
-makeChange(75 using 0  quarters) = makeChange(75 using 0  quarters,  0 dimes) + 
-                                   makeChange(75 using 0  quarters,  1  dime) + 
-                                   makeChange(75 using 0  quarters,  2 dimes) +
+makeChange(100 using 0 quarters) = makeChange(100 using 0 quarters, 0 dimes) + 
+                                   makeChange(l00 using 0 quarters, 1  dime) + 
+                                   makeChange(100 using 0 quarters, 2 dimes) +
                                    ...
-                                   makeChange(75 using 0  quarters,  7  dimes)
+                                   makeChange(l00 using 0 quarters, 10 dimes)
 
-makeChange(50 using 0  quarters) = makeChange(50 using 0  quarters,  0 dimes)  + 
-                                   makeChange(50 using 0  quarters,  1 dime)   + 
-                                   makeChange(50 using 0  quarters,  2  dimes) + 
-                                   ...
-                                   makeChange(50 using 0  quarters,  5 dimes)
+makeChange(75 using 0 quarters) = makeChange(75 using 0 quarters, 0 dimes) + 
+                                  makeChange(75 using 0 quarters, 1  dime) + 
+                                  makeChange(75 using 0 quarters, 2 dimes) +
+                                  ...
+                                  makeChange(75 using 0 quarters, 7 dimes)
 
-make(hange(25 using  0 quarters) = makeChange(25 using 0  quarters,  0 dimes) + 
-                                   makeChange(25 using 0  quarters,  1 dime)  + 
-                                   makeChange(25 using 0  quarters,  2 dimes)
+makeChange(50 using 0 quarters) = makeChange(50 using 0 quarters, 0 dimes) + 
+                                  makeChange(50 using 0 quarters, 1  dime) + 
+                                  makeChange(50 using 0 quarters, 2 dimes) + 
+                                  ...
+                                  makeChange(50 using 0 quarters, 5 dimes)
+
+make(hange(25 using 0 quarters) = makeChange(25 using 0 quarters, 0 dimes) + 
+                                   makeChange(25 using 0 quarters, 1 dime)  + 
+                                   makeChange(25 using 0 quarters, 2 dimes)
 ```
 
 Each one of these, in turn, expands out once we start applying nickels. We end up with a tree-like recursive structure where each call expands out to four or more calls.
@@ -1421,26 +1421,26 @@ Picture the queen that is placed last, which we'll assume is on row 8. (This is 
 
 So if we want to know all the valid ways of arranging 8 queens on an 8x8 chess board, it would be:
 ```
-ways to  arrange 8  queens  on an  8x8  board= 
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 0) + 
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 1) +
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 2) +
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 3) +
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 4) + 
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 5) + 
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 6) +
-  ways to arrange 8  queens  on  an  8x8  board  with  queen  at (7, 7)
+ways to  arrange 8 queens on an 8x8 board= 
+  ways to arrange 8 queens on an 8x8 board with queen at (7, 0) + 
+  ways to arrange 8 queens on an 8x8 board with queen at (7, 1) +
+  ways to arrange 8 queens on an 8x8 board with queen at (7, 2) +
+  ways to arrange 8 queens on an 8x8 board with queen at (7, 3) +
+  ways to arrange 8 queens on an 8x8 board with queen at (7, 4) + 
+  ways to arrange 8 queens on an 8x8 board with queen at (7, 5) + 
+  ways to arrange 8 queens on an 8x8 board with queen at (7, 6) +
+  ways to arrange 8 queens on an 8x8 board with queen at (7, 7)
 ```
 We can compute each one of these using a very similar approach:
 ```
 ways to  arrange 8  queens  on  an  8x8  board  with  queen  at (7, 3) = 
-  ways to ... with  queens  at (7, 3)  and  (6, 0) + 
-  ways to ... with  queens  at (7, 3)  and  (6, 1) + 
-  ways to ... with  queens  at (7, 3)  and  (6, 2) + 
-  ways to ... with  queens  at (7, 3)  and  (6, 4) + 
-  ways to ... with  queens  at (7, 3)  and  (6, 5) +
-  ways to ... with  queens  at (7, 3)  and  (6, 6) +
-  ways to ... with  queens  at (7, 3)  and  (6, 7) 
+  ways to ... with queens at (7, 3) and (6, 0) + 
+  ways to ... with queens at (7, 3) and (6, 1) + 
+  ways to ... with queens at (7, 3) and (6, 2) + 
+  ways to ... with queens at (7, 3) and (6, 4) + 
+  ways to ... with queens at (7, 3) and (6, 5) +
+  ways to ... with queens at (7, 3) and (6, 6) +
+  ways to ... with queens at (7, 3) and (6, 7) 
 ```
 Note that we don't need to consider combinations with queens at (7,  3) and (6, 3), since this is a violation of the requirement that every queen is in its own row, column and diagonal.
 
@@ -1632,7 +1632,7 @@ Again, pay close attention to when you recall and insert values into the hash ta
 EXAMPLE
 
 ```
-countEval("1^0|0|1", false) ->  2 
+countEval("1^0|0|1", false) -> 2 
 countEval("0&0&0&1^1|0", true)-> 10 
 ```
 
@@ -1650,10 +1650,10 @@ We could just essentially iterate through each possible place to put a parenthes
 
 ```
 countEval(0^0&0^1|1, true) =
-     countEval(0^0&0^1|1  where paren  around  char  1,  true)
- +   countEval(0^0&0^1|1  where paren  around  char  3,  true)
- +   countEval(0^0&0^1|1  where paren  around  char  S,  true)
- +   countEval(0^0&0^1|1  where paren  around  char  7,  true)
+     countEval(0^0&0^1|1 where paren around char 1, true)
+ +   countEval(0^0&0^1|1 where paren around char 3, true)
+ +   countEval(0^0&0^1|1 where paren around char S, true)
+ +   countEval(0^0&0^1|1 where paren around char 7, true)
 ```
 
 Now what? Let's look at just one of those expressions-the paren aroundchar 3. This gives us (0^0)&(0^1). 
@@ -1684,12 +1684,12 @@ countEval(left ^   right, true) =   countEval(left,  true)  *  countEval(right, 
 ```
 What if we were trying to make the result false instead? We can switch up the logic from above:
 ```
-countEval(left &  right,  false) = countEval(left, true)  * countEval(right,  false)
-                                 + countEval(left, false) * countEval(right,  true)
-                                 + countEval(left, false) * countEval(right,  false) 
-countEval(left | right, false) = countEval(left, false)   * countEval(right,  false)
-countEval(left ^ right, false) = countEval(left, false)   * countEval(right,  false) 
-                               + countEval(left, true)    * countEval(right,  true)
+countEval(left &  right,  false) = countEval(left, true)  * countEval(right, false)
+                                 + countEval(left, false) * countEval(right, true)
+                                 + countEval(left, false) * countEval(right, false) 
+countEval(left | right, false) = countEval(left, false)   * countEval(right, false)
+countEval(left ^ right, false) = countEval(left, false)   * countEval(right, false) 
+                               + countEval(left, true)    * countEval(right, true)
 ```
 
 Alternatively, we can just use the same logic from above and subtract it out from the total number of ways of evaluating the expression.

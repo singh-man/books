@@ -184,8 +184,8 @@ Interview Questions
 
 ```
 unsigned int i;
-for  (i =  100; i >=  0; --i)
-printf("%d\n",  i);
+for (i = 100; i >= 0; --i)
+printf("%d\n", i);
 ```
 
 SOLUTION
@@ -199,14 +199,14 @@ First, note that an unsigned  int is, by definition, always greater than or equa
 The correct code to print all numbers from 100 to 1, is i > 0. If we truly wanted to print zero, we could add an additional printf statement after the for loop.
 ```
 1     unsigned inti;
-2      for (i =  100; i >  0; --i)
+2      for (i = 100; i > 0; --i)
 3           printf("%d\n", i);
 ```
 One additional correction is to use %u in place of %d, as we are printing unsigned  int.
 ```
 1     unsigned inti;
-2      for (i =   100; i >  0; --i)
-3           printf("%u\n",  i);
+2      for (i =  100; i > 0; --i)
+3           printf("%u\n", i);
 ```
 This code will now correctly print the list of all numbers from 100 to 1, in descending order.
 
@@ -264,12 +264,12 @@ General testing is much more expansive. Ideally, we would test every  possible b
 
 There are 6 pieces in chess,  so we can test each piece against every other piece,  in every possible direction. This would look something like the below code:
 ```
-1   foreach piece  a:
-2      foreach other type of piece b  (6  types +  empty   space)
-3         foreach direction  d
-4               Create a  board with piece  a.
-5               Place piece  b  in  direction d.
-6               Try   to move  - check return  value.
+1   foreach piece a:
+2      foreach other type of piece b (6 types + empty space)
+3         foreach direction d
+4               Create a board with piece a.
+5               Place piece b in direction d.
+6               Try to move - check return value.
 ```
 The key to this  problem is recognizing that we can't test every  possible scenario, even if we would like to. So, instead, we must focus on the essential areas.
 

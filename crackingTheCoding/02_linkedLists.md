@@ -310,8 +310,8 @@ Note that this problem cannot be solved if the node to be deleted is the last no
 
 ```
 EXAMPLE 
-Input:   3  ->  5 -> 8 -> 5  ->  10 -> 2  ->  1 [partition = 5] 
-Output:  3  ->  1 -> 2 -> 10 ->  5  -> 5  ->  8 
+Input:   3 -> 5 -> 8 -> 5  -> 10 -> 2 -> 1 [partition = 5] 
+Output:  3 -> 1 -> 2 -> 10 -> 5  -> 5 -> 8 
 ```
 
 SOLUTION
@@ -324,7 +324,7 @@ However, in a linked list, the situation is much easier. Rather than shifting an
 
 We iterate through the linked list, inserting elements into our before list or our after list. Once we reach the end of the linked list and have completed this splitting, we merge the two lists.
 
-This approach is mostly "stable" in that elements stay in their original order, other than the necessary move­ment around the partition. The code below implements this approach.
+This approach is mostly "stable" in that elements stay in their original order, other than the necessary movement around the partition. The code below implements this approach.
 
 ```java
 1   /*Pass in the head of the linked list and the value to partition around*/
@@ -407,7 +407,7 @@ There are many  equally optimal solutions to this problem. If you came up  with 
 
 ```
 EXAMPLE
-Input: (7-> 1 -> 6) + (5 -> 9 -> 2). That is, 617 +  295. 
+Input: (7 -> 1 -> 6) + (5 -> 9 -> 2). That is, 617 +  295. 
 Output: 2 -> 1 -> 9. That is, 912.
 ```
 
@@ -431,7 +431,7 @@ It's useful  to remember in this problem how exactly addition works. Imagine the
 + 2 9 5
 ```
 
-First, we add 7 and 5 to get 12. The digit 2 becomes the last digit of the number, and 1 gets carried over to the next step. Second,  we add 1, 1, and 9 to get 11.The 1 becomes the second digit, and the other 1 gets carried over the final step. Third and finally, we add 1,6 and 2 to get 9. So, our value becomes 912.
+First, we add 7 and 5 to get 12. The digit 2 becomes the last digit of the number, and 1 gets carried over to the next step. Second,  we add 1, 1, and 9 to get 11. The 1 becomes the second digit, and the other 1 gets carried over the final step. Third and finally, we add 1,6 and 2 to get 9. So, our value becomes 912.
 
 We can mimic this process recursively by adding node by node, carrying  over any "excess" data to the next node.  Let's walk through this for the below linked list:
 
@@ -945,7 +945,7 @@ Let's assume that the linked list has a "non-looped" part of size k.
 
 If we apply our algorithm  from part  l, when  will FastRunner and SlowRunner collide?
 
-We know that for every p steps that SlowRunner takes, FastRunner has taken 2p steps.Therefore, when SlowRunner enters the looped  portion  after k steps, FastRunner has taken 2k steps total and must be 2k   -   k steps, or k steps, into the looped portion. Since k might be much larger than the loop length, we should  actually write this as mod (k,  LOOP_SIZE) steps, which we will denote as K.
+We know that for every p steps that SlowRunner takes, FastRunner has taken 2p steps. Therefore, when SlowRunner enters the looped  portion  after k steps, FastRunner has taken 2k steps total and must be 2k   -   k steps, or k steps, into the looped portion. Since k might be much larger than the loop length, we should  actually write this as mod (k,  LOOP_SIZE) steps, which we will denote as K.
 
 At each subsequent step, FastRunner and  SlowRunner get either one step  farther  away or one step closer, depending on your perspective. That is, because we are in a circle, when A moves q steps away from B, it is also moving q steps  closer to B.
 

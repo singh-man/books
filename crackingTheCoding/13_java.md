@@ -91,14 +91,14 @@ ArrayList: An ArrayList is a dynamically resizing array, which grows as you inse
 1   ArrayList<String> myArr = new ArrayList<String>();
 2   myArr.add("one");
 3   myArr.add("two");
-4   System.out.println(myArr.get(0));  /* prints <one> */
+4   System.out.println(myArr.get(0)); /* prints <one> */
 ```
 Vector: A vector is very similar to an ArrayList except that it is synchronized.  Its syntax is almost identical as well.
 
 ```java
 1   Vector<String> myVect = new Vector<String>();
-2   myVect.add("one");      
-3   myVect.add("two");      
+2   myVect.add("one");
+3   myVect.add("two");
 4   system.out.printin(myVect.get(0));
 ```
 LinkedList: LinkedList is, of course, Java's built-in LinkedList class. Though it rarely comes up in an interview, it's useful to study because it demonstrates some of the syntax for an iterator.
@@ -115,7 +115,7 @@ HashMap: The HashMap collection is widely used, both in interviews and in the re
 ```java
 1   HashMap<String, String> map = new HashMap<String, String>();
 2   map.put("one", "uno");
-3   map.put("two",  "dos");
+3   map.put("two", "dos");
 4   System.out.println(map. get("one"));
 ```
 Before your interview, make sure you're very comfortable with the above syntax. You'll need it.
@@ -437,7 +437,7 @@ Second, we convert this into a list of populations using map.
 ```
 Third and finally, we compute the sum using reduce.
 ```
-1   int population = populations.reduce(0, (a,  b)   ->  a  + b); 
+1   int population = populations.reduce(0, (a, b) -> a + b); 
 ```
 This function puts it all together.
 ```java
@@ -491,10 +491,10 @@ We've got two choices: yes or no. We need to weight the probability of "yes" vs.
 For any specific element, there are as many subsets that contain the element as do not contain it. Consider the following: 
 
 ```
-{}       {1}
-{2}      {1,  2}
-{3}      {1,  3}
-{2,  3}  {1,  2, 3} 
+{}     {1}
+{2}    {1, 2}
+{3}    {1, 3}
+{2, 3} {1, 2, 3} 
 ```
 Note how the difference between the subsets on the left and the subsets on the right is the existence of
 

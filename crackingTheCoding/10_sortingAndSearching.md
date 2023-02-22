@@ -907,10 +907,10 @@ The code below implements this algorithm.
 45       return lowerleft;
 46   }
 47   
-48   Coordinate findElement(int[][] matrix,   int x)  {
-49       Coordinate origin =  new Coordinate(0,  0);
-50       coordinate dest   =  new Coordinate(matrix.length  -  1,  matrix[0].length  -  1);
-51       return  findElement(matrix, origin,  dest,  x);
+48   Coordinate findElement(int[][] matrix, int x) {
+49       Coordinate origin =  new Coordinate(0, 0);
+50       coordinate dest   =  new Coordinate(matrix.length - 1, matrix[0].length - 1);
+51       return findElement(matrix, origin, dest, x);
 52   }
 53   
 54   public class Coordinate implements Cloneable {
@@ -948,10 +948,10 @@ You help  yourself out a  bit by separating code  out  into other methods. For  
 **10.10  Rank from  Stream:**   Imagine you are reading in a stream of integers. Periodically,  you wish to be able to look up the rank of a number x (the  number of values less than or equal to x). Implement the data structures and algorithms to support these operations. That is, implement the method track(int x), which is called when each number is generated, and the method getRankOfNumber(int  x), which returns the number of values less than or equal to x (not including x itself).
 ```
 EXAMPLE
-Stream (in order of appearance):5,    1,   4,   4,  5,  9,   7,   13,   3 
-getRankOfNumber(1) =  0
-getRankOfNumber(3) =  1
-getRankOfNumber(4) =  3
+Stream (in order of appearance):5,  1,  4,  4,  5,  9,  7,  13,  3 
+getRankOfNumber(1) = 0
+getRankOfNumber(3) = 1
+getRankOfNumber(4) = 3
 ```
 
 SOLUTION
@@ -994,10 +994,10 @@ Finally, we find 24 and we return counter: 6.
 
 Recursively, the algorithm is the following:
 ```
-1   int getRank(Node  node,  int x)  {
+1   int getRank(Node node, int x) {
 2       if x is node.data, return node.leftSize()
-3       if x is on left of  node,  return  getRank(node.left,  x)
-4       if x is on right of  node, return node.leftSize() + 1 + getRank(node.right,  x)
+3       if x is on left of node, return getRank(node.left, x)
+4       if x is on right of node, return node.leftSize() + 1 + getRank(node.right, x)
 5   }
 ```
 The full code for this is below.
@@ -1135,9 +1135,9 @@ Let's revisit an example.
 For each element,  we'll look at the adjacent  elements. Let's imagine some sequences. We'll just use the numbers 0, 1  and 2. The specific values don't matter.
 ```
 0   1   2
-0   2   1   //peak
+0   2   1  //peak
 1   0   2
-1   2   0   //peak
+1   2   0  //peak
 2   1   0
 2   0   1
 ```
@@ -1146,12 +1146,12 @@ If the center element needs to be a peak, then two of those sequences work. Can 
 
 Yes. We can fix this sequence by swapping the center element with the largest adjacent element.
 ```
-0   1   2   -> 0    2   1           
+0   1   2   -> 0    2    1           
 0   2   1       // peak 
 1   0   2   -> 1      2     0
 1   2   0       // peak
-2   1   0   -> 1    2   0
-2   0   1   -> 0    2   1
+2   1   0   -> 1    2    0
+2   0   1   -> 0    2    1
 ```
 As we noted before, if we make sure the peaks are in the right place then we know the valleys are in the right place.
 
