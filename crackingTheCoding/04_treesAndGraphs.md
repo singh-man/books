@@ -23,8 +23,8 @@ A very simple class definition for Node is:
 
 ```java
 1   class Node {
-2        public String name;
-3        public Node[] children;
+2       public String name;
+3       public Node[] children;
 4   }
 ```
 
@@ -32,7 +32,7 @@ You might also have a Tree class to wrap this node. For the purposes of intervie
 
 ```java
 1   class Tree {
-2     public Node root;
+2       public Node root;
 3   }
 ```
 
@@ -264,7 +264,7 @@ This is a bit more compact, but it isn't quite as clean. We tend to use node cla
 #### Adjacency Matrices
 
 An adjacency matrix  is an NxN boolean matrix (where N is the  number of nodes), where a true value  at matrix[i][j] indicates an edge from node i to node j. (You can also use an integer matrix with 0s and
-1 s.)
+1s.)
 
 In an undirected graph, an adjacency matrix will be symmetric. In a directed graph, it will not  (necessarily) be.
 
@@ -289,7 +289,7 @@ Breadth-first search and depth-first search tend to be used in different scenari
 
 However,  if we want to find the shortest path (or just any path) between two nodes, BFS is generally better. Consider representing all the friendships in the entire world in a graph and trying to find a path of friendships between Ash and Vanessa.
 
-In depth-first search, we could take a path like `Ash -> Brian  -> Carleton -> Davis -> Eric -> Farah -> Gayle -> Harry ->  Isabella -> John ->  Kari...` and then find ourselves very far away. We could go through most of the world without realizing that, in fact, Vanessa is Ash's friend. We will still eventually find the path, but it may take a long time. It also won't find us the shortest path.
+In depth-first search, we could take a path like `Ash -> Brian -> Carleton -> Davis -> Eric -> Farah -> Gayle -> Harry -> Isabella -> John ->  Kari...` and then find ourselves very far away. We could go through most of the world without realizing that, in fact, Vanessa is Ash's friend. We will still eventually find the path, but it may take a long time. It also won't find us the shortest path.
 
 In breadth-first search, we would stay close to Ash for as long as possible. We might iterate through many of Ash's friends, but we wouldn't go to his more distant connections until absolutely necessary. If Vanessa is Ash's friend, or his friend-of-a-friend, we'll find this out relatively quickly.
 
@@ -350,7 +350,7 @@ Bidirectional search is used to find the shortest path between  a source and des
 To see why this is faster, consider  a graph  where every node has at most  k adjacent nodes and the shortest path from node s to node t has length d.
 
 - In traditional breadth-first search, we would  search up to k nodes in the first "level" of the search. In the second level, we would  search up to k nodes for each of those first k nodes, so k2 nodes total (thus far). We would do this d times, so that's O(kᵈ) nodes.
-- In bidirectional search, we have two searches that collide after approximately d/2 levels (the midpoint of the path). The search from s visits approximately k⁽ᵈ/²⁾ , as does the search from t. That's approximately 2 k⁽ᵈ/²⁾, or O(k⁽ᵈ/²⁾), nodes total.
+- In bidirectional search, we have two searches that collide after approximately d/2 levels (the midpoint of the path). The search from s visits approximately k⁽ᵈ/²⁾ , as does the search from t. That's approximately 2k⁽ᵈ/²⁾, or O(k⁽ᵈ/²⁾), nodes total.
 
 This might seem like a minor  difference,  but it's not. It's huge.  Recall that (kᵈ/²) * (kᵈ/²) = kᵈ. The bidirectional search is actually faster by a factor of kᵈ/².
 
@@ -424,7 +424,7 @@ To create a tree of minimal height, we need to match the number of nodes in the 
 
 We proceed with constructing our tree in a similar fashion. The middle of each subsection of the array becomes the root of the node. The left half of the array will become our left subtree, and the right half of the array will become the right subtree.
 
-One way to implement this is to use a simple root.insertNode(int  v) method which inserts the value v through a recursive process that starts with the root node. This will indeed construct a tree with minimal height but it will not do so very efficiently.  Each insertion  will require traversing the tree, giving a total cost of O(N log N) to the tree.
+One way to implement this is to use a simple ```root.insertNode(int  v)``` method which inserts the value v through a recursive process that starts with the root node. This will indeed construct a tree with minimal height but it will not do so very efficiently.  Each insertion  will require traversing the tree, giving a total cost of O(N log N) to the tree.
 
 Alternatively, we can cut out the extra traversals by recursively using the createMinimalBST method. This method is passed just a subsection of the array and returns the root of a minimal tree for that array.
 
@@ -497,7 +497,7 @@ We can implement a simple modification of the pre-order traversal algorithm, whe
 
 Alternatively, we can also implement a modification of breadth-first search. With this implementation, we want to iterate through the root first, then level 2, then level 3, and so on.
 
-With each level i, we will have already  fully visited all nodes on level i -  1. This means that to get which nodes are on level i, we can simply look at all children of the nodes of level i -  1.
+With each level i, we will have already  fully visited all nodes on level ```i -  1```. This means that to get which nodes are on level i, we can simply look at all children of the nodes of level ```i - 1```.
 
 The code below implements this algorithm.
 
@@ -652,7 +652,7 @@ The code below implements this algorithm.
 2   boolean checkBST(TreeNode n) {
 3       if (n == null) return true;
 4  
-5       // Check I recurse left
+5       // Check / recurse left
 6       if (!checkBST(n.left)) return false;
 7  
 8       // Check current
@@ -830,7 +830,7 @@ In drawing this example (which is not the example from the problem description),
 
 Now that we have a good example, let's get started with an algorithm.
 
-**Solution#l**
+**Solution#1**
 
 Where do we start? Are there any nodes that we can definitely compile immediately?
 
@@ -852,7 +852,7 @@ Next, we know that c, b, and g are free to build since they have no incoming edg
 
 Project a can be built next, so let's do that and remove its outgoing edges. This leaves just e. We build that next, giving us a complete build order.
 
-    build  order:   f, d,  c,  b,  g,  a,  e
+    build  order:   f,  d,  c,  b,  g,  a,  e
 
 Did this algorithm work, or did we just get lucky? Let's think about the logic.
 
@@ -921,7 +921,7 @@ The code below implements this algorithm.
 34          Project current = order[toBeProcessed];
 35  
 36          /* We have a circular dependency since there are no remaining projects with
-37          * zero dependencies. */
+37           * zero dependencies. */
 38          if (current == null) {
 39              return null;
 40          }
@@ -1015,13 +1015,13 @@ Alternatively, we can use depth-first search (DFS) to find the build  path.
 
 Suppose we picked an arbitrary node (say b) and  performed a depth-first search on it. When  we get  to the end of a path and  can't  go  any  further (which will happen at h and  e), we know  that those terminating nodes can be the  last projects to be built.  No projects depend on them.
 ```
-DFS(b)                              // Step  1
-    DFS(h)                          // Step  2
-        build order = ... , h       // Step  3
-    DFS(a)                          // Step  4
-        DFS(e)                      // Step  5
-            build  order... , e, h  // Step  6
-        ...                         // Step  7+
+DFS(b)                               // Step  1
+    DFS(h)                           // Step  2
+        build order = ...,  h        // Step  3
+    DFS(a)                           // Step  4
+        DFS(e)                       // Step  5
+            build order = ..., e, h  // Step  6
+        ...                          // Step  7+
     ...
 ```
 
@@ -1186,7 +1186,7 @@ Next, we go to node 10, uncovering the subtree rooted at 15. We check this subtr
 ![](media/04_7_6.JPG)
 
 
-To implement this, we can just traverse upwards from p, storing the parent and the sibling node in a variable. (The sibling node is always a child of parent and refers to the newly uncovered  subtree.) At each iteration, sibling gets set to the old parent's sibling node and parent gets set to parent.parent.
+To implement this, we can just traverse upwards from p, storing the parent and the sibling node in a variable. (The sibling node is always a child of parent and refers to the newly uncovered  subtree.) At each iteration, sibling gets set to the old parent's sibling node and parent gets set to ```parent.parent```.
 
 ```java
 1   TreeNode commonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -1263,7 +1263,7 @@ The code below implements this approach.
 27  }
 ```
 
-This algorithm runs in O(n) time on a balanced tree. This is because covers is called on 2n nodes in the first call (n nodes for the left side, and n nodes for the right side). After that the algorithm branches left or right, at which point covers will be called on  (2n)/2  nodes, then  (2n)/4, and so on. This results in a runtime of O(n).
+This algorithm runs in O(n) time on a balanced tree. This is because covers is called on 2n nodes in the first call (n nodes for the left side, and n nodes for the right side). After that the algorithm branches left or right, at which point covers will be called on  ²ⁿ/₂  nodes, then  ²ⁿ/₄, and so on. This results in a runtime of O(n).
 
 We know at this point that we cannot do better than that in terms of the asymptotic runtime since we need to potentially look at every node in the tree. However, we may be able to improve it by a constant multiple.
 
@@ -1273,7 +1273,7 @@ Although Solution #3 is optimal in its runtime, we may recognize that there is s
 
 We may recognize that we should only need to search the entire tree once to find p and q. We should then be able to "bubble up" the findings to earlier nodes in the stack. The basic logic is the same as the earlier solution.
 
-We recurse through the entire tree with a function called commonAncestor(TreeNode root, TreeNode p, TreeNode q). This function returns values as follows:
+We recurse through the entire tree with a function called ```commonAncestor(TreeNode root, TreeNode p, TreeNode q)```. This function returns values as follows:
 
 - Returns p, if root's subtree includes p (and not q). 
 - Returns q, if root's subtree includes q (and not p). 
@@ -1359,12 +1359,12 @@ We somehow need to distinguish between these two cases, and this is what the cod
 23      }
 24  
 25      Result rx = commonAncHelper(root.left, p, q);
-26      if (rx.isAncestor) {//Found common ancestor
+26      if (rx.isAncestor) { //Found common ancestor
 27          return rx;
 28      }
 29  
 30      Result ry = commonAncHelper(root.right, p, q);
-31      if (ry.isAncestor) {//Found common ancestor
+31      if (ry.isAncestor) { //Found common ancestor
 32          return ry;
 33      }
 34  
@@ -1424,10 +1424,10 @@ Let's think  about this problem recursively.  If we had all arrays  that could h
 
 Here's what we mean by weaving. We are merging two arrays in all possible ways, while keeping the elements within each array in the same relative order.
 ```
-arrayl: {1,  2}
-array2: {3,  4}
-weaved: {1, 2, 3,  4},  {1, 3,  2,  4},  {1,   3,  4,  2},
-        {3, 1, 2,  4},  {3, 1,  4,  2},  {3,   4,  1,  2}
+arrayl: {1, 2}
+array2: {3, 4}
+weaved: {1, 2, 3, 4}, {1, 3, 2, 4}, {1, 3, 4, 2},
+        {3, 1, 2, 4}, {3, 1, 4, 2}, {3, 4, 1, 2}
 ```
 Note that, as long as there  aren't any duplicates in the original array sets, we won't have to worry that weaving will create duplicates.
 
@@ -1479,8 +1479,8 @@ We've chosen to implement it the latter way. Since we're keeping the same refere
 10      prefix.add(node.data);
 11  
 12      /* Recurse on left and right subtrees. */
-13      ArrayList<LinkedList<Integer>> leftSeq   =  allSequences(node.left);
-14      ArrayList<LinkedList<Integer>> rightSeq  =  allSequences(node.right);
+13      ArrayList<LinkedList<Integer>> leftSeq  = allSequences(node.left);
+14      ArrayList<LinkedList<Integer>> rightSeq = allSequences(node.right);
 15  
 16      /* Weave together each list from the left and right sides. */
 17      for (LinkedList<Integer> left : leftSeq) {
@@ -1561,9 +1561,9 @@ Unfortunately, trees with different structures could still have the same pre-ord
 ```
     3        3
    /          \
-  4             4
+  4            4
 ```
-There's a simple  fix though. We can store NULL nodes in the pre-order traversal string as a special character, like an 'X'. (We'll  assume that the binary trees contain only integers.)The left tree would have the traversal { 3,   4,   X} and the right tree will have the traversal { 3,   X,  4}.
+There's a simple  fix though. We can store NULL nodes in the pre-order traversal string as a special character, like an 'X'. (We'll  assume that the binary trees contain only integers.)The left tree would have the traversal { 3,   4,   X} and the right tree will have the traversal {3, X, 4}.
 
 Observe that, as long as we represent the NULL nodes, the pre-order traversal of a tree is unique. That is, if two trees have the same pre-order traversal, then we know they are identical trees in values and structure.
 
@@ -1576,7 +1576,7 @@ The root is 1, and its left node, 2, follows it. 2.left must be 4. 4 must have t
           /     \
         2         3
       /   \     /   \
-    4       x  x     x
+     4     x   x     x
    /  \
  x      x
 ```
@@ -1603,8 +1603,8 @@ Implementing this is quite straightforward. We just need to construct and compar
 13          sb.append("X"); // Add null indicator
 14          return;
 15      }
-16      sb.append(node.data + " "); // Add root
-17      getOrderString(node.left, sb); // Add left
+16      sb.append(node.data + " "); 	// Add root
+17      getOrderString(node.left, sb); 	// Add left
 18      getOrderString(node.right, sb); // Add right
 19  }
 ```
@@ -1640,7 +1640,7 @@ The code below implements this algorithm.
 14  
 15  boolean matchTree(TreeNode r1, TreeNode r2) {
 16      if (r1 == null && r2 == null) {
-17          return true; // nothing left in the subtree
+17          return true;  // nothing left in the subtree
 18      }  else if (r1 == null || r2 == null) {
 19          return false; // exactly tree is empty, therefore trees don't match
 20      }  else if (r1.data != r2.data)  {
@@ -1750,7 +1750,7 @@ This means that each node must know the size of the nodes on the left and the si
 12      public TreeNode getRandomNode() {
 13          int leftSize  = left == null ? 0 : left.size();
 14          Random random = new Random();
-15          int index = random.nextint(size);
+15          int index = random.nextInt(size);
 16          if (index < leftSize) {
 17              return left.getRandomNode();
 18          } else if (index == leftSize) {
@@ -1760,18 +1760,18 @@ This means that each node must know the size of the nodes on the left and the si
 22          }
 23      }
 24  
-25      public void insertinOrder(int d) {
+25      public void insertInOrder(int d) {
 26          if (d <= data) {
 27              if (left == null) {
 28                  left = new TreeNode(d);
 29              } else {
-30                  left.insertlnOrder(d);
+30                  left.insertInOrder(d);
 31              }
 32          } else {
 33              if (right == null) {
 34                  right = new TreeNode(d);
 35              } else {
-36                  right.insertinOrder(d);
+36                  right.insertInOrder(d);
 37              }
 38          }
 39          size++;
@@ -1799,7 +1799,7 @@ In a balanced tree, this algorithm will be O(log N), where N is the number of no
 
 Random number calls can be expensive.  If we'd like, we can reduce the number of random number calls substantially.
 
-*Imagine* we called getRandomNode on the tree below, and then traversed left.
+*Imagine* we called *getRandomNode* on the tree below, and then traversed left.
 
 ```
           20
@@ -1807,13 +1807,13 @@ Random number calls can be expensive.  If we'd like, we can reduce the number of
       10      30
      /   \      \
     5    15      35
-   / \  /  \
+   / \     \
   3   7     17
 ```
 
 We traversed left because we picked a number between 0 and 5 (inclusive). When we traverse left, we again pick a random number between 0 and 5. Why re-pick? The first number will work just fine.
 
-But what if we went right instead? We have a number between 7 and 8 (inclusive) but we would need a number between O and 1  (inclusive). That's easy to fix: just subtract out LEFT_SIZE  +  1.
+But what if we went right instead? We have a number between 7 and 8 (inclusive) but we would need a number between 0 and 1  (inclusive). That's easy to fix: just subtract out LEFT_SIZE  +  1.
 
 Another way to think about what we're doing is that the initial random number call indicates which node(i) to return, and then we're locating the ith node in an in-order traversal. Subtracting LEFT_SIZE  +  1 from i reflects that, when we go right, we skip over LEFT_SIZE  + 1 nodes in the in-order traversal.
 
@@ -1827,15 +1827,15 @@ Another way to think about what we're doing is that the initial random number ca
 7           if (root == null) return null;
 8  
 9           Random random = new Random();
-10          int i = random.nextlnt(size());
-11          return root.getlthNode(i);
+10          int i = random.nextInt(size());
+11          return root.getIthNode(i);
 12      }
 13  
-14      public void insertinOrder(int value) {
+14      public void insertInOrder(int value) {
 15          if (root == null) {
 16              root = new TreeNode(value);
 17          }  else {
-18              root.insertlnOrder(value);
+18              root.insertInOrder(value);
 19          }
 20      }
 21  }
@@ -1843,18 +1843,18 @@ Another way to think about what we're doing is that the initial random number ca
 23  class TreeNode {
 24      /* construc tor and variables are the same. */
 25  
-26      public TreeNode getlthNode(int i) {
+26      public TreeNode getIthNode(int i) {
 27          int leftSize = left == null ? 0 : left.size();
 28          if (i < leftSize) {
-29              return left.getithNode(i);
+29              return left.getIthNode(i);
 30          }  else if (i == leftSize) {
 31              return this;
 32          }  else {
 33              /* Skipping over leftSize + 1 nodes, so subtract them. */
-34              return right.getlthNode(i - (leftSize + 1));
+34              return right.getIthNode(i - (leftSize + 1));
 35          }
 36      }
-37      public void insertlnOrder(int d) {/* same */}
+37      public void insertInOrder(int d) {/* same */}
 38      public int size() { return size; }
 39      public TreeNode find(int d) {/* same */}
 40  
@@ -1879,9 +1879,12 @@ Let's pick a potential sum-say, 8-and then draw  a binary  tree  based on this. 
         5      -3
       /    \     \
     3       2     11
-   /  \    /  \
-  3     -2      1
+   /  \       \
+  3   -2       1
 ```
+
+One option is the brute force approach. 
+
 
 **Solution #1: Brute  Force**
 
@@ -1895,7 +1898,7 @@ In the  brute force approach, we just  look at all possible paths. To do this, w
 5       int pathsFromRoot = countPathsWithSumFromNode(root, targetSum, 0);
 6   
 7       /* Try the nodes on the left and right. */
-8       int pathsOnleft  = countPathsWithSum(root.left, targetSum);
+8       int pathsOnLeft  = countPathsWithSum(root.left, targetSum);
 9       int pathsOnRight = countPathsWithSum(root.right, targetSum);
 10  
 11      return pathsFromRoot +  pathsOnLeft +  pathsOnRight;
@@ -1922,11 +1925,11 @@ What is the time complexity of this algorithm?
 
 Consider that node at depth d will be "touched" (via countPathsWithSumFromNode)  by d nodes above it. 
 
-In a balanced binary tree, d will be no more than approximately log N. Therefore, we know that with N nodes in the tree, countPathsWithSumFromNode will be called O(N log N) times. The runtime is O(N log N).
+In a balanced binary tree, d will be no more than approximately ```log N```. Therefore, we know that with N nodes in the tree, countPathsWithSumFromNode will be called ```O(N log N)``` times. The runtime is ```O(N log N)```.
 
 We can also approach this from the other direction. At the root node, we traverse to all N - 1 nodes beneath it (via countPathsWithSumFromNode). At the second level (where there are two nodes), we traverse to N   -  3 nodes. At the third level (where there are four nodes, plus three above those), we traverse to N   -   7 nodes. Following this pattern, the total work is roughly:
 ```
-(N -  1)  + (N -  3) + (N  -  7)  +  (N  -  15)  +  (N -  31) + ••• +  (N  -  N)
+(N  -  1)  + (N  -  3) + (N  -  7)  +  (N  -  15)  +  (N  -  31) + ••• +  (N  -  N)
 ```
 To simplify this, notice that the left side of each term is always N and the right side is one less than a power of two. The number of terms is the depth of the tree, which is O(log  N). For the right side, we can ignore the fact that it's one less than a power  of two. Therefore, we really have this:
 ```
@@ -1935,21 +1938,21 @@ O(N  log  N - N)
 O(N  log  N)
 ```
 If the value of the sum of powers of two from 1 through N isn't obvious to you, think about what the powers of two look like in binary:
-0001
 ```
+   0001
 +  0010
 +  0100
 +  1000
 -------
 =  1111
 ```
-Therefore, the runtime  is O(N log N) in a balanced tree.
+Therefore, the runtime  is ```O(N log N)``` in a balanced tree.
 
 In an unbalanced tree, the runtime could be much worse. Consider a tree that is just a straight line down. At the root, we traverse to N  -  1 nodes. At the next level (with just  a single node), we traverse to N -  2 nodes. At the third level, we traverse to N - 3 nodes, and so on. This leads us to the sum of numbers between 1 and N, which is O(N²).
 
 ##### Solution #2: Optimized
 
-In analyzing the last solution, we may realize that we repeat some work. For a path such as `10  ->  5   -> 3  ->   -2`, we traverse this path (or parts of it) repeatedly. We do it when we start with node  10, then when we go to node 5 (looking at 5, then 3, then  -2), then  when  we go to node  3, and then  finally  when  we go to node -2. Ideally, we'd like to reuse this work.
+In analyzing the last solution, we may realize that we repeat some work. For a path such as `10  ->  5  -> 3  ->  -2`, we traverse this path (or parts of it) repeatedly. We do it when we start with node  10, then when we go to node 5 (looking at 5, then 3, then  -2), then  when  we go to node  3, and then  finally  when  we go to node -2. Ideally, we'd like to reuse this work.
 
 ```
             10
@@ -1957,14 +1960,14 @@ In analyzing the last solution, we may realize that we repeat some work. For a p
         5       -3
       /    \      \
      3      1      11
-   /  \   /  \
-  3    -2     2
+   /  \      \
+  3   -2      2
 ```
 
 
 Let's isolate a given path and treat it as just an array. Consider a (hypothetical, extended) path like:
 ```
-10 -> 5   -> 1  -> 2  ->  -1  ->  -1  -> 7  -> 1  ->  2
+10  ->  5  ->  1  ->  2  ->  -1  ->  -1  ->  7  ->  1  ->  2
 ```
 What we're really saying then is: How many contiguous subsequences in this array sum to a target sum such as 8? In other words, for each y, we're trying to find the x values  below.  (Or, more accurately, the number of x values below.)
 
@@ -2029,7 +2032,7 @@ Despite the complexity of deriving this algorithm, the code to implement this is
 28  
 29  void incrementHashTable(HashMap<Integer, Integer> hashTable, int key, int delta) {
 30      int newCount = hashTable.getOrDefault(key, 0) + delta;
-31      if (newCount == 0) {//Remove when zero to reduce space usage
+31      if (newCount == 0) { //Remove when zero to reduce space usage
 32          hashTable.remove(key);
 33      }  else {
 34          hashTable.put(key, newCount);

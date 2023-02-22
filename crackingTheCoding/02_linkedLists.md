@@ -577,7 +577,7 @@ SOLUTION
  
 --- 
 
-To approach this problem, we can picture a palindrome like 0  - >   1  - >   2  - >   1  - >  0. We know that, since it's a palindrome, the list must be the same backwards and forwards. This leads us to our first solution.
+To approach this problem, we can picture a palindrome like 0  ->  1  ->  2  ->  0. We know that, since it's a palindrome, the list must be the same backwards and forwards. This leads us to our first solution.
 
 
 **Solution #1: Reverse and Compare**
@@ -676,10 +676,10 @@ In order to apply this approach, we first need to know when we've reached the mi
 
 ```java
 1  recurse(Node n, int length) {
-2       if (length == 0 || length == 1) {
-3            return [something]; // At middle
-4       }
-5       recurse(n.next, length - 2);
+2      if (length == 0 || length == 1) {
+3           return [something]; // At middle
+4      }
+5      recurse(n.next, length - 2);
 6    ...
 7  }
 ```
@@ -689,10 +689,10 @@ This method will form the outline of the isPalindrome method. The "meat" of the 
 Let's examine what the call stack looks like:
 
 ```
-1   vl = isPalindrome: list = 0  (  1  (  2  (  3  )  2  )  1  )  0.length   =  7
-2      v2 =  isPalindrome: list  = 1  (  2  (  3  )  2  )  1  )  0.length =  5
-3         v3 =  isPalindrome: list =   2  (  3  )  2  )  1  )  0.length   =  3
-4            v4 =  isPalindrome:   list  = 3  )  2  )  1  )  0.length =  1
+1   v1 = isPalindrome: list = 0  (  1  (  2  (  3  )  2  )  1  )  0.length   =  7
+2      v2 =  isPalindrome: list = 1  (  2  (  3  )  2  )  1  )  0.length =  5
+3         v3 =  isPalindrome: list = 2  (  3  )  2  )  1  )  0.length   =  3
+4            v4 =  isPalindrome: list = 3  )  2  )  1  )  0.length =  1
 5            returns v3
 6         returns v2
 7      returns v1
@@ -730,12 +730,12 @@ The example below illustrates the parameters and return values from this sample 
 ```
 1   isPalindrome:  list = 0  (  1  (  2  (  3  (  4  )  3  )  2  )  1  )  0.  len  =  9
 2     isPalindrome:  list =  1  (  2  (  3  (  4  )  3  )  2  )  1  )  0.  len  =  7
-3       isPalindrome:  list =   2  (  3  (  4  )  3  )  2  )  1  )  0.  len  =   5
-4         isPalindrome:  list =   3  (  4  )  3  )  2  )  1  )  0,   len=    3
-5           isPalindrome:  list =  4  )  3  )  2  )  1  )  0.  len  =   1
+3       isPalindrome:  list =  2  (  3  (  4  )  3  )  2  )  1  )  0.  len  =  5
+4         isPalindrome:  list =   3  (  4  )  3  )  2  )  1  )  0.  len=  3
+5           isPalindrome:  list =  4  )  3  )  2  )  1  )  0.  len  =  1
 6           returns node 3b,  true
 7         returns node 2b,  true
-8       returns node 1b,   true
+8       returns node 1b, true
 9     returns node 0b,  true
 10  returns null,  true
 ```
@@ -853,7 +853,7 @@ We now have a multistep process.
 5. Now, traverse on each linked  list until the  pointers are the  same. The implementation for this is below.
 
 ```java
-1   LinkedListNode findintersection(LinkedListNode list1, LinkedListNode list2) {
+1   LinkedListNode findIntersection(LinkedListNode list1, LinkedListNode list2) {
 2       if (list1 == null || list2 == null) return null;
 3   
 4       /* Get tail and sizes. */
@@ -923,7 +923,7 @@ DEFINITION
 Circular linked list: A (corrupt) linked list in which a node's next pointer points to an earlier node, so as to make a loop in the linked list.
 ```
 EXAMPLE 
-Input:  A   - > B   - > C   - > D   - > E   - > C [the same C as earlier] 
+Input:  A  ->  B  ->  C  ->  D  ->  E  ->  C [the same C as earlier] 
 Output: C
 ```
 

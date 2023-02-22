@@ -35,7 +35,7 @@ We have provided simple sample code to implement a stack. Note that a stack can 
 11      private StackNode<T> top;
 12  
 13      public T pop() {
-14          if (top == null) throw new EmptystackException();
+14          if (top == null) throw new EmptyStackException();
 15          T item = top.data;
 16          top = top.next;
 17          return item;
@@ -320,7 +320,7 @@ Please note that the code for this solution is far more complex than would be ap
 86          StackInfo stack = info[stackNum];
 87          return values[stack.lastElementIndex()];
 88      }
-89      /* Shift items in stack over by one element. If we have available capacity,
+89      /* Shift items in stack over by one element. If we have available capacity, then
 90       * we'll end up shrinking the stack by one element. If we don't have available
 91       * capacity, then we'll need to shift the next stack over too. */
 92      private void shift(int stackNum) {
@@ -409,8 +409,8 @@ push(5);  // stack is {5},   min is 5
 push(6);  // stack is {6,  5},  min is 5 
 push(3);  // stack is {3,  6,  5},   min is 3 
 push(7);  // stack is {7,  3,  6,  5},   min is 3
-pop();    // pops  7. stack is {3,   6,   5},   min is 3 
-pop();    // pops  3. stack is {6,   5}.   min is 5.
+pop();    // pops  7. stack is {3,  6,   5},   min is 3 
+pop();    // pops  3. stack is {6,  5}.   min is 5.
 ```
 
 Observe how once the stack goes back to a prior state ({6, 5}), the minimum also goes back to its prior state (5). This leads us to our second solution.
@@ -452,7 +452,7 @@ We can (maybe) do a bit better than this by using an additional stack which keep
 ```java
 1   public class StackWithMin2 extends Stack<Integer> {
 2       Stack<Integer> s2;
-3       public stackWithMiN2() {
+3       public stackWithMin2() {
 4           s2 = new Stack<Integer>();
 5       }
 6   
@@ -508,7 +508,7 @@ We know that push() should behave identically to a single stack, which means tha
 
 ```java
 1   void push(int v) {
-2       Stack last = getlastStack();
+2       Stack last = getLastStack();
 3       if (last != null && !last.isFull()) { //add to last stack
 4           last.push(v);
 5       } else {//must create new stack
@@ -553,7 +553,7 @@ You could make an argument  that, rather than "rolling over", we should be okay 
 13      public void push(int v) {/*see earlier code */}
 14      public int pop() {/*see earlier code */}
 15      public boolean isEmpty() {
-16          Stack last = getlastStack();
+16          Stack last = getLastStack();
 17          return last == null || last.isEmpty();
 18      }
 19  
@@ -782,7 +782,7 @@ An alternative approach that is simple,  clean  and efficient is to simply  use 
 30          /* Look at tops of dog and cat queues, and pop the queue with the oldest
 31           * value. */
 32          if (dogs.size() == 0) {
-33              return  dequeueCats();
+33              return dequeueCats();
 34          } else if (cats.size() == 0) {
 35              return dequeueDogs();
 36          }
