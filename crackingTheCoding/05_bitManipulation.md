@@ -27,7 +27,7 @@ The tricks in Column 3 are as follows:
 
 3. Think about this operation bit by bit. If you XOR a bit with its own negated value, you will always  get  1. Therefore, the  solution to a^(\~a) will be a sequence of 1s.
 
-4. \~0 is a sequence of 1s, so \~0  << 2 is 1s followed by two 0s. ANDing that with another value  will clear the  last two bits of the  value.
+4. \~0 is a sequence of 1s, so \~0 << 2 is 1s followed by two 0s. ANDing that with another value  will clear the  last two bits of the  value.
 
 If you didn't see these tricks immediately, think about them logically.
 
@@ -37,9 +37,9 @@ If you didn't see these tricks immediately, think about them logically.
 The following expressions are useful  in bit manipulation. Don't just  memorize them, though; think deeply about why each of these is true. We use "1s" and "0s" to indicate a sequence of 1s or 0s, respectively. 
 
 ```
-X  ^ 0s  =  X        X  &  0s = X      x | 0s  =  X 
-X  ^ 1s  =  ~X       X  &  1s = X      x | 1s  =  1s 
-X  ^ x   =  X        X  &  x  = X      x | x   =  X 
+X  ^  0s  =  X       X  &  0s  =  X      x  |  0s  =  X 
+X  ^  1s  =  ~X      X  &  1s  =  X      x  |  1s  =  1s 
+X  ^  x   =  X       X  &  x   =  X      x  |  x   =  X 
 ```
 
 To understand these expressions, recall that these operations occur bit-by-bit, with what's happening  on one bit never impacting the other bits. This means that if one of the above statements is true for a single bit, then it's true for a sequence of bits.
@@ -51,7 +51,7 @@ Computers typically store integers in two's complement representation. A positiv
 
 Let's look at the 4-bit integer -3 as an example. If it's a 4-bit number, we have one bit for the sign and three bits for the value. We want the complement with respect to 2³,  which is 8. The complement of 3 (the absolute value of -3) with respect to 8 is 5. 5 in binary is 101. Therefore, -3 in binary as a 4-bit number  is 1101, with the first bit being the sign bit.
 
-In other words, the binary representation of-K (negative K) as a N-bit number is concat ( 1,  2ᴺ⁻¹  -  K). 
+In other words, the binary representation of -K (negative K) as a N-bit number is concat ( 1,  2ᴺ⁻¹  -  K). 
 
 Another way to look at this is that we invert the bits in the positive representation and then add 1. 3 is 011 in binary. Flip the bits to get 100, add 1 to get 101, then prepend the sign bit (1) to get 1101.
 
@@ -80,7 +80,7 @@ What do you think these functions would do on parameters x = -93242 and count = 
 ```java
 1   int repeatedArithmeticShift(int x, int count) {
 2       for (int i = 0; i < count; i++) {
-3           x >>= 1; // Arith metic shift by1
+3           x >>= 1; // Arithmetic shift by1
 4       }
 5       return x;
 6   }
@@ -109,7 +109,7 @@ This method shifts 1 over by i bits, creating a value that looks like 00010000. 
 
 ```java
 1   boolean getBit(int num, int i) {
-2         return (( num & (1 << i)) != 0);
+2       return (( num & (1 << i)) != 0);
 3   }
 ```
 
@@ -146,7 +146,7 @@ To clear all bits from the most significant bit through i (inclusive), we create
 To clear all bits from i through 0 (inclusive), we take a sequence of all 1s (which is -1) and shift it left by i + 1 bits. This gives us a sequence of 1s (in the most significant bits) followed by i 0 bits.
 
 ```java
-1   int clearBitsithrough0(int num, int i) {
+1   int clearBitsIthrough0(int num, int i) {
 2       int mask = (-1 << (i + 1));
 3       return num & mask;
 4   }
@@ -177,7 +177,7 @@ Additional Questions: Arrays and Strings (#1.1, #1.4, #1.8), Math and Logic Puzz
 
 EXAMPLE 
 
-Input:  N = 10000000000,  M = 10011,  i =  2,  j   6
+Input:  N = 10000000000,  M = 10011,  i = 2,  j = 6
 
 Output: N = 10001001100
 
@@ -295,7 +295,7 @@ Both approaches are equally good; choose the one you feel most comfortable with.
 Either way, you should make sure to prepare thorough  test cases for this problem-and to actually run through them in your interview.
 
 
-**5.3       Flip Bit to Win:** You have an integer and you can flip exactly one bit from a O to a 1. Write code to find the length of the longest sequence of 1s you could create.
+**5.3       Flip Bit to Win:** You have an integer and you can flip exactly one bit from a 0 to a 1. Write code to find the length of the longest sequence of 1s you could create.
 
 EXAMPLE 
     
@@ -387,7 +387,7 @@ Therefore, we can just walk through the integer doing this, tracking the current
 - If the next bit is a 1, previousLength  should be set to currentLength.
 - If the next bit is a 0, then we can't merge these sequences together. So, set previousLength to 0.
 
-Update max Length  as we go.
+Update maxLength  as we go.
 ```java
 1   int flipBit(int a) {
 2       /* If all 1s, this is already the longest sequence. */
@@ -435,7 +435,10 @@ Let's start with the code for getNext, and then move on to getPrev.
 
 If we think about what the next number should be, we can observe the following. Given the number 13948, the binary representation looks like:
 
-![](media/05_4_1.JPG)
+|    |    |    |    |    |    |    |    |    |    |    |    |    |    |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| 1  | 1  | 0  | 1  | 1  | 0  | 0  | 1  | 1  | 1  | 1  | 1  | 0  | 0  |
+| 13 | 12 | 11 | 10 | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  | 0  |
 
 We want to make this number bigger (but not too big). We also need to keep the same number of ones. 
 
@@ -444,14 +447,18 @@ Observation: Given a number n and two bit locations i and j, suppose we flip bit
 We know the following:
 
 1. If we flip a zero to a one, we must flip a one to a zero.
-2. When we do that, the number will be bigger if and only if the zero-to-one bit was to the left of the one­-to-zero bit.
+2. When we do that, the number will be bigger if and only if the zero-to-one bit was to the left of the one-to-zero bit.
 3. We want to make the number bigger, but not unnecessarily bigger. Therefore, we need to flip the right- most zero which has ones on the right of it.
 
 To put this in a different way, we are flipping the rightmost non-trailing zero. That is, using the above example, the trailing zeros are in the 0th and 1st spot. The rightmost non-trailing zero is at bit 7. Let's call this position p.
 
 *Step 1: Flip rightmost non-trailing zero*
 
-![](media/05_4_2.JPG)
+|    |    |    |    |    |    |    |    |    |    |    |    |    |    |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| 1  | 1  | 0  | 1  | 1  | 0  | 1  | 1  | 1  | 1  | 1  | 1  | 0  | 0  |
+| 13 | 12 | 11 | 10 | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  | 0  |
+
 
 With this change, we have increased the size of n. But, we also have one too many ones, and one too few zeros. We'll need to shrink the size of our number as much as possible while keeping that in mind.
 
@@ -463,14 +470,18 @@ Let's walk through this with an example.
 
 *Step2: Clear bits to the right of p. From before, c0 = 2. c1 = 5. p = 7.*
 
-![](media/05_4_3.JPG)
+|    |    |    |    |    |    |    |    |    |    |    |    |    |    |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| 1  | 1  | 0  | 1  | 1  | 0  | 1  | 0  | 0  | 0  | 0  | 0  | 0  | 0  |
+| 13 | 12 | 11 | 10 | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  | 0  |
+
 
 To clear these bits, we need to create a mask that  is a sequence  of ones, followed by p zeros. We can do this as follows: 
 ```
-a  =  1  << p; // all zeros except for  a  1  at  position  p.
-b  =  a  - 1;  // all zeros, followed by p ones.
-mask  =  ~b;   // all ones, followed by p zeros. 
-n =  n & mask; // clears rightmost p bits. 
+a  =  1  << p;  // all zeros except for  a  1  at  position  p.
+b  =  a  - 1;   // all zeros, followed by p ones.
+mask  =  ~b;    // all ones, followed by p zeros. 
+n  =  n & mask; // clears rightmost p bits. 
 ```
 Or, more concisely, we do:
 ```
@@ -479,7 +490,11 @@ n &=  ~((1 <<  p)  -  1).
 
 *Step 3:Add in c1   -  1 ones.*
 
-![](media/05_4_4.JPG)
+|    |    |    |    |    |    |    |    |    |    |    |    |    |    |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| 1  | 1  | 0  | 1  | 1  | 0  | 1  | 0  | 0  | 0  | 1  | 1  | 1  | 1  |
+| 13 | 12 | 11 | 10 | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  | 0  |
+
 
 To insert  c1 -  1 ones on the right, we do the following:
 ```
@@ -489,7 +504,7 @@ n = n | b;          // inserts 1s at  positions  0 through c1 - 1
 ```
 Or, more concisely:
 ```
-n  |= (1 << (c1 -  1))  - 1;
+n |= (1 << (c1 - 1)) - 1;
 ```
 We have now arrived at the smallest number  bigger than n with the same number  of ones. 
 
@@ -540,18 +555,25 @@ Let's walk through this with an example.
 
 *Step 1: Initial Number.  p = 7. c1 = 2.  c0 = 5.*
 
-![](media/05_4_5.JPG)
+|    |    |    |    |    |    |    |    |    |    |    |    |    |    |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| 1  | 0  | 0  | 1  | 1  | 1  | 1  | 0  | 0  | 0  | 0  | 0  | 1  | 1  |
+| 13 | 12 | 11 | 10 | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  | 0  |
+
 
 *Steps 2 & 3: Clear bits 0 through p.*
 
-![](media/05_4_6.JPG)
+|    |    |    |    |    |    |    |    |    |    |    |    |    |    |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| 1  | 0  | 0  | 1  | 1  | 1  | 0  | 0  | 0  | 0  | 0  | 0  | 0  | 0  |
+| 13 | 12 | 11 | 10 | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  | 0  |
 
 We can do this as follows:
 
 ```
-int a = ~0;           // Sequence  of  1s 
-int b = a << (p + 1); // Sequence  of  1s  followed by   p + 1  zeros.
-n  &= b;              // Clears bits  0 through p. 
+int a = ~0;           // Sequence of 1s 
+int b = a << (p + 1); // Sequence of 1s  followed by  p + 1  zeros.
+n &= b;               // Clears bits 0 through p. 
 ``` 
 
 *Steps 4: Insert c1 + 1 ones immediately to the right of position p.*
@@ -565,7 +587,7 @@ We can do this as follows:
 int a =  1 <<   (c1 + 1);    // 0S with 1  at position (c1 +  1)
 int b =  a  -  1;            // 0s  followed by c1 + 1 ones
 int c =  b <<   (c0  -  1);  // c1+1 ones  followed  by  c0-1  zeros.
-n   |=  c;
+n  |=  c;
 ```
 The code to implement this is below.
 ```java
@@ -638,9 +660,9 @@ If c₁ is the number of trailing ones,  c₀  is the size of the zero block imm
 We can implement this arithmetically as follows. For clarity in the example, we will assume n = 10000011. This makes c₁ = 2 and c₀ =  5.
 
 ```
-n -=  2ᶜ¹   -  l;       // Removes  trailing 1s. n  is now 10000000.
-n -=  1;                // Flips trailing  0s.   n  is now 01111111.
-n -=  2ᶜ⁰⁻¹ -  1;       // Flips last  (c0-1) 0s.   n  is now 01110000.
+n -=  2ᶜ¹   -  1;   // Removes  trailing 1s. n  is now 10000000.
+n -=  1;            // Flips trailing  0s.   n  is now 01111111.
+n -=  2ᶜ⁰⁻¹ -  1;   // Flips last  (c0-1) 0s.   n  is now 01110000.
 ``` 
  
 This reduces mathematically to:
@@ -681,11 +703,11 @@ Try doing subtraction by hand (in base 2 or 10). What happens?
 -          1                       -      1
 = 1101010111  [base   2]           = 593099  [base  10] 
 ```
-When you subtract 1 from a number, you look at the least significant bit. If it's a 1 you change it to 0, and you are done. If it's a zero, you must "borrow" from a larger bit. So, you go to increasingly larger bits, changing each bit from a O to a 1, until you find a 1. You flip that 1 to a 0 and you are done.
+When you subtract 1 from a number, you look at the least significant bit. If it's a 1 you change it to 0, and you are done. If it's a zero, you must "borrow" from a larger bit. So, you go to increasingly larger bits, changing each bit from a 0 to a 1, until you find a 1. You flip that 1 to a 0 and you are done.
 
 Thus, n-1  will look like n, except that n's initial 0s will be 1s in n -1, and n's least significant 1 will be a 0 in n-1. That is:
 ```
-if      n  =  abcdel000 
+if      n  =  abcde1000 
 then  n-1  =  abcde0111
 ```
 
@@ -698,14 +720,14 @@ then n-1   =  abcde0111
 ```
 abcde must be all 0s, which means that n must look like this: 00001000. The value n is therefore a power of two.
 
-So, we have our answer: ((n &   (n -1)) == 0) checks  if n is a power of 2 (or if n is 0).
+So, we have our answer: ((n  &  (n -1)) == 0) checks  if n is a power of 2 (or if n is 0).
 
 
 **5.6   Conversion:** Write a function to determine the number of bits you would need to flip to convert integer A to integer B.
 
 EXAMPLE 
 
-Input: 29  (or:  11101), 15  (or:  01111)
+Input: 29  (or:  11101),  15  (or:  01111)
 
 Output: 2
 
@@ -763,7 +785,7 @@ Note that we use the logical right shift, instead of the arithmetic right shift.
 We've implemented the code above for 32-bit integers in Java. If you were working with 64-bit integers, you would need to change the mask. The logic, however, would remain the same.
 
 
-**5.8   Draw Line:**  A monochrome screen is stored as a single array of bytes, allowing eight consecutive pixels to be stored in one byte. The screen has width w, where w is divisible by 8 (that is, no byte will be split across rows). The height of the screen, of course, can be derived from the length of the array and the width. Implement a function that draws a horizontal line from (xl, y) to (x2, y).
+**5.8   Draw Line:**  A monochrome screen is stored as a single array of bytes, allowing eight consecutive pixels to be stored in one byte. The screen has width w, where w is divisible by 8 (that is, no byte will be split across rows). The height of the screen, of course, can be derived from the length of the array and the width. Implement a function that draws a horizontal line from (x1, y) to (x2, y).
 
 The method signature should look something like:
 
