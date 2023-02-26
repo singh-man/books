@@ -49,7 +49,7 @@ It's okay to make some assumptions  (when necessary), but they should be reasona
 
 However, it might be reasonable to design for a max of one million new URLs per day. Making this assump­tion can help you calculate how much data your system might need to store.
 
-Some assumptions might take some "product sense" (which is not a bad thing). For example, is it okay for the data to be stale by a max of ten minutes? That all depends. If it takes 1O minutes for a just-entered URL to work, that's a deal-breaking issue. People usually want these URLs to be active immediately. However, if the statistics are ten minutes out of date, that might be okay. Talk to your interviewer about these sorts of assumptions.
+Some assumptions might take some "product sense" (which is not a bad thing). For example, is it okay for the data to be stale by a max of ten minutes? That all depends. If it takes 10 minutes for a just-entered URL to work, that's a deal-breaking issue. People usually want these URLs to be active immediately. However, if the statistics are ten minutes out of date, that might be okay. Talk to your interviewer about these sorts of assumptions.
 
 
 **Step  3: Draw the Major Components**
@@ -232,8 +232,8 @@ The first step is to pretend we just have a few dozen documents. How would we im
 One way to do this is to pre-process each document and create a hash table index. This hash table would map from a word to a list of the documents that contain that word.
 
 ```
-"books"  ->  {doc2,  doc3,   doc6,   doc8}
-"many"   ->  {doc1,  doc3,   doc7,   doc8,   doc9}
+"books"  ->  {doc2,  doc3,  doc6,  doc8}
+"many"   ->  {doc1,  doc3,  doc7,  doc8,  doc9}
 ```
 
 To search for "many books", we would simply do an intesection on the values for "books" and "many", and return {doc3, doc8}  as the result.
@@ -427,11 +427,11 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 39          /* Add friends to queue. */
 40          Person person = pathNode.getPerson();
 41          ArrayList<Integer> friends = person.getFriends();
-42          for (int friendid : friends) {
-43              if (!primary.visited.containsKey(friendid)) {
-44                  Person friend = people.get(friendld);
+42          for (int friendId : friends) {
+43              if (!primary.visited.containsKey(friendId)) {
+44                  Person friend = people.get(friendId);
 45                  PathNode next = new PathNode(friend, pathNode);
-46                  primary.visited.put(friendld, next);
+46                  primary.visited.put(friendId, next);
 47                  primary.toVisit.add(next);
 48              }
 49          }
@@ -465,7 +465,7 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 77          PathNode node = this;
 78          while (node != null) {
 79              if (startsWithRoot) {
-80                  path.addlast(node.person);
+80                  path.addLast(node.person);
 81              }  else {
 82                  path.addFirst(node.person);
 83              }
@@ -554,8 +554,8 @@ The code below outlines this process. We've defined a class Server, which holds 
 28      private String info;
 29  
 30      public Person(int id) { this.personID = id; }
-31      public String getinfo() { return info; }
-32      public void setinfo(String info) {this.info = info; }
+31      public String getInfo() { return info; }
+32      public void setInfo(String info) {this.info = info; }
 33      public ArrayList<Integer> getFriends() {return friends; }
 34      public int getID() {return personID;}
 35      public void addFriend(int id) {friends.add(id); }
@@ -715,11 +715,11 @@ For illustrative  purposes, abbreviated code for the cache is below. The code at
 9       }
 10  
 11      /*Moves node to front of linked list */
-12      public void moveToFront(Node node) {... }
-13      public void moveToFront(String query) {... }
+12      public void moveToFront(Node node) { ... }
+13      public void moveToFront(String query) { ... }
 14  
 15      /*Removes node from linked list */
-16      public void removeFromlinkedList(Node node) {... }
+16      public void removeFromlinkedList(Node node) { ... }
 17  
 18      /* Gets results from cache, and updates linked list */
 19      public String[] getResults(String query) {
@@ -836,7 +836,7 @@ This part just gives us a good idea of what the problem, or scope of features, i
 
 **Step  2: Make Reasonable Assumptions**
 
-These are the sorts of things you'd want to discuss with your interviewer. Because we don't have an inter­viewer in front of us, we'll have to make some assumptions.
+These are the sorts of things you'd want to discuss with your interviewer. Because we don't have an interviewer in front of us, we'll have to make some assumptions.
 
 - We will assume that the stats do not need to be 100% up-to-date. Data can be up to an hour old for the most popular items (for example,  top 100 in each category), and up to one day old for the less popular items. That is, few people would care if the #2,809,132th best-selling item should have actually been listed as #2,789,158th instead.
 - Precision is important for the most popular items, but a small degree of error is okay for the less popular items.
@@ -929,7 +929,7 @@ We would run frequent jobs to merge files together  by product ID and time range
 /sportsequipment
     1423,Dec 13  08:23-Dec  13  08:23,1
     4221,Dec 13  15:22-Dec  15  15:45,5
-
+    ...
 /safety
     1423,Dec 13  08:23-Dec  13  08:23,1
     5221,Dec 12  03:19-Dec  12  03:28,19
@@ -1151,8 +1151,8 @@ A simple design like this might work well:
     |
     |
     +
-URL to File            server with files
-Database    +------->
+URL to File +-------> server with files
+Database    
     +
     |
     |
@@ -1208,7 +1208,7 @@ The log files are not designed to be used frequently. We will want to also store
 
 
 | URL        | Month and Year | Visits |
-| --         | --             | --     |
+| :--:       | :--:           | :--:   |
 | 12ab31b92p | December  2013 | 242119 |
 | 12ab31b92p | January 2014   | 429918 |
 | ...        | ...            | ...    |

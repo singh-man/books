@@ -1,7 +1,7 @@
 7 Object-Oriented Design
 ========================
 
-Object-oriented design questions require a candidate to sketch out the classes and methods to implement technical problems or real-life objects. These problems give-or at least are believed to give-an interviewer insight into your coding style.
+Object-oriented design questions require a candidate to sketch out the classes and methods to implement technical problems or real-life objects. These problems give--or at least are believed to give-an interviewer insight into your coding style.
 
 These questions are not so much about regurgitating design patterns as they are about demonstrating that you understand how to create elegant, maintainable object-oriented code. Poor performance on this type of question may raise serious red flags.
 
@@ -116,21 +116,21 @@ Let's assume that your interviewer clarifies that the deck is a standard 52-card
 3       private int value;
 4       private Suit(int v) { value = v; }
 5       public int getValue() { return value; }
-6       public static Suit getSuitFromValue(int value) {... }
+6       public static Suit getSuitFromValue(int value) { ... }
 7   }
 8   
 9   public class Deck <T extends Card> {
 10      private ArrayList<T> cards; // all cards, dealt or not
 11      private int dealtIndex = 0; // marks first undealt card
 12  
-13      public void setDeckOfCards(ArrayList<T> deckOfCards) {... }
+13      public void setDeckOfCards(ArrayList<T> deckOfCards) { ... }
 14  
-15      public void shuffle() {... }
+15      public void shuffle() { ... }
 16      public int remainingCards() {
 17          return cards.size() - dealtIndex;
 18      }
-19      public T[] dealHand(int number) {... }
-20      public T dealCard() {... }
+19      public T[] dealHand(int number) { ... }
+20      public T dealCard() { ... }
 21  }
 22  
 23  public abstract class Card {
@@ -563,7 +563,7 @@ In the below implementation, we have created an abstract class Vehicle, from whi
 27      }
 28  
 29      /* Checks if the spot is a Large. Doesn't check num of spots */
-30      public boolean canFitInSpot(ParkingSpot spot) {        }
+30      public boolean canFitInSpot(ParkingSpot spot) { ... }
 31  }
 32  
 33  public class Car extends Vehicle {
@@ -635,7 +635,7 @@ The ParkingSpot is implemented by having just a variable which represents the si
 5       private int spotNumber;
 6       private Level level;
 7   
-8       public ParkingSpot(Level lvl, int r, int n, VehicleSize s) {...}
+8       public ParkingSpot(Level lvl, int r, int n, VehicleSize s) { ... }
 9   
 10      public boolean isAvailable() { return vehicle == null; }
 11  
@@ -643,8 +643,8 @@ The ParkingSpot is implemented by having just a variable which represents the si
 13      public boolean canFitVehicle(Vehicle vehicle) { ... }
 14  
 15      /* Park vehicle in this spot. */
-16      public boolean park(Vehicle v) {           }
-17  
+16      public boolean park(Vehicle v) { ... }
+17  `
 18      public int getRow() { return row; }
 19      public int getSpotNumber() { return spotNumber; }
 20  
@@ -791,7 +791,7 @@ We then implement separate classes to handle the user manager, the library, and 
 78  
 79      public void refreshUsername() {/* updates username display*/}
 80      public void refreshTitle() {/* updates title display*/}
-81      public void refreshDetails() {/* updates details display*/ }
+81      public void refreshDetails() {/* updates details display*/}
 82      public void refreshPage() {/* updated page display*/}
 83  }
 ```
@@ -803,7 +803,7 @@ The classes for User and Book simply hold data and provide little true functiona
 2       private int bookId;
 3       private String details;
 4   
-5       public Book(int id,  String det) {
+5       public Book(int id, String det) {
 6           bookId = id;
 7           details = det;
 8       }
@@ -960,7 +960,7 @@ The code below outlines this algorithm.
 2   boolean fitNextEdge(LinkedList<Piece> piecesToSearch, int row, int column) {
 3       if (row == 0 && column == 0) {//On top left corner, just put in a piece
 4           Piece p = piecesToSearch.remove();
-5           orientTopleftCorner(p);
+5           orientTopLeftCorner(p);
 6           solution[0][0] = p;
 7       }  else {
 8           /*Get the right edge and list to match. */
@@ -1114,16 +1114,16 @@ Again, this is just one way of designing these interactions. It is not the only 
 23      public User(int id, String accountName, String fullName) { ... }
 24      public boolean sendMessageToUser(User to, String content) { ... }
 25      public boolean sendMessageToGroupChat(int id, String cnt) {...}
-26      public void setStatus(UserStatus status) {            }
+26      public void setStatus(UserStatus status) { ... }
 27      public UserStatus getStatus() { ... }
 28      public boolean addContact(User user) { ... }
 29      public void receivedAddRequest(AddRequest req) { ... }
 30      public void sentAddRequest(AddRequest req) { ... }
 31      public void removeAddRequest(AddRequest req) { ... }
 32      public void requestAddUser(String accountName) { ... }
-33      public void addConversation(PrivateChat conversation) {         }
+33      public void addConversation(PrivateChat conversation) { ... }
 34      public void addConversation(GroupChat conversation) { ... }
-35      public int getid() { ... }
+35      public int getId() { ... }
 36      public String getAccountName() { ... }
 37      public String getFullName() { ... }
 38  }
@@ -1139,7 +1139,7 @@ The Conversation class is implemented  as an abstract class, since all Conversat
 5   
 6       public ArrayList<Message> getMessages() { ... }
 7       public boolean addMessage(Message m) { ... }
-8       public int getid() { ... }
+8       public int getId() { ... }
 9   }
 10  
 11  public class GroupChat extends Conversation {
@@ -1148,7 +1148,7 @@ The Conversation class is implemented  as an abstract class, since all Conversat
 14  }
 15  
 16  public class PrivateChat extends Conversation {
-17      public PrivateChat(User userl, User user2) {...
+17      public PrivateChat(User user1, User user2) {...
 18      public User getOtherParticipant(User primary) { ... }
 19  }
 20  
@@ -1407,7 +1407,7 @@ The code below implements this approach.
 19  
 20      public T get(int i) {
 21          if (i < 0 || i >= items.length) {
-22              throw new java.lang.IndexOutOfBoundsException(" ...");
+22              throw new java.lang.IndexOutOfBoundsException("...");
 23          }
 24          return items[convert(i)];
 25      }
@@ -1421,7 +1421,7 @@ The code below implements this approach.
 There are a number of things here which are easy to make mistakes on, such as:
 
 - In Java, we cannot create an array of the generic type. Instead, we must either cast the array or define iterns to be of type List\<T>. For simplicity, we have done the former.
-- The % operator will return a negative value when we do negValue %  posVal. For example, -8  % 3 is -2. This is different from how mathematicians  would define the modulus function. We must add iterns.length to a negative index to get the correct positive result.
+- The % operator will return a negative value when we do `negValue % posVal`. For example, `-8  % 3 is -2`. This is different from how mathematicians  would define the modulus function. We must add iterns.length to a negative index to get the correct positive result.
 - We need to be sure to consistently convert the raw index to the rotated index. For this reason, we have implemented a convert function that is used by other methods.  Even the rotate function uses convert. This is a good example of code reuse.
 
 Now that we have the basic code for CircularArray out of the way, we can focus on implementing an iterator.
@@ -1432,7 +1432,7 @@ Now that we have the basic code for CircularArray out of the way, we can focus o
 The second part of this question asks us to implement the CircularArray class such that we can do the following:
 ```
 1     CircularArray<String>  array = ...
-2     for (Strings  :   array) {  ... }
+2     for (Strings  :  array) {  ... }
 ```
 Implementing this requires implementing  the Iterator interface. The details of this implementation apply to Java, but similar things can be implemented in other languages.
 
@@ -1599,7 +1599,7 @@ The Game class will store references to the  board and hold the game state.  It 
 
 ```java
 1   public class Game {
-2       public enum GameState { WON, LOST, RUNNING}
+2       public enum GameState { WON, LOST, RUNNING }
 3   
 4       private Board board;
 5       private int rows;
@@ -1810,7 +1810,7 @@ A file system, in its most simplistic version, consists  of Files and Directorie
 69              if (e instanceof Directory) {
 70                  count++; // Directory counts as a file
 71                  Directory d = (Directory) e;
-72                  count += d. numberOfFiles();
+72                  count += d.numberOfFiles();
 73              } else if (e instanceof File) {
 74                  count++;
 75              }
@@ -1830,7 +1830,7 @@ A file system, in its most simplistic version, consists  of Files and Directorie
 89  }
 ```
 
-Alternatively, we could have implemented  Directory such that it contains separate  lists for files and subdirectories. This makes the nurnberOfFiles() method  a bit cleaner, since it doesn't need to use the instanceof operator, but it does prohibit us from cleanly sorting files and directories by dates or names.
+Alternatively, we could have implemented  Directory such that it contains separate  lists for files and subdirectories. This makes the numberOfFiles() method  a bit cleaner, since it doesn't need to use the instanceof operator, but it does prohibit us from cleanly sorting files and directories by dates or names.
 
 
 **7.12  Hash  Table:**   Design and  implement  a hash table  which uses  chaining (linked lists) to handle collisions.
@@ -1908,7 +1908,7 @@ The code below uses this implementation.
 33          }
 34  
 35          node = new LinkedListNode<K, V>(key, value);
-36          int index = getindexForKey(key);
+36          int index = getIndexForKey(key);
 37          if (arr.get(index) != null) {
 38              node.next = arr.get(index);
 39              node.next.prev = node;
@@ -1923,7 +1923,7 @@ The code below uses this implementation.
 48              node.prev.next = node.next;
 49          } else {
 50              /* Removing head - update. */
-51              int hashKey = getindexForKey(key);
+51              int hashKey = getIndexForKey(key);
 52              arr.set(hashKey, node.next);
 53          }
 54  
@@ -1940,7 +1940,7 @@ The code below uses this implementation.
 65  
 66      /* Get linked list node associated with a given key. */
 67      private LinkedListNode<K, V> getNodeForKey(K key) {
-68          int index = getindexForKey(key);
+68          int index = getIndexForKey(key);
 69          LinkedListNode<K, V> current = arr.get(index);
 70          while (current != null) {
 71              if (current.key == key) {
@@ -1952,7 +1952,7 @@ The code below uses this implementation.
 77      }
 78  
 79      /* Really naive function to map a key to an index. */
-80      public int getindexForKey(K key) {
+80      public int getIndexForKey(K key) {
 81          return Math.abs(key.hashCode() % arr.size());
 82      }
 83  }

@@ -789,7 +789,7 @@ We've implemented the code above for 32-bit integers in Java. If you were workin
 
 The method signature should look something like:
 
-```drawLine(byte[] screen, int width, int x1, int x2, int y)```
+`drawLine(byte[] screen, int width, int x1, int x2, int y)`
 
 
 SOLUTION

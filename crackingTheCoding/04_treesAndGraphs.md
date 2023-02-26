@@ -424,7 +424,7 @@ To create a tree of minimal height, we need to match the number of nodes in the 
 
 We proceed with constructing our tree in a similar fashion. The middle of each subsection of the array becomes the root of the node. The left half of the array will become our left subtree, and the right half of the array will become the right subtree.
 
-One way to implement this is to use a simple ```root.insertNode(int  v)``` method which inserts the value v through a recursive process that starts with the root node. This will indeed construct a tree with minimal height but it will not do so very efficiently.  Each insertion  will require traversing the tree, giving a total cost of O(N log N) to the tree.
+One way to implement this is to use a simple `root.insertNode(int  v)` method which inserts the value v through a recursive process that starts with the root node. This will indeed construct a tree with minimal height but it will not do so very efficiently.  Each insertion  will require traversing the tree, giving a total cost of O(N log N) to the tree.
 
 Alternatively, we can cut out the extra traversals by recursively using the createMinimalBST method. This method is passed just a subsection of the array and returns the root of a minimal tree for that array.
 
@@ -497,7 +497,7 @@ We can implement a simple modification of the pre-order traversal algorithm, whe
 
 Alternatively, we can also implement a modification of breadth-first search. With this implementation, we want to iterate through the root first, then level 2, then level 3, and so on.
 
-With each level i, we will have already  fully visited all nodes on level ```i -  1```. This means that to get which nodes are on level i, we can simply look at all children of the nodes of level ```i - 1```.
+With each level i, we will have already  fully visited all nodes on level `i -  1`. This means that to get which nodes are on level i, we can simply look at all children of the nodes of level `i - 1`.
 
 The code below implements this algorithm.
 
@@ -1186,7 +1186,7 @@ Next, we go to node 10, uncovering the subtree rooted at 15. We check this subtr
 ![](media/04_7_6.JPG)
 
 
-To implement this, we can just traverse upwards from p, storing the parent and the sibling node in a variable. (The sibling node is always a child of parent and refers to the newly uncovered  subtree.) At each iteration, sibling gets set to the old parent's sibling node and parent gets set to ```parent.parent```.
+To implement this, we can just traverse upwards from p, storing the parent and the sibling node in a variable. (The sibling node is always a child of parent and refers to the newly uncovered  subtree.) At each iteration, sibling gets set to the old parent's sibling node and parent gets set to `parent.parent`.
 
 ```java
 1   TreeNode commonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -1273,7 +1273,7 @@ Although Solution #3 is optimal in its runtime, we may recognize that there is s
 
 We may recognize that we should only need to search the entire tree once to find p and q. We should then be able to "bubble up" the findings to earlier nodes in the stack. The basic logic is the same as the earlier solution.
 
-We recurse through the entire tree with a function called ```commonAncestor(TreeNode root, TreeNode p, TreeNode q)```. This function returns values as follows:
+We recurse through the entire tree with a function called `commonAncestor(TreeNode root, TreeNode p, TreeNode q)`. This function returns values as follows:
 
 - Returns p, if root's subtree includes p (and not q). 
 - Returns q, if root's subtree includes q (and not p). 
@@ -1925,7 +1925,7 @@ What is the time complexity of this algorithm?
 
 Consider that node at depth d will be "touched" (via countPathsWithSumFromNode)  by d nodes above it. 
 
-In a balanced binary tree, d will be no more than approximately ```log N```. Therefore, we know that with N nodes in the tree, countPathsWithSumFromNode will be called ```O(N log N)``` times. The runtime is ```O(N log N)```.
+In a balanced binary tree, d will be no more than approximately `log N`. Therefore, we know that with N nodes in the tree, countPathsWithSumFromNode will be called `O(N log N)` times. The runtime is `O(N log N)`.
 
 We can also approach this from the other direction. At the root node, we traverse to all N - 1 nodes beneath it (via countPathsWithSumFromNode). At the second level (where there are two nodes), we traverse to N   -  3 nodes. At the third level (where there are four nodes, plus three above those), we traverse to N   -   7 nodes. Following this pattern, the total work is roughly:
 ```
@@ -1946,7 +1946,7 @@ If the value of the sum of powers of two from 1 through N isn't obvious to you, 
 -------
 =  1111
 ```
-Therefore, the runtime  is ```O(N log N)``` in a balanced tree.
+Therefore, the runtime  is `O(N log N)` in a balanced tree.
 
 In an unbalanced tree, the runtime could be much worse. Consider a tree that is just a straight line down. At the root, we traverse to N  -  1 nodes. At the next level (with just  a single node), we traverse to N -  2 nodes. At the third level, we traverse to N - 3 nodes, and so on. This leads us to the sum of numbers between 1 and N, which is O(N²).
 

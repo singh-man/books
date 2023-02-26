@@ -4,7 +4,7 @@
 
 While  there are a large number of recursive problems, many follow similar patterns. A good hint that a problem is recursive is that it can be built off of subproblems.
 
-When you hear a problem beginning with the following statements, it's often (though not always) a good candidate for recursion: "Design an algorithm to compute the nth ..", "Write code to list the first n ..; "Implement a method to compute all..", and so on.
+When you hear a problem beginning with the following statements, it's often (though not always) a good candidate for recursion: "Design an algorithm to compute the nth ...", "Write code to list the first n...; "Implement a method to compute all...", and so on.
 
 > Tip: In my experience  coaching  candidates, people  typically have about 50% accuracy in their "this sounds like a recursive problem" instinct. Use that instinct, since that 50% is valuable. But don't be afraid to look at the problem in a different way, even if you initially thought it seemed recursive. There's also a 50% chance that you were wrong.
 
@@ -26,7 +26,9 @@ The bottom-up approach is often the most intuitive. We start with knowing how to
 
 The top-down  approach  can be more complex since it's less concrete. But sometimes, it's the best way to think about the problem.
 
-In these problems, we think about how we can divide the problem for case N into subproblems. Be careful of overlap between the cases.
+In these problems, we think about how we can divide the problem for case N into subproblems. 
+
+Be careful of overlap between the cases.
 
 #### Half-and-Half Approach
 
@@ -395,7 +397,7 @@ This is what the dynamic programming algorithm below does.
 
 This simple change will make our code run substantially faster. The algorithm will now take O(XY) time because we hit each cell just once.
 
-**8.3      Magic Index:** A magic index in an array A[1.•.n-1]  is defined to be an index such that A[i] = i. Given a sorted array of distinct integers, write a method to find a magic index, if one exists, in array A.
+**8.3      Magic Index:** A magic index in an array A[1...n-1]  is defined to be an index such that A[i] = i. Given a sorted array of distinct integers, write a method to find a magic index, if one exists, in array A.
 
 FOLLOW UP
 
@@ -487,21 +489,21 @@ The code  below implements this algorithm.
 5   int magicFast(int[] array, int start, int end) {
 6     if (end < start) return -1;
 7 
-8     int midindex = (start + end) / 2;
+8     int midIndex = (start + end) / 2;
 9     int midValue = array[midindex];
 10    if (midValue == midindex) {
 11      return midindex;
 12    }
 13  
 14    /* Search left */
-15    int leftIndex = Math.min(midindex - 1, midValue);
+15    int leftIndex = Math.min(midIndex - 1, midValue);
 16    int left = magicFast(array, start, leftIndex);
 17    if (left >= 0) {
 18      return left;
 19    }
 20  
 21    /* Search right */
-22    int rightIndex = Math.max(midindex + 1, midValue);
+22    int rightIndex = Math.max(midIndex + 1, midValue);
 23    int right = magicFast(array, rightIndex, end);
 24  
 25    return right;
@@ -696,7 +698,7 @@ minProduct(17, 23)
   + minProduct(9, 23)
        minProduct(4, 23)
           ...
-     + minProduct(S, 23)
+     + minProduct(5, 23)
           ...
 ```
 
@@ -954,8 +956,8 @@ We can now implement this algorithm recursively.
 2     if (str == null) return null;
 3 
 4     ArrayList<String> permutations = new ArrayList<String>();
-5     if (str.length() == 0) {//base case
-6       permutations. add('"');
+5     if (str.length() == 0) { //base case
+6       permutations.add('"');
 7       return permutations;
 8     }
 9   
@@ -983,7 +985,7 @@ We can now implement this algorithm recursively.
 
 *Base Case: single-character strings*
 
-The onlypermutation of a₁ is the string a₁. So: 
+The only permutation of a₁ is the string a₁. So: 
 ```
 P(a₁)  =  a₁
 ```
@@ -1007,7 +1009,7 @@ P(a₁a₂a₃) = {a₁ + P(a₂a₃)} + {a₂ + P(a₁a₃)} + {a₃ + P(a₁a�
 ```
 Now that we can generate all permutations of three-character strings, we can use this to generate permuta­tions of four-character strings.
 ```
-P(a₁a₂a₃a₄) = {a₁+ P(a₂a₃a₄)} + {a₂+ P(a₁a₃a₄)}  +  {a₃ +  P(a₁a₂a₄)}+ {a₄ +  P(a₁a₂a₃)} 
+P(a₁a₂a₃a₄) = {a₁ + P(a₂a₃a₄)} + {a₂+ P(a₁a₃a₄)} + {a₃ + P(a₁a₂a₄)} + {a₄ + P(a₁a₂a₃)} 
 ```
 This is now a fairly straightforward algorithm to implement.
 
@@ -1073,7 +1075,7 @@ SOLUTION
 
 This is very similar to the previous problem, except that now we could potentially have duplicate characters in the word.
 
-One simple way of handling this problem is to do the same work to check  if a permutation has been created before and then, if not, add it to the list. A simple  hash table will do the trick here. This solution will take O(n ! ) time in the worst case (and, in fact in all cases).
+One simple way of handling this problem is to do the same work to check  if a permutation has been created before and then, if not, add it to the list. A simple  hash table will do the trick here. This solution will take O(n!) time in the worst case (and, in fact in all cases).
 
 While it's true that we can't beat this worst case time, we should be able to design an algorithm to beat this in many cases. Consider a string with all duplicate characters, like aaaaaaaaaaaaaaa. This will take an extremely long time (since there are over 6 billion permutations of a 13-character string), even though there is only one unique permutation.
 
@@ -1172,12 +1174,12 @@ We can  do this by inserting a pair of parentheses inside  every existing pair o
 So, we have the following:
 
 ```
-(()) ->  (()()) /* inserted pair after 1st left paren*/
-     ->  ((())) /* inserted pair after 2nd left paren*/
-     ->  ()(()) /* inserted pair at beginning of string*/ 
-() ()->  (())() /* inserted pair after 1st left paren*/ 
-     ->  ()(()) /* inserted pair after 2nd left paren*/ 
-     ->  ()()() /* inserted pair at beginning of string*/ 
+(()) ->  (()()) /* inserted pair after 1st left paren */
+     ->  ((())) /* inserted pair after 2nd left paren */
+     ->  ()(()) /* inserted pair at beginning of string */ 
+()() ->  (())() /* inserted pair after 1st left paren */ 
+     ->  ()(()) /* inserted pair after 2nd left paren */ 
+     ->  ()()() /* inserted pair at beginning of string */ 
 ```
  
 But wait-we have some duplicate pairs listed. The string ()(()) is listed twice.
@@ -1194,7 +1196,7 @@ If we're going to apply this approach, we'll need to check for duplicate values 
 7       for (String str : prev) {
 8         for (int i = 0; i < str.length(); i++) {
 9           if (str.charAt(i) == '(') {
-10            String s = insertlnside(str, i);
+10            String s = insertInside(str, i);
 11            /* Add s to set if it's not already in there. Note: HashSet
 12             * automatically checks for duplicates before adding, so an explicit
 13             * check is not necessary. */
@@ -1207,7 +1209,7 @@ If we're going to apply this approach, we'll need to check for duplicate values 
 20     return set;
 21  }
 22  
-23  String insertlnside(String str, int leftIndex) {
+23  String insertInside(String str, int leftIndex) {
 24    String left = str.substring(0, leftIndex + 1);
 25    String right = str.substring(leftindex + 1, str.length());
 26    return left + "()" + right;
@@ -1264,7 +1266,7 @@ First, let's visualize how this method  works. When we call paintFill (i.e., "cl
 We can implement this algorithm recursively:
 
 ```java
-1   enum Color { Black, White, Red, Yellow, Green}
+1   enum Color { Black, White, Red, Yellow, Green }
 2   
 3   boolean PaintFill(Color[][] screen, int r, int c, Color ncolor) {
 4     if (screen[r][c] == ncolor) return false;
@@ -1305,8 +1307,8 @@ Let's say n  =  100. We want to compute the number of ways of making change for 
 
 We know that making change for 100 cents will involve either 0, 1, 2, 3, or 4 quarters. So:
 ```
-makeChange(100) = makeChange(100 using 0 quarters)+ 
-                  makeChange(100 using 1 quarter) + 
+makeChange(100) = makeChange(100 using 0 quarters) + 
+                  makeChange(100 using 1 quarter)  + 
                   makeChange(100 using 2 quarters) + 
                   makeChange(100 using 3 quarters) + 
                   makeChange(100 using 4 quarters)
@@ -1315,11 +1317,11 @@ Inspecting this further, we can see that some of these problems reduce. For exam
 
 We can apply the same logic tomakeChange(100 using  2  quarters), makeChange(100  using 3  quarters) andmakeChange(100 using  4  quarters). We have thus reduced the above state­ment to the following.
 ```
-makeChange(100) =  makeChange(100 using 0 quarters) + 
-                   makeChange(75 using 0 quarters) + 
-                   makeChange(50 using 0 quarters) + 
-                   makeChange(25 using 0 quarters) +
-                   1
+makeChange(100) = makeChange(100 using 0 quarters) + 
+                  makeChange(75 using 0 quarters) + 
+                  makeChange(50 using 0 quarters) + 
+                  makeChange(25 using 0 quarters) +
+                  1
 ```
 
 Note that the final statement from above, makeChange(100  using 4   quarters), equals 1. We call this "fully reduced".
@@ -1348,13 +1350,13 @@ makeChange(50 using 0 quarters) = makeChange(50 using 0 quarters, 0 dimes) +
                                   makeChange(50 using 0 quarters, 5 dimes)
 
 make(hange(25 using 0 quarters) = makeChange(25 using 0 quarters, 0 dimes) + 
-                                   makeChange(25 using 0 quarters, 1 dime)  + 
+                                   makeChange(25 using 0 quarters, 1 dime) + 
                                    makeChange(25 using 0 quarters, 2 dimes)
 ```
 
 Each one of these, in turn, expands out once we start applying nickels. We end up with a tree-like recursive structure where each call expands out to four or more calls.
 
-The base case of our recursion is the fully reduced  statement. For example,  makeChange(50 using 0 quarters 5 dimes) is fully reduced to 1, since 5 dimes equals 50 cents.
+The base case of our recursion is the fully reduced  statement. For example,  `makeChange(50 using 0 quarters 5 dimes)` is fully reduced to 1, since 5 dimes equals 50 cents.
 
 This leads to a recursive algorithm that looks like this:
 
@@ -1388,14 +1390,14 @@ We can resolve this issue by storing the previously computed values. We'll need 
 5   }
 6 
 7   int makeChange(int amount, int[] denoms, int index, int[][] map) {
-8     if (map[amount][index] > 0) {//retrieve value
+8     if (map[amount][index] > 0) { // retrieve value
 9       return map[amount][index];
 10    }
-11    if (index >= denoms.length - 1) return 1; //one denom remaining
+11    if (index >= denoms.length - 1) return 1; // one denom remaining
 12    int denomAmount = denoms[index];
 13    int ways = 0;
 14    for (int i = 0; i * denomAmount <= amount; i++) {
-15      //go to next denom, assuming i coins of denomAmount
+15      // go to next denom, assuming i coins of denomAmount
 16      int amountRemaining = amount - i * denomAmount;
 17      ways += makeChange(amountRemaining, denoms, index + 1, map);
 18    }
@@ -1421,7 +1423,7 @@ Picture the queen that is placed last, which we'll assume is on row 8. (This is 
 
 So if we want to know all the valid ways of arranging 8 queens on an 8x8 chess board, it would be:
 ```
-ways to  arrange 8 queens on an 8x8 board= 
+ways to arrange 8 queens on an 8x8 board= 
   ways to arrange 8 queens on an 8x8 board with queen at (7, 0) + 
   ways to arrange 8 queens on an 8x8 board with queen at (7, 1) +
   ways to arrange 8 queens on an 8x8 board with queen at (7, 2) +
@@ -1450,7 +1452,7 @@ Implementing this is now reasonably straightforward.
 1   int GRID_SIZE = 8;
 2 
 3   void placeQueens(int row, Integer[] columns, ArrayList<Integer[]> results) {
-4     if (row == GRID_SIZE) {//Found valid placement
+4     if (row == GRID_SIZE) { //Found valid placement
 5       results.add(columns.clone());
 6     }  else {
 7       for (int col = 0; col < GRID_SIZE; col++) {
@@ -1493,7 +1495,7 @@ Implementing this is now reasonably straightforward.
 
 Observe that since each row can only have one queen, we don't need to store our board as a full 8x8 matrix. We only need a single array where column[r]  =  c indicates that row r has a queen at column c.
 
-**8.13  Stack of Boxes:** You have a stack of n boxes, with widths w₁, heights h₁, and depths d₁. The boxes cannot be rotated and can only be stacked on top of one another if each box in the stack is strictly larger than the box above it in width, height, and depth. Implement a method to compute the height of the tallest possible stack. The height of a stack is the sum of the heights of each box.
+**8.13  Stack of Boxes:** You have a stack of n boxes, with widths wᵢ, heights hᵢ, and depths dᵢ. The boxes cannot be rotated and can only be stacked on top of one another if each box in the stack is strictly larger than the box above it in width, height, and depth. Implement a method to compute the height of the tallest possible stack. The height of a stack is the sum of the heights of each box.
 
 SOLUTION
 
@@ -1503,7 +1505,7 @@ To tackle this problem, we need to recognize the relationship between the differ
 
 **Solution#1**
 
-Imagine we had the following boxes: b₁,   b₂,••• ,   bₙ. The biggest stack that we can build with all the boxes equals the max of (biggest stack with bottom b₁, biggest stack with bottom b₂ ,   •••, biggest stack with bottom bₙ). That is, if we experimented with each box as a bottom and built the biggest stack possible with each, we would find the biggest stack possible.
+Imagine we had the following boxes: b₁, b₂,••• , bₙ. The biggest stack that we can build with all the boxes equals the max of (biggest stack with bottom b₁, biggest stack with bottom b₂ ,   •••, biggest stack with bottom bₙ). That is, if we experimented with each box as a bottom and built the biggest stack possible with each, we would find the biggest stack possible.
 
 But, how would we find the biggest stack with a particular bottom? Essentially the same way. We experi­ment with different boxes for the second level, and so on for each level.
 
@@ -1525,8 +1527,8 @@ The code below implements this algorithm recursively.
 9     return maxHeight;
 10  }
 11  
-12  int createStack(ArrayList<Box> boxes, int bottomindex) {
-13    Box bottom = boxes.get(bottomindex);
+12  int createStack(ArrayList<Box> boxes, int bottomIndex) {
+13    Box bottom = boxes.get(bottomIndex);
 14    int maxHeight = 0;
 15    for (inti = bottomIndex + 1; i < boxes.size(); i++) {
 16      if (boxes.get(i).canBeAbove(bottom)) {
@@ -1650,17 +1652,17 @@ We could just essentially iterate through each possible place to put a parenthes
 
 ```
 countEval(0^0&0^1|1, true) =
-     countEval(0^0&0^1|1 where paren around char 1, true)
- +   countEval(0^0&0^1|1 where paren around char 3, true)
- +   countEval(0^0&0^1|1 where paren around char S, true)
- +   countEval(0^0&0^1|1 where paren around char 7, true)
+    countEval(0^0&0^1|1 where paren around char 1, true)
+ +  countEval(0^0&0^1|1 where paren around char 3, true)
+ +  countEval(0^0&0^1|1 where paren around char S, true)
+ +  countEval(0^0&0^1|1 where paren around char 7, true)
 ```
 
 Now what? Let's look at just one of those expressions-the paren aroundchar 3. This gives us (0^0)&(0^1). 
 
 In order to make that expression true, both the left and right sides must be true. So:
 ```
-left= "0^0"
+left = "0^0"
 right =  "0^1|1"
 countEval(left & right, true) = countEval(left, true) * countEval(right, true)
 ```
@@ -1673,14 +1675,14 @@ What happens when we have an "|"(OR)? Or an "^"(XOR)?
 If it's an OR, then either the left or the right side must be true-or both.
 
 ```
-  countEval(left | right,  true) =  countEval(left, true)  * countEval(right,  false)
-                                 +  countEval(left, false) * countEval(right,  true)
-                                 +  countEval(left, true)  * countEval(right,  true)
+  countEval(left | right,  true) =  countEval(left, true)  * countEval(right, false)
+                                 +  countEval(left, false) * countEval(right, true)
+                                 +  countEval(left, true)  * countEval(right, true)
 ```
 If it's an XOR, then the left or the right side can be true, but not both.
 ```
-countEval(left ^   right, true) =   countEval(left,  true)  *  countEval(right,  false)
-                                +   countEval(left,  false) *  countEval(right,  true)
+countEval(left ^   right, true) =   countEval(left, true)  * countEval(right, false)
+                                +   countEval(left, false) * countEval(right, true)
 ```
 What if we were trying to make the result false instead? We can switch up the logic from above:
 ```
@@ -1710,13 +1712,13 @@ This makes the code a bit more concise.
 5     int ways = 0;
 6     for (int i = 1; i < s.length(); i += 2) {
 7       char c = s.charAt(i);
-8       String left = s.substring(0, i);
+8       String left  = s.substring(0, i);
 9       String right = s.substring(i + 1, s.length());
 10  
 11      /* Evaluate each side for each result. */
-12      int leftTrue = countEval(left, true);
-13      int leftFalse = countEval(left, false);
-14      int rightTrue = countEval(right, true);
+12      int leftTrue   = countEval(left, true);
+13      int leftFalse  = countEval(left, false);
+14      int rightTrue  = countEval(right, true);
 15      int rightFalse = countEval(right, false);
 16      int total = (leftTrue + leftFalse) * (rightTrue + rightFalse);
 17  

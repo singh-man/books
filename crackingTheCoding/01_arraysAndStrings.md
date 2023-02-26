@@ -60,7 +60,7 @@ second  capacity increase :  2 elements to copy
 first capacity increase   :  1 element  to copy
 ```
 
-Therefore, the total number of copies to insert N elements is roughly ```N/2 + N/4 + N/8 + ... + 2 + 1```, which is just less than N.
+Therefore, the total number of copies to insert N elements is roughly `N/2 + N/4 + N/8 + ... + 2 + 1`, which is just less than N.
 
 
 > If the sum of this series isn't obvious to you, imagine this: Suppose you have a kilometer-long walk to the store. You walk 0.5 kilometers, and then 0.25 kilometers, and then 0.125 kilometers, and so on. You will never exceed one kilometer (although you'll get very close to it).
@@ -175,7 +175,7 @@ SOLUTION
 
 --- 
 
-Like in many questions, we should confirm some details with our interviewer. We should understand if the permutation comparison is case sensitive. That is: is God a permutation of dog? Additionally, we should ask if whitespace is significant. We will assume for this problem that the comparison is case sensitive and whitespace is significant. So, ```"god        "``` is different from "dog".
+Like in many questions, we should confirm some details with our interviewer. We should understand if the permutation comparison is case sensitive. That is: is God a permutation of dog? Additionally, we should ask if whitespace is significant. We will assume for this problem that the comparison is case sensitive and whitespace is significant. So, `"god        "` is different from "dog".
 
 Observe first that strings of different lengths cannot be permutations of each other. There are two easy ways to solve this problem, both of which use this optimization.
 
@@ -528,7 +528,7 @@ This algorithm (and almost any reasonable algorithm) takes O(n) time, where n is
 
 > Why is the runtime dictated by the shorter string instead of the longer string? If the strings are the same length (plus or minus one character), then it doesn't matter whether we use the longer string or the shorter string to define the runtime. If the strings are very different lengths, then the algorithm will terminate in O(1)  time. One really, really long string therefore won't significantly extend the runtime. It increases the runtime only if both strings are long.
 
-We might notice that the code for ```oneEditReplace``` is very similar to that for ```oneEditinsert```. We can merge them into one method.
+We might notice that the code for `oneEditReplace` is very similar to that for `oneEditinsert`. We can merge them into one method.
 
 To do this, observe  that both methods follow similar logic: compare each character and ensure  that the strings are only different by one. The methods  vary in how they handle  that difference. The method oneEditReplace does nothing other than flag the difference, whereas oneEditinsert increments the pointer to the longer string. We can handle both of these in the same method.
 
@@ -782,7 +782,7 @@ To make this somewhat more space efficient we could  use  a bit vector instead o
 
 We can  reduce the  space to O(1) by using the  first row as a replacement for the  row  array  and  the  first column as a replacement for the column array. This works as follows:
 
-1. Check if the first row and first column have any zeros, and set variables ```rowHasZero``` and ```columnHasZero```. (We'll nullify the first row and  first column later, if necessary.)
+1. Check if the first row and first column have any zeros, and set variables `rowHasZero` and `columnHasZero`. (We'll nullify the first row and  first column later, if necessary.)
 2. Iterate through the rest of the matrix, setting matrix[i][0] and matrix[0][j] to zero whenever there's a zero in matrix[i][j].
 3. Iterate through rest of matrix, nullifying row i if there's a zero in matrix[i][0].
 4. Iterate through rest of matrix, nullifying column j if there's a zero in matrix[0][j].

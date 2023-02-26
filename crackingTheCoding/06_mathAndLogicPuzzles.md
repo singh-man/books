@@ -12,7 +12,7 @@ We'll go through some common approaches for tackling these questions, as well as
 
 As you probably know, every positive integer can be decomposed into a product of primes. For example:
 
-    84  =   2²  * 3¹ * 5⁰ * 7¹ * 11⁰ * 13⁰ * 17⁰ * ... 
+    84  =   2² * 3¹ * 5⁰ * 7¹ * 11⁰ * 13⁰ * 17⁰ * ... 
 
 Note that many of these primes have an exponent of zero.
 
@@ -146,7 +146,7 @@ Let's look at a Venn diagram to visualize two events A and B. The areas of the t
 
 Imagine you were throwing a dart at this Venn diagram. What is the probability that you would land in the intersection between A and B?  If you knew the odds of landing in A, and you also knew the percent of A that's also in B (that is, the odds of being in B given that you were in A), then you could express the prob­ability as:
 
-    P(A  and  B)  =  P(B given A)   P(A)
+    P(A and B)  =  P(B given A)  P(A)
 
 For example, imagine we were picking a number between  1 and 10 (inclusive). What's the probability of picking an even number and a number between  1 and 5? The odds of picking a number between 1  and 5 is 50%, and the odds of a number between  1 and 5 being even is 40%. So, the odds of doing both are: 
 
@@ -170,11 +170,11 @@ Now, imagine  you wanted to know what the probability  of landing  in A or B is.
 
     P(A or B) = P(A) + P(B)  -  P(A and B)
 
-Logically, this makes sense. If we simply added their sizes, we would have double-counted their intersection. We need to subtract this out.We can again visualize this through a Venn diagram:
+Logically, this makes sense. If we simply added their sizes, we would have double-counted their intersection. We need to subtract this out. We can again visualize this through a Venn diagram:
 
 ![](media/IX_06_03.JPG)
 
-For example,  imagine  we were picking a number between 1 and  10 (inclusive). What's the  probability  of picking an even number or a number between 1  and  5? We have a 50% probability  of picking an even number and a 50% probability  of picking a number between 1 and 5.The odds of doing both are 20%. So the odds are:
+For example,  imagine  we were picking a number between 1 and  10 (inclusive). What's the  probability  of picking an even number or a number between 1  and  5? We have a 50% probability  of picking an even number and a 50% probability  of picking a number between 1 and 5. The odds of doing both are 20%. So the odds are:
 
 P(x is  even or x  <=5)
 ```
@@ -225,7 +225,7 @@ However,  we can light a rope at both ends. The two flames  would meet after  30
 
 We now  know  that we can  time  30 minutes using a single rope. This also means that we can  remove 30 minutes of burning time from the second rope, by lighting rope 1 on both ends and rope 2 on just one end.
 
-*Rule 3:* If rope 1 takes x minutes to burn and rope 2 takes y minutes, we can turn  rope 2 into a rope that takes (y-x) minutes or (y- x/2) minutes.
+*Rule 3:* If rope 1 takes x minutes to burn and rope 2 takes y minutes, we can turn  rope 2 into a rope that takes (y - x) minutes or (y - x/2) minutes.
 
 Now, let's piece all of these together. We can turn rope 2 into a rope with 30 minutes of burn time. If we then light rope 2 on the  other end (see rule 2), rope 2 will be done after  15 minutes.
 
@@ -282,7 +282,7 @@ If we took one pill from Bottle #1 and two pills from Bottle #2, what would the 
 
 We know the "expected" weight of a bunch of pills. The difference between the expected weight and the actual weight will indicate which bottle contributed the heavier pills, provided we select a different number of pills from each bottle.
 
-We can generalize this to the full solution: take one pill from Bottle #1, two pills from Bottle #2, three pills from Bottle #3, and so on. Weigh this mix of pills. If all pills were one gram each, the scale would read 210 grams `(1  +  2  +   •  •  •     +  20  =  20  *   21  / 2  =  210)`. Any "overage" must come from the extra 0.1 gram pills.
+We can generalize this to the full solution: take one pill from Bottle #1, two pills from Bottle #2, three pills from Bottle #3, and so on. Weigh this mix of pills. If all pills were one gram each, the scale would read 210 grams `(1  +  2  +  •  •  •  +  20  =  20  *  21  / 2  =  210)`. Any "overage" must come from the extra 0.1 gram pills.
 
 This formula will tell you the bottle number:
 ```
@@ -329,30 +329,30 @@ The probability of making exactly two shots is:
 P(making 1 and  2, and missing 3)
       +  P(making 1 and 3, and missing 2)
       +  P(missing 1, and making 2 and 3)
-   = p *  p *  (1 - p)  +  p  *  (1 - p)  *  p +   (1 - p)  *  p *  P
+   = p *  p *  (1 - p)  +  p  *  (1 - p)  *  p +  (1 - p)  *  p *  P
    = 3 (1 - p) p²
 ```
 
 Adding these together, we get:
 
 ```
-   = p³   + 3(1 - p)p²  
-   = p³   + 3p² - 3p³
-   = 3p²  - 2p³
+   = p³  + 3(1 - p)p²  
+   = p³  + 3p² - 3p³
+   = 3p² - 2p³
 ```
 
 Which game should you play?
 
-You should play Game 1  if P (Game   1)  >   P (Game   2):
+You should play Game 1  if P (Game  1)  >  P (Game  2):
 ```
 p  >  3p² - 2p³.
 1  >  3p  - 2p²
 2p² - 3p +  1  >  0 
-(2p - l)(p -  1) >   0 
+(2p - l)(p -  1) > 0 
 ```
 Both terms must be positive, or both must be negative. But we know p  <   1, so p  -  1  <  0. This means both terms must be negative.
 ```
-2p - 1  <   0
+2p - 1  <  0
 2p < 1
 p  < .5
 ```
@@ -501,7 +501,7 @@ You probably won't know this off the top of your head, but we can try to estimat
  2/8 = 32/128            5/64 = 10/128
 3/16 = 24/128           6/128 =  6/128
 
-32 + 32 + 24 + 16 + 10 + 6   120
+32 + 32 + 24 + 16 + 10 + 6  120
 -------------------------- = ---
            128               128
 ```
@@ -589,8 +589,8 @@ Our goal is to create a system for dropping Egg 1 such that the number of drops 
 4. Therefore, Egg 1 must start at floor X, then go up by X-1 floors, then X- 2, ..., until it gets to 100.
 5. Solve for X.
 ```
-X + (X - 1)+(X - 2)+...+1 = 100
-X(X+1)/2 = 100
+X + (X - 1) + (X - 2) + ... + 1 = 100
+X(X + 1)/2 = 100
 X ≈ 13.65
 ```
 X clearly needs to be an integer. Should we round X up or down?
@@ -671,7 +671,7 @@ Question: How many perfect squares are there?
 
 There are 10 perfect squares. You could count them (1, 4, 9, 16, 25, 36, 49, 64, 81, 100), or you could simply realize that you can take the numbers 1 through 10 and square them:
 ```
-1*1,  2*2,  3*3,  ...,   10*10
+1*1,  2*2,  3*3,  ...,  10*10
 ```
 
 Therefore, there are 10 lockers open at the end of this process.
@@ -705,7 +705,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 3       private int id;
 4   
 5       public Bottle(int id) {this.id = id;}
-6       public int get!d() {return id;}
+6       public int getId() {return id;}
 7       public void setAsPoisoned() {poisoned = true;}
 8       public boolean isPoisoned() {return poisoned;}
 9   }
@@ -823,7 +823,7 @@ If we divide the bottles up into 10 groups (with bottles 0 - 99 going to strip 0
 Dividing the bottles in a different way can reveal the second or third digit. We just need to run these tests on different days so that we don't confuse the results.
 
 |         | Day 0 -> 7 | Day 1 -> 8 | Day 2 -> 9 |
-| --      | --         | --         | --         |
+| :--:    | :--:       | :--:       | :--:       |
 | Strip 0 | 0xx        | x0x        | xx0        |
 | Strip 1 | 1xx        | x1x        | xx1        |
 | Strip 2 | 2xx        | x2x        | xx2        |
@@ -847,7 +847,7 @@ We will need to run one additional test. We could run this at the end to clear u
 
  
 |         | Day 0 -> 7 | Day 1 -> 8 | Day 2 -> 9 | Day 3 -> 10 |
-| --      | --         | --         | --         | --          |
+| :--:    | :--:       | :--:       | :--:       | :--:        |
 | Strip 0 | 0xx        | x0x        | xx0        | xx9         |
 | Strip 1 | 1xx        | x1x        | xx1        | xx0         |
 | Strip 2 | 2xx        | x2x        | xx2        | xx1         |

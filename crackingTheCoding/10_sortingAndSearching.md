@@ -57,7 +57,7 @@ The merge method operates by copying all the elements from the target array segm
 23      int current = low;
 24  
 25      /* Iterate through helper array. Compare the left and right half, copying back
-26      * the smaller element from the two halves into the original array. */
+26       * the smaller element from the two halves into the original array. */
 27      while (helperLeft <= middle && helperRight <= high) {
 28          if  (helper[helperLeft] <= helper[helperRight]) {
 29              array[current] = helper[helperLeft];
@@ -282,8 +282,8 @@ The code below implements this algorithm.
 24      return new String(content);
 25  }
 26  
-27  /*HashMapList<String, Integer> is a HashMap that maps from Strings to
-28  * ArrayList<Integer>. See appendix for implementation. * /
+27  /* HashMapList<String, Integer> is a HashMap that maps from Strings to
+28   * ArrayList<Integer>. See appendix for implementation. */
 ```
 
 You may notice that the  algorithm above is a modification of bucket sort.
@@ -304,7 +304,7 @@ If this problem smells  like binary search to you, you're  right!
 
 In classic binary search, we compare x with  the  midpoint to figure  out  if x belongs on the  left or the right side. The  complication here is that the  array  is rotated and may  have  an  inflection point. Consider, for example, the  following two arrays:
 ```
-Arrayl:  {10, 15,  20,  0,  5} 
+Array1:  {10, 15,  20,  0,  5} 
 Array2:  {50,  5,  20, 30, 40}
 ```
 
@@ -324,7 +324,7 @@ Otherwise, we have no choice but to search both halves.
 ```java
 1   int search(int a[], int left, int right, int x) {
 2       int mid = (left + right) / 2;
-3       if (x == a[mid]) {//Found element
+3       if (x == a[mid]) { //Found element
 4           return mid;
 5       }
 6       if (right < left) {
@@ -332,8 +332,8 @@ Otherwise, we have no choice but to search both halves.
 8       }
 9   
 10      /* Either the left or right half must be normally ordered. Find out which side
-11      * is normally ordered, and then use the normally ordered half to figure out
-12      * which side to search to find x. */
+11       * is normally ordered, and then use the normally ordered half to figure out
+12       * which side to search to find x. */
 13      if (a[left] < a[mid]) {//Left is normally ordered.
 14          if (x >= a[left] && x < a[mid]) {
 15              return search(a, left, mid - 1, x); // Search left
@@ -346,10 +346,10 @@ Otherwise, we have no choice but to search both halves.
 22          }  else {
 23              return search(a, left, mid - 1, x); // Search left
 24          }
-25      }  else if (a[left] == a[mid]) {//Left or right half is all repeats
-26          if (a[mid] != a[right]) {//If right is different, search it
+25      }  else if (a[left] == a[mid]) { //Left or right half is all repeats
+26          if (a[mid] != a[right]) { //If right is different, search it
 27              return search(a, mid + 1, right, x); // search right
-28          }  else {//Else, we have to search both halves
+28          }  else { //Else, we have to search both halves
 29              int result = search(a, left, mid - 1, x); // Search left
 30              if (result == -1) {
 31                  return search(a, mid + 1, right, x); // Search right
@@ -380,7 +380,7 @@ Could we compute the length? Yes!
 
 We know that elementAt will return -1 when i is too large. We can therefore just try bigger and bigger values until we exceed the size of the list.
 
-But how much bigger? If we just went through the list linearly-1, then 2, then 3, then 4, and so on-we'd wind up with a linear time algorithm. We probably  want something faster than this. Otherwise, why would the interviewer have specified the list is sorted?
+But how much bigger? If we just went through the list linearly---1, then 2, then 3, then 4, and so on-we'd wind up with a linear time algorithm. We probably  want something faster than this. Otherwise, why would the interviewer have specified the list is sorted?
 
 It's better to back off exponentially. Try 1, then 2, then 4, then 8, then 16, and so on. This ensures that, if the list has length n, we'll find the length in at most O(log  n) time.
 
@@ -525,7 +525,7 @@ We have 1 GB of memory, or 8 billion bits. Thus, with 8 billion bits, we can map
 
 1. Create a bit vector (BV) with 4 billion bits. Recall that a bit vector is an array that compactly stores boolean values by using an array of ints (or another data type). Each int represents 32 boolean values.
 2. Initialize BV with all 0s.
-3. Scan all numbers (num) from the file and call BV. set (num, 1) .
+3. Scan all numbers (num) from the file and call BV.set(num, 1) .
 4. Now scan again BV from the 0th index.
 5. Return the first index which has a value of 0. 
 
@@ -551,7 +551,7 @@ The following code demonstrates  our algorithm.
 17              /* Retrieves the individual bits of each byte. When 0 bit is found, print
 18               * the corresponding value. */
 19              if ((bitfield[i] & (1 << j)) == 0) {
-20                  System.out.println (i * 8 + j);
+20                  System.out.println(i * 8 + j);
 21                  return;
 22              }
 23          }
@@ -576,7 +576,7 @@ We need to select a value for rangeSize such that the memory from the first pass
 
 *First Pass: The Array*
 
-The array in the first pass can fit in 10 megabytes, or roughly 223 bytes, of memory. Since each element in the array is an int, and an int is 4 bytes, we can hold an array of at most about 221 elements. So, we can deduce the following:
+The array in the first pass can fit in 10 megabytes, or roughly 2²³ bytes, of memory. Since each element in the array is an int, and an int is 4 bytes, we can hold an array of at most about 2²¹ elements. So, we can deduce the following:
 
 ``` 
 arraySize = 2³¹/rangeSize <= 2²¹
@@ -588,7 +588,7 @@ rangeSize >= 2¹⁰
 
 We need to have enough space to store rangeSize bits. Since we can fit 2²³ bytes in memory, we can fit 2²⁶ bits in memory. Therefore, we can conclude the following:
 ```
-2¹¹ <=  rangeSize  <=  2²⁶
+2¹¹ <= rangeSize <= 2²⁶
 ```
 These conditions give us a good amount of "wiggle room;" but the nearer to the middle that we pick, the less memory will be used at any given time.
 
@@ -605,14 +605,14 @@ The below code provides one implementation for this algorithm.
 9       if (blockIndex < 0) return -1;
 10  
 11      /* Create bit vector for items within this range. */
-12      byte[] bitVector = getBitVectorForRange(filename, blockindex, rangeSize);
+12      byte[] bitVector = getBitVectorForRange(filename, blockIndex, rangeSize);
 13  
 14      /* Find a zero in the bit vector */
 15      int offset findZero(bitVector);
 16      if (offset < 0) return -1;
 17  
 18      /* Compute missing value. */
-19      return blockindex * rangeSize + offset;
+19      return blockIndex * rangeSize + offset;
 20  }
 21  
 22  /* Get count of items within each range. */
@@ -623,7 +623,7 @@ The below code provides one implementation for this algorithm.
 27  
 28      Scanner in = new Scanner (new FileReader(filename));
 29      while (in.hasNextint()) {
-30          int value = in.nextint();
+30          int value = in.nextInt();
 31          blocks[value / rangeSize]++;
 32      }
 33      in.close();
@@ -641,15 +641,15 @@ The below code provides one implementation for this algorithm.
 45  }
 46  
 47  /* Create a bit vector for the values within a specific range. */
-48  byte[] getBitVectorForRange(String filename, int blockindex, int rangeSize)
+48  byte[] getBitVectorForRange(String filename, int blockIndex, int rangeSize)
 49                  throws FileNotFoundException {
-50      int startRange = blockindex * rangeSize;
+50      int startRange = blockIndex * rangeSize;
 51      int endRange = startRange + rangeSize;
 52      byte[] bitVector = new byte[rangeSize / Byte.SIZE];
 53  
 54      Scanner in = new Scanner(new FileReader(filename));
-55      while (in.hasNextint()) {
-56          int value = in.nextint();
+55      while (in.hasNextInt()) {
+56          int value = in.nextInt();
 57          /* If the number is inside the block that's missing numbers, we record it */
 58          if  (startRange <= value && value < endRange) {
 59              int offset = value - startRange;
@@ -734,17 +734,17 @@ When we come across a duplicate element, we print it.
 32  }
 ```
 
-Note that while this isn't an especially difficult problem, it's important to implement this cleanly. This is why we defined our own bit vector class to hold a large  bit vector. If our interviewer lets us (she may or may not), we could have of course used Java's  built in BitSet class.
+Note that while this isn't an especially difficult problem, it's important to implement this cleanly. This is why we defined our own bit vector class to hold a large  bit vector. If our interviewer lets us (she may or may not), we could have of course used Java's built in BitSet class.
 
 
-**10.9  Sorted  Matrix Search:**  Given an M  x  N matrix  in which  each row and  each column is sorted in ascending order, write a method to find an element.
+**10.9  Sorted  Matrix Search:** Given an M  x  N matrix  in which  each row and  each column is sorted in ascending order, write a method to find an element.
 
 
 SOLUTION
 
 ---
 
-We can approach this in two  ways: a more naive  solution that only takes advantage of part  of the  sorting, and  a more optimal way that takes advantage of both parts of the  sorting.
+We can approach this in two  ways: a more naive solution that only takes advantage of part  of the  sorting, and  a more optimal way that takes advantage of both parts of the  sorting.
 
 **Solution #1: Naive Solution**
 
@@ -948,7 +948,7 @@ You help  yourself out a  bit by separating code  out  into other methods. For  
 **10.10  Rank from  Stream:**   Imagine you are reading in a stream of integers. Periodically,  you wish to be able to look up the rank of a number x (the  number of values less than or equal to x). Implement the data structures and algorithms to support these operations. That is, implement the method track(int x), which is called when each number is generated, and the method getRankOfNumber(int  x), which returns the number of values less than or equal to x (not including x itself).
 ```
 EXAMPLE
-Stream (in order of appearance):5,  1,  4,  4,  5,  9,  7,  13,  3 
+Stream (in order of appearance): 5,  1,  4,  4,  5,  9,  7,  13,  3 
 getRankOfNumber(1) = 0
 getRankOfNumber(3) = 1
 getRankOfNumber(4) = 3
@@ -980,7 +980,7 @@ Let's walk through an example on the following tree. In the below example, the v
            15(3)        25(2)
          /       \     /
     10(1)         23(0)
-    /    \      /      \
+    /    \             \
 5(0)      13(0)        24(0)
 ```
 
@@ -1073,7 +1073,7 @@ Since this problem asks us to sort the array in a particular way, one thing we c
 
 Imagine we were given an unsorted array and then sort it to become the following:
 ```
-0      1      4      7      8      9
+0   1   4   7   8   9
 ```
 
 We now have an ascending list of integers.
@@ -1083,16 +1083,16 @@ How can we rearrange this into a proper alternating sequence  of peaks and valle
 - The 0 is okay.
 - The 1 is in the wrong place. We can swap it with either the 0 or 4. Let's swap it with the 0.
 ```
-1     0     4     7     8     9
+1   0   4   7   8   9
 ```
 - The 4 is okay.
 - The 7 is in the wrong place. We can swap it with either the 4 or the 8. Let's swap it with the 4.
 ```
-1       0     7     4     8     9
+1   0   7   4   8   9
 ```
 - The 9 is in the wrong place. Let's swap it with the 8.
 ```
-1     0     7     4     9     8
+1   0   7   4   9   8
 ```
 
 Observe that there's nothing special about the array having these values. The relative order of the elements matters, but all sorted arrays will have the same relative order. Therefore, we can take this same approach on any sorted array.
@@ -1130,14 +1130,14 @@ To optimize past the prior solution, we need to cut out the sorting step. The al
 
 Let's revisit an example.
 ```
-9      1      0      4      8      7
+9   1   0   4   8   7
 ```
 For each element,  we'll look at the adjacent  elements. Let's imagine some sequences. We'll just use the numbers 0, 1  and 2. The specific values don't matter.
 ```
 0   1   2
-0   2   1  //peak
+0   2   1  // peak
 1   0   2
-1   2   0  //peak
+1   2   0  // peak
 2   1   0
 2   0   1
 ```
@@ -1170,7 +1170,7 @@ The code to implement this is below.
 7       }
 8   }
 9   
-10  int maxindex(int[] array, int a, int b, int c) {
+10  int maxIndex(int[] array, int a, int b, int c) {
 11      int len = array.length;
 12      int aValue = a >= 0 && a < len ? array[a] : Integer.MIN_VALUE;
 13      int bValue = b >= 0 && b < len ? array[b] : Integer.MIN_VALUE;
