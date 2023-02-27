@@ -29,9 +29,9 @@ Instead, we can denormalize the database by  storing redundant data. For example
 
 Let's  walk through a review of basic SQL syntax, using as  an example the database that was  mentioned earlier. This  database has the following simple structure (* indicates a primary key):
 ```
-Courses:   CourseID*,  CourseName, TeacherID 
-Teachers:   TeacherID*,  TeacherName 
-Students:   StudentID*,  StudentName
+Courses:  CourseID*,  CourseName,  TeacherID 
+Teachers:  TeacherID*,  TeacherName 
+Students:  StudentID*,  StudentName
 StudentCourses:  CourseID*,  StudentID*
 ```
 
@@ -42,7 +42,7 @@ Using the above table, implement the following queries.
 Implement a query to get a list of all students and how many courses each student is enrolled in. At first, we might try something like this:
 ```
 1   /* Incorrect Code */
-2   SELECTStudents.StudentName,   count(*)
+2   SELECT Students.StudentName,  count(*)
 3   FROM Students INNER JOIN StudentCourses
 4   ON Students.StudentID =  StudentCourses.StudentID
 5   GROUP BY Students.StudentID
@@ -98,21 +98,21 @@ Implement a query to get a list ofall teachers and how many students they each t
 
 We can construct this query step by step. First, let's get a list of TeacherIDs and how many students are associated with each TeacherID. This is very similar to the earlier query.
 ```
-1  SELECT  TeacherID,   count(StudentCourses.CourseID)  AS  [Number]
-2  FROM  Courses   INNER   JOIN StudentCourses
-3  ON   Courses.CourseID = StudentCourses.CourseID
-4  GROUP   BY  Courses.TeacherID
+1  SELECT  TeacherID,  count(StudentCourses.CourseID)  AS  [Number]
+2  FROM  Courses  INNER  JOIN StudentCourses
+3  ON  Courses.CourseID = StudentCourses.CourseID
+4  GROUP  BY  Courses.TeacherID
 ```
 Note that this INNER  JOIN will not select teachers who aren't teaching classes. We'll handle that in the below query when we join it with the list of all teachers.
 ```sql
 1  SELECT  TeacherName,  isnull(StudentSize.Number,  0)
-2  FROM   Teachers  LEFT  JOIN
+2  FROM  Teachers  LEFT  JOIN
 3            (SELECT  TeacherID, count(StudentCourses.CourseID)  AS  [Number]
-4              FROM  Courses  INNER  JOIN StudentCourses
-5              ON  Courses.CourseID =  StudentCourses.CourseID
-6              GROUP  BY  Courses.TeacherID)  StudentSize
+4             FROM  Courses  INNER  JOIN StudentCourses
+5             ON  Courses.CourseID =  StudentCourses.CourseID
+6             GROUP  BY  Courses.TeacherID)  StudentSize
 7  ON  Teachers.TeacherID =  StudentSize.TeacherID
-8  ORDER   BY  StudentSize.Number DESC
+8  ORDER  BY  StudentSize.Number DESC
 ```
 Note how we handled the NULL values in the SELECT statement to convert the NULL values to zeros.
 
@@ -208,7 +208,7 @@ This problem uses a straightforward join of Requests and Apartments to get a lis
 6         ON Requests.AptID  =  Apartments.AptID
 7         WHERE Requests.Status  =  'Open'
 8         GROUP BY  Apartments.BuildingID)  ReqCounts
-9  ON  ReqCounts.BuildingID =  Buildings.BuildingID
+9  ON  ReqCounts.BuildingID  =  Buildings.BuildingID
 ```
 Queries like this that utilize sub-queries should be thoroughly tested, even when coding by hand. It may be useful to test the inner part of the query first, and then test the outer part.
 
@@ -224,7 +224,7 @@ UPDATE queries, like SELECT queries, can have WHERE clauses. To implement this q
 ```sql
 1  UPDATE  Requests
 2  SET  Status = 'Closed'
-3  WHERE  AptID  IN (SELECT  AptID  FROM  Apartments  WHERE  BuildingID =  11)
+3  WHERE  AptID  IN (SELECT  AptID  FROM  Apartments  WHERE  BuildingID  =  11)
 ```
 
 
@@ -358,8 +358,8 @@ The problem with the above code is that it will return literally the top 10% of 
 To correct this issue, we can build something similar to this query, but instead first get the GPA cut off.
 ```sql
 1  DECLARE @GPACutOff  float;
-2  SET @GPACutOff  = (SELECT  min(GPA) as  'GPAMin' FROM  (
-3                SELECT TOP  10 PERCENT  AVG(CourseEnrollment.Grade) AS  GPA
+2  SET @GPACutOff  =  (SELECT  min(GPA)  as  'GPAMin' FROM  (
+3                SELECT TOP  10 PERCENT  AVG(CourseEnrollment.Grade)  AS  GPA
 4            FROM  CourseEnrollment
 5            GROUP BY CourseEnrollment.StudentID
 6            ORDER BY GPA desc)  Grades);
@@ -367,10 +367,10 @@ To correct this issue, we can build something similar to this query, but instead
 Then, once we have @GPACutOff defined, selecting the students  with at least this GPA is reasonably straightforward.
 ```sql
 1  SELECT StudentName,  GPA
-2  FROM (SELECT AVG(CourseEnrollment.Grade) AS  GPA, CourseEnrollment.StudentID
+2  FROM (SELECT AVG(CourseEnrollment.Grade)  AS  GPA, CourseEnrollment.StudentID
 3              FROM CourseEnrollment
-4              GROUP BY  CourseEnrollment.StudentID
-5              HAVING AVG(CourseEnrollment.Grade)  >= @GPACutOff) Honors
+4              GROUP BY CourseEnrollment.StudentID
+5              HAVING AVG(CourseEnrollment.Grade)  >=  @GPACutOff) Honors
 6  INNER  JOIN Students ON Honors.StudentID  =  Student.StudentID
 ```
 Be very careful about what implicit assumptions you make. If you look at the above database description, what potentially incorrect assumption  do you see? One is that each course can only be taught  by one professor. At some schools, courses may be taught by multiple professors.

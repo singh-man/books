@@ -165,7 +165,7 @@ To clarify the last point, consider the following code:
 Can two instances of MyClass call foo at the same time? It depends. If they have the same instance of MyObject, then no. But, if they hold different references, then the answer is yes.
 ```java
 1    /* Difference references - both threads can call MyObject.foo() */
-2   MyObject objl   = new MyObject();
+2   MyObject obj1   = new MyObject();
 3   MyObject obj2   = new MyObject();
 4   MyClass thread1 = new MyClass(obj1, "1");
 5   MyClass thread2 = new MyClass(obj2, "2");
@@ -241,7 +241,7 @@ A common use case for locks is when a resource is accessed from multiple places,
 3       private int balance = 100;
 4   
 5       public LockedATM() {
-6           lock = new Reentrantlock();
+6           lock = new ReentrantLock();
 7       }
 8   
 9       public int withdraw(int value) {
@@ -374,13 +374,13 @@ SOLUTION
 
 ---
 
-First, let's implement a simple simulation of the dining philosophers problem in which we don't concern ourselves with deadlocks. We can implement this solution by having Philosopher extend Thread, and Chopstick call lock.lock() when it is picked up and lock.unlock() when it is put down.
+First, let's implement a simple simulation of the dining philosophers problem in which we don't concern ourselves with deadlocks. We can implement this solution by having Philosopher extend Thread, and Chopstick call `lock.lock()` when it is picked up and `lock.unlock()` when it is put down.
 ```java
 1   class Chopstick {
 2       private Lock lock;
 3   
 4       public Chopstick() {
-5           lock = new Reentrantlock();
+5           lock = new ReentrantLock();
 6       }
 7   
 8       public void pickUp() {
@@ -402,13 +402,13 @@ First, let's implement a simple simulation of the dining philosophers problem in
 24      }
 25  
 26      public void eat() {
-27          pickup();
+27          pickUp();
 28          chew();
 29          putDown();
 30      }
 31  
 32      public void pickUp() {
-33          left.pickup();
+33          left.pickUp();
 34          right.pickUp();
 35      }
 36  
@@ -438,11 +438,11 @@ To prevent deadlocks, we can implement a strategy where a philosopher will put d
 2       /* same as before */
 3   
 4       public boolean pickUp() {
-5           return lock.trylock();
+5           return lock.tryLock();
 6       }
 7   }
 8   
-9   public class Philosopher extends.Thread {
+9   public class Philosopher extends Thread {
 10      /* same as before */
 11  
 12      public void eat() {
@@ -454,10 +454,10 @@ To prevent deadlocks, we can implement a strategy where a philosopher will put d
 18  
 19      public boolean pickUp() {
 20          /* attempt to pick up */
-21          if (!left.pickup()) {
+21          if (!left.pickUp()) {
 22              return false;
 23          }
-24          if (!right.pickup()) {
+24          if (!right.pickUp()) {
 25              left.putDown();
 26              return false;
 27          }
@@ -490,14 +490,14 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Eac
 14      }
 15  
 16      public void eat() {
-17          pickup();
+17          pickUp();
 18          chew();
 19          putDown();
 20      }
 21  
 22      public void pickUp() {
-23          lower.pickup();
-24          higher.pickup();
+23          lower.pickUp();
+24          higher.pickUp();
 25      }
 26  
 27      public void chew() { ... }
@@ -519,11 +519,11 @@ Alternatively, we can label  the  chopsticks with a number from  0 to N - 1. Eac
 43      private int number;
 44  
 45      public Chopstick(int n) {
-46          lock = new Reentrantlock();
+46          lock = new ReentrantLock();
 47          this.number = n;
 48      }
 49  
-50      public void pickup() {
+50      public void pickUp() {
 51          lock.lock();
 52      }
 53  
@@ -571,9 +571,9 @@ We know that if a cycle was created, one of our new edges must be to blame. Thus
 The pseudocode for this special case cycle detection looks like this:
 ```
 1   boolean checkForCycle(locks[] locks)  {
-2       touchedNodes  = hash  table(lock  ->  boolean)
-3       initialize  touchedNodes  to false for each  lock  in locks
-4       for each  (lock x in  process.locks)  {
+2       touchedNodes = hash table(lock -> boolean)
+3       initialize touchedNodes to false for each lock in locks
+4       for each (lock x in process.locks)  {
 5           if (touchedNodes[x] == false) {
 6               if (hasCycle(x, touchedNodes)) {
 7                   return true;
@@ -583,12 +583,12 @@ The pseudocode for this special case cycle detection looks like this:
 11      return false;
 12  }
 13  
-14  boolean hasCycle(node x,  touchedNodes)  {
-15      touchedNodes[r]  =  true;
+14  boolean hasCycle(node x, touchedNodes)  {
+15      touchedNodes[r] = true;
 16      if (x.state == VISITING) {
 17          return true;
 18      } else if (x.state == FRESH)  {
-19          ... (see full code  below)
+19          ... (see full code below)
 20      }
 21  }
 ```
@@ -599,13 +599,13 @@ The code below provides further details. For simplicity, we assume that all lock
 1     class LockFactory {
 2         private static LockFactory instance;
 3     
-4         private int numberOfLocks = 5; /*default */
+4         private int numberOfLocks = 5; /* default */
 5         private LockNode[] locks;
 6         /* Maps from a process or owner to the order that the owner claimed it would
 7          * call the locks in */
 8         private HashMap<Integer, LinkedList<LockNode>> lockOrder;
 9     
-10        private LockFactory(int count) { ...}
+10        private LockFactory(int count) { ... }
 11        public static LockFactory getinstance() { return instance; }
 12    
 13        public static synchronized LockFactory initialize(int count) {
@@ -614,9 +614,9 @@ The code below provides further details. For simplicity, we assume that all lock
 16        }
 17    
 18        public boolean hasCycle(HashMap<Integer, Boolean> touchedNodes,
-19                                int[] resourcesinOrder) {
+19                                int[] resourcesInOrder) {
 20            /*check for a cycle*/
-21            for (int resource : resourcesinOrder) {
+21            for (int resource : resourcesInOrder) {
 22                if (touchedNodes.get(resource) == false) {
 23                    LockNode n = locks[resource];
 24                  if (n.hasCycle(touchedNodes)) {
@@ -630,24 +630,24 @@ The code below provides further details. For simplicity, we assume that all lock
 32      /* To prevent deadlocks, force the processes to declare upfront what order they
 33       * will need the locks in. Verify that this order does not create a deadlock (a
 34       * cycle in a directed graph) */
-35      public boolean declare(int ownerId, int[] resourcesinOrder) {
+35      public boolean declare(int ownerId, int[] resourcesInOrder) {
 36          HashMap<Integer, Boolean> touchedNodes = new HashMap<Integer, Boolean>();
 37  
 38          /*add nodes to graph*/
 39          int index = 1;
-40          touchedNodes.put(resourcesinOrder[0], false);
-41          for (index = 1; index < resourcesinOrder.length; index++) {
-42              LockNode prev = locks[resourcesinOrder[index - 1]];
-43              LockNode curr = locks[resourcesinOrder[index]];
+40          touchedNodes.put(resourcesInOrder[0], false);
+41          for (index = 1; index < resourcesInOrder.length; index++) {
+42              LockNode prev = locks[resourcesInOrder[index - 1]];
+43              LockNode curr = locks[resourcesInOrder[index]];
 44              prev.joinTo(curr);
-45              touchedNodes.put(resourcesinOrder[index], false);
+45              touchedNodes.put(resourcesInOrder[index], false);
 46          }
 47  
 48          /*if we created a cycle, destroy this resource list and return false*/
-49          if (hasCycle(touchedNodes, resourcesinOrder)) {
-50              for (int j = 1; j < resourcesinOrder.length; j++) {
-51                  LockNode p = locks[resourcesinOrder[j - 1]];
-52                  LockNode c = locks[resourcesinOrder[j]];
+49          if (hasCycle(touchedNodes, resourcesInOrder)) {
+50              for (int j = 1; j < resourcesInOrder.length; j++) {
+51                  LockNode p = locks[resourcesInOrder[j - 1]];
+52                  LockNode c = locks[resourcesInOrder[j]];
 53                  p.remove(c);
 54              }
 55              return false;
@@ -657,8 +657,8 @@ The code below provides further details. For simplicity, we assume that all lock
 59           * verify that the process is really calling the locks in the order it said
 60           * it would. */
 61          LinkedList<LockNode> list = new LinkedList<LockNode>();
-62            for (int i = 0; i < resourcesinOrder.length; i++) {
-63                LockNode resource = locks[resourcesinOrder[i]];
+62            for (int i = 0; i < resourcesInOrder.length; i++) {
+63                LockNode resource = locks[resourcesInOrder[i]];
 64                list.add(resource);
 65            }
 66            lockOrder.put(ownerId, list);
@@ -683,7 +683,7 @@ The code below provides further details. For simplicity, we assume that all lock
 85    
 86
 87  public class LockNode {
-88    public enum VisitState {FRESH, VISITING, VISITED};
+88    public enum VisitState { FRESH, VISITING, VISITED };
 89   
 90      private ArrayList<LockNode> children;
 91      private int lockId;
@@ -727,12 +727,12 @@ The code below provides further details. For simplicity, we assume that all lock
 129         return false;
 130     }
 131    
-132     public Lock getlock() {
-133         if (lock == null) lock = new Reentrantlock();
+132     public Lock getLock() {
+133         if (lock == null) lock = new ReentrantLock();
 134         return lock;
 135     }
 136 
-137     public int getld() { return lockId; }
+137     public int getId() { return lockId; }
 138 } 
 ```
 
@@ -760,12 +760,12 @@ What about using a lock to do something like the below code?
 ```java
 1   public class FooBad {
 2       public int pauseTime = 1000;
-3       public Reentrantlock lock1, lock2;
+3       public ReentrantLock lock1, lock2;
 4   
 5       public FooBad() {
 6           try {
-7               lock1 = new Reentrantlock();
-8               lock2 = new Reentrantlock();
+7               lock1 = new ReentrantLock();
+8               lock2 = new ReentrantLock();
 9   
 10              lock1.lock();
 11              lock2.lock();
@@ -860,7 +860,7 @@ In the second part, we're asked if  thread1 can execute synchronized method  A w
 Ultimately, the key concept to remember is that only one synchronized method can be in execution per instance of that object. Other threads can execute non-synchronized methods on that instance, or they can execute any method on a different instance of the object.
 
 
-**15.7  FizzBuzz:**  In the classic problem FizzBuzz, you are told to print the numbers from 1  to n. However, when the number is divisible by 3, print "Fizz". When it is divisible by 5, print "Buzz". When it is divisible by 3 and 5, print "FizzBuzz". In this problem, you are asked to do this in a multithreaded way. Implement a multithreaded version  of FizzBuzz with four threads. One thread checks for divisibility of 3 and prints "Fizz". Another thread is responsible for divisibility of 5 and prints "Buzz". A third thread is responsible for divisibility of 3 and 5 and prints "FizzBuzz".  A fourth thread does the numbers.
+**15.7  FizzBuzz:**  In the classic problem FizzBuzz, you are told to print the numbers from 1  to n. However, when the number is divisible by 3, print "Fizz". When it is divisible by 5, print "Buzz". When it is divisible by 3 and 5, print "FizzBuzz". In this problem, you are asked to do this in a multithreaded way. Implement a multithreaded version  of FizzBuzz with four threads. One thread checks for divisibility of 3 and prints "Fizz". Another thread is responsible for divisibility of 5 and prints "Buzz". A third thread is responsible for divisibility of 3 and 5 and prints "FizzBuzz". A fourth thread does the numbers.
 
 
 SOLUTION
@@ -1000,7 +1000,7 @@ Alternatively, if we're working in a language which supports this (Java 8 and ma
 14      private int max;
 15      private Predicate<Integer> validate;
 16      private Function<Integer, String> printer;
-17      int X = 1;
+17      int x = 1;
 18  
 19      public FBThread(Predicate<Integer> validate,
 20                      Function<Integer, String> printer, int max) {

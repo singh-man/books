@@ -84,7 +84,7 @@ Remember that it's not up to you to just magically decide the use cases. This is
 
 Now that we have the vague use cases defined, we need to figure out what exactly this means. What does it mean for a website to be blocked? Should just the "illegal" page be blocked, or the entire website? Is the application supposed to "learn" what is bad content, or is it based on a white list or black list? If it's supposed to learn what inappropriate content is, what degree of false positives or false negatives is acceptable?
 
-#### Step 5: What are the stress conditions/ failure conditions?
+#### Step 5: What are the stress conditions / failure conditions?
 
 When the software fails-which it inevitably will-what should the failure look like? Clearly, the software failure shouldn't crash the computer. Instead, it's likely that the software should just permit a blocked site, or ban an allowable site. In the latter  case, you might want to discuss the possibility  of a selective override with a password from the parents.
 
@@ -143,7 +143,7 @@ A final type of question is explaining how you would debug or troubleshoot an ex
 
 Let's walk through this problem with an example: You're working on the Google Chrome team when you receive a bug report: Chrome crashes on launch. What would you do?
 
-Reinstalling the browser might solve this user's problem, but it wouldn't help the other users who might be experiencing the same issue.Your goal is to understand what's really happening, so that the developers can fix it.
+Reinstalling the browser might solve this user's problem, but it wouldn't help the other users who might be experiencing the same issue. Your goal is to understand what's really happening, so that the developers can fix it.
 
 
 #### Step  1: Understand the  Scenario
@@ -235,7 +235,7 @@ Additionally, we may be able to use tools to check for specific situations. For 
 These problems are as much about your brainstorming ability as they are about  your approach. Do you jump all over the place, shouting out random suggestions? Or do you approach it in a logical, structured manner? Hopefully, it's the latter.
 
 
-**11.3  Chess  Test:** We have the following method  used in a chess game: boolean canMoveTo(int x, int y).This method is part of the Piece class and returns whether or not the piece can move  to position (x, y). Explain how you would test this method. 
+**11.3  Chess  Test:** We have the following method  used in a chess game: boolean canMoveTo(int x, int y). This method is part of the Piece class and returns whether or not the piece can move  to position (x, y). Explain how you would test this method. 
 
 
 SOLUTION

@@ -70,7 +70,7 @@ The destructor cleans up upon object deletion and  is automatically called  when
 
 ```C
 1   ~Person() {
-2        delete obj;   //  free  any  memory   allocated  within  class 
+2        delete obj;  // free any memory allocated within class 
 3   }
 ```
 
@@ -111,7 +111,7 @@ If we want to ensure that the  Student's implementation of about Me is called, w
 13  } ;
 ```
 
-Another usage for virtual functions is when we can't (or don't want to) implement a method for the parent class. Imagine, for example, that we want Student and Teacher to inherit from Person so that we can implement a common method such as addCourse(string  s). Calling addCourse on Person, however, wouldn't make much sense since the implementation depends on whether the object is actually a Student or Teacher.
+Another usage for virtual functions is when we can't (or don't want to) implement a method for the parent class. Imagine, for example, that we want Student and Teacher to inherit from Person so that we can implement a common method such as `addCourse(string s)`. Calling addCourse on Person, however, wouldn't make much sense since the implementation depends on whether the object is actually a Student or Teacher.
 
 In this case, we might want addCourse to be a virtual function defined within Person, with the imple­mentation being left to the subclass.
 
@@ -146,12 +146,12 @@ In this case, we might want addCourse to be a virtual function defined within Pe
 28  }
 ```
 
-Note that by defining addCourse to be a "pure virtual function;· Person is now an abstract class and we cannot instantiate it.
+Note that by defining addCourse to be a "pure virtual function," Person is now an abstract class and we cannot instantiate it.
 
 
 ### Virtual Destructor
 
-The virtual function naturally introduces the concept of a "virtual destructor". Suppose we wanted to imple­ment a destructor method for Person and Student. A naive solution might look like this:
+The virtual function naturally introduces the concept of a "virtual destructor". Suppose we wanted to implement a destructor method for Person and Student. A naive solution might look like this:
 
 ```c++
 1   class Person {
@@ -189,7 +189,7 @@ To fix this, we simply define the destructor  for Person to be virtual.
 8   class Student : public Person {
 9   public:
 10      ~student() {
-11          cout << "Deleting a student." < < endl;
+11          cout << "Deleting a student." << endl;
 12      }
 13  } ;
 14  
@@ -201,8 +201,8 @@ To fix this, we simply define the destructor  for Person to be virtual.
 
 This will output the following: 
 ```
-Deleting  a student.
-Deleting  a person.
+Deleting a student.
+Deleting a person.
 ```
 
 ### Default Values
@@ -224,7 +224,7 @@ Functions can specify default values, as shown below. Note that all default para
 
 Operator overloading enables us to apply operators like + to objects that would otherwise not support these operations. For example, if we wanted to merge two BookShelves into one, we could overload the + operator as follows.
 
-    1      Bookshelf  BookShelf::operator+(BookShelf  &other)  {  ... }
+    1    Bookshelf BookShelf::operator+(BookShelf  &other)  { ... }
 
 
 ### Pointers and References
@@ -349,7 +349,7 @@ step  4 (insert i):  array  {g,  h,  i,  d,  e, f}. p = 3
 The code below implements this algorithm.
  
 ```c++
-1   void printlast10Lines(char* fileName) {
+1   void printLast10Lines(char* fileName) {
 2       const int K = 10;
 3       ifstream file (fileName);
 4       string L[K];
@@ -679,7 +679,7 @@ We know we need constructors and a single destructor for this class, so let's ad
 ```
 There's one additional way that reference scan be created: by setting one SmartPointer equal to another. We'll want to override the equal operator to handle this, but for now, let's sketch the code like this.
 ```c++
-1   onSetEquals(SmartPoint<T> ptrl, SmartPoint<T> ptr2) {
+1   onSetEquals(SmartPoint<T> ptr1, SmartPoint<T> ptr2) {
 2      /* If ptrl has an existing value, decrement its reference count. Then, copy the
 3       * pointers to obj and ref_count over. Finally, since we created a new
 4       * reference, we need to increment ref_count. */
@@ -782,14 +782,14 @@ Therefore, to guarantee both an aligned address and space for this pointer, we w
 
 The code below implements this approach.
 ```c++
-1   void* aligned_malloc(size_t required_bytes, size t alignment) {
+1   void* aligned_malloc(size_t required_bytes, size_t alignment) {
 2       void* p1; // initial block
 3       void* p2; // aligned block inside initial block
 4       int offset = alignment - 1 + sizeof(void*);
 5       if ((p1 = (void*)malloc(required_bytes + offset)) NULL) {
 6           return NULL;
 7       }
-8       p2 = (void*)(((size_t)(p1) + offset) & = (alignment - 1));
+8       p2 = (void*)(((size_t)(p1) + offset) & ~(alignment - 1));
 9       ((void **)p2)[-1] = p1;
 10      return p2;
 11  }
@@ -806,7 +806,7 @@ Let's look at the pointer arithmetic in lines 9 and 15.  If we treat p2 as a voi
 In aligned_free, we take p2 as the same p2 returned  from aligned_malloc. As before, we know that the value of p1 (which points to the beginning of the full memory block) was stored just before p2. By freeing pl, we deallocate the whole memory block.
 
 
-**12.11 2D Alloc:**  Write a function in C  called my2DA1loc which allocates a two-dimensional  array. Minimize the number  of calls to malloc and make sure that  the memory is accessible by the notation arr[i][j].
+**12.11 2D Alloc:**  Write a function in C  called my2DAlloc which allocates a two-dimensional array. Minimize the number of calls to malloc and make sure that the memory is accessible by the notation arr[i][j].
 
 SOLUTION
 

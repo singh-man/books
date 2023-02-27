@@ -170,7 +170,7 @@ Further detail on these keywords and methods is provided below.
 
 The final statement has a different meaning depending on its context.
 
-- When  applied to a variable (primitive):The value  of the  variable cannot change.
+- When  applied to a variable (primitive): The value  of the  variable cannot change.
 - When  applied to a variable (reference): The reference variable cannot point to any other object on the heap.
 - When  applied to a method: The method cannot be overridden.
 - When  applied to a class: The class cannot be subclassed.
@@ -231,7 +231,7 @@ Look carefully  at lines 3 to 5 in the  output. The catch block is fully execute
 
 **finalize()**
 
-The automatic garbage collector calls the finalize() method just before actually destroying the  object. A class can therefore override the  finalize() method from the  Object class in order to define custom behavior during garbage collection.
+The automatic garbage collector calls the `finalize()` method just before actually destroying the  object. A class can therefore override the  `finalize()` method from the  Object class in order to define custom behavior during garbage collection.
 ```java
 1   protected void finalize() throws Throwable {
 2        /* Close open files, release resources, etc */
@@ -336,7 +336,7 @@ Imagine you passed an empty TreeMap, HashMap, and LinkedHashMap into the followi
 The output for each will look like the results below.
 
 | HashMap        | LinkedHashMap | TreeMap    |
-| --             | --            | --         |
+| :--:           | :--:          | :--:       |
 | (any ordering) | {1, -1, 0}    | {-1, 0, 1} |
 
 
