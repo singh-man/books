@@ -47,7 +47,7 @@ Make a list here as well of the major features or use cases. For example, for Ti
 
 It's okay to make some assumptions  (when necessary), but they should be reasonable. For example, it would not be reasonable to assume that your system only needs to process 100 users per day, or to assume that you have infinite memory available.
 
-However, it might be reasonable to design for a max of one million new URLs per day. Making this assump­tion can help you calculate how much data your system might need to store.
+However, it might be reasonable to design for a max of one million new URLs per day. Making this assumption can help you calculate how much data your system might need to store.
 
 Some assumptions might take some "product sense" (which is not a bad thing). For example, is it okay for the data to be stale by a max of ten minutes? That all depends. If it takes 10 minutes for a just-entered URL to work, that's a deal-breaking issue. People usually want these URLs to be active immediately. However, if the statistics are ten minutes out of date, that might be okay. Talk to your interviewer about these sorts of assumptions.
 
@@ -62,7 +62,7 @@ It may help here to ignore major scalability challenges and just pretend that th
 
 **Step  4: Identify  the  Key Issues**
 
-Once you have a basic design in mind, focus on the key issues. What will be the bottlenecks or major chal­lenges in the system?
+Once you have a basic design in mind, focus on the key issues. What will be the bottlenecks or major challenges in the system?
 
 For example, if you were designing TinyURL, one situation you might consider is that while some URLs will be infrequently accessed, others can suddenly peak. This might happen if a URL is posted  on Reddit or another popular forum. You don't necessarily want to constantly hit the database.
 
@@ -117,7 +117,7 @@ While system design questions aren't really tests of what you know, certain conc
 
 A system can be scaled one of two ways.
 
-- Vertical scaling means increasing the resources of a specific node. For example, you might add addi­tional memory to a server to improve its ability to handle load changes.
+- Vertical scaling means increasing the resources of a specific node. For example, you might add additional memory to a server to improve its ability to handle load changes.
 - Horizontal scaling means increasing the number of nodes. For example, you might add additional servers, thus decreasing the load on any one server.
 
 Vertical scaling is generally easier than horizontal scaling, but it's limited. You can only add so much memory or disk space.
@@ -177,10 +177,10 @@ Some of the most important metrics around networking include:
 
 Imagine you have a conveyor belt that transfers items across a factory. Latency is the time it takes an item to go from one side to another. Throughput is the number of items that roll off the conveyor belt per second.
 
-- Building a fatter conveyor belt will not change latency.  It will, however,  change throughput and band­width. You can get more items on the belt, thus transferring more in a given unit of time.
+- Building a fatter conveyor belt will not change latency.  It will, however,  change throughput and bandwidth. You can get more items on the belt, thus transferring more in a given unit of time.
 - Shortening the belt will decrease latency, since items spend less time in transit. It won't change the throughput or bandwidth. The same number of items will roll off the belt per unit of time.
 - Making a faster conveyor belt will change all three. The time it takes an item to travel across the factory decreases. More items will also roll off the conveyor belt per unit of time.
-- Bandwidth is the number of items that can be transferred per unit of time, in the best possible condi­tions. Throughput is the time it really takes, when the machines perhaps aren't operating smoothly.
+- Bandwidth is the number of items that can be transferred per unit of time, in the best possible conditions. Throughput is the time it really takes, when the machines perhaps aren't operating smoothly.
 
 Latency can be easy to disregard, but it can be very important in particular situations. For example,  if you're playing certain online games, latency can be a very big deal. How can you play a typical online sports game (like a two-player football game) if you aren't notified very quickly of your opponent's movement? Additionally, unlike throughput where at least you have the option of speeding things up through data compression, there is often little you can do about latency.
 
@@ -204,7 +204,7 @@ For more information, see "MapReduce" on page 642.
 In addition to the earlier concepts to learn, you should consider the following issues when designing a system.
 
 - **Failures:** Essentially any part of a system can fail. You'll need to plan for many or all of these failures.
-- **Availability and Reliability:** Availability is a function of the percentage of time the system is opera­tional. Reliability is a function of the probability that the system is operational for a certain unit of time.
+- **Availability and Reliability:** Availability is a function of the percentage of time the system is operational. Reliability is a function of the probability that the system is operational for a certain unit of time.
 - **Read-heavy vs. Write-heavy:** Whether an application will do a lot of reads or a lot of writes impacts the design. If it's write-heavy, you could consider queuing up the writes (but think about potential failure here!). If it's read-heavy, you might want to cache. Other design decisions could change as well.
 - **Security:** Security threats can, of course, be devastating for a system. Think about the types of issues a system might face and design around those.
 
@@ -375,7 +375,7 @@ A good way to approach this problem is to remove some of the constraints and sol
 
 First, let's forget  that we're dealing with millions of users. Design this for the simple case.
 
-We can construct a graph by treating each person as a node and letting an edge between two nodes indi­cate that the two users are friends.
+We can construct a graph by treating each person as a node and letting an edge between two nodes indicate that the two users are friends.
 
 If I wanted to find the path between two people, I could start with one person and do a simple breadth-first search.
 
@@ -649,7 +649,7 @@ In the second pass, we would essentially implement the simple solution we came u
 
 **Solution #2: Multiple  Machines**
 
-The other solution is to perform essentially the same procedure, but to use multiple machines. In this solu­tion, rather than storing the data in file \<x>.txt, we would send the URL to machine x. 
+The other solution is to perform essentially the same procedure, but to use multiple machines. In this solution, rather than storing the data in file \<x>.txt, we would send the URL to machine x. 
 
 Using multiple machines has pros and cons.
 
@@ -692,7 +692,7 @@ In addition, we must also handle updating  or clearing the cache when the result
 
 A good way to approach this problem is to start by designing it for a single machine. So, how would you create a data structure that enables you to easily purge old data and also efficiently look up a value based on a key?
 
-- A linked list would allow easy purging of old data, by moving "fresh" items to the front. We could imple­ment it to remove the last element of the linked list when the list exceeds a certain size.
+- A linked list would allow easy purging of old data, by moving "fresh" items to the front. We could implement it to remove the last element of the linked list when the list exceeds a certain size.
 - A hash table allows efficient lookups of data, but it wouldn't ordinarily allow easy data purging. 
 
 How can we get the best of both worlds? By merging the two data structures. Here's how this works:
@@ -803,7 +803,7 @@ A good way to handle Situation #3 (and likely something we'd want to do anyway) 
 
 **Step 4: Further Enhancements**
 
-There are a number of improvements and tweaks you could make to this design depending on the assump­tions you make and the situations you optimize for.
+There are a number of improvements and tweaks you could make to this design depending on the assumptions you make and the situations you optimize for.
 
 One such optimization is to better support the situation where some queries are very popular.  For example, suppose (as an extreme example) a particular string constitutes 1 % of all queries. Rather than machine i forwarding the request to machine j every time, machine i could forward the request just once to j, and then i could store the results in its own cache as well.
 
@@ -1108,7 +1108,7 @@ We could also just recompute the budget from scratch. The budget analyzer is fai
 - How would this change if you also needed to support a mobile app?
 - How would you design the component  which assigns items to each category? 
 - How would you design the recommended  budgets feature?
-- How would you. change this if the user could develop rules to categorize all transactions from a partic­ular seller differently than the default?
+- How would you. change this if the user could develop rules to categorize all transactions from a particular seller differently than the default?
 
 
 **9.8       Pastebin:** Design a system like Pastebin, where a user can enter a piece of text and get a randomly generated URL for public access. 

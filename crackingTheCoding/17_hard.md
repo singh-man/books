@@ -115,7 +115,7 @@ SOLUTION
 
 ---
 
-Like the  prior problem which was similar, (problem 17.2 on page 531), we can  look at this problem recur­sively using the  Base Case and Build approach.
+Like the  prior problem which was similar, (problem 17.2 on page 531), we can  look at this problem recursively using the  Base Case and Build approach.
 
 Suppose we have an algorithm that can pull a random set of m elements from an array of size n - 1. How can we use this algorithm to pull a random set of m elements from  an array of size n?
 
@@ -162,7 +162,7 @@ This is even cleaner to  write  iteratively. In this  approach, we  initialize  
 Both solutions are, not surprisingly, very similar to the algorithm to shuffle an array.
 
 
-**17.4    Missing  Number:** An array A contains all the integers from O to n, except for one number which is missing. In this problem, we cannot access an entire integer in A with a single operation. The elements of A are represented in binary, and the only operation we can use to access them is "fetch the jth bit of A[i]," which takes constant time. Write code to find the missing integer. Can you do it in O(n) time?
+**17.4    Missing  Number:** An array A contains all the integers from 0 to n, except for one number which is missing. In this problem, we cannot access an entire integer in A with a single operation. The elements of A are represented in binary, and the only operation we can use to access them is "fetch the jth bit of A[i]," which takes constant time. Write code to find the missing integer. Can you do it in O(n) time?
 
 SOLUTION
 
@@ -170,7 +170,7 @@ SOLUTION
 
 You may have seen a very similar sounding  problem: Given a list of numbers from 0 to n, with exactly one number removed, find the missing number. This problem can be solved by simply adding the list of numbers and comparing it to the actual sum of 0 through n, which is n(n+1)/2. The difference will be the missing number.
 
-We could solve this by computing the value of each number, based on its binary representation, and calcu­lating the sum.
+We could solve this by computing the value of each number, based on its binary representation, and calculating the sum.
 
 The runtime of this solution is n * length(n), when length is the number of bits in n. Note that length(n) = log₂(n). So, the runtime is actually O(n log(n)).  Not quite good enough!
 
@@ -328,7 +328,7 @@ We can make one small optimization to this. We can start with the longest subarr
 16  boolean hasEqualLettersNumbers(char[] array, int start, int end) {
 17      int counter = 0;
 18      for (int i = start; i <= end; i++) {
-19          if (Character.isletter(array[i])) {
+19          if (Character.isLetter(array[i])) {
 20              counter++;
 21          } else if (Character.isDigit(array[i])) {
 22              counter--;
@@ -404,7 +404,7 @@ To do so, we use a hash table to store the first time we see a particular differ
 16      int[] deltas = new int[array.length];
 17      int delta = 0;
 18      for (int i = 0; i < array.length; i++) {
-19          if (Character.isletter(array[i])) {
+19          if (Character.isLetter(array[i])) {
 20              delta++;
 21          } else if (Character.isDigit(array[i])) {
 22              delta--;
@@ -815,7 +815,7 @@ SOLUTION
 
 When we cut out all the "fluff" to this problem, we can understand that the problem is really the following.
 
-*We have a list ofpairs ofitems. Find the longest sequence such that both the first and second items are in non­-decreasing order.*
+*We have a list ofpairs ofitems. Find the longest sequence such that both the first and second items are in non-decreasing order.*
 
 One thing we might first try is sorting the items on an attribute. This is useful actually, but it won't get us all the way there.
 
@@ -828,10 +828,10 @@ One approach is to essentially try all possibilities. After sorting by height, w
 ```java
 1   ArrayList<Htwt> longestIncreasingSeq(ArrayList<Htwt> items) {
 2       Collections.sort(items);
-3       return bestSeqAtindex(items, new ArrayList<Htwt>(), 0);
+3       return bestSeqAtIndex(items, new ArrayList<Htwt>(), 0);
 4   }
 5   
-6   ArrayList<Htwt> bestSeqAtindex(ArrayList<Htwt> array, ArrayList<Htwt> sequence,
+6   ArrayList<Htwt> bestSeqAtIndex(ArrayList<Htwt> array, ArrayList<Htwt> sequence,
 7       int index) {
 8       if (index >= array.size()) return sequence;
 9   
@@ -1002,7 +1002,7 @@ We know that biggest this kth number could be is 3ᵏ * 5ᵏ * 7ᵏ. So, the "st
 
 What is the runtime of this approach? We have nested for loops, each of which runs for k iterations. The runtime of the allPossibleKFactors is O(k³). Then, we sort the k³ results in O(k³ log (k³)) time (which is equivalent  to O(k³ log k). This gives us a runtime of O(k³ log k).
 
-There are a number of optimizations you could make to this (and better ways of handling the integer over­flow), but honestly this algorithm is fairly slow. We should instead focus on reworking the algorithm.
+There are a number of optimizations you could make to this (and better ways of handling the integer overflow), but honestly this algorithm is fairly slow. We should instead focus on reworking the algorithm.
 
 
 **Improved**
@@ -1126,26 +1126,26 @@ Let's walk through this with an example to make it really clear.
         Q3 = 3*3
         Q5 = 5, 5*3
         Q7 = 7, 7*3
-    remove min =  5. 3*5 is a  dup,  since we already  did  5*3.  insert 5*5 into Q5, 7*5
+    remove min =  5. 3*5 is a  dup,  since we already  did  5*3. insert 5*5 into Q5, 7*5
     into Q7.
         Q3 = 3 * 3
         Q5 = 5*3, 5*5
         Q7 = 7, 7*3, 7*5
-    remove min =  7. 3*7 and  5*7 are  dups, since we already  did  7*3 and  7*5.  insert 7*7
+    remove min =  7. 3*7 and  5*7 are  dups, since we already did 7*3 and 7*5. insert 7*7
     into Q7.
         Q3 = 3*3
         Q5 = 5*3, 5*5
         Q7 = 7*3, 7*5, 7*7
-    remove min =  3*3 =  9. insert 3*3*3 in Q3,  3*3*5 into Q5, 3*3*7 into Q7.
+    remove min =  3*3 =  9. insert 3*3*3 in Q3, 3*3*5 into Q5, 3*3*7 into Q7.
         Q3 = 3*3*3
         Q5 = 5*3, 5*5, 5*3*3
         Q7 = 7*3, 7*5, 7*7, 7*3*3
-    remove min =  5*3  =  15.  3*(5*3) is a  dup,  since we already  did  5*(3*3). insert
+    remove min =  5*3  =  15.  3*(5*3) is a  dup, since we already  did  5*(3*3). insert
     5*5*3 in Q5,  7*5*3 into Q7.
         Q3 = 3*3*3
         Q5 = 5*5, 5*3*3, 5*5*3
         Q7 = 7*3, 7*5, 7*7, 7*3*3, 7*5*3
-    remove min =  7*3  =  21.  3*(7*3) and  5*(7*3) are  dups, since we already  did  7*(3*3)
+    remove min =  7*3  =  21.  3*(7*3) and  5*(7*3) are dups, since we already did 7*(3*3)
     and  7*(5*3). insert  7*7*3 into Q7.
         Q3 = 3*3*3
         Q5 = 5*5, 5*3*3, 5*5*3
@@ -1193,7 +1193,7 @@ The code below implements this algorithm.
 24          }  else if (val == v7) { // enqueue into Q7
 25              queue7.remove();
 26          }
-27          queue7.add(7 * val);// Always enqueue into Q7
+27          queue7.add(7 * val); // Always enqueue into Q7
 28      }
 29      return val;
 30  }
@@ -1220,7 +1220,7 @@ Let's start off with an example:
 
     3 1 7 1 3 7 3 7 1 7 7
 
-One thing we can notice here is that if the majority element (in this case 7) appears less often in the begin­ning, it must appear much more often toward the end. That's a good observation to make.
+One thing we can notice here is that if the majority element (in this case 7) appears less often in the beginning, it must appear much more often toward the end. That's a good observation to make.
 
 This interview question specifically requires us to do this in O(N) time and O(1) space. Nonetheless, sometimes it can be useful to relax one of those requirements and develop an algorithm. Let's try relaxing the time requirement but staying firm on the O(1) space requirement.
 
@@ -1314,24 +1314,24 @@ Let's try this again and see if it works out.
         TERMINATE.   3 is not   majority thus   far. 
     skip 1
     validate(7)
-        sees 7  ->  countYes  = 1,    countNo  =  0 
-        sees 1  ->  countYes  = 1,    countNo  =  1
+        sees 7  ->  countYes  =  1,   countNo  =  0 
+        sees 1  ->  countYes  =  1,   countNo  =  1
         TERMINATE.   7 is not   majority thus   far.
     skip 1 
     validate(1)
-        sees 1  ->  countYes  =  1,   countNo  = 0
-        sees 7  ->  countYes  =  1,   countNo  = 1
+        sees 1  ->  countYes  =  1,   countNo  =  0
+        sees 7  ->  countYes  =  1,   countNo  =  1
         TERMINATE.   1  is not   majority thus   far.
     skip 7 
     validate(7)
-        sees 7  ->  countYes  =  1,   countNo  = 0
-        sees 3  ->  countYes  =  1,   countNo  = 1
+        sees 7  ->  countYes  =  1,   countNo  =  0
+        sees 3  ->  countYes  =  1,   countNo  =  1
         TERMINATE.   7 is not   majority thus   far. 
     skip 3
     validate(7)
-        sees 7  ->  countYes  =  1,   countNo  = 0
-        sees 7  ->  countYes  =  2,   countNo  = 0
-        sees 7  ->  countYes  =  3,   countNo  = 0
+        sees 7  ->  countYes  =  1,   countNo  =  0
+        sees 7  ->  countYes  =  2,   countNo  =  0
+        sees 7  ->  countYes  =  3,   countNo  =  0
 
 Good! We got the right answer. But did we just get lucky?
 
@@ -1393,7 +1393,7 @@ SOLUTION
 
 ---
 
-We will assume for this question that it doesn't matter whether word1 or word2 appears first. This is a ques­tion you should ask your interviewer.
+We will assume for this question that it doesn't matter whether word1 or word2 appears first. This is a question you should ask your interviewer.
 
 To solve  this  problem, we  can  traverse the  file just  once.  We remember throughout our  traversal where we've  last  seen word1 and word2, storing the locations in location1 and  location2. If the current locations are better than our best known location, we update the best locations.
 
@@ -1451,7 +1451,7 @@ If we need to repeat the operation for other pairs of words, we can create a has
 Consider the following lists of locations. 
 
     listA:  {l,  2,  9,   15,  25}
-    listB:  {4,   10,   19}
+    listB:  {4,  10,  19}
 
 Picture pointers pA and pB that point to the beginning of each list. Our goal is to make pA and pB point to values as close together as possible.
 
@@ -1628,7 +1628,7 @@ Instead of returning the head and tail of the linked list with NodePair, we can 
 23      return node;
 24  }
 ```
-Other than a call to getTail, this code is almost identical to the first solution.  It is not, however, very effi­cient. A leaf node at depth d will be "touched" by the getTail method d times (one for each node above it), leading to an O(N²) overall runtime, where N is the number of nodes in the tree.
+Other than a call to getTail, this code is almost identical to the first solution.  It is not, however, very efficient. A leaf node at depth d will be "touched" by the getTail method d times (one for each node above it), leading to an O(N²) overall runtime, where N is the number of nodes in the tree.
 
 
 **Solution #3: Building a Circular Linked List**
@@ -1690,7 +1690,7 @@ The approach takes O(N) time, since each node is only touched an average of once
 ```
 EXAMPLE
 Input  jesslookedjustliketimherbrother
-Output: **jess** looked  just like **tim**  her  brother (7 unrecognized characters)
+Output: **jess** looked just like **tim** her brother (7 unrecognized characters)
 ```
 
 SOLUTION
@@ -1705,7 +1705,7 @@ Note that we do not attempt to "understand" the string. We could just as well pa
 
 **Brute Force**
 
-The key to this problem is finding a way to define the solution (that is, parsed string) in terms of its sub prob­lems. One way to do this is recursing through the string.
+The key to this problem is finding a way to define the solution (that is, parsed string) in terms of its sub problems. One way to do this is recursing through the string.
 
 The very first choice we make is where to insert the first space. After the first character? Second character? Third character?
 
@@ -2034,7 +2034,7 @@ The code below implements this algorithm.
 60      /* Get random integer within range, inclusive. */
 61      int randomIntInRange(int min, int max) {
 62          Random rand = new Random();
-63          return rand.nextint(max + 1 - min) + min;
+63          return rand.nextInt(max + 1 - min) + min;
 64      }
 65  
 66      /* Swap values at index i and j. */
@@ -2292,7 +2292,7 @@ The runtime of this solution  is O(2ⁿ) because at each element we're making tw
 
 The space complexity is O(n)  due to the recursive call stack.
 
-We can also depict this through a recursive call tree on an array of length 5. The number in each node repre­sents the index value in a call to maxMinutes. Observe that, for example, maxMinutes(massages, 0) calls maxMinutes(massages, 1) and maxMinutes(massages, 2).
+We can also depict this through a recursive call tree on an array of length 5. The number in each node represents the index value in a call to maxMinutes. Observe that, for example, maxMinutes(massages, 0) calls maxMinutes(massages, 1) and maxMinutes(massages, 2).
 
 
 ![](media/17_16_1.JPG)
@@ -2788,7 +2788,7 @@ Let's think about how we can optimize this. The core reason why it's slow is the
 
 Let's think about it with an example. Given the  array below,  is there a way we could  quickly find the  next  5 from each location?
 
-    7,   5,  9,   0,   2,   1,   3,   s,  7,   9,   1,   1,   5,  8,   8,   9,   7
+    7,  5,  9,  0,  2,  1,  3,  s,  7,  9,  1,  1,  5,  8,  8,  9,  7
 
 Yes. Because we're going to have to do this repeatedly, we can precompute this information in just a single (backwards) sweep. Iterate through the  array backwards, tracking the  last (most recent) occurrence of 5.
 
@@ -2818,7 +2818,7 @@ Now, all we have to do is to find the minimum distance in this table.
 6
 7   /* Create table of next occurrences. */
 8   int[][] getNextElementsMulti(int[] big, int[] small) {
-9       int[][] nextElements = newint[ small.length][big.length];
+9       int[][] nextElements = new int[small.length][big.length];
 10      for (int i = 0; i < small.length; i++) {
 11          nextElements[i] = getNextElement(big, small[i]);
 12      }
@@ -2977,7 +2977,7 @@ We can continue down this path each time, repeating this process. We will end up
 2. Remove the minimum head.
 3. Repeat.
 
-This will give us an O(SB) time complexity. This is because for each of B elements, we are doing a compar­ison to the S other list heads to find the minimum.
+This will give us an O(SB) time complexity. This is because for each of B elements, we are doing a comparison to the S other list heads to find the minimum.
 
 This is pretty good, but let's see if we can make that minimum computation faster.
 
@@ -3141,7 +3141,7 @@ Unfortunately, knowing the sum isn't enough. If, for example, the sum is 10, tha
 
 We're again at the same point we were in the first part of the problem. We need a calculation that can be applied such that the result is unique across all potential pairs of missing numbers.
 
-Perhaps there is such a calculation (the prime one would work, but it's not constant time), but your inter­viewer probably doesn't expect you to know such math.
+Perhaps there is such a calculation (the prime one would work, but it's not constant time), but your interviewer probably doesn't expect you to know such math.
 
 What else can we do? Let's go back to what we can do. We can get x  +  y and we can also get x * y. Each result leaves us with a number  of possibilities. But using both  of them narrows it down to the specific numbers. 
 
@@ -3228,9 +3228,9 @@ If this doesn't immediately make sense to you, remember that x and y are interch
 
 Still not convinced? Okay, we can do some math. Let's say we took the alternate value for x: [-b  - sqrt(b² - 4ac)] / 2a. What's y?
 ```
-    X  +  y  = r1
-          y  = r1  -  X
-             = r1  - [-b - sqrt(b² - 4ac)]/2a
+    X  +  y  = r₁
+          y  = r₁  -  X
+             = r₁  - [-b - sqrt(b² - 4ac)]/2a
              = [2a*r₁ + b + sqrt(b² - 4ac)]/2a 
 ```
 Partially plug in values for a and b, but keep the rest of the equation as-is:
@@ -3313,11 +3313,11 @@ The algorithm works as follows. When a new value arrives, it is placed in the ma
 ```
 EXAMPLE
 Input: {0, 0, 4, 0, 0, 6, 0, 0, 3, 0, 5, 0, 1, 0, 0, 0} 
-  (Black bars are the  histogram. Gray   is water.)
+  (Black bars are the histogram. Gray is water.)
 ```
 ![](media/17_21_1.JPG)
  
-    Output:26
+    Output: 26
 
 SOLUTION
 
@@ -3584,8 +3584,8 @@ Yes, this really is the entire code! It is still O(N) time, but it's a lot simpl
 **17.22  Word  Transformer:** Given two words of equal length that are in a dictionary, write a method  to transform one word into another word by changing only one letter at a time. The new word you get in each step must be in the dictionary.
 ```
 EXAMPLE
-Input: DAMP,   LIKE
-Output:  DAMP-> LAMP->  LIMP-> LIME-> LIKE
+Input: DAMP,  LIKE
+Output: DAMP -> LAMP -> LIMP -> LIME -> LIKE
 ```
 
 SOLUTION
@@ -3982,8 +3982,8 @@ If we analyze what isSquare does,  we  realize  that all it ever  needs to know 
 We iterate from right to left, bottom to top. At each cell, we do the following computation:
 
     if A[r][c] is white, zeros right and   zeros  below are  0 
-    else A[r][c].zerosRight = A[r][c + 1].zerosRight +  1
-         A[r][c].zerosBelow = A[r + 1][c].zerosBelow +  1
+    else A[r][c].zerosRight = A[r][c + 1].zerosRight + 1
+         A[r][c].zerosBelow = A[r + 1][c].zerosBelow + 1
 
 Below is an example of these values for a potential matrix.
 
@@ -4130,15 +4130,15 @@ Consider the following rectangle:
 Suppose we knew the following values: 
 
     ValD = area(point(0, 0) -> point(x2, y2))
-    ValC = area(point(0, 0) -> point(x2, yl))
-    ValB = area(point(0, 0) -> point(xl, y2))
-    ValA = area(point(0, 0) -> point(xl, yl))
+    ValC = area(point(0, 0) -> point(x2, y1))
+    ValB = area(point(0, 0) -> point(x1, y2))
+    ValA = area(point(0, 0) -> point(x1, y1))
 
 Each Val* starts at the origin and ends at the bottom right corner of a subrectangle.
 
 With these values, we know the following:
 
-    area(D) =  ValD -  area(A   union  C) - area(A   union  B) + area(A). 
+    area(D)  =  ValD -  area(A  union  C) - area(A  union  B) + area(A). 
 
 Or, written another way:
 
@@ -4146,7 +4146,7 @@ Or, written another way:
 
 We can efficiently compute these values for all points in the matrix by using similar logic:
 
-    Val(x,  y)  = Val(x-1,  y)  + Val(y-1,   x)  -  Val(x-1,  y-1)   +  M[x][y]
+    Val(x,  y)  = Val(x-1,  y)  + Val(y-1, x)  -  Val(x-1,  y-1) +  M[x][y]
 
 We can precompute all such values and then efficiently find the maximum submatrix.
 
@@ -4186,7 +4186,7 @@ The following code implements this algorithm.
 32      return sumThrough;
 33  }
 34
-35  int sum(int[][] sumThrough, int rl, int cl, int r2, int c2) {
+35  int sum(int[][] sumThrough, int r1, int c1, int r2, int c2) {
 36      int topAndLeft = r1 > 0 && c1 > 0 ? sumThrough[r1 - 1][c1 - 1] 0;
 37      int left = c1 > 0 ? sumThrough[r2][c1 - 1] : 0;
 38      int top  = r1 > 0 ? sumThrough[r1 - 1][c2] : 0;
@@ -4211,7 +4211,7 @@ Every submatrix can be represented by a contiguous sequence of rows and a contig
 4       /* We have many possible submatrices with rowStart and rowEnd as the top and
 5        * bottom edges of the matrix. Find the colStart and colEnd edges that give
 6        * the highest sum. */
-7       maxSum = max(runningMaxSum, maxsum)
+7       maxSum = max(runningMaxSum, maxSum)
 8   return maxSum
 ```
 Now the question is, how do we efficiently find the "best" co1Start and colEnd? 
@@ -4237,7 +4237,7 @@ We now have pseudocode that looks like the following.
 ```
 The sum in lines 5 and 6 takes  R\*C time to compute  (since it iterates through rowStart through rowEnd), so this gives us a runtime of O(R³C). We're not quite done yet.
 
-In lines 5 and 6, we're basically adding up a[0] ... a[i] from scratch, even though in the previous itera­tion of the outer for loop, we already added up a[0]...a [i-1]. Let's cut out this duplicated effort.
+In lines 5 and 6, we're basically adding up a[0] ... a[i] from scratch, even though in the previous iteration of the outer for loop, we already added up a[0]...a [i-1]. Let's cut out this duplicated effort.
 ```
 1   maxSum  =  0
 2   foreach  rowStart  in  rows
@@ -4314,7 +4314,7 @@ SOLUTION
 
 ---
 
-Many problems involving a dictionary can be solved by doing some pre-processing. Where can we do pre­processing?
+Many problems involving a dictionary can be solved by doing some pre-processing. Where can we do preprocessing?
 
 Well, if we're going  to create a rectangle of words, we know that  each  row must be the same length and each column must be the same length. So let's group the words of the dictionary  based  on their sizes. Let's call this grouping D, where D[i] contains the list of words of length  i.
 
@@ -4329,7 +4329,7 @@ s       }
 ```
 By iterating from the biggest possible  rectangle to the smallest, we ensure  that the first valid rectangle we find will be the largest possible one.
 
-Now, for the hard part: makeRectangle(int l, int h).This method attempts to build a rectangle of words which has length  1 and height h.
+Now, for the hard part: makeRectangle(int l, int h). This method attempts to build a rectangle of words which has length  1 and height h.
 
 One way to do this is to iterate through all (ordered) sets of h words and then check if the columns are also valid words. This will work, but it's rather inefficient.
 
@@ -4538,9 +4538,9 @@ Print only the pairs with similarity greater than 0. Empty documents should not 
 EXAMPLE 
 
 Input:
-    13:   {14,   15,   100,   9,   3}
+    13:   {14,  15, 100,   9,   3}
     16:   {32,   1,   9,   3,   5}
-    19:   {15,   29,   2,   6,   8,   7}
+    19:   {15,  29,   2,   6,   8,   7}
     24:   {7,   10}
 Output: 
     ID1,  ID2 : SIMILARITY
@@ -4571,7 +4571,7 @@ To compute the union, we need to be sure that we don't double count elements tha
 
 Alternatively, we can think about it this way. If we did double count elements, it would mean that elements in the intersection (in both A and B) were counted twice. Therefore, the easy fix is to just remove these duplicate elements.
 
-    union(A, B) = A + B  -  intersection(A,  B)
+    union(A, B) = A + B - intersection(A, B)
 
 This means that all we really need to do is compute the intersection. We can derive the union, and therefore similarity, from that immediately.
 
@@ -4682,9 +4682,9 @@ We cannot necessarily assume that the second part "dominates" the first one, bec
 It is useful  to create a larger example to really understand the problem.
 
     13:  {14,  15,  100,  9,  3}
-    16:  {32,  1,   9,  3,  5}
-    19:  {15,  29,  2,  6,  8,  7}
-    24:  {7,  10,  3}
+    16:  {32,   1,    9,  3,  5}
+    19:  {15,  29,    2,  6,  8,  7}
+    24:  {7,   10,    3}
 
 At first, we might try various techniques that allow us to more quickly eliminate potential comparisons. For example, could we compute the min and max values in each array?  If we did that, then we'd know that arrays with no overlap in ranges don't need to be compared.
 
@@ -4729,7 +4729,7 @@ One way to tackle this is to analyze what information the hash table gives us. C
 
     12:  {1,  5,  9}
     13:  {5,  3,  1,  8}
-    14:  {4,   3,  2}
+    14:  {4,  3,  2}
     15:  {1,  5,  9,  8}
     17:  {1,  6}
 

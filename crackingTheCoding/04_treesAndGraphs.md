@@ -619,7 +619,7 @@ The only problem  is that it can't handle duplicate values in the tree properly.
  
 ![](media/04_1_1.JPG)
 
-However, if we assume that the tree cannot have duplicate values, then this approach works. The pseudo­code for this method looks something like:
+However, if we assume that the tree cannot have duplicate values, then this approach works. The pseudocode for this method looks something like:
 
 ```java
 1   int index = 0;
@@ -822,7 +822,7 @@ Visualizing the information as a graph probably works best. Be careful  with the
 
 In drawing this example (which is not the example from the problem description), I looked for a few things.
 
-- I wanted the nodes labeled somewhat randomly. If I had instead put a at the top, with b and c as chil­dren, then d and e, it could be misleading. The alphabetical order would match the compile order.
+- I wanted the nodes labeled somewhat randomly. If I had instead put a at the top, with b and c as children, then d and e, it could be misleading. The alphabetical order would match the compile order.
 - I wanted a graph with multiple parts/components, since a connected graph is a bit of a special case.
 - I wanted a graph where a node links to a node that cannot immediately follow it. For example,  f links to a but a cannot immediately follow it (since b and c must come before a and after f).
 - I wanted a larger graph since I need to figure out the pattern.
@@ -1060,7 +1060,7 @@ DFS(f)
 ```
 In an algorithm like this, we should think about the issue of cycles. There is no possible build order if there is a cycle. But still, we don't want to get stuck in an infinite loop just because there's no possible solution.
 
-A cycle will happen if, while doing a DFS on a node, we run back into the same path. What we need there­fore is a signal that indicates "I'm still processing this node, so if you see the node again, we have a problem."
+A cycle will happen if, while doing a DFS on a node, we run back into the same path. What we need therefore is a signal that indicates "I'm still processing this node, so if you see the node again, we have a problem."
 
 What we can do for this is to mark each node as a "partial" (or "is visiting") state just before we start the DFS on it. If we see any node whose state is partial, then we know we have a problem. When we're done with this node's DFS, we need to update the state.
 
@@ -1527,7 +1527,7 @@ We've chosen to implement it the latter way. Since we're keeping the same refere
 
 Some people struggle with this problem because there are two different recursive algorithms that must be designed and implemented. They get confused with how the algorithms should interact with each other and they try to juggle both in their heads.
 
-If this sounds like you, try this: trust and focus. Trust that one method does the right thing when imple­menting an independent method, and focus on the one thing that this independent method needs to do.
+If this sounds like you, try this: trust and focus. Trust that one method does the right thing when implementing an independent method, and focus on the one thing that this independent method needs to do.
 
 Look at weaveLists. It has a specific job: to weave two lists together and return a list of all possible weaves. The existence of allSequences is irrelevant. Focus on the task that weaveLists has to do and design this algorithm.
 

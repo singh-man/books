@@ -113,7 +113,7 @@ If we want to ensure that the  Student's implementation of about Me is called, w
 
 Another usage for virtual functions is when we can't (or don't want to) implement a method for the parent class. Imagine, for example, that we want Student and Teacher to inherit from Person so that we can implement a common method such as `addCourse(string s)`. Calling addCourse on Person, however, wouldn't make much sense since the implementation depends on whether the object is actually a Student or Teacher.
 
-In this case, we might want addCourse to be a virtual function defined within Person, with the imple­mentation being left to the subclass.
+In this case, we might want addCourse to be a virtual function defined within Person, with the implementation being left to the subclass.
 
 ```c++
 1   class Person {
@@ -174,7 +174,7 @@ The virtual function naturally introduces the concept of a "virtual destructor".
 18  }
 ```
 
-As in the earlier example, since p is a Person, the destructor for the Person class is called. This is problem­atic because the memory for Student may not be cleaned up.
+As in the earlier example, since p is a Person, the destructor for the Person class is called. This is problematic because the memory for Student may not be cleaned up.
 
 To fix this, we simply define the destructor  for Person to be virtual.
 
@@ -778,7 +778,7 @@ We've allocated an extra 15 bytes, in the above example, and we need to free the
 
 We can do this by storing, in this "extra" memory, the address of where the full memory block begins. We will store this immediately before the aligned memory block. Of course, this means that we now need to allocate even more extra memory to ensure that we have enough space to store this pointer.
 
-Therefore, to guarantee both an aligned address and space for this pointer, we will need to allocate an addi­tional alignment  -  1  +  sizeof(void\*) bytes.
+Therefore, to guarantee both an aligned address and space for this pointer, we will need to allocate an additional alignment  -  1  +  sizeof(void\*) bytes.
 
 The code below implements this approach.
 ```c++

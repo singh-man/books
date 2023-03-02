@@ -2,7 +2,7 @@
 ====================
 
 
-Hopefully, all readers of this book are familiar with arrays and strings, so we won't bore you with such details. Instead, we'll focus on some of the more common techniques and issues with these data struc­tures.
+Hopefully, all readers of this book are familiar with arrays and strings, so we won't bore you with such details. Instead, we'll focus on some of the more common techniques and issues with these data structures.
 
 Please note that array questions and string questions are often interchangeable. That is, a question that this book states using an array may be asked instead as a string question, and vice versa.
 
@@ -294,7 +294,7 @@ SOLUTION
 
 This is a question where it helps to figure out what it means for a string to be a permutation of a palindrome. This is like asking  what the "defining features" of such  a string would be.
 
-A palindrome is a string that is the same forwards and backwards. Therefore, to decide if a string is a permu­tation of a palindrome, we need to know if it can be written such that it's the same forwards and backwards.
+A palindrome is a string that is the same forwards and backwards. Therefore, to decide if a string is a permutation of a palindrome, we need to know if it can be written such that it's the same forwards and backwards.
 
 What does it take to be able to write a set of characters the same way forwards and backwards? We need to have an even number of almost all characters, so that half can be  on one side and  half can be on the other side. At most one character (the middle character) can have an odd  count.
 

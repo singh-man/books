@@ -144,7 +144,7 @@ Let's look at a Venn diagram to visualize two events A and B. The areas of the t
 
 #### Probability of A and  B
 
-Imagine you were throwing a dart at this Venn diagram. What is the probability that you would land in the intersection between A and B?  If you knew the odds of landing in A, and you also knew the percent of A that's also in B (that is, the odds of being in B given that you were in A), then you could express the prob­ability as:
+Imagine you were throwing a dart at this Venn diagram. What is the probability that you would land in the intersection between A and B?  If you knew the odds of landing in A, and you also knew the percent of A that's also in B (that is, the odds of being in B given that you were in A), then you could express the probability as:
 
     P(A and B)  =  P(B given A)  P(A)
 
@@ -428,7 +428,7 @@ If we just play with the jugs,  we'll find that we can pour water back and forth
 | 4       | 3       | Fill remainder of 3-quart with 5-quart  |
 | 4       |         | Done! We have  4 quarts.                |
 
-This question, like many puzzle questions, has a math/computer science root.  If the  two jug  sizes are rela­tively prime, you can measure any value between one  and the  sum of the jug  sizes.
+This question, like many puzzle questions, has a math/computer science root.  If the  two jug  sizes are relatively prime, you can measure any value between one  and the  sum of the jug  sizes.
 
 
 **6.6   Blue-Eyed Island:** A bunch of people are living on an island, when a visitor comes with a strange order: all blue-eyed people must leave the island as soon as possible. There will be a flight out at 8:00pm every evening. Each person can see everyone else's eye color, but they do not know their own (nor is anyone allowed to tell them). Additionally, they do not know how many people have blue eyes, although they do know that at least one person does. How many days will it take the blue-eyed people to leave?

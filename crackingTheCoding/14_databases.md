@@ -286,7 +286,7 @@ In some ways, this  is great; if a teacher changes his or her name, we only have
 
 The drawback, however, is that if the tables are large, we may spend an unnecessarily long time doing joins on tables.
 
-Denormalization, then, strikes  a different compromise. Under denormalization, we decide that we're  okay with  some redundancy and  some extra  effort  to update the  database in order to get  the  efficiency  advan­tages of fewer joins.
+Denormalization, then, strikes  a different compromise. Under denormalization, we decide that we're  okay with  some redundancy and  some extra  effort  to update the  database in order to get  the  efficiency  advantages of fewer joins.
 
 
 | Cons of Denomaralization                                                         | Pros of Denomaralization                                                                                                   |

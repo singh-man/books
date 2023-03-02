@@ -78,7 +78,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#63.    3.6     Think about how you'd do it in real life. You have a list of dogs in chronological order and a list of cats in chronological order. What data would you need to find the oldest animal? How would you maintain this data?
 - \#64.    3.3     You will need to keep track of the size of each substack. When one stack is full, you may need to create a new stack.
 - \#65.    2.7     Observe that two intersecting linked lists will always have the same last node. Once they intersect, all the nodes after that will be equal.
-- \#66.    4.9     The relationship between the left subtree values and the right subtree values is, essen­tially, anything. The left subtree values could be inserted before the right subtree, or the reverse (right values before left), or any other ordering.
+- \#66.    4.9     The relationship between the left subtree values and the right subtree values is, essentially, anything. The left subtree values could be inserted before the right subtree, or the reverse (right values before left), or any other ordering.
 - \#67.    2.2     You might find it useful to return multiple values. Some languages don't directly support this, but there are workarounds in essentially any language. What are some of those workarounds?
 - \#68.    4.12    To extend this to paths that start anywhere, we can just repeat this process for all nodes.
 - \#69.    2.8     To identify if there's a cycle, try the "runner" approach described on page 93. Have one pointer move faster than the other.
@@ -137,7 +137,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#122.   1.2     Could a hash table be useful?
 - \#123.   4.3     A hash table or array that maps from level number to nodes at that level might also be useful. 
 - \#124.   4.4     Actually, you can just have a single checkHeight function that does both the height computation  and the balance check. An integer return value can be used to indicate both.
-- \#125.   4.7     As a totally different approach: Consider doing a depth-first search starting from an arbi­trary node. What is the relationship between  this depth-first search and a valid build order?
+- \#125.   4.7     As a totally different approach: Consider doing a depth-first search starting from an arbitrary node. What is the relationship between  this depth-first search and a valid build order?
 - \#126.   2.2     Can you do it iteratively? Imagine if you had two pointers pointing to adjacent nodes and they were moving at the same speed through the linked list. When one hits the end of the linked list, where will the other be?
 - \#127.   4.1     Two well-known algorithms can do this. What are the tradeoffs between them?
 - \#128.   4.5     Think about the checkBST function as a recursive function that ensures each node is within an allowable (min,  max) range. At first, this range is infinite. When we traverse to the left, the min is negative infinity and the max is root. value. Can you implement this recursive function and properly adjust these ranges as you traverse the tree?
@@ -194,7 +194,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#174.   8.9     Suppose we had all valid ways of writing two pairs of parentheses. How could we use this to get all valid ways of writing three pairs?
 - \#175.   5.4     Get Next: Picture a binary number-something with a bunch of 1s and 0s spread out throughout the number. Suppose you flip a 1 to a O and a O to a 1. In what case will the number get bigger? In what case will it get smaller?
 - \#176.   9.6     Think about what sort of expectations on freshness and accuracy of data is expected. Does the data always need to be 100% up to date? Is the accuracy of some products more important than others?
-- \#177.   10.2    How do you check  if two words are anagrams of each other? Think about what the defi­nition of "anagram" is. Explain it in your own words.
+- \#177.   10.2    How do you check  if two words are anagrams of each other? Think about what the definition of "anagram" is. Explain it in your own words.
 - \#178.   8.1     If we knew the number of paths to each of the steps before step 100, could we compute the number of steps to 100?
 - \#179.   7.8     Should white pieces and black pieces be the same class? What are the pros and cons of this?
 - \#180.   9.7     Observe that there is a lot of data coming in, but people probably aren't reading the data very frequently.
@@ -226,7 +226,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#206.   9.8     How will you handle generating URLs? 
 - \#207.   10.6    Think about merge sort versus quick sort. WouId one of them work well for this purpose?   
 - \#208.   9.6     You also want to limit joins because they can be very expensive. 
-- \#209.   8.9     The problem with the solution suggested by the earlier hint is that it might have dupli­cate values. We could eliminate this by using a hash table. 
+- \#209.   8.9     The problem with the solution suggested by the earlier hint is that it might have duplicate values. We could eliminate this by using a hash table. 
 - \#210.   11.6    Be careful  about your assumptions. Who are the users? Where are they using this? It might seem obvious, but the real answer might be different.  
 - \#211.   10.9    We can do a binary search in each row. How long will this take? How can we do better?   
 - \#212.   9.7     Think about things like how you're going to get the bank data (will it be pulled or pushed?), what features the system will support, etc. 

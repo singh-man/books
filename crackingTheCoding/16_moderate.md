@@ -268,7 +268,7 @@ There are only 3⁹ or about 20,000, tic-tac-toe boards (assuming a 3x3 board). 
 2       return winnerHashtable[board];
 3   }
 ```
-To convert a board (represented by a char array) to an int, we can use what is essentially a "base 3" repre­sentation. Each board is represented as 3°v₀ + 3¹v₁ + 3²v₂ + ... + 3⁸v₈ , where v₁ is a 0 if the space is empty, a 1 if it's a "blue spot" and a 2 if it's a "red spot".
+To convert a board (represented by a char array) to an int, we can use what is essentially a "base 3" representation. Each board is represented as 3°v₀ + 3¹v₁ + 3²v₂ + ... + 3⁸v₈ , where v₁ is a 0 if the space is empty, a 1 if it's a "blue spot" and a 2 if it's a "red spot".
 ```java
 1   enum Piece { Empty, Red, Blue };
 2   
@@ -682,7 +682,7 @@ The simple brute force way is to just iterate through all pairs, compute the dif
 2       if (array1.length == 0 || array2.length == 0) return -1;
 3
 4       int min = Integer.MAX_VALUE;
-5       for (inti = 0; i < array1.length; i++) { 
+5       for (int i = 0; i < array1.length; i++) { 
 6           for (int j = 0; j < array2.length; j++) {
 7               if (Math.abs(array1[i] - array2[j]) < min) {
 8                   min = Math.abs(array1[i] - array2[j]);
@@ -960,7 +960,7 @@ The code below implements this algorithm.
 ```
 Figuring out the runtime here takes a bit of calculation.
 
-Observe that reducing a by half takes O(log a) work. Why? For each round of "reduce a by half", the abso­lute values of a and delta always add up to the same number. The values of delta and a will converge at a/2. Since delta is being doubled each time, it will take O(log a) steps to reach half of a.
+Observe that reducing a by half takes O(log a) work. Why? For each round of "reduce a by half", the absolute values of a and delta always add up to the same number. The values of delta and a will converge at a/2. Since delta is being doubled each time, it will take O(log a) steps to reach half of a.
 
 We do O(log a) rounds.
 
@@ -1697,7 +1697,7 @@ You, the user, are trying to guess the solution. You might, for example, guess Y
 
 When you guess the correct color for the correct slot, you get a "hit". If you guess a color that exists but is in the wrong slot, you get a "pseudo-hit". Note that a slot that is a hit can never count as a pseudo-hit.
 
-For example, if the actual solution is RGBY and you guess GGRR, you have one hit and one pseudo­-hit
+For example, if the actual solution is RGBY and you guess GGRR, you have one hit and one pseudo-hit
 
 Write a method that, given a guess and a solution, returns the number of hits and pseudo-hits.
 
@@ -1864,7 +1864,7 @@ The following code implements this algorithm.
 39
 40  int shrinkLeft(int[] array, int min_index, int start) {
 41      int comp = array[min_index];
-42      for (inti = start - 1; i >= 0; i--) {
+42      for (int i = start - 1; i >= 0; i--) {
 43          if (array[i] <= comp) return i + 1;
 44      }
 45      return 0;
@@ -1916,7 +1916,7 @@ Now, we consider 6. This subsequence is greater than 5, so we update both maxSum
 
 Next, we look at -2. Adding this to 6 will set sum to 4. Since this is still a "value add" (when adjoined to another, bigger sequence), we might want {6, -2}  in our max subsequence. We'll update  sum, but not maxSum.
 
-Finally, we look at 3. Adding 3 to sum(4) gives us 7, so we update maxSum. The max subsequence is there­fore the sequence {6, -2,  3}.
+Finally, we look at 3. Adding 3 to sum(4) gives us 7, so we update maxSum. The max subsequence is therefore the sequence {6, -2,  3}.
 
 When we look at this in the fully expanded  array, our logic is identical. The code below implements this algorithm.
 ```java
@@ -2946,7 +2946,7 @@ Unfortunately, the above code will not generate the values with equal probabilit
 | 2            | 1             | 3          | ----- | 4            | 4             | 1          |
 | 2            | 2             | 4          | ----- | 4            |               |            |
 
-Each individual row has a 1  in 25 chance of occurring, since there are two calls to rand5() and each distrib­utes its results with ¹/₅th probability. If you count up the number of times each number occurs, you'll note that this rand7() function will return 4 with ⁵/₂₅th probability but return 0 with just ³/₂₅th probability. This means that our function has failed; the results do not have probability 1/7th.
+Each individual row has a 1  in 25 chance of occurring, since there are two calls to rand5() and each distributes its results with ¹/₅th probability. If you count up the number of times each number occurs, you'll note that this rand7() function will return 4 with ⁵/₂₅th probability but return 0 with just ³/₂₅th probability. This means that our function has failed; the results do not have probability 1/7th.
 
 Now, imagine we modify our function to add an if-statement, to change the constant multiplier, or to insert a new call to rand5(). We will still wind up with a similar looking table, and the probability of getting any one of those rows will be ¹/₅ᵏ, where k is the number of calls to rand5() in that row. Different rows may have different number of calls.
 
@@ -3375,7 +3375,7 @@ The processing works as follows:
 - Each time we see a number, it gets pushed onto numberStack.
 - Operators get pushed onto operatorStack-as long as the operator has higher priority than the current top of the stack. If priority(currentOperator) <= priority(operatorStack. top()), then we "collapse" the top of the stacks:
   - Collapsing:  pop two elements off numberStack, pop an operator off operatorStack, apply the operator, and push the result onto numberStack.
-  - Priority: addition  and subtraction have equal priority, which is lower than the priority of multipli­cation and division (also equal priority).
+  - Priority: addition  and subtraction have equal priority, which is lower than the priority of multiplication and division (also equal priority).
 
 This collapsing continues until the above inequality is broken, at which point currentOperator is pushed onto operatorStack.
 

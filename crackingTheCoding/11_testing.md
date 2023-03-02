@@ -194,7 +194,7 @@ SOLUTION
 
 There are two mistakes in this code.
  
-First, note that an unsigned  int is, by definition, always greater than or equal to zero. The for loop condi­tion will therefore always be true, and it will loop infinitely.
+First, note that an unsigned  int is, by definition, always greater than or equal to zero. The for loop condition will therefore always be true, and it will loop infinitely.
 
 The correct code to print all numbers from 100 to 1, is i > 0. If we truly wanted to print zero, we could add an additional printf statement after the for loop.
 ```
@@ -256,7 +256,7 @@ We need to ensure that the program handles bad or unusual input gracefully. This
 - Test with far more white pieces than black
 - Test with far more black pieces than white
 
-For the error cases above, we should ask our interviewer whether we want to return false or throw an excep­tion, and we should test accordingly.
+For the error cases above, we should ask our interviewer whether we want to return false or throw an exception, and we should test accordingly.
 
 **Testing Type #2: General Testing:**
 
@@ -355,8 +355,7 @@ The first thing to do on this question is to clarify assumptions. Ask the follow
 
 Remember: a good tester makes sure she knows what she's testing!
 
-Once we understand  what the system looks like, we'll want to break down the problem into different test­
-able components. These components include: 
+Once we understand  what the system looks like, we'll want to break down the problem into different testable components. These components include: 
 
 - Logging in
 - Withdrawing money

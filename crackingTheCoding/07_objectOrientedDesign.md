@@ -1194,7 +1194,7 @@ AddRequest and UserStatus are simple classes with little functionality. Their ma
 28  }
 ```
 
-The downloadable code attachment provides a more detailed look at these methods, including implemen­tations for the methods shown above.
+The downloadable code attachment provides a more detailed look at these methods, including implementations for the methods shown above.
 
 **What problems would be  the hardest to solve (or  the most interesting)?**
 
@@ -1497,7 +1497,7 @@ SOLUTION
 
 Writing an entire game-even a text-based one-would take far longer than the allotted time you have in an interview. This doesn't mean that it's not fair game as a question. It just means that your interviewer's expectation will not be that you actually write all of this in an interview.  It also means that you need to focus on getting the key ideas-or structure-out.
 
-Let's start with what the classes are. We certainly want a Cell class as well as a Board class. We also prob­ably want to have a Game class.
+Let's start with what the classes are. We certainly want a Cell class as well as a Board class. We also probably want to have a Game class.
  
 > We could potentially merge Board  and Game together, but it's probably best to keep them separate. Err towards more organization, not less. Board can hold the list of Ce11 objects and do some basic moves with flipping over cells. Game will hold the game state and handle user input.
 
@@ -1868,7 +1868,7 @@ The keys jim and bob will map to the same index in the array, even though they a
 
 This is why we need to store both the value and the original key.
 
-One way to do that is to create another object called `Cell` which pairs keys and values. With this implemen­tation, our linked list is of type `Cell`.
+One way to do that is to create another object called `Cell` which pairs keys and values. With this implementation, our linked list is of type `Cell`.
 
 The code below uses this implementation.
 

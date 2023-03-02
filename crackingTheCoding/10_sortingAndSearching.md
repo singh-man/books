@@ -842,7 +842,7 @@ Likewise, the top left hand corner will always be the smallest. The colors below
 
 ![](media/10_9_4.JPG)
 
-Let's return to the original problem: suppose we were searching for the value 85. If we look along the diag­onal, we'll find the elements 35 and 95. What does this tell us about the location of 85?
+Let's return to the original problem: suppose we were searching for the value 85. If we look along the diagonal, we'll find the elements 35 and 95. What does this tell us about the location of 85?
 
 ![](media/10_9_5.JPG)
 
@@ -972,7 +972,7 @@ When we move to the right though, we skip over a bunch of elements on the left. 
 
 Rather than counting the size of the left subtree(which would be inefficient), we can track this information as we add new elements to the tree.
 
-Let's walk through an example on the following tree. In the below example, the value in parentheses indi­cates the number of nodes in the left subtree (or, in other words, the rank of the node *relative* to its subtree).
+Let's walk through an example on the following tree. In the below example, the value in parentheses indicates the number of nodes in the left subtree (or, in other words, the rank of the node *relative* to its subtree).
 
 ```
                   20(4)

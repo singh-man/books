@@ -1021,7 +1021,7 @@ The code below implements this algorithm.
 ```
 
 
-Additional Questions: Trees and Graphs (#4.3),  Object-Oriented Design (#7.12),  System Design and Scal­ability (#9.5), Moderate Problems (#16.25), Hard Problems (#17.12).
+Additional Questions: Trees and Graphs (#4.3),  Object-Oriented Design (#7.12),  System Design and Scalability (#9.5), Moderate Problems (#16.25), Hard Problems (#17.12).
 
 
 

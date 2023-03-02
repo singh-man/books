@@ -45,7 +45,36 @@ In either case, the sum is ⁿ⁽ⁿ⁺¹⁾/₂.
 
 This reasoning comes up a lot in nested loops. For example, consider the following code:
 ```java
-1   for (int i= 0; i < n; i++) {
+1   for (int i = 0; i < n; i++) 
+{7 Questions to Help You Know if You’re Compatible
+
+Do you feel safe speaking up?
+While this is a foundation for compatibility, it is, perhaps more importantly, the foundation for any close relationship. If you don’t feel safe to say how you feel but are always walking on eggshells and anxious, or are always giving in because you don’t want to upset your partner, you never get what you need because your needs are never voiced; you’re running on fear and ultimately not solving problems.
+
+Will there be times and situations where you’re hesitant to speak up? Sure. This happens to all of us based on our old wounds or our caring about the other and not wanting to upset them. But if you often feel this way, you will never be able to lean into the relationship and get the intimacy and support you need.
+
+Does the relationship feel balanced?
+Obviously, not feeling safe creates an imbalance. But here we’re talking about another form of imbalance, where even if you feel safe to speak up, the relationship feels lopsided–where the other person’s needs and wants dominate the relationship, or where you feel like you’re always initiating, reaching out, doing the emotional and practical heavy lifting. Instead, you want a more equal relationship where you both feel that the other person has your back, that your happiness and needs are just as important as theirs, that your problems are taken seriously rather than minimized or dismissed, and where they are willing to step up as do as much as you.
+
+Can you have productive, problem-solving conversations?
+Though tied to all of the above, here we’re talking about good communication skills and emotional regulation: the ability to stop arguments before they get out of hand, control emotions before they do damage, circle back after the dust settles, and create win-win compromises. If you can’t do this as a couple despite your best efforts, your relationship will eventually become a landmine of hurts or a tense and distant wasteland.
+
+Do you share the same values?
+Do you both have the same overall view about what is important in life and how to live it: what it means to be a couple or family day-to-day, about the role of work, the ways others should be treated and whether they can be trusted, about life’s purpose? This is about priorities and what you do with your ilfe and, at some level, about your personal philosophies about the meaning of life itself. If you are on different pages, operating from different assumptions, you’re likely always moving in different directions, differences that can lead to disappointment, frustration, or resentment.
+
+Do you have the same goals?
+Values are about broad guiding attitudes and assumptions. Here we’re talking about your concrete visions of the future. You want to have three kids or focus on your career, buy a house, or live in a big city, while your partner wants to travel and have no kids or is okay with the city but as long as it’s not too cold or expensive. Differences are expected, but again, can you support each other and negotiate those win-win compromises rather than arguing over whose goals are more critical? Can your partner support you in following your dreams?
+
+Do you have similar needs for individual vs. together time?
+The classic extrovert vs. the introvert; when you’re busy at work or need time alone, your partner understands and doesn’t feel rejected. His idea of being a couple is to have dinner, chat about your day, and then spend three hours watching Netflix while snuggling together on the couch. Or no, it’s about having dinner, playing video games, or going out with friends. How do you spend time? Again, what does being in a close relationship mean and require? Can you accommodate each other's needs?
+
+Do you have common interests?
+You seemed to have a lot of common interests at the beginning of your relationship because it was new and exciting. You both partied a lot or worked in the same type of jobs, or you were simply accommodating. But at some point, things change–you want to focus on the kids, party less, or are retired, and work is no longer a connection. This happens to many intimate relationships where couples have grown apart at various points in their lives; the glue that used to hold them together is no longer there. The challenge is finding a way to connect by being flexible and keeping your relationship important even when the old ways have changed. We’re back to communication and problem-solving.
+
+That’s my list. You may have other criteria. The keys here are being willing and able to step up and say what you need at the start and over time; being able to reach those win-win compromises so the relationship stays balanced; realizing that the relationship will change as you naturally change, and periodically taking stock, so you both get what you need.
+
+Most of all, it's about both being committed to prioritizing the relationship.
+
 2        for (int j = i + 1; j < n; j++) {
 3               System.out.println(i + j);
 4        }
@@ -57,14 +86,14 @@ On the first iteration of the outer for loop, the inner for loop iterates n - 1 
 
 Consider this sequence: 2° + 2¹  + 2² + ... + 2ⁿ. What is its result? A nice way to see this is by looking at these values in binary.
 
-|      | Power | Binary | Decimal    |
-| :--: | :--:  | :--:   | :--:       |
-|      | 2⁰    | 00001  | 1          |
-|      | 2¹    | 00010  | 2          |
-|      | 2²    | 00100  | 4          |
-|      | 2³    | 01000  | 8          |
-|      | 2⁴    | 10000  | 16         |
-| sum: | 2⁵-1  | 11111  | 32 -1 = 31 |
+|      | Power  | Binary | Decimal     |
+| :--: | :--:   | :--:   | :--:        |
+|      | 2⁰     | 00001  | 1           |
+|      | 2¹     | 00010  | 2           |
+|      | 2²     | 00100  | 4           |
+|      | 2³     | 01000  | 8           |
+|      | 2⁴     | 10000  | 16          |
+| sum: | 2⁵ - 1 | 11111  | 32 - 1 = 31 |
 
 Therefore, the sum of 2° + 2¹  + 2² + ... + 2ⁿ would, in base 2, be a sequence of (n + 1) 1s. This  is 2ⁿ⁺¹ -  1.
 
@@ -102,7 +131,7 @@ What if you were forming a k-length string (with all unique characters) from n t
 
 Suppose you have a set of n distinct characters. How many ways are there of selecting k characters into a new set (where order doesn't matter)? That is,  how many k-sized subsets are there out of n distinct elements? This is what the expression n-choose-k means, which is often written (ⁿₖ).
 
-Imagine we made a list of all the sets by first writing all k-length substrings and then taking out the dupli­cates.
+Imagine we made a list of all the sets by first writing all k-length substrings and then taking out the duplicates.
 
 From the above *Permutations* section, we'd have n!/(n-k)!  k-length substrings.
 
@@ -158,7 +187,7 @@ More formally, the algorithm is this:
 
 1.  Create a queue order, which will eventually store the valid topological sort. It is currently empty.
 2.  Create a queue processNext. This queue will store the next nodes to process.
-3.  Count the number of incoming edges of each node and set a class variable node. inbound. Nodes typi­cally only store their outgoing edges. However, you can count the inbound edges by walking through each node n and, for each of its outgoing edges (n,  x),  incrementing x. inbound.
+3.  Count the number of incoming edges of each node and set a class variable node. inbound. Nodes typically only store their outgoing edges. However, you can count the inbound edges by walking through each node n and, for each of its outgoing edges (n,  x),  incrementing x. inbound.
 4.  Walk through the nodes again and add to processNext any node where x. inbound == 0.
 5.  While processNext is not empty, do the following:
     - Remove first node n from processNext.
@@ -485,7 +514,7 @@ MapReduce allows you to process the document in parallel. The Map function reads
 
 ```java
 1   void map(String name, String document):
-2       for  each word w in document :
+2       for each word w in document :
 3           emit(w, 1)
 4   
 5   void reduce(String word, Iterator partialCounts):
@@ -525,7 +554,7 @@ So, you've mastered this material and you want to learn even more?  Okay. Here a
 - **A\*:** Find the least-cost path between a source node and a goal node (or one of several goal nodes). It extends Dijkstra's algorithm and achieves better performance by using heuristics.
 - **Interval Trees:** An extension of a balanced binary search tree, but storing intervals (low -> high ranges) instead of simple values. A hotel could use this to store a list of all reservations and then efficiently detect who is staying at the hotel at a particular time.
 - **Graph  coloring:** A way of coloring the nodes in a graph such that no two adjacent vertices have the same color. There are various algorithms to do things like determine if a graph can be colored with only K colors.
-- **P, NP, and  NP-Complete:** P.  NP. and NP-Complete refer to classes of problems.  P problems are prob­lems that can be quickly solved (where "quickly" means polynomial time). NP problems are those where, given a solution, the solution can be quickly verified. NP-Complete problems are a subset of NP problems that can all be reduced to each other (that is, if you found a solution to one problem, you could tweak the solution to solve other problems in the set in polynomial time).
+- **P, NP, and  NP-Complete:** P.  NP. and NP-Complete refer to classes of problems.  P problems are problems that can be quickly solved (where "quickly" means polynomial time). NP problems are those where, given a solution, the solution can be quickly verified. NP-Complete problems are a subset of NP problems that can all be reduced to each other (that is, if you found a solution to one problem, you could tweak the solution to solve other problems in the set in polynomial time).
 
 It is an open (and very famous) question whether P = NP, but the answer is generally believed to be no.
 

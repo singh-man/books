@@ -1,7 +1,7 @@
 5 Bit Manipulation
 ==================
 
-Bit manipulation is used in a variety  of problems. Sometimes, the  question explicitly calls for bit manipu­lation.  Other times,  it's simply  a useful  technique to optimize your  code.  You should be  comfortable doing bit manipulation by hand, as well as with code.  Be careful;  it's easy to make little mistakes.
+Bit manipulation is used in a variety  of problems. Sometimes, the  question explicitly calls for bit manipulation.  Other times,  it's simply  a useful  technique to optimize your  code.  You should be  comfortable doing bit manipulation by hand, as well as with code.  Be careful;  it's easy to make little mistakes.
 
 
 ### Bit Manipulation By Hand
@@ -312,7 +312,7 @@ We can think about each integer as being an alternating sequence of 0s and 1s. W
 
 **Brute Force**
 
-One approach is to convert an integer into an array that reflects the lengths of the 0s and 1s sequences. For example, 11011101111 would be (reading from right to left) [0₀, 4₁, 1₀, 3₁, 2₁, 21₀]. The subscript reflects whether the integer corresponds to a 0s sequence or a 1s sequence, but the actual solu­tion doesn't need this. It's a strictly alternating sequence, always starting with the 0s sequence.
+One approach is to convert an integer into an array that reflects the lengths of the 0s and 1s sequences. For example, 11011101111 would be (reading from right to left) [0₀, 4₁, 1₀, 3₁, 2₁, 21₀]. The subscript reflects whether the integer corresponds to a 0s sequence or a 1s sequence, but the actual solution doesn't need this. It's a strictly alternating sequence, always starting with the 0s sequence.
 
 Once we have this, we just walk through the array. At each 0s sequence, then we consider merging the adjacent 1s sequences if the 0s sequence has length 1.
 ```java

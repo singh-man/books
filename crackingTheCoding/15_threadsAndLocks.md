@@ -2,7 +2,7 @@
 =====================
 
 
-In a Microsoft, Google or Amazon interview, it's not terribly common to be asked to implement an algo­rithm with threads  (unless you're working in a team for which this is a particularly important  skill). It is, however, relatively common for interviewers at any company to assess your general understanding  of threads, particularly your understanding of deadlocks.
+In a Microsoft, Google or Amazon interview, it's not terribly common to be asked to implement an algorithm with threads  (unless you're working in a team for which this is a particularly important  skill). It is, however, relatively common for interviewers at any company to assess your general understanding  of threads, particularly your understanding of deadlocks.
 
 This chapter will provide an introduction to this topic.
 
@@ -117,7 +117,7 @@ This code is very similar to the first approach. The difference is that since we
 
 #### Extending the Thread Class vs. Implementing the  Runnable Interface
 
-When creating threads, there are two reasons why implementing  the Runnable interface may be prefer­able to extending the Thread class:
+When creating threads, there are two reasons why implementing  the Runnable interface may be preferable to extending the Thread class:
 
 - Java does not support multiple inheritance. Therefore, extending the Thread class means that the subclass cannot extend any other class. A class implementing the Runnable interface will be able to extend another class.
 - A class might only be interested in being runnable, and therefore, inheriting the full overhead of the Thread class would be excessive.
@@ -282,7 +282,7 @@ A deadlock is a situation where a thread is waiting for an object lock that anot
 In order for a deadlock to occur, you must have all four of the following conditions met:
 
 1. *Mutual Exclusion:* Only one process can access a resource at a given time. (Or, more accurately, there is limited access to a resource. A deadlock could also occur if a resource has limited quantity.)
-2. *Hold and Wait:* Processes already holding a resource can request additional resources, without relin­quishing their current resources.
+2. *Hold and Wait:* Processes already holding a resource can request additional resources, without relinquishing their current resources.
 3. *No Preemption:* One process cannot forcibly remove another process' resource.
 4. *Circular Wait:* Two or more processes form a circular chain where each process is waiting on another resource in the chain.
 
@@ -335,7 +335,7 @@ Another issue is that  swapping  is governed  by the scheduling algorithm of the
 
 In order to overcome these obstacles, we must first construct an environment such that after P₁ executes, the task scheduler immediately selects P₂ to run. This may be accomplished by constructing a data channel, such as a pipe, between  P₁ and P₂ and having the two processes play a game of ping-pong  with a data token.
 
-That is, let's allow P₁ to be the initial sender and P₂ to be the receiver. Initially, P₂ is blocked (sleeping) as it awaits the data token. When P₁ executes, it delivers the token over the data channel to P₂ and immediately attempts to read a response token. However, since P₂ has not yet had a chance to run, no such token is avail­able for P₁ and the process is blocked. This relinquishes the CPU. 
+That is, let's allow P₁ to be the initial sender and P₂ to be the receiver. Initially, P₂ is blocked (sleeping) as it awaits the data token. When P₁ executes, it delivers the token over the data channel to P₂ and immediately attempts to read a response token. However, since P₂ has not yet had a chance to run, no such token is available for P₁ and the process is blocked. This relinquishes the CPU. 
 
 A context switch results and the task scheduler must select another process to run. Since P₂ is now in a ready-to-run state, it is a desirable candidate to be selected by the task scheduler for execution. When P₂ runs, the roles of P₁ and P₂ are swapped. P₂ is now acting as the sender and P₁ as the blocked receiver. The game ends when P₂ returns the token to P₁.
 
@@ -363,7 +363,7 @@ How can we do this? We can do this by measuring the length of time it takes P₁
 
 The game is played a number of iterations to average out any variability in the elapsed time between steps 2 and 9 that may result from unexpected kernel interrupts and additional kernel threads contending for the CPU. We select the smallest observed context switch time as our final answer.
 
-However, all we can ultimately say that this is an approximation which depends on the underlying system. For example, we make the assumption  that P₂  is selected to run once a data token becomes available. However, this is dependent on the implementation  of the task scheduler and we cannot make any guar­antees.
+However, all we can ultimately say that this is an approximation which depends on the underlying system. For example, we make the assumption  that P₂  is selected to run once a data token becomes available. However, this is dependent on the implementation  of the task scheduler and we cannot make any guarantees.
 
 That's okay; it's important in an interview to recognize when your solution might not be perfect.
 
@@ -849,7 +849,7 @@ SOLUTION
 
 ---
 
-By applying the word synchronized to a method, we ensure that two threads cannot execute synchro­nized methods on the same object instance at the same time.
+By applying the word synchronized to a method, we ensure that two threads cannot execute synchronized methods on the same object instance at the same time.
 
 So, the answer to the first part really depends. If the two threads have the same instance of the object, then no, they cannot simultaneously execute method A. However,  if they have different instances of the object, then they can.
 

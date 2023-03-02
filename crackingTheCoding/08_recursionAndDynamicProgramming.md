@@ -1000,14 +1000,14 @@ P(a₁a₃)  =  a₁a₃  and  a₃a₁.
 
 Here is where the cases get more interesting. How can we generate all permutations of three-character strings, such as a₁a₂a₃, given the permutations of two-character strings?
 
-Well, in essence, we just need to "try" each character as the first character and then append the permuta­tions.
+Well, in essence, we just need to "try" each character as the first character and then append the permutations.
 ```
 P(a₁a₂a₃) = {a₁ + P(a₂a₃)} + {a₂ + P(a₁a₃)} + {a₃ + P(a₁a₂)}
   {a₁ + P(a₂a₃)} -> a₁a₂a₃, a₁a₃a₂
   {a₂ + P(a₁a₃)} -> a₂a₁a₃, a₂a₃a₁
   {a₃ + P(a₁a₂)} -> a₃a₁a₂, a₃a₂a₁
 ```
-Now that we can generate all permutations of three-character strings, we can use this to generate permuta­tions of four-character strings.
+Now that we can generate all permutations of three-character strings, we can use this to generate permutations of four-character strings.
 ```
 P(a₁a₂a₃a₄) = {a₁ + P(a₂a₃a₄)} + {a₂+ P(a₁a₃a₄)} + {a₃ + P(a₁a₂a₄)} + {a₄ + P(a₁a₂a₃)} 
 ```
@@ -1315,7 +1315,7 @@ makeChange(100) = makeChange(100 using 0 quarters) +
 ```
 Inspecting this further, we can see that some of these problems reduce. For example, makeChange(100 using 1  quarter) will equalmakeChange(75 using 0  quarters). This is because, if we must use exactly one quarter to make change for 100 cents, then our only remaining choices involve making change for the remaining 75 cents.
 
-We can apply the same logic tomakeChange(100 using  2  quarters), makeChange(100  using 3  quarters) andmakeChange(100 using  4  quarters). We have thus reduced the above state­ment to the following.
+We can apply the same logic tomakeChange(100 using  2  quarters), makeChange(100  using 3  quarters) andmakeChange(100 using  4  quarters). We have thus reduced the above statement to the following.
 ```
 makeChange(100) = makeChange(100 using 0 quarters) + 
                   makeChange(75 using 0 quarters) + 
@@ -1507,7 +1507,7 @@ To tackle this problem, we need to recognize the relationship between the differ
 
 Imagine we had the following boxes: b₁, b₂,••• , bₙ. The biggest stack that we can build with all the boxes equals the max of (biggest stack with bottom b₁, biggest stack with bottom b₂ ,   •••, biggest stack with bottom bₙ). That is, if we experimented with each box as a bottom and built the biggest stack possible with each, we would find the biggest stack possible.
 
-But, how would we find the biggest stack with a particular bottom? Essentially the same way. We experi­ment with different boxes for the second level, and so on for each level.
+But, how would we find the biggest stack with a particular bottom? Essentially the same way. We experiment with different boxes for the second level, and so on for each level.
 
 Of course, we only experiment with valid boxes. If b₅ is bigger than b₁, then there's no point in trying to build a stack that looks like {b₁,  b₅, ...}. We already know b₁ can't be below b₅.
 
@@ -1530,7 +1530,7 @@ The code below implements this algorithm recursively.
 12  int createStack(ArrayList<Box> boxes, int bottomIndex) {
 13    Box bottom = boxes.get(bottomIndex);
 14    int maxHeight = 0;
-15    for (inti = bottomIndex + 1; i < boxes.size(); i++) {
+15    for (int i = bottomIndex + 1; i < boxes.size(); i++) {
 16      if (boxes.get(i).canBeAbove(bottom)) {
 17        int height = createStack(boxes, i);
 18        maxHeight = Math.max(height, maxHeight);

@@ -6,7 +6,7 @@ While Java-related questions are found throughout this book,  this chapter deals
 
 ### How to Approach
 
-As these questions focus so much on knowledge, it may seem silly to talk about an approach to these prob­lems. After all, isn't it just about knowing the  right  answer?
+As these questions focus so much on knowledge, it may seem silly to talk about an approach to these problems. After all, isn't it just about knowing the  right  answer?
 
 Yes and  no. Of course, the  best thing you can do to master these questions is to learn Java inside  and  out. But, if you do get  stumped, you can try to tackle it with the following approach:
 
@@ -161,7 +161,7 @@ SOLUTIONS
  
 ---
 
-Despite their similar sounding names, final, finally and finalize have very different purposes. To speak in very general terms, final is used to control whether a variable, method, or class is "change­able". The finally keyword is used in a try/ catch block to ensure that a segment of code is always executed. The finalize() method is called by the garbage collector once it determines that no more references exist.
+Despite their similar sounding names, final, finally and finalize have very different purposes. To speak in very general terms, final is used to control whether a variable, method, or class is "changeable". The finally keyword is used in a try/ catch block to ensure that a segment of code is always executed. The finalize() method is called by the garbage collector once it determines that no more references exist.
 
 Further detail on these keywords and methods is provided below.
 
@@ -346,7 +346,7 @@ When might you need ordering in real life?
 
 - Suppose you were creating a mapping  of names to Person objects. You might want to periodically output the people in alphabetical order by name. A TreeMap lets you do this.
 - A TreeMap  also offers a way to, given a name, output  the next 10 people. This could be useful for a "More" function in many applications.
-- A LinkedHashMap is useful whenever you need the ordering of keys to match the ordering of inser­tion. This might be useful in a caching situation, when you want to delete the oldest item.
+- A LinkedHashMap is useful whenever you need the ordering of keys to match the ordering of insertion. This might be useful in a caching situation, when you want to delete the oldest item.
 
 Generally, unless there is a reason not to, you would use HashMap. That is, if you need to get the keys back in insertion order, then use LinkedHashMap. If you need to get the keys back in their true/natural  order, then use TreeMap. Otherwise, HashMap is probably best. It is typically faster and requires less overhead.
 
