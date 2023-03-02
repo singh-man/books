@@ -12,7 +12,7 @@ On one hand, I'd had a number of requests to include these topics. Some people i
 
 On the  other hand, I know  these topics to be rarely asked. It happens, of course. Interviewers are individuals and  might have their  own ideas of what is "fair game" or "relevant" for an interview. But it's rare. When it does come up, if you don't know  the  topic, it's unlikely  to be a big red flag.
 
-> Admittedly, as an interviewer, I have asked candidates questions where the  solution was essen­tially an application of one of these algorithms. On the  rare occasions that a candidate already knew the algorithm, they  did not  benefit from this knowledge (nor were  they  hurt  by it). I want to  evaluate your ability  to  solve  a problem you  haven't seen before. So,  I'll take  into  account whether you know  the  underlying algorithm in advance.
+> Admittedly, as an interviewer, I have asked candidates questions where the  solution was essentially an application of one of these algorithms. On the  rare occasions that a candidate already knew the algorithm, they  did not  benefit from this knowledge (nor were  they  hurt  by it). I want to  evaluate your ability  to  solve  a problem you  haven't seen before. So,  I'll take  into  account whether you know  the  underlying algorithm in advance.
 
 I believe in giving people a fair expectation of the  interview, not  scaring people into  excess studying. I also have no interest in making the  book more "advanced" so as to help book sales, at the  expense of your time and  energy. That's not  fair or right to do to you.
 
@@ -45,20 +45,20 @@ In either case, the sum is ⁿ⁽ⁿ⁺¹⁾/₂.
 
 This reasoning comes up a lot in nested loops. For example, consider the following code:
 ```java
-1   for  (inti=  0;  i <   n;  i++)  {
-2        for  (int j =  i +  1;  j <   n;  j++)  {
+1   for (int i= 0; i < n; i++) {
+2        for (int j = i + 1; j < n; j++) {
 3               System.out.println(i + j);
 4        }
 5   }
 ```
-On the first iteration of the outer for loop, the inner for loop iterates n - 1  times. On the second iteration of the outer for loop, the inner for loop iterates n -2 times. Next, n - 3, then n - 4, and so on. There are ⁿ⁽ⁿ⁻¹⁾/₂ total iterations of the inner for loop. Therefore, this code takes O(n²) time. 
+On the first iteration of the outer for loop, the inner for loop iterates n - 1  times. On the second iteration of the outer for loop, the inner for loop iterates n - 2 times. Next, n - 3, then n - 4, and so on. There are ⁿ⁽ⁿ⁻¹⁾/₂ total iterations of the inner for loop. Therefore, this code takes O(n²) time. 
 
 *Sum of Powers of 2*
 
 Consider this sequence: 2° + 2¹  + 2² + ... + 2ⁿ. What is its result? A nice way to see this is by looking at these values in binary.
 
 |      | Power | Binary | Decimal    |
-| --   | --    | --     | --         |
+| :--: | :--:  | :--:   | :--:       |
 |      | 2⁰    | 00001  | 1          |
 |      | 2¹    | 00010  | 2          |
 |      | 2²    | 00100  | 4          |
@@ -205,7 +205,7 @@ We first initialize several variables:
 Once we've initialized these values, we can start adjusting the values of path_weight.
 
 
-> A (min) priority queue is an abstract data type that-at least in this case-supports insertion of an object and key, removing  the object with the minimum key, and decreasing a key. (Think of it like a typical queue, except that, instead of removing the oldest item, it removes the item with the lowest or highest priority.) It is an abstract data type because it is defined by its behavior (its operations). Its underlying implementation can vary. You could  implement a priority queue with an array or a min (or max) heap (or many other data structures).
+> A (min) **priority queue** is an abstract data type that-at least in this case-supports insertion of an object and key, removing  the object with the minimum key, and decreasing a key. (Think of it like a typical queue, except that, instead of removing the oldest item, it removes the item with the lowest or highest priority.) It is an abstract data type because it is defined by its behavior (its operations). Its underlying implementation can vary. You could  implement a priority queue with an array or a min (or max) heap (or many other data structures).
 
 
 We iterate through the nodes in remaining (until remaining is empty), doing the following:
@@ -226,7 +226,7 @@ We continue doing this until remaining is empty. The following diagram shows the
 
 ![](media/XI_04.JPG)
 
-Once we're done, we can follow this chart backwards, starting at i to find the actual path. In this case, the smallest weight path has weight 8 and is `a  - >   c  - >   d  - >   g  - >   i`.
+Once we're done, we can follow this chart backwards, starting at i to find the actual path. In this case, the smallest weight path has weight 8 and is `a  ->  c  ->  d  ->  g  ->  i`.
 
 *Priority Queue and Runtime*
 
@@ -285,7 +285,7 @@ For example, imagine  our hash function was simply the sum of each character (wh
 
 ![](media/XI_05.JPG)
 
-If we computed these sums by doing hash('doe'), then hash ('oe'), then hash('e a'), and soon, we would still be at O(s(b-s)) time.
+If we computed these sums by doing hash('doe'), then hash ('oe '), then hash('e a'), and soon, we would still be at O(s(b-s)) time.
 
 Instead, we compute the hash values by recognizing that hash ('oe') = hash('doe') - code('d') +  code('   '). This takes O(b) time to compute all the hashes.
 
@@ -297,7 +297,7 @@ In practice,  we would use a better rolling hash function, such as the Rabin fin
 
 This hash function  will allow us to remove the d, shift the o and e, and then add in the space. 
     
-    hash('oe   ') = (hash('doe')  -  code('d')  *  128²)    *  128 +  code('   ')
+    hash('oe   ')  =  (hash('doe')  -  code('d')  *  128²)    *  128 +  code('   ')
 
 This will considerably cut down on the number of false matches. Using a good hash function like this will give us expected time complexity of O(s + b), although the worst case is O(sb).
 
@@ -314,7 +314,7 @@ An AVL tree is one of two common ways to implement tree balancing. We will only 
 An AVL tree stores in each node the height of the subtrees rooted at this node. Then, for any node, we can check if it is height balanced: that the height of the left subtree and the height of the right subtree differ by no more than one. This prevents situations where the tree gets too lopsided.
 
     balance(n) = n.left.height - n.right.height
-                -1 <=  balance(n)  <=  1
+                -1 <= balance(n) <= 1
 
 **Inserts**
 
@@ -433,7 +433,7 @@ If we can do this, we're good. In each of the cases below, the red violation is 
 
 Further, the below rotations maintain the exact number of black nodes in each path through the affected portion of the tree that were in place beforehand. The children of the rotating section are either NULL leaves or subtrees that remain internally unchanged.
 
-*Case A: N and Pare both left children.*
+*Case A: N and P are both left children.*
 
 We resolve the red violation with the rotation of N, P, and G and the associated recoloring shown below. If you picture the in-order traversal, you can see the rotation maintains the node ordering (a  < =  N   < = b  <=  P  <=  c  <=   G   <= U). The tree maintains the same, equal number of black nodes in the path down to each subtree a, b, c, and U (which may all be NULL).
 
@@ -448,7 +448,7 @@ The rotations in Case B resolve the red violation and maintain the in-order prop
 ![](media/XI_12.JPG)
 
 
-*Case C: N and Pare both right children.*
+*Case C: N and P are both right children.*
 
 This is a mirror image of case A.
 
@@ -484,15 +484,15 @@ Of course, you could write this as a single function that reads in all the data,
 MapReduce allows you to process the document in parallel. The Map function reads in a document and emits just each individual word and the count (which is always 1). The Reduce function reads in keys (words) and associated values (counts). It emits the sum of the counts. This sum could possibly wind up as input for another call to Reduce on the same key (as shown in the diagram).
 
 ```java
-1   void  map(String  name, String document):
-2       for  each  word w   in  document :
-3           emit(w,  1)
+1   void map(String name, String document):
+2       for  each word w in document :
+3           emit(w, 1)
 4   
-5   void  reduce(String word,  Iterator partialCounts):
-6       int sum =  0
-7       for  each count  in partialCounts :
-8           sum +=  count
-9       emit(word,   sum)
+5   void reduce(String word, Iterator partialCounts):
+6       int sum = 0
+7       for each count in partialCounts :
+8           sum += count
+9       emit(word, sum)
 ```
 The diagram below shows how this might work on this example.
 
@@ -509,7 +509,7 @@ Therefore, our Reduce step instead takes in {(80, 2),(50,1}}, then sums the weig
 
 Another Reduce step might reduce {(25, 1),(100, 1)} to get (62.5, 2). If we reduce this with (70, 3) we get the final answer: (67, 5). In other words, the average temperature in this city for this year was 67 degrees.
 
-We could do this in other ways, too. We could have just the city as the key, and the value be (Year, Tempera­ture, Count). The Reduce step would do essentially the same thing, but would have to group by Year itself.
+We could do this in other ways, too. We could have just the city as the key, and the value be (Year, Temperature, Count). The Reduce step would do essentially the same thing, but would have to group by Year itself.
 
 In many cases, it's useful to think about what the Reduce step should do first, and then design the Map step around that. What data does Reduce need to have to do its job?
 
@@ -557,10 +557,10 @@ The HashMapList class is essentially shorthand for HashMap\<T, ArrayList\<E>>. I
 For example, we might want a data structure that maps from an integer to a list of strings. Ordinarily, we'd have to write something like this:
 
 ```java
-1   HashMap<Integer,   ArrayList<String>> mapList =
-2           new HashMap<Integer,   ArrayList<String>>();
+1   HashMap<Integer, ArrayList<String>> mapList =
+2           new HashMap<Integer, ArrayList<String>>();
 3   for (String s : strings) {
-4       int key =  computeValue(s);
+4       int key = computeValue(s);
 5       if (!mapList.containsKey(key)) {
 6           mapList.put(key, new ArrayList<String>());
 7       }
@@ -569,54 +569,54 @@ For example, we might want a data structure that maps from an integer to a list 
 ```
 Now, we can just write this:
 ```java
-1  HashMapList<Integer, String> mapList = new HashMapList<Integer,  String>();
+1  HashMapList<Integer, String> mapList = new HashMapList<Integer, String>();
 2  for (String s : strings) {
-3       int key =  computeValue(s);
-4       mapList.put(key,  s);
+3       int key = computeValue(s);
+4       mapList.put(key, s);
 5  }
 ```
 It's not a big change, but it makes our code a bit simpler.
 ```java
-1   public class HashMapList<T,  E>  {
-2       private HashMap<T,  ArrayList<E>> map =  new HashMap<T,  ArrayList<E>>();
+1   public class HashMapList<T, E> {
+2       private HashMap<T, ArrayList<E>> map = new HashMap<T, ArrayList<E>>();
 3       
-4       /*   Insert item  into list  at key.   */
-5       public void  put(T   key,   E   item)   {
+4       /* Insert item into list at key. */
+5       public void put(T key, E item) {
 6           if (!map.containsKey(key)) {
-7               map.put(key,  new ArrayList<E>());
+7               map.put(key, new ArrayList<E>());
 8           }
 9           map.get(key).add(item);
 10      }
 11      
-12      /*  Insert list of  items  at key.  */
-13      public void  put(T  key,  ArrayList<E> items)  {
-14          map.put(key,   items);
+12      /* Insert list of items at key. */
+13      public void put(T key, ArrayList<E> items) {
+14          map.put(key, items);
 15      }
 16      
-17      /*  Get list of  items  at key.  */
-18      public ArrayList<E>  get(T  key)  {
-19          return  map.get(key);
+17      /* Get list of items at key. */
+18      public ArrayList<E> get(T key) {
+19          return map.get(key);
 20      }
 21      
-22      /*  Check if hashmaplist  contains key.  */
-23      public boolean  containsKey(T  key)  {
-24          return  map.containsKey(key);
+22      /* Check if hashmaplist contains key. */
+23      public boolean containsKey(T key) {
+24          return map.containsKey(key);
 25      }
 26      
-27      /*  Check if list at key contains value. */
-28      public   boolean  containsKeyValue(T  key,  E   value)   {
-29          ArrayList<E>  list =  get(key);
-30          if (list ==  null) return false;
+27      /* Check if list at key contains value. */
+28      public boolean containsKeyValue(T key, E value) {
+29          ArrayList<E> list = get(key);
+30          if (list == null) return false;
 31          return list.contains(value);
 32      }
 33      
-34      /*  Get the  list of  keys.   */
-35      public  Set<T> keySet() {
-36          return  map.keySet();
+34      /* Get the list of keys. */
+35      public Set<T> keySet() {
+36          return map.keySet();
 37      }
 38      
 39      @Override
-40      public   String toString()  {
+40      public String toString() {
 41          return map.toString();
 42      }
 43  }
@@ -631,26 +631,26 @@ The TreeNode  class supports a variety of functionality, much of which we wouldn
 
 For simplicity, we'd implemented this tree as storing integers for data.
 ```java
-1   public  class TreeNode {
-2       public  int data;
-3       public  TreeNode left,  right, parent;
-4       private int size =  0;
+1   public class TreeNode {
+2       public int data;
+3       public TreeNode left, right, parent;
+4       private int size = 0;
 5       
-6       public   TreeNode(int  d)  {
-7           data =  d;
-8           size =  1;
+6       public TreeNode(int d) {
+7           data = d;
+8           size = 1;
 9       }
 10      
-11      public void  insertInOrder(int d)  {
-12          if (d  <=  data) {
-13              if (left ==  null) {
-14                  setLeftChild(new  TreeNode(d));
+11      public void insertInOrder(int d) {
+12          if (d <= data) {
+13              if (left == null) {
+14                  setLeftChild(new TreeNode(d));
 15              }  else {
 16                  left.insertInOrder(d);
 17              }
 18          }  else {
 19              if (right == null) {
-20                  setRightChild(new  TreeNode(d));
+20                  setRightChild(new TreeNode(d));
 21              }  else {
 22                  right.insertInOrder(d);
 23              }
@@ -662,26 +662,26 @@ For simplicity, we'd implemented this tree as storing integers for data.
 29          return size;
 30      }
 31      
-32      public TreeNode find(int d)  {
-33          if (d  ==  data) {
+32      public TreeNode find(int d) {
+33          if (d == data) {
 34              return this;
-35          }  else if (d  <=  data) {
+35          }  else if (d <= data) {
 36              return left != null ? left.find(d) : null;
 37          }  else if (d > data) {
-38              return right  != null ? right.find(d) : null;
+38              return right != null ? right.find(d) : null;
 39          }
 40          return null;
 41      }
 42      
 43      public void setLeftChild(TreeNode left) {
-44          this.left =  left;
-45          if (left !=  null) {
-46              left.parent =  this;
+44          this.left = left;
+45          if (left != null) {
+46              left.parent = this;
 47          }
 48      }
 49      
 50      public void setRightChild(TreeNode right) {
-51          this.right =  right;
+51          this.right = right;
 52          if (right != null) {
 53              right.parent = this;
 54          }
@@ -697,44 +697,44 @@ This tree is implemented to be a binary search tree. However, you can use it for
 
 Like the  TreeNode class, we often needed access to the  internals of a linked  list in a way that the  built-in linked  list class  wouldn't support. For this  reason, we  implemented our  own  class  and used it for many problems.
 ```java
-1   public class  LinkedListNode {
+1   public class LinkedListNode {
 2       public LinkedListNode next, prev, last;
-3       public int  data;
-4       public LinkedListNode(int  d,  LinkedListNode n,  LinkedListNode  p) {
-5           data =  d;
+3       public int data;
+4       public LinkedListNode(int d, LinkedListNode n, LinkedListNode p) {
+5           data = d;
 6           setNext(n);
 7           setPrevious(p);
 8       }
 9       
 10      public LinkedListNode(int d) {
-11          data =  d;
+11          data = d;
 12      }
 13      
 14      public LinkedListNode() {}
 15      
 16      public void setNext(LinkedListNode n) {
-17          next =  n;
-18          if (this ==  last) {
-19              last =  n;
+17          next = n;
+18          if (this == last) {
+19              last = n;
 20          }
-21          if (n !=  null &&   n.prev  !=  this) {
+21          if (n != null && n.prev != this) {
 22              n.setPrevious(this);
 23          }
 24      }
 25      
-26      public  void setPrevious(LinkedListNode p) {
-27          prev =  p;
-28          if (p !=  null &&   p.next  !=  this) {
+26      public void setPrevious(LinkedListNode p) {
+27          prev = p;
+28          if (p != null && p.next != this) {
 29              p.setNext(this);
 30          }
 31      }
 32      
-33      public  LinkedListNode clone() {
-34          LinkedListNode next2 =  null;
-35          if (next !=  null) {
-36              next2 =  next.clone();
+33      public LinkedListNode clone() {
+34          LinkedListNode next2 = null;
+35          if (next != null) {
+36              next2 = next.clone();
 37          }
-38          LinkedListNode head2 =  new  LinkedListNode(data, next2,  null);
+38          LinkedListNode head2 = new LinkedListNode(data, next2, null);
 39          return head2;
 40      }
 41  }
@@ -748,36 +748,36 @@ Again, we've  kept the  methods and variables public  because we often needed th
 The trie data structure is used in a few problems to make  it easier to look up if a word is a prefix of any other words in a dictionary (or list of valid words). This is often used when we're recursively building words so that we can short circuit when the word is not valid.
 
 ```java
-1   public class Trie  {
-2       //The root   of  this trie.
+1   public class Trie {
+2       // The root of this trie.
 3       private TrieNode root;
 4       
-5       /* Takes a list of  strings as  an argument,  and constructs a trie that stores
-6        * these strings.  */
+5       /* Takes a list of strings as an argument, and constructs a trie that stores
+6        * these strings. */
 7       public Trie(ArrayList<String> list) {
-8           root = new  TrieNode();
+8           root = new TrieNode();
 9           for (String word : list) {
 10              root.addWord(word);
 11          }
 12      }
 13      
 14      
-15      /* Takes a list of  strings as  an argument,  and constructs a trie that stores
-16       * these strings.  */
-17      public Trie(String[]  list) {
-18          root = new  TrieNode();
+15      /* Takes a list of strings as an argument, and constructs a trie that stores
+16       * these strings. */
+17      public Trie(String[] list) {
+18          root = new TrieNode();
 19          for (String word : list) {
 20              root.addWord(word);
 21          }
 22      }
 23      
-24      /* Checks whether  this trie  contains a string with  the  prefix passed  in  as
-25       * argument.  */
-26      public boolean  contains(String prefix,  boolean  exact) {
-27          TrieNode lastNode  =  root;
+24      /* Checks whether this trie contains a string with the prefix passed in as
+25       * argument. */
+26      public boolean contains(String prefix, boolean exact) {
+27          TrieNode lastNode = root;
 28          int i = 0;
-29          for (i =  0;  i <  prefix.length(); i++)  {
-30              lastNode  =  lastNode.getChild(prefix.charAt(i));
+29          for (i = 0; i < prefix.length(); i++) {
+30              lastNode = lastNode.getChild(prefix.charAt(i));
 31              if (lastNode == null) {
 32                  return false;
 33              }
@@ -785,8 +785,8 @@ The trie data structure is used in a few problems to make  it easier to look up 
 35          return !exact || lastNode.terminates();
 36      }
 37      
-38      public boolean  contains(String prefix)  {
-39          return contains(prefix,  false);
+38      public boolean contains(String prefix) {
+39          return contains(prefix, false);
 40      }
 41      
 42      public TrieNode getRoot() {
@@ -794,70 +794,70 @@ The trie data structure is used in a few problems to make  it easier to look up 
 44      }
 45  }
 ```
-The Trie class uses theTrieNode class, which is implemented below.
+The Trie class uses the TrieNode class, which is implemented below.
 
 ```java
 1   public class TrieNode {
-2       /*  The children of  this node in  the  trie.*/
+2       /* The children of this node in the trie.*/
 3       private HashMap<Character, TrieNode> children;
-4       private boolean  terminates =  false;
+4       private boolean terminates = false;
 5       
-6       /*  The character stored in  this node as  data.*/
-7       private char  character;
+6       /* The character stored in this node as data.*/
+7       private char character;
 8       
-9       /* Constructs an empty trie node and initializes the  list of  its  children to  an
-10       * empty hash map. Used only  to  construct the  root  node of  the  trie. */
-11      public TrieNode()  {
-12          children =  new HashMap<Character, TrieNode>();
+9       /* Constructs an empty trie node and initializes the list of its children to an
+10       * empty hash map. Used only to construct the root node of the trie. */
+11      public TrieNode() {
+12          children = new HashMap<Character, TrieNode>();
 13      }
 14      
-15      /*  Constructs a  trie node and stores this character as  the  node's value.
-16       *  Initializes the  list of  child nodes of  this node to  an empty hash  map. */
-17      public TrieNode(char  character) {
+15      /* Constructs a trie node and stores this character as the node's value.
+16       * Initializes the list of child nodes of this node to an empty hash map. */
+17      public TrieNode(char character) {
 18          this();
-19          this.character =  character;
+19          this.character = character;
 20      }
 21      
-22      /*  Returns  the  character data  stored in  this node.  */
-23      public char  getChar() {
+22      /* Returns the character data stored in this node. */
+23      public char getChar() {
 24          return character;
 25      }
 26      
-27      /*  Add  this word to  the  trie, and recursively create the  child
-28       *  nodes.  */
-29      public void  addWord(String  word) {
-30          if (word ==  null  ||  word.isEmpty())  {
+27      /* Add this word to the trie, and recursively create the child
+28       * nodes. */
+29      public void addWord(String word) {
+30          if (word == null || word.isEmpty()) {
 31              return;
 32          }
 33          
-34          char  firstChar  = word.charAt(0);
+34          char firstChar = word.charAt(0);
 35          
-36          TrieNode child =  getChild(firstChar);
+36          TrieNode child = getChild(firstChar);
 37          if (child == null) {
-38              child =  new TrieNode(firstChar);
+38              child = new TrieNode(firstChar);
 39              children.put(firstChar, child);
 40          }
 41          
-42          if (word.length() > 1)  {
+42          if (word.length() > 1) {
 43              child.addWord(word.substring(l));
 44          }  else {
 45              child.setTerminates(true);
 46          }
 47      }
 48      
-49      /*  Find a  child node of  this node that has  the  char  argument as  its data. Return
-50       *  null if no such  child node is present in  the  trie. */
-51      public TrieNode getChild(char c)  {
+49      /* Find a child node of this node that has the char argument as its data. Return
+50       * null if no such child node is present in the trie. */
+51      public TrieNode getChild(char c) {
 52          return children.get(c);
 53      }
 54      
-55      /*  Returns  whether  this node represents the  end of  a complete  word.  */
-56      public boolean  terminates() {
+55      /* Returns whether this node represents the end of a complete word. */
+56      public boolean terminates() {
 57          return terminates;
 58      }
 59      
-60      /*  Set  whether  this node is the  end of  a complete  word.*/
-61      public void  setTerminates(boolean t) {
+60      /* Set whether this node is the end of a complete word.*/
+61      public void setTerminates(boolean t) {
 62          terminates = t;
 63      }
 64  }

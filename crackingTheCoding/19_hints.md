@@ -42,7 +42,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#27.    3.2     Observe that the minimum element doesn't change very often. It only changes when a smaller element is added, or when the smallest element is popped.
 - \#28.    4.8     How would you figure out if p is a descendent of a node n?
 - \#29.    2.6     Assume you have the length of the linked list. Can you implement this recursively?
-- \#30.    2.5     Try recursion. Suppose you have two lists, `A  =  1->5->9` (representing 951)  and `B = 2-> 3->6->7 (representing 7632)`, and a function that operates on the remainder of the lists `(5->9 and 3->6->7)`.  Could you use this to create the sum method? What is the relationship between `sum(l->5->9,  2->3->6->7)` and `sum(5->9,  3->6->7)`?
+- \#30.    2.5     Try recursion. Suppose you have two lists, `A = 1->5->9` (representing 951)  and `B = 2->3->6->7 (representing 7632)`, and a function that operates on the remainder of the lists `(5->9 and 3->6->7)`.  Could you use this to create the sum method? What is the relationship between `sum(1->5->9, 2->3->6->7)` and `sum(5->9, 3->6->7)`?
 - \#31.    4.10    Although the problem seems like it stems from duplicate values, it's really deeper than that. The issue is that the pre-order  traversal is the same only because  there are null nodes that we skipped over (because  they're null). Consider inserting a placeholder value into the pre-order traversal string whenever you reach a null node. Register the null node as a "real" node so that you can distinguish between the different structures.
 - \#32.    3.5     Imagine your secondary stack is sorted. Can you insert elements into it in sorted order? You might need some extra storage. What could you use for extra storage?
 - \#33.    4.4     If  you've developed  a brute  force solution, be  careful about  its runtime. If  you are computing the height of the subtrees for each node, you could have a pretty inefficient algorithm.
@@ -329,7 +329,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#309.   8.7     Approach 2: To generate a permutation of abed, you need to pick an initial character. It can be a, b,c, or d. You can then permute the remaining characters. How can you use this approach to generate all permutations of the full string?
 - \#310.   10.3    What is the runtime of your algorithm? What will happen if the array has duplicates?
 - \#311.   9.5     How would you scale this to a larger system?
-- \#312.   5.4     Get Next: Can you flip a Oto a 1  to create the next biggest number?
+- \#312.   5.4     Get Next: Can you flip a 0 to a 1  to create the next biggest number?
 - \#313.   11.4    Think about what load testing is designed to test. What are the factors in the load of a webpage? What criteria would be used to judge if a webpage performs satisfactorily under heavy load?
 - \#314.   5.3     Each sequence can be lengthened by merging it with an adjacent sequence (if any) or just flipping the immediate neighboring zero. You just need to find the best choice.
 - \#315.   10.8    Consider implementing your own bit vector class. It's a good exercise and an important part of this problem.
@@ -356,7 +356,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#336.   5.6     How would you figure out how many bits are different between two numbers?
 - \#337.   10.4    Binary search requires comparing an element to the midpoint. Getting the midpoint requires knowing the length. We don't know the length. Can we find it?
 - \#338.   8.4     Subsets that contain c will be subsets {a,   b,   c} but not {a,   b}. Can you build these subsets from the subsets of {a,   b}?
-- \#339.   5.4     Get Next: Flipping a Oto a 1 will create a bigger number. The farther right the index is the smaller the bigger number is.  If we have a number like 1001, we want to flip the rightmost 0 (to create 1011). But if we have a number like 1010, we should not flip the rightmost 1.
+- \#339.   5.4     Get Next: Flipping a 0 to a 1 will create a bigger number. The farther right the index is the smaller the bigger number is.  If we have a number like 1001, we want to flip the rightmost 0 (to create 1011). But if we have a number like 1010, we should not flip the rightmost 1.
 - \#340.   8.3     Given a specific index and value, can you identify if the magic index would be before or after it?
 - \#341.   6.6     Now suppose there were two blue-eyed people. What would they see? What would they know? When would they leave? Remember your answer from the prior hint. Assume they know the answer to the earlier hint.
 - \#342.   10.2    Do you even need to truly "sort"? Or is just reorganizing the list sufficient?
@@ -375,7 +375,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#355.   5.7     Try masks 0xaaaaaaaa and 0x55555555  to select the even and odd bits. Then try shifting the even and odd bits around to create the right number.
 - \#356.   8.7     Approach 2: You can implement this approach by having the recursive function pass back the list of the strings, and then you prepend the starting character to it. Or, you can push down a prefix to the recursive calls.
 - \#357.   6.8     Try dropping Egg 1 at bigger intervals at the beginning and then at smaller and smaller intervals. The idea is to keep the sum of Egg 1  and Egg 2's drops as constant as possible. For each additional drop that Egg  1 takes, Egg 2 takes one fewer drop. What is the right interval?
-- \#358.   5.4     Get Next: We should flip the rightmost non-trailing 0. The number 1010 would become 1110. Once we've done that, we need to flip a 1 to a Oto make the number as small as possible, but bigger than the original number (1010). What do we do? How can we shrink the number?
+- \#358.   5.4     Get Next: We should flip the rightmost non-trailing 0. The number 1010 would become 1110. Once we've done that, we need to flip a 1 to a 0 to make the number as small as possible, but bigger than the original number (1010). What do we do? How can we shrink the number?
 - \#359    8.1     Try memoization as a way to optimize an inefficient recursive program.
 - \#360.   8.2     Simplify this problem a bit by first figuring out if there's a path. Then, modify your algorithm to track the path.
 - \#361.   7.10    What is the algorithm to place the bombs around the board?
@@ -464,7 +464,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#440.   12.10   How will we free the memory?
 - \#441.   15.2    It's okay if your solution isn't totally perfect. That might not be possible. Discuss the tradeoffs of your approach.
 - \#442.   14.7    Think carefully about how you handle ties when selecting the top 10%.
-- \#443.   13.8    A naive approach is to pick a random subset size z and then iterate through the elements, putting it in the set with probability z/list_size. Why would this not work?
+- \#443.   13.8    A naive approach is to pick a random subset size z and then iterate through the elements, putting it in the set with probability `z/list_size`. Why would this not work?
 - \#444.   14.5    Denormalization means adding redundant data to a table. It's typically used in very large systems. Why might this be useful?
 - \#445.   12.5    A shallow  copy copies just the initial data structure. A deep copy does this, and also copies any underlying data. Given this, why might you use one versus the other?
 - \#446.   15.5    Would semaphores be useful here?
@@ -500,7 +500,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#470.   17.14   There are actually several approaches. Brainstorm these. It's okay to start off with a naive approach.
 - \#471.   16.20   Consider recursion.
 - \#472.   16.3    Will all lines intercept? What determines if two lines intercept?
-- \#473.   16.7    Let k be 1 if a > b and  O otherwise. If you  were  given k, could you  return the  max (without a comparison or if-else logic)?
+- \#473.   16.7    Let k be 1 if a > b and 0 otherwise. If you  were  given k, could you  return the  max (without a comparison or if-else logic)?
 - \#474.   16.22   The tricky bit is handling an infinite  grid. What are your options?
 - \#475.   17.15   Try simplifying this problem: What if you just needed to know  the  longest word  made up of two other words  in the  list?
 - \#476.   16.10   Solution 1: Can you count the  number of people alive in each year?
@@ -531,7 +531,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#501.   17.11   Adapt your algorithm for one execution of the algorithm for repeated executions. What is the slow part? Can you optimize it?
 - \#502.   16.8    Try thinking about the number in terms of chunks of three digits.
 - \#503.   17.19   Start with the first part: Finding the missing number if only one number is missing.
-- \#504.   17.16   Recursive solution: You have two choices at each appointment  (take the appointment or reject the appointment). As a brute force approach, you can recurse through all possibilities. Note, though, that if you take request i, your recursive algorithm should skip request i +  1.
+- \#504.   17.16   Recursive solution: You have two choices at each appointment  (take the appointment or reject the appointment). As a brute force approach, you can recurse through all possibilities. Note, though, that if you take request i, your recursive algorithm should skip request i + 1.
 - \#505.   16.23   Be very careful that your solution actually returns each value from 0 through 6 with equal probability.
 - \#506.   17.22   Start with a brute force, recursive solution. Just create all words that are one edit away, check if they are in the dictionary, and then attempt that path.
 - \#507.   16.10   Solution 2: What if you sorted the years? What would you sort by?
@@ -584,14 +584,14 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#554.   17.16   Iterative solution: It's probably easiest to start with the end of the array and work backwards.
 - \#555.   17.26   Solution 2: If we can't compare all documents to all other documents, then we need to dive down and start looking at things at the element level. Consider a naive solution and see if you can extend that to multiple documents.
 - \#556.   17.22   To quickly  get  the  valid words that are  one edit  away,  try to  group the  words in the dictionary in a useful way. Observe that all words in the form b_ll (such as bill, ball, bell, and  bull) will be  one edit  away. However,  those aren't the  only words that are one edit  away from bill.
-- \#557.   16.21   When you move a value a from  array A to array B, then N.s sum  decreases by a and  B's sum increases by a. What happens when you swap two values? What  would be needed to swap two values and  get  the  same sum?
+- \#557.   16.21   When you move a value a from  array A to array B, then A's sum  decreases by a and  B's sum increases by a. What happens when you swap two values? What  would be needed to swap two values and  get  the  same sum?
 - \#558.   17.11   If you had  a list of the  occurrences of each word,  then you are really looking for a pair of values within two arrays  (one  value  for each array) with the  smallest difference. This could be a fairly similar algorithm to your initial algorithm.
 - \#559.   16.22   Option #2: One  approach is to just double the  size of the  array when the  ant  wanders to an edge. How will you handle the  ant  wandering into negative coordinates, though? Arrays can't  have negative indices.
 - \#560.   16.13   Given a line (slope and  y-intercept), can you find where it intersects another line?
-- \#561.   17.26   Solution 2: One  way to think  about this is that we need to be  able  to very quickly pull a list of all documents with  some similarity  to a specific document. (Again, we should not  do this by saying "look at all documents and  quickly eliminate the  dissimilar documents". That wilI be at least  O(D2) .)
+- \#561.   17.26   Solution 2: One  way to think  about this is that we need to be  able  to very quickly pull a list of all documents with  some similarity  to a specific document. (Again, we should not  do this by saying "look at all documents and  quickly eliminate the  dissimilar documents". That wilI be at least  O(D²).)
 - \#562.   17.16   Iterative solution: Observe that you would never skip three appointments in a row. Why would you? You would always be able to take  the  middle booking.
 - \#563.   16.14   Have you tried using a hash table?
-- \#564.   16.21   If you swap two values, a and  b, then the  sum  of A becomes sumA   -  a  +   band the sum  of B becomes sumB   -  b   +  a. These sums need to be equal.
+- \#564.   16.21   If you swap two values, a and  b, then the  sum  of A becomes sumA   -  a  +   b and the sum  of B becomes sumB   -  b   +  a. These sums need to be equal.
 - \#565.   17.24   If you can precompute the  sum  from the  top left corner to each cell, you can use this to compute the sum of an arbitrary submatrix in O(1) time. Picture a particular submatrix. The  full, precomputed sum  will include this  submatrix, an  array immediately above it (C), and  array to the  left (B), and  an area to the  top and  left (A). How can you compute the  sum of just D?
 ![](media/565.JPG)
 - \#566.   17.10   Consider the  brute force  solution. We  pick  an  element and  then validate if it's  the majority element by counting the  number of matching and  non-matching elements. Suppose, for the first element, the first few checks reveal seven non-matching elements and  three matching elements. Is it necessary to keep checking this element?
@@ -613,7 +613,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#582.   17.17   Can you use a trie?
 - \#583.   16.21   If we do the math, we are looking for a pair of values such that a   -   b  =   (sumA   - sumB)   / 2. The problem then reduces to looking for a pair of values with a particular difference.
 - \#584.   17.26   Solution 2: Try building a hash table from each word to the documents that contain this word. This will allow us to easily find all documents with some similarity to {13, 16, 21, 3}.
-- \#585.   16.5    How does a zero get into the result of n l? What does it mean?
+- \#585.   16.5    How does a zero get into the result of n !? What does it mean?
 - \#586.   17.7    If each name  maps to a list of its alternate spellings, you might  have to update a lot of lists when  you set X and Y as synonyms.  If X is a synonym  of {A, B, C}, and Y is a synonym of{D,   E,   F}then you would need  to add {Y, D, E, F} to A's synonym list, B's synonym list, C's synonym list, and X's synonym list. Ditto for {Y, D, E, F}. Can we make this faster?
 - \#587.   17.16   Iterative solution: If you take an appointment, you can't take the next appointment, but you can take anything after that. Therefore, optimal(r₁, ..., rₙ)   =  max (r₁ + optimal(r₁₊₂, ... , rₙ), optimal(r₁₊₁, ..., rₙ)). You can solve this iteratively by working backwards. #588.   16.8    Have  you  considered negative  numbers? Does  your  solution  work  for  values  like 100,030,000?
 - \#589.   17.15   When  you get  recursive  algorithms that  are  very inefficient try looking  for repeated subproblems.
@@ -655,7 +655,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#625.   17.14   If you picked an arbitrary element, how long would it take you to figure out the rank of this element (the number of elements bigger or smaller than it)?
 - \#626.   17.19   Part 2: We're now looking for two missing numbers, which we will call a and b. The approach from part 1 will tell us the sum of a and b, but it won't actually tell us a and b. What other calculations could we do? 
 - \#627.   16.22   Option  #3: You could consider keeping a hash set of all the white cells. How will you be able to print the whole grid, though?          
-- \#628.   17.1    The adding step alone would convert 1+ 1 -> 0, 1+ 0 -> 1, 0+ 1 -> 1, O+ O -> O. How  do you do this without the+ sign?         
+- \#628.   17.1    The adding step alone would convert 1 + 1 -> 0, 1 + 0 -> 1, 0 + 1 -> 1, 0 + 0 -> 0. How  do you do this without the+ sign?         
 - \#629.   17.21   What role does the tallest bar in the histogram play?          
 - \#630.   16.25   What data structure would be most useful for the lookups? What data structure would be most useful to know and maintain the order of items?          
 - \#631.   16.18   Start with a brute force approach. Can you try all possibilities for a and b?           
@@ -693,7 +693,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#656.   17.13   You can think about the choices the recursive algorithm makes in one of two ways: (1) At each character, should I put a space here? (2) Where should I put the next space? You can solve both of these recursively.
 - \#657.   17.8    If you needed  only one side of the pair to increase, then you would just sort all the values on that side. Your longest sequence  would in fact be all of the pairs (other than any duplicates, since the longest sequence needs to strictly increase). What does this tell you about the original problem?
 - \#658.   17.21   You can handle the remainder of the graph by just repeating this process: find the tallest bar and the second tallest bar, and subtract out the bars in between.
-- \#659.   17.4    To find the least significant bit of the missing number, note that you know how many 0s and 1s to expect. For example, if you see three 0s and three 1s in the least significant bit, then the missing number's least significant bit must be a 1. Think about it: in any sequence of 0s and ls, you'd get a 0, then a 1, then a 0, then a 1, and so on.
+- \#659.   17.4    To find the least significant bit of the missing number, note that you know how many 0s and 1s to expect. For example, if you see three 0s and three 1s in the least significant bit, then the missing number's least significant bit must be a 1. Think about it: in any sequence of 0s and 1s, you'd get a 0, then a 1, then a 0, then a 1, and so on.
 - \#660.   17.9    Rather than checking all values in the list for the next value (by multiplying each by 3, 5, and 7), think about it this way: when you insert a value x into the list, you can "create" the values 3x, 5x, and 7x to be used later.
 - \#661.   17.14   Think about the previous hint some more, particularly in the context of quicksort.
 - \#662.   17.21   How can you make the process of finding the next tallest bar on each side faster?
@@ -705,8 +705,8 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#668.   16.23   Looking at this table again, note that the number of rows will be 5ᵏ, where k is the max number of calls to rand5(). In order to make each value between 0 and 6 have equal probability, 1/7th of the rows must map to 0,  1/7th to 1, and so on. Is this possible?
 - \#669.   17.18   Another way of thinking about the brute force is that we take each starting index and find the next instance of each element in the target string. The maximum of all these next instances marks the end of a subsequence which contains all the target characters. What is the runtime of this? How can we make it faster?
 - \#670.   16.6    Think about how you would merge two sorted arrays.
-- \#671.   17.5    When the above tables have equal values for the number of As and Bs, the entire subarray (starting from index 0) has an equal number of As and Bs. How could you use this table to find qualifying subarrays that don't start at index O?
-- \#672.   17.19   Part 2: Adding the numbers together will tell us the result of a   +  b. Multiplying the numbers together will tell us the result of a  * b. How can we get the exact values for a and b?
+- \#671.   17.5    When the above tables have equal values for the number of As and Bs, the entire subarray (starting from index 0) has an equal number of As and Bs. How could you use this table to find qualifying subarrays that don't start at index 0?
+- \#672.   17.19   Part 2: Adding the numbers together will tell us the result of a   +  b. Multiplying the numbers together will tell us the result of a * b. How can we get the exact values for a and b?
 - \#673.   16.24   If we sorted the array, we could do repeated binary searches for the complement of a number. What if, instead, the array is given to us sorted? Could we then solve the problem in O(N) time and O(1) space?
 - \#674.   16.19   If you were given the row and column of a water cell, how can you find all connected spaces?
 - \#675.   17.7    We can treat adding X, Y as synonyms as adding an edge between the X node and the Y node. How then do we figure out the groups of synonyms?
@@ -733,7 +733,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#696.   17.19   Part 2: Almost any "equation" we can come up with will work here (as long as it's not equivalent to a linear sum). It's just a matter of keeping this sum small.
 - \#697.   16.23   It is not possible to divide 5ᵏ evenly by 7. Does this mean that you can't implement rand7() with rand5()?
 - \#698.   16.26   You can also maintain two stacks, one for the operators and one for the numbers. You push a number onto the stack every time you see it. What about the operators? When do you pop operators from the stack and apply them to the numbers?
-- \#699.   17.8    Another way to think about the problem is this: if you had the longest sequence ending at each element A[0] through A[n -1], could you use that to find the longest sequence ending at element A[n -1]?
+- \#699.   17.8    Another way to think about the problem is this: if you had the longest sequence ending at each element A[0] through A[n - 1], could you use that to find the longest sequence ending at element A[n - 1]?
 - \#700.   16.11   Consider a recursive solution. 
 - \#701.   17.12   Many people get stuck at this point and aren't sure what to do. Sometimes they need the start of the linked list, and sometimes they need the end. A given node doesn't necessarily know what to return on its convert call. Sometimes the simple solution is easiest: always return both. What are some ways you could do this?
 - \#702.   17.19   Part 2: Try a sum of squares of the values.
