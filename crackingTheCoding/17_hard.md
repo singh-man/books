@@ -186,8 +186,8 @@ We can actually use a similar approach, but leverage the bit values more directl
 ```
 Removing the number above creates an imbalance of 1s and 0s in the least significant bit, which we'll call LSB₁. In a list of numbers from 0 to n, we would expect there to be the same number of 0s as 1s (if n is odd), or an additional 0 if n is even. That is:
 
-    if n %  2 == 1 then  count(0s)  =  count(1s)
-    if n %  2 == 0 then  count(0s)  =  1 + count(1s)
+    if n % 2 == 1 then count(0s) = count(1s)
+    if n % 2 == 0 then count(0s) = 1 + count(1s)
 
 Note that this means that count(0s) is always greater than or equal to count(1s).
 
@@ -209,8 +209,8 @@ As in the earlier example, we can deduce the value of the second least significa
 
 Again, we have the same conclusion:
 
-- If count₂(0s)  <=  count₂(1s), then LSB₂(v) = 0. 
-- If count₂(0s)  >   count₂(1s), then LSB₂(v) = 1.
+- If count₂(0s) <= count₂(1s), then LSB₂(v) = 0. 
+- If count₂(0s) >  count₂(1s), then LSB₂(v) = 1.
 
 We can repeat this process for each bit. On each iteration, we count the number of 0s and 1s in bit i to check if LSBᵢ(v) is 0 or 1. Then, we discard the numbers where LSBᵢ(x) != LSBᵢ(v). That is, if v is even, we discard the odd numbers, and so on.
 
