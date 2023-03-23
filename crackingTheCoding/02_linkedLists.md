@@ -407,7 +407,7 @@ There are many  equally optimal solutions to this problem. If you came up  with 
 
 ```
 EXAMPLE
-Input: (7 -> 1 -> 6) + (5 -> 9 -> 2). That is, 617 +  295. 
+Input: (7 -> 1 -> 6) + (5 -> 9 -> 2). That is, 617 + 295. 
 Output: 2 -> 1 -> 9. That is, 912.
 ```
 
@@ -416,7 +416,7 @@ FOLLOW UP
 Suppose the digits are stored in forward order. Repeat the above problem. 
 
 ```
-Input: (6 -> 1 -> 7) +  (2 -> 9 -> 5). That is, 617 +  295.
+Input: (6 -> 1 -> 7) + (2 -> 9 -> 5). That is, 617 + 295.
 Output: 9 -> 1 -> 2. That is, 912.
 ```
 
@@ -493,7 +493,7 @@ In implementing this code, we must be careful to handle the condition when one l
 
 Part B is conceptually the same (recurse, carry the excess), but has some additional complications when it comes to implementation:
 
-1. One list may be shorter than the other, and we cannot handle this "on the fly". For example, suppose we were adding `(1 -> 2 -> 3-> 4) and (5-> 6-> 7)`. We need to know that the 5 should be "matched" with the 2, not the 1. We can accomplish this by comparing the lengths of the lists in the beginning and padding the shorter list with zeros.
+1. One list may be shorter than the other, and we cannot handle this "on the fly". For example, suppose we were adding `(1 -> 2 -> 3 -> 4) and (5 -> 6 -> 7)`. We need to know that the 5 should be "matched" with the 2, not the 1. We can accomplish this by comparing the lengths of the lists in the beginning and padding the shorter list with zeros.
 2. In the first part, successive results were added to the tail (i.e., passed forward). This meant that the recursive call would be passed the carry, and would return the result (which is then appended to the tail). In this case, however, results are added to the head (i.e., passed backward). The recursive call must return the result, as before, as well as the carry. This is not terribly challenging to implement, but it is more cumbersome. We can solve this issue by creating a wrapper class called Partial Sum.
 
 The code below implements this algorithm.
@@ -577,7 +577,7 @@ SOLUTION
  
 --- 
 
-To approach this problem, we can picture a palindrome like 0  ->  1  ->  2  ->  0. We know that, since it's a palindrome, the list must be the same backwards and forwards. This leads us to our first solution.
+To approach this problem, we can picture a palindrome like 0 -> 1 -> 2 -> 0. We know that, since it's a palindrome, the list must be the same backwards and forwards. This leads us to our first solution.
 
 
 **Solution #1: Reverse and Compare**
@@ -638,8 +638,8 @@ Now, we simply iterate through the rest of the linked list. At each iteration, w
 5       Stack<Integer> stack = new Stack<Integer>();
 6   
 7       /* Push elements from first half of linked list onto stack. When fast runner
-8       * (which is moving at 2x speed) reaches the end of the linked list, then we
-9       * know we're at the middle */
+8        * (which is moving at 2x speed) reaches the end of the linked list, then we
+9        * know we're at the middle */
 10      while (fast != null && fast.next != null) {
 11          stack.push(slow.data);
 12          slow = slow.next;
@@ -654,7 +654,7 @@ Now, we simply iterate through the rest of the linked list. At each iteration, w
 21      while (slow != null) {
 22          int top = stack.pop().intValue();
 23  
-24          /* If values are different, then it's not a palindrome*/
+24          /* If values are different, then it's not a palindrome */
 25          if (top != slow.data) {
 26              return false;
 27          }
@@ -701,10 +701,10 @@ Let's examine what the call stack looks like:
 
 In the above call stack, each call wants to check  if the list is a palindrome by comparing its head node with the corresponding node from the back of the list. That is:
 
-- Line 1 needs to compare node  0f with node   0b
-- Line 2 needs to compare node  1f with node   1b
-- Line 3 needs to compare node  2f with node   2b
-- Line 4 needs to compare node  3f with node   3b.
+- Line 1 needs to compare node 0f with node 0b
+- Line 2 needs to compare node 1f with node 1b
+- Line 3 needs to compare node 2f with node 2b
+- Line 4 needs to compare node 3f with node 3b.
 
 If we rewind the stack, passing nodes back as described below, we can do just that:
 
