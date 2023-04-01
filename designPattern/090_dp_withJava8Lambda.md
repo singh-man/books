@@ -122,7 +122,7 @@ public class ManFuncUnderstanding {
                 .andThen(mf3) // ManFuncUnderstanding$ManFunc$$Lambda$5' 3 instance
                 .andThen(getMyFunc("4")) // ManFuncUnderstanding$ManFunc$$Lambda$5' 4 instance and ManFuncUnderstanding$$Lambda$50 2 instance
                 .apply("a"));
-        // In total 9 func exists, apply is called on ManFuncUnderstanding$ManFunc$$Lambda$5' its last instance created
+        // In total 9 func exists, apply is called on ManFuncUnderstanding$ManFunc$$Lambda$5' its last instance created but do not via func chaining first func will be used to start processing the passed parameter.
         // check a1.hprof image Note: ManFunc is interface
         heapDump("a1.hprof");
 
