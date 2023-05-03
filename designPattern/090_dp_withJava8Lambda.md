@@ -1,15 +1,16 @@
 ## Design Patterns with Java 8’s Lambdas
 
 > Hint: Any design pattern which is based on one single function. However this is not limited.
+
 > Its better if API consumer defines the API structure.
 
 ### Difference between OOPS and Functioal paradigm
 
-**OOPS**: Data and Behaviour is one single unit and is called **Object**. Data is given priority and behaviour works on it.
+**OOPS**: Data and Behaviour is one single unit and is called **Object**. Data and behaviour are combined in a template, called as Class. Data is given priority and behaviour works on it.
 
 **FP**: *Data and Behaviour are seperate entities*. Data is immutable (e.g. String Class) values that are transformed by pure functions, which do not have side effects.
 
-OOPS is data centric with behaviour treated as secondary whicle FP is function first.
+OOPS is data centric with behaviour treated as secondary while in FP; functions are treated as first class citizen.
 
 ### Abstract Factory
 
