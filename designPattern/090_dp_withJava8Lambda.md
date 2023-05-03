@@ -6,7 +6,7 @@
 
 ### Difference between OOPS and Functioal paradigm
 
-**OOPS**: Data and Behaviour is one single unit and is called **Object**. Data and behaviour are combined in a template, called as Class. Data is given priority and behaviour works on it.
+**OOPS**: Data and Behaviour is one single unit and is called **Object**. Data and behaviour are combined in a template, called as **Class**. Data is given priority and behaviour works on it.
 
 **FP**: *Data and Behaviour are seperate entities*. Data is immutable (e.g. String Class) values that are transformed by pure functions, which do not have side effects.
 
