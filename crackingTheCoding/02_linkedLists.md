@@ -264,7 +264,7 @@ The code below implements this algorithm.
 9       }
 10  
 11      /* Move them at the same pace. When p1 hits the end, p2 will be at the right
-12      * element. */
+12       * element. */
 13      while (p1 != null) {
 14          p1 = p1.next;
 15          p2 = p2.next;
@@ -689,10 +689,10 @@ This method will form the outline of the isPalindrome method. The "meat" of the 
 Let's examine what the call stack looks like:
 
 ```
-1   v1 = isPalindrome: list = 0  (  1  (  2  (  3  )  2  )  1  )  0.length   =  7
-2      v2 =  isPalindrome: list = 1  (  2  (  3  )  2  )  1  )  0.length =  5
-3         v3 =  isPalindrome: list = 2  (  3  )  2  )  1  )  0.length   =  3
-4            v4 =  isPalindrome: list = 3  )  2  )  1  )  0.length =  1
+1   v1 = isPalindrome: list = 0  (  1  (  2  (  3  )  2  )  1  )  0. length  =  7
+2      v2 =  isPalindrome: list = 1  (  2  (  3  )  2  )  1  )  0. length  =  5
+3         v3 =  isPalindrome: list = 2  (  3  )  2  )  1  )  0. length  =  3
+4            v4 =  isPalindrome: list = 3  )  2  )  1  )  0. length  =  1
 5            returns v3
 6         returns v2
 7      returns v1
@@ -728,16 +728,16 @@ It's both. We create a simple class with two members, a boolean and a node, and 
 
 The example below illustrates the parameters and return values from this sample list.
 ```
-1   isPalindrome:  list = 0  (  1  (  2  (  3  (  4  )  3  )  2  )  1  )  0.  len  =  9
-2     isPalindrome:  list =  1  (  2  (  3  (  4  )  3  )  2  )  1  )  0.  len  =  7
-3       isPalindrome:  list =  2  (  3  (  4  )  3  )  2  )  1  )  0.  len  =  5
-4         isPalindrome:  list =   3  (  4  )  3  )  2  )  1  )  0.  len=  3
-5           isPalindrome:  list =  4  )  3  )  2  )  1  )  0.  len  =  1
-6           returns node 3b,  true
-7         returns node 2b,  true
+1   isPalindrome:  list = 0  (  1  (  2  (  3  (  4  )  3  )  2  )  1  )  0. len  =  9
+2     isPalindrome:  list =  1  (  2  (  3  (  4  )  3  )  2  )  1  )  0. len  =  7
+3       isPalindrome:  list =  2  (  3  (  4  )  3  )  2  )  1  )  0. len  =  5
+4         isPalindrome:  list =   3  (  4  )  3  )  2  )  1  )  0. len  =  3
+5           isPalindrome:  list =  4  )  3  )  2  )  1  )  0. len  =  1
+6           returns node 3b, true
+7         returns node 2b, true
 8       returns node 1b, true
-9     returns node 0b,  true
-10  returns null,  true
+9     returns node 0b, true
+10  returns null, true
 ```
 
 Implementing this code is now just a matter of filling in the details.

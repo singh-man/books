@@ -405,12 +405,12 @@ One solution is to have just a single int value, minValue, that's a member  of t
 To further understand this question, let's walk through it with a short example:
 
 ```
-push(5);  // stack is {5},   min is 5 
+push(5);  // stack is {5},  min is 5 
 push(6);  // stack is {6,  5},  min is 5 
-push(3);  // stack is {3,  6,  5},   min is 3 
-push(7);  // stack is {7,  3,  6,  5},   min is 3
-pop();    // pops  7. stack is {3,  6,   5},   min is 3 
-pop();    // pops  3. stack is {6,  5}.   min is 5.
+push(3);  // stack is {3,  6,  5},  min is 3 
+push(7);  // stack is {7,  3,  6,  5},  min is 3
+pop();    // pops  7. stack is {3,  6,  5},  min is 3 
+pop();    // pops  3. stack is {6,  5}.  min is 5.
 ```
 
 Observe how once the stack goes back to a prior state ({6, 5}), the minimum also goes back to its prior state (5). This leads us to our second solution.
