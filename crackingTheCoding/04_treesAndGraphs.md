@@ -424,7 +424,7 @@ To create a tree of minimal height, we need to match the number of nodes in the 
 
 We proceed with constructing our tree in a similar fashion. The middle of each subsection of the array becomes the root of the node. The left half of the array will become our left subtree, and the right half of the array will become the right subtree.
 
-One way to implement this is to use a simple `root.insertNode(int  v)` method which inserts the value v through a recursive process that starts with the root node. This will indeed construct a tree with minimal height but it will not do so very efficiently.  Each insertion  will require traversing the tree, giving a total cost of O(N log N) to the tree.
+One way to implement this is to use a simple `root.insertNode(int v)` method which inserts the value v through a recursive process that starts with the root node. This will indeed construct a tree with minimal height but it will not do so very efficiently.  Each insertion  will require traversing the tree, giving a total cost of O(N log N) to the tree.
 
 Alternatively, we can cut out the extra traversals by recursively using the createMinimalBST method. This method is passed just a subsection of the array and returns the root of a minimal tree for that array.
 
@@ -511,8 +511,8 @@ The code below implements this algorithm.
 7       }
 8  
 9       while (current.size() > 0) {
-10          result.add(current);// Add previous level
-11          LinkedList<TreeNode> parents = current;//Go to next level
+10          result.add(current); // Add previous level
+11          LinkedList<TreeNode> parents = current; // Go to next level
 12          current = new LinkedList<TreeNode>();
 13          for (TreeNode parent : parents) {
 14              /* Visit the children*/
@@ -556,7 +556,7 @@ In this question, we've been fortunate enough to be told exactly what balanced m
 9       int heightDiff = getHeight(root.left) - getHeight(root.right);
 10      if (Math.abs(heightDiff) > 1) {
 11          return false;
-12      } else { //Recurse
+12      } else { // Recurse
 13          return isBalanced(root.left) && isBalanced(root.right);
 14      }
 15  }
@@ -664,7 +664,7 @@ The code below implements this algorithm.
 14      // Check / recurse right
 15      if (!checkBST(n.right)) return false;
 16  
-17      return true;// All good!
+17      return true; // All good!
 18  }
 ```
 
@@ -804,8 +804,8 @@ EXAMPLE
 
 ```
 Input:
-    projects:  a, b, c,  d, e, f
-    dependencies: (a,  d),  (f,  b),  (b,   d),  (f,  a),  (d,   c) 
+    projects:  a, b, c, d, e, f
+    dependencies: (a, d), (f, b), (b, d), (f, a), (d, c) 
 
 Output: f, e, a, b, d, c
 ```
@@ -913,7 +913,7 @@ The code below implements this algorithm.
 26   Project[] orderProjects(ArrayList<Project> projects) {
 27      Project[] order = new Project[projects.size()];
 28  
-29      /* Add "roots" to the build order first.*/
+29      /* Add "roots" to the build order first. */
 30      int endOfList = addNonDependent(order, projects, 0);
 31  
 32      int toBeProcessed = 0;
@@ -1036,7 +1036,7 @@ DFS(b)                                  // Step  1
     DFS(a)                              // Step  4
         DFS(e)                          // Step  5
             build order =   ..., e, h   // Step  6
-        build order =  ... , a,   e, h  // Step  7
+        build order =  ..., a,   e, h   // Step  7
     DFS(e)  -> return                   // Step  8
     build order =  ...,   b, a, e, h    // Step  9
 ```
@@ -1051,12 +1051,12 @@ Now what? We can start with any old node again, doing a DFS on it and then addin
 ```
 DFS(d) 
     DFS(g)
-        build order =  ...,   g,  b,   a,   e,   h 
-    build order =  ...,   d,   g,  b,   a,   e,   h
+        build order =  ...,  g,  b,  a,  e,  h 
+    build order =  ...,   d,  g,  b,  a,  e,  h
 DFS(f) 
     DFS(c)
-        build order =  ...,   c,   d,   g,  b,   a,   e,   h 
-        build order = f,  c,   d,   g,  b,   a,   e,   h
+        build order =  ...,   c,  d,  g,  b,  a,  e,  h 
+        build order = f,  c,  d,  g,  b,  a,  e,  h
 ```
 In an algorithm like this, we should think about the issue of cycles. There is no possible build order if there is a cycle. But still, we don't want to get stuck in an infinite loop just because there's no possible solution.
 
@@ -1359,12 +1359,12 @@ We somehow need to distinguish between these two cases, and this is what the cod
 23      }
 24  
 25      Result rx = commonAncHelper(root.left, p, q);
-26      if (rx.isAncestor) { //Found common ancestor
+26      if (rx.isAncestor) { // Found common ancestor
 27          return rx;
 28      }
 29  
 30      Result ry = commonAncHelper(root.right, p, q);
-31      if (ry.isAncestor) { //Found common ancestor
+31      if (ry.isAncestor) { // Found common ancestor
 32          return ry;
 33      }
 34  
@@ -1434,7 +1434,7 @@ Note that, as long as there  aren't any duplicates in the original array sets, w
 The last piece to talk about here is how the weaving works Let's think recursively about how to weave {1, 2, 3} and {4, 5,  6}. What are the subproblems?
 
 - Prepend a 1 to all weaves of {2,  3} and {4,  5,   6}. 
-- Prepend a 4 to all weaves of {l,  2,  3} and {5,   6}.
+- Prepend a 4 to all weaves of {1,  2,  3} and {5,   6}.
 
 To implement this, we'll store each as linked lists. This will make it easy to add and remove elements. When we recurse, we'll push the prefixed elements down the recursion When first or second are empty, we add the remainder to prefix and store the result.
 
@@ -1668,13 +1668,13 @@ SOLUTION
 
 Let's draw an example.
 ```
-           20
-         /   \
-       10     30
-      /    \
-     5      15
-   /  \       \
-  3     7      17
+          20
+         /  \
+       10    30
+      /  \
+     5    15
+    / \    \
+   3   7    17
 ```
 
 We're going to explore many solutions until we get to an optimal one that works.
@@ -1802,11 +1802,11 @@ Random number calls can be expensive.  If we'd like, we can reduce the number of
 *Imagine* we called *getRandomNode* on the tree below, and then traversed left.
 
 ```
-          20
-        /    \
-      10      30
-     /   \      \
-    5    15      35
+         20
+       /    \
+      10     30
+     /   \     \
+    5    15     35
    / \     \
   3   7     17
 ```
@@ -1874,13 +1874,13 @@ SOLUTION
 Let's pick a potential sum-say, 8-and then draw  a binary  tree  based on this. This tree  intentionally has a number of paths with this sum.
 
 ```
-            10
-          /    \
-        5      -3
-      /    \     \
-    3       2     11
-   /  \       \
-  3   -2       1
+          10
+        /    \
+       5      -3
+     /   \      \
+    3     2      11
+   /  \    \
+  3   -2    1
 ```
 
 One option is the brute force approach. 
@@ -1955,13 +1955,13 @@ In an unbalanced tree, the runtime could be much worse. Consider a tree that is 
 In analyzing the last solution, we may realize that we repeat some work. For a path such as `10  ->  5  -> 3  ->  -2`, we traverse this path (or parts of it) repeatedly. We do it when we start with node  10, then when we go to node 5 (looking at 5, then 3, then  -2), then  when  we go to node  3, and then  finally  when  we go to node -2. Ideally, we'd like to reuse this work.
 
 ```
-            10
-          /    \
-        5       -3
-      /    \      \
-     3      1      11
-   /  \      \
-  3   -2      2
+           10
+         /   \
+        5     -3
+      /   \     \
+     3     1     11
+   /  \     \
+  3   -2     2
 ```
 
 

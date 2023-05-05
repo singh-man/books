@@ -65,7 +65,7 @@ The Singleton pattern ensures that a class has only one instance and ensures acc
 1   public class Restaurant {
 2       private static Restaurant _instance = null;
 3       protected Restaurant() { ... }
-4       public static Restaurant getlnstance() {
+4       public static Restaurant getInstance() {
 5           if (_instance == null) {
 6               _instance =  new Restaurant();
 7           }
@@ -305,7 +305,7 @@ CallHandler represents the body of the program, and all calls are funneled first
 46  
 47      /* An employee got free. Look for a waiting call that employee can serve. Return
 48       * true if we assigned a call, false otherwise. */
-49      public boolean assignCall(Employee emp) {... }
+49      public boolean assignCall(Employee emp) { ... }
 50  }
 ```
 
@@ -330,10 +330,10 @@ Call represents a call from a user. A call has a minimum rank and is assigned to
 16      /* Set employee who is handling call.*/
 17      public void setHandler(Employee e) {handler = e; }
 18  
-19      public void reply(String message) {... }
+19      public void reply(String message) { ... }
 20      public Rank getRank() {return rank;}
 21      public void setRank(Rank r) {rank = r; }
-22      public Rank incrementRank() {... }
+22      public Rank incrementRank() { ... }
 23      public void disconnect() { ... }
 24  }
 ```
@@ -456,7 +456,7 @@ Like a real CD player, the CDP layer class supports storing just one CD at a tim
 3       private CD c;
 4   
 5       /*Constructors.*/
-6       public CDPlayer(CD c, Playlist p) {...}
+6       public CDPlayer(CD c, Playlist p) { ... }
 7       public CDPlayer(Playlist p) { this.p = p;}
 8       public CDPlayer(CD c) { this.c = c;}
 9   
@@ -546,7 +546,7 @@ In the below implementation, we have created an abstract class Vehicle, from whi
 10      public VehicleSize getSize() { return size; }
 11  
 12      /* Park vehicle in this spot (among others, potentially) */
-13      public void parkinSpot(ParkingSpot s) { parkingSpots.add(s); }
+13      public void parkInSpot(ParkingSpot s) { parkingSpots.add(s); }
 14  
 15      /* Remove car from spot, and notify spot that it's gone */
 16      public void clearSpots() { ... }
@@ -703,7 +703,7 @@ The class OnlineReaderSystem represents the body of our program. We could implem
 25      public User getActiveUser() { return activeUser; }
 26      public void setActiveUser(User user) {
 27          activeUser = user;
-28          display.displayuser(user);
+28          display.displayUser(user);
 29      }
 30  }
 ```
@@ -1084,7 +1084,7 @@ The method sentAddRequest in the  User class  is called by UserManager to add an
 1.  User A clicks "add user" on the client and it gets sent to the server.
 2.  User A calls requestAddUser(User B).
 3.  This method calls UserManager. addUser.
-4.  UserManager calls both User  A. sentAddRequest and User B.receivedAddRequest.
+4.  UserManager calls both User  A.sentAddRequest and User B.receivedAddRequest.
 
 Again, this is just one way of designing these interactions. It is not the only way, or even the only "good" way.
 
@@ -1113,7 +1113,7 @@ Again, this is just one way of designing these interactions. It is not the only 
 22  
 23      public User(int id, String accountName, String fullName) { ... }
 24      public boolean sendMessageToUser(User to, String content) { ... }
-25      public boolean sendMessageToGroupChat(int id, String cnt) {...}
+25      public boolean sendMessageToGroupChat(int id, String cnt) { ... }
 26      public void setStatus(UserStatus status) { ... }
 27      public UserStatus getStatus() { ... }
 28      public boolean addContact(User user) { ... }
@@ -1412,7 +1412,7 @@ The code below implements this approach.
 24          return items[convert(i)];
 25      }
 26  
-27      public void set(int i, Titem) {
+27      public void set(int i, T item) {
 28          items[convert(i)] = item;
 29      }
 30  }
@@ -1432,7 +1432,7 @@ Now that we have the basic code for CircularArray out of the way, we can focus o
 The second part of this question asks us to implement the CircularArray class such that we can do the following:
 ```
 1     CircularArray<String>  array = ...
-2     for (Strings  :  array) {  ... }
+2     for (Strings  :  array) { ... }
 ```
 Implementing this requires implementing  the Iterator interface. The details of this implementation apply to Java, but similar things can be implemented in other languages.
 
@@ -1767,7 +1767,7 @@ A file system, in its most simplistic version, consists  of Files and Directorie
 26      }
 27  
 28      /* Getters and setters. */
-29      public long getcreationTime() { return created; }
+29      public long getCreationTime() { return created; }
 30      public long getLastUpdatedTime() { return lastUpdated; }
 31      public long getLastAccessedTime() { return lastAccessed; }
 32      public void changeName(String n) { name = n; }
@@ -1860,7 +1860,7 @@ Suppose we have a very simple hash function that uses the string length.
 
 ```java
 1    int hashCodeOfKey(K key) {
-2        return key.to5tring().length() % items.length;
+2        return key.toString().length() % items.length;
 3    }
 ```
 
@@ -1902,7 +1902,7 @@ The code below uses this implementation.
 27      /* Insert key and value into hash table. */
 28      public void put(K key, V value) {
 29          LinkedListNode<K, V> node = getNodeForKey(key);
-30          if (node != null) {//Already there
+30          if (node != null) { // Already there
 31              node.value = value; // just update the value.
 32              return;
 33          }

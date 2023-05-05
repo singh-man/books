@@ -181,7 +181,7 @@ First, we compute fib(1) and fib(0), which are already known from the base cases
 12  }
 ```
 
-If you really think about how this works, you only use memo[i] for memo[i+l] and memo[i+2]. You don't need it after that. Therefore, we can get rid of the memo table and just store a few variables.
+If you really think about how this works, you only use memo[i] for memo[i+1] and memo[i+2]. You don't need it after that. Therefore, we can get rid of the memo table and just store a few variables.
 
 ```java
 1   int fibonacci(int n) {
@@ -287,7 +287,7 @@ Typically we use  a HashMap\<Integer, Integer> for a cache. In this case,  the  
 13      return memo[n];
 14    }  else {
 15      memo[n] = countWays(n - 1, memo) + countWays(n - 2, memo) +
-16                            countWays(n - 3, memo);
+16                countWays(n - 3, memo);
 17      return memo[n];
 18    }
 19  }
@@ -325,7 +325,7 @@ So then, to find a path from the origin, we just work backwards like this. Start
 8   }
 9 
 10  boolean getPath(boolean[][] maze, int row, int col, ArrayList<Point> path) {
-11    /* If out of bounds or not available, return.*/
+11    /* If out of bounds or not available, return. */
 12    if (col < 0 || row < 0 || !maze[row][col]) {
 13      return false;
 14    }
@@ -369,7 +369,7 @@ This is what the dynamic programming algorithm below does.
 10  
 11  boolean getPath(boolean[][] maze, int row, int col, ArrayList<Point> path,
 12                HashSet<Point> failedPoints) {
-13    /* If out of bounds or not available, return.*/
+13    /* If out of bounds or not available, return. */
 14    if (col < 0 || row < 0 || !maze[row][col]) {
 15      return false;
 16    }
@@ -624,7 +624,7 @@ Generating all subsets, then, really just comes down to generating all binary nu
 13    int index = 0;
 14    for (int k = x; k > 0; k >>= 1) {
 15      if ((k & 1) == 1) {
-16        subs et.add(set.get(index));
+16        subset.add(set.get(index));
 17      }
 18      index++;
 19    }
@@ -956,7 +956,7 @@ We can now implement this algorithm recursively.
 2     if (str == null) return null;
 3 
 4     ArrayList<String> permutations = new ArrayList<String>();
-5     if (str.length() == 0) { //base case
+5     if (str.length() == 0) { // base case
 6       permutations.add('"');
 7       return permutations;
 8     }
@@ -1231,15 +1231,15 @@ So, we simply keep track of the number of left and right parentheses allowed. If
 ```java
 1   void addParen(ArrayList<String> list, int leftRem, int rightRem, char[] str,
 2                 int index) { 
-3     if (leftRem < 0 || rightRem < leftRem) return;//invalid state
+3     if (leftRem < 0 || rightRem < leftRem) return; // invalid state
 4   
-5     if (leftRem == 0 && rightRem == 0) {/*Out of left and right parentheses */
+5     if (leftRem == 0 && rightRem == 0) { /* Out of left and right parentheses */
 6       list.add(String.copyValueOf(str));
 7     }  else {
-8       str[index] = '(';//Add left and recurse 
+8       str[index] = '('; // Add left and recurse 
 9       addParen(list, leftRem - 1, rightRem, str, index + 1);
 10  
-11      str[index] = ')';//Add right and recurse
+11      str[index] = ')'; // Add right and recurse
 12      addParen(list, leftRem, rightRem - 1, str, index + 1);
 13    }
 14  }
@@ -1362,7 +1362,7 @@ This leads to a recursive algorithm that looks like this:
 
 ```java
 1   int makeChange(int amount, int[] denoms, int index) {
-2     if (index >= denoms.length - 1) return 1; //last denom
+2     if (index >= denoms.length - 1) return 1; // last denom
 3     int denomAmount = denoms[index];
 4     int ways = 0;
 5     for (int i = 0; i * denomAmount <= amount; i++) {
@@ -1385,7 +1385,7 @@ We can resolve this issue by storing the previously computed values. We'll need 
 ```java
 1   int makeChange(int n) {
 2     int[] denoms = {2, 510, 5, 1};
-3     int[][] map = new int[n + 1][denoms.length]; //precomputed vals
+3     int[][] map = new int[n + 1][denoms.length]; // precomputed vals
 4     return makeChange(n, denoms, 0, map);
 5   }
 6 
@@ -1452,7 +1452,7 @@ Implementing this is now reasonably straightforward.
 1   int GRID_SIZE = 8;
 2 
 3   void placeQueens(int row, Integer[] columns, ArrayList<Integer[]> results) {
-4     if (row == GRID_SIZE) { //Found valid placement
+4     if (row == GRID_SIZE) { // Found valid placement
 5       results.add(columns.clone());
 6     }  else {
 7       for (int col = 0; col < GRID_SIZE; col++) {
@@ -1505,7 +1505,7 @@ To tackle this problem, we need to recognize the relationship between the differ
 
 **Solution#1**
 
-Imagine we had the following boxes: b₁, b₂,••• , bₙ. The biggest stack that we can build with all the boxes equals the max of (biggest stack with bottom b₁, biggest stack with bottom b₂ ,   •••, biggest stack with bottom bₙ). That is, if we experimented with each box as a bottom and built the biggest stack possible with each, we would find the biggest stack possible.
+Imagine we had the following boxes: b₁, b₂,•••, bₙ. The biggest stack that we can build with all the boxes equals the max of (biggest stack with bottom b₁, biggest stack with bottom b₂ ,   •••, biggest stack with bottom bₙ). That is, if we experimented with each box as a bottom and built the biggest stack possible with each, we would find the biggest stack possible.
 
 But, how would we find the biggest stack with a particular bottom? Essentially the same way. We experiment with different boxes for the second level, and so on for each level.
 
@@ -1662,8 +1662,8 @@ Now what? Let's look at just one of those expressions-the paren aroundchar 3. Th
 
 In order to make that expression true, both the left and right sides must be true. So:
 ```
-left = "0^0"
-right =  "0^1|1"
+left  = "0^0"
+right = "0^1|1"
 countEval(left & right, true) = countEval(left, true) * countEval(right, true)
 ```
 The reason we multiply the results of the left and right sides is that each result from the two sides can be paired up with each other to form a unique combination.
@@ -1675,20 +1675,20 @@ What happens when we have an "|"(OR)? Or an "^"(XOR)?
 If it's an OR, then either the left or the right side must be true-or both.
 
 ```
-  countEval(left | right,  true) =  countEval(left, true)  * countEval(right, false)
-                                 +  countEval(left, false) * countEval(right, true)
-                                 +  countEval(left, true)  * countEval(right, true)
+  countEval(left | right, true) =  countEval(left, true)  * countEval(right, false)
+                                +  countEval(left, false) * countEval(right, true)
+                                +  countEval(left, true)  * countEval(right, true)
 ```
 If it's an XOR, then the left or the right side can be true, but not both.
 ```
-countEval(left ^   right, true) =   countEval(left, true)  * countEval(right, false)
-                                +   countEval(left, false) * countEval(right, true)
+countEval(left ^ right, true) =   countEval(left, true)  * countEval(right, false)
+                              +   countEval(left, false) * countEval(right, true)
 ```
 What if we were trying to make the result false instead? We can switch up the logic from above:
 ```
-countEval(left &  right,  false) = countEval(left, true)  * countEval(right, false)
-                                 + countEval(left, false) * countEval(right, true)
-                                 + countEval(left, false) * countEval(right, false) 
+countEval(left & right, false) = countEval(left, true)  * countEval(right, false)
+                               + countEval(left, false) * countEval(right, true)
+                               + countEval(left, false) * countEval(right, false) 
 countEval(left | right, false) = countEval(left, false)   * countEval(right, false)
 countEval(left ^ right, false) = countEval(left, false)   * countEval(right, false) 
                                + countEval(left, true)    * countEval(right, true)
@@ -1698,8 +1698,8 @@ Alternatively, we can just use the same logic from above and subtract it out fro
 ```
 totalEval(left) =  countEval(left,  true) + countEval(left,  false) 
 totalEval(right) = countEval(right, true) + countEval(right, false) 
-totalEval(expression) =  totalEval(left)* totalEval(right)
-countEval(expression,  false) = totalEval(expression)  -  countEval(expression,  true)
+totalEval(expression) = totalEval(left) * totalEval(right)
+countEval(expression, false) = totalEval(expression) - countEval(expression, true)
 ```
 
 This makes the code a bit more concise.
@@ -1725,7 +1725,7 @@ This makes the code a bit more concise.
 18      int totalTrue = 0;
 19      if (c == '^') { // required: one true and one false
 20        totalTrue = leftTrue * rightFalse + leftFalse * rightTrue;
-21      }  else if (c == '&') {//required: both true
+21      }  else if (c == '&') { // required: both true
 22        totalTrue = leftTrue * rightTrue;
 23      }  else if (c == '|') { // required: anything but both false
 24        totalTrue = leftTrue * rightTrue + leftFalse * rightTrue +

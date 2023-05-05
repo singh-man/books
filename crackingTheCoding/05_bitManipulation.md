@@ -80,14 +80,14 @@ What do you think these functions would do on parameters x = -93242 and count = 
 ```java
 1   int repeatedArithmeticShift(int x, int count) {
 2       for (int i = 0; i < count; i++) {
-3           x >>= 1; // Arithmetic shift by1
+3           x >>= 1; // Arithmetic shift by 1
 4       }
 5       return x;
 6   }
 7   
 8   int repeatedLogicalShift(int x, int count) {
 9       for (int i = 0; i < count; i++) {
-10          x >>>= 1; // Logical shift by1
+10          x >>>= 1; // Logical shift by 1
 11      }
 12      return x;
 13  }
@@ -485,7 +485,7 @@ n  =  n & mask; // clears rightmost p bits.
 ```
 Or, more concisely, we do:
 ```
-n &=  ~((1 <<  p)  -  1).
+n &=  ~((1 << p) - 1).
 ```
 
 *Step 3:Add in c1   -  1 ones.*
@@ -610,7 +610,7 @@ The code to implement this is below.
 17      int p = c0 + c1; // position of rightmost non-trailing one
 18      n &= ((~0) << (p + 1)); // clears from bit p onwards
 19  
-20      int mask = (1 << (c1 + 1)) - 1; // Sequence of (c1+l) ones
+20      int mask = (1 << (c1 + 1)) - 1; // Sequence of (c1+1) ones
 21      n |= mask << (c0 - 1);
 22  
 23      return n;

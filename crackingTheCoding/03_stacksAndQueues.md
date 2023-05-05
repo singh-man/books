@@ -15,7 +15,7 @@ It uses the following operations:
 - pop(): Remove the top item from the stack. 
 - push(itern): Add an item to the top of the stack. 
 - peek(): Return the top of the stack.
-- is Empty(): Return true if and only if the stack is empty.
+- isEmpty(): Return true if and only if the stack is empty.
 
 Unlike an array, a stack does not offer constant-time access to the ith item. However, it does allow constant-time adds and removes, as it doesn't require shifting elements around.
 
@@ -500,7 +500,7 @@ In this problem, we've been told what our data structure should look like:
 1   class SetOfStacks {
 2       ArrayList<Stack> stacks = new ArrayList<Stack>();
 3       public void push(int v) { ... }
-4       public int pop() {... }
+4       public int pop() { ... }
 5   }
 ```
 
@@ -509,9 +509,9 @@ We know that push() should behave identically to a single stack, which means tha
 ```java
 1   void push(int v) {
 2       Stack last = getLastStack();
-3       if (last != null && !last.isFull()) { //add to last stack
+3       if (last != null && !last.isFull()) { // add to last stack
 4           last.push(v);
-5       } else {//must create new stack
+5       } else { // must create new stack
 6           Stack stack = new Stack(capacity);
 7           stack.push(v);
 8           stacks.add(stack);
@@ -640,7 +640,7 @@ In this approach,  stackNewest has the  newest  elements  on top  and stackOldes
 The code below implements this algorithm.
 
 ```java
-1   public class MyQueue<T>  {
+1   public class MyQueue<T> {
 2        Stack<T> stackNewest, stackOldest;
 3
 4        public MyQueue() {
@@ -653,7 +653,7 @@ The code below implements this algorithm.
 11       }
 12 
 13      public void add(T value) {
-14         /* Push onto stackNewest, which always has the newest elements on top */
+14           /* Push onto stackNewest, which always has the newest elements on top */
 15           stackNewest.push(value);
 16      }
 17  
@@ -753,7 +753,7 @@ An alternative approach that is simple,  clean  and efficient is to simply  use 
 1   abstract class Animal {
 2       private int order;
 3       protected String name;
-4       public Animal(String n) {name = n; }
+4       public Animal(String n) { name = n; }
 5       public void setOrder(int ord) { order = ord; }
 6       public int getOrder() { return order; }
 7   
@@ -774,8 +774,8 @@ An alternative approach that is simple,  clean  and efficient is to simply  use 
 22          a.setOrder(order);
 23          order++;
 24  
-25          if (a instanceof Dog) dogs.addlast((Dog) a);
-26          else if (a instanceof Cat) cats.addlast((Cat)a);
+25          if (a instanceof Dog) dogs.addLast((Dog) a);
+26          else if (a instanceof Cat) cats.addLast((Cat)a);
 27      }
 28  
 29      public Animal dequeueAny() {
@@ -806,10 +806,10 @@ An alternative approach that is simple,  clean  and efficient is to simply  use 
 54  }
 55  
 56  public class Dog extends Animal {
-57      public Dog(String n)  { super(n); }
+57      public Dog(String n) { super(n); }
 58  }
 59  
-60  public class Cat extends  Animal   {
+60  public class Cat extends Animal {
 61      public Cat(String n) { super(n); }
 62  }
 ```
