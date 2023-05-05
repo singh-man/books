@@ -59,10 +59,10 @@ The merge method operates by copying all the elements from the target array segm
 25      /* Iterate through helper array. Compare the left and right half, copying back
 26       * the smaller element from the two halves into the original array. */
 27      while (helperLeft <= middle && helperRight <= high) {
-28          if  (helper[helperLeft] <= helper[helperRight]) {
+28          if (helper[helperLeft] <= helper[helperRight]) {
 29              array[current] = helper[helperLeft];
 30              helperLeft++;
-31          }  else {//If right element is smaller than left element
+31          } else { // If right element is smaller than left element
 32              array[current] = helper[helperRight];
 33              helperRight++;
 34          }
@@ -193,16 +193,16 @@ The code below does just that. It works from the back of A and B, moving the lar
 
 ```java
 1   void merge(int[] a, int[] b, int lastA, int lastB) {
-2       int indexA = lastA - 1; /* Index of last element in array a*/
-3       int indexB = lastB - 1; /* Index of last element in array b*/
-4       int indexMerged = lastB + lastA - 1; /* end of merged array*/
+2       int indexA = lastA - 1; /* Index of last element in array a */
+3       int indexB = lastB - 1; /* Index of last element in array b */
+4       int indexMerged = lastB + lastA - 1; /* end of merged array */
 5   
-6       /* Merge a and b, starting from the last element in each*/
+6       /* Merge a and b, starting from the last element in each */
 7       while (indexB >= 0) {
-8           /* end of a is > than end of b*/
+8           /* end of a is > than end of b */
 9           if (indexA >= 0 && a[indexA] > b[indexB]) {
-10              a[indexMerged] = a[indexA];// copyelement
-11              indexA - -;
+10              a[indexMerged] = a[indexA]; // copy element
+11              indexA--;
 12          }  else {
 13              a[indexMerged] = b[indexB]; // copy element
 14              indexB--;
@@ -265,7 +265,7 @@ The code below implements this algorithm.
 7           mapList.put(key, s);
 8       }
 9   
-10      /*Convert hash table to array*/
+10      /* Convert hash table to array */
 11      int index = 0;
 12      for (String key : mapList.keySet()) {
 13          ArrayList<String> list = mapList.get(key);
@@ -337,23 +337,23 @@ Otherwise, we have no choice but to search both halves.
 13      if (a[left] < a[mid]) {//Left is normally ordered.
 14          if (x >= a[left] && x < a[mid]) {
 15              return search(a, left, mid - 1, x); // Search left
-16          }  else {
+16          } else {
 17              return search(a, mid + 1, right, x); // Search right
 18          }
-19      }  else if (a[mid] < a[left]) { //Right is normally ordered.
+19      } else if (a[mid] < a[left]) { // Right is normally ordered.
 20          if (x > a[mid] && x <= a[right]) {
 21              return search(a, mid + 1, right, x); // Search right
-22          }  else {
+22          } else {
 23              return search(a, left, mid - 1, x); // Search left
 24          }
-25      }  else if (a[left] == a[mid]) { //Left or right half is all repeats
-26          if (a[mid] != a[right]) { //If right is different, search it
+25      } else if (a[left] == a[mid]) { // Left or right half is all repeats
+26          if (a[mid] != a[right]) { // If right is different, search it
 27              return search(a, mid + 1, right, x); // search right
-28          }  else { //Else, we have to search both halves
+28          } else { // Else, we have to search both halves
 29              int result = search(a, left, mid - 1, x); // Search left
 30              if (result == -1) {
 31                  return search(a, mid + 1, right, x); // Search right
-32              }  else {
+32              } else {
 33                  return result;
 34              }
 35          }
@@ -465,12 +465,12 @@ The recursive code below to solve this problem can easily be modified to be iter
 22          }
 23      }
 24  
-25      /* Check for string, and recurse if necessary*/
-26      if (str.equals(strings[mid])) {//Found it!
+25      /* Check for string, and recurse if necessary */
+26      if (str.equals(strings[mid])) { // Found it!
 27          return mid;
-28      }  else if (strings[mid].compareTo(str) < 0) {//Search right
+28      }  else if (strings[mid].compareTo(str) < 0) { // Search right
 29          return search(strings, str, mid + 1, last);
-30      }  else {//Search left
+30      }  else { // Search left
 31          return search(strings, str, first, mid - 1);
 32      }
 33  }
@@ -579,7 +579,7 @@ We need to select a value for rangeSize such that the memory from the first pass
 The array in the first pass can fit in 10 megabytes, or roughly 2²³ bytes, of memory. Since each element in the array is an int, and an int is 4 bytes, we can hold an array of at most about 2²¹ elements. So, we can deduce the following:
 
 ``` 
-arraySize = 2³¹/rangeSize <= 2²¹
+arraySize  = 2³¹/rangeSize <= 2²¹
 rangeSize >= 2³¹/2²¹
 rangeSize >= 2¹⁰
 ```
@@ -661,7 +661,7 @@ The below code provides one implementation for this algorithm.
 65      return bitVector;
 66  }
 67  
-68  /*Find bit index that is 0 within byte. */
+68  /* Find bit index that is 0 within byte. */
 69  int findZero(byte b) {
 70      for (int i = 0; i < Byte.SIZE; i++) {
 71          int mask = 1 << i;
@@ -672,12 +672,12 @@ The below code provides one implementation for this algorithm.
 76      return -1;
 77  }
 78  
-79  /*Find a zero within the bit vector and return the index. */
+79  /* Find a zero within the bit vector and return the index. */
 80  int findZero(byte[] bitVector) {
 81      for (int i = 0; i < bitVector.length; i++) {
-82          if (bitVector[i] != ~0) {//If not all 1s
-83              int bitindex = findZero(bitVector[i]);
-84              return i * Byte.SIZE + bitindex;
+82          if (bitVector[i] != ~0) { // If not all 1s
+83              int bitIndex = findZero(bitVector[i]);
+84              return i * Byte.SIZE + bitIndex;
 85          }
 86      }
 87      return -1;
@@ -704,7 +704,7 @@ When we come across a duplicate element, we print it.
 2       BitSet bs = new BitSet(32000);
 3       for (int i = 0; i < array.length; i++) {
 4           int num  = array[i];
-5           int num0 = num - 1; //bitset starts at 0, numbers start at 1
+5           int num0 = num - 1; // bitset starts at 0, numbers start at 1
 6           if (bs.get(num0)) {
 7               System.out.println(num);
 8           }  else {
@@ -748,7 +748,7 @@ We can approach this in two  ways: a more naive solution that only takes advanta
 
 **Solution #1: Naive Solution**
 
-As a first approach, we can  do binary  search on every  row to find the  element. This algorithm will be O(M log( N)), since there are M rows and  it takes O(log( N)) time to search each one. This is a good approach to mention to your interviewer before you proceed with generating a better algorithm.
+As a first approach, we can  do binary  search on every  row to find the  element. This algorithm will be O(M log( N)), since there are M rows and  it takes O(log(N)) time to search each one. This is a good approach to mention to your interviewer before you proceed with generating a better algorithm.
 
 To develop an algorithm, let's start  with a simple example.
 
@@ -825,8 +825,8 @@ We are told that every row and column is sorted. This means that element a[i][j]
 
 Or, in other words:
 ```
-a[i][0]  <=  a[i][1]  <=  ... <=  a[i][j-1]  <=  a[i][j]
-a[0][j]  <=  a[1][j]  <=  ... <=  a[i-1][j]  <=  a[i][j]
+a[i][0] <= a[i][1] <= ... <= a[i][j-1] <= a[i][j]
+a[0][j] <= a[1][j] <= ... <= a[i-1][j] <= a[i][j]
 ```
 Looking at this visually, the dark gray element below is bigger than all the light gray elements.
 
@@ -901,10 +901,10 @@ The code below implements this algorithm.
 39       Coordinate upperRightDest   = new Coordinate(pivot.row - 1, dest.column);
 40   
 41       Coordinate lowerLeft = findElement(matrix, lowerLeftOrigin, lowerLeftDest, x);
-42       if (lowerleft == null) {
+42       if (lowerLeft == null) {
 43           return findElement(matrix, upperRightOrigin, upperRightDest, x);
 44       }
-45       return lowerleft;
+45       return lowerLeft;
 46   }
 47   
 48   Coordinate findElement(int[][] matrix, int x) {
@@ -1148,7 +1148,7 @@ Yes. We can fix this sequence by swapping the center element with the largest ad
 ```
 0   1   2   -> 0    2    1           
 0   2   1       // peak 
-1   0   2   -> 1      2     0
+1   0   2   -> 1    2    0
 1   2   0       // peak
 2   1   0   -> 1    2    0
 2   0   1   -> 0    2    1
@@ -1163,9 +1163,9 @@ The code to implement this is below.
 ```java
 1   void sortValleyPeak(int[] array) {
 2       for (int i = 1; i < array.length; i += 2) {
-3           int biggestindex = maxindex(array, i - 1, i, i + 1);
-4           if (i != biggestindex) {
-5               swap(array, i, biggestindex);
+3           int biggestIndex = maxIndex(array, i - 1, i, i + 1);
+4           if (i != biggestIndex) {
+5               swap(array, i, biggestIndex);
 6           }
 7       }
 8   }

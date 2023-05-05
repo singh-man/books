@@ -44,7 +44,7 @@ The bounds of use might mean holding up to thirty sheets of paper in a single us
 
 The bounds also extend to environmental factors as well. For example, should the paperclip work during very warm temperatures (90 - 110 degrees Fahrenheit)? What about extreme cold?
 
-#### Step 4: What are the stress/ failure conditions?
+#### Step 4: What are the stress / failure conditions?
 
 No product is fail-proof, so analyzing failure conditions  needs to be part of your testing. A good discussion to have with your interviewer is about when it's acceptable (or even necessary) for the product  to fail, and what failure should mean.
 
@@ -131,9 +131,9 @@ Once you have the test cases and results defined, writing the code to implement 
 1   void testAddThreeSorted() {
 2       MyList list = new MyList();
 3       list.addThreeSorted(3, 1, 2); // Adds 3 items in sorted order
-4       assertEquals(list.getElement(0),  1);
-5       as sertEquals(list.getElement(l), 2);
-6       as sertEquals(list.getElement(2), 3);
+4       assertEquals(list.getElement(0), 1);
+5       assertEquals(list.getElement(1), 2);
+6       assertEquals(list.getElement(2), 3);
 7   }
 ```
 
@@ -198,14 +198,14 @@ First, note that an unsigned  int is, by definition, always greater than or equa
 
 The correct code to print all numbers from 100 to 1, is i > 0. If we truly wanted to print zero, we could add an additional printf statement after the for loop.
 ```
-1     unsigned inti;
+1     unsigned int i;
 2      for (i = 100; i > 0; --i)
 3           printf("%d\n", i);
 ```
 One additional correction is to use %u in place of %d, as we are printing unsigned  int.
 ```
-1     unsigned inti;
-2      for (i =  100; i > 0; --i)
+1     unsigned int i;
+2      for (i = 100; i > 0; --i)
 3           printf("%u\n", i);
 ```
 This code will now correctly print the list of all numbers from 100 to 1, in descending order.

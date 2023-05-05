@@ -13,8 +13,8 @@ Every thread in Java is created and controlled by a unique object of the java.la
 
 In Java, we can implement threads in one of two ways:
 
-- By implementing the java. lang.Runnable interface
-- By extending the java. lang. Thread class
+- By implementing the java.lang.Runnable interface
+- By extending the java.lang.Thread class
 
 We will cover both of these below.
 
@@ -258,7 +258,7 @@ A common use case for locks is when a resource is accessed from multiple places,
 20      }
 21  
 22      public int deposit(int value) {
-23          lock. lock();
+23          lock.lock();
 24          int temp = balance;
 25          try {
 26              Thread.sleep(100);
@@ -633,7 +633,7 @@ The code below provides further details. For simplicity, we assume that all lock
 35      public boolean declare(int ownerId, int[] resourcesInOrder) {
 36          HashMap<Integer, Boolean> touchedNodes = new HashMap<Integer, Boolean>();
 37  
-38          /*add nodes to graph*/
+38          /* add nodes to graph */
 39          int index = 1;
 40          touchedNodes.put(resourcesInOrder[0], false);
 41          for (index = 1; index < resourcesInOrder.length; index++) {
@@ -643,7 +643,7 @@ The code below provides further details. For simplicity, we assume that all lock
 45              touchedNodes.put(resourcesInOrder[index], false);
 46          }
 47  
-48          /*if we created a cycle, destroy this resource list and return false*/
+48          /* if we created a cycle, destroy this resource list and return false */
 49          if (hasCycle(touchedNodes, resourcesInOrder)) {
 50              for (int j = 1; j < resourcesInOrder.length; j++) {
 51                  LockNode p = locks[resourcesInOrder[j - 1]];
@@ -673,7 +673,7 @@ The code below provides further details. For simplicity, we assume that all lock
 75            if (list == null) return null;
 76    
 77            LockNode head = list.getFirst();
-78            if (head.getid() == resourceID) {
+78            if (head.getId() == resourceID) {
 79                list.removeFirst();
 80                return head.getLock();
 81            }
@@ -690,7 +690,7 @@ The code below provides further details. For simplicity, we assume that all lock
 92      private Lock lock;
 93      private int maxLocks;
 94    
-95      public LockNode(int id, int max) { ...}
+95      public LockNode(int id, int max) { ... }
 96    
 97      /* Join "this" to "node", checking that it doesn't create a cycle */
 98      public void joinTo(LockNode node) { children.add(node); }
@@ -699,7 +699,7 @@ The code below provides further details. For simplicity, we assume that all lock
 101     /* Check for a cycle by doing a depth-first-search. */
 102     public boolean hasCycle(HashMap<Integer, Boolean> touchedNodes) {
 103         VisitState[] visited = new VisitState[maxLocks];
-104         for (int i = 0; i < maxlocks; i++) {
+104         for (int i = 0; i < maxLocks; i++) {
 105              visited[i] = VisitState.FRESH;
 106         }
 107         return hasCycle(visited, touchedNodes);
@@ -905,7 +905,7 @@ The code for this will look something like:
 3           return;
 4       }
 5       if (/* divisibility test */) {
-6           System.out.println(/* print something*/);
+6           System.out.println(/* print something */);
 7           current++;
 8       }
 9   }

@@ -117,7 +117,7 @@ In this case, we might want addCourse to be a virtual function defined within Pe
 
 ```c++
 1   class Person {
-2       int id;// all members are private by default
+2       int id; // all members are private by default
 3       char name[NAME_SIZE];
 4   public:
 5       virtual void aboutMe() {
