@@ -10,9 +10,9 @@ As these questions focus so much on knowledge, it may seem silly to talk about a
 
 Yes and  no. Of course, the  best thing you can do to master these questions is to learn Java inside  and  out. But, if you do get  stumped, you can try to tackle it with the following approach:
 
-1.  Create an example of the  scenario, and  ask yourself  how things should play out.
-2.  Ask yourself  how other languages would handle this scenario.
-3.  Consider how you would design this situation if you were the language designer. What would the implications of each choice be?
+1. Create an example of the  scenario, and  ask yourself  how things should play out.
+2. Ask yourself  how other languages would handle this scenario.
+3. Consider how you would design this situation if you were the language designer. What would the implications of each choice be?
 
 Your interviewer may be equally-or more-impressed if you can derive the  answer than if you automatically knew it. Don't try to bluff though. Tell the  interviewer, "I'm not  sure  I can recall the  answer,  but let me see if I can figure  it out. Suppose we have this code..."
 
@@ -450,7 +450,7 @@ This function puts it all together.
 7       /* Convert to list of populations. */
 8       Stream<Integer> populations = sublist.map(
 9           c -> c.getPopulation()
-10      ) ;
+10      );
 11  
 12      /* Sum list. */
 13      int population = populations.reduce(0, (a, b) -> a + b);

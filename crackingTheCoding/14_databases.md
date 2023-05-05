@@ -56,7 +56,7 @@ This has three problems:
 
 Fixing these issues gets us to this query:
 ```sql
-1   /* Solution 1: Wrap with another query*/
+1   /* Solution 1: Wrap with another query */
 2   SELECT StudentName, Students.StudentID, Cnt
 3   FROM (
 4     SELECT Students.StudentID, count(StudentCourses.CourseID) as [Cnt]

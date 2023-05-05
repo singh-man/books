@@ -12,7 +12,7 @@ We'll go through some common approaches for tackling these questions, as well as
 
 As you probably know, every positive integer can be decomposed into a product of primes. For example:
 
-    84  =   2² * 3¹ * 5⁰ * 7¹ * 11⁰ * 13⁰ * 17⁰ * ... 
+    84  =  2² * 3¹ * 5⁰ * 7¹ * 11⁰ * 13⁰ * 17⁰ * ... 
 
 Note that many of these primes have an exponent of zero.
 
@@ -30,7 +30,7 @@ If x\y, then for all i, ji <=  ki.
 
 In fact, the greatest common divisor of x and y will be:
 
-gcd (x, y) = 2ᵐⁱⁿ⁽ʲ⁰, ᵏ⁰⁾   * 3ᵐⁱⁿ⁽ʲ¹, ᵏ¹⁾ * 5ᵐⁱⁿ⁽ʲ², ᵏ²⁾ * ....
+gcd (x, y) = 2ᵐⁱⁿ⁽ʲ⁰, ᵏ⁰⁾ * 3ᵐⁱⁿ⁽ʲ¹, ᵏ¹⁾ * 5ᵐⁱⁿ⁽ʲ², ᵏ²⁾ * ....
 
 The least common multiple of x and y will be:
 
@@ -151,8 +151,8 @@ Imagine you were throwing a dart at this Venn diagram. What is the probability t
 For example, imagine we were picking a number between  1 and 10 (inclusive). What's the probability of picking an even number and a number between  1 and 5? The odds of picking a number between 1  and 5 is 50%, and the odds of a number between  1 and 5 being even is 40%. So, the odds of doing both are: 
 
 ```
-= P(x  is even and  x  <=  5)
-= P(x  is even given x <= 5) P(x <= 5) 
+= P(x is even and  x  <= 5)
+= P(x is even given x <= 5) P(x <= 5) 
 = (2/5) * (1/2)
 = 1/5
 ```
@@ -168,7 +168,7 @@ The above equation is called Bayes' Theorem.
  
 Now, imagine  you wanted to know what the probability  of landing  in A or B is. If you knew the  odds  of landing  in each individually, and you also knew the odds  of landing  in their intersection, then you could express the probability as:
 
-    P(A or B) = P(A) + P(B)  -  P(A and B)
+    P(A or B) = P(A) + P(B) - P(A and B)
 
 Logically, this makes sense. If we simply added their sizes, we would have double-counted their intersection. We need to subtract this out. We can again visualize this through a Venn diagram:
 
@@ -178,7 +178,7 @@ For example,  imagine  we were picking a number between 1 and  10 (inclusive). W
 
 P(x is  even or x  <=5)
 ```
-= P(x is even) + P(x <=  5) - P(x is even and x  <=  5)
+= P(x is even) + P(x <= 5) - P(x is even and x <= 5)
 = 1/2 + 1/2 - 1/5
 = 4/5
 ```
@@ -326,10 +326,10 @@ s(3,3) = p³
 The probability of making exactly two shots is: 
 
 ```
-P(making 1 and  2, and missing 3)
+P(making 1 and 2, and missing 3)
       +  P(making 1 and 3, and missing 2)
       +  P(missing 1, and making 2 and 3)
-   = p *  p *  (1 - p)  +  p  *  (1 - p)  *  p +  (1 - p)  *  p *  P
+   = p * p * (1 - p) + p * (1 - p) * p + (1 - p) * p * P
    = 3 (1 - p) p²
 ```
 
@@ -348,7 +348,7 @@ You should play Game 1  if P (Game  1)  >  P (Game  2):
 p  >  3p² - 2p³.
 1  >  3p  - 2p²
 2p² - 3p +  1  >  0 
-(2p - l)(p -  1) > 0 
+(2p - 1)(p -  1) > 0 
 ```
 Both terms must be positive, or both must be negative. But we know p  <   1, so p  -  1  <  0. This means both terms must be negative.
 ```
@@ -400,7 +400,7 @@ P (same direction) = (1/2)³ + (1/2)³ = 1/4
 The probability of collision  is therefore the  probability of the  ants not moving in the  same direction:
 
 ```
-P (collision) = 1-P (same direction) = 1 - 1/4 = 3/4
+P (collision) = 1 - P (same direction) = 1 - 1/4 = 3/4
 ```
 To generalize this to an n-vertex polygon: there are still only two ways in which the  ants can move to avoid a collision, but there are 2ⁿ ways they  can move in total. Therefore, in general, probability of collision  is:
 ```
@@ -919,7 +919,7 @@ Implementing this requires some careful work to prevent bugs.
 42  
 43  /* Run set of tests for this day. */
 44  void runTestSet(ArrayList<Bottle> bottles, ArrayList<TestStrip> strips, int day) {
-45      if (day > 3) return;// only works for 3 days (digits)+one extra
+45      if (day > 3) return; // only works for 3 days (digits)+one extra
 46  
 47      for (Bottle bottle : bottles) {
 48          int index = getTestStripindexForDay(bottle, day, strips.size());
@@ -975,13 +975,13 @@ We wait seven days, and then read the results.  If test strip i is positive, the
 7   /* Add bottle contents to test strips */
 8   void runTests(ArrayList<Bottle> bottles, ArrayList<TestStrip> testStrips) {
 9       for (Bottle bottle : bottles) {
-10          int id = bottle.getid();
-11          int bitindex = 0;
+10          int id = bottle.getId();
+11          int bitIndex = 0;
 12          while (id > 0) {
 13              if ((id & 1) == 1) {
-14                  testStrips.get(bitindex).addDropOnDay(0, bottle);
+14                  testStrips.get(bitIndex).addDropOnDay(0, bottle);
 15              }
-16              bitindex++;
+16              bitIndex++;
 17              id »= 1;
 18          }
 19      }
@@ -1002,8 +1002,8 @@ We wait seven days, and then read the results.  If test strip i is positive, the
 34  /* Create number by setting bits with indices specified in positive. */
 35  int setBits(ArrayList<Integer> positive) {
 36      int id = 0;
-37      for (Integer bitindex : positive) {
-38          id |= 1 << bitindex;
+37      for (Integer bitIndex : positive) {
+38          id |= 1 << bitIndex;
 39      }
 40      return id;
 41  }

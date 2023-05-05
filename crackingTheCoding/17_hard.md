@@ -80,7 +80,7 @@ Recursively, that algorithm looks like this:
 6   int[] shuffleArrayRecursively(int[] cards, int i) {
 7       if (i == 0) return cards;
 8   
-9       shuffleArrayRecursively(cards, i - 1);// Shuffle earlier part
+9       shuffleArrayRecursively(cards, i - 1); // Shuffle earlier part
 10      int k = rand(0, i);// Pick random index to swap with
 11  
 12      /* Swap element k and i */
@@ -149,7 +149,7 @@ This is even cleaner to  write  iteratively. In this  approach, we  initialize  
 8   
 9       /* Go through rest of original array. */
 10      for (int i = m; i < original.length; i++) {
-11          int k = rand(0, i); //Random# between 0 and i, inclusive
+11          int k = rand(0, i); // Random# between 0 and i, inclusive
 12          if (k < m) {
 13              subset[k] = original[i];
 14          }
@@ -226,17 +226,17 @@ If it helps, we can also move through this more visually. In the first iteration
 Since count₁(0s)  >  count₁(1s), we know that LSB₁(v)  =   1. Now, discard all numbers x where LSB₁(x)  != LSB₁(v).
 ```
 ~00000~ ~00100~ ~01000~ ~01100~
-00001   00101   01001   01101
+ 00001   00101   01001   01101
 ~00010~ ~00110~ ~01010~
------   00111   01011   
+-----    00111   01011   
 ```
 Now, count₂(0s) > count₂(1s), so we know that LSB₂(v) = 1. Now, discard all numbers x where LSB₂(x)  != LSB₂(v).
 
 ```
 ~00000~ ~00100~ ~01000~ ~01100~
-00001   ~00101~ ~01001~ ~01101~
+ 00001  ~00101~ ~01001~ ~01101~
 ~00010~ ~00110~ ~01010~
------   00111   01011   
+-----    00111   01011   
 ```
 This time, count₃(0)s <= count₃(1s), we know that LSB₃(v) = 0. Now discard all numbers x where LSB₃(x) != LSB₃(v).
  
@@ -244,7 +244,7 @@ This time, count₃(0)s <= count₃(1s), we know that LSB₃(v) = 0. Now discard
 ~00000~ ~00100~ ~01000~ ~01100~
 ~00001~ ~00101~ ~01001~ ~01101~
 ~00010~ ~00110~ ~01010~
------   ~00111~   01011 
+-----   ~00111~  01011 
 ```
 
 We're down to just one number. In this case, count₄(0s) <= count₄(1s),  so LSB₄(v) = 0.
@@ -454,7 +454,7 @@ Our first approach to this problem can be-and probably should be-a brute force s
 1   /* Counts the number of '2' digits between 0 and n */
 2   int numberOf2sInRange(int n) {
 3       int count = 0;
-4       for (int i = 2; i <= n; i++) { //Might as well start at 2
+4       for (int i = 2; i <= n; i++) { // Might as well start at 2
 5           count += number0f2s(i);
 6       }
 7       return count;
@@ -514,8 +514,8 @@ if x[d] >  2: count2sInRangeAtDigit(x, d)=
 The final case may be the trickiest,  but it follows from the earlier logic. Consider x =  62523 and d =  3. We know that there are the same ranges of2s from before (that is, the ranges 2000  -  2999, 12000  -  12999, ..., 52000  -   52999). How many  appear in the  3rd digit  in the final, partial range from 62000 - 62523? Well, that should be pretty easy. It's just 524 (62000,  62001,  ...,   62523).
 ```
 if  x[d]  =  2: count2sInRangeAtDigit(x, d) =
-    let y =  round down  to nearest 10ᵈ⁺¹
-    let z =  right  side of x  (i.e., x % 10ᵈ)
+    let y =  round down to nearest 10ᵈ⁺¹
+    let z =  right side of x (i.e., x % 10ᵈ)
     return y / 10 + z + 1
 ```
 Now, all you  need is to iterate through each digit  in the  number. Implementing this  code is reasonably straightforward.
@@ -791,7 +791,7 @@ s       connectEdges(graph, synonyms);
 57  }
 58  
 59  /* Code for GraphNode and Graph is fairly self-explanatory, but can be found in
-60   * the downloadable code solutions.*/
+60   * the downloadable code solutions. */
 ```
 To analyze the efficiency, we can think about the efficiency of each part of the algorithm.
 
@@ -982,7 +982,7 @@ We know that biggest this kth number could be is 3ᵏ * 5ᵏ * 7ᵏ. So, the "st
 11          for (int b = 0; b <= k; b++) { // loop 5
 12              int powB = (int) Math.pow(5, b);
 13              for (int c = 0; c <= k; c++) { // loop 7
-14                  int powC = (int) Math.pow( ?, c);
+14                  int powC = (int) Math.pow(7, c);
 15                  int value = powA * powB * powC;
 16  
 17                  /* Check for overflow. */
@@ -1093,7 +1093,7 @@ Where is there unnecessary work that we might be able to optimize out?
 
 Let's imagine our list looks like:
 
-    q₆  =  {7A₁, 5A₂, 7A₂, 7A₃, 3A₄, 5A₄, 7A₄, 5A₅, 7A₅}
+    q₆ = {7A₁, 5A₂, 7A₂, 7A₃, 3A₄, 5A₄, 7A₄, 5A₅, 7A₅}
 
 When we search this list for the min, we check if 7A₁ < min, and then later we check if 7A₅ < min. That seems sort of silly, doesn't it? Since we know that A₁ < A₅, we should only need to check 7A₁
 
@@ -1102,9 +1102,9 @@ If we separated the list from the beginning by the constant factors, then we'd o
 
 That is, our list above would look like:
 
-    Q36 =  {3A₄}
-    Q56 =  {5A₂, 5A₄, 5A₅}
-    Q76 =  {7A₁, 7A₂, 7A₃, 7A₄, 7A₅}
+    Q36 = {3A₄}
+    Q56 = {5A₂, 5A₄, 5A₅}
+    Q76 = {7A₁, 7A₂, 7A₃, 7A₄, 7A₅}
 
 To get the min, we only need to look at the fronts of each queue:
 
@@ -1450,7 +1450,7 @@ If we need to repeat the operation for other pairs of words, we can create a has
 
 Consider the following lists of locations. 
 
-    listA:  {l,  2,  9,   15,  25}
+    listA:  {1,  2,  9,  15,  25}
     listB:  {4,  10,  19}
 
 Picture pointers pA and pB that point to the beginning of each list. Our goal is to make pA and pB point to values as close together as possible.
@@ -1549,7 +1549,7 @@ The pseudocode looks something like:
 2       BiNode left = convert(node.left);
 3       BiNode right = convert(node.right);
 4       mergeLists(left, node, right);
-5       return left;// front of left
+5       return left; // front of left
 6   }
 ```
 To actually implement the nitty-gritty details of this, we'll need to get the head and tail of each linked list. We can do this several different ways.
@@ -1742,14 +1742,14 @@ What should the function return? We need both the number of invalid characters i
 16          char c = sentence.charAt(index);
 17          partial += c;
 18          int invalid = dictionary.contains(partial) ? 0 : partial.length();
-19          if (invalid < bestInvalid) {//Short circuit
+19          if (invalid < bestInvalid) { // Short circuit
 20              /* Recurse, putting a space after this character. If this is better than
 21               * the current best option, replace the best option. */
 22              ParseResult result = split(dictionary, sentence, index + 1);
 23              if (invalid + result.invalid < bestInvalid) {
 24                  bestInvalid = invalid + result.invalid;
 25                  bestParsing = partial + "  " + result.parsed;
-26                  if (bestlnvalid == 0) break; //Short circuit
+26                  if (bestInvalid == 0) break; // Short circuit
 27              }
 28          }
 29
@@ -1925,11 +1925,11 @@ At the end of the traversal, we will have a heap containing the smallest one mil
 12      PriorityQueue<Integer> heap =
 13              new PriorityQueue<Integer>(k, new MaxHeapComparator());
 14      for (int a : array) {
-15          if (heap.size() < k) {//If space remaining
+15          if (heap.size() < k) { // If space remaining
 16              heap.add(a);
-17          } else if (a < heap.peek()) {//If full and top is small
-18              heap.poll(); //remove highest
-19              heap.add(a); //insert new element
+17          } else if (a < heap.peek()) { // If full and top is small
+18              heap.poll(); // remove highest
+19              heap.add(a); // insert new element
 20          }
 21      }
 22      return heap;
@@ -1972,86 +1972,86 @@ Once you have found the ith smallest element, you know that all elements smaller
 The code below implements this algorithm.
 
 ```java
-1       int[] smallestK(int[] array, int k) {
-2           if (k <= 0 || k > array.length) {
-3               throw new IllegalArgumentException();
-4           }
-5   
-6           int threshold = rank(array, k - 1);
-7           int[] smallest = new int[k];
-8           int count = 0;
-9           for (int a : array) {
-10              if (a <= threshold) {
-11                  smallest[count] = a;
-12                  count++;
-13              }
-14          }
-15          return smallest;
-16      }
-17  
-18      /* Get element with rank. */
-19      int rank(int[] array, int rank) {
-20          return rank(array, 0, array.length - 1, rank);
-21      }
-22  
-23      /* Get element with rank between left and right indices. */
-24      int rank(int[] array, int left, int right, int rank) {
-25          int pivot = array[randomIntInRange(left, right)];
-26          int leftEnd = partition(array, left, right, pivot);
-27          int leftSize = leftEnd - left + 1;
-28          if (rank == leftSize - 1) {
-29              return max(array, left, leftEnd);
-30          }  else if (rank < leftSize) {
-31              return rank(array, left, leftEnd, rank);
-32          }  else {
-33              return rank(array, leftEnd + 1, right, rank - leftSize);
-34          }
-35      }
-36  
-37      /* Partition array around pivot such that all elements <= pivot come before all
-38       * elements > pivot. */
-39      int partition(int[] array, int left, int right, int pivot) {
-40         while (left <= right) {
-41             if (array[left] > pivot) {
-42              /* Left is bigger than pivot. Swap it to the right side, where we know it
-43               * should be. */
-44              swap(array, left, right);
-45              right--;
-46             }  else if (array[right] <= pivot) {
-47              /* Right is smaller than the pivot. Swap it to the left side, where we know
-48               * it should be. */
-49              swap(array, left, right);
-50              left++;
-51             }  else {
-52              /* Left and right are in correct places. Expand both sides. */
-53              left++;
-54              right--;
-55             }
-56          }
-57          return left - 1;
-58      }
-59  
-60      /* Get random integer within range, inclusive. */
-61      int randomIntInRange(int min, int max) {
-62          Random rand = new Random();
-63          return rand.nextInt(max + 1 - min) + min;
-64      }
-65  
-66      /* Swap values at index i and j. */
-67      void swap(int[] array, int i, int j) {
-68          int t = array[i];
-69          array[i] = array[j];
-70          array[j] = t;
-71      }
-72  
-73      /* Get largest element in array between left and right indices. */
-74      int max(int[] array, int left, int right) {
-75          int max = Integer.MIN_VALUE;
-76          for (int i = left; i <= right; i++) {
-77              max = Math.max(array[i], max);
-78          }
-79          return max;
-80      }
+1     int[] smallestK(int[] array, int k) {
+2         if (k <= 0 || k > array.length) {
+3             throw new IllegalArgumentException();
+4         }
+5 
+6         int threshold = rank(array, k - 1);
+7         int[] smallest = new int[k];
+8         int count = 0;
+9         for (int a : array) {
+10            if (a <= threshold) {
+11                smallest[count] = a;
+12                count++;
+13            }
+14        }
+15        return smallest;
+16    }
+17
+18    /* Get element with rank. */
+19    int rank(int[] array, int rank) {
+20        return rank(array, 0, array.length - 1, rank);
+21    }
+22
+23    /* Get element with rank between left and right indices. */
+24    int rank(int[] array, int left, int right, int rank) {
+25        int pivot = array[randomIntInRange(left, right)];
+26        int leftEnd = partition(array, left, right, pivot);
+27        int leftSize = leftEnd - left + 1;
+28        if (rank == leftSize - 1) {
+29            return max(array, left, leftEnd);
+30        } else if (rank < leftSize) {
+31            return rank(array, left, leftEnd, rank);
+32        } else {
+33            return rank(array, leftEnd + 1, right, rank - leftSize);
+34        }
+35    }
+36
+37    /* Partition array around pivot such that all elements <= pivot come before all
+38     * elements > pivot. */
+39    int partition(int[] array, int left, int right, int pivot) {
+40       while (left <= right) {
+41           if (array[left] > pivot) {
+42             /* Left is bigger than pivot. Swap it to the right side, where we know it
+43              * should be. */
+44             swap(array, left, right);
+45             right--;
+46           } else if (array[right] <= pivot) {
+47             /* Right is smaller than the pivot. Swap it to the left side, where we know
+48              * it should be. */
+49             swap(array, left, right);
+50             left++;
+51           } else {
+52             /* Left and right are in correct places. Expand both sides. */
+53             left++;
+54             right--;
+55           }
+56        }
+57        return left - 1;
+58    }
+59
+60    /* Get random integer within range, inclusive. */
+61    int randomIntInRange(int min, int max) {
+62        Random rand = new Random();
+63        return rand.nextInt(max + 1 - min) + min;
+64    }
+65
+66    /* Swap values at index i and j. */
+67    void swap(int[] array, int i, int j) {
+68        int t = array[i];
+69        array[i] = array[j];
+70        array[j] = t;
+71    }
+72
+73    /* Get largest element in array between left and right indices. */
+74    int max(int[] array, int left, int right) {
+75        int max = Integer.MIN_VALUE;
+76        for (int i = left; i <= right; i++) {
+77            max = Math.max(array[i], max);
+78        }
+79        return max;
+80    }
 ```
 
 If the elements are not unique, we can tweak this algorithm slightly to accommodate this.
@@ -2116,21 +2116,21 @@ This requires minor tweaks to rank as well. We now compare the size of left and 
 51      int middleSize = partition.middleSize;
 52
 53      /* Search portion of array. */
-54      if (k < leftSize) { //Rank k is on left half
+54      if (k < leftSize) { // Rank k is on left half
 55          return rank(array, k, start, start + leftSize - 1);
-56      }  else if (k < leftSize + middleSize) { // Rank k is in middle
+56      } else if (k < leftSize + middleSize) { // Rank k is in middle
 57          return pivot; // middle is all pivot values
-58      }  else { // Rank k is on right
+58      } else { // Rank k is on right
 59          return rank(array, k - leftSize - middleSize, start + leftSize + middleSize,
 60                  end);
 61      }
 62  }
 63
-64  /*Partition result into < pivot, equal to pivot -> bigger than pivot. */
+64  /* Partition result into < pivot, equal to pivot -> bigger than pivot. */
 65  PartitionResult partition(int[] array, int start, int end, int pivot) {
 66      int left = start; /* Stays at (right) edge of left side. */
 67      int right = end; /* Stays at (left) edge of right side. */
-68      int middle = start; /*Stays at (right) edge of middle. */
+68      int middle = start; /* Stays at (right) edge of middle. */
 69      while (middle <= right) {
 70          if (array[middle] < pivot) {
 71              /* Middle is smaller than the pivot. Left is either smaller or equal to
@@ -2183,8 +2183,8 @@ The pseudocode for this would  look like the following:
 8       }
 9
 10      for (String s : array) {
-11          // Divide into every poss ible pair
-12          for (int i = l; i < s.length(); i++) {
+11          // Divide into every possible pair
+12          for (int i = 1; i < s.length(); i++) {
 13              String left = s.substring(0, i);
 14              String right = s.substring(i);
 15              // Check if both sides are in the array
@@ -2771,9 +2771,9 @@ By finding the closures for each index in the array, we can find the shortest su
 45          end = e;
 46      }
 47
-48      public int length() { return end - start + 1;}
-49      public int getStart() { return start;}
-50      public int getEnd() { return end;}
+48      public int length() { return end - start + 1; }
+49      public int getStart() { return start; }
+50      public int getEnd() { return end; }
 51
 52      public boolean shorterThan(Range other) {
 53          return length() < other.length();
@@ -2812,8 +2812,8 @@ Now, all we have to do is to find the minimum distance in this table.
 ```java
 1   Range shortestSupersequence(int[]big, int[] small) {
 2       int[][] nextElements = getNextElementsMulti(big, small);
-3       int[] closures = getClosures( nextElements);
-4       return getShortestClosure( closures);
+3       int[] closures = getClosures(nextElements);
+4       return getShortestClosure(closures);
 5   }
 6
 7   /* Create table of next occurrences. */
@@ -2912,7 +2912,7 @@ Instead, as we do each sweep, we just update the closure row with the minimums. 
 16   * value, if it's later than the current closure. */
 17  void sweepForClosure(int[] big, int[] closures, int value) {
 18      int next = -1;
-19      for (int i = big.length - 1; i >= 0; i-- ) {
+19      for (int i = big.length - 1; i >= 0; i--) {
 20          if (big[i] == value) {
 21              next = i;
 22          }
@@ -2931,7 +2931,7 @@ Instead, as we do each sweep, we just update the closure row with the minimums. 
 35              b reak;
 36          }
 37          Range range = new Range(i, closures[i]);
-38          if (!shortest.shorterThan( range)) {
+38          if (!shortest.shorterThan(range)) {
 39              shortest = range;
 40          }
 41      }
@@ -2949,9 +2949,9 @@ There's a totally different way to approach it. Let's suppose we had a list of t
 | value | 7  | 5  | 9  | 9  | 2  | 1  | 3  | 5  | 7  | 9  | 1  | 1  | 5  | 8  | 8  | 9  | 7  |
 | index | 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 
-    1  ->  {5, 10, 11}
-    5  ->  {1, 7, 12}
-    9  ->  {2, 3, 9, 15}
+    1 -> {5, 10, 11}
+    5 -> {1, 7, 12}
+    9 -> {2, 3, 9, 15}
 
 What is the very first valid subsequence  (which contains 1, 5, and 9)? We can just look at the heads of each list to tell us this. The minimum of the heads is the start of the range and the max of the heads is the end of the range.  In this case, the first range is [1, 5]. This is currently our "best" subsequence.
 
@@ -2965,9 +2965,9 @@ The next subsequence is [2, 7]. This is worse than the earlier best, so we can t
 
 Now, what's the next subsequence? We can remove the min from earlier (2) and find out.
 
-    1 ->  {5, 10, 11}
-    5 ->  {7, 12}
-    9 ->  {3, 9, 15}
+    1 -> {5, 10, 11}
+    5 -> {7, 12}
+    9 -> {3, 9, 15}
     
 The next subsequence is [3, 7], which is no better or worse than our current best.
 
@@ -3147,8 +3147,8 @@ What else can we do? Let's go back to what we can do. We can get x  +  y and we 
 
     X + y = sum      -> y  = sum - x
     X * y = product  -> x(sum - x)  = product
-                        x*sum -  x² = product 
-                        x*sum -  x² - product = 0
+                        x*sum - x²  = product 
+                        x*sum - x²  - product = 0
                         -x² + x*sum - product = 0 
 
 At this point, we can apply the quadratic formula to solve for x. Once we have x, we can then compute y.
@@ -3158,9 +3158,9 @@ There are actually a number of other calculations you can perform. In fact, almo
 For this part, let's use a different calculation. Instead of using the product of 1  * 2  * . . .   * n, we can use the sum of the squares: 1²   +  2²   +   . . .  +  n². This will make the BigInteger usage a little less critical, as the code will at least run on small values of n. We can discuss with our interviewer whether or not this is important. 
 
 
-    X  + y  = s    -> y =  s  -  X
-    xz + y² = t    -> x²  + (s-x)² =  t
-                       2x² - 2sx  + s² - t = 0 
+    X  + y  = s  -> y =  s  -  X
+    xz + y² = t  -> x² + (s-x)² = t
+                       2x² - 2sx + s² - t = 0 
 
 
 Recall the quadratic formula:
@@ -3368,7 +3368,7 @@ The code below implements this algorithm.
 12  /* Compute the volume of a subgraph of the histogram. One max is at either start
 13   * or end (depending on isLeft). Find second tallest, then compute volume between
 14   * tallest and second tallest. Then compute volume of subgraph. */
-15  int subgraphVolu me(int[] histogram, int start, int end, boolean isLeft) {
+15  int subgraphVolume(int[] histogram, int start, int end, boolean isLeft) {
 16          if (start >= end) return 0;
 17          int sum = 0;
 18          if (isLeft) {
@@ -3506,10 +3506,10 @@ We've chosen to use a HistogramData object to store this extra information, but 
 76      private int leftMaxIndex  = -1;
 77      private int rightMaxIndex = -1;
 78
-79      public HistogramData(int v) {height = v; }
-80      public int  getHeight() {return height; }
+79      public HistogramData(int v) { height = v; }
+80      public int  getHeight() { return height; }
 81      public int  getLeftMaxIndex() { return leftMaxIndex; }
-82      public void setLeftMaxIndex(int idx) {leftMaxIndex = idx; };
+82      public void setLeftMaxIndex(int idx) { leftMaxIndex = idx; };
 83      public int  getRightMaxIndex() { return rightMaxIndex; }
 84      public void setRightMaxindex(int idx) { rightMaxIndex = idx; };
 85  }
@@ -3706,7 +3706,7 @@ The algorithm is otherwise essentially the same.
 12          LinkedList<String> path = new LinkedList<String>();
 13          path.add(start);
 14          return path;
-15      }  else if (visited.contains(start)) {
+15      } else if (visited.contains(start)) {
 16          return null;
 17      }
 18
@@ -3955,7 +3955,7 @@ Our code works as follows:
 27          if (matrix[row][col + j] == 1) {
 28              return false;
 29          }
-30          if (matrix[row + size - l][col + j]) {
+30          if (matrix[row + size - 1][col + j]) {
 31              return false;
 32          }
 33      }
@@ -4014,7 +4014,7 @@ Our code for this  algorithm is below.  Note that findSquare and findSquareWithS
 18  }
 19
 20  boolean isSquare(SquareCell[][] matrix, int row, int col, int sz) {
-21      SquareCell topleft = matrix[row][col];
+21      SquareCell topLeft = matrix[row][col];
 22      SquareCell topRight = matrix[row][col + sz - 1];
 23      SquareCell bottomLeft = matrix[row + sz - 1][col];
 24
@@ -4138,15 +4138,15 @@ Each Val* starts at the origin and ends at the bottom right corner of a subrecta
 
 With these values, we know the following:
 
-    area(D)  =  ValD -  area(A  union  C) - area(A  union  B) + area(A). 
+    area(D)  =  ValD - area(A  union  C) - area(A  union  B) + area(A). 
 
 Or, written another way:
 
-    area(D) =  ValD - ValB -  ValC  + ValA
+    area(D)  =  ValD - ValB -  ValC  + ValA
 
 We can efficiently compute these values for all points in the matrix by using similar logic:
 
-    Val(x,  y)  = Val(x-1,  y)  + Val(y-1, x)  -  Val(x-1,  y-1) +  M[x][y]
+    Val(x, y) = Val(x-1, y) + Val(y-1, x) - Val(x-1, y-1) + M[x][y]
 
 We can precompute all such values and then efficiently find the maximum submatrix.
 
@@ -4359,7 +4359,7 @@ The maxRectangle method is the "main" part  of our code. It starts  with the  bi
 1  Rectangle maxRectangle() {
 2   int maxSize = maxWordLength * maxWordLength;
 3   for (int z = maxSize; z > 0; z--) {// start from biggest area
-4       for (int i = 1; i <= maxWordLength; i TT) {
+4       for (int i = 1; i <= maxWordLength; i++) {
 s           if (z % i == 0) {
 6               int j = z / i;
 7               if (j <= maxWordLength) {
@@ -4502,7 +4502,7 @@ The lists in WordGroup are created through a static method called createWordGrou
 14      public static WordGroup[] createWordGroups(String[] list) {
 15          WordGroup[] groupList;
 16          int maxWordLength = 0;
-17          /* Find the length of the longest word*/
+17          /* Find the length of the longest word */
 18          for (int i = 0; i < list.length; i++) {
 19              if (list[i].length() > maxWordLength) {
 20                  maxWordLength = list[i].length();
@@ -4510,7 +4510,7 @@ The lists in WordGroup are created through a static method called createWordGrou
 22          }
 23
 24          /* Group the words in the dictionary into lists of words of same length.
-25           * groupList[i] will contain a list of words, each of length (i + l). */
+25           * groupList[i] will contain a list of words, each of length (i + 1). */
 26          groupList = new WordGroup[maxWordLength];
 27          for (int i = 0; i < list.length; i++) {
 28              /* We do wordLength - 1 instead of just wordLength since this is used as
@@ -4623,7 +4623,7 @@ It will also be useful to have a class that represents the documents.
 7           words = w;
 8       }
 9
-10      public ArrayList<Integer> getWords() { return words;}
+10      public ArrayList<Integer> getWords() { return words; }
 11      public int getId() { return docId; }
 12      public int size() { return words == null ? 0 : words.size(); }
 13  }

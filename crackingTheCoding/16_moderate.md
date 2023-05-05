@@ -272,7 +272,7 @@ To convert a board (represented by a char array) to an int, we can use what is e
 ```java
 1   enum Piece { Empty, Red, Blue };
 2   
-3   int convertBoardToint(Piece[][] board) {
+3   int convertBoardToInt(Piece[][] board) {
 4       int sum = 0;
 5       for (int i = 0; i < board.length; i++) {
 6           for (int j = 0; j < board[i].length; j++) {
@@ -305,7 +305,7 @@ If we know the very last move that was made (and we've been checking for a winne
 9           return piece;
 10      }
 11  
-12      if (row == column && haswonDiagonal(board, 1)) {
+12      if (row == column && hasWonDiagonal(board, 1)) {
 13          return piece;
 14      }
 15  
@@ -428,7 +428,7 @@ The most obvious way is through a series of nested for-loops.
 23          for (int j = 1; j < size; j++) {
 24              if (board[j][i] != first) {
 25                  break;
-26              }  else if (j == size - 1) {//Last element
+26              }  else if (j == size - 1) { // Last element
 27                  return first;
 28              }
 29          }
@@ -440,7 +440,7 @@ The most obvious way is through a series of nested for-loops.
 35          for (int i = 1; i < size; i++) {
 36              if (board[i][i] != first) {
 37                  break;
-38              }  else if (i == size - 1) {//Last element
+38              }  else if (i == size - 1) { // Last element
 39                  return first;
 40              }
 41          }
@@ -451,7 +451,7 @@ The most obvious way is through a series of nested for-loops.
 46          for  (int i = 1; i < size; i++) {
 47              if (board[i][size - i - 1] != first) {
 48                  break;
-49              }  else if (i == size - 1) { //Last element
+49              }  else if (i == size - 1) { // Last element
 50                  return first;
 51              }
 52          }
@@ -560,11 +560,11 @@ Another way of doing it is, of course,  to actually build an iterator.
 31      return first;
 32  }
 33
-34  class Positioniterator implements Iterator<Position> {
+34  class PositionIterator implements Iterator<Position> {
 35      private int rowIncrement, colIncrement, size;
 36      private Position current;
 37
-38      public Positioniterator(Position p, int rowIncrement,
+38      public PositionIterator(Position p, int rowIncrement,
 39              int colIncrement, int size) {
 40          this.rowIncrement = rowIncrement;
 41          this.colIncrement = colIncrement;
@@ -663,7 +663,7 @@ This problem is a bit of a brainteaser, but it can be approached  logically (as 
 **16.6  Smallest Difference:** Given two arrays of integers, compute the pair of values (one value in each array) with the smallest (non-negative) difference. Return the difference.
 ```
 EXAMPLE
-Input: {l, 3, 15, 11, 2}, {23, 127, 235, 19, 8} 
+Input: {1, 3, 15, 11, 2}, {23, 127, 235, 19, 8} 
 Output: 3. That is, the pair (11, 8).
 ```
 
@@ -705,7 +705,7 @@ A more optimal approach is to sort the arrays. Once the arrays are sorted, we ca
 
 Consider the following two arrays: 
 ```
-A:  {l,  2,  11,  15}
+A:  {1,  2,  11,  15}
 B:  {4,  12, 19,  23,  127,  235}
 ```
 Try the following approach:
@@ -827,8 +827,8 @@ This is not an especially challenging problem, but it is a somewhat tedious one.
 
 We can think about converting a number like 19,323,984 as converting each of three 3-digit segments of the number, and inserting "thousands" and "millions" in between as appropriate. That is,
 ```
-convert(19,323,984)  = convert(19)  + "  million  " +  convert(323)  + "  thousand  " +  
-                       convert(984)
+convert(19,323,984) = convert(19)  + "  million  " +  convert(323)  + "  thousand  " +  
+                      convert(984)
 ```
 The code below implements this algorithm.
 ```java
@@ -845,7 +845,7 @@ The code below implements this algorithm.
 11      if (num == 0) {
 12          return smalls[0];
 13      }  else if (num < 0) {
-14          return negative + " " + convert( -1 * num);
+14          return negative + " " + convert(-1 * num);
 15      }
 16
 17      LinkedList<String> parts = new LinkedList<String>();
@@ -1140,7 +1140,7 @@ A slightly  better way of doing this is to create an array where we track the nu
 7   /* Add each person's years to a year map. */
 8   int[] createYearMap(Person[] people, int min, int max) {
 9       int[] years = new int[max - min + 1];
-10      for  (Person person : people) {
+10      for (Person person : people) {
 11          incrementRange(years, person.birth - min, person.death - min);
 12      }
 13      return years;
@@ -1398,7 +1398,7 @@ We don't actually need to go through all arrangements of planks. We just need to
 
 This can be done in just a simple for loop. At each "sequence", we just compute the sum.
 ```java
-1   HashSet<Integer> alllengths(int k, int shorter, int longer) {
+1   HashSet<Integer> allLengths(int k, int shorter, int longer) {
 2       HashSet<Integer> lengths = new HashSet<Integer>();
 3       for (int nShorter = 0; nShorter <= k; nShorter++) {
 4           int nLonger = k - nShorter;
@@ -1522,7 +1522,7 @@ In the below code, we will assume the origin (0,  0) is in the upper left-hand c
 31          if (Math.abs(slope) == 1) {
 32              x1 = mid1.x + xdir * size / 2.0;
 33              y1 = mid1.y + ydir * size / 2.0;
-34          } else if (Math.abs(slope) < 1) {//shallow slope
+34          } else if (Math.abs(slope) < 1) { // shallow slope
 35              x1 = mid1.x + xdir * size / 2.0;
 36              y1 = slope * (x1 - mid1.x) + mid1.y;
 37          } else {//steep slope
@@ -1958,11 +1958,11 @@ A brute force algorithm is to just try all possible values for a and b and then 
 
 We could do this by iterating through all substrings for a and all possible substrings for b. There are O(N²) substrings in a string of length n, so this will actually take O(n⁴) time. But then, for each value of a and b, we need to build the new string of this length and compare it for equality. This building/comparison step takes O(n) time, giving an overall runtime of O(n⁵).
 ```
-1     for each possible substring a
-2          for each possible substring b
-3               candidate = buildFromPattern(pattern, a, b)
-4               if candidate equals value
-5                    return true
+1    for each possible substring a
+2         for each possible substring b
+3              candidate = buildFromPattern(pattern, a, b)
+4              if candidate equals value
+5                   return true
 ```
 Ouch.
 
@@ -2317,7 +2317,7 @@ The Trie data structure (see "Tries (Prefix Trees)" on page  105) can do this fo
 6
 7    void getValidWords(String number, int index, String prefix, TrieNode trieNode,
 8           ArrayList<String> results) {
-9         /*If it's a complete word, print it. */
+9         /* If it's a complete word, print it. */
 10        if (index == number.length()) {
 11            if (trieNode.terminates()) {//Is complete word
 12                results.add(prefix);
@@ -2374,7 +2374,7 @@ That's it!
 7   /* PRECOMPUTATION */
 8
 9   /* Create a hash table that maps from a number to all words that have this
-10  * numerical representation. */
+10   * numerical representation. */
 11  HashMapList<String, String> initializeDictionary(String[] words) {
 12      /* Create a hash table that maps from a letter to the digit */
 13      HashMap<Character, Character> letterToNumberMap = createLetterToNumberMap();
@@ -2451,7 +2451,7 @@ We are looking for two  values,  a and  b, such  that:
 Doing some quick math:
     
     2a -  2b  =  sumA -  sumB
-    a  -  b   = (sumA  -  sumB)  /  2
+    a  -  b   = (sumA  -  sumB) / 2
 
 Therefore, we're looking for two values  that have  a specific  target difference: (sumA - sumB) / 2.
 
@@ -2853,7 +2853,7 @@ Since we will need to print  a grid, we can track what should be top-left and  b
 47
 48      /* Print board. */
 49      public String toString() {
-50          5tringBuilder sb = new StringBuilder();
+50          StringBuilder sb = new StringBuilder();
 51          int rowMin = topLeftCorner.row;
 52          int rowMax = bottomRightCorner.row;
 53          int colMin = topLeftCorner.column;
@@ -2952,7 +2952,7 @@ Now, imagine we modify our function to add an if-statement, to change the consta
 
 The probability of winding up with the result of the rand7() function being, say, 6 would be the sum of the probabilities  of all rows that result in 6. That is:
 
-    P(rand7() = 6)  =  1/5ⁱ +1/5ʲ + .... + 1/5ᵐ
+    P(rand7() = 6) = 1/5ⁱ +1/5ʲ + .... + 1/5ᵐ
 
 
 We know that, in order for our function to be correct, this probability must equal ¹/₇. This is impossible *though. Because 5 and 7 are relatively prime, no series of reciprocal powers of 5 will result in ¹/₇.*
@@ -3170,7 +3170,7 @@ The algorithms now operate as follows:
 33     }
 34
 35     /* Insert node at front of linked list. */
-36     private void insertAtFrontOflinkedList(LinkedListNode node) {
+36     private void insertAtFrontOfLinkedList(LinkedListNode node) {
 37         if (listHead == null) {
 38             listHead = node;
 39             listTail = node;
@@ -3258,8 +3258,8 @@ On the above example, we would do the following:
 
 1.  Read +2. Apply it to processing. Apply processing to result. Clear processing. 
     
-        processing = {+,   2} -->  null
-        result = 0            -->  2
+        processing = {+,  2} -->  null
+        result = 0           -->  2
 
 2.  Read -6. Apply it to processing. Apply processing  to result. Clear processing. 
 
@@ -3283,8 +3283,8 @@ On the above example, we would do the following:
 
 6.  Read +5. Apply it to processing. Apply processing to result. Clear processing. 
 
-        processing = {+,   5} -->  null
-        result = -32          -->  -27
+        processing = {+,  5} -->  null
+        result = -32         -->  -27
 
 The code below implements this algorithm.
 ```java
@@ -3368,7 +3368,7 @@ This takes O(N) time, where N is the length of the initial string.
 
 Alternatively, we can solve this problem using two stacks: one for numbers and one for operators.
 
-    2  -  6  -  7 * 8 / 2 + 5
+    2 - 6 - 7 * 8 / 2 + 5
 
 The processing works as follows:
 
@@ -3381,7 +3381,7 @@ This collapsing continues until the above inequality is broken, at which point c
 
 - At the very end, we collapse the stack.
 
-Let's see this with an example: 2 -  6  -  7 * 8 / 2 +  5
+Let's see this with an example: 2 - 6 - 7 * 8 / 2 + 5
  
 ![](media/16_26_1.JPG)
 
