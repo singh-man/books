@@ -45,46 +45,19 @@ In either case, the sum is ⁿ⁽ⁿ⁺¹⁾/₂.
 
 This reasoning comes up a lot in nested loops. For example, consider the following code:
 ```java
-1   for (int i = 0; i < n; i++) 
-{7 Questions to Help You Know if You’re Compatible
-
-Do you feel safe speaking up?
-While this is a foundation for compatibility, it is, perhaps more importantly, the foundation for any close relationship. If you don’t feel safe to say how you feel but are always walking on eggshells and anxious, or are always giving in because you don’t want to upset your partner, you never get what you need because your needs are never voiced; you’re running on fear and ultimately not solving problems.
-
-Will there be times and situations where you’re hesitant to speak up? Sure. This happens to all of us based on our old wounds or our caring about the other and not wanting to upset them. But if you often feel this way, you will never be able to lean into the relationship and get the intimacy and support you need.
-
-Does the relationship feel balanced?
-Obviously, not feeling safe creates an imbalance. But here we’re talking about another form of imbalance, where even if you feel safe to speak up, the relationship feels lopsided–where the other person’s needs and wants dominate the relationship, or where you feel like you’re always initiating, reaching out, doing the emotional and practical heavy lifting. Instead, you want a more equal relationship where you both feel that the other person has your back, that your happiness and needs are just as important as theirs, that your problems are taken seriously rather than minimized or dismissed, and where they are willing to step up as do as much as you.
-
-Can you have productive, problem-solving conversations?
-Though tied to all of the above, here we’re talking about good communication skills and emotional regulation: the ability to stop arguments before they get out of hand, control emotions before they do damage, circle back after the dust settles, and create win-win compromises. If you can’t do this as a couple despite your best efforts, your relationship will eventually become a landmine of hurts or a tense and distant wasteland.
-
-Do you share the same values?
-Do you both have the same overall view about what is important in life and how to live it: what it means to be a couple or family day-to-day, about the role of work, the ways others should be treated and whether they can be trusted, about life’s purpose? This is about priorities and what you do with your ilfe and, at some level, about your personal philosophies about the meaning of life itself. If you are on different pages, operating from different assumptions, you’re likely always moving in different directions, differences that can lead to disappointment, frustration, or resentment.
-
-Do you have the same goals?
-Values are about broad guiding attitudes and assumptions. Here we’re talking about your concrete visions of the future. You want to have three kids or focus on your career, buy a house, or live in a big city, while your partner wants to travel and have no kids or is okay with the city but as long as it’s not too cold or expensive. Differences are expected, but again, can you support each other and negotiate those win-win compromises rather than arguing over whose goals are more critical? Can your partner support you in following your dreams?
-
-Do you have similar needs for individual vs. together time?
-The classic extrovert vs. the introvert; when you’re busy at work or need time alone, your partner understands and doesn’t feel rejected. His idea of being a couple is to have dinner, chat about your day, and then spend three hours watching Netflix while snuggling together on the couch. Or no, it’s about having dinner, playing video games, or going out with friends. How do you spend time? Again, what does being in a close relationship mean and require? Can you accommodate each other's needs?
-
-Do you have common interests?
-You seemed to have a lot of common interests at the beginning of your relationship because it was new and exciting. You both partied a lot or worked in the same type of jobs, or you were simply accommodating. But at some point, things change–you want to focus on the kids, party less, or are retired, and work is no longer a connection. This happens to many intimate relationships where couples have grown apart at various points in their lives; the glue that used to hold them together is no longer there. The challenge is finding a way to connect by being flexible and keeping your relationship important even when the old ways have changed. We’re back to communication and problem-solving.
-
-That’s my list. You may have other criteria. The keys here are being willing and able to step up and say what you need at the start and over time; being able to reach those win-win compromises so the relationship stays balanced; realizing that the relationship will change as you naturally change, and periodically taking stock, so you both get what you need.
-
-Most of all, it's about both being committed to prioritizing the relationship.
-
-2        for (int j = i + 1; j < n; j++) {
-3               System.out.println(i + j);
-4        }
+1   for (int i = 0; i < n; i++) {
+2      for (int j = i + 1; j < n; j++) {
+3          System.out.println(i + j);
+4      }
 5   }
 ```
 On the first iteration of the outer for loop, the inner for loop iterates n - 1  times. On the second iteration of the outer for loop, the inner for loop iterates n - 2 times. Next, n - 3, then n - 4, and so on. There are ⁿ⁽ⁿ⁻¹⁾/₂ total iterations of the inner for loop. Therefore, this code takes O(n²) time. 
 
 *Sum of Powers of 2*
 
-Consider this sequence: 2° + 2¹  + 2² + ... + 2ⁿ. What is its result? A nice way to see this is by looking at these values in binary.
+Consider this sequence: 2° + 2¹  + 2² + ... + 2ⁿ. What is its result? 
+
+A nice way to see this is by looking at these values in binary.
 
 |      | Power  | Binary | Decimal     |
 | :--: | :--:   | :--:   | :--:        |
@@ -153,8 +126,7 @@ This is like dominoes. If the first domino falls, and one domino always knocks o
 
 Let's use this to prove that there are 2ⁿ subsets of an n-element set.
 
-Definitions: let S  =   {a₁ ,  a₂ ,  a₃ ,  •  •  •  ,  aₙ} be the n-element set.
-
+- Definitions: let S  =   {a₁ ,  a₂ ,  a₃ ,  •  •  •  ,  aₙ} be the n-element set.
 - Base case: Prove there are 2° subsets of {}. This is true, since the only subset of {} is {}.
 - Assume that there are 2ⁿ subsets of {a₁ ,  a₂ ,  a₃ ,  •  •  •  ,  aₙ}.
 - Prove that there are 2ⁿ⁺¹  subsets of {a₁ ,  a₂ ,  a₃ ,  •  •  •  ,  aₙ₊₁} .
@@ -464,7 +436,7 @@ Further, the below rotations maintain the exact number of black nodes in each pa
 
 *Case A: N and P are both left children.*
 
-We resolve the red violation with the rotation of N, P, and G and the associated recoloring shown below. If you picture the in-order traversal, you can see the rotation maintains the node ordering (a  < =  N   < = b  <=  P  <=  c  <=   G   <= U). The tree maintains the same, equal number of black nodes in the path down to each subtree a, b, c, and U (which may all be NULL).
+We resolve the red violation with the rotation of N, P, and G and the associated recoloring shown below. If you picture the in-order traversal, you can see the rotation maintains the node ordering (a <= N <= b <= P <= c <= G <= U). The tree maintains the same, equal number of black nodes in the path down to each subtree a, b, c, and U (which may all be NULL).
 
 
 ![](media/XI_11.JPG)
@@ -472,7 +444,7 @@ We resolve the red violation with the rotation of N, P, and G and the associated
 
 *Case 8: P is a left child, and N is a right child.*
 
-The rotations in Case B resolve the red violation and maintain the in-order property: a  <=  P  <=  b  <= N   <=   c  <=  G  <=  U. Again,  the count of the black nodes remains constant in each path down to the leaves (or subtrees).
+The rotations in Case B resolve the red violation and maintain the in-order property: a <= P <= b <= N <= c <= G <= U. Again,  the count of the black nodes remains constant in each path down to the leaves (or subtrees).
 
 ![](media/XI_12.JPG)
 
@@ -674,13 +646,13 @@ For simplicity, we'd implemented this tree as storing integers for data.
 12          if (d <= data) {
 13              if (left == null) {
 14                  setLeftChild(new TreeNode(d));
-15              }  else {
+15              } else {
 16                  left.insertInOrder(d);
 17              }
-18          }  else {
+18          } else {
 19              if (right == null) {
 20                  setRightChild(new TreeNode(d));
-21              }  else {
+21              } else {
 22                  right.insertInOrder(d);
 23              }
 24          }
@@ -694,9 +666,9 @@ For simplicity, we'd implemented this tree as storing integers for data.
 32      public TreeNode find(int d) {
 33          if (d == data) {
 34              return this;
-35          }  else if (d <= data) {
+35          } else if (d <= data) {
 36              return left != null ? left.find(d) : null;
-37          }  else if (d > data) {
+37          } else if (d > data) {
 38              return right != null ? right.find(d) : null;
 39          }
 40          return null;
@@ -869,7 +841,7 @@ The Trie class uses the TrieNode class, which is implemented below.
 41          
 42          if (word.length() > 1) {
 43              child.addWord(word.substring(l));
-44          }  else {
+44          } else {
 45              child.setTerminates(true);
 46          }
 47      }

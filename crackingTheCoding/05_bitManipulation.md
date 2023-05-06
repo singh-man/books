@@ -255,7 +255,7 @@ If r  >= 1, then we know that n had a 1 right after the decimal point. By doing 
 15          if (r >= 1) {
 16              binary.append(l);
 17              num = r - 1;
-18          }  else {
+18          } else {
 19              binary.append(0);
 20              num = r;
 21          }
@@ -282,7 +282,7 @@ Alternatively, rather than multiplying the number  by two and comparing it to 1,
 14          if (num >= frac) {
 15              binary.append(1);
 15              num -= frac;
-17          }  else {
+17          } else {
 18              binary.append(0);
 19          }
 20          frac /= 2;
@@ -399,7 +399,7 @@ Update maxLength  as we go.
 8       while (a != 0) {
 9           if ((a & 1) == 1) { // Current bit is a 1
 10              currentLength++;
-11          }  else if ((a & 1) == 0) { // Current bit is a 0
+11          } else if ((a & 1) == 0) { // Current bit is a 0
 12              /* Update to 0 (if next bit is 0) or currentLength (if next bit is 1). */
 13              previousLength = (a & 2) == 0 ? 0 : currentLength;
 14              currentLength = 0;
@@ -826,7 +826,7 @@ A better solution is to recognize that if x1 and x2 are far away from each other
 24      if ((x1 / 8) == (x2 / 8)) { // x1 and x2 are in the same byte
 25          byte mask = (byte) (start_mask & end_mask);
 26          screen[(width / 8) * y + (x1 / 8)] |= mask;
-27      }  else {
+27      } else {
 28          if (start_offset != 0) {
 29              int byte_number = (width / 8) * y + first_full_byte - 1;
 30              screen[byte_number] |= start_mask;

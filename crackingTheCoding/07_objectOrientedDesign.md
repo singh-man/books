@@ -86,7 +86,7 @@ The Factory Method offers an interface for creating an instance of a class, with
 2       public static CardGame createCardGame(GameType type) {
 3           if (type == GameType.Poker) {
 4               return new PokerGame();
-5           }  else if (type == GameType.BlackJack) {
+5           } else if (type == GameType.BlackJack) {
 6               return new BlackJackGame();
 7           }
 8           return null;
@@ -296,7 +296,7 @@ CallHandler represents the body of the program, and all calls are funneled first
 37          if (emp != null) {
 38              emp.receiveCall(call);
 39              call.setHandler(emp);
-40          }  else {
+40          } else {
 41              /* Place the call into corresponding call queue according to its rank. */
 42              call.reply("Please wait for free employee to reply");
 43              callQueues.get(call.getRank().getValue()).add(call);
@@ -962,7 +962,7 @@ The code below outlines this algorithm.
 4           Piece p = piecesToSearch.remove();
 5           orientTopLeftCorner(p);
 6           solution[0][0] = p;
-7       }  else {
+7       } else {
 8           /*Get the right edge and list to match. */
 9           Piece pieceToMatch = column == 0 ? solution[row - 1][0] :
 10                                                 solution[row][column - 1];

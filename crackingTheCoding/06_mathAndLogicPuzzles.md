@@ -909,7 +909,7 @@ Implementing this requires some careful work to prevent bugs.
 32               * digit 1, or the other way around. */
 33              digits[2] = ((digits[0] + 1) % nTestStrips) == digits[1] ?
 34                          digits[0] : digits[1];
-35          }  else {
+35          } else {
 36              digits[2] = (digits[3] - 1 + nTestStrips) % nTestStrips;
 37          }
 38      }

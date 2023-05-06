@@ -198,7 +198,7 @@ We can now go ahead and implement this algorithm.
 39  boolean isBetween(double start, double middle, double end) {
 40      if (start > end) {
 41          return end <= middle && middle <= start;
-42      }  else {
+42      } else {
 43          return start <= middle && middle <= end;
 44      }
 45  }
@@ -415,7 +415,7 @@ The most obvious way is through a series of nested for-loops.
 10          for (int j = 1; j < size; j++) {
 11              if (board[i][j] != first) {
 12                  break;
-13              }  else if (j == size - 1) { //Last element
+13              } else if (j == size - 1) { //Last element
 14                  return first;
 15              }
 16          }
@@ -428,7 +428,7 @@ The most obvious way is through a series of nested for-loops.
 23          for (int j = 1; j < size; j++) {
 24              if (board[j][i] != first) {
 25                  break;
-26              }  else if (j == size - 1) { // Last element
+26              } else if (j == size - 1) { // Last element
 27                  return first;
 28              }
 29          }
@@ -440,7 +440,7 @@ The most obvious way is through a series of nested for-loops.
 35          for (int i = 1; i < size; i++) {
 36              if (board[i][i] != first) {
 37                  break;
-38              }  else if (i == size - 1) { // Last element
+38              } else if (i == size - 1) { // Last element
 39                  return first;
 40              }
 41          }
@@ -451,7 +451,7 @@ The most obvious way is through a series of nested for-loops.
 46          for  (int i = 1; i < size; i++) {
 47              if (board[i][size - i - 1] != first) {
 48                  break;
-49              }  else if (i == size - 1) { // Last element
+49              } else if (i == size - 1) { // Last element
 50                  return first;
 51              }
 52          }
@@ -844,7 +844,7 @@ The code below implements this algorithm.
 10  String convert(int num) {
 11      if (num == 0) {
 12          return smalls[0];
-13      }  else if (num < 0) {
+13      } else if (num < 0) {
 14          return negative + " " + convert(-1 * num);
 15      }
 16
@@ -876,7 +876,7 @@ The code below implements this algorithm.
 42      /* Convert tens place */
 43      if (number >= 10 && number <= 19) {
 44          parts.addLast(smalls[number]);
-45      }  else if (number >= 20) {
+45      } else if (number >= 20) {
 46          parts.addLast(tens[number / 10]);
 47          number %= 10;
 48      }
@@ -1017,7 +1017,7 @@ The connection between addition and multiplication is equally straightforward. T
 17  int abs(int a) {
 18      if (a < 0) {
 19          return negate(a);
-20      }  else {
+20      } else {
 21          return a;
 22      }
 23  }
@@ -1060,7 +1060,7 @@ The code below implements this algorithm.
 14
 15      if ((a < 0 && b < 0) || (a > 0 && b > 0)) {
 16          return x;
-17      }  else {
+17      } else {
 18          return negate(x);
 19      }
 20  }
@@ -1218,7 +1218,7 @@ If we walk through the two arrays like this, we can track the number of people a
 17                  maxAliveYear = births[birthIndex];
 18              }
 19              birthIndex++; // move birth index
-20          }  else if (births[birthIndex] > deaths[deathIndex]) {
+20          } else if (births[birthIndex] > deaths[deathIndex]) {
 21              currentlyAlive--; // include death
 22              deathIndex++; // move death index
 23          }
@@ -1448,7 +1448,7 @@ We repeatedly call encode() on parts of the XML structure, handling the code in 
 6       encode("0", sb);
 7       if (root.value != null && root.value != "") {
 8           encode(root.value, sb);
-9       }  else {
+9       } else {
 10          for (Element e : root.children) {
 11              encode(e, sb);
 12          }
@@ -1658,7 +1658,7 @@ What does this mean for our hash table? It means that two lines with "equal" slo
 76          if (Math.abs(p.x - q.x) > epsilon) { // if x's are different
 77              slope = (p.y - q.y) / (p.x - q.x); // compute slope
 78              intercept = p.y - slope * p.x; // y intercept from y=mx+b
-79          }  else {
+79          } else {
 80              infinite_slope = true;
 81              intercept = p.x; // x-intercept, since slope is infinite
 82          }
@@ -1748,7 +1748,7 @@ The code below implements this algorithm.
 34      for (int i = 0; i < guess.length(); i++) {
 35          if (guess.charAt(i) == solution.charAt(i)) {
 36              res.hits++;
-37          }  else {
+37          } else {
 38              /* Only increment the frequency table (which will be used for pseudo-hits)
 39               * if it's not a hit. If it's a hit, the slot has already been "used." */
 40              int code = code(solution.charAt(i));
@@ -1999,7 +1999,7 @@ There's one more minor (optional) optimization we can make. We don't actually ne
 23      for (char c : pattern.toCharArray()) {
 24          if (c == first) {
 25              sb.append(main);
-26          }  else {
+26          } else {
 27              sb.append(alt);
 28          }
 29      }
@@ -2581,7 +2581,7 @@ If the arrays are sorted, we can iterate through them to find an appropriate pai
 19              return values;
 20          } else if (difference < target) {
 21              a++;
-22          }  else {
+22          } else {
 23              b++;
 24          }
 25      }
@@ -2661,7 +2661,7 @@ This relabeling will not impact the big O time since we have to create a new mat
 29          if (position.row < 0) {
 30              shiftRow = numRows;
 31              numRows *= 2;
-32          }  else if (position.row >= numRows) {
+32          } else if (position.row >= numRows) {
 33              numRows *= 2;
 34          }
 35
@@ -2670,7 +2670,7 @@ This relabeling will not impact the big O time since we have to create a new mat
 38          if (position.column < 0) {
 39              shiftColumn = numColumns;
 40              numColumns *= 2;
-41          }  else if (position.column >= numColumns) {
+41          } else if (position.column >= numColumns) {
 42              numColumns *= 2;
 43          }
 44
@@ -2705,9 +2705,9 @@ This relabeling will not impact the big O time since we have to create a new mat
 73              for  (int c = 0; c < grid[0].length; c++) {
 74                  if (r == ant.position.row && c == ant.position.column) {
 75                      sb.append(ant.orientation);
-76                  }  else if (grid[r][c]) {
+76                  } else if (grid[r][c]) {
 77                      sb.append("X");
-78                  }  else {
+78                  } else {
 79                      sb.append("_");
 80                  }
 81              }
@@ -2732,11 +2732,11 @@ We pulled the Ant code into a separate class. The nice thing about this is that 
 9       public void move() {
 10          if (orientation == Orientation.left) {
 11              position.column--;
-12          }  else if (orientation == Orientation.right) {
+12          } else if (orientation == Orientation.right) {
 13              position.column++;
-14          }  else if (orientation == Orientation.up) {
+14          } else if (orientation == Orientation.up) {
 15              position.row--;
-16          }  else if (orientation == Orientation.down) {
+16          } else if (orientation == Orientation.down) {
 17              position.row++;
 18          }
 19      }
@@ -2755,11 +2755,11 @@ Orientation is also its own enum, with a few useful functions.
 4        public Orientation getTurn(boolean clockwise) {
 5            if (this == left) {
 6                return clockwise ? up : down;
-7            }  else if (this == up) {
+7            } else if (this == up) {
 8                return clockwise ? right : left;
-9            }  else if (this == right) {
+9            } else if (this == right) {
 10               return clockwise ? down : up;
-11           }  else {//down
+11           } else {//down
 12               return clockwise ? left : right;
 13           }
 14       }
@@ -2768,11 +2768,11 @@ Orientation is also its own enum, with a few useful functions.
 17       public String toString() {
 18           if (this == left) {
 19               return "\u2190";
-20           }  else if (this == up) {
+20           } else if (this == up) {
 21               return "\u2191";
-22           }  else if (this == right) {
+22           } else if (this == right) {
 23               return "\u2192";
-24           }  else {//down
+24           } else {//down
 25               return "\u2193";
 26           }
 27       }
@@ -3043,7 +3043,7 @@ We can optimize this with a hash map, where the value in the hash map reflects t
 6           if (unpairedCount.getOrDefault(complement, 0) > 0) {
 7               result.add(new Pair(x, complement));
 8               adjustCounterBy(unpairedCount, complement, -1); // decrement complement
-9           }  else {
+9           } else {
 10              adjustCounterBy(unpairedCount, x, 1); // increment count
 11          }
 12      }
@@ -3174,7 +3174,7 @@ The algorithms now operate as follows:
 37         if (listHead == null) {
 38             listHead = node;
 39             listTail = node;
-40         }  else {
+40         } else {
 41             listHead.prev = node;
 42             node.next = listHead;
 43             listHead  = node;
@@ -3437,7 +3437,7 @@ The code below implements this algorithm.
 48              Operator op = operatorStack.pop();
 49              double collapsed = applyOp(first, op, second);
 50              numberStack.push(collapsed);
-51          }  else {
+51          } else {
 52              break;
 53          }
 54      }

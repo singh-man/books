@@ -386,7 +386,7 @@ In this approach, we start a "new" list (using the existing nodes). Elements big
 8               /* Insert node at head. */
 9               node.next = head;
 10              head = node;
-11          }  else {
+11          } else {
 12              /* Insert node at tail. */
 13              tail.next = node;
 14              tail = node;

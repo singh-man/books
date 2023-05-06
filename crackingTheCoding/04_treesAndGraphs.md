@@ -398,7 +398,7 @@ The code below provides an iterative implementation of breadth-first search.
 19                  if (v.state == State.Unvisited) {
 20                      if (v == end) {
 21                          return true;
-22                      }  else {
+22                      } else {
 23                          v.state = State.Visiting;
 24                          q.add(v);
 25                      }
@@ -480,7 +480,7 @@ We can implement a simple modification of the pre-order traversal algorithm, whe
 9            * visited level i, we must have seen levels 0 through i - 1. We can
 10           * therefore safely add the level at the end. */
 11          lists.add(list);
-12      }  else {
+12      } else {
 13          list = lists.get(level);
 14      }
 15      list.add(root);
@@ -753,7 +753,7 @@ The pseudocode looks like this:
 1   Node inorderSucc(Node n) {
 2       if (n has a right subtree) {
 3           return leftmost child of right subtree
-4       }  else {
+4       } else {
 5           while (n is a right child of n.parent) {
 6               n = n.parent; // Go up
 7           }
@@ -1193,7 +1193,7 @@ To implement this, we can just traverse upwards from p, storing the parent and t
 2       /* Check if either node is not in the  tree, or if one covers the  other. */
 3       if (!covers(root, p) || !covers(root, q)) {
 4           return null;
-5       }  else if (covers(p, q)) {
+5       } else if (covers(p, q)) {
 6           return p;
 7       } else if (covers(q, p)) {
 8           return q;
@@ -1370,7 +1370,7 @@ We somehow need to distinguish between these two cases, and this is what the cod
 34  
 35      if (rx.node != null && ry.node != null) {
 36          return new Result(root, true); // This is the common ancestor
-37      }  else if (root == p || root == q) {
+37      } else if (root == p || root == q) {
 38          /* If we're currently at p or q, and we also found one of those nodes in a
 39           * subtree, then this is truly an ancestor and the flag should be true. */
 40          boolean isAncestor = rx.node != null || ry.node != null;
@@ -1632,7 +1632,7 @@ The code below implements this algorithm.
 6   boolean subTree(TreeNode r1, TreeNode r2) {
 7       if (r1 == null) {
 8           return false; // big tree empty & subtree still not found.
-9       }  else if (r1.data == r2.data && matchTree(r1, r2)) {
+9       } else if (r1.data == r2.data && matchTree(r1, r2)) {
 10          return true;
 11      }
 12      return subTree(r1.left, r2) || subTree(r1.right, r2);
@@ -1641,11 +1641,11 @@ The code below implements this algorithm.
 15  boolean matchTree(TreeNode r1, TreeNode r2) {
 16      if (r1 == null && r2 == null) {
 17          return true;  // nothing left in the subtree
-18      }  else if (r1 == null || r2 == null) {
+18      } else if (r1 == null || r2 == null) {
 19          return false; // exactly tree is empty, therefore trees don't match
-20      }  else if (r1.data != r2.data)  {
+20      } else if (r1.data != r2.data)  {
 21          return false; // data doesn't match
-22      }  else {
+22      } else {
 23          return matchTree(r1.left, r2.left) && matchTree(r1.right, r2.right);
 24      }
 25  }
@@ -1834,7 +1834,7 @@ Another way to think about what we're doing is that the initial random number ca
 14      public void insertInOrder(int value) {
 15          if (root == null) {
 16              root = new TreeNode(value);
-17          }  else {
+17          } else {
 18              root.insertInOrder(value);
 19          }
 20      }
@@ -1847,9 +1847,9 @@ Another way to think about what we're doing is that the initial random number ca
 27          int leftSize = left == null ? 0 : left.size();
 28          if (i < leftSize) {
 29              return left.getIthNode(i);
-30          }  else if (i == leftSize) {
+30          } else if (i == leftSize) {
 31              return this;
-32          }  else {
+32          } else {
 33              /* Skipping over leftSize + 1 nodes, so subtract them. */
 34              return right.getIthNode(i - (leftSize + 1));
 35          }
@@ -2034,7 +2034,7 @@ Despite the complexity of deriving this algorithm, the code to implement this is
 30      int newCount = hashTable.getOrDefault(key, 0) + delta;
 31      if (newCount == 0) { //Remove when zero to reduce space usage
 32          hashTable.remove(key);
-33      }  else {
+33      } else {
 34          hashTable.put(key, newCount);
 35      }
 36  }
