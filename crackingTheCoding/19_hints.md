@@ -59,7 +59,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#44.    1.1     Try a hash table.
 - \#45.    2.7     Examples will help you. Draw a picture of intersecting linked lists and two equivalent linked lists (by value) that do not intersect.
 - \#46.    4.8     Try a recursive approach. Check if p and q are descendants of the left subtree and the right subtree. If they are descendants of different subtrees, then the current node is the first common ancestor. If they are descendants of the same subtree, then that subtree holds the first common ancestor. Now, how do you implement this efficiently?
-- \#47.    4.7     Look at this graph. 1s there any node you can identify that will definitely be okay to build first?
+- \#47.    4.7     Look at this graph. Is there any node you can identify that will definitely be okay to build first?
 - \#48.    4.9     The root is the very first value that must be in every array. What can you say about the order of the values in the left subtree as compared to the values in the right subtree? Do the left subtree values need to be inserted before the right subtree?
 - \#49.    4.4     What if you could modify the binary tree node class to allow a node to store the height of its subtree?
 - \#50.    2.8     There are really two parts to this problem. First, detect if the linked list has a loop. Second, figure out where the loop starts.

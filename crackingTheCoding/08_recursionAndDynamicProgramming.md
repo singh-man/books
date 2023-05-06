@@ -251,11 +251,11 @@ A simple implementation of this code is below.
 ```java
 1   int countWays(int n) {
 2     if (n < 0) {
-3       return 0;
-4     }  else if (n == 0) {
-5       return 1;
-6     }  else {
-7       return countWays(n - 1) + countWays(n - 2) + countWays(n - 3);
+3         return 0;
+4     } else if (n == 0) {
+5         return 1;
+6     } else {
+7         return countWays(n - 1) + countWays(n - 2) + countWays(n - 3);
 8     }
 9   }
 ```
@@ -280,15 +280,15 @@ Typically we use  a HashMap\<Integer, Integer> for a cache. In this case,  the  
 6 
 7   int countWays(int n, int[] memo) {
 8     if (n < 0) {
-9       return 0;
-10    }  else if (n == 0) {
-11      return 1;
-12    }  else if (memo[n] > -1) {
-13      return memo[n];
-14    }  else {
-15      memo[n] = countWays(n - 1, memo) + countWays(n - 2, memo) +
-16                countWays(n - 3, memo);
-17      return memo[n];
+9         return 0;
+10    } else if (n == 0) {
+11        return 1;
+12    } else if (memo[n] > -1) {
+13        return memo[n];
+14    } else {
+15        memo[n] = countWays(n - 1, memo) + countWays(n - 2, memo) +
+16                  countWays(n - 3, memo);
+17        return memo[n];
 18    }
 19  }
 ```
@@ -450,11 +450,11 @@ We continue to apply this recursive algorithm, developing code that looks very m
 8     }
 9     int mid = (start + end) / 2;
 10    if (array[mid] == mid) {
-11      return mid;
-12    }  else if (array[mid] > mid) {
-13      return magicFast(array, start, mid - 1);
-14    }  else {
-15      return magicFast(array, mid + 1, end);
+11        return mid;
+12    } else if (array[mid] > mid) {
+13        return magicFast(array, start, mid - 1);
+14    } else {
+15        return magicFast(array, mid + 1, end);
 16    }
 17  }
 ```
@@ -577,18 +577,18 @@ The following code implements this algorithm:
 1   ArrayList<ArrayList<Integer>> getSubsets(ArrayList<Integer> set, int index) {
 2     ArrayList<ArrayList<Integer>> allsubsets;
 3     if (set.size() == index) { //Base case - add empty set
-4       allsubsets = new ArrayList<ArrayList<Integer>>();
-5       allsubsets.add(new ArrayList<Integer>()); // Empty set
-6     }  else {
-7       allsubsets = getSubsets(set, index + 1);
-8       int item = set.get(index);
-9       ArrayList<ArrayList<Integer>> moresubsets = 
-10        new ArrayList<ArrayList<Integer>>();
-11      for (ArrayList<Integer> subset : allsubsets) {
-12        ArrayList<Integer> newsubset = new ArrayList<Integer>();
-13        newsubset.addAll(subset); //
-14        newsubset.add(item);
-15        moresubsets.add(newsubset);
+4         allsubsets = new ArrayList<ArrayList<Integer>>();
+5         allsubsets.add(new ArrayList<Integer>()); // Empty set
+6     } else {
+7         allsubsets = getSubsets(set, index + 1);
+8         int item = set.get(index);
+9         ArrayList<ArrayList<Integer>> moresubsets = 
+10          new ArrayList<ArrayList<Integer>>();
+11        for (ArrayList<Integer> subset : allsubsets) {
+12          ArrayList<Integer> newsubset = new ArrayList<Integer>();
+13          newsubset.addAll(subset); //
+14          newsubset.add(item);
+15          moresubsets.add(newsubset);
 16      }
 17      allsubsets.addAll(moresubsets);
 18    }
@@ -668,9 +668,9 @@ Of course, this "doubling" only works if the number is in fact even. When it's n
 6 
 7   int minProductHelper(int smaller, int bigger) {
 8     if (smaller == 0) { // 0 x bigger = 0
-9       return 0;
-10    }  else if (smaller == 1) { // 1 x bigger bigger
-11      return bigger;
+9         return 0;
+10    } else if (smaller == 1) { // 1 x bigger bigger
+11        return bigger;
 12    }
 13  
 14    /* Compute half. If uneven, compute other half. If even, double it. */
@@ -715,11 +715,11 @@ The second call to minProduct(4, 23) is unaware of the prior call, and so it rep
 8 
 9   int minProduct(int smaller, int bigger, int[] memo) {
 10    if (smaller == 0) {
-11      return 0;
-12    }  else if (smaller == 1) {
-13      return bigger;
-14    }  else if (memo[smaller] > 0) {
-15      return memo[smaller];
+11        return 0;
+12    } else if (smaller == 1) {
+13        return bigger;
+14    } else if (memo[smaller] > 0) {
+15        return memo[smaller];
 16    }
 17  
 18    /* Compute half. If uneven, compute other half. If even, double it. */
@@ -767,9 +767,9 @@ In doing so, we have  an unexpected "win". Our minProduct function just recurses
 12    int halfProd = minProductHelper(s, bigger);
 13  
 14    if (smaller % 2 == 0) {
-15      return halfProd + halfProd;
-16    }  else {
-17      return halfProd + halfProd + bigger;
+15        return halfProd + halfProd;
+16    } else {
+17        return halfProd + halfProd + bigger;
 18    }
 19  }
 ```
@@ -884,9 +884,9 @@ The following code provides a more detailed implementation of this algorithm, us
 25  
 26    public void add(int d) {
 27      if (!disks.isEmpty() && disks.peek() <= d) {
-28        System.out.println("Error placing disk" + d);
-29      }  else {
-30        disks.push(d);
+28          System.out.println("Error placing disk" + d);
+29      } else {
+30          disks.push(d);
 31      }
 32    }
 33  
@@ -1190,21 +1190,21 @@ If we're going to apply this approach, we'll need to check for duplicate values 
 1   Set<String> generateParens(int remaining) {
 2     Set<String> set = new HashSet<String>();
 3     if (remaining == 0) {
-4       set.add("");
-5     }  else {
-6       Set<String> prev = generateParens(remaining - 1);
-7       for (String str : prev) {
-8         for (int i = 0; i < str.length(); i++) {
-9           if (str.charAt(i) == '(') {
-10            String s = insertInside(str, i);
-11            /* Add s to set if it's not already in there. Note: HashSet
-12             * automatically checks for duplicates before adding, so an explicit
-13             * check is not necessary. */
-14            set.add(s);
-15          }
-16         }
-17         set.add("()" + str);
-18       }
+4         set.add("");
+5     } else {
+6         Set<String> prev = generateParens(remaining - 1);
+7         for (String str : prev) {
+8           for (int i = 0; i < str.length(); i++) {
+9             if (str.charAt(i) == '(') {
+10              String s = insertInside(str, i);
+11              /* Add s to set if it's not already in there. Note: HashSet
+12               * automatically checks for duplicates before adding, so an explicit
+13               * check is not necessary. */
+14              set.add(s);
+15            }
+16           }
+17           set.add("()" + str);
+18         }
 19     }
 20     return set;
 21  }
@@ -1234,13 +1234,13 @@ So, we simply keep track of the number of left and right parentheses allowed. If
 3     if (leftRem < 0 || rightRem < leftRem) return; // invalid state
 4   
 5     if (leftRem == 0 && rightRem == 0) { /* Out of left and right parentheses */
-6       list.add(String.copyValueOf(str));
-7     }  else {
-8       str[index] = '('; // Add left and recurse 
-9       addParen(list, leftRem - 1, rightRem, str, index + 1);
+6         list.add(String.copyValueOf(str));
+7     } else {
+8         str[index] = '('; // Add left and recurse 
+9         addParen(list, leftRem - 1, rightRem, str, index + 1);
 10  
-11      str[index] = ')'; // Add right and recurse
-12      addParen(list, leftRem, rightRem - 1, str, index + 1);
+11        str[index] = ')'; // Add right and recurse
+12        addParen(list, leftRem, rightRem - 1, str, index + 1);
 13    }
 14  }
 15  
@@ -1453,13 +1453,13 @@ Implementing this is now reasonably straightforward.
 2 
 3   void placeQueens(int row, Integer[] columns, ArrayList<Integer[]> results) {
 4     if (row == GRID_SIZE) { // Found valid placement
-5       results.add(columns.clone());
-6     }  else {
-7       for (int col = 0; col < GRID_SIZE; col++) {
-8         if (checkValid(columns, row, col)) {
-9           columns[row] = col; // Place queen
-10          placeQueens(row + 1, columns, results);
-11        }
+5         results.add(columns.clone());
+6     } else {
+7         for (int col = 0; col < GRID_SIZE; col++) {
+8           if (checkValid(columns, row, col)) {
+9             columns[row] = col; // Place queen
+10            placeQueens(row + 1, columns, results);
+11         }
 12      }
 13    }
 14  }
@@ -1724,12 +1724,12 @@ This makes the code a bit more concise.
 17  
 18      int totalTrue = 0;
 19      if (c == '^') { // required: one true and one false
-20        totalTrue = leftTrue * rightFalse + leftFalse * rightTrue;
-21      }  else if (c == '&') { // required: both true
-22        totalTrue = leftTrue * rightTrue;
-23      }  else if (c == '|') { // required: anything but both false
-24        totalTrue = leftTrue * rightTrue + leftFalse * rightTrue +
-25          leftTrue * rightFalse;
+20          totalTrue = leftTrue * rightFalse + leftFalse * rightTrue;
+21      } else if (c == '&') { // required: both true
+22          totalTrue = leftTrue * rightTrue;
+23      } else if (c == '|') { // required: anything but both false
+24          totalTrue = leftTrue * rightTrue + leftFalse * rightTrue +
+25            leftTrue * rightFalse;
 26      }
 27  
 28      int subways = result ? totalTrue : total - totalTrue;

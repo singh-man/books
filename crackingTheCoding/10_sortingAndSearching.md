@@ -146,9 +146,9 @@ Note that although the concept is fairly simple, getting all the details right i
 7           mid = (low + high) / 2;
 8           if (a[mid] < x) {
 9               low = mid + 1;
-10          }  else if (a[mid] > x) {
+10          } else if (a[mid] > x) {
 11              high = mid - 1;
-12          }  else {
+12          } else {
 13              return mid;
 14          }
 15      }
@@ -161,9 +161,9 @@ Note that although the concept is fairly simple, getting all the details right i
 22      int mid = (low + high) / 2;
 23      if (a[mid] < x) {
 24          return binarySearchRecursive(a, x, mid + 1, high);
-25      }  else if (a[mid] > x) {
+25      } else if (a[mid] > x) {
 26          return binarySearchRecursive(a, x, low, mid - 1);
-27      }  else {
+27      } else {
 28          return mid;
 29      }
 30  }
@@ -203,7 +203,7 @@ The code below does just that. It works from the back of A and B, moving the lar
 9           if (indexA >= 0 && a[indexA] > b[indexB]) {
 10              a[indexMerged] = a[indexA]; // copy element
 11              indexA--;
-12          }  else {
+12          } else {
 13              a[indexMerged] = b[indexB]; // copy element
 14              indexB--;
 15          }
@@ -409,9 +409,9 @@ There's one more little tweak. Recall that the way we figure out the length is b
 14          int middle = list.elementAt(mid);
 15          if (middle > value || middle == -1) {
 16              high = mid - 1;
-17          }  else if (middle < value) {
+17          } else if (middle < value) {
 18              low = mid + 1;
-19          }  else {
+19          } else {
 20              return mid;
 21          }
 22      }
@@ -453,10 +453,10 @@ The recursive code below to solve this problem can easily be modified to be iter
 10          while (true) {
 11              if (left < first && right > last) {
 12                  return -1;
-13              }  else if (right <= last && !strings[right].isEmpty()) {
+13              } else if (right <= last && !strings[right].isEmpty()) {
 14                  mid = right;
 15                  break;
-16              }  else if (left >= first && !strings[left].isEmpty()) {
+16              } else if (left >= first && !strings[left].isEmpty()) {
 17                  mid = left;
 18                  break;
 19              }
@@ -468,9 +468,9 @@ The recursive code below to solve this problem can easily be modified to be iter
 25      /* Check for string, and recurse if necessary */
 26      if (str.equals(strings[mid])) { // Found it!
 27          return mid;
-28      }  else if (strings[mid].compareTo(str) < 0) { // Search right
+28      } else if (strings[mid].compareTo(str) < 0) { // Search right
 29          return search(strings, str, mid + 1, last);
-30      }  else { // Search left
+30      } else { // Search left
 31          return search(strings, str, first, mid - 1);
 32      }
 33  }
@@ -707,7 +707,7 @@ When we come across a duplicate element, we print it.
 5           int num0 = num - 1; // bitset starts at 0, numbers start at 1
 6           if (bs.get(num0)) {
 7               System.out.println(num);
-8           }  else {
+8           } else {
 9               bs.sgt(num0);
 10          }
 11      }
@@ -866,7 +866,7 @@ The code below implements this algorithm.
 4       }
 5       if (matrix[origin.row][origin.column] == x) {
 6           return origin;
-7       }  else if (!origin.isBefore(dest)) {
+7       } else if (!origin.isBefore(dest)) {
 8           return null;
 9       }
 10  
@@ -883,7 +883,7 @@ The code below implements this algorithm.
 21          if (x > matrix[p.row][p.column]) {
 22              start.row = p.row + 1;
 23              start.column = p.column + 1;
-24          }  else {
+24          } else {
 25              end.row = p.row - 1;
 26              end.column = p.column - 1;
 27          }
@@ -1007,7 +1007,7 @@ The full code for this is below.
 3   void track(int number) {
 4       if (root == null) {
 5           root = new RankNode(number);
-6       }  else {
+6       } else {
 7           root.insert(number);
 8       }
 9   }
@@ -1030,7 +1030,7 @@ The full code for this is below.
 26              if (left != null) left.insert(d);
 27              else left = new RankNode(d);
 28              left_size++;
-29          }  else {
+29          } else {
 30              if (right != null) right.insert(d);
 31              else right = new RankNode(d);
 32          }
@@ -1039,10 +1039,10 @@ The full code for this is below.
 35      public int getRank(int ct) {
 36          if (d == data) {
 37              return left_size;
-38          }  else if (d < data) {
+38          } else if (d < data) {
 39              if (left == null) return -1;
 40              else return left.getRank(d);
-41          }  else {
+41          } else {
 42              int right_rank = right == null ? -1 : right.getRank(d);
 43              if (right_rank == -1) return -1;
 44              else return left_size + 1 + right_rank;

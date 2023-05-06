@@ -375,7 +375,7 @@ Instead of checking the number of odd counts at the end, we can check as we go a
 8               table[x]++;
 9               if (table[x] % 2 == 1) {
 10                  countOdd++;
-11              }  else  {
+11              } else  {
 12                  countOdd--;
 13              }
 14          }
@@ -429,7 +429,7 @@ This leads us to our final implementation.
 21      int mask = 1 << index;
 22      if  ((bitVector &  mask) == 0) {
 23          bitVector |= mask;
-24      }  else {
+24      } else {
 25          bitVector &= ~mask;
 26      }
 27      return  bitVector;
@@ -482,9 +482,9 @@ Observe that you don't need to check the strings for insertion, removal, and rep
 1   boolean   oneEditAway(String  first, String  second) {
 2       if (first.length() == second.length()) {
 3           return oneEditReplace(first, second);
-4       }  else if (first.length() + 1 == second.length()) {
+4       } else if (first.length() + 1 == second.length()) {
 5           return oneEditinsert(first,  second);
-6       }  else if (first.length() - 1 == second.length()) {
+6       } else if (first.length() - 1 == second.length()) {
 7           return oneEditinsert(second, first);
 8       }
 9       return false;

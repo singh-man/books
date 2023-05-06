@@ -34,7 +34,7 @@ The following code implements this algorithm.
 ```java
 1   int add(int a, int b) {
 2       if (b == 0) return a;
-3       int sum   = a ^ b;// add without carrying
+3       int sum   = a ^ b; // add without carrying
 4       int carry = (a & b) << 1; // carry, but don't add
 5       return add(sum, carry); // recurse with sum + carry
 6   }
@@ -126,7 +126,7 @@ The pseudocode for this recursive algorithm would look like this:
 1   int[] pickMRecursively(int[] original, int m, int i) {
 2       if (i + 1 == m) { // Base case
 3           /* return first m elements of original */
-4       }  else if (i + 1 > m) {
+4       } else if (i + 1 > m) {
 5           int[] subset = pickMRecursively(original, m, i - 1);
 6           int k = random value between 0 and i, inclusive
 7           if (k < m) {
@@ -271,14 +271,14 @@ The code below implements this algorithm. We've implemented the discarding aspec
 13      for (BitInteger t : input) {
 14          if (t.fetch(column) == 0) {
 15              zeroBits.add(t);
-16          }  else {
+16          } else {
 17              oneBits.add(t);
 18          }
 19      }
 20      if (zeroBits.size() <= oneBits.size()) {
 21          int v = findMissing(zeroBits, column + 1);
 22          return (v << 1) | 0;
-23      }  else {
+23      } else {
 24          int v = findMissing(oneBits, column + 1);
 25          return (v << 1) | 1;
 26      }
@@ -498,16 +498,16 @@ Consider the value x  =  61523  and d  =  3, and observe that x[d] = 1 (that is,
 In other words, we can round down to the nearest 10ᵈ⁺¹, and then divide by 10, to compute the number of 2s in the dth digit.
 ```
 if x[d] < 2: count2sInRangeAtDigit(x, d) = 
-    let y  =  round  down to nearest 10⁽ᵈ⁺¹⁾
-    return y  / 10
+    let y = round  down to nearest 10⁽ᵈ⁺¹⁾
+    return y / 10
 ```
 *Case digit> 2*
 
 Now, let's look at the case where dth digit of x is greater than 2(x[d] > 2). We can apply almost the exact same logic to see that there are the same number of 2s in the 3rd digit in the range 0 - 63525 as there as in the range 0 - 70000. So, rather than rounding down,  we round up.
 ```
-if x[d] >  2: count2sInRangeAtDigit(x, d)=
-    let y  =  round up  to nearest 10ᵈ⁺¹
-    return y  / 10
+if x[d] > 2: count2sInRangeAtDigit(x, d)=
+    let y = round up to nearest 10ᵈ⁺¹
+    return y / 10
 ```
 *Case digit= 2*
 
@@ -531,9 +531,9 @@ Now, all you  need is to iterate through each digit  in the  number. Implementin
 9       int digit = (number / powerOf10) % 10;
 10      if (digit < 2) { // if the digit in spot digit is
 11          return roundDown / 10;
-12      }  else if (digit == 2) {
+12      } else if (digit == 2) {
 13          return roundDown / 10 + right + 1;
-14      }  else {
+14      } else {
 15          return roundup / 10;
 16      }
 17  }
@@ -582,16 +582,16 @@ We can start reading pairs in from the synonyms list. As we read the pair (Jonat
 
 We can use a hash table (L1) that maps from a name to its "true" name. We'll also need to know, given a "true" name, all the names equivalent to it. This will be stored in a hash table L2. Note that L2 acts as a reverse lookup of L1.
 
-    READ   (Jonathan,  John)
+    READ  (Jonathan,  John)
         Li.ADD  Jonathan  -> John
         L2.ADD  John  -> Jonathan
-    READ   (Jon,   Johnny)
+    READ  (Jon,  Johnny)
         Li.ADD  Jon  -> Johnny
-        LZ.ADD   Johnny ->  Jon
-    READ   (Johnny,   John)
+        LZ.ADD  Johnny ->  Jon
+    READ  (Johnny,  John)
         LI.ADD  Johnny -> John
         Li.UPDATE  Jon  -> John
-        LZ.UPDATE  John  -> Jonathan,   Johnny,  Jon
+        LZ.UPDATE  John  -> Jonathan,  Johnny,  Jon
 
 If we later find that John is equivalent to, say, Jonny, we'll need to look up the names in L1 and L2 and merge together all the names that are equivalent to them.
 
@@ -601,17 +601,17 @@ Instead, we can think of these names as "equivalence classes". When we find a pa
 
 If we need to merge two sets, then we copy one set into the other and update the hash table to point to the new set.
     
-    READ   (Jonathan,  John)
-        CREATE  Set1 =  Jonathan,   John
+    READ  (Jonathan,  John)
+        CREATE  Set1 = Jonathan,  John
         L1.ADD  Jonathan  -> Set1
         L1.ADD  John  -> Set1
-    READ   (Jon,   Johnny)
+    READ  (Jon,  Johnny)
         CREATE  Set2  =  Jon,  Johnny
         L1.ADD  Jon  -> Set2
         L1.ADD  Johnny -> Set2
-    READ   (Johnny,   John)
+    READ  (Johnny,  John)
         COPY  Set2  into Set1.
-            Set1 =  Jonathan,   John,  Jon,  Johnny
+            Set1 = Jonathan,  John,  Jon,  Johnny
         L1.UPDATE  Jon  -> Set1
         L1.UPDATE  Johnny -> Set1
 
@@ -848,7 +848,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 20  
 21      if (bestWith == null || bestWithout.size() > bestWith.size()) {
 22          return bestWithout;
-23      }  else {
+23      } else {
 24          return bestWith;
 25      }
 26  }
@@ -864,7 +864,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 36  ArrayList<HtWt> max(ArrayList<HtWt> seq1, ArrayList<Htwt> seq2) {
 37      if (seq1 == null) {
 38          return seq2;
-39      }  else if (seq2 == null) {
+39      } else if (seq2 == null) {
 40          return seq1;
 41      }
 42      return seq1.size() > seq2.size() ? seq1 : seq2;
@@ -878,7 +878,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 50      public int compareTo(HtWt second) {
 51          if (this.height != second.height) {
 52              return ((Integer)this.height).compareTo(second.height);
-53          }  else {
+53          } else {
 54              return ((Integer)this.weight).compareTo(second.weight);
 55          }
 56      }
@@ -889,7 +889,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 61      public boolean isBefore(Htwt other) {
 62          if (height < other.height && weight < other.weight) {
 63              return true;
-64          }  else {
+64          } else {
 65              return false;
 66          }
 67      }
@@ -905,11 +905,11 @@ There's a cleaner way to do this though.
 Imagine we had the longest subsequence that terminates with each element, A[0] through A[3]. Could we use this to find the longest subsequence that terminates with A[4]?
 
     Array:  13,  14,  10,  11,  12
-    Longest(ending with  A[0]):  13
-    Longest(ending with  A[1]):  13,  14
-    Longest(ending with  A[2]):  10
-    Longest(ending with  A[3]):  10,  11
-    Longest(ending with  A[4]):  10,  11,  12
+    Longest(ending with  A[0]): 13
+    Longest(ending with  A[1]): 13,  14
+    Longest(ending with  A[2]): 10
+    Longest(ending with  A[3]): 10,  11
+    Longest(ending with  A[4]): 10,  11,  12
 
 Sure. We just append A[4] on to the longest subsequence that it can be appended to. 
 
@@ -1009,19 +1009,19 @@ There are a number of optimizations you could make to this (and better ways of h
 
 Let's picture what our results will look like.
 
-    1        -     3⁰  *  5⁰  *  7⁰
-    3        3     3¹  *  5⁰  *  7⁰
-    5        5     3⁰  *  5¹  *  7⁰
-    7        7     3⁰  *  5⁰  *  7¹
-    9       3*3    3²  *  5⁰  *  7⁰
-    15      3*5    3¹  *  5¹  *  7⁰
-    21      3*7    3¹  *  5⁰  *  7¹
-    25      5*5    3⁰  *  5²  *  7⁰
-    27      3*9    3³  *  5⁰  *  7⁰
-    35      5*7    3⁰  *  5¹  *  7¹
-    45      5*9    3²  *  5¹  *  7⁰
-    49      7*7    3⁰  *  5⁰  *  7² 
-    63     3*21    3²  *  5⁰  *  7¹ 
+    1       -     3⁰  *  5⁰  *  7⁰
+    3       3     3¹  *  5⁰  *  7⁰
+    5       5     3⁰  *  5¹  *  7⁰
+    7       7     3⁰  *  5⁰  *  7¹
+    9      3*3    3²  *  5⁰  *  7⁰
+    15     3*5    3¹  *  5¹  *  7⁰
+    21     3*7    3¹  *  5⁰  *  7¹
+    25     5*5    3⁰  *  5²  *  7⁰
+    27     3*9    3³  *  5⁰  *  7⁰
+    35     5*7    3⁰  *  5¹  *  7¹
+    45     5*9    3²  *  5¹  *  7⁰
+    49     7*7    3⁰  *  5⁰  *  7² 
+    63    3*21    3²  *  5⁰  *  7¹ 
 
 The question is: what is the next value in the list? The next value will be one of these:
 
@@ -1187,10 +1187,10 @@ The code below implements this algorithm.
 18              queue3.remove();
 19              queue3.add(3 * val);
 20              queue5.add(5 * val);
-21          }  else if (val == v5) { // enqueue into queue 5 and 7
+21          } else if (val == v5) { // enqueue into queue 5 and 7
 22              queue5.remove();
 23              queue5.add(5 * val);
-24          }  else if (val == v7) { // enqueue into Q7
+24          } else if (val == v7) { // enqueue into Q7
 25              queue7.remove();
 26          }
 27          queue7.add(7 * val); // Always enqueue into Q7
@@ -1366,7 +1366,7 @@ Our algorithm can now be run in two passes: one to find the possible majority el
 12          }
 13          if (n == majority) {
 14              count++;
-15          }  else {
+15          } else {
 16              count - -;
 17          }
 18      }
@@ -1408,7 +1408,7 @@ The code below implements this algorithm.
 6           if (word.equals(word1)) {
 7               current.location1 = i;
 8               best.updateWithMin(current);
-9           }  else if (word.equals(word2)) {
+9           } else if (word.equals(word2)) {
 10              current.location2 = i;
 11              best.updateWithMin(current); // If shorter, update values
 12          }
@@ -1450,7 +1450,7 @@ If we need to repeat the operation for other pairs of words, we can create a has
 
 Consider the following lists of locations. 
 
-    listA:  {1,  2,  9,  15,  25}
+    listA:  {1,   2,   9,  15,  25}
     listB:  {4,  10,  19}
 
 Picture pointers pA and pB that point to the beginning of each list. Our goal is to make pA and pB point to values as close together as possible.
@@ -1494,7 +1494,7 @@ We can implement this algorithm as shown below.
 22          best.updateWithMin(current); // If shorter, update values
 23          if (current.location1 < current.location2) {
 24              index1++;
-25          }  else {
+25          } else {
 26              index2++;
 27          }
 28      }
@@ -1512,7 +1512,7 @@ We can implement this algorithm as shown below.
 40  }
 41
 42  /* HashMapList<String, Integer> is a HashMap that maps from Strings to
-43   * ArrayList<Integer>. See appendix for implementation. * /
+43   * ArrayList<Integer>. See appendix for implementation. */
 ```
 
 The precomputation step of this algorithm will take O(N) time, where N is the number of words in the string.
@@ -1653,14 +1653,14 @@ This approach requires returning the head and tail of the linked list with BiNod
 14      /* join left to root */
 15      if (part1 == null) {
 16          concat(part3.node1, root);
-17      }  else {
+17      } else {
 18          concat(part1.node1, root);
 19      }
 20
 21      /* join right to root */
 22      if (part3 == null) {
 23          concat(root, part1);
-24      }  else {
+24      } else {
 25          concat(root, part3);
 26      }
 27
@@ -1818,7 +1818,7 @@ The code is essentially identical to the earlier function, but now takes in a me
 8                           ParseResult [] memo) {
 9       if (start >= sentence.length()) {
 10          return new ParseResult(0, "");
-11      }  if (memo[start] != null)  {
+11      } if (memo[start] != null) {
 12          return memo[start];
 13      }
 14
@@ -2258,7 +2258,7 @@ Let's start with an example. We'll draw it visually to get a better feel for the
 | --      | --       | --       | --      | --      | --       |
 | r₀ = 75 | r₁ = 105 | r₂ = 120 | r₃ = 75 | r₄ = 90 | r₅ = 135 |
 
-Alternatively, we could have also divided all the values (including the break) by 15 minutes, to give us the array {5,    7,  8,  5,   6,  9}. This would be equivalent, but now we would want a 1-minute break.
+Alternatively, we could have also divided all the values (including the break) by 15 minutes, to give us the array {5,  7,  8,  5,  6,  9}. This would be equivalent, but now we would want a 1-minute break.
 
 The best set of appointments for this problem has 330 minutes total, formed with {r₀ = 75, r₂ = 120, r₅ = 135}. Note that we've intentionally chosen an example in which the best sequence of appointments was not formed through a strictly alternating sequence.
 
@@ -2509,7 +2509,7 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 2       HashMapList<String, Integer> lookup = new HashMapList<String, Integer>();
 3       Trie tree = createTrieFromString(big);
 4       for (String s : smalls) {
-5           /* Get terminating location of each occurrence.*/
+5           /* Get terminating location of each occurrence. */
 6           ArrayList<Integer> locations = tree.search(s);
 7
 8           /* Adjust to starting location. */
@@ -2572,13 +2572,13 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 66              TrieNode child = null;
 67              if (children.containsKey(value)) {
 68                  child = children.get(value);
-69              }  else {
+69              } else {
 70                  child = new TrieNode();
 71                  children.put(value, child);
 72              }
 73              String remainder = s.substring(1);
 74              child.insertString(remainder, index + 1);
-75          }  else {
+75          } else {
 76              children.put('\0', null); // Terminating character
 77          }
 78      }
@@ -2586,7 +2586,7 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 80      public ArrayList<Integer> search(String s) {
 81          if (s == null || s.length() == 0) {
 82              return indexes;
-83          }  else {
+83          } else {
 84              char first = s.charAt(0);
 85              if (children.containsKey(first)) {
 86                  String remainder = s.substring(l);
@@ -2606,7 +2606,7 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 100 }
 101
 102 /* HashMapList<String, Integer> is a HashMap that maps from Strings to
-103  * ArrayList<Integer>. See appendix for implementation. * /
+103  * ArrayList<Integer>. See appendix for implementation. */
 ```
 It takes O(b²) time to create the tree and O(kt) time to search for the locations.
 
@@ -2702,9 +2702,9 @@ Solution #2 was O(b² +  kt). Since b will always  be bigger than k (or if it's 
 ```
 EXAMPLE
 Input:
-{1,   5,   9}
-{7,   5,   9,  0,  2,   1,   3,  5, 7, 9. 1,   1,   5,   8,   8,   9,  7}
-                                 ----------
+{1,  5,  9}
+{7,  5,  9,  0,  2,  1,  3,  5,  7,  9,  1,  1,  5,  8,  8,  9,  7}
+                                 -------------
 Output:[7,   10]    (the  underlined portion  above)
 ```
 
@@ -2788,7 +2788,7 @@ Let's think about how we can optimize this. The core reason why it's slow is the
 
 Let's think about it with an example. Given the  array below,  is there a way we could  quickly find the  next  5 from each location?
 
-    7,  5,  9,  0,  2,  1,  3,  s,  7,  9,  1,  1,  5,  8,  8,  9,  7
+    7,  5,  9,  0,  2,  1,  3,  5,  7,  9,  1,  1,  5,  8,  8,  9,  7
 
 Yes. Because we're going to have to do this repeatedly, we can precompute this information in just a single (backwards) sweep. Iterate through the  array backwards, tracking the  last (most recent) occurrence of 5.
 
@@ -2810,7 +2810,7 @@ The difference between the index and the closure is the smallest subarray starti
 
 Now, all we have to do is to find the minimum distance in this table.
 ```java
-1   Range shortestSupersequence(int[]big, int[] small) {
+1   Range shortestSupersequence(int[] big, int[] small) {
 2       int[][] nextElements = getNextElementsMulti(big, small);
 3       int[] closures = getClosures(nextElements);
 4       return getShortestClosure(closures);
@@ -2827,7 +2827,7 @@ Now, all we have to do is to find the minimum distance in this table.
 15
 16  /* Do backwards sweep to get a list of the next occurrence of value from each
 17   * index. */
-18  int[] getNextElement(int[]bigArray, int value) {
+18  int[] getNextElement(int[] bigArray, int value) {
 19      int next = -1;
 20      int[] nexts = new int[bigArray.length];
 21      for (int i = bigArray.length - 1; i >= 0; i--) {
@@ -3105,7 +3105,7 @@ We can still approach it this way, but we'll need to use the Biglnteger class.
 1   int missingOne(int[] array) {
 2       BigInteger fullProduct = productToN(array.length + 1);
 3
-4       BigInteger actualProduct = new BigInteger("l");
+4       BigInteger actualProduct = new BigInteger("1");
 5       for (int i = 0; i < array.length; i++) {
 6           BigInteger value = new BigInteger(array[i] + "");
 7           actualProduct = actualProduct.multiply(value);
@@ -3116,7 +3116,7 @@ We can still approach it this way, but we'll need to use the Biglnteger class.
 12  }
 13
 14  BigInteger productToN(int n) {
-15      BigInteger fullProduct = new BigInteger("l");
+15      BigInteger fullProduct = new BigInteger("1");
 16      for (int i = 2; i <= n; i++) {
 17          fullProduct = fullProduct.multiply(new BigInteger(i + ""));
 18      }
@@ -3158,7 +3158,7 @@ There are actually a number of other calculations you can perform. In fact, almo
 For this part, let's use a different calculation. Instead of using the product of 1  * 2  * . . .   * n, we can use the sum of the squares: 1²   +  2²   +   . . .  +  n². This will make the BigInteger usage a little less critical, as the code will at least run on small values of n. We can discuss with our interviewer whether or not this is important. 
 
 
-    X  + y  = s  -> y =  s  -  X
+    X  + y  = s  -> y = s  -  X
     xz + y² = t  -> x² + (s-x)² = t
                        2x² - 2sx + s² - t = 0 
 
@@ -3229,8 +3229,8 @@ If this doesn't immediately make sense to you, remember that x and y are interch
 Still not convinced? Okay, we can do some math. Let's say we took the alternate value for x: [-b  - sqrt(b² - 4ac)] / 2a. What's y?
 ```
     X  +  y  = r₁
-          y  = r₁  -  X
-             = r₁  - [-b - sqrt(b² - 4ac)]/2a
+          y  = r₁ - X
+             = r₁ - [-b - sqrt(b² - 4ac)]/2a
              = [2a*r₁ + b + sqrt(b² - 4ac)]/2a 
 ```
 Partially plug in values for a and b, but keep the rest of the equation as-is:
@@ -3282,7 +3282,7 @@ The algorithm works as follows. When a new value arrives, it is placed in the ma
 12          } else {
 13              maxHeap.offer(randomNumber);
 14          }
-15      }  else {
+15      } else {
 16          if (randomNumber < maxHeap.peek()) {
 17              minHeap.offer(maxHeap.poll());
 18              maxHeap.offer(randomNumber);
@@ -3375,7 +3375,7 @@ The code below implements this algorithm.
 19              int max = findIndexOfMax(histogram, start, end - 1);
 20              sum += borderedVolume(histogram, max, end);
 21              sum += subgraphVolume(histogram, start, max, isLeft);
-22          }  else {
+22          } else {
 23              int max = findIndexOfMax(histogram, start + 1, end);
 24              sum += borderedVolume(histogram, start, max);
 25              sum += subgraphVolume(histogram, max, end, isLeft);
@@ -3479,7 +3479,7 @@ We've chosen to use a HistogramData object to store this extra information, but 
 49          int max = histogram[end - 1].getLeftMaxIndex();
 50          sum += borderedVolume(histogram, max, end);
 51          sum += subgraphVolume(histogram, start, max, isLeft);
-52      }  else {
+52      } else {
 53          int max = histogram[start + 1].getRightMaxIndex();
 54          sum += borderedVolume(histogram, start, max);
 55          sum += subgraphVolume(histogram, max, end, isLeft);
@@ -4358,7 +4358,7 @@ The maxRectangle method is the "main" part  of our code. It starts  with the  bi
 ```java
 1  Rectangle maxRectangle() {
 2   int maxSize = maxWordLength * maxWordLength;
-3   for (int z = maxSize; z > 0; z--) {// start from biggest area
+3   for (int z = maxSize; z > 0; z--) { // start from biggest area
 4       for (int i = 1; i <= maxWordLength; i++) {
 s           if (z % i == 0) {
 6               int j = z / i;
@@ -4477,9 +4477,9 @@ The Rectangle class represents a partially or fully formed rectangle of words. T
 49          return true;
 50      }
 51
-52  /* Create a new Rectangle by taking the rows of the current rectangle and
-53   * appending s. */
-54  public Rectangle append(String s) { ... }
+52      /* Create a new Rectangle by taking the rows of the current rectangle and
+53       * appending s. */
+54      public Rectangle append(String s) { ... }
 55  }
 ```
 The WordGroup class is a simple container for all words of a specific length. For easy lookup, we store the words in a hash table as well as in an ArrayList.
@@ -4804,7 +4804,7 @@ Comparing this runtime to the previous one is a bit tricky. One way we can look 
 44      DocPair pair = new DocPair(doc1, doc2);
 45      if (!similarities.containsKey(pair)) {
 46          similarities.put(pair, 1.0);
-47      }  else {
+47      } else {
 48          similarities.put(pair, similarities.get(pair) + 1);
 49      }
 50  }
@@ -4884,7 +4884,7 @@ We will use an Element class to group together documents and words. When we sort
 40      DocPair pair = new DocPair(doc1, doc2);
 41      if (!similarities.containsKey(pair)) {
 42          similarities.put(pair, 1.0);
-43      }  else {
+43      } else {
 44          similarities.put(pair, similarities.get(pair) + 1);
 45      }
 46  }

@@ -568,7 +568,7 @@ You could make an argument  that, rather than "rolling over", we should be okay 
 28          else removed_item = stack.removeBottom();
 29          if (stack.isEmpty()) {
 30              stacks.remove(index);
-31          }  else if (stacks.size() > index + 1) {
+31          } else if (stacks.size() > index + 1) {
 32              int v = leftShift(index + 1, false);
 33              stack.push(v);
 34          }

@@ -466,7 +466,7 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 78          while (node != null) {
 79              if (startsWithRoot) {
 80                  path.addLast(node.person);
-81              }  else {
+81              } else {
 82                  path.addFirst(node.person);
 83              }
 84              node = node.previousNode;

@@ -879,11 +879,11 @@ In actuality, the best way to do it, considering readability and efficiency, is 
 2       for (int i = 1; i <= n; i++) {
 3           if (i % 3 == 0 && i % 5 == 0) {
 4               System.out.println("FizzBuzz");
-5           }  else if (i % 3 == 0) {
+5           } else if (i % 3 == 0) {
 6               System.out.println("Fizz");
-7           }  else if (i % 5 == 0) {
+7           } else if (i % 5 == 0) {
 8               System.out.println("Buzz");
-9           }  else {
+9           } else {
 10              System.out.println(i);
 11          }
 12      }
