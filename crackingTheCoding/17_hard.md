@@ -988,8 +988,8 @@ We know that biggest this kth number could be is 3ᵏ * 5ᵏ * 7ᵏ. So, the "st
 17                  /* Check for overflow. */
 18                  if (value < 0 || powA == Integer.MAX_VALUE ||
 19                      powB == Integer.MAX_VALUE ||
-20                      powC ==  Integer.MAX_VALUE) {
-21                          value  =  Integer.MAX_VALUE;
+20                      powC == Integer.MAX_VALUE) {
+21                          value = Integer.MAX_VALUE;
 22                  }
 23                  values.add(value);
 24              }
