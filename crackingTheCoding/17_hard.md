@@ -513,9 +513,9 @@ if x[d] > 2: count2sInRangeAtDigit(x, d)=
 
 The final case may be the trickiest,  but it follows from the earlier logic. Consider x =  62523 and d =  3. We know that there are the same ranges of2s from before (that is, the ranges 2000  -  2999, 12000  -  12999, ..., 52000  -   52999). How many  appear in the  3rd digit  in the final, partial range from 62000 - 62523? Well, that should be pretty easy. It's just 524 (62000,  62001,  ...,   62523).
 ```
-if  x[d]  =  2: count2sInRangeAtDigit(x, d) =
-    let y =  round down to nearest 10ᵈ⁺¹
-    let z =  right side of x (i.e., x % 10ᵈ)
+if  x[d]  = 2: count2sInRangeAtDigit(x, d) =
+    let y = round down to nearest 10ᵈ⁺¹
+    let z = right side of x (i.e., x % 10ᵈ)
     return y / 10 + z + 1
 ```
 Now, all you  need is to iterate through each digit  in the  number. Implementing this  code is reasonably straightforward.
