@@ -171,3 +171,9 @@ How to import existing maven, gradle projects in intellij after git clone.
 https://www.jetbrains.com/help/idea/maven-support.html#maven_import_project_start
 
 OR try ==> File -> Project From existing sources -> Import project from external model (maven | gradle) -> Finish -> New Window
+
+### Dark Reader (for browsers)
+Brightness: -5
+Contrast: -35
+Sepia: +55
+Grayscale: +25
