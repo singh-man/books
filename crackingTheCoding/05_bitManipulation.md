@@ -356,11 +356,11 @@ Once we have this, we just walk through the array. At each 0s sequence, then we 
 38          int onesSeqLeft = i + 1 < seq.size() ? seq.get(i + 1) : 0;
 39          
 40          int thisSeq = 0;
-41          if (zerosSeq == 1) {//Can merge
+41          if (zerosSeq == 1) { // Can merge
 42              thisSeq = onesSeqLeft + 1 + onesSeqRight;
-43          } if (zerosSeq > 1) {//Just add a zero to either side
+43          } if (zerosSeq > 1) { // Just add a zero to either side
 44              thisSeq = 1 + Math.max(onesSeqRight, onesSeqLeft);
-45          } else if (zerosSeq == 0) {//No zero, but take either side
+45          } else if (zerosSeq == 0) { // No zero, but take either side
 46              thisSeq = Math.max(onesSeqRight, onesSeqLeft);
 47          }
 48          maxSeq = Math.max(thisSeq, maxSeq);
