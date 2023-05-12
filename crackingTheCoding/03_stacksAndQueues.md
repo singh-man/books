@@ -550,8 +550,8 @@ You could make an argument  that, rather than "rolling over", we should be okay 
 10          return stacks.get(stacks.size() - 1);
 11      }
 12  
-13      public void push(int v) {/*see earlier code */}
-14      public int pop() {/*see earlier code */}
+13      public void push(int v) { /* see earlier code */ }
+14      public int pop() { /* see earlier code */ }
 15      public boolean isEmpty() {
 16          Stack last = getLastStack();
 17          return last == null || last.isEmpty();

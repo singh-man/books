@@ -1249,7 +1249,7 @@ The code below implements this approach.
 13  
 14      boolean pIsOnleft = covers(root.left, p);
 15      boolean qIsOnLeft = covers(root.left, q);
-16      if (pIsOnLeft != qIsOnLeft) {//Nodes are on different side
+16      if (pIsOnLeft != qIsOnLeft) { // Nodes are on different side
 17          return root;
 18      }
 19      TreeNode childSide = pIsOnLeft ? root.left : root.right;
@@ -2032,7 +2032,7 @@ Despite the complexity of deriving this algorithm, the code to implement this is
 28  
 29  void incrementHashTable(HashMap<Integer, Integer> hashTable, int key, int delta) {
 30      int newCount = hashTable.getOrDefault(key, 0) + delta;
-31      if (newCount == 0) { //Remove when zero to reduce space usage
+31      if (newCount == 0) { // Remove when zero to reduce space usage
 32          hashTable.remove(key);
 33      } else {
 34          hashTable.put(key, newCount);
