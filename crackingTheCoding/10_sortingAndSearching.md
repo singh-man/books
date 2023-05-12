@@ -324,7 +324,7 @@ Otherwise, we have no choice but to search both halves.
 ```java
 1   int search(int a[], int left, int right, int x) {
 2       int mid = (left + right) / 2;
-3       if (x == a[mid]) { //Found element
+3       if (x == a[mid]) { // Found element
 4           return mid;
 5       }
 6       if (right < left) {
@@ -334,7 +334,7 @@ Otherwise, we have no choice but to search both halves.
 10      /* Either the left or right half must be normally ordered. Find out which side
 11       * is normally ordered, and then use the normally ordered half to figure out
 12       * which side to search to find x. */
-13      if (a[left] < a[mid]) {//Left is normally ordered.
+13      if (a[left] < a[mid]) { // Left is normally ordered.
 14          if (x >= a[left] && x < a[mid]) {
 15              return search(a, left, mid - 1, x); // Search left
 16          } else {

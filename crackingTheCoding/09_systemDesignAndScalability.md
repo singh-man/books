@@ -726,16 +726,16 @@ For illustrative  purposes, abbreviated code for the cache is below. The code at
 20          if (!map.containsKey(query)) return null;
 21  
 22          Node node = map.get(query);
-23          moveToFront(node); //update freshness
+23          moveToFront(node); // update freshness
 24          return node.results;
 25      }
 26  
 27      /* Inserts results into linked list and hash */
 28      public void insertResults(String query, String[] results) {
-29          if (map.containsKey(query)) {//update values
+29          if (map.containsKey(query)) { // update values
 30              Node node = map.get(query);
 31              node.results = results;
-32              moveToFront(node); //update freshness
+32              moveToFront(node); // update freshness
 33              return;
 34          }
 35  
