@@ -262,7 +262,7 @@ The code below implements this algorithm. We've implemented the discarding aspec
 4   }
 5   
 6   int findMissing(ArrayList<BitInteger> input, int column) {
-7       if (column >= BitInteger.INTEGER_SIZE) {//We're done!
+7       if (column >= BitInteger.INTEGER_SIZE) { // We're done!
 8           return 0;
 9       }
 10      ArrayList<BitInteger> oneBits  = new ArrayList<BitInteger>(input.size() / 2);
@@ -2273,7 +2273,7 @@ The first thing that may come to mind is a recursive solution. We have essential
 3   }
 4
 5   int maxMinutes(int[] massages, int index) {
-6       if (index >= massages.length) { //Out of bounds
+6       if (index >= massages.length) { // Out of bounds
 7           return 0;
 8       }
 9 
