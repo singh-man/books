@@ -761,7 +761,7 @@ public class Context {
         return temperatureInF;
     }
 
-    public boolean getResult() {//invoker of behaviour
+    public boolean getResult() { // invoker of behaviour
         return strategy.checkTemperature(temperatureInF);
     }
 }
@@ -841,7 +841,7 @@ Here is an example of the command pattern. We have a Command interface with an e
 package com.cakes;
 
 public interface Command {
-    public void execute();//encapsulates the action of Receiver
+    public void execute(); // encapsulates the action of Receiver
 }
 ```
 LunchCommand implements Command. It contains a reference to Lunch, a receiver. Its execute() method invokes the appropriate action on the receiver.
@@ -859,7 +859,7 @@ public class LunchCommand implements Command {
 
     @Override
     public void execute() {
-        lunch.makeLunch();//receiver action is encapsulated
+        lunch.makeLunch(); // receiver action is encapsulated
     }
 }
 ```
@@ -1001,7 +1001,7 @@ The SadState class also implements the EmotionalState interface. The messages ar
 ```java
 package com.cakes;
 
-//Concrete State
+// Concrete State
 public class SadState implements EmotionalState {
 
     @Override
