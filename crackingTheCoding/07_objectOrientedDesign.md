@@ -150,9 +150,9 @@ Let's assume that your interviewer clarifies that the deck is a standard 52-card
 37      public Suit suit() {return suit;}
 38  
 39      /* Checks if the card is available to be given out to someone */
-40      public boolean isAvailable() {return available; }
-41      public void markUnavailable() {available = false; }
-42      public void markAvailable() {available = true; }
+40      public boolean isAvailable() { return available; }
+41      public void markUnavailable() { available = false; }
+42      public void markAvailable() { available = true; }
 43  }
 44  
 45  public class Hand <T extends Card> {
@@ -691,7 +691,7 @@ The class OnlineReaderSystem represents the body of our program. We could implem
 13      }
 14  
 15      public Library getLibrary() { return library; }
-16      public UserManager getUserManager() { return userManager;}
+16      public UserManager getUserManager() { return userManager; }
 17      public Display getDisplay() { return display; }
 18  
 19      public Book getActiveBook() { return activeBook; }
@@ -789,10 +789,10 @@ We then implement separate classes to handle the user manager, the library, and 
 76          refreshPage();
 77      }
 78  
-79      public void refreshUsername() {/* updates username display*/}
-80      public void refreshTitle() {/* updates title display*/}
-81      public void refreshDetails() {/* updates details display*/}
-82      public void refreshPage() {/* updated page display*/}
+79      public void refreshUsername() {/* updates username display */}
+80      public void refreshTitle() {/* updates title display */}
+81      public void refreshDetails() {/* updates details display */}
+82      public void refreshPage() {/* updated page display */}
 83  }
 ```
 
@@ -958,7 +958,7 @@ The code below outlines this algorithm.
 ```java
 1   /*Find the matching piece within piecesToSearch and insert it at row, column. */
 2   boolean fitNextEdge(LinkedList<Piece> piecesToSearch, int row, int column) {
-3       if (row == 0 && column == 0) {//On top left corner, just put in a piece
+3       if (row == 0 && column == 0) { // On top left corner, just put in a piece
 4           Piece p = piecesToSearch.remove();
 5           orientTopLeftCorner(p);
 6           solution[0][0] = p;
@@ -970,11 +970,11 @@ The code below outlines this algorithm.
 12                                                          Orientation.RIGHT;
 13          Edge edgeToMatch = pieceToMatch.getEdgeWithOrientation(orientationToMatch);
 14  
-15          /*Get matching edge. */
+15          /* Get matching edge. */
 16          Edge edge = getMatchingEdge(edgeToMatch, piecesToSearch);
-17          if (edge == null) return false; //Can't solve
+17          if (edge == null) return false; // Can't solve
 18  
-19          /*Insert piece and edge. */
+19          /* Insert piece and edge. */
 20          Orientation orientation = orientationToMatch.getOpposite();
 21          setEdgeInSolution(piecesToSearch, edge, row, column, orientation);
 22      }
@@ -982,13 +982,13 @@ The code below outlines this algorithm.
 24  }
 25  
 26  boolean solve() {
-27      /*Group pieces. */
+27      /* Group pieces. */
 28      LinkedList<Piece> cornerPieces = new LinkedList<Piece>();
 29      LinkedList<Piece> borderPieces = new LinkedList<Piece>();
 30      LinkedList<Piece> insidePieces = new LinkedList<Piece>();
 31      groupPieces(cornerPieces, borderPieces, insidePieces);
 32  
-33      /*Walk through puzzle, finding the piece that joins the previous one. */
+33      /* Walk through puzzle, finding the piece that joins the previous one. */
 34      solution = new Piece[size][size];
 35      for (int row = 0; row < size; row++) {
 36          for (int column = 0; column < size; column++) {
@@ -1572,10 +1572,10 @@ The basic skeleton of this class might  look something like this:
 8   
 9       public Board(int r, int c, int b) { ... }
 10  
-11      private void initializeBoard() { ...}
+11      private void initializeBoard() { ... }
 12      private boolean flipCell(Cell cell) { ... }
 13      public void expandBlank(Cell cell) { ... }
-14      public UserPlayResult playFlip(UserPlay play) { ...}
+14      public UserPlayResult playFlip(UserPlay play) { ... }
 15      public int getNumRemaining() { return numUnexposedRemaining; }
 16  }
 17  

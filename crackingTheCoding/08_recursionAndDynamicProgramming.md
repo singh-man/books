@@ -576,7 +576,7 @@ The following code implements this algorithm:
 ```java
 1   ArrayList<ArrayList<Integer>> getSubsets(ArrayList<Integer> set, int index) {
 2     ArrayList<ArrayList<Integer>> allsubsets;
-3     if (set.size() == index) { //Base case - add empty set
+3     if (set.size() == index) { // Base case - add empty set
 4         allsubsets = new ArrayList<ArrayList<Integer>>();
 5         allsubsets.add(new ArrayList<Integer>()); // Empty set
 6     } else {
