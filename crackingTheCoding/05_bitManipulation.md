@@ -584,9 +584,9 @@ Note that since p = c1 + c0, the (c1 + l) ones will be followed by (c0 - 1) zero
 
 We can do this as follows:
 ```
-int a =  1 <<   (c1 + 1);    // 0S with 1  at position (c1 +  1)
-int b =  a  -  1;            // 0s  followed by c1 + 1 ones
-int c =  b <<   (c0  -  1);  // c1+1 ones  followed  by  c0-1  zeros.
+int a =  1 <<  (c1 + 1);  // 0S with 1  at position (c1 +  1)
+int b =  a  -  1;         // 0s  followed by c1 + 1 ones
+int c =  b <<  (c0 - 1);  // c1+1 ones  followed  by  c0-1  zeros.
 n  |=  c;
 ```
 The code to implement this is below.
