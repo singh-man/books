@@ -133,7 +133,7 @@ The code below implements this algorithm.
 4       boolean[] char_set = new boolean[128];
 5       for (int i = 0; i < str.length(); i++) {
 6           int val = str.charAt(i);
-7           if (char_set[val]) {//Already found this char in string
+7           if (char_set[val]) { // Already found this char in string
 8               return false;
 9           }
 10          char_set[val] = true;
@@ -337,9 +337,9 @@ Implementing this algorithm is fairly straightforward. We use a hash table to co
 24      int z  = Character.getNumericValue('z');
 25      int val =  Character.getNumericValue(c);
 26      if (a <= val  &&   val <= z)  {
-27          return val  -   a;
+27          return val - a;
 28      }
-29      return  -1;
+29      return -1;
 30  }
 31  
 32  /*  Count how many  times  each character appears.*/
@@ -348,7 +348,7 @@ Implementing this algorithm is fairly straightforward. We use a hash table to co
 35                              Character.getNumericValue('a') +  1];
 36      for (char c : phrase.toCharArray()) {
 37          int x = getCharNumber(c);
-38          if (x != -1)  {
+38          if (x != -1) {
 39              table[x]++;
 40          }
 41      }
@@ -368,7 +368,7 @@ Instead of checking the number of odd counts at the end, we can check as we go a
 1   boolean isPermutationOfPalindrome(String phrase)  {
 2       int countOdd = 0;
 3       int[] table = new int[Character.getNumericValue('z') -
-4                             Character.getNumericValue('a')  + 1];
+4                             Character.getNumericValue('a') + 1];
 5       for (char c : phrase.toCharArray()) {
 6           int x = getCharNumber(c);
 7           if (x != -1) {
@@ -424,21 +424,21 @@ This leads us to our final implementation.
 16  
 17  /* Toggle the ith bit in the integer.*/
 18  int toggle(int bitVector, int index) {
-19      if  (index < 0)  return bitVector;
+19      if (index < 0)  return bitVector;
 20  
 21      int mask = 1 << index;
-22      if  ((bitVector &  mask) == 0) {
+22      if ((bitVector & mask) == 0) {
 23          bitVector |= mask;
 24      } else {
 25          bitVector &= ~mask;
 26      }
-27      return  bitVector;
+27      return bitVector;
 28  }
 29  
 30  /* Check that exactly one bit is set by subtracting one from the integer and
 31   * ANDing it with  the original integer.*/
-32  boolean   checkExactlyOneBitSet(int bitVector)  {
-33      return  (bitVector &  (bitVector - 1)) ==  0;
+32  boolean checkExactlyOneBitSet(int bitVector) {
+33      return (bitVector & (bitVector - 1)) == 0;
 34  }
 ```
 
@@ -479,7 +479,7 @@ We can go ahead and implement this algorithm now. We'll merge the insertion and 
 Observe that you don't need to check the strings for insertion, removal, and replacement edits. The lengths of the strings will indicate which of these you need to check.
 
 ```java
-1   boolean   oneEditAway(String  first, String  second) {
+1   boolean oneEditAway(String  first, String  second) {
 2       if (first.length() == second.length()) {
 3           return oneEditReplace(first, second);
 4       } else if (first.length() + 1 == second.length()) {
@@ -491,7 +491,7 @@ Observe that you don't need to check the strings for insertion, removal, and rep
 10  }
 11  
 12  boolean oneEditReplace(String s1,  String s2)   {
-13      boolean   foundDifference  =  false;
+13      boolean foundDifference = false;
 14      for (int i = 0; i < s1.length(); i++)   {
 15          if (s1.charAt(i) != s2.charAt(i)) {
 16              if (foundDifference)  {
@@ -505,9 +505,9 @@ Observe that you don't need to check the strings for insertion, removal, and rep
 24  }
 25  
 26  /* Check if you  can  insert a  character into s1 to make s2.*/
-27  boolean oneEditinsert(String  s1,  String s2)   {
-28      int index1 =  0;
-29      int index2 =  0;
+27  boolean oneEditinsert(String  s1, String s2)   {
+28      int index1 = 0;
+29      int index2 = 0;
 30      while  (index2 <  s2.length() && index1 < s1.length()) {
 31          if (s1.charAt(index1) != s2.charAt(index2)) {
 32              if  (index1 != index2) {
@@ -533,7 +533,7 @@ We might notice that the code for `oneEditReplace` is very similar to that for `
 To do this, observe  that both methods follow similar logic: compare each character and ensure  that the strings are only different by one. The methods  vary in how they handle  that difference. The method oneEditReplace does nothing other than flag the difference, whereas oneEditinsert increments the pointer to the longer string. We can handle both of these in the same method.
 
 ```java
-1   boolean  oneEditAway(String first,  String second)   {
+1   boolean oneEditAway(String first,  String second)   {
 2       /*Length  checks.*/
 3       if (Math.abs(first.length() -  second.length()) >   1)  {
 4           return false;
@@ -552,7 +552,7 @@ To do this, observe  that both methods follow similar logic: compare each charac
 17              if (foundDifference) return false;
 18              foundDifference =  true;
 19      
-20              if (s1.length() == s2.length()) {//On replace, move shorter pointer
+20              if (s1.length() == s2.length()) { // On replace, move shorter pointer
 21                  index1++;
 22              }
 23          } else {
@@ -713,7 +713,7 @@ The code for this algorithm is below.
 18              matrix[last][last - offset] = matrix[i][last];
 19      
 20              // top   ->  right
-21              matrix[i][last] = top;   // right<-  saved top
+21              matrix[i][last] = top; // right <- saved top
 22          }
 23      }
 24      return  true;
@@ -760,7 +760,7 @@ The code below implements this algorithm. We use two arrays to keep track of all
 18      }
 19      
 20      // Nullify  columns
-21      for (int j =  0;   j < column.length; j++) {
+21      for (int j = 0; j < column.length; j++) {
 22          if (column[j]) nullifyColumn(matrix, j);
 23      }
 24   }
@@ -772,7 +772,7 @@ The code below implements this algorithm. We use two arrays to keep track of all
 30   }
 31      
 32   void nullifyColumn(int[][] matrix, int  col) {
-33    	for (int  i =  0;   i < matrix.length; i++) {
+33    	for (int i = 0; i < matrix.length; i++) {
 34     		matrix[i][col] =  0;
 35      }
 36   }
@@ -795,7 +795,7 @@ This code is below:
 2       boolean  rowHasZero = false;
 3       boolean  colHasZero = false;
 4       
-5       // Check   if first row  has a  zero
+5       // Check if first row has a zero
 6       for (int j = 0; j < matrix[0].length; j++) {
 7           if  (matrix[0][j] == 0) {
 8               rowHasZero  = true;
@@ -812,8 +812,8 @@ This code is below:
 19      }
 20      
 21      // Check for zeros in the rest  of the array
-22      for (int i =  1; i < matrix.length; i++) {
-23          for (int j =  1; j < matrix[0].length; j++) {
+22      for (int i = 1; i < matrix.length; i++) {
+23          for (int j = 1; j < matrix[0].length; j++) {
 24              if  (matrix[i][j] == 0) {
 25                  matrix[i][0] = 0;
 26                  matrix[0][j] = 0;
