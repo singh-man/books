@@ -415,7 +415,7 @@ The most obvious way is through a series of nested for-loops.
 10          for (int j = 1; j < size; j++) {
 11              if (board[i][j] != first) {
 12                  break;
-13              } else if (j == size - 1) { //Last element
+13              } else if (j == size - 1) { // Last element
 14                  return first;
 15              }
 16          }
@@ -982,10 +982,10 @@ If we apply this to the above expression, we get:
 
 1. O(log  a + log(ᵃ/₂)  +  log(ᵃ/₄) + ...)
 2. O(log  a + (log a - log 2) + (log a - log 4) + (log a - log 8) +...
-3. O((log a) * (log a) - (log 2 + log 4 + log 8 + ... + log a))  //O(log  a) terms
-4. O((log a) * (log a) - (1 + 2 + 3 + ... + log a))  //computing the values of logs
-5. O((log a) * (log a) - ((log a)(1 + log a))/2  //apply equation for sum of 1 through k
-6. O((log a)²)  //drop second term from step 5
+3. O((log a) * (log a) - (log 2 + log 4 + log 8 + ... + log a))  // O(log  a) terms
+4. O((log a) * (log a) - (1 + 2 + 3 + ... + log a))  // computing the values of logs
+5. O((log a) * (log a) - ((log a)(1 + log a))/2  // apply equation for sum of 1 through k
+6. O((log a)²)  // drop second term from step 5
 
 Therefore, the runtime is O((log a)²).
 
@@ -1525,7 +1525,7 @@ In the below code, we will assume the origin (0,  0) is in the upper left-hand c
 34          } else if (Math.abs(slope) < 1) { // shallow slope
 35              x1 = mid1.x + xdir * size / 2.0;
 36              y1 = slope * (x1 - mid1.x) + mid1.y;
-37          } else {//steep slope
+37          } else { // steep slope
 38              y1 = mid1.y + ydir * size / 2.0;
 39              x1 = (y1 - mid1.y) / slope + mid1.x;
 40          }
@@ -2319,7 +2319,7 @@ The Trie data structure (see "Tries (Prefix Trees)" on page  105) can do this fo
 8           ArrayList<String> results) {
 9         /* If it's a complete word, print it. */
 10        if (index == number.length()) {
-11            if (trieNode.terminates()) {//Is complete word
+11            if (trieNode.terminates()) { // Is complete word
 12                results.add(prefix);
 13            }
 14            return;
@@ -2759,7 +2759,7 @@ Orientation is also its own enum, with a few useful functions.
 8                return clockwise ? right : left;
 9            } else if (this == right) {
 10               return clockwise ? down : up;
-11           } else {//down
+11           } else { // down
 12               return clockwise ? left : right;
 13           }
 14       }
@@ -2772,7 +2772,7 @@ Orientation is also its own enum, with a few useful functions.
 21               return "\u2191";
 22           } else if (this == right) {
 23               return "\u2192";
-24           } else {//down
+24           } else { // down
 25               return "\u2193";
 26           }
 27       }
