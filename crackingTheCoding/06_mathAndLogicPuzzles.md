@@ -501,7 +501,7 @@ You probably won't know this off the top of your head, but we can try to estimat
  2/8 = 32/128            5/64 = 10/128
 3/16 = 24/128           6/128 =  6/128
 
-32 + 32 + 24 + 16 + 10 + 6  120
+32 + 32 + 24 + 16 + 10 + 6   120
 -------------------------- = ---
            128               128
 ```
@@ -903,7 +903,7 @@ Implementing this requires some careful work to prevent bugs.
 25      /* If day 2 matched day 0 or day 1, check day 3. Day 3 is the same as day 2, but
 27       * in cremented by 1. */
 28      if (digits[2] == -1) {
-29          if (digits[3] == -1) {/* Day 3 didn't give new result*/
+29          if (digits[3] == -1) { /* Day 3 didn't give new result */
 30              /* Digit 2 equals digit 0 or digit 1. But, digit 2, when incremented also
 31               * matches digit 0 or digit 1. This means that digit 0 incremented matches
 32               * digit 1, or the other way around. */
