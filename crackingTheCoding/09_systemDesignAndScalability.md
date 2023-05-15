@@ -337,7 +337,7 @@ l   <root>
 13                  <closingPrice>54.91</closingPrice>
 14             </company>
 15        </date>
-16        <date  value="2008-10-11">  .  .  . </date>
+16        <date value="2008-10-11">  .  .  . </date>
 17   </root>
 ```
 
@@ -555,10 +555,10 @@ The code below outlines this process. We've defined a class Server, which holds 
 29  
 30      public Person(int id) { this.personID = id; }
 31      public String getInfo() { return info; }
-32      public void setInfo(String info) {this.info = info; }
-33      public ArrayList<Integer> getFriends() {return friends; }
+32      public void setInfo(String info) { this.info = info; }
+33      public ArrayList<Integer> getFriends() { return friends; }
 34      public int getID() {return personID;}
-35      public void addFriend(int id) {friends.add(id); }
+35      public void addFriend(int id) { friends.add(id); }
 36  }
 ```
 
