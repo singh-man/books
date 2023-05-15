@@ -151,7 +151,7 @@ Imagine you were throwing a dart at this Venn diagram. What is the probability t
 For example, imagine we were picking a number between  1 and 10 (inclusive). What's the probability of picking an even number and a number between  1 and 5? The odds of picking a number between 1  and 5 is 50%, and the odds of a number between  1 and 5 being even is 40%. So, the odds of doing both are: 
 
 ```
-= P(x is even and  x  <= 5)
+= P(x is even and   x <= 5)
 = P(x is even given x <= 5) P(x <= 5) 
 = (2/5) * (1/2)
 = 1/5
@@ -347,8 +347,8 @@ You should play Game 1  if P (Game  1)  >  P (Game  2):
 ```
 p  >  3p² - 2p³.
 1  >  3p  - 2p²
-2p² - 3p +  1  >  0 
-(2p - 1)(p -  1) > 0 
+2p² - 3p  + 1  >  0 
+(2p - 1)(p - 1) > 0 
 ```
 Both terms must be positive, or both must be negative. But we know p  <   1, so p  -  1  <  0. This means both terms must be negative.
 ```
@@ -407,7 +407,7 @@ To generalize this to an n-vertex polygon: there are still only two ways in whic
 P (clockwise) = (1/2)ⁿ 
 P (counter) = (1/2)ⁿ
 P (same direction) = 2 (1/2)ⁿ = (1/2)⁽ⁿ⁻¹⁾
-P (collision) = 1 - P (same direction)= 1 - (1/2)⁽ⁿ⁻¹⁾
+P (collision) = 1 - P (same direction) = 1 - (1/2)⁽ⁿ⁻¹⁾
 ```
 
 **6.5   Jugs of Water:** You have  a five-quart jug, a three-quart jug, and an unlimited supply of water (but no measuring cups).  How would you come up with  exactly  four quarts of water? Note that the jugs are oddly shaped, such that filling up exactly "half" of the jug would be impossible.
@@ -497,9 +497,9 @@ Or in other words,  this is the sum of i to infinity of i divided by 2¹.
 You probably won't know this off the top of your head, but we can try to estimate it. Let's try converting the above values to a common denominator of 128 (2⁶). 
 
 ```
- 1/4 = 32/128            4/32 = 16/128
- 2/8 = 32/128            5/64 = 10/128
-3/16 = 24/128           6/128 =  6/128
+ 1/4 = 32/128      4/32 = 16/128
+ 2/8 = 32/128      5/64 = 10/128
+3/16 = 24/128     6/128 =  6/128
 
 32 + 32 + 24 + 16 + 10 + 6   120
 -------------------------- = ---
@@ -982,7 +982,7 @@ We wait seven days, and then read the results.  If test strip i is positive, the
 14                  testStrips.get(bitIndex).addDropOnDay(0, bottle);
 15              }
 16              bitIndex++;
-17              id »= 1;
+17              id >>= 1;
 18          }
 19      }
 20  }
