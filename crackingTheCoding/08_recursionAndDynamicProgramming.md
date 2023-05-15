@@ -1026,12 +1026,12 @@ This is now a fairly straightforward algorithm to implement.
 10  
 11  
 12    for (int i = 0; i < len; i++) {
-13      /* Remove char i and find permutations of remaining chars.*/
+13      /* Remove char i and find permutations of remaining chars. */
 14      String before = remainder.substring(0, i);
 15      String after = remainder.substring(i + 1, len);
 16      ArrayList<String> partials = getPerms(before + after);
 17  
-18      /* Prepend char i to each permutation.*/
+18      /* Prepend char i to each permutation. */
 19      for (String s : partials) {
 20        result.add(remainder.charAt(i) + s);
 21      }
@@ -1607,7 +1607,7 @@ We will again use memoization to cache the height of the tallest stack with a pa
 7   int createStack(ArrayList<Box> boxes, Box bottom, int offset, int[] stackMap) {
 8     if (offset >= boxes.size()) return 0; // Base case
 9   
-10    /*height with this bottom*/
+10    /* height with this bottom */
 11    Box newBottom = boxes.get(offset);
 12    int heightWithBottom = 0;
 13    if (bottom == null || newBottom.canBeAbove(bottom)) {
@@ -1618,7 +1618,7 @@ We will again use memoization to cache the height of the tallest stack with a pa
 18      heightWithBottom = stackMap[offset];
 19    }
 20  
-21    /*without this bottom*/
+21    /* without this bottom */
 22    int heightWithoutBottom createStack(boxes, bottom, offset + 1, stackMap);
 23  
 24    /* Return better of two options. */
@@ -1689,9 +1689,9 @@ What if we were trying to make the result false instead? We can switch up the lo
 countEval(left & right, false) = countEval(left, true)  * countEval(right, false)
                                + countEval(left, false) * countEval(right, true)
                                + countEval(left, false) * countEval(right, false) 
-countEval(left | right, false) = countEval(left, false)   * countEval(right, false)
-countEval(left ^ right, false) = countEval(left, false)   * countEval(right, false) 
-                               + countEval(left, true)    * countEval(right, true)
+countEval(left | right, false) = countEval(left, false) * countEval(right, false)
+countEval(left ^ right, false) = countEval(left, false) * countEval(right, false) 
+                               + countEval(left, true)  * countEval(right, true)
 ```
 
 Alternatively, we can just use the same logic from above and subtract it out from the total number of ways of evaluating the expression.
@@ -1808,7 +1808,7 @@ There  is one further  optimization we can  make,  but  it's far beyond the  sco
 
 ```
 Cₙ =    (2n)!
-      ----------
+     ------------
      ((n + 1)!n!)
 ```
 
