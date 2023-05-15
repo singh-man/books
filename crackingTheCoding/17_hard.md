@@ -873,7 +873,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 45  public class Htwt implements Comparable<HtWt> {
 46      private int height;
 47      private int weight;
-48      public HtWt(int h, int w) {height = h; weight w; }
+48      public HtWt(int h, int w) { height = h; weight w; }
 49  
 50      public int compareTo(HtWt second) {
 51          if (this.height != second.height) {
@@ -1136,16 +1136,16 @@ Let's walk through this with an example to make it really clear.
         Q3 = 3*3
         Q5 = 5*3, 5*5
         Q7 = 7*3, 7*5, 7*7
-    remove min =  3*3 =  9. insert 3*3*3 in Q3, 3*3*5 into Q5, 3*3*7 into Q7.
+    remove min = 3*3 = 9. insert 3*3*3 in Q3, 3*3*5 into Q5, 3*3*7 into Q7.
         Q3 = 3*3*3
         Q5 = 5*3, 5*5, 5*3*3
         Q7 = 7*3, 7*5, 7*7, 7*3*3
-    remove min =  5*3  =  15.  3*(5*3) is a  dup, since we already  did  5*(3*3). insert
+    remove min = 5*3 = 15. 3*(5*3) is a  dup, since we already  did  5*(3*3). insert
     5*5*3 in Q5,  7*5*3 into Q7.
         Q3 = 3*3*3
         Q5 = 5*5, 5*3*3, 5*5*3
         Q7 = 7*3, 7*5, 7*7, 7*3*3, 7*5*3
-    remove min =  7*3  =  21.  3*(7*3) and  5*(7*3) are dups, since we already did 7*(3*3)
+    remove min = 7*3 = 21. 3*(7*3) and 5*(7*3) are dups, since we already did 7*(3*3)
     and  7*(5*3). insert  7*7*3 into Q7.
         Q3 = 3*3*3
         Q5 = 5*5, 5*3*3, 5*5*3
@@ -1367,7 +1367,7 @@ Our algorithm can now be run in two passes: one to find the possible majority el
 13          if (n == majority) {
 14              count++;
 15          } else {
-16              count - -;
+16              count--;
 17          }
 18      }
 19      return majority;
