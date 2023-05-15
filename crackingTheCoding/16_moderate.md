@@ -1227,7 +1227,7 @@ If we walk through the two arrays like this, we can track the number of people a
 26      return maxAliveYear;
 27  }
 28
-29  /* Copy birth years or death years (depending on the value of copyBirthVear into
+29  /* Copy birth years or death years (depending on the value of copyBirthYear into
 30   * integer array, then sort array. */
 31  int[] getSortedYears(Person[1 people, boolean copyBirthYear) {
 32      int[] years = new int[people.length];
@@ -2829,7 +2829,7 @@ Since we will need to print  a grid, we can track what should be top-left and  b
 23          }
 24      }
 25
-26      /* Grow grid by tracking the most top-left and bottom-right positions.*/
+26      /* Grow grid by tracking the most top-left and bottom-right positions. */
 27      private void ensureFit(Position position) {
 28          int row = position.row;
 29          int column = position.column;
