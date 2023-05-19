@@ -83,7 +83,6 @@ With data structures, you can perform 4 primary types of actions:
 
 ```
 Accessing, Searching, Inserting, and Deleting.
-
 ```
 
 It is important to note that data structures may be good at one action but bad at another.
