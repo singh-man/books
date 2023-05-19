@@ -98,7 +98,7 @@ How many ways are there of rearranging a string  of n unique characters? Well, y
 
 What if you were forming a k-length string (with all unique characters) from n total unique  characters? You can follow similar logic, but you'd just stop your selection/multiplication earlier.
 
-    n!/(n-k)! = n * n-1 * n-2 * n-3 * ...   *  n-k+1
+    n!/(n-k)! = n * n-1 * n-2 * n-3 * ... * n-k+1
 
 *Combinations*
 
