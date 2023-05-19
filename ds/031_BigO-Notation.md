@@ -178,12 +178,12 @@ In general, how can you determine the running time of a piece of code? The answe
 
 #### Sequence of statements
 
-```
+
 	statement 1;
 	statement 2;
 	... 
 	statement k;
-```
+
 
 The total time is found by adding the times for all statements:
 
