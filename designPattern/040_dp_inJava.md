@@ -14,6 +14,8 @@ OR
 
 custome class loader by ```extends ClassLoader```
 
+> Question: What happens if an Exception is thrown during a class loading or in other words JVM class loading of a particular class fails. 
+>> Answer: Class loading will continue further but the class which failed to load will not be available for instantiation which means objects of that class can not be made and other subsequent problems because of it.
 
 ### Important design patterns
   - Singleton
