@@ -354,7 +354,8 @@ Imagine taking a sequence of numbers:
      1  2  3  4  5  6  7
 
 And turning it into a tree starting from the center.
-   
+
+```
           4
        /     \
     2           6
@@ -362,6 +363,7 @@ And turning it into a tree starting from the center.
  1     3     5     7
 -^--^--^--^--^--^--^-
  1  2  3  4  5  6  7
+``` 
 ```    
 This is how a binary tree works. Each node can have two children:
    - Left: Less than parent node's value.
