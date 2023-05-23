@@ -1,7 +1,7 @@
 17 Hard
 =======
 
-**17 .1 Add Without Plus:** Write a function that adds two numbers. You should not use+ or any arithmetic operators.
+**17.1 Add Without Plus:** Write a function that adds two numbers. You should not use+ or any arithmetic operators.
 
 SOLUTION
 
@@ -805,7 +805,7 @@ Therefore, the total time of the algorithm is O(B + P). We know we cannot do bet
 
 EXAMPLE
 ```
-Input(ht,wt): (65,  100)  (70,  150)    (56,  90)    (75,  190)  (60,  95)    (68,  110) 
+Input(ht,wt): (65,  100)  (70,  150)  (56,  90)  (75,  190)  (60,  95)  (68,  110) 
 
 Output: The longest tower is length 6 and includes from top to bottom:
     (56, 90) (60,95)  (65,100)  (68,110)  (70,150)  (75,190)
@@ -1128,7 +1128,7 @@ Let's walk through this with an example to make it really clear.
         Q7 = 7, 7*3
     remove min =  5. 3*5 is a  dup,  since we already  did  5*3. insert 5*5 into Q5, 7*5
     into Q7.
-        Q3 = 3 * 3
+        Q3 = 3*3
         Q5 = 5*3, 5*5
         Q7 = 7, 7*3, 7*5
     remove min =  7. 3*7 and  5*7 are  dups, since we already did 7*3 and 7*5. insert 7*7
@@ -1141,7 +1141,7 @@ Let's walk through this with an example to make it really clear.
         Q5 = 5*3, 5*5, 5*3*3
         Q7 = 7*3, 7*5, 7*7, 7*3*3
     remove min = 5*3 = 15. 3*(5*3) is a  dup, since we already  did  5*(3*3). insert
-    5*5*3 in Q5,  7*5*3 into Q7.
+    5*5*3 in Q5, 7*5*3 into Q7.
         Q3 = 3*3*3
         Q5 = 5*5, 5*3*3, 5*5*3
         Q7 = 7*3, 7*5, 7*7, 7*3*3, 7*5*3
@@ -1337,8 +1337,7 @@ Good! We got the right answer. But did we just get lucky?
 
 We should pause for a moment to think what this algorithm is doing.
 
-1. We start off with [3] and we expand the subarray until 3 is no longer the majority element. We fail at
-[3, 1]. At the moment we fail, the subarray can have no majority element.
+1. We start off with [3] and we expand the subarray until 3 is no longer the majority element. We fail at [3, 1]. At the moment we fail, the subarray can have no majority element.
 
 2.  Then we go to [7] and expand until [7, 1]. Again, we terminate and nothing could be the majority element in that subarray.
 
