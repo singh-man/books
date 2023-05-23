@@ -32,7 +32,7 @@ Here's  some math that can  be  useful  in some questions. There  are  more form
 
 *Sum of Integers 1 through N*
 
-What is 1  + 2 + ... + n? Let's figure it out by pairing up low values with high values.
+What is 1 + 2 + ... + n? Let's figure it out by pairing up low values with high values.
 
 If n is even, we pair 1  with n, 2 with n  -  1, and so on. We will have ⁿ/₂ pairs each with sum n  +  1. 
 
@@ -94,7 +94,7 @@ Therefore, if we want to convert log₂p  to log₁₀, we just do this:
 
 How many ways are there of rearranging a string  of n unique characters? Well, you have n options for what to put in the first characters, then n - 1  options for what to put in the second slot (one option  is taken), then n - 2 options for what to put in the third slot, and so on. Therefore, the total number of strings is n!.
 
-    n!   =  n * n-1 * n-2 * n-3 * .... * 1
+    n!  =  n * n-1 * n-2 * n-3 * .... * 1
 
 What if you were forming a k-length string (with all unique characters) from n total unique  characters? You can follow similar logic, but you'd just stop your selection/multiplication earlier.
 
