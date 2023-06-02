@@ -12,6 +12,12 @@
 
 OOPS is data centric with behaviour treated as secondary while in FP; functions are treated as first class citizen.
 
+### When to Use Which?
+
+> **OO** focuses on data, it makes a great candidate for data modeling. 
+
+> **Functional programming** focuses on operations, it should be used for processing data.
+
 ### Abstract Factory
 
 A lambda that conforms to some interface and returns a new object. 
