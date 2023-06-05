@@ -85,7 +85,7 @@ If you said O(n) or O(n²) (as many people do), think again. Study the code path
                         /                      \
                        /                        \
                       /                          \
-               fib(4)                             fib(3)     
+               fib(4)                           fib(3)     
               /      \                          /   \     
         fib(3)        fib(2)                fib(2)   fib(1)
          /   \        /     \               /  \
