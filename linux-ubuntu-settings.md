@@ -1,6 +1,4 @@
-## This is for WSL 10 but can be used in other stand alone linux as well
-
-##### lxrun /uninstall /full ---- lxrun /install
+## This is for Ubuntu set-up and can also be used for  WSL2
 
 ### Freshly install linux first run
 ```sh
@@ -35,43 +33,41 @@ It’s a bug with 18.03 and you can easily fix it. Hit CTRL + Shift + ECS to ope
 
 Follow the steps https://github.com/microsoft/WSL/issues/5256#issuecomment-666545999
 
-#### Fedora 33 WSL 2 on windows 10
-Follow:
-https://dev.to/bowmanjd/install-fedora-on-windows-subsystem-for-linux-wsl-4b26
-
-Below install successfully
-dnf install nano git nmap python3 python3-pip unzip zip maxima elinks -y && pip3 install pytest
-dnf clean all
-
-Trouble: will mess up the /etc/resolv.conf file and then all upgrades and installation will start failing.
-
-dnf install nginx poppler-utils postgres
-
 #### Alpine on WSL 2 on windows 10
 Get the root filesystem for the alpine from https://alpinelinux.org/downloads/
-Import the new system via wsl --import ......
+Import the new system via `wsl --import <root filesystem>`
 > alpine via this way will have root user and root permissions.
 
 > latest NeoVim if not available in apk, compile it by following the NeoVim by source.
 
 ### Install **below packages**
 ```sh
-sudo apt install -y git nginx openssh-client openssh-server nmap unzip zip pandoc poppler-utils elinks maxima ripgrep lazygit python3-pip
-pip3 install pytest 
-- ripgrep is used by telescope plugin for neovim
-sudo apt install -y nnn trash-cli sxiv
-> nnn works only on env variables.
-- Google
--- docker-ce, docker-compose, awscli
-> don't install docker with snap, it causes volume mounting problem
-> docker in Linux needs to be run with 'sudo' or else add the user in sudo group. "google" how to do that.
--- neovim (plugins: telescope, treesitter, nvim_cmp, nvim_lsp .....)
-- sdkman (SDKMAN should be last line in bashrc)
--- java, gradle, maven, lein and others
->>> SDKMAN on windows use git bash and make a copy of 7z.exe as zip.exe; than export 7z root folder path as PATH.
--- *SDKMAN doesn't set M2_HOME and JAVA_HOME do set it in .profile*
-- snap (always search snap alternative)
--- ffmpeg, sublimetext, vscode, dbeaver
+# Ripgrep for neovim's telescope plugin
+sudo apt install -y git nginx openssh-client openssh-server nmap unzip zip pandoc poppler-utils elinks maxima ripgrep python3-pip
+pip3 install pytest
+
+# Install terminal file explorer "ranger" and terminal image viewer
+pip3 install ranger-fm
+sudo apt install w3m
+
+# Install lazygit, follow
+https://github.com/jesseduffield/lazygit#ubuntu
+
+# Install and setup Neovim, follow
+https://github.com/singh-man/nvim-IDE
+
+# Google
+## docker-ce, docker-compose, awscli
+## don't install docker with snap, it causes volume mounting problem
+## docker in Linux needs to be run with 'sudo' or else add the user in sudo group. "google" how to do that.
+
+# Install sdkman for java, gradle, maven, lein and others (SDKMAN should be last line in .bashrc)
+# SDKMAN on windows use git bash; hence make a copy of 7z.exe as zip.exe; than export 7z root folder path as PATH.
+# SDKMAN doesn't set M2_HOME and JAVA_HOME do set it in .profile
+https://sdkman.io/install
+
+# snap (always search snap alternative)
+## ffmpeg, sublimetext, vscode, dbeaver
 
 # udpate .bashrc
 # For WSL ~/.m2/settings.xml add <localRepository>/c/Users/msingh/.m2/repository</localRepository> to point to windows home .m2
@@ -80,19 +76,17 @@ echo "export M2_HOME" >> ~/.bashrc
 echo "export M2=$M2_HOME/bin" >> ~/.bashrc
 echo "export PATH=$M2:$PATH" >> ~/.bashrc
 echo "alias mvn_cist='mvn clean install -Dmaven.test.skip'" >> ~/.bashrc
+
+# NOTE: Recommended to use "myAlias" file in home and do 'source ~/myAlias' in ".bashrc" or ".bash_profile"
 ```
 
 ##### If Using WSL to execute commands on docker installed on windows. Do remember to enable TCP daemon from docker settings. |https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly
-```sh
-# This step not needed if using WSL 2
-echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc && source ~/.bashrc
-```
 
 In windows 10 if using Git Bash use .bash_profile present in \<user home\>. Do note if using visual studio code add JAVA_HOME to .bash_profile so that maven can work.
 
 ### Git and multiple SSH keys
 
-If there are multiple accounts in github or bitbucket all using different keys follow:
+If there are multiple accounts in github or bitbucket all using different keys, follow:
 
 https://gist.github.com/aprilmintacpineda/f101bf5fd34f1e6664497cf4b9b9345f
 
@@ -147,7 +141,7 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_example -F /dev/null"
 	- handbrake
 	- libre office
 	- shotcut
-	- skype
+	- teams
 	- transmission
 	- vlc
 - ? sudo apt install gnome-tweak-tool
