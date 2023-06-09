@@ -48,7 +48,7 @@ pip3 install pytest
 
 # Install terminal file explorer "ranger" and terminal image viewer
 pip3 install ranger-fm
-sudo apt install w3m
+sudo apt install w3m sxiv
 
 # Install lazygit, follow
 https://github.com/jesseduffield/lazygit#ubuntu
