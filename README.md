@@ -6,6 +6,8 @@
 
 https://github.com/singh-man/effective-java-summary-3rd-ed
 
+- Item 19 : Create classes for inheritance or forbid it
+- Item 20 : Interfaces are better than abstract classes
 - Item 52 : Overloading
 - Item 54 : Return empty collections or arrays instead of null
 - Item 55 : Return of Optionals
