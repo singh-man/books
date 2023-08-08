@@ -14,3 +14,4 @@ https://github.com/singh-man/effective-java-summary-3rd-ed
 - Item 57 : Minimize the scope of local variables
 - Item 61 : Prefer primitives to boxed primitives
 - Item 64 : Refer to objects by their interfaces
+- Item 84 : Don't depend on the thread scheduler
