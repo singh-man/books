@@ -18,6 +18,13 @@ OOPS is data centric with behaviour treated as secondary while in FP; functions 
 
 > **Functional programming** focuses on operations, it should be used for processing data.
 
+### Moving parts
+> OO makes code understandable by encapsulating moving parts.
+> 
+> FP makes code understandable by minimizing moving parts.
+> - Michael Feathers
+
+
 ### Abstract Factory
 
 A lambda that conforms to some interface and returns a new object. 
