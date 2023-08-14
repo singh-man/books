@@ -15,3 +15,6 @@ https://github.com/singh-man/effective-java-summary-3rd-ed
 - Item 61 : Prefer primitives to boxed primitives
 - Item 64 : Refer to objects by their interfaces
 - Item 84 : Don't depend on the thread scheduler
+- Item 88 : Write readObject methods defensively
+- Item 89 : For instance control, prefer enum types to readResolve
+- Item 90 : Serialization proxies
