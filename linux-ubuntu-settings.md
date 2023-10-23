@@ -2,8 +2,17 @@
 
 ### Freshly install linux first run
 ```sh
+sudo apt update && sudo apt upgrade && sudo apt autoremove
+OR
 sudo apt-get update && sudo apt-get upgrade && sudo apt autoremove
 ```
+
+### Install Nala 
+A front end to apt, which looks like **dnf** https://github.com/volitank/nala    
+```sh
+sudo apt install nala
+```
+Now **apt** anywhere can be replaced with **nala**
 
 ### WSL (only) 
 #### change the mount from /mnt/c/ to /c
@@ -120,16 +129,16 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_example -F /dev/null"
 		- tor
 	- IDE
 		- android studio
-		- eclipse
+		- ~eclipse~
 		- intellij
 		- sublime text
-		- Visual studio code
+		- Visual Studio Code
 		- DBeaver db browser
 		- neovim with plugins
 	- programming env
 	 	- git extensions
 		- maxima, wxmaxima
-		- nodejs
+		- nodejs -> check Coci.nvim page, how to install.
 		- MemoryAnalyzer
 		- VisualVM
 	- blender
@@ -154,7 +163,7 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_example -F /dev/null"
 - Build Tools
 	- Gradle
 		- Build and run using: Intellij IDEA
-		- Tun test using: Choose per test
+		- Run test using: Choose per test
 - Terminal
 	- Shell Path: "C:\Program Files\Git\bin\sh.exe" --login -i 
 - WSL2
