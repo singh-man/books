@@ -176,7 +176,7 @@ https://www.jetbrains.com/help/idea/maven-support.html#maven_import_project_star
 OR try ==> File -> Project From existing sources -> Import project from external model (maven | gradle) -> Finish -> New Window
 
 ### Dark Reader (for browsers)
-Brightness: -5
-Contrast: -25 or -35
-Sepia: +55
-Grayscale: +25
+**Brightness**: -5
+**Contrast**: -25 or -35
+**Sepia**: +55
+**Grayscale**: +25
