@@ -177,6 +177,6 @@ OR try ==> File -> Project From existing sources -> Import project from external
 
 ### Dark Reader (for browsers)
 Brightness: -5
-Contrast: -35
+Contrast: -25 or -35
 Sepia: +55
 Grayscale: +25
