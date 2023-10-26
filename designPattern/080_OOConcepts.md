@@ -34,6 +34,14 @@ An object is phantomly referenced after it has been finalized, but before its al
 A circular reference is a series of references where the last object references the first, resulting in a closed loop.
 The Sun JRE does treat SoftReferences differently from WeakReferences. *We attempt to hold on to object referenced by a SoftReference if there isn't pressure on the available memory. One detail: the policy for the "-client" and "-server" JRE's are different: the -client JRE tries to keep your footprint small by preferring to clear SoftReferences rather than expand the heap, whereas the -server JRE tries to keep your performance high by preferring to expand the heap (if possible) rather than clear SoftReferences. One size does not fit all.*
 
+#### Misc:
+- Class -> is a blueprint/template, has members like:
+    - Field -> (generally known as variables); holds the state of the program
+    - methods -> operate on field(s) (state)
+    - Object -> also called instance; runtime instance of class in memory
+- Refrence -> a variable that points to an object
+- import x.y.z.* on this package classes are imported not sub-packages
+
 #### Strangler pattern
 1. Data hiding can practically be termed as implementation hiding
 1. Getters (queires) -> preferably returns some value but are definitely indempotent, setters (commands) -> preferably returns void
