@@ -14,7 +14,7 @@
 |Proxy|x|Functions||
 |Flyweight|x|||
 ||||Behavioral Deisgn Patterns|
-|Chain of responsibility|x||A lambda that may or may not delegate to another lambda, which may or may not delegate to another lambda, ad infinitum. (How to get the ‘next’ reference into the lambda is left as an exercise for the reader.) |
+|Chain of responsibility|x|Stream of functions|A lambda that may or may not delegate to another lambda, which may or may not delegate to another lambda, ad infinitum. (How to get the ‘next’ reference into the lambda is left as an exercise for the reader.) |
 |Command|x|Functions|Otherwise known as: a lambda! (Assuming you’re not planning on implementing undo. But then you just want a tuple of lambdas, don’t you?)|
 |Iterator|||Close (though not identical) to forEach(lambda). More specific functions like map(lambda), filter(lambda), flatMap(lambda), foldLeft/Right(lambda), reduceLeft/Right(lambda), etc. cater for the majority of Iterator’s use in modern Java.|
 |Observer|x|Consumer|Give some other object a lambda to call when something happens in the future. (Assuming the Observer interface has a single function.)|
