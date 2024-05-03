@@ -4,7 +4,7 @@
 
 > Its better if API consumer defines the API structure.
 
-|Name|SAM|Details|
+|Name|SAM (Single Abstract Method)|Details|
 |---|---|---|
 |Abstract Factory||A lambda that conforms to some interface and returns a new object. |
 |Adapter||A lambda that calls a function with a different signature on some other object. (Assuming the adapter interface has one public function.) |
