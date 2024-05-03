@@ -1280,8 +1280,9 @@ Lets look at an example of this. We have an Item class, which represents an item
 ```java
 package com.cakes;
 
-public class Item {String name;
+public class Item {
 
+    String name;
     float price;
 
     public Item(String name, float price) {
