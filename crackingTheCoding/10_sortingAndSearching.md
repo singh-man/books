@@ -84,7 +84,7 @@ Consider, for example, an array like [1,   4,  5 ||  2,   8,   9]  (the "||" ind
 The space complexity of merge sort is O(n) due to the auxiliary space used to merge parts of the array.
 
 
-#### Quick Sort | Runtime: O(n  log(n)) average, O(n² ) worst case. Memory: O(log(n)).
+#### Quick Sort | Runtime: O(n  log(n)) average, O(n²) worst case. Memory: O(log(n)).
 
 In quick sort we pick a random element and partition the array, such that all numbers that are less than the partitioning element come before all elements that are greater than it. The partitioning can be performed efficiently through a series of swaps (see below).
 
@@ -748,7 +748,7 @@ We can approach this in two  ways: a more naive solution that only takes advanta
 
 **Solution #1: Naive Solution**
 
-As a first approach, we can  do binary  search on every  row to find the  element. This algorithm will be O(M log( N)), since there are M rows and  it takes O(log(N)) time to search each one. This is a good approach to mention to your interviewer before you proceed with generating a better algorithm.
+As a first approach, we can  do binary  search on every  row to find the  element. This algorithm will be O(M log(N)), since there are M rows and  it takes O(log(N)) time to search each one. This is a good approach to mention to your interviewer before you proceed with generating a better algorithm.
 
 To develop an algorithm, let's start  with a simple example.
 

@@ -2779,7 +2779,7 @@ By finding the closures for each index in the array, we can find the shortest su
 54      }
 55  }
 ```
-This algorithm will potentially take  O(SB²)  time, where B  is the  length of bigString and S is the  length of smal1String.This is because at each of the  B  characters, we potentially do O(SB) work: S scans of the rest of the  string, which has potentially B  characters.
+This algorithm will potentially take  O(SB²)  time, where B  is the  length of bigString and S is the  length of smallString.This is because at each of the  B  characters, we potentially do O(SB) work: S scans of the rest of the  string, which has potentially B  characters.
 
 **Optimized**
 

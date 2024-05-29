@@ -352,7 +352,7 @@ Often, we can optimize exponential algorithms by finding duplicate work. What wo
 
 If  we walk through  the algorithm, we'll see that we are visiting squares multiple times. In fact, we visit each square many, many times. After all, we have re squares but we're doing O(2ʳ⁺ᶜ) work. If we were only visiting each square once, we would probably have an algorithm that was O(rc) (unless we were somehow doing a lot of work during each visit).
 
-How does our current algorithm work? To find a path to (r, c),  we look for a path to an adjacent coordinate: (r-1, c) or (r, c-1). Of course, if one of those squares is off limits, we ignore it.  Then, we look at their adjacent coordinates: (r-2, c),  (r-1, c-1), (r-1, c-1), and (r, c-2). The spot (r -1, c-1) appears  twice, which means that we're duplicating effort. Ideally, we should remember  that we already visited (r-1, c-1) so that we don't waste our time.
+How does our current algorithm work? To find a path to (r, c),  we look for a path to an adjacent coordinate: (r-1, c) or (r, c-1). Of course, if one of those squares is off limits, we ignore it.  Then, we look at their adjacent coordinates: (r-2, c),  (r-1, c-1), (r-1, c-1), and (r, c-2). The spot (r-1, c-1) appears  twice, which means that we're duplicating effort. Ideally, we should remember  that we already visited (r-1, c-1) so that we don't waste our time.
 
 This is what the dynamic programming algorithm below does.
 
@@ -1654,7 +1654,7 @@ We could just essentially iterate through each possible place to put a parenthes
 countEval(0^0&0^1|1, true) =
     countEval(0^0&0^1|1 where paren around char 1, true)
  +  countEval(0^0&0^1|1 where paren around char 3, true)
- +  countEval(0^0&0^1|1 where paren around char S, true)
+ +  countEval(0^0&0^1|1 where paren around char 5, true)
  +  countEval(0^0&0^1|1 where paren around char 7, true)
 ```
 
