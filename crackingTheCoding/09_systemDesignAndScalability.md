@@ -325,7 +325,7 @@ company_name, open, high, low, closing price. The XML could look like this:
 l   <root>
 2          <date value="2008-10-12">
 3               <company name="foo">
-4                    <open>l26.23</open>
+4                    <open>126.23</open>
 5                    <high>130.27</high>
 6                    <low>122.83</low>
 7                    <closingPrice>127.30</closingPrice>
@@ -978,7 +978,7 @@ Ordinarily, you would clarify this system with your interviewer. We'll scope the
 - This financial history includes outgoing money (things you bought or paid for), incoming money (salary and other payments), and your current money (what's in your bank account and investments).
 - Each payment transaction has a "category" associated with it (food, travel, clothing, etc.).
 - There is some sort of data source provided that tells the system, with some reliability, which category a transaction is associated with. The user might, in some cases, override the category when it's improperly assigned (e.g., eating at the cafe of a department store getting assigned to "clothing" rather than "food").
-- Users will use the system to get recommendations on their spending. These recommendations will come from a mix of "typical" users ("people generally shouldn't spend more than Xo/o of their income on clothing"), but can be overridden with custom budgets. This will not be a primary focus right now.
+- Users will use the system to get recommendations on their spending. These recommendations will come from a mix of "typical" users ("people generally shouldn't spend more than X% of their income on clothing"), but can be overridden with custom budgets. This will not be a primary focus right now.
 - We assume this is just a website for now, although we could potentially talk about a mobile app as well.
 - We probably want email notifications either on a regular basis, or on certain conditions (spending over a certain threshold, hitting a budget  max, etc.).
 - We'll assume that there's no concept of user-specified rules for assigning categories to transactions. 
@@ -1126,7 +1126,7 @@ We can start with clarifying the specifics of this system.
 - The system tracks analytics of how many times each page is accessed.
 - Old documents get deleted after not being accessed for a sufficiently long period of time.
 - While there isn't true authentication on accessing documents, users should not be able to "guess" document URLs easily.
-- The system has a frontend as well as an AP\.
+- The system has a frontend as well as an API.
 - The analytics for each URL can be accessed through a "stats" link on each page. It is not shown by default, though.
 
 **Step 2: Make Reasonable Assumptions**
