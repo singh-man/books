@@ -100,27 +100,6 @@ Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
 ```java
 Iterator <I>
     ListIterator <I>
-
-Collection <I>
-    Set <I>
-        SortedSet <I>
-            TreeSet
-        HashSet 
-            LinkedHashSet
-    List <I>
-        ArrayList
-        Vector
-        LinkedList
-    Queue <I>
-        LinkedList
-        PriorityQueue
-
-Map <I>
-    HahsTable    
-    HashMap
-        LinkedHashMap    
-    SortedMap <I>
-        TreeMap
 ```
 
 ```
@@ -130,13 +109,13 @@ Map <I>
              |                                |                        |
              |                                |                        |
              +                                +                        +
-    +-->Set <I> <------+                +-->List <I> <---------+     Queue <I> <----+
-    |        ^         |                |         ^            |     ^              |
-    |        |         +                |         |            |     |              |
+    +-->Set <I> <------+                +-->List <I> <---------+     +--Queue <I> <-+
+    |        ^         |                |         ^            |     |              |
+    |        |         |                |         |            |     |              |
     |        |    SortedSet <I>         |         |            |     |              |
     |        |            ^             |         |            |     |              |
     |        |            |             |         |            |     |              |
-    +        |            +             |         |            |     |              +
+    |        |            |             |         |            |     |              |
 HashSet LinkedHashSet    TreeSet      ArrayList   Vector    LinkedList    PriorityQueue
 
 
@@ -149,11 +128,6 @@ HashSet LinkedHashSet    TreeSet      ArrayList   Vector    LinkedList    Priori
    |         |                |          ^
    |         |                |          |
    |         |                |          |
-   +         |                +          +
+   |         |                |          |
 HahsTable    LinkedHashMap    HashMap    TreeMap
 ```
-
-
-
-
-<!--Start Fragment-->
