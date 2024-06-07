@@ -25,9 +25,9 @@ java example : `Optional<U> map(Function<? super T, ? extends U> mapper)`
 
 Monads are a type of structure used to represent computations that are described as a series of stages. 
 
-In java ```Optional``` and ```Streams```
+In java `Optional` (more) and `Streams` (to lesser extent) are like Monads.
 
-'Optional<U> flatMap(Function<? super T, ? extends Optional<? extends U>> mapper)'
+`Optional<U> flatMap(Function<? super T, ? extends Optional<? extends U>> mapper)`
 
 ```java
 public interface Monad<T> {
