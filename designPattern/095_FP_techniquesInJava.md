@@ -14,8 +14,9 @@ interface Functor<T> {
 
 java example : `Optional<U> map(Function<? super T, ? extends U> mapper)`
 
-> Note: Its like a monad but with a twist 
-> Monad return type is another Monad but user has provided that monad whereas in functor return value of applied function is wrpped by Functor in anohter Functor.
+> Note: Its like a monad but with a twist ??
+> 
+> Monad return type is another Monad; but user must provided that monad as return type, whereas in Functor return value of applied function is wrpped by Functor in anohter Functor.
 
 **Why Functor can't be chained: - Supose a user choose to return a function after applying an opertion on a value which means functor will double wrap the return function into another Functor which Monads avoid.**
 
@@ -24,7 +25,7 @@ java example : `Optional<U> map(Function<? super T, ? extends U> mapper)`
 
 Monads are a type of structure used to represent computations that are described as a series of stages. 
 
-In java Optional and Streams
+In java ```Optional``` and ```Streams```
 
 'Optional<U> flatMap(Function<? super T, ? extends Optional<? extends U>> mapper)'
 
@@ -66,6 +67,64 @@ public class Maybe<T> implements Monad<T> {
             .flatMap(value -> Maybe.just(value * 2))
             .flatMap(value -> Maybe.just(value + 5));
         System.out.println("Empty Result: " + emptyResult.getValue()); // Output: Empty Result: null
+    }
+}
+```
+
+### Currying
+
+Currying is a functional programming technique where a function that takes multiple arguments is transformed into a sequence of functions, each taking a single argument.
+
+```java
+@Test
+public void currying() {
+    // Define a function that takes two arguments and returns their sum
+    Function<Integer, Function<Integer, Integer>> add = x -> y -> x + y;
+    // Apply currying to the "add" function
+    Function<Integer, Integer> add5 = add.apply(5);
+    // Apply the partially applied function
+    int result = add5.apply(3);
+    System.out.println("Result: " + result); // Output: Result: 8
+}
+```
+
+### Trampoline
+
+There is no Tail Call Optimization in java for recursive function! Trampoline design for the rescue :-)
+
+```java
+public class Trampoline {
+
+    void recCountdown(int n) {
+        if (n == 0) {
+            System.out.println("DONE!");
+            return;
+        }
+        System.out.println(n);
+        recCountdown(n - 1);
+    }
+
+    Supplier<?> countdown(int n) {
+        if (n == 0) {
+            System.out.println("DONE!");
+            return null;
+        }
+        System.out.println(n);
+        return () -> countdown(n - 1);
+    }
+
+    void trampoline(Supplier<?> s) {
+        while (s != null) s = (Supplier<?>) s.get();
+    }
+
+    @Test
+    public void testTrampoline() {
+        new Trampoline().trampoline(new Trampoline().countdown(Integer.MAX_VALUE - 1));
+    }
+
+    @Test
+    public static void main(String[] args) {
+       new Trampoline().recCountdown(Integer.MAX_VALUE - 1); // StackOverflowException as low as 20000
     }
 }
 ```
