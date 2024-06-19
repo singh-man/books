@@ -136,7 +136,7 @@ Of course, there are a number of optimizations that can be made to this. One sim
 
 Probability can be a complex topic, but it's based in a few basic laws that can be logically derived.
 
-Let's look at a Venn diagram to visualize two events A and B. The areas of the two circles represent their relative probability, and the overlapping area is the event {A and   B}.
+Let's look at a Venn diagram to visualize two events A and B. The areas of the two circles represent their relative probability, and the overlapping area is the event {A and B}.
 
 
 ![](media/IX_06_02.JPG)
