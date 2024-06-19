@@ -249,10 +249,10 @@ Note  that the  size of a pointer varies  depending on the  architecture: 32 bit
 A reference is another name (an alias) for a pre-existing object and  it does not have memory of its own. For example:
 
 ```
-1     int a = 5;
-2     int & b = a;
-3     b = 7;
-4     cout << a; // prints 7 
+1    int a = 5;
+2    int & b = a;
+3    b = 7;
+4    cout << a; // prints 7 
 ```
 
 In line 2 above, b is a reference to a; modifying b will also modify  a.
@@ -270,11 +270,11 @@ Unlike pointers, references cannot be null and  cannot be reassigned to another 
 One  will often see programmers perform addition on a pointer, such  as what you see  below:
 
 ```
-1      int * p = new int[2];
-2      p[0] = 0;
-3      p[1] = 1;
-4      p++;
-5      cout << *p; // Outputs 1
+1    int * p = new int[2];
+2    p[0] = 0;
+3    p[1] = 1;
+4    p++;
+5    cout << *p; // Outputs 1
 ```
 
 Performing p++ will skip ahead by  sizeof(int) bytes, such  that the  code outputs 1. Had p  been of different type, it would skip ahead as many  bytes as the  size of the  data structure.
@@ -340,10 +340,10 @@ With a circular array, we always replace  the oldest item when we read a new lin
 
 The following is an example of a circular array: 
 ```
-step  1 (initially): array  {a,  b,  c,  d,  e, f}. p = 0
-step  2 (insert g):  array  {g,  b,  c,  d,  e, f}. p = 1
-step  3 (insert h):  array  {g,  h,  c,  d,  e, f}. p = 2 
-step  4 (insert i):  array  {g,  h,  i,  d,  e, f}. p = 3
+step  1 (initially): array  {a,  b,  c,  d,  e,  f}. p = 0
+step  2 (insert g):  array  {g,  b,  c,  d,  e,  f}. p = 1
+step  3 (insert h):  array  {g,  h,  c,  d,  e,  f}. p = 2 
+step  4 (insert i):  array  {g,  h,  i,  d,  e,  f}. p = 3
 ```
 
 The code below implements this algorithm.
