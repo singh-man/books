@@ -5,19 +5,27 @@ OO Concepts
 
 ### OO Defination
 
+#### Abstraction
+Concept of hiding the details of implementation and exposing only the necessary functionalities. The keywords to keep in mind here are: 'Implementation hiding'.
+
 #### Encapsulation
+Concept of encapsulating or wrapping up the member variables (data) and the methods (behavior) of an object into a single unit, such as a class.
+
 (funny term) takes the part that vary and encapsulate it so that it will not effect the other things. Here's another way to think about this principle: take the parts that vary and encapsulate them, so that later you can alter or extend the parts what vary without affecting those that don't and then remember to program to an interfaces (provide a constructor or setter/getter injection to provide the concrete object).
 
 Encapsulation is literally a way to design so that object will never go into invalid state or at least make it to fail fast
 
 #### Inheritance
-must inherited dependency (but can exist independently)
+Establishes a hierarchical relationship between two classes. Inherited dependency (but can exist independently)
 
 #### Composition
 strong dependency (can not exist independently) delegate can come here (hardcoded in constructor via new opertor)
 
 #### Aggregation
 loose dependency (can exist independently) (data and its behaviour should follow this) delegates can come here
+
+#### Polymorphism
+Capability of an object to be represented in different forms.
 
 ### Reference type:-
 
