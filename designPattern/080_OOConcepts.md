@@ -49,6 +49,7 @@ The Sun JRE does treat SoftReferences differently from WeakReferences. *We attem
     - Object -> also called instance; runtime instance of class in memory
 - Refrence -> a variable that points to an object
 - import x.y.z.* on this package classes are imported not sub-packages
+- Stack memory is a sort of memory allocation that the OS continuously manages and uses to store local variables in a LIFO order. On the other hand, heap memory is a type of dynamic memory allocation used for storing objects and data structures that require a longer lifespan than stack memory.
 
 #### Strangler pattern
 1. Data hiding can practically be termed as implementation hiding
