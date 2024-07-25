@@ -123,10 +123,11 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_example -F /dev/null"
 - sudo apt-get install lubuntu-restricted-extras
 - install
 	- browser
-		- chromium
+		- chromium -> **Settings > Security and Privacy > Security, scroll to the bottom, and then toggle to “Always use secure connections.**
 		- elinks
 		- firefox
 		- tor
+  		- brave
 	- IDE
 		- android studio
 		- ~eclipse~
