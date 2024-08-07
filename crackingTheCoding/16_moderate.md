@@ -8,7 +8,7 @@ SOLUTION
 
 ---
 
-This is a classic interview problem, and it's a reasonably straightforward one. We'll walk through this using a0 to indicate the original value of a and b0 to indicate the original value of b. We'll also use diff to indicate the value of a₀  - b₀
+This is a classic interview problem, and it's a reasonably straightforward one. We'll walk through this using a₀ to indicate the original value of a and b₀ to indicate the original value of b. We'll also use diff to indicate the value of a₀  - b₀
 
 Let's picture these on a number line for the case where a > b.
 
