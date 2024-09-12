@@ -182,7 +182,7 @@ OR try ==> File -> Project From existing sources -> Import project from external
 **Sepia**: +55
 **Grayscale**: +25
 
-
+```
 BEGIN
   -- Check if the table exists
   IF (SELECT COUNT(*) FROM user_tables WHERE table_name = 'MY_TABLE') > 0 THEN
@@ -204,3 +204,4 @@ EXCEPTION
     dbms_output.put_line('Error: ' || SQLERRM);
 END;
 /
+```
