@@ -181,3 +181,26 @@ OR try ==> File -> Project From existing sources -> Import project from external
 **Contrast**: -25 or -35
 **Sepia**: +55
 **Grayscale**: +25
+
+
+BEGIN
+  -- Check if the table exists
+  IF (SELECT COUNT(*) FROM user_tables WHERE table_name = 'MY_TABLE') > 0 THEN
+    -- Table exists, create or replace the trigger using dynamic SQL
+    EXECUTE IMMEDIATE '
+      CREATE OR REPLACE TRIGGER my_trigger
+      BEFORE INSERT ON my_table
+      FOR EACH ROW
+      BEGIN
+        :new.id := my_sequence.NEXTVAL;
+      END;';
+  ELSE
+    -- Table does not exist, optionally handle this case
+    dbms_output.put_line('Table MY_TABLE does not exist.');
+  END IF;
+EXCEPTION
+  WHEN OTHERS THEN
+    -- Exception handling (e.g., if there's an error executing the dynamic SQL)
+    dbms_output.put_line('Error: ' || SQLERRM);
+END;
+/
