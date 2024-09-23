@@ -4,6 +4,8 @@
 
 > Its better if API consumer defines the API structure.
 
+> Good: https://github.com/mariofusco/from-gof-to-lambda/tree/master
+
 |Name|SAM|ToDo|Details|
 |---|---|---|---|
 ||||Creational Deisgn Patterns|
