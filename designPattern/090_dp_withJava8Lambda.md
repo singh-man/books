@@ -156,6 +156,7 @@ public class ManFuncUnderstanding {
 <img src="media/a0.JPG" width="40%" height="40%">
 
 9 func in total; 4 via `andThen()` call; for more details check code
+> In other words a new function is needed(created) to chain 2 functions!!
 
 <img src="media/a1.JPG" width="40%" height="40%">
 
