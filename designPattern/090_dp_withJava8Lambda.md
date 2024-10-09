@@ -6,6 +6,8 @@
 
 > Good: https://github.com/mariofusco/from-gof-to-lambda/tree/master
 
+*Funtion chaining works if passed argument is only 1 i.e. ```public arg2 work(arg1)``` can be chained but ```public arg3 work(arg1, arg2)``` can't be chained.* Rember Function<T, R>.
+
 |Name|SAM|ToDo|Details|
 |---|---|---|---|
 ||||Creational Deisgn Patterns|
