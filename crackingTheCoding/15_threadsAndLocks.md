@@ -606,7 +606,7 @@ The code below provides further details. For simplicity, we assume that all lock
 8         private HashMap<Integer, LinkedList<LockNode>> lockOrder;
 9     
 10        private LockFactory(int count) { ... }
-11        public static LockFactory getinstance() { return instance; }
+11        public static LockFactory getInstance() { return instance; }
 12    
 13        public static synchronized LockFactory initialize(int count) {
 14            if (instance == null) instance = new LockFactory(count);

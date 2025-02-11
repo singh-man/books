@@ -521,7 +521,7 @@ One way that we can reuse the code better is to just pass in the values to anoth
 52      return first;
 53  }
 ```
-The Cheek function is essentially  operating as an iterator.
+The Check function is essentially  operating as an iterator.
 
 *Iterator*
 
@@ -531,7 +531,7 @@ Another way of doing it is, of course,  to actually build an iterator.
 2       if (board.length != board[0].length) return Piece.Empty;
 3       int size = board.length;
 4
-5       ArrayList<Positionlterator> instructions = new ArrayList<Positionlterator>();
+5       ArrayList<PositionIterator> instructions = new ArrayList<PositionIterator>();
 6       for (int i = 0; i < board.length; i++) {
 7           instructions.add(new PositionIterator(new Position(0, i), 1, 0, size));
 8           instructions.add(new PositionIterator(new Position(i, 0), 0, 1, size));
@@ -539,7 +539,7 @@ Another way of doing it is, of course,  to actually build an iterator.
 10      instructions.add(new PositionIterator(new Position(0, 0), 1, 1, size));
 11      instructions.add(new PositionIterator(new Position(0, size - 1), 1, -1, size));
 12
-13      for (Positionlterator iterator : instructions) {
+13      for (PositionIterator iterator : instructions) {
 14          Piece winner = hasWon(board, iterator);
 15          if (winner != Piece.Empty) {
 16              return winner;
@@ -1330,7 +1330,7 @@ We can follow this logic to write recursive code. Note that we don't need to tra
 ```java
 1   HashSet<Integer> allLengths(int k, int shorter, int longer) {
 2       HashSet<Integer> lengths = new HashSet<Integer>();
-3       getAlllengths(k, 0, shorter, longer, lengths);
+3       getAllLengths(k, 0, shorter, longer, lengths);
 4       return lengths;
 5   }
 6
@@ -1825,7 +1825,7 @@ The following code implements this algorithm.
 ```java
 1   void findUnsortedSequence(int[] array) {
 2       // find left subsequence
-3       int end left = findEndOfleftSubsequence(array);
+3       int end left = findEndOfLeftSubsequence(array);
 4       if (end_left >= array.length - 1) return; // Already sorted
 5
 6       // find right subsequence

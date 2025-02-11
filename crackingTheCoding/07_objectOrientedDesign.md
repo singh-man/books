@@ -1283,7 +1283,7 @@ One possible design for Othello is below.
 20          players[1] = new Player(Color.White);
 21      }
 22 
-23      public static Game getinstance() {
+23      public static Game getInstance() {
 24          if (instance == null) instance = new Game();
 25          return instance;
 26      }
