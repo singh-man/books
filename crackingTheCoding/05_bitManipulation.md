@@ -347,7 +347,7 @@ Once we have this, we just walk through the array. At each 0s sequence, then we 
 29  
 30  /* Given the lengths of alternating sequences of 0s and 1s, find the longest one
 31   * we can build. */
-32  int findlongestSequence(ArrayList<Integer> seq) {
+32  int findLongestSequence(ArrayList<Integer> seq) {
 33      int maxSeq = 1;
 34      
 35      for (int i = 0; i < seq.size(); i += 2) {
