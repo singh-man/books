@@ -922,14 +922,14 @@ Implementing this requires some careful work to prevent bugs.
 45      if (day > 3) return; // only works for 3 days (digits)+one extra
 46  
 47      for (Bottle bottle : bottles) {
-48          int index = getTestStripindexForDay(bottle, day, strips.size());
+48          int index = getTestStripIndexForDay(bottle, day, strips.size());
 49          TestStrip testStrip = strips.get(index);
 50          testStrip.addDropOnDay(day, bottle);
 51      }
 52  }
 53  
 54  /* Get strip that should be used on this bottle on this day. */
-55  int getTestStripindexForDay(Bottle bottle, int day, int nTestStrips) {
+55  int getTestStripIndexForDay(Bottle bottle, int day, int nTestStrips) {
 56      int id = bottle.getid();
 57      switch (day) {
 58      case 0: return id / 100;
