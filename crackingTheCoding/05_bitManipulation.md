@@ -498,9 +498,9 @@ n &=  ~((1 << p) - 1).
 
 To insert  c1 -  1 ones on the right, we do the following:
 ```
-a = 1 << (c1 -  1); // 0s with  a  1  at  position  c1 -  1
-b = a - 1;          // 0S with 1s at  positions  0 through c1 - 1 
-n = n | b;          // inserts 1s at  positions  0 through c1 - 1
+a = 1 << (c1 - 1); // 0s with  a  1  at  position  c1 - 1
+b = a - 1;         // 0S with 1s at  positions 0 through c1 - 1 
+n = n | b;         // inserts 1s at  positions 0 through c1 - 1
 ```
 Or, more concisely:
 ```
@@ -517,7 +517,7 @@ The code for getNext is below.
 5       int c1 = 0;
 6       while (((c & 1) == 0) && (c != 0)) {
 7           c0++;
-8           c >>= l;
+8           c >>= 1;
 9       }
 10  
 11      while ((c & 1) == 1) {
@@ -580,13 +580,13 @@ n &= b;               // Clears bits 0 through p.
 
 ![](media/05_4_7.JPG)
 
-Note that since p = c1 + c0, the (c1 + l) ones will be followed by (c0 - 1) zeros. 
+Note that since p = c1 + c0, the (c1 + 1) ones will be followed by (c0 - 1) zeros. 
 
 We can do this as follows:
 ```
-int a =  1 <<  (c1 + 1);  // 0S with 1  at position (c1 +  1)
-int b =  a  -  1;         // 0s  followed by c1 + 1 ones
-int c =  b <<  (c0 - 1);  // c1+1 ones  followed  by  c0-1  zeros.
+int a =  1 <<  (c1 + 1);  // 0s with 1 at position (c1 + 1)
+int b =  a  -  1;         // 0s followed by c1 + 1 ones
+int c =  b <<  (c0 - 1);  // c1+1 ones followed by c0-1 zeros.
 n  |=  c;
 ```
 The code to implement this is below.
@@ -662,7 +662,7 @@ We can implement this arithmetically as follows. For clarity in the example, we 
 ```
 n -=  2ᶜ¹   -  1;   // Removes  trailing 1s. n  is now 10000000.
 n -=  1;            // Flips trailing  0s.   n  is now 01111111.
-n -=  2ᶜ⁰⁻¹ -  1;   // Flips last  (c0-1) 0s.   n  is now 01110000.
+n -=  2ᶜ⁰⁻¹ -  1;   // Flips last (c0-1) 0s. n  is now 01110000.
 ``` 
  
 This reduces mathematically to:
@@ -699,9 +699,9 @@ It means that A and B never have a 1 bit in the same place. So if n & (n -1) == 
 
 Try doing subtraction by hand (in base 2 or 10). What happens?
 ```
-  1101011000  [base   2]             593100  [base  10]
--          1                       -      1
-= 1101010111  [base   2]           = 593099  [base  10] 
+  1101011000  [base   2]          593100  [base  10]
+-          1                    -      1
+= 1101010111  [base   2]        = 593099  [base  10] 
 ```
 When you subtract 1 from a number, you look at the least significant bit. If it's a 1 you change it to 0, and you are done. If it's a zero, you must "borrow" from a larger bit. So, you go to increasingly larger bits, changing each bit from a 0 to a 1, until you find a 1. You flip that 1 to a 0 and you are done.
 
