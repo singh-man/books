@@ -181,3 +181,20 @@ OR try ==> File -> Project From existing sources -> Import project from external
 **Contrast**: -25 or -35
 **Sepia**: +55
 **Grayscale**: +25
+
+## Windows
+
+### 'lf' file manager
+Ranger: hard to make it work on windows; better use `lf'
+
+If git is installed; it gives you git bash.
+
+Follow https://winget.ragerworks.com/package/gokcehan.lf
+
+In short open git-bash and run ```winget install --id=gokcehan.lf -e```
+
+then open git-bash and run
+
+```winpty lf```
+
+
