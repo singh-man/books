@@ -175,12 +175,13 @@ containsKey     - O(log(n))
 ```
 add             - O(1)
 remove          - O(1)
-contains        - O(1)
+contains        - O(1) // Search
 ```
 
 ### TreeSet uses internal TreeMap
 ```
 add             - O(log(n))
 remove          - O(log(n))
-contains        - O(log(n))
+contains        - O(log(n)) // Search
+
 ```
