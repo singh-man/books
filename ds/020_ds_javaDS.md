@@ -151,15 +151,15 @@ add(index, element)   - O(n)
 get()                 - O(n)
 remove(element)       - O(n)
 remove(index)         - O(n)
-contains()            - O(n) // searching
+contains()            - O(n) // Search
 ```
 
 ### HashMap, LinkedHashMap, IdentityHashMap, WeakHashMap, EnumMap and ConcurrentHashMap.
 ```
-containsKey     - O(1)
-get 	        - O(1)
 put             - O(1)
+get 	        - O(1)
 remove	        - O(1)
+containsKey     - O(1) // Search
 ```
 
 ### TreeMap and ConcurrentSkipListMap 
@@ -168,7 +168,7 @@ since some java version its backed by binary tree earlier it was List
 put             - O(log(n))
 get             - O(log(n))
 remove          - O(log(n))
-containsKey     - O(log(n))
+containsKey     - O(log(n)) // Search
 ```
 
 ### HashSet, LinkedHashSet, and EnumSet uses internal HashMap
