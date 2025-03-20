@@ -158,7 +158,7 @@ contains()            - O(n) // searching
 ```
 containsKey     - O(1)
 get 	        - O(1)
-put	            - O(1)
+put             - O(1)
 remove	        - O(1)
 ```
 
