@@ -131,3 +131,56 @@ HashSet LinkedHashSet    TreeSet      ArrayList   Vector    LinkedList    Priori
    |         |                |          |
 HahsTable    LinkedHashMap    HashMap    TreeMap
 ```
+
+## Java Collection Time complexity
+
+### ArrayList
+```
+add()                 - O(1), O(n) worst-case scenario, new array and copy all elements.
+add(index, element)   - O(n)
+get()                 - O(1)
+remove()              - O(n) Iterate and remove.
+indexOf()             - O(n) // find
+contains()            - O(n) uses indexOf() // find, search
+```
+
+### LinkedList
+```
+add()                 - O(1)
+add(index, element)   - O(n)
+get()                 - O(n)
+remove(element)       - O(n)
+remove(index)         - O(n)
+contains()            - O(n) // searching
+```
+
+### HashMap, LinkedHashMap, IdentityHashMap, WeakHashMap, EnumMap and ConcurrentHashMap.
+```
+containsKey     - O(1)
+get 	        - O(1)
+put	            - O(1)
+remove	        - O(1)
+```
+
+### TreeMap and ConcurrentSkipListMap 
+since some java version its backed by binary tree earlier it was List
+```
+put             - O(log(n))
+get             - O(log(n))
+remove          - O(log(n))
+containsKey     - O(log(n))
+```
+
+### HashSet, LinkedHashSet, and EnumSet uses internal HashMap
+```
+add             - O(1)
+remove          - O(1)
+contains        - O(1)
+```
+
+### TreeSet uses internal TreeMap
+```
+add             - O(log(n))
+remove          - O(log(n))
+contains        - O(log(n))
+```
