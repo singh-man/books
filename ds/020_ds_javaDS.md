@@ -92,6 +92,9 @@ Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
  > - HashMap -> uses hashCode() and then equals() -> java 1.8  collision resolution is changed to BST after a threshold from LinkedList as used in prior versions.
  > - ConcurrentHashMap API states that its iterators do not throw ConcurrentModificationException. This is because its iterators reflect the state of the hash table at point of the creation of the iterator. This is as if its iterators work with a hash table snapshot:
 
+> Properties (String key and value) extends HashTable (Object key and value): a design break in Java. HashTable can take Properties and and both can use add and get for Object which is wrong as per Properties design which should only use String via method setProperty and getProperty.
+> This is not breaking Liskov Substitution.
+
 
 | Data Structure     | List       | Queue         | Set           | Map           |
 | ----               | ----       | ----          | ----          | ----          |
