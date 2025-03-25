@@ -116,8 +116,8 @@ Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
 
 ### Map
 
-| Opeation | HashMap, LinkedHashMap, IdentityHashMap, WeakHashMap, EnumMap and ConcurrentHashMap | TreeMap, ConcurrentSkipListMap (since some java version its backed by binary tree earlier it was List) |
-| ----     | ----                                                                                | ----                                                                                                   |
+| Opeation | HashMap, LinkedHashMap, IdentityHashMap, WeakHashMap, EnumMap and ConcurrentHashMap (Hash based) | TreeMap, ConcurrentSkipListMap (some java version its backed by binary tree earlier it was List) |
+| ----     | ----                                                                                             | ----                                                                                             |
 | put                  | O(1) | O(log(n)) |
 | get 	               | O(1) | O(log(n)) |
 | remove               | O(1) | O(log(n)) |
@@ -125,8 +125,8 @@ Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
 
 ### Set
 
-| Opeation | HashSet, LinkedHashSet, and EnumSet uses internal HashMap | TreeSet (uses internal TreeMap) |
-| ----     | ----                                                      | ----                            |
+| Opeation | HashSet, LinkedHashSet, and EnumSet uses internal HashMap (Hash based) | TreeSet (uses internal TreeMap) |
+| ----     | ----                                                                   | ----                            |
 add               | O(1) | O(log(n)) |
 remove            | O(1) | O(log(n)) |
 contains / search | O(1) | O(log(n)) |
