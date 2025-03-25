@@ -102,54 +102,31 @@ Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
 
 ## Java Collection Time complexity
 
-### ArrayList
-```
-add()                 - O(1), O(n) worst-case scenario, new array and copy all elements.
-add(index, element)   - O(n)
-get()                 - O(1)
-remove()              - O(n) Iterate and remove.
-indexOf()             - O(n) // find
-contains()            - O(n) uses indexOf() // find, search
-```
+### List
 
-### LinkedList
-```
-add()                 - O(1)
-add(index, element)   - O(n)
-get()                 - O(n)
-remove(element)       - O(n)
-remove(index)         - O(n)
-contains()            - O(n) // Search
-```
+| Opeation                             | ArrayList                                                        | LinkedList  |
+| ----                                 | ----                                                             | ----        |
+| add(element)                         | O(1), O(n) worst-case scenario, new array and copy all elements. | O(1) always |
+| add(index, element)                  | O(n)                                                             | O(n)        |   
+| get(index)                           | O(1)                                                             | O(n)        |
+| remove(element)                      | O(n) Iterate and remove.                                         | O(n)        |
+| remove(index)                        | O(n) remaining elements other elements must be shifted           | O(n)        |
+| indexOf(element) / find / search     | O(n)                                                             | O(n)        |
+| contains(element) / uses indexOf()   | O(n)                                                             | O(n)        |
 
-### HashMap, LinkedHashMap, IdentityHashMap, WeakHashMap, EnumMap and ConcurrentHashMap.
-```
-put             - O(1)
-get 	        - O(1)
-remove	        - O(1)
-containsKey     - O(1) // Search
-```
+### Map
 
-### TreeMap and ConcurrentSkipListMap 
-since some java version its backed by binary tree earlier it was List
-```
-put             - O(log(n))
-get             - O(log(n))
-remove          - O(log(n))
-containsKey     - O(log(n)) // Search
-```
+| Opeation | HashMap, LinkedHashMap, IdentityHashMap, WeakHashMap, EnumMap and ConcurrentHashMap | TreeMap, ConcurrentSkipListMap (since some java version its backed by binary tree earlier it was List) |
+| ----     | ----                                                                                | ----                                                                                                   |
+| put                  | O(1) | O(log(n)) |
+| get 	               | O(1) | O(log(n)) |
+| remove	           | O(1) | O(log(n)) |
+| containsKey / Search | O(1) | O(log(n)) |  
 
-### HashSet, LinkedHashSet, and EnumSet uses internal HashMap
-```
-add             - O(1)
-remove          - O(1)
-contains        - O(1) // Search
-```
+### Set
 
-### TreeSet uses internal TreeMap
-```
-add             - O(log(n))
-remove          - O(log(n))
-contains        - O(log(n)) // Search
-
-```
+| Opeation | HashSet, LinkedHashSet, and EnumSet uses internal HashMap | TreeSet (uses internal TreeMap) |
+| ----     | ----                                                      | ----                            |
+add               | O(1) | O(log(n)) |
+remove            | O(1) | O(log(n)) |
+contains / search | O(1) | O(log(n)) |
