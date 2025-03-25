@@ -120,7 +120,7 @@ Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
 | ----     | ----                                                                                | ----                                                                                                   |
 | put                  | O(1) | O(log(n)) |
 | get 	               | O(1) | O(log(n)) |
-| remove	           | O(1) | O(log(n)) |
+| remove               | O(1) | O(log(n)) |
 | containsKey / Search | O(1) | O(log(n)) |  
 
 ### Set
