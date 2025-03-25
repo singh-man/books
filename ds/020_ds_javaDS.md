@@ -25,23 +25,17 @@ Java Process Memory (Java process consuming memory in OS)
 ## Java Collection hierarchy
 
 ```java
-Iterable    
+Iterator <I>
+    ListIterator <I>
+
+Iterable <I> -> getIterator()
     Collection <I> -> add(x), addAll(x), contains(x), containsAll(x), remove(x), clear(), isEmpty(), size()
-        Set <I> -> add(x), contains(x), remove(x), size(), clear(), isEmpty()
-            SortedSet <I> -> uses natural order or external Comparator
-                NavigableSet <I> navigation methods available
-                    TreeSet -> Tree ds (sorted) so no hashcode/equals; Comparable/Comparator instead
-                    ConcurrentSkipListSet
-            HashSet -> backed by HashMap
-                LinkedHashSet -> Ordered
-            EnumSet
-            CopyOnWriteArraySet
         List<I> -> add(i, x), get(ith)
             ArrayList -> Singly Linked List/Dyanmic Array
-            CopyOnWriteArrayList -> get an immutable snapshot of the data in the list at the time iterator() was called. remove() not supported
             Vector
                 Stack
             LinkedList -> DoublyLinkedList
+            CopyOnWriteArrayList -> get an immutable snapshot of the data in the list at the time iterator() was called. remove() not supported
         Queue <I> -> add(x)/offer(x), remove()/poll(), element()/peek()
             Deque <I> Double Ended Queue insert and remove elements from both ends of the queue
                 ArrayDeque
@@ -59,6 +53,15 @@ Iterable
                     LinkedTransferQueue
                 PriorityBlockingQueue
             ConcurrentLinkedQueue -> based on CAS hence non blocking
+        Set <I> -> add(x), contains(x), remove(x), size(), clear(), isEmpty()
+            HashSet -> backed by HashMap
+                LinkedHashSet -> Ordered
+            SortedSet <I> -> uses natural order or external Comparator
+                NavigableSet <I> navigation methods available
+                    TreeSet -> Tree ds (sorted) so no hashcode/equals; Comparable/Comparator instead
+                    ConcurrentSkipListSet
+            EnumSet
+            CopyOnWriteArraySet
 
     Deque = Double Ended Queue -> use this instead of Stack
     LinkedList -> Deque implementation
@@ -96,41 +99,6 @@ Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
 | Linked             | LinkedList | PriorityQueue | TreeSet       | TreeMap       |
 | Indexed with links |            |               | LinkedHashSet | LinkedHashMap |
 | Bit string         |            |               | EnumSet       | EnumMap       |
-
-```java
-Iterator <I>
-    ListIterator <I>
-```
-
-```
-             +----------->Collection <I> <----+^-----------------------+
-             |                                |                        |
-             |                                |                        |
-             |                                |                        |
-             |                                |                        |
-             +                                +                        +
-    +-->Set <I> <------+                +-->List <I> <---------+     +--Queue <I> <-+
-    |        ^         |                |         ^            |     |              |
-    |        |         |                |         |            |     |              |
-    |        |    SortedSet <I>         |         |            |     |              |
-    |        |            ^             |         |            |     |              |
-    |        |            |             |         |            |     |              |
-    |        |            |             |         |            |     |              |
-HashSet LinkedHashSet    TreeSet      ArrayList   Vector    LinkedList    PriorityQueue
-
-
-
-   +---> Map <I>  <-----------+^-----+
-   |                          |      |
-   |         ^                |      |
-   |         |                |      +
-   |         |                |    SortedMap <I>
-   |         |                |          ^
-   |         |                |          |
-   |         |                |          |
-   |         |                |          |
-HahsTable    LinkedHashMap    HashMap    TreeMap
-```
 
 ## Java Collection Time complexity
 
