@@ -70,7 +70,7 @@ Iterable <I> -> getIterator()
     PriorityQueue -> based on priority heap
 
 Map <I> -> put(k,v), remove(k), contains(k), V get(k), clear(), size()
-    HashTable -> sunchronized, no null key, 
+    HashTable -> synchronized, no null key, 
         Properties
     HashMap -> not synchronized, one null key
         LinkedHashMap
