@@ -45,6 +45,7 @@ Iterable <I> -> getIterator()
                 ConcurrentLinkedDeque
             PriorityQueue
             BlockingQueue <I>
+                ArrayBlockingQueue
                 LinkedBlockingQueue -> used for producer/consumer model
                 BlockingDeque <I>
                     LinkedBlockingDeque
