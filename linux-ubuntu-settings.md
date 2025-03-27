@@ -114,7 +114,7 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_example -F /dev/null"
 ```
 
 
-### VirutualBox
+### VirtualBox
 - Use bridge adapter so that VM get its own dedicated ip address for easier ssh from anywhere in local network
 - give half of CPU and ample RAM
 - guest additions installation works from inside the ubuntu apt install
