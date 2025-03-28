@@ -14,31 +14,7 @@ sudo apt install nala
 ```
 Now **apt** anywhere can be replaced with **nala**
 
-### WSL (only) 
-#### change the mount from /mnt/c/ to /c
-
-> This step is mandatory if using WSL to execute docker commands installed on windows otherwise skip to next section.
-
-In a WSL terminal
-```sh
-sudo nano /etc/wsl.conf
-
-# Now make it look like this and save the file when you're done:
-[automount]
-root = /
-options = "metadata"
-```
-We need to set root = / because this will make your drives mounted at /c or /e instead of /mnt/c or /mnt/e.
-
-The options = "metadata" line is not necessary but it will fix folder and file permissions on WSL mounts so everything isn’t 777 all the time within the WSL mounts. I highly recommend you do this!
-
-Once you make those changes, sign out and sign back in to Windows to ensure the changes take effect. Win + L isn’t enough. You’ll need to do a full blown sign out / sign in.
-
-**If you get an error the next time you start your WSL terminal don’t freak out.**
-
-It’s a bug with 18.03 and you can easily fix it. Hit CTRL + Shift + ECS to open the task manager, goto the “Services” tab, find the “LxssManager” service and restart it.
-
-**WSL2 not connecting to internet in win version 2004 or in genearl**
+### WSL2 not connecting to internet in win version 2004 or in genearl
 
 Follow the steps https://github.com/microsoft/WSL/issues/5256#issuecomment-666545999
 
