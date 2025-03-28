@@ -115,7 +115,7 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_example -F /dev/null"
 	- programming env
 	 	- git extensions
 		- maxima, wxmaxima
-		- nodejs -> check Coci.nvim page, how to install.
+		- nodejs -> check Coc.nvim page, how to install.
 		- MemoryAnalyzer
 		- VisualVM
 	- blender
@@ -172,5 +172,3 @@ In short open git-bash and run ```winget install --id=gokcehan.lf -e```
 then open git-bash and run
 
 ```winpty lf```
-
-
