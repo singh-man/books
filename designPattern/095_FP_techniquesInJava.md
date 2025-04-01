@@ -16,7 +16,7 @@ java example : `Optional<U> map(Function<? super T, ? extends U> mapper)`
 
 > Note: Its like a monad but with a twist ??
 > 
-> Monad return type is another Monad; but user must provided that monad as return type, whereas in Functor return value of applied function is wrpped by Functor in anohter Functor.
+> Monad return type is another Monad; but user must provided that monad as return type, whereas in Functor return value of applied function is wrapped by Functor in anohter Functor.
 
 **Why Functor can't be chained: - Supose a user choose to return a function after applying an opertion on a value which means functor will double wrap the return function into another Functor which Monads avoid.**
 
