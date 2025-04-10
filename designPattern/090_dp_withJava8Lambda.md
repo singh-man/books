@@ -44,7 +44,7 @@ OOPS is data centric with behaviour treated as secondary while in FP; functions 
 
 ### When to Use Which?
 
-> **OO** focuses on data, it makes a great candidate for data modeling. 
+> **OO** focuses on data, it makes a great candidate for data modeling. Remember Circle/Ellipse issue might come.
 
 > **Functional programming** focuses on operations, it should be used for processing data.
 
