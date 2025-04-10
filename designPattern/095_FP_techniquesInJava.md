@@ -75,6 +75,8 @@ public class Maybe<T> implements Monad<T> {
 
 Currying is a functional programming technique where a function that takes multiple arguments is transformed into a sequence of functions, each taking a single argument.
 
+> Abstract Factory is currying
+
 ```java
 @Test
 public void currying() {
