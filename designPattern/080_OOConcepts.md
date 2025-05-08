@@ -1,6 +1,13 @@
 OO Concepts
 ===========
 
+### If-Else style
+
+- novice developer: uses if-else may be switch
+- avg developer: overloading
+- good developer: overriding (running short of english text words)
+- god developer: delegates logic to data-structure or functional paradigm
+
 ### DIvsIOC
 
 ### OO Defination
