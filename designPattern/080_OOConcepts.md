@@ -5,7 +5,7 @@ OO Concepts
 
 - novice developer: uses if-else may be switch
 - avg developer: overloading
-- good developer: overriding (running short of english text words)
+- good developer: overriding (running short of english text words) (overriding changes the behavior in a way that is not compatible with the base class's behavior, it violates LSP).
 - god developer: delegates logic to data-structure or functional paradigm
 
 ### DIvsIOC
