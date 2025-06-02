@@ -62,10 +62,11 @@ The Sun JRE does treat SoftReferences differently from WeakReferences. *We attem
 1. Data hiding can practically be termed as implementation hiding
 1. Getters (queires) -> preferably returns some value but are definitely indempotent, setters (commands) -> preferably returns void
 2. Interfaces are not designed they are discovered as the system grows Start with specific behaviour and then discover abstractions as commonality emerges
-2. Rule of 3 -> unless there are 3 examples of code that looks similar avaoid abstraction
+2. Rule of 3 -> unless there are 3 examples of code that looks similar avoid abstraction
 2. Liskov substitution
     1. append only
-    1. keep the system correct (dont go out of the boundries of the system)
+    2. If S is a subtype of T, then objects of type T in a program may be replaced with objects of type S without altering any of the desirable properties of that program.
+    1. keep the system correct (don't go out of the boundries of the system)
     1. Probable reason of violoation
         1. NotSupportedException indicates the violation of liskov substitution
         1. Extracted interfaces/abstraction (after coding)
