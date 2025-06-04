@@ -5,7 +5,7 @@ OO Concepts
 
 - novice developer: uses if-else may be switch
 - avg developer: overloading
-- good developer: overriding (running short of english text words) (overriding changes the behavior in a way that is not compatible with the base class's behavior, it violates LSP). [More](#strangler-pattern)
+- good developer: overriding (running short of english text words) (overriding changes the behavior in a way that is not compatible with the base class's behavior, it violates LSP). [More](#oops-critics)
 - god developer: delegates logic to data-structure or functional paradigm
 
 ### DIvsIOC
@@ -22,14 +22,22 @@ Concept of encapsulating or wrapping up the member variables (data) and the meth
 
 Encapsulation is literally a way to design so that object will never go into invalid state or at least make it to fail fast
 
-#### Inheritance
+#### Inheritance (Is-A)
 Establishes a hierarchical relationship between two classes. Inherited dependency (but can exist independently)
 
-#### Composition
+#### Composition (Has-A)
 strong dependency (can not exist independently) delegate can come here (hardcoded in constructor via new opertor)
 
-#### Aggregation
+#### Aggregation (Uses-A)
 loose dependency (can exist independently) (data and its behaviour should follow this) delegates can come here
+
+> Aggregation over > Composition over > Inheritance
+>> Goalng has no inheritance of data it uses composition to enhance data.
+>>> Avoid coupling Data and behaviour [Tell Don't Ask](https://martinfowler.com/bliki/TellDontAsk.html)
+>>> Circle-ellipse or PersonWalk-PrisonWalk like problem can be avoided by not using inheritance.
+
+#### Association
+Objects knows eachother
 
 #### Polymorphism
 Capability of an object to be represented in different forms.
@@ -58,7 +66,7 @@ The Sun JRE does treat SoftReferences differently from WeakReferences. *We attem
 - import x.y.z.* on this package classes are imported not sub-packages
 - Stack memory is a sort of memory allocation that the OS continuously manages and uses to store local variables in a LIFO order. On the other hand, heap memory is a type of dynamic memory allocation used for storing objects and data structures that require a longer lifespan than stack memory.
 
-#### Strangler pattern
+#### OOPS Critics
 1. Data hiding can practically be termed as implementation hiding
 1. Getters (queires) -> preferably returns some value but are definitely indempotent, setters (commands) -> preferably returns void
 2. Interfaces are not designed they are discovered as the system grows Start with specific behaviour and then discover abstractions as commonality emerges
@@ -73,6 +81,7 @@ The Sun JRE does treat SoftReferences differently from WeakReferences. *We attem
         1. downcast
         1. Often violated when an attempt to remove feature
 1. Reused abstraction principle compliance indicates liskov substitution principle compliance
+2. Circle-Ellipse problem breaks liskov substition
 
 Letting the client define the interface is much better than the vice versa Clients define the interfaces (because they consume it) and interface decision must be what the clients consume
 
@@ -130,3 +139,5 @@ actual call flow happens: duke proxy -> audienceAdvisor -> target
 But with @~AspectJ annotations, we can revisit our Audience class and turn it into an aspect without the need for any additional classes or bean declarations. 
 
 No need of writing an advice Concern can be declared as an Aspect and Pointcut can be declared on its method hence - *@Aspect and @pointcut annotation eliminates writing a new Advice* java class and declaring pointcuts and advisor in xml configuration
+
+#### Strangler pattern
