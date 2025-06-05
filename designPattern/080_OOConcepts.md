@@ -5,10 +5,8 @@ OO Concepts
 
 - novice developer: uses if-else may be switch
 - avg developer: overloading
-- good developer: overriding (running short of english text words) (overriding changes the behavior in a way that is not compatible with the base class's behavior, it violates LSP). [More](#oops-critics)
+- good developer: overriding (running short of english text words) (overriding changes the behavior in a way that is not compatible with the base class's behavior, it violates LSP). [More](#s-o-l-i-d)
 - god developer: delegates logic to data-structure or functional paradigm
-
-### DIvsIOC
 
 ### OO Defination
 
@@ -18,7 +16,7 @@ Concept of hiding the details of implementation and exposing only the necessary 
 #### Encapsulation
 Concept of encapsulating or wrapping up the member variables (data) and the methods (behavior) of an object into a single unit, such as a class.
 
-(funny term) takes the part that vary and encapsulate it so that it will not effect the other things. Here's another way to think about this principle: take the parts that vary and encapsulate them, so that later you can alter or extend the parts what vary without affecting those that don't and then remember to program to an interfaces (provide a constructor or setter/getter injection to provide the concrete object).
+**(funny term)** takes the part that vary and encapsulate it so that it will not effect the other things. Here's another way to think about this principle: take the parts that vary and encapsulate them, so that later you can alter or extend the parts what vary without affecting those that don't and then remember to program to an interfaces (provide a constructor or setter/getter injection to provide the concrete object).
 
 Encapsulation is literally a way to design so that object will never go into invalid state or at least make it to fail fast
 
@@ -32,8 +30,8 @@ strong dependency (can not exist independently) delegate can come here (hardcode
 loose dependency (can exist independently) (data and its behaviour should follow this) delegates can come here
 
 > Aggregation over > Composition over > Inheritance
->> Goalng has no inheritance of data it uses composition to enhance data.
->>> Avoid coupling Data and behaviour [Tell Don't Ask](https://martinfowler.com/bliki/TellDontAsk.html)
+>> Goalng has no inheritance of data it uses composition to enhance data, use that technique.
+>>> Avoid coupling Data and behaviour [Tell Don't Ask](https://martinfowler.com/bliki/TellDontAsk.html). Also it alligns better to functional paradigm.
 >>> Circle-ellipse or PersonWalk-PrisonWalk like problem can be avoided by not using inheritance.
 
 #### Association
@@ -42,6 +40,28 @@ Objects knows eachother
 #### Polymorphism
 Capability of an object to be represented in different forms.
 
+#### Misc:
+- Class -> is a blueprint/template, has members like:
+    - Field -> (generally known as variables); holds the **state** of the program. **Invalid State** root cause of most of the bugs.
+    - Methods -> operate on field(s) (state)
+    - Object -> also called instance; runtime instance of class in memory
+- Interface -> Defines the behaviour of system
+    - Interfaces are not designed they are discovered as the system grows Start with specific behaviour and then discover abstractions as commonality emerges
+    - **Rule of 3 -> unless there are 3 examples of code that looks similar avoid abstraction**
+    - Letting the **client define the interface** is much better than the vice versa Clients define the interfaces (because they consume it) and interface decision must be what the clients consume
+    - **Role interfaces (with one member)**: is better in handling liskov substituion
+- **Objects** are data with behavoiur 
+- **Functions** are pure behaviour
+- **Closures** are behaviours with data
+- Refrence -> a variable that points to an object
+    - Instance variables causes threading issues and needs **sync** or **locks**, local variables, referring to some objects; if within the **thread stack** are **thread safe**
+- Memory
+    - Heap: -> **Not Thread safe** :: all objects irr-respective of local or instance even primitive types at instance level. Heap memory is a type of dynamic memory allocation used for storing objects and data structures that require a longer lifespan than stack memory. 
+    - Thread Stack: -> **Thread Safe** (if within the method scope) :: Stack memory is a sort of memory allocation that the OS continuously manages and uses to store local variables in a LIFO order. All local variables (not the objects its referring to)  
+- import x.y.z.* on this package classes are imported not sub-packages
+- Data hiding can practically be termed as implementation hiding
+- Getters (queires) -> preferably returns some value but are definitely indempotent, setters (commands) -> preferably returns void
+  
 ### Reference type:-
 
 #### Soft reference
@@ -57,21 +77,8 @@ An object is phantomly referenced after it has been finalized, but before its al
 A circular reference is a series of references where the last object references the first, resulting in a closed loop.
 The Sun JRE does treat SoftReferences differently from WeakReferences. *We attempt to hold on to object referenced by a SoftReference if there isn't pressure on the available memory. One detail: the policy for the "-client" and "-server" JRE's are different: the -client JRE tries to keep your footprint small by preferring to clear SoftReferences rather than expand the heap, whereas the -server JRE tries to keep your performance high by preferring to expand the heap (if possible) rather than clear SoftReferences. One size does not fit all.*
 
-#### Misc:
-- Class -> is a blueprint/template, has members like:
-    - Field -> (generally known as variables); holds the state of the program
-    - methods -> operate on field(s) (state)
-    - Object -> also called instance; runtime instance of class in memory
-- Refrence -> a variable that points to an object
-- import x.y.z.* on this package classes are imported not sub-packages
-- Stack memory is a sort of memory allocation that the OS continuously manages and uses to store local variables in a LIFO order. On the other hand, heap memory is a type of dynamic memory allocation used for storing objects and data structures that require a longer lifespan than stack memory.
-
-#### OOPS Critics
-1. Data hiding can practically be termed as implementation hiding
-1. Getters (queires) -> preferably returns some value but are definitely indempotent, setters (commands) -> preferably returns void
-2. Interfaces are not designed they are discovered as the system grows Start with specific behaviour and then discover abstractions as commonality emerges
-2. Rule of 3 -> unless there are 3 examples of code that looks similar avoid abstraction
-2. Liskov substitution (applies to classes not interface)
+#### S O [L] I D
+1. Liskov substitution (applies to classes not interface)
     1. append only
     2. If S is a subtype of T, then objects of type T in a program may be replaced with objects of type S without altering any of the desirable properties of that program.
     1. keep the system correct (don't go out of the boundries of the system)
@@ -80,23 +87,15 @@ The Sun JRE does treat SoftReferences differently from WeakReferences. *We attem
         1. Extracted interfaces/abstraction (after coding)
         1. downcast
         1. Often violated when an attempt to remove feature
+        2. hashcode/equals overriden in sub-class
 1. Reused abstraction principle compliance indicates liskov substitution principle compliance
 2. Circle-Ellipse problem breaks liskov substition
-
-Letting the client define the interface is much better than the vice versa Clients define the interfaces (because they consume it) and interface decision must be what the clients consume
-
-Role interfaces (with one member) is better in handling liskov substituion
-
-Objects are data with behavoiur
-
-Functions are pure behaviour
-
-closures are behaviours with data
 
 ### DI principle
 1. High-level modules should not depend on low-level modules. Both should depend on abstractions.
 1. Abstractions should not depend on details. Details should depend on abstractions.
 
+### Others
 Decorator patter is well suiter for Quieris(getters) better than composition (can be used for caching after save) Decorator is like russian doll
 change composition to aggregation design will become DI inheritance - is-a composition - has-a aggregation - uses-a The difference between HAS-A and USES-A is with regard to ownership. With the HAS-A relationship though your class is responsible for the lifetime of the object it contains, so if your class has a pointer to the object it is responsible for deleting the pointer. USES-A may use shared_ptr to the object. -—
 
@@ -140,4 +139,12 @@ But with @~AspectJ annotations, we can revisit our Audience class and turn it in
 
 No need of writing an advice Concern can be declared as an Aspect and Pointcut can be declared on its method hence - *@Aspect and @pointcut annotation eliminates writing a new Advice* java class and declaring pointcuts and advisor in xml configuration
 
+### IOC vs DI
+- **Inversion of Control (IoC)** where the control of object creation and dependency management is transferred to an external framework or container, 
+- **Dependency Injection (DI)** is a specific implementation of IoC where dependencies are provided externally to a class. DI is a way to achieve IoC, making it a more general concept than DI
+
 #### Strangler pattern
+Software design pattern used to incrementally modernize a system, especially monolithic applications, by replacing parts with new services. It involves introducing a proxy layer (facade) that initially routes requests to the legacy system while new functionalities are added in parallel. As new services become operational, the proxy gradually redirects traffic to them, eventually phasing out the legacy system
+
+#### Circuit Breaker Pattern
+software design pattern that enhances system resilience and fault tolerance, especially in distributed systems. It works by monitoring a service or API and, when a certain failure threshold is reached, "tripping" the circuit, which temporarily prevents further calls to that service, allowing it time to recover. This prevents cascading failures and ensures the overall system remains stable
