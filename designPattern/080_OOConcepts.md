@@ -22,6 +22,15 @@ Encapsulation is literally a way to design so that object will never go into inv
 
 #### Inheritance (Is-A)
 Establishes a hierarchical relationship between two classes. Inherited dependency (but can exist independently)
+- BAD BAD!!
+    - **extends** avoid using it, unless mandated by some framework. Use **composition** or **mixin**.
+    - Makes hierarchial chain tightly coupled
+    - A inherits from B" means both "A contains all data B contains" and "A can do everything B can do. **This is a violation of the Single Responsibility Principle right in the language**
+    - Inheriting from an interface/abstract class **(without data)** is one thing; inheriting from a fully functional class is bizarre.
+    - Small changes can impact a large amount of code through the inheritance tree.
+    - inheritance is "better" (read: needs less code) for components of a program that never or rarely changes. BUT inheritance leads to hard to refactor and more rigid code. Once you change the behavior of a base class you have to make sure it won't break anything in one of it's subclass
+    - Composition leads to more code, but it's much more flexible. Every object handles only it's own data so it's much easier to change something without breaking any other part of the code. It's also much easier to read and understand the code because it's always linear.
+    - Fragile Ibheritance: changes made to a base class (superclass) can unintentionally break the functionality of its derived classes (subclasses), even if the changes appear safe on their own. e.g. B extends A, if a value is changed in A will B remain safe or complete B's call hierarchy will be impacted.
 
 #### Composition (Has-A)
 strong dependency (can not exist independently) delegate can come here (hardcoded in constructor via new opertor)
@@ -29,8 +38,8 @@ strong dependency (can not exist independently) delegate can come here (hardcode
 #### Aggregation (Uses-A)
 loose dependency (can exist independently) (data and its behaviour should follow this) delegates can come here
 
-> Aggregation over > Composition over > Inheritance
->> Goalng has no inheritance of data it uses composition to enhance data, use that technique.
+> Aggregation over (loose coupling) > Composition over (strong coupled) > Inheritance (tightly coupled)
+>> Goalng has no inheritance of data it uses **composition** to enhance data, use that technique.
 >>> Avoid coupling Data and behaviour [Tell Don't Ask](https://martinfowler.com/bliki/TellDontAsk.html). Also it alligns better to functional paradigm.
 >>> Circle-ellipse or PersonWalk-PrisonWalk like problem can be avoided by not using inheritance.
 
@@ -49,7 +58,7 @@ Capability of an object to be represented in different forms.
     - Interfaces are not designed they are discovered as the system grows Start with specific behaviour and then discover abstractions as commonality emerges
     - **Rule of 3 -> unless there are 3 examples of code that looks similar avoid abstraction**
     - Letting the **client define the interface** is much better than the vice versa Clients define the interfaces (because they consume it) and interface decision must be what the clients consume
-    - **Role interfaces (with one member)**: is better in handling liskov substituion
+    - **Role interfaces (with one member)**: is better in handling **liskov substituion** also fits the functional paradigm.
 - **Objects** are data with behavoiur 
 - **Functions** are pure behaviour
 - **Closures** are behaviours with data
@@ -62,7 +71,7 @@ Capability of an object to be represented in different forms.
 - Data hiding can practically be termed as implementation hiding
 - Getters (queires) -> preferably returns some value but are definitely indempotent, setters (commands) -> preferably returns void
   
-### Reference type:-
+### Reference type
 
 #### Soft reference
 A soft reference is one of the strengths or levels of 'non strong' reference defined in the Java programming language, the others being weak and phantom.The garbage collector will always collect weakly referenced objects, but will only collect softly referenced objects when its algorithms decide that memory is low enough to warrant it. Soft and weak references provide two quasi-priorities for non-strongly referenced objects. Soft references may be used, for example, when writing a cache: weakly referenced objects may disappear too quickly to make the cache useful.
@@ -89,7 +98,7 @@ The Sun JRE does treat SoftReferences differently from WeakReferences. *We attem
         1. Often violated when an attempt to remove feature
         2. hashcode/equals overriden in sub-class
 1. Reused abstraction principle compliance indicates liskov substitution principle compliance
-2. Circle-Ellipse problem breaks liskov substition
+2. Circle-Ellipse or PersonWalk-PrisonWalk problem breaks liskov substition.
 
 ### DI principle
 1. High-level modules should not depend on low-level modules. Both should depend on abstractions.
