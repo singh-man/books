@@ -15,7 +15,7 @@
 |Builder|||Curries |
 |Structural DESIGN Pattern||||
 |Adapter|||A lambda that calls a function with a different signature on some other object. (Assuming the adapter interface has one public function.) |
-|Decorator|x|Functions composition|A lambda that calls another lambda with the same signature but changes the arguments on the way in, or the result on the way out, or performs some extra action. (Assuming the decorated object has one public function.)|
+|Decorator|x|Functions composition / Consumer Composition|A lambda that calls another lambda with the same signature but changes the arguments on the way in, or the result on the way out, or performs some extra action. (Assuming the decorated object has one public function.) / Consumer: Im Pure Function|
 |Proxy|x|Functions||
 |Flyweight|x|||
 |Behavioral DESIGN Pattern||||
