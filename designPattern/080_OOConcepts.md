@@ -20,7 +20,7 @@ Concept of encapsulating or wrapping up the member variables (data) and the meth
 
 Encapsulation is literally a way to design so that object will never go into **invalid state** or at least make it to **fail fast**
 
-#### Inheritance (Is-A)
+#### Inheritance (Is-A) - [Type Of]
 Establishes a hierarchical relationship between two classes. Inherited dependency (but can exist independently)
 - BAD BAD!!
     - **extends** avoid using it, unless mandated by some framework. Use **composition** or **mixin**.
@@ -32,11 +32,11 @@ Establishes a hierarchical relationship between two classes. Inherited dependenc
     - Composition leads to more code, but it's much more flexible. Every object handles only it's own data so it's much easier to change something without breaking any other part of the code. It's also much easier to read and understand the code because it's always linear.
     - Fragile Ibheritance: changes made to a base class (superclass) can unintentionally break the functionality of its derived classes (subclasses), even if the changes appear safe on their own. e.g. B extends A, if a value is changed in A will B remain safe or complete B's call hierarchy will be impacted.
 
-#### Composition (Has-A)
-strong dependency (can not exist independently) delegate can come here (hardcoded in constructor via new opertor)
+#### Composition (Has-A) [Owns A]
+Strong dependency (can not exist independently) delegate can come here (**hardcoded in constructor via new opertor**). Class is responsible for the lifetime of the object it contains.
 
-#### Aggregation (Uses-A)
-loose dependency (can exist independently) (data and its behaviour should follow this) delegates can come here
+#### Aggregation (Uses-A) [Uses A]
+Loose dependency (can exist independently) (data and its behaviour should follow this) delegates can come here. **dependency provided**. Class is not responsible for the lifetime of the object it contains.
 
 > Aggregation over (loose coupling) > Composition over (strong coupled) > Inheritance (tightly coupled)
 >> Goalng has no inheritance of data it uses **composition** to enhance data, use that technique.
@@ -48,6 +48,11 @@ Objects knows eachother
 
 #### Polymorphism
 Capability of an object to be represented in different forms.
+- Polymorphism hard to test in real time systems
+    - Performance Overhead
+    - Non-Deterministic Behavior (Liskov Substitution)
+    - Difficult to Debug
+    - Memory Management Challenges
 
 #### Misc:
 - Class -> is a blueprint/template, has members like:
@@ -105,8 +110,7 @@ The Sun JRE does treat SoftReferences differently from WeakReferences. *We attem
 1. Abstractions should not depend on details. Details should depend on abstractions.
 
 ### Others
-Decorator patter is well suiter for Quieris(getters) better than composition (can be used for caching after save) Decorator is like russian doll
-change composition to aggregation design will become DI inheritance - is-a composition - has-a aggregation - uses-a The difference between HAS-A and USES-A is with regard to ownership. With the HAS-A relationship though your class is responsible for the lifetime of the object it contains, so if your class has a pointer to the object it is responsible for deleting the pointer. USES-A may use shared_ptr to the object. -—
+Decorator patter is well suiter for Quieris(getters) better than composition (can be used for caching after save) Decorator is like russian doll.
 
 ### Predicate Programming
 Predicate (mathematical logic) / computing too :
@@ -116,15 +120,15 @@ predicate is a statement that may be true or false depending on the values of it
 ## AOP
 job of an aspect is called advice. Advice defines both the what and the when of an aspect. In addition to describing the job that an aspect will perform, advice addresses the question of when to perform the job. Should it be applied before a method is invoked? After the method is invoked? Both before and after method invocation? Or should it only be applied if a method throws an exception?
 
-application may have thousands of opportunities for advice to be applied. These opportunities are known as joinpoints. A joinpoint is a point in the execution of the application where an aspect can be plugged in.
+Application may have thousands of opportunities for advice to be applied. These opportunities are known as joinpoints. A joinpoint is a point in the execution of the application where an aspect can be plugged in.
 
 If advice defines the what and when of aspects then pointcuts define the where. A pointcut definition matches one or more joinpoints at which advice should be woven. an aspect doesn’t necessarily advise all joinpoints in an application.pointcuts using explicit class and method names or through regular expressions that define matching class and method name patterns
 
 An aspect(the advisor we create in spring which combines advice and pointcust is aspect) is the merger of advice and pointcuts.
 
-interceptor is an aspect; it consist of advice and pointcut (means an advisor)
+Interceptor is an aspect; it consist of advice and pointcut (means an advisor)
 
-interface Performer 	Class Instrumentalist 	Class Vocal
+Interface Performer 	Class Instrumentalist 	Class Vocal
 
 Audience : take seat, applause etc. is a concern that need to be aspected on Performer interface AudienceAdvice : defines what to do(we inject audience object and triggers the concerns on it) and when to do(Before, after, after throwing, around) implements MethodBeforeAdvice / MethodAfterAdvice / AfterThrowing or MethodInterceptor 1. traditional way
 
