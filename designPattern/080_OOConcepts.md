@@ -172,12 +172,12 @@ But with @~AspectJ annotations, we can revisit our Audience class and turn it in
 
 No need of writing an advice Concern can be declared as an Aspect and Pointcut can be declared on its method hence - *@Aspect and @pointcut annotation eliminates writing a new Advice* java class and declaring pointcuts and advisor in xml configuration
 
-### IOC vs DI
+## IOC vs DI
 - **Inversion of Control (IoC)** where the control of object creation and dependency management is transferred to an external framework or container, 
 - **Dependency Injection (DI)** is a specific implementation of IoC where dependencies are provided externally to a class. DI is a way to achieve IoC, making it a more general concept than DI
 
-#### Strangler pattern
+## Strangler pattern
 Software design pattern used to incrementally modernize a system, especially monolithic applications, by replacing parts with new services. It involves introducing a proxy layer (facade) that initially routes requests to the legacy system while new functionalities are added in parallel. As new services become operational, the proxy gradually redirects traffic to them, eventually phasing out the legacy system
 
-#### Circuit Breaker Pattern
+## Circuit Breaker Pattern
 software design pattern that enhances system resilience and fault tolerance, especially in distributed systems. It works by monitoring a service or API and, when a certain failure threshold is reached, "tripping" the circuit, which temporarily prevents further calls to that service, allowing it time to recover. This prevents cascading failures and ensures the overall system remains stable
