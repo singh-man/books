@@ -105,8 +105,8 @@ Coercion Polymorphism                           > Type Casting              > Wi
 - **Functions** are pure behaviour
 - **Closures** are behaviours with data
 - Refrence -> a variable that points to an object
-    - ```Instance variables:``` causes threading issues and needs **sync** or **locks**, local variables, referring to some objects; if within the **thread stack** are **thread safe**
-    - ```Local variables   :``` Variable itself is thread safe if it doesn't escape the scope of thread stack. Object still exist in the heap. 
+    - ```Instance variables:``` causes threading issues and needs **sync** or **locks**.
+    - ```Local variables   :``` Variable itself is **thread safe** if it doesn't escape the scope of thread stack. Object still exist in the heap. 
 - Memory
     - Heap: -> **Not Thread safe** :: all objects ir-respective of local or instance; even primitive types at instance level. Heap memory is a type of dynamic memory allocation used for storing objects and data structures that require a longer lifespan than stack memory. 
     - Thread Stack: -> **Thread Safe** (if within the method scope) :: Stack memory is a sort of memory allocation that the OS continuously manages and uses to store local variables in a LIFO order. All local variables (not the objects its referring to)  
