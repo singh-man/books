@@ -11,7 +11,7 @@ OO Concepts
 ### OO Defination
 
 #### Abstraction
-Concept of hiding the details of implementation and exposing only the necessary functionalities. The keywords to keep in mind here are: 'Implementation hiding'.
+Concept of hiding the details of implementation and exposing only the necessary functionalities. The keywords to keep in mind here are: **Implementation hiding**.
 > Code duplication is better than bad abstraction.
 
 #### Encapsulation
@@ -75,6 +75,21 @@ Capability of an object to be represented in different forms.
     - Non-Deterministic Behavior (Liskov Substitution)
     - Difficult to Debug
     - Memory Management Challenges
+
+> Java: method **overriding** exist only because of **Inheritance**
+```
+Ad-hoc Polymorphism                             > Operator Overloading      > Without Inheritence
+Ad-hoc Polymorphism                             > Method Overloading        > Without Inheritence
+Ad-hoc Polymorphism                             > Method Overriding         > With Inheritence   -----> Java Uses
+Parametric Polymorphism                         > Generics                  > Without Inheritence
+Subtype Polymorphism or Inclusion Polymorphism  > Polymorphic Assignment    > With Inheritence
+Subtype Polymorphism or Inclusion Polymorphism  > Polymorphic Return Type   > With Inheritence
+Subtype Polymorphism or Inclusion Polymorphism  > Polymorphic Argument Type > With Inheritence
+Coercion Polymorphism                           > Widening                  > With or without Inheritence
+Coercion Polymorphism                           > Auto boxing and unboxing  > Without Inheritence
+Coercion Polymorphism                           > Var args                  > Without Inheritence
+Coercion Polymorphism                           > Type Casting              > Without Inheritence
+```
 
 #### Misc:
 - Class -> is a blueprint/template, has members like:
