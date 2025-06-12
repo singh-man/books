@@ -3,15 +3,16 @@ OO Concepts
 
 ### If-Else style
 
-- novice developer: uses if-else may be switch
-- avg developer: overloading
-- good developer: overriding (running short of english text words) (overriding changes the behavior in a way that is not compatible with the base class's behavior, it violates LSP). [More](#s-o-l-i-d)
-- god developer: delegates logic to data-structure or functional paradigm
+- ```novice developer :``` uses if-else or switch
+- ```avg developer    :``` overloading
+- ```good developer   :``` overriding (running short of english text words) (overriding changes the behavior in a way that is not compatible with the base class's behavior, it violates LSP). [More](#inheritance)
+- ```god developer    :``` delegates logic to data-structure or functional paradigm
 
 ### OO Defination
 
 #### Abstraction
 Concept of hiding the details of implementation and exposing only the necessary functionalities. The keywords to keep in mind here are: 'Implementation hiding'.
+> Code duplication is better than bad abstraction.
 
 #### Encapsulation
 Concept of encapsulating or wrapping up the member variables (data) and the methods (behavior) of an object into a single unit, such as a class.
@@ -20,8 +21,12 @@ Concept of encapsulating or wrapping up the member variables (data) and the meth
 
 Encapsulation is literally a way to design so that object will never go into **invalid state** or at least make it to **fail fast**
 
-#### Inheritance (Is-A) - [Type Of]
+#### Inheritance 
+> (Is-A) - [Type Of]
+
 Establishes a hierarchical relationship between two classes. Inherited dependency (but can exist independently)
+
+> If Multiple inheritance was bad; so is the single inheritance.
 - BAD BAD!!
     - **extends** avoid using it, unless mandated by some framework. Use **composition** or **mixin**.
     - Makes hierarchial chain tightly coupled
@@ -31,11 +36,28 @@ Establishes a hierarchical relationship between two classes. Inherited dependenc
     - inheritance is "better" (read: needs less code) for components of a program that never or rarely changes. BUT inheritance leads to hard to refactor and more rigid code. Once you change the behavior of a base class you have to make sure it won't break anything in one of it's subclass
     - Composition leads to more code, but it's much more flexible. Every object handles only it's own data so it's much easier to change something without breaking any other part of the code. It's also much easier to read and understand the code because it's always linear.
     - Fragile Ibheritance: changes made to a base class (superclass) can unintentionally break the functionality of its derived classes (subclasses), even if the changes appear safe on their own. e.g. B extends A, if a value is changed in A will B remain safe or complete B's call hierarchy will be impacted.
+    - #### S O [L] I D
+    1. Liskov substitution (applies to classes not interface)
+        1. append only
+        2. If S is a subtype of T, then objects of type T in a program may be replaced with objects of type S without altering any of the desirable properties of that program.
+        1. keep the system correct (don't go out of the boundries of the system)
+        1. Probable reason of violoation
+            1. NotSupportedException indicates the violation of liskov substitution
+            1. Extracted interfaces/abstraction (after coding)
+            1. downcast
+            1. Often violated when an attempt to remove feature
+            2. hashcode/equals overriden in sub-class
+    1. Reused abstraction principle compliance indicates liskov substitution principle compliance
+    2. Circle-Ellipse or PersonWalk-PrisonWalk problem breaks liskov substition.
 
-#### Composition (Has-A) [Owns A]
+#### Composition 
+> (Has-A) [Owns A]
+
 Strong dependency (can not exist independently) delegate can come here (**hardcoded in constructor via new opertor**). Class is responsible for the lifetime of the object it contains.
 
-#### Aggregation (Uses-A) [Uses A]
+#### Aggregation 
+> (Uses-A) [Uses A]
+
 Loose dependency (can exist independently) (data and its behaviour should follow this) delegates can come here. **dependency provided**. Class is not responsible for the lifetime of the object it contains.
 
 > Aggregation over (loose coupling) > Composition over (strong coupled) > Inheritance (tightly coupled)
@@ -90,20 +112,6 @@ An object is phantomly referenced after it has been finalized, but before its al
 #### Circular reference:
 A circular reference is a series of references where the last object references the first, resulting in a closed loop.
 The Sun JRE does treat SoftReferences differently from WeakReferences. *We attempt to hold on to object referenced by a SoftReference if there isn't pressure on the available memory. One detail: the policy for the "-client" and "-server" JRE's are different: the -client JRE tries to keep your footprint small by preferring to clear SoftReferences rather than expand the heap, whereas the -server JRE tries to keep your performance high by preferring to expand the heap (if possible) rather than clear SoftReferences. One size does not fit all.*
-
-#### S O [L] I D
-1. Liskov substitution (applies to classes not interface)
-    1. append only
-    2. If S is a subtype of T, then objects of type T in a program may be replaced with objects of type S without altering any of the desirable properties of that program.
-    1. keep the system correct (don't go out of the boundries of the system)
-    1. Probable reason of violoation
-        1. NotSupportedException indicates the violation of liskov substitution
-        1. Extracted interfaces/abstraction (after coding)
-        1. downcast
-        1. Often violated when an attempt to remove feature
-        2. hashcode/equals overriden in sub-class
-1. Reused abstraction principle compliance indicates liskov substitution principle compliance
-2. Circle-Ellipse or PersonWalk-PrisonWalk problem breaks liskov substition.
 
 ### DI principle
 1. High-level modules should not depend on low-level modules. Both should depend on abstractions.
