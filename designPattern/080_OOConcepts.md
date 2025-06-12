@@ -36,7 +36,7 @@ Establishes a hierarchical relationship between two classes. Inherited dependenc
     - inheritance is "better" (read: needs less code) for components of a program that never or rarely changes. BUT inheritance leads to hard to refactor and more rigid code. Once you change the behavior of a base class you have to make sure it won't break anything in one of it's subclass
     - Composition leads to more code, but it's much more flexible. Every object handles only it's own data so it's much easier to change something without breaking any other part of the code. It's also much easier to read and understand the code because it's always linear.
     - Fragile Ibheritance: changes made to a base class (superclass) can unintentionally break the functionality of its derived classes (subclasses), even if the changes appear safe on their own. e.g. B extends A, if a value is changed in A will B remain safe or complete B's call hierarchy will be impacted.
-    - #### S O [L] I D
+    - S-O-[L]-I-D
     1. Liskov substitution (applies to classes not interface)
         1. append only
         2. If S is a subtype of T, then objects of type T in a program may be replaced with objects of type S without altering any of the desirable properties of that program.
@@ -51,16 +51,16 @@ Establishes a hierarchical relationship between two classes. Inherited dependenc
     2. Circle-Ellipse or PersonWalk-PrisonWalk problem breaks liskov substition.
 
 #### Composition 
-> (Has-A) [Owns A]
+> (Has-A) [Class/instance owns the lifecycle of another object]
 
-Strong dependency (can not exist independently) delegate can come here (**hardcoded in constructor via new opertor**). Class is responsible for the lifetime of the object it contains.
+Strong dependency (can not exist independently) delegate can come here (**hardcoded in constructor via new opertor**).
 
 #### Aggregation 
-> (Uses-A) [Uses A]
+> (Uses-A) [Class uses the other object i.e. doesn't control the lifecycle of object]
 
-Loose dependency (can exist independently) (data and its behaviour should follow this) delegates can come here. **dependency provided**. Class is not responsible for the lifetime of the object it contains.
+Loose dependency (can exist independently) (data and its behaviour should follow this) delegates can come here. **dependency provided**.
 
-> Aggregation over (loose coupling) > Composition over (strong coupled) > Inheritance (tightly coupled)
+> Aggregation over (loose coupling) > Composition over (strong coupling) > Inheritance (tightly coupling)
 >> Goalng has no inheritance of data it uses **composition** to enhance data, use that technique.
 >>> Avoid coupling Data and behaviour [Tell Don't Ask](https://martinfowler.com/bliki/TellDontAsk.html). Also it alligns better to functional paradigm.
 >>> Circle-ellipse or PersonWalk-PrisonWalk like problem can be avoided by not using inheritance.
@@ -100,14 +100,14 @@ Coercion Polymorphism                           > Type Casting              > Wi
     - Interfaces are not designed they are discovered as the system grows Start with specific behaviour and then discover abstractions as commonality emerges
     - **Rule of 3 -> unless there are 3 examples of code that looks similar avoid abstraction**
     - Letting the **client define the interface** is much better than the vice versa Clients define the interfaces (because they consume it) and interface decision must be what the clients consume
-    - **Role interfaces (with one member)**: is better in handling **liskov substituion** also fits the functional paradigm.
+    - **Role interfaces (with one member)**: is better in handling **liskov substituion** also fits the **functional** paradigm.
 - **Objects** are data with behavoiur 
 - **Functions** are pure behaviour
 - **Closures** are behaviours with data
 - Refrence -> a variable that points to an object
     - Instance variables causes threading issues and needs **sync** or **locks**, local variables, referring to some objects; if within the **thread stack** are **thread safe**
 - Memory
-    - Heap: -> **Not Thread safe** :: all objects irr-respective of local or instance even primitive types at instance level. Heap memory is a type of dynamic memory allocation used for storing objects and data structures that require a longer lifespan than stack memory. 
+    - Heap: -> **Not Thread safe** :: all objects ir-respective of local or instance; even primitive types at instance level. Heap memory is a type of dynamic memory allocation used for storing objects and data structures that require a longer lifespan than stack memory. 
     - Thread Stack: -> **Thread Safe** (if within the method scope) :: Stack memory is a sort of memory allocation that the OS continuously manages and uses to store local variables in a LIFO order. All local variables (not the objects its referring to)  
 - import x.y.z.* on this package classes are imported not sub-packages
 - Data hiding can practically be termed as implementation hiding
@@ -132,13 +132,10 @@ The Sun JRE does treat SoftReferences differently from WeakReferences. *We attem
 1. High-level modules should not depend on low-level modules. Both should depend on abstractions.
 1. Abstractions should not depend on details. Details should depend on abstractions.
 
-### Others
-Decorator patter is well suiter for Quieris(getters) better than composition (can be used for caching after save) Decorator is like russian doll.
-
 ### Predicate Programming
 Predicate (mathematical logic) / computing too :
 In mathematics, a predicate is commonly understood to be a Boolean-valued function P: X→ {true, false}, called the predicate on X.
-predicate is a statement that may be true or false depending on the values of its variables.
+Predicate is a statement that may be true or false depending on the values of its variables.
 
 ## AOP
 job of an aspect is called advice. Advice defines both the what and the when of an aspect. In addition to describing the job that an aspect will perform, advice addresses the question of when to perform the job. Should it be applied before a method is invoked? After the method is invoked? Both before and after method invocation? Or should it only be applied if a method throws an exception?
