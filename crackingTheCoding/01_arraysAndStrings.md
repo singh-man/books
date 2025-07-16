@@ -319,9 +319,9 @@ Implementing this algorithm is fairly straightforward. We use a hash table to co
 6   /*  Check that no more than one character has an odd count.*/
 7   boolean checkMaxOneOdd(int[] table) {
 8       boolean foundOdd =  false;
-9       for  (int count : table) {
-10          if  (count % 2 == 1)  {
-11              if (foundOdd)  {
+9       for (int count : table) {
+10          if (count % 2 == 1) {
+11              if (foundOdd) {
 12                  return false;
 13              }
 14              foundOdd = true;
@@ -332,11 +332,11 @@ Implementing this algorithm is fairly straightforward. We use a hash table to co
 19  
 20  /* Map  each character to  a number. a -> 0, b -> 1, c -> 2, etc.
 21   * This  is case  insensitive. Non-letter characters map to -1. */
-22  int getCharNumber(Character c)  {
+22  int getCharNumber(Character c) {
 23      int a  = Character.getNumericValue('a');
 24      int z  = Character.getNumericValue('z');
 25      int val =  Character.getNumericValue(c);
-26      if (a <= val  &&   val <= z)  {
+26      if (a <= val  &&  val <= z) {
 27          return val - a;
 28      }
 29      return -1;
@@ -344,8 +344,8 @@ Implementing this algorithm is fairly straightforward. We use a hash table to co
 31  
 32  /*  Count how many  times  each character appears.*/
 33  int[] buildCharFrequencyTable(String phrase)  {
-34      int[] table =  new  int[Character.getNumericValue('z') -
-35                              Character.getNumericValue('a') +  1];
+34      int[] table = new int[Character.getNumericValue('z') -
+35                            Character.getNumericValue('a') +  1];
 36      for (char c : phrase.toCharArray()) {
 37          int x = getCharNumber(c);
 38          if (x != -1) {
@@ -380,7 +380,7 @@ Instead of checking the number of odd counts at the end, we can check as we go a
 13              }
 14          }
 15      }
-16      return countOdd <=  1;
+16      return countOdd <= 1;
 17  }
 ```
 
@@ -483,9 +483,9 @@ Observe that you don't need to check the strings for insertion, removal, and rep
 2       if (first.length() == second.length()) {
 3           return oneEditReplace(first, second);
 4       } else if (first.length() + 1 == second.length()) {
-5           return oneEditinsert(first,  second);
+5           return oneEditInsert(first,  second);
 6       } else if (first.length() - 1 == second.length()) {
-7           return oneEditinsert(second, first);
+7           return oneEditInsert(second, first);
 8       }
 9       return false;
 10  }
@@ -505,7 +505,7 @@ Observe that you don't need to check the strings for insertion, removal, and rep
 24  }
 25  
 26  /* Check if you  can  insert a  character into s1 to make s2.*/
-27  boolean oneEditinsert(String  s1, String s2)   {
+27  boolean oneEditInsert(String  s1, String s2)   {
 28      int index1 = 0;
 29      int index2 = 0;
 30      while  (index2 <  s2.length() && index1 < s1.length()) {
@@ -533,9 +533,9 @@ We might notice that the code for `oneEditReplace` is very similar to that for `
 To do this, observe  that both methods follow similar logic: compare each character and ensure  that the strings are only different by one. The methods  vary in how they handle  that difference. The method oneEditReplace does nothing other than flag the difference, whereas oneEditinsert increments the pointer to the longer string. We can handle both of these in the same method.
 
 ```java
-1   boolean oneEditAway(String first,  String second)   {
+1   boolean oneEditAway(String first, String second) {
 2       /*Length  checks.*/
-3       if (Math.abs(first.length() -  second.length()) >   1)  {
+3       if (Math.abs(first.length() - second.length()) > 1) {
 4           return false;
 5       }
 6       
@@ -604,19 +604,19 @@ We can fix this by using a StringBuilder.
 
 ```java
 1   String compress(String str) {
-2       StringBuilder compressed =  new StringBuilder();
-3       int countConsecutive =  0;
-4       for   (int i = 0; i < str.length(); i++)  {
+2       StringBuilder compressed = new StringBuilder();
+3       int countConsecutive = 0;
+4       for (int i = 0; i < str.length(); i++)  {
 5           countConsecutive++;
 6       
 7           /*If next character is different than current, append this char to result.*/
-8           if (i + 1  >=  str.length() || str.charAt(i) != str.charAt(i + 1))  {
+8           if (i + 1 >= str.length() || str.charAt(i) != str.charAt(i + 1)) {
 9               compressed.append(str.charAt(i));
 10              compressed.append(countConsecutive);
-11              countConsecutive =  0;
+11              countConsecutive = 0;
 12          }
 13      }
-14      return compressed.length() < str.length() ? compressed.toString()  : str;
+14      return compressed.length() < str.length() ? compressed.toString() : str;
 15  }
 ```
 
@@ -630,25 +630,25 @@ Instead, we can check in advance. This will be more optimal in cases where we do
 3       int finallength =  countCompression(str);
 4       if (finallength >=  str.length())  return str;
 5       
-6       StringBuilder compressed =  new StringBuilder(finalLength); // initial capacity
+6       StringBuilder compressed = new StringBuilder(finalLength); // initial capacity
 7       int  countConsecutive =  0;
-8       for  (int i = 0;  i <   str.length(); i++)  {
+8       for  (int i = 0;  i <  str.length(); i++)  {
 9           countConsecutive++;
 10      
 11          /* If next character is different than current, append this char to resu    lt.*/
-12          if (i +  1  >=  str.length() || str.charAt(i) != str.charAt(i + 1))   {
+12          if (i + 1 >= str.length() || str.charAt(i) != str.charAt(i + 1))   {
 13              compressed.append(str.charAt(i));
 14              compressed.append(countConsecutive);
-15              countConsecutive =  0;
+15              countConsecutive = 0;
 16          }
 17      }
 18      return  compressed.toString();
 19  }
 20      
 21  int  countCompression(String str) {
-22      int compressedlength =  0;
-23      int countConsecutive =  0;
-24      for  (int i = 0;  i <   str.length(); i++)  {
+22      int compressedlength = 0;
+23      int countConsecutive = 0;
+24      for  (int i = 0; i < str.length(); i++)  {
 25          countConsecutive++;
 26      
 27          /*If next character is different than current, increase the length.*/
@@ -745,9 +745,9 @@ The code below implements this algorithm. We use two arrays to keep track of all
 3       boolean[]  column  = new  boolean[matrix[0].length];
 4       
 5       // Store  the  row and column  index with value  0
-6       for  (int i =  0; i < matrix.length; i++)   {
-7           for  (int j = 0; j < matrix[0].length; j++) {
-8               if  (matrix[i][j] ==  0)  {
+6       for (int i =  0; i < matrix.length; i++) {
+7           for (int j = 0; j < matrix[0].length; j++) {
+8               if (matrix[i][j] == 0) {
 9                   row[i] = true;
 10                  column[j] = true;
 11              }
@@ -797,7 +797,7 @@ This code is below:
 4       
 5       // Check if first row has a zero
 6       for (int j = 0; j < matrix[0].length; j++) {
-7           if  (matrix[0][j] == 0) {
+7           if (matrix[0][j] == 0) {
 8               rowHasZero  = true;
 9               break;
 10          }
@@ -814,7 +814,7 @@ This code is below:
 21      // Check for zeros in the rest  of the array
 22      for (int i = 1; i < matrix.length; i++) {
 23          for (int j = 1; j < matrix[0].length; j++) {
-24              if  (matrix[i][j] == 0) {
+24              if (matrix[i][j] == 0) {
 25                  matrix[i][0] = 0;
 26                  matrix[0][j] = 0;
 27              }
