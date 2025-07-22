@@ -11,11 +11,11 @@ OO Concepts
 ### OO Defination
 
 #### Abstraction
-Concept of hiding the details of implementation and exposing only the necessary functionalities. The keywords to keep in mind here are: **Implementation hiding**.
+Concept of hiding the details of implementation and exposing only the necessary functionalities. The keywords to keep in mind here are: **Implementation hiding**. Public concept of what is exposed.
 > Code duplication is better than bad abstraction.
 
 #### Encapsulation
-Concept of encapsulating or wrapping up the member variables (data) and the methods (behavior) of an object into a single unit, such as a class.
+Concept of encapsulating or wrapping up the member variables (data) and the methods (behavior) of an object into a single unit, such as a class. Internal concept to avoid going in invalid state.
 
 **(funny term)** takes the part that vary and encapsulate it so that it will not effect the other things. Here's another way to think about this principle: take the parts that vary and encapsulate them, so that later you can alter or extend the parts what vary without affecting those that don't and then remember to program to an interfaces (provide a constructor or setter/getter injection to provide the concrete object).
 
