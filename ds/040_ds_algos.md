@@ -167,7 +167,8 @@ Array is efficient because the most recently inserted item is placed at the end 
     - push(value)
     - pop()
     - peek()
-
+    
+Stack is generally used to solve problems related to recursion. in/pre/post order tree traversal.
 
 ### QUEUES
 
@@ -180,6 +181,7 @@ Queues can be implemented as arrays or linked lists
 
 The important thing to note here is that because we used a **Array** to back our queue it inherits the performance of "shift" which is linear O(N) "OKAY."
 
+Queue is generally used to solve problems related to sequential processing e.g. BFS tree traversal
 
 ### GRAPHS
 
@@ -395,3 +397,4 @@ Notice how we only had to do 3 checks to reach the number 5. If we were to expan
 
 
 <!--Start Fragment-->
+
