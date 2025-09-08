@@ -505,8 +505,8 @@ The observer pattern is a behavioral object design pattern. (Publisher(Subject) 
 
 > Observer Pattern is synchronized means tightly coupled.
 >> Alternate: is Publisher Subscriber
->>> Which is Async means an Event Bus exist acts as a broker with One-To-One messaging or Topic based broadcasting.
->>>> JMS implementaions are primarily Pub-Sub.
+>>> Which is Async means an Event Bus exist acts as a broker for **Topic** based broadcasting.
+>>>> JMS **Topic** based are primarily Pub-Sub. While **Point-to-Point** (queue-based messaging)
 
 **Used in JMS with one more provider layer(Queues and Topics) for communication and to asynchronize the data. That means Observer Pattern + Producer/Consumer model is JMS Prorviders are provided by JMS and it also provides some interfaces to make publisher and subscriber.**
 
@@ -1537,5 +1537,6 @@ The console output of the execution of MementoDemo is shown here. Notice how the
 	Name: Fred, day number: 4, weight: 97
 	Restoring saved state.
 	Name: Fred, day number: 2, weight: 99
+
 
 
