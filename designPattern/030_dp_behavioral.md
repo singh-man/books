@@ -497,13 +497,18 @@ chain.
 
 *Actually the Events/Listener concept.*
 
-__Used in JMS with one more provider layer(Queues and Topics) for communication and to asynchronize the data. That means Observer Pattern + Producer/Consumer model is JMS Prorviders are provided by JMS and it also provides some interfaces to make publisher and subscriber.__
+*Defines a one-to-many dependency between objects so that when one*
 
-_Defines a one-to-many dependency between objects so that when one_
-
-_object changes state, all of its dependents are notified and updated automatically._
+*object changes state, all of its dependents are notified and updated automatically.*
 
 The observer pattern is a behavioral object design pattern. (Publisher(Subject) + Subscriber(Observers) = Observer Pattern) In the observer pattern, an object called the subject maintains a collection of objects called observers. When the subject changes, it notifies the observers. Observers can be added or removed from the collection of observers in the subject. The changes in state of the subject can be passed to the observers so that the observers can change their own state to reflect this change.
+
+> Observer Pattern is synchronized means tightly coupled.
+> Alternate: is Publisher Subscriber
+> Which is Async means an Event Bus exist acts as a broker with One-To-One messaging or Topic based broadcasting.
+> JMS implementaions are primarily Pub-Sub.
+
+**Used in JMS with one more provider layer(Queues and Topics) for communication and to asynchronize the data. That means Observer Pattern + Producer/Consumer model is JMS Prorviders are provided by JMS and it also provides some interfaces to make publisher and subscriber.**
 
 The subject has an interface that defines methods for attaching and detaching observers from the subject's collection of observers. This interface also features a notification method. This method should be called when the state of the subject changes. This notifies the observers that the subject's state has changed. The observers have an interface with a method to update the observer. This update method is called for each observer in the subject's notification method. Since this communication occurs via an interface, any concrete observer implementing the observer interface can be updated by the subject. This results in loose coupling between the subject and the observer classes.
  
