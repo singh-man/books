@@ -503,8 +503,8 @@ chain.
 
 The observer pattern is a behavioral object design pattern. (Publisher(Subject) + Subscriber(Observers) = Observer Pattern) In the observer pattern, an object called the subject maintains a collection of objects called observers. When the subject changes, it notifies the observers. Observers can be added or removed from the collection of observers in the subject. The changes in state of the subject can be passed to the observers so that the observers can change their own state to reflect this change.
 
-> Observer Pattern is synchronized means tightly coupled.
->> Alternate: is Publisher Subscriber
+> Observer Pattern is synchronized means **tightly coupled**.
+>> Alternate: is Publisher Subscriber **Loose coupling**.
 >>> Which is Async means an Event Bus exist acts as a broker for **Topic** based broadcasting.
 >>>> JMS **Topic** based are primarily Pub-Sub. While **Point-to-Point** (queue-based messaging)
 
@@ -1537,6 +1537,7 @@ The console output of the execution of MementoDemo is shown here. Notice how the
 	Name: Fred, day number: 4, weight: 97
 	Restoring saved state.
 	Name: Fred, day number: 2, weight: 99
+
 
 
 
