@@ -107,11 +107,11 @@ In-order traversal means to "visit" (often,  print)  the left branch, then the c
 
 ```java
 1  void inOrderTraversal(TreeNode node) {
-2       if (node != null) {
-3           inOrderTraversal(node.left);
-4           visit(node);
-5           inOrderTraversal(node.right);
-6      }
+2     if (node != null) {
+3         inOrderTraversal(node.left);
+4         visit(node);
+5         inOrderTraversal(node.right);
+6     }
 7  }
 ```
 
@@ -124,11 +124,11 @@ Pre-order traversal visits the current node before its child nodes (hence the na
 
 ```java
 1  void preOrderTraversal(TreeNode node) {
-2        if (node != null) {
-3             visit(node);
-4             preOrderTraversal(node.left);
-5             preOrderTraversal(node.right);
-6        }
+2     if (node != null) {
+3          visit(node);
+4          preOrderTraversal(node.left);
+5          preOrderTraversal(node.right);
+6     }
 7   }
 ```
 
@@ -141,11 +141,11 @@ Post-order traversal visits the current node after  its child nodes (hence the n
 
 ```java
 1  void postOrderTraversal(TreeNode node) {
-2       if (node != null) {
-3             postOrderTraversal(node.left);
-4             postOrderTraversal(node.right);
-5             visit(node);
-6       }
+2     if (node != null) {
+3         postOrderTraversal(node.left);
+4         postOrderTraversal(node.right);
+5         visit(node);
+6     }
 7  }
 ```
 
@@ -236,12 +236,12 @@ A simple class definition for a graph node could look essentially the same as a 
 
 ```java
 1   class Graph {
-2        public Node[] nodes; 
+2       public Node[] nodes; 
 3   }
 4
 5   class Node {
-6        public String name;
-7        public Node[] children;
+6       public String name;
+7       public Node[] children;
 8   }
 ```
 
@@ -307,9 +307,9 @@ The pseudocode below implements DFS.
 3       visit(root);
 4       root.visited = true;
 5       for each (Node n in root.adjacent) {
-6            if (n.visited == false) {
-7                 search(n);
-8            }
+6           if (n.visited == false) {
+7               search(n);
+8           }
 9       }
 10   }
 ```
@@ -838,21 +838,21 @@ Yes. Nodes with no incoming edges can be built immediately since they don't depe
 
 Once we've done that, it's irrelevant that some nodes are dependent on d and f since d and f have already been built. We can reflect this new state by removing d and f's outgoing edges.
 
-    build   order: f,  d
+    build order: f,  d
 
 ![](media/04_7_2.JPG)
 
 
 Next, we know that c, b, and g are free to build since they have no incoming edges. Let's build those and then remove their outgoing edges.
 
-    build  order: f,  d,  c,  b,  g
+    build order: f,  d,  c,  b,  g
 
 ![](media/04_7_3.JPG)
 
 
 Project a can be built next, so let's do that and remove its outgoing edges. This leaves just e. We build that next, giving us a complete build order.
 
-    build  order:   f,  d,  c,  b,  g,  a,  e
+    build order: f,  d,  c,  b,  g,  a,  e
 
 Did this algorithm work, or did we just get lucky? Let's think about the logic.
 
@@ -1408,8 +1408,8 @@ It's useful to kick off this question with a good example.
         20      60
        /  \    /  \
      10     25      70
-   /   \   /   \   /   \
-  5     15      65      80
+   /   \   /   \   /  \
+  5     15      65     80
 ```
 
 We should also think  about the  ordering of items in a binary  search tree.  Given a node, all nodes on its left must be  less than all nodes on  its right.  Once  we reach a place  without a node, we insert the  new  value there.
@@ -1559,9 +1559,9 @@ What about a pre-order traversal? This  is a bit more promising.  At least in th
 Unfortunately, trees with different structures could still have the same pre-order traversal.
 
 ```
-    3        3
-   /          \
-  4            4
+    3     3
+   /       \
+  4         4
 ```
 There's a simple  fix though. We can store NULL nodes in the pre-order traversal string as a special character, like an 'X'. (We'll  assume that the binary trees contain only integers.)The left tree would have the traversal { 3,   4,   X} and the right tree will have the traversal {3, X, 4}.
 
@@ -1748,7 +1748,7 @@ This means that each node must know the size of the nodes on the left and the si
 10      }
 11  
 12      public TreeNode getRandomNode() {
-13          int leftSize  = left == null ? 0 : left.size();
+13          int leftSize = left == null ? 0 : left.size();
 14          Random random = new Random();
 15          int index = random.nextInt(size);
 16          if (index < leftSize) {
@@ -1901,7 +1901,7 @@ In the  brute force approach, we just  look at all possible paths. To do this, w
 8       int pathsOnLeft  = countPathsWithSum(root.left, targetSum);
 9       int pathsOnRight = countPathsWithSum(root.right, targetSum);
 10  
-11      return pathsFromRoot +  pathsOnLeft +  pathsOnRight;
+11      return pathsFromRoot + pathsOnLeft + pathsOnRight;
 12  }
 13  
 14  /* Returns the number of paths with this sum starting from this node. */
