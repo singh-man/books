@@ -990,7 +990,7 @@ We wait seven days, and then read the results.  If test strip i is positive, the
 22  /* Get test strips that are positive on a particular day. */
 23  ArrayList<Integer> getPositiveOnDay(ArrayList<TestStrip> testStrips, int day) {
 24      ArrayList<Integer> positive = new ArrayList<Integer>();
-25      for  (TestStrip testStrip : testStrips) {
+25      for (TestStrip testStrip : testStrips) {
 26          int id = testStrip.getid();
 27          if (testStrip.isPositiveOnDay(day)) {
 28              positive.add(id);

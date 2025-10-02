@@ -628,13 +628,13 @@ If c0 is the  number of trailing  zeros, c1 is the  size of the  one  block imme
 A quick and dirty way to perform steps 1  and  2 is to set the trailing zeros  to 1 (giving us p trailing ones),  and then add 1. Adding one will flip all trailing ones, so we wind up with a 1 at bit p followed by p zeros. We can perform this arithmetically. 
 
 ```
-n  +=  2ᶜ⁰ - 1  // Sets trailing  0s to 1, giving us p trailing 1s
-n  +=  1;       // Flips first p  1s to 0s, and  puts a 1 at bit  p. 
+n  +=  2ᶜ⁰ - 1  // Sets trailing 0s to 1, giving us p trailing 1s
+n  +=  1;       // Flips first p 1s to 0s, and puts a 1 at bit  p. 
 ```
 
 Now, to perform Step  3 arithmetically, we just  do:
 ```
-n  +=  2ᶜ¹⁻¹ - 1; // Sets trailing  c1 -  1  zeros to ones.
+n  +=  2ᶜ¹⁻¹ - 1; // Sets trailing c1 - 1 zeros to ones.
 ```
 This math reduces to:
 ```
