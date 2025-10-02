@@ -47,7 +47,7 @@ The merge method operates by copying all the elements from the target array segm
 13  }
 14  
 15  void merge(int[] array, int[] helper, int low, int middle, int high) {
-16      /* Copy both halves into a helper array*/
+16      /* Copy both halves into a helper array */
 17      for (int i = low; i <= high; i++) {
 18          helper[i] = array[i];
 19      }
