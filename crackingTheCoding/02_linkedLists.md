@@ -66,7 +66,7 @@ Additionally,  if you implement this code in C, C++ or another  language that re
 8       while (n.next != null) {
 9           if (n.next.data == d) {
 10              n.next = n.next.next;
-11              return head; /* head didn't change*/
+11              return head; /* head didn't change */
 12          }
 13          n = n.next;
 14      }
