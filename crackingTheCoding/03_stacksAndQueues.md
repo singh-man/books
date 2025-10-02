@@ -233,9 +233,9 @@ Please note that the code for this solution is far more complex than would be ap
 
 ```java
 1   public class MultiStack {
-2       /* StackInfo is a simple class that holds a set of data about each ck.
-3        * does not hold the actual items in the stack. We could have e
-4        * just a bunch of individual variables, but that's messy and doesn't n us
+2       /* StackInfo is a simple class that holds a set of data about each stack. It
+3        * does not hold the actual items in the stack. We could have done this with
+4        * just a bunch of individual variables, but that's messy and doesn't gain us
 5        * much. */
 6       private class StackInfo {
 7           public int start, size, capacity;
@@ -409,8 +409,8 @@ push(5);  // stack is {5},  min is 5
 push(6);  // stack is {6,  5},  min is 5 
 push(3);  // stack is {3,  6,  5},  min is 3 
 push(7);  // stack is {7,  3,  6,  5},  min is 3
-pop();    // pops  7. stack is {3,  6,  5},  min is 3 
-pop();    // pops  3. stack is {6,  5}.  min is 5.
+pop();    // pops  7. stack is {3, 6, 5},  min is 3 
+pop();    // pops  3. stack is {6, 5}.  min is 5.
 ```
 
 Observe how once the stack goes back to a prior state ({6, 5}), the minimum also goes back to its prior state (5). This leads us to our second solution.
@@ -581,8 +581,8 @@ You could make an argument  that, rather than "rolling over", we should be okay 
 41      public Node top, bottom;
 42      public int size = 0;
 43  
-44      public Stack(int capacity) {this.capacity = capacity; }
-45      public boolean isFull() {return capacity == size; }
+44      public Stack(int capacity) { this.capacity = capacity; }
+45      public boolean isFull() { return capacity == size; }
 46  
 47      public void join(Node above, Node below) {
 48          if (below != null) below.above = above;

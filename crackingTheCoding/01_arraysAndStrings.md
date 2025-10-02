@@ -479,7 +479,7 @@ We can go ahead and implement this algorithm now. We'll merge the insertion and 
 Observe that you don't need to check the strings for insertion, removal, and replacement edits. The lengths of the strings will indicate which of these you need to check.
 
 ```java
-1   boolean oneEditAway(String  first, String  second) {
+1   boolean oneEditAway(String first, String second) {
 2       if (first.length() == second.length()) {
 3           return oneEditReplace(first, second);
 4       } else if (first.length() + 1 == second.length()) {
@@ -490,11 +490,11 @@ Observe that you don't need to check the strings for insertion, removal, and rep
 9       return false;
 10  }
 11  
-12  boolean oneEditReplace(String s1,  String s2)   {
+12  boolean oneEditReplace(String s1, String s2) {
 13      boolean foundDifference = false;
-14      for (int i = 0; i < s1.length(); i++)   {
+14      for (int i = 0; i < s1.length(); i++) {
 15          if (s1.charAt(i) != s2.charAt(i)) {
-16              if (foundDifference)  {
+16              if (foundDifference) {
 17                  return false;
 18              }
 19      
@@ -505,7 +505,7 @@ Observe that you don't need to check the strings for insertion, removal, and rep
 24  }
 25  
 26  /* Check if you  can  insert a  character into s1 to make s2.*/
-27  boolean oneEditInsert(String  s1, String s2)   {
+27  boolean oneEditInsert(String s1, String s2) {
 28      int index1 = 0;
 29      int index2 = 0;
 30      while  (index2 <  s2.length() && index1 < s1.length()) {
@@ -556,9 +556,9 @@ To do this, observe  that both methods follow similar logic: compare each charac
 21                  index1++;
 22              }
 23          } else {
-24              index1++;  // If matching,  move  shorter pointer
+24              index1++;  // If matching, move shorter pointer
 25          }
-26          index2++;  // Always   move  pointer for longer string
+26          index2++;  // Always move pointer for longer string
 27      }
 28      return true;
 29  }
@@ -581,13 +581,13 @@ How hard could it be?
 
 ```java
 1   String compressBad(String str) {
-2       String compressedString =  "";
-3       int countConsecutive =  0;
+2       String compressedString = "";
+3       int countConsecutive = 0;
 4       for (int i = 0; i < str.length(); i++) {   
 5           countConsecutive++;
 6       
 7           /*If next character is different than current, append this char to result.*/
-8           if (i + 1 >= str.length()  || str.charAt(i) != str.charAt(i + 1)) {
+8           if (i + 1 >= str.length() || str.charAt(i) != str.charAt(i + 1)) {
 9               compressedString +=  "" + str.charAt(i) + countConsecutive;
 10              countConsecutive =  0;
 11          }
@@ -606,7 +606,7 @@ We can fix this by using a StringBuilder.
 1   String compress(String str) {
 2       StringBuilder compressed = new StringBuilder();
 3       int countConsecutive = 0;
-4       for (int i = 0; i < str.length(); i++)  {
+4       for (int i = 0; i < str.length(); i++) {
 5           countConsecutive++;
 6       
 7           /*If next character is different than current, append this char to result.*/
@@ -626,34 +626,34 @@ Instead, we can check in advance. This will be more optimal in cases where we do
 
 ```java
 1   String  compress(String str) {
-2       /*  Check final  length and return input   string if it would be longer. */
-3       int finallength =  countCompression(str);
+2       /*  Check final length and return input string if it would be longer. */
+3       int finallength  =  countCompression(str);
 4       if (finallength >=  str.length())  return str;
 5       
 6       StringBuilder compressed = new StringBuilder(finalLength); // initial capacity
-7       int  countConsecutive =  0;
-8       for  (int i = 0;  i <  str.length(); i++)  {
+7       int countConsecutive = 0;
+8       for (int i = 0;  i <  str.length(); i++) {
 9           countConsecutive++;
 10      
-11          /* If next character is different than current, append this char to resu    lt.*/
+11          /* If next character is different than current, append this char to result.*/
 12          if (i + 1 >= str.length() || str.charAt(i) != str.charAt(i + 1))   {
 13              compressed.append(str.charAt(i));
 14              compressed.append(countConsecutive);
 15              countConsecutive = 0;
 16          }
 17      }
-18      return  compressed.toString();
+18      return compressed.toString();
 19  }
 20      
 21  int  countCompression(String str) {
 22      int compressedlength = 0;
 23      int countConsecutive = 0;
-24      for  (int i = 0; i < str.length(); i++)  {
+24      for (int i = 0; i < str.length(); i++) {
 25          countConsecutive++;
 26      
 27          /*If next character is different than current, increase the length.*/
-28          if (i + 1 >= str.length() || str.charAt(i) != str.charAt(i + 1))   {
-29              compressedlength +=  1 + String.valueOf(countConsecutive).length();
+28          if (i + 1 >= str.length() || str.charAt(i) != str.charAt(i + 1)) {
+29              compressedlength += 1 + String.valueOf(countConsecutive).length();
 30              countConsecutive = 0;
 31          }
 32      }
@@ -695,24 +695,24 @@ The code for this algorithm is below.
 ```java
 1   boolean rotate(int[][] matrix)  {
 2       if (matrix.length == 0 || matrix.length != matrix[0].length) return false;
-3       int n  = matrix.length;
-4       for (int  layer =  0;  layer <  n/2;  layer++)  {
+3       int n = matrix.length;
+4       for (int layer = 0; layer < n/2; layer++)  {
 5           int first = layer;
 6           int last = n - 1 - layer;
 7           for (int i = first; i < last; i++)  {
-8               int offset =  i - first;
+8               int offset = i - first;
 9               int top = matrix[first][i]; // save top
 10      
-11              // left ->  top
-12              matrix[first][i] =  matrix[last - offset][first];
+11              // left -> top
+12              matrix[first][i] = matrix[last - offset][first];
 13      
-14              // bottom ->  left
-15              matrix[last - offset][first] = matrix[last][last  -  offset];
+14              // bottom -> left
+15              matrix[last - offset][first] = matrix[last][last - offset];
 16      
-17              // right  ->  bottom
+17              // right -> bottom
 18              matrix[last][last - offset] = matrix[i][last];
 19      
-20              // top   ->  right
+20              // top -> right
 21              matrix[i][last] = top; // right <- saved top
 22          }
 23      }
@@ -745,7 +745,7 @@ The code below implements this algorithm. We use two arrays to keep track of all
 3       boolean[]  column  = new  boolean[matrix[0].length];
 4       
 5       // Store  the  row and column  index with value  0
-6       for (int i =  0; i < matrix.length; i++) {
+6       for (int i = 0; i < matrix.length; i++) {
 7           for (int j = 0; j < matrix[0].length; j++) {
 8               if (matrix[i][j] == 0) {
 9                   row[i] = true;
@@ -765,13 +765,13 @@ The code below implements this algorithm. We use two arrays to keep track of all
 23      }
 24   }
 25      
-26   void nullifyRow(int[][]  matrix, int  row) {
+26   void nullifyRow(int[][] matrix, int row) {
 27      for (int j = 0; j < matrix[0].length; j++) {
-28          matrix[row][j] =  0;
+28          matrix[row][j] = 0;
 29      }
 30   }
 31      
-32   void nullifyColumn(int[][] matrix, int  col) {
+32   void nullifyColumn(int[][] matrix, int col) {
 33    	for (int i = 0; i < matrix.length; i++) {
 34     		matrix[i][col] =  0;
 35      }
@@ -792,8 +792,8 @@ This code is below:
 
 ```java
 1   void  setZeros(int[][] matrix) {
-2       boolean  rowHasZero = false;
-3       boolean  colHasZero = false;
+2       boolean rowHasZero = false;
+3       boolean colHasZero = false;
 4       
 5       // Check if first row has a zero
 6       for (int j = 0; j < matrix[0].length; j++) {
@@ -803,7 +803,7 @@ This code is below:
 10          }
 11      }
 12      
-13      // Check   if first column   has a  zero
+13      // Check if first column has a zero
 14      for (int i = 0; i < matrix.length; i++) {
 15          if (matrix[i][0] == 0) {
 16              colHasZero = true;
@@ -811,7 +811,7 @@ This code is below:
 18          }
 19      }
 20      
-21      // Check for zeros in the rest  of the array
+21      // Check for zeros in the rest of the array
 22      for (int i = 1; i < matrix.length; i++) {
 23          for (int j = 1; j < matrix[0].length; j++) {
 24              if (matrix[i][j] == 0) {
@@ -823,12 +823,12 @@ This code is below:
 30      
 31      // Nullify rows based on values in first column
 32      for (int i = 1; i < matrix.length; i++) {
-33          if  (matrix[i][0] == 0) {
+33          if (matrix[i][0] == 0) {
 34              nullifyRow(matrix, i);
 35          }
 36      }
 37      
-38      // Nullify  columns based on  values in  first row
+38      // Nullify columns based on  values in first row
 39      for (int j = 1; j < matrix[0].length; j++) {
 40          if (matrix[0][j] == 0) {
 41              nullifyColumn(matrix, j);
@@ -859,10 +859,10 @@ SOLUTION
 If we imagine that s2  is a rotation of s1,  then we can  ask what the  rotation point is. For example, if you rotate waterbottle after  wat. you  get  erbottlewat. In a rotation, we cut s1  into  two  parts,  x and y, and rearrange them to get  s2.
 
 ```
-s1 = xy   =  waterbottle
+s1 = xy  = waterbottle
 x  = wat
 y  = erbottle
-s2 = yx   = erbottlewat
+s2 = yx  = erbottlewat
 ```
 
 So, we need to check  if there's a way to split s1 into x and y such that xy = s1 and yx = s2. Regardless of where the division between x and y is, we can see that yx will always be a substring of xyxy. That is, s2 will always be a substring of s1s1.
