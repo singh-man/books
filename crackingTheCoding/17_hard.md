@@ -310,7 +310,7 @@ Let's start with the obvious solution. Just go through all subarrays, count the 
 
 We can make one small optimization to this. We can start with the longest subarray and, as soon as we find one which fits this equality condition, return it.
 ```java
-1   /* Return the largest subarray with equal number of 0s and ls. Look at each
+1   /* Return the largest subarray with equal number of 0s and 1s. Look at each
 2    * subarray, starting from the longest. As soon as we find one that's equal, we
 3    * return. */
 4   char[] findLongestSubarray(char[] array) {
@@ -2457,7 +2457,7 @@ The naive solution is reasonably straightforward. Just search through the bigger
 1   HashMapList<String, Integer> searchAll(String big, String[] smalls) {
 2       HashMapList<String, Integer> lookup =
 3                   new HashMapList<String, Integer>();
-4       for  (String small : smalls) {
+4       for (String small : smalls) {
 5           ArrayList<Integer> locations = search(big, small);
 5           lookup.put(small, locations);
 7       }
@@ -2486,7 +2486,7 @@ The naive solution is reasonably straightforward. Just search through the bigger
 30  }
 31
 32  /* HashMapList<String, Integer> is a HashMap that maps from Strings to
-33   * ArrayList<Integer>. See appendix for implementation. * /
+33   * ArrayList<Integer>. See appendix for implementation. */
 ```
 We could have also used a substring and equals function, instead of writing isAtLocation. This is slightly faster (though not in terms of big 0) because it doesn't require creating a bunch of substrings.
 
@@ -3004,7 +3004,7 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 15          itemLocations.put(s, queue);
 15      }
 17
-18      /* Walk through big array, adding the item locations to hash map*/
+18      /* Walk through big array, adding the item locations to hash map */
 19      for (int i = 0; i < big.length; i++) {
 20          Queue<Integer> queue = itemLocations.get(big[i]);
 21          if (queue != null) {
@@ -3021,7 +3021,7 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 32      PriorityQueue<HeapNode> minHeap = new PriorityQueue<HeapNode>();
 33      int max = Integer.MIN_VALUE;
 34
-35      /*Insert min element from each list.*/
+35      /* Insert min element from each list. */
 36      for (int i = 0; i < lists.size(); i++) {
 37          int head = lists.get(i).remove();
 38          minHeap.add(new HeapNode(head, i));
@@ -3762,7 +3762,7 @@ S2      return words;
 69  }
 70
 71  /* HashMapList<String, String> is a HashMap that maps from Strings to
-72   * ArrayList<String>. See appendix for implementation. * /
+72   * ArrayList<String>. See appendix for implementation. */
 ```
 This will work, but we can still make it faster.
 
@@ -3901,7 +3901,7 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 108 }
 109 
 110 /* HashMapList<String, Integer> is a HashMap that maps from Strings to
-111  * ArrayList<Integer>. See appendix for implementation. * /
+111  * ArrayList<Integer>. See appendix for implementation. */
 ```
 This algorithm's runtime is a bit harder to describe since it depends on what the language looks like, as well as the actual source and destination words. One way of expressing it is that if each word has E words that are one edit away and the source and destination are distance D, the runtime is O(Eᴰ/²). This is how much work each breadth-first search does.
 
@@ -4822,7 +4822,7 @@ Comparing this runtime to the previous one is a bit tricky. One way we can look 
 63  }
 64
 65  /* HashMapList<Integer, Integer> is a HashMap that maps from Integer to
-66   * ArrayList<Integer>. See appendix for implementation. * /
+66   * ArrayList<Integer>. See appendix for implementation. */
 ```
 For a set of documents with sparse similarity, this will run much faster than the original naive algorithm, which compares all pairs of documents directly.
 

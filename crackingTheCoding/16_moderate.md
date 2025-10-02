@@ -1721,7 +1721,7 @@ The code below implements this algorithm.
 7       }
 8   }
 9
-10  int  code(char c) {
+10  int code(char c) {
 11      switch (c) {
 12      case 'B':
 13          return 0;
@@ -2186,7 +2186,7 @@ You might also  notice that the  for loop iterates through nine  cells, not  eig
 
 If you don't like modifying the  input matrix, you can create a secondary visited matrix.
 ```java
-1   ArrayList<Integer>ncomputePondSizes(int[][] land) {
+1   ArrayList<Integer> computePondSizes(int[][] land) {
 2       boolean[][] visited = new boolean[land.length][land[0].length];
 3       ArrayList<Integer> pondSizes = new ArrayList<Integer>();
 4       for (int r = 0; r < land.length; r++) {
@@ -3138,8 +3138,8 @@ The algorithms now operate as follows:
 1  public class Cache {
 2      private int maxCacheSize;
 3      private HashMap <Integer, LinkedListNode> map = 
-4                 new HashMap < Integer, LinkedListNode>();
-5      private LinkedListNode listHead = nullf
+4                 new HashMap <Integer, LinkedListNode>();
+5      private LinkedListNode listHead = null;
 6      public LinkedListNode listTail = null;
 7
 8      public Cache(int maxSize) {

@@ -799,11 +799,11 @@ The Trie class uses the TrieNode class, which is implemented below.
 
 ```java
 1   public class TrieNode {
-2       /* The children of this node in the trie.*/
+2       /* The children of this node in the trie. */
 3       private HashMap<Character, TrieNode> children;
 4       private boolean terminates = false;
 5       
-6       /* The character stored in this node as data.*/
+6       /* The character stored in this node as data. */
 7       private char character;
 8       
 9       /* Constructs an empty trie node and initializes the list of its children to an
