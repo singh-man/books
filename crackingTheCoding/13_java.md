@@ -287,9 +287,9 @@ To illustrate this, consider the  code below:
 18  MyClass<Bar> * bar1 = new MyClass<Bar>(20);
 19  MyClass<Bar> * bar2 = new MyClass<Bar>(35);
 20  
-21  int fl = foo1->val; // will equal 15
+21  int f1 = foo1->val; // will equal 15
 22  int f2 = foo2->val; // will equal 15
-23  int bl = bar1->val; // will equal 35
+23  int b1 = bar1->val; // will equal 35
 24  int b2 = bar2->val; // will equal 35
 ```
 

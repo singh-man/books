@@ -410,7 +410,7 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 22  /*Search one level and return collision, if any.*/
 23  Person searchLevel(HashMap<Integer, Person> people, BFSData primary,
 24                      BFSData secondary) {
-25      /*We only want to search one level at a time. Count how many nodes are
+25      /* We only want to search one level at a time. Count how many nodes are
 26       * currently in the primary's level and only do that many nodes. We'll continue
 27       * to add nodes to the end. */
 28      int count = primary.toVisit.size();
