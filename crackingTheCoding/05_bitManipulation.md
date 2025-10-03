@@ -51,7 +51,7 @@ Computers typically store integers in two's complement representation. A positiv
 
 Let's look at the 4-bit integer -3 as an example. If it's a 4-bit number, we have one bit for the sign and three bits for the value. We want the complement with respect to 2³,  which is 8. The complement of 3 (the absolute value of -3) with respect to 8 is 5. 5 in binary is 101. Therefore, -3 in binary as a 4-bit number  is 1101, with the first bit being the sign bit.
 
-In other words, the binary representation of -K (negative K) as a N-bit number is concat ( 1,  2ᴺ⁻¹  -  K). 
+In other words, the binary representation of -K (negative K) as a N-bit number is concat (1,  2ᴺ⁻¹  -  K). 
 
 Another way to look at this is that we invert the bits in the positive representation and then add 1. 3 is 011 in binary. Flip the bits to get 100, add 1 to get 101, then prepend the sign bit (1) to get 1101.
 
@@ -109,7 +109,7 @@ This method shifts 1 over by i bits, creating a value that looks like 00010000. 
 
 ```java
 1   boolean getBit(int num, int i) {
-2       return (( num & (1 << i)) != 0);
+2       return ((num & (1 << i)) != 0);
 3   }
 ```
 
@@ -119,7 +119,7 @@ Set Bit shifts  1 over by i  bits, creating a value like 00010000. By performing
 
 ```java
 1   int setBit(int num, int i) {
-2       return num | ( 1 << i);
+2       return num | (1 << i);
 3   }
 ```
 
@@ -485,7 +485,7 @@ n  =  n & mask; // clears rightmost p bits.
 ```
 Or, more concisely, we do:
 ```
-n &=  ~((1 << p) - 1).
+n &= ~((1 << p) - 1).
 ```
 
 *Step 3:Add in c1   -  1 ones.*
@@ -602,7 +602,7 @@ The code to implement this is below.
 9   
 10      if (temp == 0) return -1;
 11  
-12      while (((temp & 1) == 0) &&  (temp != 0)) {
+12      while (((temp & 1) == 0) && (temp != 0)) {
 13          c0++;
 14          temp >>= 1;
 15      }
@@ -639,7 +639,7 @@ n  +=  2ᶜ¹⁻¹ - 1; // Sets trailing c1 - 1 zeros to ones.
 This math reduces to:
 ```
 next =  n  +  (2ᶜ⁰ - 1) + 1 + (2ᶜ¹⁻¹ - 1)
-     =  n  +  2ᶜ⁰ +  2ᶜ¹⁻¹  -  1
+     =  n  +   2ᶜ⁰ + 2ᶜ¹⁻¹  -  1
 ```
 The best part  is that,  using a little bit manipulation, it's simple to code.
 ```java
@@ -660,15 +660,15 @@ If c₁ is the number of trailing ones,  c₀  is the size of the zero block imm
 We can implement this arithmetically as follows. For clarity in the example, we will assume n = 10000011. This makes c₁ = 2 and c₀ =  5.
 
 ```
-n -=  2ᶜ¹   -  1;   // Removes  trailing 1s. n  is now 10000000.
-n -=  1;            // Flips trailing  0s.   n  is now 01111111.
+n -=  2ᶜ¹  -  1;   // Removes  trailing 1s. n  is now 10000000.
+n -=  1;           // Flips trailing  0s.   n  is now 01111111.
 n -=  2ᶜ⁰⁻¹ -  1;   // Flips last (c0-1) 0s. n  is now 01110000.
 ``` 
  
 This reduces mathematically to:
 ```
 next =  n  -  (2ᶜ¹  -  1) -  1  -  (2ᶜ⁰⁻¹ -  1).
-     =  n  -  2ᶜ¹ -  2ᶜ⁰⁻¹  + 1
+     =  n  -   2ᶜ¹  -  2ᶜ⁰⁻¹  + 1
 ```
 Again, this is very easy to implement.
 ```java
