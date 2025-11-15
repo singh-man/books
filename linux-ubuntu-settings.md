@@ -65,7 +65,9 @@ echo "alias mvn_cist='mvn clean install -Dmaven.test.skip'" >> ~/.bashrc
 # NOTE: Recommended to use "myAlias" file in home and do 'source ~/myAlias' in ".bashrc" or ".bash_profile"
 ```
 
-##### If Using WSL to execute commands on docker installed on windows. Do remember to enable TCP daemon from docker settings. |https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly
+##### If Using WSL to execute commands on docker installed on windows. Do remember to enable TCP daemon from docker settings. 
+
+|https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly
 
 In windows 10 if using Git Bash use .bash_profile present in \<user home\>. Do note if using visual studio code add JAVA_HOME to .bash_profile so that maven can work.
 
