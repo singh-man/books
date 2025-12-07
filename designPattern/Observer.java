@@ -1,5 +1,3 @@
-package dp;
-
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
