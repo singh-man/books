@@ -1,69 +1,8 @@
----
-title: Design Pattern
-author: Manish
-rights:  Creative Commons Non-Commercial Share Alike 3.0
-language: en-US
-...
+<!--Start Fragment-->
+Creational Design Patterns
+==========================
 
-Design Patterns Tutorials
-=========================
-
-	D:\mani\dev\opt\pandoc-2.1.3\pandoc.exe --toc --toc-depth 6 -s 01_dp_creational.md 02_dp_structural.md 03_dp_behavioral.md 04_dp_inJava.md 05_dp_j2ee.md 06_dp_desktopGUI_arch.md 07_OOConcepts.md -o designPattern.epub
-	
-Design patterns are a popular topic in software development. A design pattern is a common, well-described solution to a common software problem. Sensible use of design patterns results in increased code maintainability, since in addition to being a good solution to a common problem, design patterns can be recognized by other developers, thus reducing the learning curve when dealing with a particular piece of code. Types of design patterns include creational, structural, and behavioral design patterns.
-
-![](media/designPatternHierarchy.jpg)
-
-### Creational Design Patterns
-
-- Singleton Pattern 
-- Factory Pattern
-- Abstract Factory Pattern 
-- Builder Pattern 
-- Prototype Pattern 
-
-### Structural Design Patterns
-
-- Adapter Pattern
-- Composite Pattern 
-- Proxy Pattern 
-- Flyweight Pattern 
-- Facade Pattern 
-- Bridge Pattern 
-- Decorator Pattern 
-
-### Behavioral Design Patterns
-
-- Template Method Pattern
-- Mediator Pattern
-- Chain of Responsibility Pattern
-- Observer Pattern
-- Strategy Pattern
-- Command Pattern
-- State Pattern
-- Visitor Pattern
-- Iterator Pattern
-- Memento Pattern
-
-
-#### Interpreter Solution Language
-
-![](media/interpreter.png)
-
-Purpose : Defines a representation for a grammar as well as a mechanism to understand and act upon the grammar.
-
-Use When :
-- There is grammar to interpret that can be represented as large syntax trees.
-- The grammar is simple.
-- Efficiency is not important.
-- Decoupling grammar from underlying expressions is desired.
-
-Example :
-
-Text based adventures, wildly popular in the 1980's, provide a good example of this. Many had simple commands, such as "step down" that allowed traversal of the game. These commands could be nested such that it altered their meaning. For example, "go in" would result in a different outcome than "go up". By creating a hierarchy of commands based upon the command and the qualifier (non-terminal and terminal expressions) the application could easily map many command variations to a relating tree of actions.
-
-
-#### Singleton Pattern
+### Singleton Pattern
 
 ![](media/singleton.png)
 
@@ -185,7 +124,7 @@ public class BillPughSingleton {
 }
 ```
 Notice
-#### Factory Pattern
+### Factory Pattern
 
 ![](media/factory.png)
 
@@ -306,7 +245,7 @@ AnimalFactory animalFactory = AnimalFactory.getAnimalFactoryInstance();
 ```
 In this example, AnimalFactory.getAnimalFactoryInstance() would be implemented to return a static AnimalFactory object. This results in a single factory being instantiated and used rather than requiring a new factory to be instantiated each time the factory needs to be used.
 
-#### Abstract Factory Pattern
+### Abstract Factory Pattern
 
 ![](media/abstract-factory.png)
 
@@ -520,7 +459,7 @@ objects. The console output is shown here.
 
 Notice the use of polymorphism. We obtain different factories via the common SpeciesFactory superclass. We also obtain different animals via the common Animal superclass.
 
-#### Builder Pattern
+### Builder Pattern
 
 ![](media/builder.png)
 
@@ -734,7 +673,7 @@ The console output of executing Demo is shown here.
 
 Notice that if we'd like to create a new type of meal, we can do so by implementing a new Concrete Builder (ie, SwedishMealBuilder, FrenchMealBuilder, etc), which we'd pass to the MealDirector. If we'd like the meal to be constructed of different parts (ie, no drink), we can alter the construction process in MealDirector. Thus, construction process has been separated to the Director, and the data representation is controlled by the Concrete Builders that implement the Builder interface.
 
-#### Prototype Pattern
+### Prototype Pattern
 
 ![](media/prototype.png)
 
@@ -848,5 +787,6 @@ The console output of executing Demo is shown here.
 	person 2:This person is named Fred
 	dog 1:This dog says Wooof!
 	dog 2:This dog says Wooof!
+
 
 
