@@ -4,6 +4,21 @@ Behavioral Design Patterns
 
 ### Template Method Pattern
 
+![](media/template.png)
+
+Purpose : Identifies the framework of an algorithm, allowing implementing classes to define the actual behavior.
+
+Use When :
+- A single abstract implementation of an algorithm is needed.
+- Common behavior among subclasses should be localized to a common class.
+- Parent classes should be able to uniformly invoke behavior in their subclasses.
+- Most or all subclasses need to implement the behavior.
+
+Example :
+
+A parent class, InstantMessage, will likely have all the methods required to handle sending a message. However, the actual serialization of the data to send may vary depending on the implementation. A video message and a plain text message will require different algorithms in order to serialize the data correctly. Subclasses of InstantMessage can provide their own implementation of the serialization method, allowing the parent class to work with them without understanding their implementation details.
+
+
 The template method pattern is a behavioral class pattern. A behavioral class pattern uses inheritance for distribution of behavior. In the template method pattern, a method (the \'template method\') defines the steps of an algorithm. The implementation of these steps (ie, methods) can be deferred to subclasses. Thus, a particular algorithm is defined in the template method, but the exact steps of this algorithm can be defined in subclasses. The template method is implemented in an abstract class. The steps (methods) of the algorithm are declared in the abstract class, and the methods whose implementations are to be delegated to subclasses are declared abstract.
 
 Here is an example of the template method pattern. Meal is an abstract class with a template method called doMeal() that defines the steps involved in a meal. We declare the method as final so that it can not be overridden. The algorithm defined by doMeal() consists of four steps: prepareIngredients(), cook(), eat(), and cleanUp(). The eat() method is implemented although subclasses can override the implementation. The prepareIngredients(), cook(), and cleanUp() methods are are declared abstract so that subclasses need to implement them.
@@ -120,6 +135,19 @@ The console output of the execution of Demo is shown here.
 As you can see, the template method design pattern allows us to define the steps in an algorithm and pass the implementation of these steps to subclasses.
 
 ### Mediator Pattern
+
+![](media/mediator.png)
+
+Purpose : Allows loose coupling by encapsulating the way disparate sets of objects interact and communicate with each other. Allows for the actions of each object set to vary independently of one another.
+
+Use When :
+- Communication between sets of objects is well defined and complex.
+- Too many relationships exist and common point of control or communication is needed.
+
+Example :
+
+Mailing list software keeps track of who is signed up to the mailing list and provides a single point of access through which any one person can communicate with the entire list. Without a mediator implementation a person wanting to send a message to the group would have to constantly keep track of who was signed up and who was not. By implementing the mediator pattern the system is able to receive messages from any point then determine which recipients to forward the message on to, without the sender of the message having to be concerned with the actual recipient list.
+
 
 The mediator pattern is a behavioral object design pattern. The mediator pattern centralizes communication between objects into a mediator object. This centralization is useful since it localizes in one place the interactions between objects, which can increase code maintainability, especially as the number of classes in an application increases. Since communication occurs with the mediator rather than directly with other objects, the mediator pattern results in a loose coupling of objects.
 
@@ -348,6 +376,21 @@ In this example of the mediator pattern, notice that all communication between o
 
 ### Chain of Responsibility Pattern
 
+![](media/chain-of-responsibilty.png)
+
+Purpose : Gives more than one object an opportunity to handle a request by linking receiving objects together.
+
+Use When :
+
+- Multiple objects may handle a request and the handler doesn't have to be a specific object.
+- A set of objects should be able to handle a request with the handler determined at runtime.
+- A request not being handled is an acceptable potential outcome.
+
+Example : 
+
+Exception handling in some languages implements this pattern. When an exception is thrown in a method the runtime checks to see if the method has a mechanism to handle the exception or if it should be passed up the call stack. When passed up the call stack the process repeats until code to handle the exception is encountered or until there are no more parent objects to hand the request to.
+
+
 The chain of responsibility pattern is a behavioral object design pattern. In the chain of responsibility pattern, a series of handler objects are chained together to handle a request made by a client object. If the first handler can not handle the request, the request is forwarded to the next handler, and it is passed down the chain until the request reaches a handler that can handle the request or the chain ends. In this pattern, the client is decoupled from the actual handling of the request, since it does not know what class will actually handle the request.
 
 In this pattern, a Handler is an interface for handling a request and accessing a handler's successor. A Handler is implemented by a Concrete Handler. The Concrete Handler will handle the request or pass it on to the next Concrete Handler. A Client makes the request to the start of the handler chain.
@@ -494,6 +537,20 @@ The console output of the execution of Demo is shown here. Notice that if a hand
 chain.
 
 ### Observer Pattern
+
+![](media/observer.png)
+
+Purpose : Lets one or more objects be notified of state changes in other objects within the system.
+
+Use When :
+- State changes in one or more objects should trigger behavior in other objects
+- Broadcasting capabilities are required.
+- An understanding exists that objects will be blind to the expense of notification.
+
+Example :
+
+This pattern can be found in almost every GUI environment. When buttons, text, and other fields are placed in applications the application typically registers as a listener for those controls. When a user triggers an event, such as clicking a button, the control iterates through its registered observers and sends a notification to each.
+
 
 *Actually the Events/Listener concept.*
 
@@ -690,6 +747,22 @@ In a more advanced case, we might have given each observer a reference to the we
 
 ### Strategy Pattern
 
+![](media/strategy.png)
+
+Purpose : Defines a set of encapsulated algorithms that can be swapped to carry out a specific behavior.
+
+Use When :
+- The only difference between many related classes is their behavior.
+- Multiple versions or variations of an algorithm are required.
+- Algorithms access or utilize data that calling code shouldn't be exposed to.
+- The behavior of a class should be defined at runtime.
+- Conditional statements are complex and hard to maintain.
+
+Example :
+
+When importing data into a new system different validation algorithms may be run based on the data set. By configuring the import to utilize strategies the conditional logic to determine what validation set to run can be removed and the import can be decoupled from the actual validation code. This will allow us to dynamically call one or more strategies during the import.
+
+
 Strategy : *encapsulate the concept that varies* and *program to an interface, not an implementation*
 
 The strategy pattern is a behavioral object design pattern. In the strategy pattern, different algorithms**(behavior)** are represented as Concrete Strategy classes (***simple words: segregate the data and its behavior to composition/aggregation rather than inheritance like Duck and its Fly and Quack behavior so that different ducks can use the different behaviors dynamically***), and they share a common Strategy interface. A Context object contains a reference to a Strategy. By changing the Context's Strategy, different behaviors can be obtained. Although these behaviors are different, the different strategies all operate on data from the Context.
@@ -803,6 +876,21 @@ The console output of executing Demo is shown here.
 	Is the temperature (60F) good for hiking? true
 
 ### Command Pattern
+
+![](media/command.png)
+
+Purpose : Encapsulates a request allowing it to be treated as an object. This allows the request to be handled in traditionally object based relationships such as queuing and callbacks.
+
+Use When :
+- You need callback functionality.
+- Requests need to be handled at variant times or in variant orders.
+- A history of requests is needed.
+- The invoker should be decoupled from the object handling the invocation.
+
+Example :
+
+Job queues are widely used to facilitate the asynchronous processing of algorithms. By utilizing the command pattern the functionality to be executed can be given to a job queue for processing without any need for the queue to have knowledge of the actual implementation it is invoking. The command object that is enqueued implements its particular algorithm within the confines of the interface the queue is expecting.
+
 
 Encapsulates Method invocation: -
 
@@ -963,6 +1051,20 @@ As you can see, the invoker invokes a command, but has no direct knowledge of th
 
 ### State Pattern
 
+![](media/state.png)
+
+Purpose : Ties object circumstances to its behavior, allowing the object to behave in different ways based upon its internal state.
+
+Use When :
+- The behavior of an object should be influenced by its state.
+- Complex conditions tie object behavior to its state.
+- Transitions between states need to be explicit.
+
+Example :
+
+An email object can have various states, all of which will change how the object handles different functions. If the state is "not sent" then the call to send() is going to send the message while a call to recallMessage() will either throw an error or do nothing. However, if the state is "sent" then the call to send() would either throw an error or do nothing while the call to recallMessage() would attempt to send a recall notification to recipients. To avoid conditional statements in most or all methods there would be multiple state objects that handle the implementation with respect to their particular state. The calls within the Email object would then be delegated down to the appropriate state object for handling.
+
+
 The state pattern is a behavioral object design pattern. The idea behind the state pattern is for an object to change its behavior depending on its state. In the state pattern, we have a Context class, and this class has a State reference to a Concrete State instance. The State interface declares particular methods that represent the behaviors of a particular state. Concrete States implement these behaviors. By changing a Context's Concrete State, we change its behavior. In essence, in the state pattern, a class (the Context) is supposed to behave like different classes depending on its state. The state pattern avoids the use of switch and if statements to change behavior.
 
 Lets look at an example of the state pattern. First off, We'll define the EmotionalState interface. It declares two methods, sayHello() and sayGoodbye().
@@ -1079,6 +1181,22 @@ The console output of executing Demo is shown here.
 Note that we don\'t necessarily need to have the Context (ie, Person) implement the EmotionalState interface. The behavioral changes could have been internal to the Context rather than exposing EmotionalState's methods to the outside. However, having the Context class implement the State interface allows us to directly access the different behaviors that result from the different states of the Context.
 
 ### Visitor Pattern
+
+![](media/visitor.png)
+
+Purpose : Allows for one or more operations to be applied to a set of objects at runtime, decoupling the operations from the object structure.
+
+Use When :
+- An object structure must have many unrelated operations performed upon it.
+- The object structure can't change but operations performed on it can.
+- Operations must be performed on the concrete classes of an object structure.
+- Exposing internal state or operations of the object structure is acceptable.
+- Operations should be able to operate on multiple object structures that implement the same interface sets.
+
+Example :
+
+Calculating taxes in different regions on sets of invoices would require many different variations of calculation logic. Implementing a visitor allows the logic to be decoupled from the invoices and line items. This allows the hierarchy of items to be visited by calculation code that can then apply the proper rates for the region. Changing regions is as simple as substituting a different visitor.
+
 
 The visitor pattern is a behavioral object design pattern. The visitor pattern is used to simplify operations on groupings of related objects. These operations are performed by the visitor rather than by placing this code in the classes being visited. Since the operations are performed by the visitor rather than by the classes being visited, the operation code gets centralized in the visitor rather than being spread out across the grouping of objects, thus leading to code maintainability. The visitor pattern also avoids the use of the instanceof operator in order to perform calculations on similar classes.
 
@@ -1274,6 +1392,21 @@ Notice that if we'd like to perform new operations on the grouping of elements, 
 
 ### Iterator Pattern
 
+![](media/iterator.png)
+
+Purpose : Allows for access to the elements of an aggregate object without allowing access to its underlying representation.
+
+Use When :
+- Access to elements is needed without access to the entire representation.
+- Multiple or concurrent traversals of the elements are needed.
+- A uniform interface for traversal is needed.
+- Subtle differences exist between the implementation details of various iterators.
+
+Example :
+
+The Java implementation of the iterator pattern allows users to traverse various types of data sets without worrying about the underlying implementation of the collection. Since clients simply interact with the iterator interface, collections are left to define the appropriate iterator for themselves. Some will allow full access to the underlying data set while others may restrict certain functionalities, such as removing items.
+
+
 The iterator pattern is a behavioral object design pattern. The iterator pattern allows for the traversal through the elements in a grouping of objects via a standardized interface. An Iterator interface defines the actions that can be performed. These actions include being able to traverse the objects and also obtain the objects.
 
 Java features the widely used java.util.Iterator interface which is used to iterate through things such as Java collections. We can write our own iterator by implementing java.util.Iterator. This interface features the hasNext(), next(), and remove() methods. When writing an iterator for a class, it is very common for the iterator class to be an inner class of the class that we'd like to iterate through.
@@ -1406,6 +1539,20 @@ The console output is shown here.
 
 ### Memento Pattern
 
+![](media/memento.png)
+
+Purpose : Allows for capturing and externalizing an object's internal state so that it can be restored later, all without violating encapsulation.
+
+Use When :
+- The internal state of an object must be saved and restored at a later time.
+- Internal state cannot be exposed by interfaces without exposing implementation.
+- Encapsulation boundaries must be preserved.
+
+Example :
+
+Undo functionality can nicely be implemented using the memento pattern. By serializing and deserializing the state of an object before the change occurs we can preserve a snapshot of it that can later be restored should the user choose to undo the operation.
+
+
 The memento pattern is a behavioral design pattern. The memento pattern is used to store an object's state so that this state can be restored at a later point. The saved state data in the memento object is not accessible outside of the object to be saved and restored. This protects the integrity of the saved state data.
 
 In this pattern, an Originator class represents the object whose state we would like to save. A Memento class represents an object to store the state of the Originator. The Memento class is typically a private inner class of the Originator. As a result, the Originator has access to the fields of the memento, but outside classes do not have access to these fields. This means that state information can be transferred between the Memento and the Originator within the Originator class, but outside classes do not have access to the state data stored in the Memento.
@@ -1537,6 +1684,7 @@ The console output of the execution of MementoDemo is shown here. Notice how the
 	Name: Fred, day number: 4, weight: 97
 	Restoring saved state.
 	Name: Fred, day number: 2, weight: 99
+
 
 
 
