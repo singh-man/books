@@ -45,7 +45,37 @@ Design patterns are a popular topic in software development. A design pattern is
 - Iterator Pattern
 - Memento Pattern
 
+
+#### Interpreter Solution Language
+
+![](media/interpreter.png)
+
+Purpose : Defines a representation for a grammar as well as a mechanism to understand and act upon the grammar.
+
+Use When :
+- There is grammar to interpret that can be represented as large syntax trees.
+- The grammar is simple.
+- Efficiency is not important.
+- Decoupling grammar from underlying expressions is desired.
+
+Example :
+
+Text based adventures, wildly popular in the 1980's, provide a good example of this. Many had simple commands, such as "step down" that allowed traversal of the game. These commands could be nested such that it altered their meaning. For example, "go in" would result in a different outcome than "go up". By creating a hierarchy of commands based upon the command and the qualifier (non-terminal and terminal expressions) the application could easily map many command variations to a relating tree of actions.
+
+
 #### Singleton Pattern
+
+![](media/singleton.png)
+
+Purpose : Ensures that only one instance of a class is allowed within a system.
+
+Use When :
+- Exactly one instance of a class is required.
+- Controlled access to a single object is necessary.
+
+Example : 
+Most languages provide some sort of system or environment object that allows the language to interact with the native operating system. Since the application is physically running on only one operating system there is only ever a need for a single instance of this system object. The singleton pattern would be implemented by the language runtime to ensure that only a single copy of the system object is created and to ensure only appropriate processes are allowed access to it.
+
 
 A singleton is a class that is instantiated only once. This is typically accomplished by creating a static field in the class representing the class. A static method exists on the class to obtain the instance of the class and is typically named something such as getInstance(). The creation of the object referenced by the static field can be done either when the class is initialized or the first time that getInstance() is called. The singleton class typically has a private constructor to prevent the singleton class from being instantiated via a constructor. Rather, the instance of the singleton is obtained via the static getInstance() method.
 
@@ -157,6 +187,20 @@ public class BillPughSingleton {
 Notice
 #### Factory Pattern
 
+![](media/factory.png)
+
+Purpose : Exposes a method for creating objects, allowing subclasses to control the actual creation process.
+
+Use When :
+- A class will not know what classes it will be required to create.
+- Subclasses may specify what objects should be created.
+- Parent classes wish to defer creation to their subclasses.
+
+Example :
+
+Many applications have some form of user and group structure for security. When the application needs to create a user it will typically delegate the creation of the user to multiple user implementations. The parent user object will handle most operations for each user but the subclasses will define the factory method that handles the distinctions in the creation of each type of user. A system may have AdminUser and StandardUser objects each of which extend the User object. The AdminUser object may perform some extra tasks to ensure access while the StandardUser may do the same to limit access.
+
+
 The factory pattern (also known as the factory method pattern) is a creational design pattern. A factory is a Java class that is used to encapsulate object creation code. A factory class instantiates and returns a particular type of object based on data passed to the factory. The different types of objects that are returned from a factory typically are subclasses of a common parent class.
 
 The data passed from the calling code to the factory can be passed either when the factory is created or when the method on the factory is called to create an object. This creational method is often called something such as getInstance or getClass .
@@ -263,6 +307,22 @@ AnimalFactory animalFactory = AnimalFactory.getAnimalFactoryInstance();
 In this example, AnimalFactory.getAnimalFactoryInstance() would be implemented to return a static AnimalFactory object. This results in a single factory being instantiated and used rather than requiring a new factory to be instantiated each time the factory needs to be used.
 
 #### Abstract Factory Pattern
+
+![](media/abstract-factory.png)
+
+Purpose : Provide an interface that delegates creation calls to one or more concrete classes in order to deliver specific objects.
+
+Use When :
+- The creation of objects should be independent of the system utilizing them.
+- Systems should be capable of using multiple families of objects.
+- Families of objects must be used together.
+- Libraries must be published without exposing implementation details.
+- Concrete classes should be decoupled from clients.
+
+Example :
+
+Email editors will allow for editing in multiple formats including plain text, rich text, and HTML Depending on the format being used, different objects will need to be created. If the message is plain text then there could be a body object that represented just plain text and an attachment object that simply encrypted the attachment into Base64. If the message is HTML then the body object would represent HTML encoded text and the attachment object would allow for inline representation and a standard attachment. By utilizing an abstract factory for creation we can then ensure that the appropriate object sets are created based upon the style of email that is being sent.
+
 
 The abstract factory pattern is a creational design pattern. An abstract factory is a factory that returns factories. Why is this layer of abstraction useful? A normal factory can be used to create sets of related objects. An abstract factory returns factories. Thus, an abstract factory is used to return factories that can be used to create sets of related objects.
 
@@ -461,6 +521,20 @@ objects. The console output is shown here.
 Notice the use of polymorphism. We obtain different factories via the common SpeciesFactory superclass. We also obtain different animals via the common Animal superclass.
 
 #### Builder Pattern
+
+![](media/builder.png)
+
+Purpose : Allows for the dynamic creation of objects based upon easily interchangeable algorithms.
+
+Use When :
+- Object creation algorithms should be decoupled from the system.
+- Multiple representations of creation algorithms are required.
+- The addition of new creation functionality without changing the core code is necessary.
+- Runtime control over the creation process is required.
+
+Example : 
+A file transfer application could possibly use many different protocols to send files and the actual transfer object that will be created will be directly dependent on the chosen protocol. Using a builder we can determine the right builder to use to instantiate the right object. If the setting is FTP then the FTP builder would be used when creating the object.
+
 
 The builder pattern is a creational design pattern used to assemble complex objects. With the builder pattern, the same object construction process can be used to create different objects. The builder has 4 main parts: a Builder, Concrete Builders, a Director, and a Product.
 
@@ -662,6 +736,22 @@ Notice that if we'd like to create a new type of meal, we can do so by implement
 
 #### Prototype Pattern
 
+![](media/prototype.png)
+
+Purpose : Create objects based upon a template of an existing objects through cloning.
+
+Use When :
+- Composition, creation, and representation of objects should be decoupled from a system.
+- Classes to be created are specified at runtime.
+- A limited number of state combinations exist in an object.
+- Objects or object structures are required that are identical or closely resemble other existing objects or object structures.
+- The initial creation of each object is an expensive operation.
+
+Example :
+
+Rates processing engines often require the lookup of many different configuration values, making the initialization of the engine a relatively expensive process. When multiple instances of the engine is needed, say for importing data in a multi-threaded manner, the expense of initializing many engines is high. By utilizing the prototype pattern we can ensure that only a single copy of the engine has to be initialized then simply clone the engine to create a duplicate of the already initialized object. The added benefit of this is that the clones can be streamlined to only include relevant data for their situation.
+
+
 The prototype pattern is a creational design pattern. In the prototype pattern, a new object is created by cloning an existing object. In Java, the clone() method is an implementation of this design pattern. The prototype pattern can be a useful way of creating copies of objects. One example of how this can be useful is if an original object is created with a resource such as a data stream that may not be available at the time that a clone of the object is needed. Another example is if the original object creation involves a significant time commitment, such as reading data from a database or over a network. An added benefit of the prototype pattern is that it can reduce class proliferation in a project by avoiding factory proliferation.
 
 Normally in Java, if you\'d like to use cloning (ie, the prototype pattern), you can utilize the clone() method and the Cloneable interface. By default, clone() performs a shallow copy. In another tutorial, we demonstrate how Serializable can be used to simplify deep copying.
@@ -758,4 +848,5 @@ The console output of executing Demo is shown here.
 	person 2:This person is named Fred
 	dog 1:This dog says Wooof!
 	dog 2:This dog says Wooof!
+
 
