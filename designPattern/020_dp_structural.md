@@ -4,6 +4,20 @@ Structural Design Patterns
 
 ### Adapter Pattern
 
+![](media/adapter.png)
+
+Purpose : Permits classes with disparate interfaces to work together by creating a common object by which they may communicate and interact.
+
+Use When :
+- A class to be used doesn't meet interface requirements.
+- Complex conditions tie object behavior to its state.
+- Transitions between states need to be explicit.
+
+Example :
+
+A billing application needs to interface with an HR application in order to exchange employee data, however each has its own interface and implementation for the Employee object. In addition, the SSN is stored in different formats by each system. By creating an adapter we can create a common interface between the two applications that allows them to communicate using their native objects and is able to transform the SSN format in the process.
+
+
 The adapter pattern is a structural design pattern. In the adapter pattern, a wrapper class (ie, the adapter) is used translate requests from it to another class (ie, the adaptee). In effect, an adapter provides particular interactions with an adaptee that are not offered directly by the adaptee.
 
 The adapter pattern takes two forms. In the first form, a "class adapter" utilizes inheritance. The class adapter extends the adaptee class and adds the desired methods to the adapter. These methods can be declared in an interface (ie, the "target" interface).
@@ -180,6 +194,19 @@ The console output of the execution of AdapterDemo is shown here.
 
 ### Composite Pattern
 
+![](media/composite.png)
+
+Purpose : Facilitates the creation of object hierarchies where each object can be treated independently or as a set of nested objects through the same interface.
+
+Use When :
+- Hierarchical representations of objects are needed.
+- Objects and compositions of objects should be treated uniformly.
+
+Example :
+
+Sometimes the information displayed in a shopping cart is the product of a single item while other times it is an aggregation of multiple items. By implementing items as composites we can treat the aggregates and the items in the same way, allowing us to simply iterate over the tree and invoke functionality on each item. By calling the getCost() method on any given node we would get the cost of that item plus the cost of all child items, allowing items to be uniformly treated whether they were single items or groups of items.
+
+
 The composite pattern is a structural design pattern. In the composite pattern, a tree structure exists where identical operations can be performed on leaves and nodes. A node in a tree is a class that can have children. A node class is a \'composite\' class. A leaf in a tree is a \'primitive\' class that does not have children. The children of a composite can be leaves or other composites.
 
 The leaf class and the composite class share a common \'component\'interface that defines the common operations that can be performed on leaves and composites. When an operation on a composite is performed, this operation is performed on all children of the composite, whether they are leaves or composites. Thus, the composite pattern can be used to perform common operations on the objects that compose a tree.
@@ -326,6 +353,21 @@ As seen in the output, the composite pattern allows us to perform operations on 
 
 ### Proxy Pattern
 
+![](media/proxy.png)
+
+Purpose : Allows for object level access control by acting as a pass through entity or a placeholder object.
+
+Use When :
+- The object being represented is external to the system.
+- Objects need to be created on demand.
+- Access control for the original object is required.
+- Added functionality is required when an object is accessed.
+
+Example :
+
+Ledger applications often provide a way for users to reconcile their bank statements with their ledger data on demand, automating much of the process. The actual operation of communicating with a third party is a relatively expensive operation that should be limited. By using a proxy to represent the communications object we can limit the number of times or the intervals the communication is invoked. In addition, we can wrap the complex instantiation of the communication object inside the proxy class, decoupling calling code from the implementation details.
+
+
 The proxy pattern is a structural design pattern. In the proxy pattern, a proxy class is used to control access to another class. The reasons for this control can vary. As one example, a proxy may avoid instantiation of an object until the object is needed. This can be useful if the object requires a lot of time or resources to create. Another reason to use a proxy is to control access rights to an object. A client request may require certain credentials in order to access the object.
 
 Now, we'll look at an example of the proxy pattern. First, We'll create an abstract class called Thing with a basic sayHello() message that includes the date/time that the message is displayed.
@@ -421,6 +463,21 @@ The console output of executing ProxyDemo is shown here. From the output, notice
 	SlowThing says howdy at Sat May 03 16:41:11 PDT 2008
 
 ### Flyweight Pattern
+
+![](media/flyweight.png)
+
+Purpose : Facilitates the reuse of many fine grained objects, making the utilization of large numbers of objects more efficient.
+
+Use When :
+- Many like objects are used and storage cost is high.
+- The majority of each object's state can be made extrinsic.
+- A few shared objects can replace many unshared ones.
+- The identity of each object does not matter.
+
+Example :
+
+Systems that allow users to define their own application flows and layouts often have a need to keep track of large numbers of fields, pages, and other items that are almost identical to each other. By making these items into flyweights all instances of each object can share the intrinsic state while keeping the extrinsic state separate. The intrinsic state would store the shared properties, such as how a textbox looks, how much data it can hold, and what events it exposes. The extrinsic state would store the unshared properties, such as where the item belongs, how to react to a user click, and how to handle events.
+
 
 The flyweight pattern is a structural design pattern. In the flyweight pattern, instead of creating large numbers of similar objects, objects are reused. This can be used to reduce memory requirements and instantiation time and related costs. Similarities between objects are stored inside of the objects, and differences are moved outside of the objects and placed in client code. These differences are passed in to the objects when needed via method calls on the objects. A Flyweight interface declares these methods. A Concrete Flyweight class implements the Flyweight interface which is used to perform operations based on external state and it also stores common state. A Flyweight Factory is used create and return Flyweight objects.
 
@@ -572,6 +629,20 @@ When executing FlyweightDemo, we see that it takes 3 seconds to create the Flywe
 
 ### Facade Pattern
 
+![](media/facade.png)
+
+Purpose : Supplies a single interface to a set of interfaces within a system.
+
+Use When :
+- A simple interface is needed to provide access to a complex system.
+- There are many dependencies between system implementations and clients.
+- Systems and subsystems should be layered.
+
+Example :
+
+By exposing a set of functionalities through a web service the client code needs to only worry about the simple interface being exposed to them and not the complex relationships that may or may not exist behind the web service layer. A single web service call to update a system with new data may actually involve communication with a number of databases and systems, however this detail is hidden due to the implementation of the façade pattern.
+
+
 The facade pattern is a structural design pattern. In the facade pattern, a facade classes is used to provide a single interface to set of classes. The facade simplifies a clients interaction with a complex system by localizing the interactions into a single interface. As a result, the client can interact with a single object rather than being required to interact directly in complicated ways with the objects that make up the subsystem.
 
 As an example, supposed we have three horribly written classes. For based on the class and method names (and the lack of documentation), it would be very difficult for a client to interact with these classes.
@@ -672,6 +743,20 @@ The console output of the execution of FacadeDemo is shown here.
 This example demonstrates how the facade pattern can be used to simplify interactions with a system of classes by providing a single point of interaction with the subsystem and hiding the complex details of subsystem interactions from client code. This is accomplished with a Facade class.
 
 ### Bridge Pattern
+![](media/bridge.png)
+
+Purpose : Defines an abstract object structure independently of the implementation object structure in order to limit coupling.
+
+Use When :
+- Abstractions and implementations should not be bound at compile time.
+- Abstractions and implementations should be independently extensible.
+- Changes in the implementation of an abstraction should have no impact on clients.
+- Implementation details should be hidden from the client.
+
+Example :
+
+The Java Virtual Machine (JVM) has its own native set of functions that abstract the use of windowing, system logging, and byte code execution but the actual implementation of these functions is delegated to the operating system the JVM is running on. When an application instructs the JVM to render a window it delegates the rendering call to the concrete implementation of the JVM that knows how to communicate with the operating system in order to render the window.
+
 
 The bridge pattern is a structural design pattern. In the bridge pattern, we separate an abstraction and its implementation and develop separate inheritance structures for both the abstraction and the implementor. The abstraction is an interface or abstract class, and the implementor is likewise an interface or abstract class. The abstraction contains a reference to the implementor. Children of the abstraction are referred to as refined abstractions, and children of the implementor are concrete implementors. Since we can change the reference to the implementor in the abstraction, we are able to change the abstraction's implementor at run-time. Changes to the implementor do not affect client code.
 
@@ -846,6 +931,22 @@ Notice that we were able to change the implementor (engine) dynamically for each
 
 ### Decorator Pattern
 
+![](media/decorator.png)
+
+Purpose : Allows for the dynamic wrapping of objects in order to modify their existing responsibilities and behaviors.
+
+Use When :
+- Object responsibilities and behaviors should be dynamically modifiable.
+- Concrete implementations should be decoupled from responsibilities and behaviors.
+- Subclassing to achieve modification is impractical or impossible.
+- Specific functionality should not reside high in the object hierarchy.
+- A lot of little objects surrounding a concrete implementation is acceptable.
+
+Example :
+
+Many businesses set up their mail systems to take advantage of decorators. When messages are sent from someone in the company to an external address the mail server decorates the original message with copyright and confidentiality information. As long as the message remains internal the information is not attached. This decoration allows the message itself to remain unchanged until a runtime decision is made to wrap the message with additional information.
+
+
 The decorator pattern is a structural design pattern. Whereas inheritance adds functionality to classes, the decorator pattern adds functionality to objects by wrapping objects in other objects. Each time additional functionality is required, the object is wrapped in another object. Java I/O streams are a well-known example of the decorator pattern.
 
 For the decorator pattern, we require a class that serves as the base object that we add functionality to. This is a Concrete Component, and it implements a Component interface. The Component interface declares the common operations that are to be performed by the concrete component and all the decorators that wrap the concrete component object. A Decorator is an abstract class that implements the Component interface and contains a reference to a Component. Concrete Decorators are classes that extend Decorator.
@@ -1005,4 +1106,5 @@ The console output is shown here.
 	Grrrrr.
 
 In this example, we just used the Animal reference to refer to the objects. Using this approach, we could only access the shared operations of the Animal interface (ie, the describe() method). Instead of referencing this interface, we could have referenced the concrete decorator class. This would have exposed the unique functionality of the concrete decorator.
+
 
