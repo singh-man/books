@@ -16,12 +16,9 @@ Use When :
 
 Example :
 
-A parent class, InstantMessage, will likely have all the methods required to handle sending a message. However, the actual serialization of the data to send may vary depending on the implementation. A video message and a plain text message will require different algorithms in order to serialize the data correctly. Subclasses of InstantMessage can provide their own implementation of the serialization method, allowing the parent class to work with them without understanding their implementation details.
+Steps of an algorithm. A parent class, InstantMessage, will likely have all the methods required to handle sending a message. However, the actual serialization of the data to send may vary depending on the implementation. A video message and a plain text message will require different algorithms in order to serialize the data correctly. Subclasses of InstantMessage can provide their own implementation of the serialization method, allowing the parent class to work with them without understanding their implementation details.
 
-
-The template method pattern is a behavioral class pattern. A behavioral class pattern uses inheritance for distribution of behavior. In the template method pattern, a method (the \'template method\') defines the steps of an algorithm. The implementation of these steps (ie, methods) can be deferred to subclasses. Thus, a particular algorithm is defined in the template method, but the exact steps of this algorithm can be defined in subclasses. The template method is implemented in an abstract class. The steps (methods) of the algorithm are declared in the abstract class, and the methods whose implementations are to be delegated to subclasses are declared abstract.
-
-Here is an example of the template method pattern. Meal is an abstract class with a template method called doMeal() that defines the steps involved in a meal. We declare the method as final so that it can not be overridden. The algorithm defined by doMeal() consists of four steps: prepareIngredients(), cook(), eat(), and cleanUp(). The eat() method is implemented although subclasses can override the implementation. The prepareIngredients(), cook(), and cleanUp() methods are are declared abstract so that subclasses need to implement them.
+Meal is an abstract class with a template method called doMeal() that defines the steps involved in a meal. We declare the method as final so that it can not be overridden. The algorithm defined by doMeal() consists of four steps: prepareIngredients(), cook(), eat(), and cleanUp(). The eat() method is implemented although subclasses can override the implementation. The prepareIngredients(), cook(), and cleanUp() methods are are declared abstract so that subclasses need to implement them.
 
 [Meal.java](http://www.avajava.com/tutorials/design-patterns/template-method-pattern/Meal.java)
 ```java
@@ -147,7 +144,6 @@ Use When :
 Example :
 
 Mailing list software keeps track of who is signed up to the mailing list and provides a single point of access through which any one person can communicate with the entire list. Without a mediator implementation a person wanting to send a message to the group would have to constantly keep track of who was signed up and who was not. By implementing the mediator pattern the system is able to receive messages from any point then determine which recipients to forward the message on to, without the sender of the message having to be concerned with the actual recipient list.
-
 
 The mediator pattern is a behavioral object design pattern. The mediator pattern centralizes communication between objects into a mediator object. This centralization is useful since it localizes in one place the interactions between objects, which can increase code maintainability, especially as the number of classes in an application increases. Since communication occurs with the mediator rather than directly with other objects, the mediator pattern results in a loose coupling of objects.
 
@@ -381,7 +377,6 @@ In this example of the mediator pattern, notice that all communication between o
 Purpose : Gives more than one object an opportunity to handle a request by linking receiving objects together.
 
 Use When :
-
 - Multiple objects may handle a request and the handler doesn't have to be a specific object.
 - A set of objects should be able to handle a request with the handler determined at runtime.
 - A request not being handled is an acceptable potential outcome.
@@ -390,12 +385,7 @@ Example :
 
 Exception handling in some languages implements this pattern. When an exception is thrown in a method the runtime checks to see if the method has a mechanism to handle the exception or if it should be passed up the call stack. When passed up the call stack the process repeats until code to handle the exception is encountered or until there are no more parent objects to hand the request to.
 
-
-The chain of responsibility pattern is a behavioral object design pattern. In the chain of responsibility pattern, a series of handler objects are chained together to handle a request made by a client object. If the first handler can not handle the request, the request is forwarded to the next handler, and it is passed down the chain until the request reaches a handler that can handle the request or the chain ends. In this pattern, the client is decoupled from the actual handling of the request, since it does not know what class will actually handle the request.
-
-In this pattern, a Handler is an interface for handling a request and accessing a handler's successor. A Handler is implemented by a Concrete Handler. The Concrete Handler will handle the request or pass it on to the next Concrete Handler. A Client makes the request to the start of the handler chain.
-
-Now, lets look at an example of the chain of responsibility pattern. Rather than an interface, I\'ll use an abstract base class as the handler so that subclasses can utilize the implemented setSuccessor() method. This abstract class is called PlanetHandler. Concrete handlers that subclass PlanetHandler need to implement the handleRequest() method.
+Servlet Filter Chain
 
 [PlanetHandler.java](http://www.avajava.com/tutorials/design-patterns/chain-of-responsibility-pattern/PlanetHandler.java)
 ```java
@@ -560,16 +550,14 @@ This pattern can be found in almost every GUI environment. When buttons, text, a
 
 The observer pattern is a behavioral object design pattern. (Publisher(Subject) + Subscriber(Observers) = Observer Pattern) In the observer pattern, an object called the subject maintains a collection of objects called observers. When the subject changes, it notifies the observers. Observers can be added or removed from the collection of observers in the subject. The changes in state of the subject can be passed to the observers so that the observers can change their own state to reflect this change.
 
-> Observer Pattern is synchronized means **tightly coupled**.
->> Alternate: is Publisher Subscriber **Loose coupling**.
->>> Which is Async means an Event Bus exist acts as a broker for **Topic** based broadcasting.
+> Sync
+>> Observer Pattern **tightly coupled**.
+> Async
+>> Publisher Subscriber **Loose coupling**.
+>>> Means an Event Bus exist, acts as a broker for **Topic** based broadcasting.
 >>>> JMS **Topic** based are primarily Pub-Sub. While **Point-to-Point** (queue-based messaging)
 
 **Used in JMS with one more provider layer(Queues and Topics) for communication and to asynchronize the data. That means Observer Pattern + Producer/Consumer model is JMS Prorviders are provided by JMS and it also provides some interfaces to make publisher and subscriber.**
-
-The subject has an interface that defines methods for attaching and detaching observers from the subject's collection of observers. This interface also features a notification method. This method should be called when the state of the subject changes. This notifies the observers that the subject's state has changed. The observers have an interface with a method to update the observer. This update method is called for each observer in the subject's notification method. Since this communication occurs via an interface, any concrete observer implementing the observer interface can be updated by the subject. This results in loose coupling between the subject and the observer classes.
- 
-Now we'll look at an example of the observer pattern. We'll start by creating an interface for the subject called WeatherSubject. This will declare three methods: addObserver(), removeObserver(), and doNotify().
 
 The easiest way to implement a Subject's notify() method is with a single thread, but that can have undesirable performance implications. A single thread will update each observer one-at-a-time, in sequence; so those at the end of a long list of observers may need to wait a long time for updates. And a subject spending a long time updating all of its observers isn\'t accomplishing anything else. Even worse, an observer may well use its update thread to recact to the update, querying the subject for state and processing the new data; such observer work in the update thread makes the update process take even longer.
 
@@ -762,10 +750,9 @@ Example :
 
 When importing data into a new system different validation algorithms may be run based on the data set. By configuring the import to utilize strategies the conditional logic to determine what validation set to run can be removed and the import can be decoupled from the actual validation code. This will allow us to dynamically call one or more strategies during the import.
 
-
 Strategy : *encapsulate the concept that varies* and *program to an interface, not an implementation*
 
-The strategy pattern is a behavioral object design pattern. In the strategy pattern, different algorithms**(behavior)** are represented as Concrete Strategy classes (***simple words: segregate the data and its behavior to composition/aggregation rather than inheritance like Duck and its Fly and Quack behavior so that different ducks can use the different behaviors dynamically***), and they share a common Strategy interface. A Context object contains a reference to a Strategy. By changing the Context's Strategy, different behaviors can be obtained. Although these behaviors are different, the different strategies all operate on data from the Context.
+**simple words: segregate the data and its behavior to composition/aggregation rather than inheritance like Duck and its Fly and Quack behavior so that different ducks can use the different behaviors dynamically**
 
 The strategy pattern is one way that composition can be used as an alternative to subclassing. Rather than providing different behaviors via subclasses overriding methods in superclasses, the strategy pattern allows different behaviors to be placed in Concrete Strategy classes which share the common Strategy interface. A Context class is composed of a reference to a Strategy.
 
@@ -891,13 +878,11 @@ Example :
 
 Job queues are widely used to facilitate the asynchronous processing of algorithms. By utilizing the command pattern the functionality to be executed can be given to a job queue for processing without any need for the queue to have knowledge of the actual implementation it is invoking. The command object that is enqueued implements its particular algorithm within the confines of the interface the queue is expecting.
 
-
 Encapsulates Method invocation: -
 
 **Requester(Client) -> Command -> Receiver(who will take the action)**
 
-The client instantiates the Invoker, the Receiver, and the concrete
-command objects.
+The client instantiates the Invoker, the Receiver, and the concrete command objects.
 
 A workaround of **If-else or switch**.
 
@@ -905,7 +890,7 @@ Actually this is the OO approach to achieve the same objective operation.
 
 ![](media/image2.png)
 
-key idea here is that the concrete command registers itself with the Invoker and the Invoker calls it back, executing the command on the Receiver.
+Key idea here is that the concrete command registers itself with the Invoker and the Invoker calls it back, executing the command on the Receiver.
 
 Command : Action and receiver are bounded in Command Object.
 
@@ -920,8 +905,6 @@ Receiver
 
    1. Decouple the requester of an action from the object that actually performs the action.
    1. command object encapsulates a request to do something
-
-The command pattern is a behavioral object design pattern. In the command pattern, a Command interface declares a method for executing a particular action. Concrete Command classes implement the execute() method of the Command interface, and this execute() method invokes the appropriate action method of a Receiver class that the Concrete Command class contains. The Receiver class performs a particular action. A Client class is responsible for creating a Concrete Command and setting the Receiver of the Concrete Command. An Invoker class contains a reference to a Command and has a method to execute the Command.
 
 In the command pattern, the invoker is decoupled from the action performed by the receiver. The invoker has no knowledge of the receiver. The invoker invokes a command, and the command executes the appropriate action of the receiver. Thus, the invoker can invoke commands without knowing the details of the action to be performed. In addition, this decoupling means that changes to the receiver's action don\'t directly affect the invocation of the action.
 
@@ -1064,8 +1047,7 @@ Example :
 
 An email object can have various states, all of which will change how the object handles different functions. If the state is "not sent" then the call to send() is going to send the message while a call to recallMessage() will either throw an error or do nothing. However, if the state is "sent" then the call to send() would either throw an error or do nothing while the call to recallMessage() would attempt to send a recall notification to recipients. To avoid conditional statements in most or all methods there would be multiple state objects that handle the implementation with respect to their particular state. The calls within the Email object would then be delegated down to the appropriate state object for handling.
 
-
-The state pattern is a behavioral object design pattern. The idea behind the state pattern is for an object to change its behavior depending on its state. In the state pattern, we have a Context class, and this class has a State reference to a Concrete State instance. The State interface declares particular methods that represent the behaviors of a particular state. Concrete States implement these behaviors. By changing a Context's Concrete State, we change its behavior. In essence, in the state pattern, a class (the Context) is supposed to behave like different classes depending on its state. The state pattern avoids the use of switch and if statements to change behavior.
+The state pattern avoids the use of switch and if statements to change behavior.
 
 Lets look at an example of the state pattern. First off, We'll define the EmotionalState interface. It declares two methods, sayHello() and sayGoodbye().
 
@@ -1197,8 +1179,9 @@ Example :
 
 Calculating taxes in different regions on sets of invoices would require many different variations of calculation logic. Implementing a visitor allows the logic to be decoupled from the invoices and line items. This allows the hierarchy of items to be visited by calculation code that can then apply the proper rates for the region. Changing regions is as simple as substituting a different visitor.
 
+> Double Dispatch
 
-The visitor pattern is a behavioral object design pattern. The visitor pattern is used to simplify operations on groupings of related objects. These operations are performed by the visitor rather than by placing this code in the classes being visited. Since the operations are performed by the visitor rather than by the classes being visited, the operation code gets centralized in the visitor rather than being spread out across the grouping of objects, thus leading to code maintainability. The visitor pattern also avoids the use of the instanceof operator in order to perform calculations on similar classes.
+The visitor pattern is used to simplify operations on groupings of related objects. These operations are performed by the visitor rather than by placing this code in the classes being visited. Since the operations are performed by the visitor rather than by the classes being visited, the operation code gets centralized in the visitor rather than being spread out across the grouping of objects, thus leading to code maintainability. The visitor pattern also avoids the use of the instanceof operator in order to perform calculations on similar classes.
 
 In the visitor pattern, we have a Visitor interface that declares visit() methods for the various types of elements that can be visited. Concrete Visitors implement the Visitor interface's visit() methods. The visit() methods are the operations that should be performed by the visitor on an element being visited.
 
@@ -1406,9 +1389,6 @@ Example :
 
 The Java implementation of the iterator pattern allows users to traverse various types of data sets without worrying about the underlying implementation of the collection. Since clients simply interact with the iterator interface, collections are left to define the appropriate iterator for themselves. Some will allow full access to the underlying data set while others may restrict certain functionalities, such as removing items.
 
-
-The iterator pattern is a behavioral object design pattern. The iterator pattern allows for the traversal through the elements in a grouping of objects via a standardized interface. An Iterator interface defines the actions that can be performed. These actions include being able to traverse the objects and also obtain the objects.
-
 Java features the widely used java.util.Iterator interface which is used to iterate through things such as Java collections. We can write our own iterator by implementing java.util.Iterator. This interface features the hasNext(), next(), and remove() methods. When writing an iterator for a class, it is very common for the iterator class to be an inner class of the class that we'd like to iterate through.
 
 Lets look at an example of this. We have an Item class, which represents an item on a menu. An item has a name and a price.
@@ -1552,21 +1532,6 @@ Example :
 
 Undo functionality can nicely be implemented using the memento pattern. By serializing and deserializing the state of an object before the change occurs we can preserve a snapshot of it that can later be restored should the user choose to undo the operation.
 
-
-The memento pattern is a behavioral design pattern. The memento pattern is used to store an object's state so that this state can be restored at a later point. The saved state data in the memento object is not accessible outside of the object to be saved and restored. This protects the integrity of the saved state data.
-
-In this pattern, an Originator class represents the object whose state we would like to save. A Memento class represents an object to store the state of the Originator. The Memento class is typically a private inner class of the Originator. As a result, the Originator has access to the fields of the memento, but outside classes do not have access to these fields. This means that state information can be transferred between the Memento and the Originator within the Originator class, but outside classes do not have access to the state data stored in the Memento.
-
-The memento pattern also utilizes a Caretaker class. This is the object that is responsible for storing and restoring the Originator's state via a Memento object. Since the Memento is a private inner class, the Memento class type is not visible to the Caretaker. As a result, the Memento object needs to be stored as an Object within the Caretaker.
-
-Now, lets look at an example. The DietInfo class is our Originator class. we'd like to be able to save and restore its state. It contains 3 fields: a dieter name field, the day number of the diet, and the weight of the dieter on the specified day of the diet.
-
-This class contains a private inner class called Memento. This is our Memento class that is used to save the state of DietInfo. Memento has 3 fields representing the dieter name, the day number, and the weight of the dieter.
-
-Notice the save() method of DietInfo. This creates and returns a Memento object. This returned Memento object gets stored by the caretaker. Note that DietInfo.Memento is not visible, so the caretaker can not reference DietInfo.Memento. Instead, it stores the reference as an Object.
-
-The restore() method of DietInfo is used to restore the state of the DietInfo. The caretaker passes in the Memento (as an Object). The memento is cast to a Memento object and then the DietInfo object's state is restored by copying over the values from the memento.
-
 [DietInfo.java](http://www.avajava.com/tutorials/design-patterns/memento-pattern/DietInfo.java)
 ```java
 package com.cakes;
@@ -1684,8 +1649,5 @@ The console output of the execution of MementoDemo is shown here. Notice how the
 	Name: Fred, day number: 4, weight: 97
 	Restoring saved state.
 	Name: Fred, day number: 2, weight: 99
-
-
-
 
 
