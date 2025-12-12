@@ -544,20 +544,15 @@ This pattern can be found in almost every GUI environment. When buttons, text, a
 
 *Actually the Events/Listener concept.*
 
-*Defines a one-to-many dependency between objects so that when one*
-
-*object changes state, all of its dependents are notified and updated automatically.*
-
-The observer pattern is a behavioral object design pattern. (Publisher(Subject) + Subscriber(Observers) = Observer Pattern) In the observer pattern, an object called the subject maintains a collection of objects called observers. When the subject changes, it notifies the observers. Observers can be added or removed from the collection of observers in the subject. The changes in state of the subject can be passed to the observers so that the observers can change their own state to reflect this change.
+*Defines a one-to-many dependency between objects so that when one object changes state, all of its dependents are notified and updated automatically.*
 
 > Sync
 >> Observer Pattern **tightly coupled**.
+
 > Async
 >> Publisher Subscriber **Loose coupling**.
 >>> Means an Event Bus exist, acts as a broker for **Topic** based broadcasting.
 >>>> JMS **Topic** based are primarily Pub-Sub. While **Point-to-Point** (queue-based messaging)
-
-**Used in JMS with one more provider layer(Queues and Topics) for communication and to asynchronize the data. That means Observer Pattern + Producer/Consumer model is JMS Prorviders are provided by JMS and it also provides some interfaces to make publisher and subscriber.**
 
 The easiest way to implement a Subject's notify() method is with a single thread, but that can have undesirable performance implications. A single thread will update each observer one-at-a-time, in sequence; so those at the end of a long list of observers may need to wait a long time for updates. And a subject spending a long time updating all of its observers isn\'t accomplishing anything else. Even worse, an observer may well use its update thread to recact to the update, querying the subject for state and processing the new data; such observer work in the update thread makes the update process take even longer.
 
@@ -1649,5 +1644,6 @@ The console output of the execution of MementoDemo is shown here. Notice how the
 	Name: Fred, day number: 4, weight: 97
 	Restoring saved state.
 	Name: Fred, day number: 2, weight: 99
+
 
 
