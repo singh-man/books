@@ -16,7 +16,7 @@ public class Fibonacci_FactorialTest {
      * exit criteria : n <= 1 -> return n
      */
     @Test
-    public void fibonacci_1() {
+    public void fibonacci_recursion() {
         Function<Integer, Integer> fib = new Function<>() {
             @Override
             public Integer apply(Integer n) {
@@ -30,7 +30,7 @@ public class Fibonacci_FactorialTest {
     }
 
     @Test
-    public void fibonacci_withMemoization() {
+    public void fibonacci_recursion_withMemoization() {
         Map<Integer, Integer> cache = new HashMap<>();
         Function<Integer, Integer> fib = new Function<>() {
             @Override
@@ -46,7 +46,7 @@ public class Fibonacci_FactorialTest {
     }
 
     @Test
-    public void fibonacci_2() {
+    public void fibonacci_recursion_withPrinting() {
         BiFunction<Integer, Integer, Long> fib = new BiFunction<>() {
             @Override
             public Long apply(Integer depth, Integer n) {
@@ -67,17 +67,55 @@ public class Fibonacci_FactorialTest {
         fib.apply(0, 5);
     }
 
+    @Test
+    public void fibonacci_tabulation() {
+        Function<Integer, Integer> fib = new Function<>() {
+            @Override
+            public Integer apply(Integer n) {
+                if (n <= 1) return n;
+                int[] dp = new int[n + 1];
+                dp[0] = 0;
+                dp[1] = 1;
+                for (int i = 2; i <= n; i++) {
+                    dp[i] = dp[i - 1] + dp[i - 2];
+                }
+                return dp[n];
+            }
+        };
+        Assertions.assertEquals(55, fib.apply(10));
+        IntStream.range(0, 10)
+                .forEach(i -> System.out.println(fib.apply(i)));
+    }
+
     /**
      * n = n * fact(n-1)
      * exit criteria : n == 0 | n == 1 -> return n
      */
     @Test
-    public void factorial() {
+    public void factorial_recursion() {
         Function<Integer, Integer> fact = new Function<>() {
             @Override
             public Integer apply(Integer n) {
                 if (n== 0 || n == 1) return n;
                 return n * apply(n - 1);
+            }
+        };
+        Assertions.assertEquals(120, fact.apply(5));
+    }
+
+    @Test
+    public void factorial_tabulation() {
+        Function<Integer, Integer> fact = new Function<>() {
+            @Override
+            public Integer apply(Integer n) {
+                if (n == 0 || n == 1) return n;
+                int[] dp = new int[n + 1];
+                dp[0] = 1;
+                dp[1] = 1;
+                for (int i = 2; i <= n; i++) {
+                    dp[i] = i * dp[i - 1];
+                }
+                return dp[n];
             }
         };
         Assertions.assertEquals(120, fact.apply(5));
