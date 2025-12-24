@@ -1,4 +1,4 @@
-package number;
+package dfs_bfs;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,11 +1,11 @@
-package search;
+package slidingWindow;
 
 import org.junit.jupiter.api.Test;
 
 /**
  * This represents Kadane's algorithm
  */
-public class ArrayLargestSumSubArrayTest {
+public class Kadane_ArrayLargestSumSubArrayTest {
 
     public int maxSubArraySum(int a[]) {
         int size = a.length;
