@@ -44,5 +44,4 @@ public class SubstringsWithSameFirstAndLastCharactersTest {
         Assertions.assertEquals(7, countSubstringWithEqualEnds("abcab"));
         Assertions.assertEquals(21, countSubstringWithEqualEnds("abcabadaea"));
     }
-
 }

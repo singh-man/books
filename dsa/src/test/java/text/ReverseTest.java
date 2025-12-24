@@ -3,15 +3,19 @@ package text;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import utils.FileUtils;
+import utils.timer.TimeTaken;
+import utils.timer.TimeTakenHelper;
+
+import java.io.File;
 import java.util.Stack;
 import java.util.function.Function;
 
 public class ReverseTest {
 
-    @Test
-    public void testReverseString_Stack() {
+    private static Function<String, String> reverseStringUsingStack() {
         Function<String, String> f = s -> {
-            Stack st = new Stack();
+            Stack<Character> st = new Stack<>();
             char[] arr = s.toCharArray();
             for (int i = 0; i < arr.length; i++) {
                 st.push(arr[i]);
@@ -22,6 +26,12 @@ public class ReverseTest {
             }
             return sb.toString();
         };
+        return f;
+    }
+
+    @Test
+    public void testReverseString_Stack() {
+        Function<String, String> f = reverseStringUsingStack();
         Assertions.assertEquals("hsinam", f.apply("manish"));
     }
 
@@ -54,33 +64,34 @@ public class ReverseTest {
         Assertions.assertEquals("hsinam", f.apply("manish"));
     }
 
-//    @Test
-//    public void testReverseString() {
-//        final String orig = FileUtils.readFile(
-//                        new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toString() + "string.text"))
-//                .stream().reduce(String::concat).get();
-//        final String reverseStringUseStack = cs.reverseStringUseStack(orig);
-//        System.out.println(reverseStringUseStack);
-//        TimeTakenHelper.calculateTime("Time by Stack way", new TimeTaken() {
-//
-//            @Override
-//            public void calculateTimeTaken() {
-//                cs.reverseStringUseStack(orig);
-//            }
-//        });
-//        TimeTakenHelper.calculateTime("Time by reverse array way", new TimeTaken() {
-//
-//            @Override
-//            public void calculateTimeTaken() {
-//                Assertions.assertEquals(reverseStringUseStack, cs.reverseStringUsingArray(orig));
-//            }
-//        });
-//        TimeTakenHelper.calculateTime("Time by Swaping way", new TimeTaken() {
-//
-//            @Override
-//            public void calculateTimeTaken() {
-//                Assertions.assertEquals(reverseStringUseStack, cs.reverseStringBySwaping(orig));
-//            }
-//        });
-//    }
+
+   @Test
+   public void testReverseString() {
+       final String orig = FileUtils.readFile(
+                        new File("src/test/java/text/string.text"))
+               .stream().reduce(String::concat).get();
+       final String reverseStringUseStack = reverseStringUsingStack().apply(orig);
+       System.out.println(reverseStringUseStack);
+       TimeTakenHelper.calculateTime("Time by Stack way", new TimeTaken() {
+
+           @Override
+           public void calculateTimeTaken() {
+               reverseStringUsingStack().apply(orig);
+           }
+       });
+       TimeTakenHelper.calculateTime("Time by reverse array way", new TimeTaken() {
+
+           @Override
+           public void calculateTimeTaken() {
+               Assertions.assertEquals(reverseStringUseStack, reverseStringUsingStack().apply(orig));
+           }
+       });
+       TimeTakenHelper.calculateTime("Time by Swaping way", new TimeTaken() {
+
+           @Override
+           public void calculateTimeTaken() {
+               Assertions.assertEquals(reverseStringUseStack, reverseStringUsingStack().apply(orig));
+           }
+       });
+   }
 }
