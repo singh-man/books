@@ -122,7 +122,9 @@ public class CodeSamplesTest {
 
     @Test
     public void testRemoveRangeFromList() {
-        List list = List.of("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+        List list = new ArrayList<>();
+        Stream.of("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+        .forEach(e -> list.add(e));;
         int startIndex = 5, endIndex = 7;
         System.out.println("Removing a range of values from this list ");
         list.forEach(System.out::print);
