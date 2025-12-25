@@ -1,4 +1,4 @@
-package text;
+package hash;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.TreeMap;
 
 public class RandomStringTest {
+
     @Test
     public void testGenerateRandomStrings() {
         int leftLimit = 97; // letter 'a'
@@ -18,6 +19,8 @@ public class RandomStringTest {
         for (int i = 0; i < targetStringLength; i++) {
             int randomLimitedInt = leftLimit + (int)
                     (random.nextFloat() * (rightLimit - leftLimit + 1));
+
+
             buffer.append((char) randomLimitedInt);
         }
         String generatedString = buffer.toString();

@@ -21,17 +21,7 @@ public class CodeSamplesTest {
 
     @Test
     public void testOfNameAgeComparator() {
-        class Employee {
-
-            int age;
-            String name;
-
-            public Employee(int age, String name) {
-                super();
-                this.age = age;
-                this.name = name;
-            }
-        }
+        record Employee(int age, String name) { }
         List<Employee> employeeList = new ArrayList<>();
         employeeList.add(new Employee(18, "man"));
         employeeList.add(new Employee(10, "man"));
@@ -55,10 +45,7 @@ public class CodeSamplesTest {
                 return x1.compareTo(x2);
             }
         });
-
-        for (Employee e : employeeList) {
-            System.out.println(e.name + e.age);
-        }
+        employeeList.forEach(System.out::println);
     }
 
     interface Searchable {
@@ -157,10 +144,7 @@ public class CodeSamplesTest {
     public void testMissingChessPieces() {
         String[][] chessBoard = {{null, "W_KI"}, {}, {}, {}, {}, {}, {}, {}};
         Map<String, Integer> map = missingChessPieces(chessBoard);
-        Set<String> keySet = map.keySet();
-        for (String s : keySet) {
-            System.out.println(s + ":" + map.get(s));
-        }
+        map.forEach((k, v) -> System.out.println(k + ":" + v));
     }
 
     @Test

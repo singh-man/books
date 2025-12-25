@@ -1,11 +1,9 @@
-package text;
+package monotonicStack;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import utils.FileUtils;
-import utils.timer.TimeTaken;
-import utils.timer.TimeTakenHelper;
 
 import java.io.File;
 import java.util.Stack;
@@ -72,26 +70,5 @@ public class ReverseTest {
                .stream().reduce(String::concat).get();
        final String reverseStringUseStack = reverseStringUsingStack().apply(orig);
        System.out.println(reverseStringUseStack);
-       TimeTakenHelper.calculateTime("Time by Stack way", new TimeTaken() {
-
-           @Override
-           public void calculateTimeTaken() {
-               reverseStringUsingStack().apply(orig);
-           }
-       });
-       TimeTakenHelper.calculateTime("Time by reverse array way", new TimeTaken() {
-
-           @Override
-           public void calculateTimeTaken() {
-               Assertions.assertEquals(reverseStringUseStack, reverseStringUsingStack().apply(orig));
-           }
-       });
-       TimeTakenHelper.calculateTime("Time by Swaping way", new TimeTaken() {
-
-           @Override
-           public void calculateTimeTaken() {
-               Assertions.assertEquals(reverseStringUseStack, reverseStringUsingStack().apply(orig));
-           }
-       });
    }
 }
