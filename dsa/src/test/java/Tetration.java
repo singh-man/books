@@ -1,5 +1,4 @@
 
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +14,7 @@ public class Tetration {
         if (n == 0)
             return 1;
         else
-            return Math.pow(x, tetration(x, n-1));
+            return Math.pow(x, tetration(x, n - 1));
     }
 
     @Test
