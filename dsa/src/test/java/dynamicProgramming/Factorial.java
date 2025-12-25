@@ -24,9 +24,7 @@ public class Factorial {
 
     @Test
     public void factorial_tabulation() {
-        var fact = new Function<Integer, Integer>() {
-            @Override
-            public Integer apply(Integer n) {
+        Function<Integer, Integer> fact = n -> {
                 if (n == 0 || n == 1) return n;
                 int[] dp = new int[n + 1];
                 dp[0] = 1;
@@ -35,8 +33,7 @@ public class Factorial {
                     dp[i] = i * dp[i - 1];
                 }
                 return dp[n];
-            }
-        };
+            };
         Assertions.assertEquals(120, fact.apply(5));
     }
 }

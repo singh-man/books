@@ -69,9 +69,7 @@ public class Fibonacci {
 
     @Test
     public void fibonaccgii_tabulation() {
-        var fib = new Function<Integer, Integer>() {
-            @Override
-            public Integer apply(Integer n) {
+        Function<Integer, Integer> fib = n -> {
                 if (n <= 1) return n;
                 int[] dp = new int[n + 1];
                 dp[0] = 0;
@@ -80,8 +78,7 @@ public class Fibonacci {
                     dp[i] = dp[i - 1] + dp[i - 2];
                 }
                 return dp[n];
-            }
-        };
+            };
         Assertions.assertEquals(55, fib.apply(10));
         IntStream.range(0, 10)
                 .forEach(i -> System.out.println(fib.apply(i)));

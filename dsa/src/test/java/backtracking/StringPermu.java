@@ -1,4 +1,4 @@
-package text;
+package backtracking;
 
 import org.junit.jupiter.api.Test;
 

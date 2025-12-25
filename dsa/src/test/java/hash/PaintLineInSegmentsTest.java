@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Consider a segmented line of unknown length, input are the segments!
  * Input: (4, 10) (7, 13) (20, 30) (1, 40)
- * Output:  6       3        10      20
+ * Output:   6       3        10      20
  * Find how much paint is needed for each segment.
  */
 public class PaintLineInSegmentsTest {

@@ -1,10 +1,9 @@
 package hash;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
 /**
  * Robot on an infinite grid can move N - S - W - E
@@ -37,29 +36,8 @@ public class RobotMovementTest {
         Assertions.assertTrue(robotComesToStartOrLoop(command));
     }
 
-
     private boolean robotCrossesPath(String[] commands) {
-        class XY {
-            int x, y;
-
-            public XY(int x, int y) {
-                this.x = x;
-                this.y = y;
-            }
-
-            @Override
-            public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
-                XY xy = (XY) o;
-                return x == xy.x && y == xy.y;
-            }
-
-            @Override
-            public int hashCode() {
-                return Objects.hash(x, y);
-            }
-        }
+        record XY(int x, int y) { }
         int x = 0, y = 0;
         Set<XY> xy = new HashSet<>();
         for (String c : commands) {
@@ -76,9 +54,9 @@ public class RobotMovementTest {
     @Test
     public void testFindPathCrosses() {
         String[] command = {"N", "N", "W", "S", "E", "N"};
-        Assertions.assertTrue(robotCrossesPath(command));
+        Assertions.assertTrue(robotCrossesPath(command), "Robot should have crossed the path");
         command = new String[]{"N", "N", "W", "S"};
-        Assertions.assertFalse(robotComesToStartOrLoop(command));
+        Assertions.assertFalse(robotCrossesPath(command), "Robot shouldn't have crossed the path");
     }
 
 }

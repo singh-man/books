@@ -1,11 +1,15 @@
 package hash;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class AnagramTest {
 
@@ -85,7 +89,7 @@ public class AnagramTest {
     public void funWithAnagrams_1() {
         List<String> input = List.of("code", "doce", "ecod", "framer", "frame", "rfame", "ecod", "interview", "viewinter",
                 "jack", "ackj", "mary");
-        Map<String, Integer> unique = new HashMap<>();
+        var unique = new HashMap<String, Integer>();
         for (int i = 0; i < input.size(); i++) {
             char[] text = input.get(i).toCharArray();
             Arrays.sort(text);
