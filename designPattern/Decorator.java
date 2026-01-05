@@ -65,11 +65,34 @@ public class Decorator {
         Function<String, String> decorate_2 = s -> s + " 2";
         Function<String, String> decorate_3 = s -> s + " 3";
 
-        Function<String, String> decorated = decorate_1.andThen(decorate_2).andThen(decorate_3);
+        Function<String, String> decorated = decorate_1
+                .andThen(decorate_2)
+                .andThen(decorate_3);
 
         Assertions.assertEquals("me 1 2 3", decorated.apply("me"));
     }
 
+    @Test
+    public void pureFunction_withSubClassStyle() {
+        interface Transform extends Function<String, String> {
+           default String transform(String s) {
+              return this.apply(s);
+           }
+        }
+        class MyTransform implements Transform {
+            @Override
+            public String apply(String s) {
+                return s + " : " + System.currentTimeMillis();
+            }
+        }
+        var s = "me";
+        String after = new MyTransform()
+                .andThen(new MyTransform()) // MyTransform is a sub-class of Function so it works here
+                .andThen(new MyTransform()) // apply.. called internally by andThen
+                .apply(s); // Remember this will come handy
+        Assertions.assertTrue(after.contains(":"));
+        System.out.println(after);
+    }
     @Test
     public void impureFunction_Consumer_mutableObject_objModifiedInEachOperation() {
         class A {
@@ -83,7 +106,9 @@ public class Decorator {
         Consumer<A> dec2 = a -> a.s += " World";
         Consumer<A> dec3 = a -> a.s += " More";
 
-        Consumer<A> finalDec = dec1.andThen(dec2).andThen(dec3);
+        Consumer<A> finalDec = dec1
+                .andThen(dec2)
+                .andThen(dec3);
 
         var test = new A("Test"); // Object will be modified by decorator chaining
         System.out.println("Before decorator = " + test.s);
