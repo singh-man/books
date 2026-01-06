@@ -74,7 +74,7 @@ public class Decorator {
 
     @Test
     public void pureFunction_withSubClassStyle() {
-        interface Transform extends Function<String, String> {
+        interface Transform extends Function<String, String> { // In Case Function chaining is not needed used this Interface directly
            default String transform(String s) {
               return this.apply(s);
            }
