@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LongestSubStringK_DistinctTest {
+public class LongestSubString_K_DistinctTest {
 
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
         // Map to store the frequency of each character in the current window
@@ -39,6 +39,6 @@ public class LongestSubStringK_DistinctTest {
 
     @Test
     public void test() {
-        System.out.println(new LongestSubStringK_DistinctTest().lengthOfLongestSubstringKDistinct("aabcabb", 2));
+        System.out.println(lengthOfLongestSubstringKDistinct("aabcabb", 2));
     }
 }
