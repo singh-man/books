@@ -1,7 +1,6 @@
 package slidingWindow;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,7 @@ public class CountDistinctAbsoluteValuesInA_sortedArrayTest {
     // Input: { -1, -1, 0, 1, 1, 1 }
     // Output: The total number of distinct absolute values is 2 (0 and 1)
     public static int getCountDistinct(int[] arr) {
-        Set<Integer> d = new HashSet<>();
+        var d = new HashSet<Integer>();
         int count = 0;
 
         for (int item : arr) {

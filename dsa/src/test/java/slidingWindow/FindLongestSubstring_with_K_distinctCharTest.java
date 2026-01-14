@@ -1,7 +1,6 @@
 package slidingWindow;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,7 @@ public class FindLongestSubstring_with_K_distinctCharTest {
     // Output: bdbdbbd
     public String getLongest(String s, int k) {
         int high = 0;
-        Set<Character> windows = new HashSet<>();
+        var windows = new HashSet<Character>();
         int[] freq = new int[128];
         int low = 0, end = 0, start = 0;
 

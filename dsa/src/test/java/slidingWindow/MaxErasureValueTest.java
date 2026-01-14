@@ -1,7 +1,6 @@
 package slidingWindow;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ public class MaxErasureValueTest {
     // Output: 17
     // Explanation: The optimal subarray here is [2,4,5,6].
     public int maximumUniqueSubarray(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
+        var map = new HashMap<Integer, Integer>();
         int finalSum = 0;
         int sum = 0;
         int l = 0;

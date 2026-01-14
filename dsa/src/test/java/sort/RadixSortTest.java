@@ -72,5 +72,4 @@ public class RadixSortTest implements ISort {
     public void test() {
         run(new RadixSortTest());
     }
-
 }

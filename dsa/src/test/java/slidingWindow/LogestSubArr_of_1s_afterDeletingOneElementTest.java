@@ -1,7 +1,6 @@
 package slidingWindow;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ public class LogestSubArr_of_1s_afterDeletingOneElementTest {
     // numbers with value of 1's.
     public int longestSubarray(int[] nums) {
         int windowStart = 0;
-        Map<Integer, Integer> countMap = new HashMap<>();
+        var countMap = new HashMap<Integer, Integer>();
         int maxLength = 0;
 
         // Initialize counts for all numbers in nums

@@ -1,7 +1,6 @@
 package slidingWindow;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ public class LongestSubString_of_allVowels_inOrderTest {
     public int longestBeautifulSubstring(String word) {
         int res = 0;
         int i = 0;
-        Set<Character> seen = new HashSet<>();
+        var seen = new HashSet<Character>();
 
         for (int j = 0; j < word.length(); j++) {
             if (j > 0 && word.charAt(j) < word.charAt(j - 1)) {

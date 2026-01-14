@@ -1,7 +1,6 @@
 package slidingWindow;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,7 @@ public class BinarySubArrays_withSumTest {
     public int numSubarraysWithSum(int[] nums, int goal) {
         int cumSum = 0;
         int result = 0;
-        Map<Integer, Integer> hashMap = new HashMap<>();
+        var hashMap = new HashMap<Integer, Integer>();
         hashMap.put(0, 1); // prefix sum 0 occurs once
 
         for (int x : nums) {

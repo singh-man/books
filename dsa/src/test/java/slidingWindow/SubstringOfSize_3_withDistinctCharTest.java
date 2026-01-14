@@ -1,7 +1,6 @@
 package slidingWindow;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,7 +26,7 @@ public class SubstringOfSize_3_withDistinctCharTest {
         if (k > s.length())
             return 0;
 
-        Map<Character, Integer> freq = new HashMap<>();
+        var freq = new HashMap<Character, Integer>();
         int count = 0;
         int start = 0;
 

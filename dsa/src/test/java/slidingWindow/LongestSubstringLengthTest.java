@@ -1,8 +1,9 @@
 package slidingWindow;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.HashSet;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class LongestSubstringLengthTest {
 
@@ -12,7 +13,7 @@ public class LongestSubstringLengthTest {
         int left = 0, right = 0;
         int longest = 0;
         int n = s.length();
-        HashSet<Character> window = new HashSet<>();
+        var window = new HashSet<Character>();
         while (right < n) {
             if (!window.contains(s.charAt(right))) {
                 window.add(s.charAt(right));
@@ -29,6 +30,6 @@ public class LongestSubstringLengthTest {
 
     @Test
     public void test() {
-        System.out.println(findLengthOfLongestRepeatingCharacters("ABCDBEA"));
+        Assertions.assertEquals(5, findLengthOfLongestRepeatingCharacters("ABCDBEA"));
     }
 }

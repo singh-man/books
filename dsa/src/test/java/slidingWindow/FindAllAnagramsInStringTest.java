@@ -17,7 +17,7 @@ public class FindAllAnagramsInStringTest {
     public List<Integer> findAnagrams(String s, String p) {
         int[] target = new int[26];
         int[] count = new int[26];
-        List<Integer> result = new ArrayList<>();
+        var result = new ArrayList<Integer>();
         int start = 0;
 
         // Frequency of characters in p

@@ -20,8 +20,8 @@ public class DiffBtw_MaxAndMin_Avg_of_all_K_lengthContinousSubArrTest {
             return -1;
         }
 
-        double minAvg = Double.POSITIVE_INFINITY;
-        double maxAvg = Double.NEGATIVE_INFINITY;
+        var minAvg = Double.POSITIVE_INFINITY;
+        var maxAvg = Double.NEGATIVE_INFINITY;
 
         int windowSum = 0;
         for (int i = 0; i < k; i++) {

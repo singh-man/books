@@ -11,7 +11,7 @@ public class CountNegativeElementsIn_K_lenSubArrayTest {
     // Input: arr = [-1, 2, -2, 3, 5, -7, -5], K = 3
     // Output: 2, 1, 1, 1, 2
     public List<Integer> getCountNegatives(int[] arr, int k) {
-        List<Integer> lst = new ArrayList<>();
+        var lst = new ArrayList<Integer>();
         int start = 0;
         int count = 0;
 

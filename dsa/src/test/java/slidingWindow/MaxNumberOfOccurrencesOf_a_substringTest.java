@@ -1,7 +1,6 @@
 package slidingWindow;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,7 @@ public class MaxNumberOfOccurrencesOf_a_substringTest {
     }
 
     public int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
-        Map<String, Integer> count = new HashMap<>();
+        var count = new HashMap<String, Integer>();
         int res = 0;
         int n = s.length();
 
