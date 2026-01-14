@@ -14,7 +14,7 @@ public class FindAllAnagramsInStringTest {
     // Explanation:
     // The substring with start index = 0 is "cba", which is an anagram of "abc".
     // The substring with start index = 6 is "bac", which is an anagram of "abc".
-    public static List<Integer> findAnagrams(String s, String p) {
+    public List<Integer> findAnagrams(String s, String p) {
         int[] target = new int[26];
         int[] count = new int[26];
         List<Integer> result = new ArrayList<>();

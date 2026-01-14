@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
-public class Observer {
+public class ObserverTest {
 
     private static class Observable {
         private final Map<Object, Consumer<Object>> listeners = new ConcurrentHashMap<>();

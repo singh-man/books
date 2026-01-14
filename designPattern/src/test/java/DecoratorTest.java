@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class Decorator {
+public class DecoratorTest {
 
     private Function<String, String>[] getT() {
         Function<String, String> decorate_1 = s -> s + " 1";

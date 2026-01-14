@@ -16,7 +16,7 @@ public class Permutation_in_stringTest {
     // Input: s1 = "ab", s2 = "eidbaooo"
     // Output: true
     // Explanation: s2 contains one permutation of s1 ("ba").
-    public static boolean checkInclusion(String s1, String s2) {
+    public boolean checkInclusion(String s1, String s2) {
         if (s1.length() > s2.length())
             return false;
 

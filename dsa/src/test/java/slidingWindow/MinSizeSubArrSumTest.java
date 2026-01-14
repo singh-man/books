@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 public class MinSizeSubArrSumTest {
 
-    // input: target = 7, nums = [2,3,1,2,4,3]
+    // Input: target = 7, nums = [2,3,1,2,4,3]
     // Output: 2
     // Explanation: The subarray [4,3] has the minimal length under the problem constraint
-    public static int minSubArrayLen(int target, int[] nums) {
+    public int minSubArrayLen(int target, int[] nums) {
         int currSum = 0;
         int start = 0;
         int minCount = Integer.MAX_VALUE;

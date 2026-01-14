@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
  * Given an array of positive integers and a positive number k, find the maximum sum of any 
  * contiguous subarray of size k.
  */
-public class ArrayMaxOfSubarrayOfSize_K_Test {
+public class MaxSumSubarrayOfSize_K_Test {
 
     // Input: [3, 5, 2, 1, 7],  k=2
     // Output: 8

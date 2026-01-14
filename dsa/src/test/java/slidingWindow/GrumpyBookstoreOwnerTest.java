@@ -15,8 +15,7 @@ public class GrumpyBookstoreOwnerTest {
 
     // Input: customers = [1,0,1,2,1,1,7,5], grumpy = [0,1,0,1,0,1,0,1], minutes = 3
     // Output: 16
-    // Explanation: The bookstore owner keeps themselves not grumpy for the last 3
-    // minutes.
+    // Explanation: The bookstore owner keeps themselves not grumpy for the last 3 minutes.
     // The maximum number of customers that can be satisfied = 1 + 1 + 1 + 1 + 7 + 5 = 16.
     public int maxSatisfied(int[] customers, int[] grumpy, int minutes) {
         int n = customers.length;

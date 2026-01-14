@@ -5,10 +5,9 @@ import org.junit.jupiter.api.Test;
 
 public class FindMinSumSubArr_of_size_K_Test {
 
-    // Input: arr = [10, 4, 2, 5, 6, 3, 8, 1]
-    // k = 3
+    // Input: arr = [10, 4, 2, 5, 6, 3, 8, 1], k = 3
     // Output: 11
-    public static int getMinSum(int[] arr, int k) {
+    public int getMinSum(int[] arr, int k) {
         int currSum = 0;
         int minSum = Integer.MAX_VALUE;
         int start = 0;

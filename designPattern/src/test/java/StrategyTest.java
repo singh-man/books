@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
-public class Strategy {
+public class StrategyTest {
 
     private void publishText(String text,
                              Predicate<String> filter,
