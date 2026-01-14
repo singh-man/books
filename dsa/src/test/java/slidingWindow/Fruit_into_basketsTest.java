@@ -1,7 +1,6 @@
 package slidingWindow;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,7 @@ public class Fruit_into_basketsTest {
         int n = fruits.length;
         int left = 0;
         int longestLength = 0;
-        Map<Integer, Integer> current = new HashMap<>();
+        var current = new HashMap<Integer, Integer>();
 
         for (int right = 0; right < n; right++) {
             current.put(fruits[right], current.getOrDefault(fruits[right], 0) + 1);

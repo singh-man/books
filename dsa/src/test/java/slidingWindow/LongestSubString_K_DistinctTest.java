@@ -1,15 +1,14 @@
 package slidingWindow;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.HashMap;
-import java.util.Map;
+
+import org.junit.jupiter.api.Test;
 
 public class LongestSubString_K_DistinctTest {
 
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
         // Map to store the frequency of each character in the current window
-        Map<Character, Integer> charCountMap = new HashMap<>();
+        var charCountMap = new HashMap<Character, Integer>();
         int longestSubstringLength = 0; // variable to store the length of the longest substring
         int left = 0; // left pointer for the sliding window
 

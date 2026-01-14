@@ -46,8 +46,8 @@ public class EqualSubString_withinBudgetTest {
 
     @Test
     public void test() {
-        String s = "abcd";
-        String t = "bcdf";
+        var s = "abcd";
+        var t = "bcdf";
         int maxCost = 3;
         Assertions.assertEquals(3, equalSubstring(s, t, maxCost));
     }

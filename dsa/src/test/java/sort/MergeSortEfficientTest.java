@@ -12,13 +12,13 @@ import org.junit.jupiter.api.Test;
  * 3. copy back rest of first half of b (if necessary)
  */
 public class MergeSortEfficientTest implements ISort {
+
     @Override
     public void sort(int[] data) throws Exception {
         mergeSortEfficient(data, 0, data.length/2 -1, data.length-1);
     }
 
     /**/
-
     private void mergeSortEfficient(int[] a, int lo, int m, int hi) {
         int i, j, k;
         int[] b = new int[a.length];

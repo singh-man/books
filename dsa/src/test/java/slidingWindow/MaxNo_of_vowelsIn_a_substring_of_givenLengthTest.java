@@ -1,7 +1,6 @@
 package slidingWindow;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ public class MaxNo_of_vowelsIn_a_substring_of_givenLengthTest {
     // Output: 3
     // Explanation: The substring "iii" contains 3 vowel letters.
     public int maxVowels(String s, int k) {
-        Set<Character> vowels = new HashSet<>();
+        var vowels = new HashSet<Character>();
         vowels.add('a');
         vowels.add('e');
         vowels.add('i');

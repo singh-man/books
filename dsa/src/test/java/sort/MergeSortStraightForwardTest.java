@@ -18,7 +18,7 @@ public class MergeSortStraightForwardTest implements ISort {
         mergeSortStraightForward(data, 0, 2, 3);
     }
 
-    // Straightforward variant
+    // Straight forward variant
     public void mergeSortStraightForward(int[] a, int lo, int m, int hi) {
         int i, j, k;
         int[] b = new int[a.length];

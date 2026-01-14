@@ -147,8 +147,7 @@ public class FileUtils {
 
     public static void removeFile(File file) {
         if (file.exists()) {
-            if(file.isFile())
-            {
+            if(file.isFile()) {
                 file.delete();
             }
             else {
@@ -176,8 +175,7 @@ public class FileUtils {
     public static void writeToFile(String data, File file) {
         try(FileWriter fw = new FileWriter(file.getAbsolutePath(), true);
             BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter out = new PrintWriter(bw))
-        {
+            PrintWriter out = new PrintWriter(bw)) {
             out.println(data);
         } catch (IOException e) {
             e.printStackTrace();
@@ -189,7 +187,6 @@ public class FileUtils {
         BufferedReader br = null;
         String line = "";
         try {
-
             br = new BufferedReader(new FileReader(file));
             while ((line = br.readLine()) != null) {
                 rows.addAll(Arrays.asList(line));

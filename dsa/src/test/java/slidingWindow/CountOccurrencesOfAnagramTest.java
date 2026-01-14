@@ -1,7 +1,6 @@
 package slidingWindow;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,7 +29,7 @@ public class CountOccurrencesOfAnagramTest {
     public int countAnagram(String text, String word) {
         int w = word.length();
         int count = 0;
-        Set<String> seen = new HashSet<>();
+        var seen = new HashSet<String>();
 
         if (text.length() < w)
             return 0;

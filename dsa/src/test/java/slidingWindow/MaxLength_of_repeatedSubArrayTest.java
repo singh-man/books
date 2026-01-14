@@ -1,7 +1,6 @@
 package slidingWindow;
 
 import org.junit.jupiter.api.Assertions;
-
 /**
  * Given two integer arrays nums1 and nums2, return the maximum length of a subarray that 
  * appears in both arrays.
@@ -15,13 +14,13 @@ public class MaxLength_of_repeatedSubArrayTest {
     // Explanation: The repeated subarray with maximum length is [3,2,1].
     public int findLength(int[] nums1, int[] nums2) {
         // Convert nums2 to a string
-        StringBuilder sb2 = new StringBuilder();
+        var sb2 = new StringBuilder();
         for (int num : nums2) {
             sb2.append((char) num);
         }
         String nums2Str = sb2.toString();
 
-        StringBuilder maxStr = new StringBuilder();
+        var maxStr = new StringBuilder();
         int res = 0;
 
         for (int num : nums1) {
