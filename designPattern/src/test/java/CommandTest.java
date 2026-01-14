@@ -1,9 +1,9 @@
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Command {
+import org.junit.jupiter.api.Test;
+
+public class CommandTest {
 
     public static void log(String message) {
         System.out.println("Logging: " + message);

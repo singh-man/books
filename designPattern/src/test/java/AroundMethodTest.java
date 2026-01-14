@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 
-public class AroundMethod {
+public class AroundMethodTest {
 
     class Resource implements AutoCloseable {
         public Resource op1() {
@@ -36,7 +36,7 @@ public class AroundMethod {
 
     @Test
     public void test() {
-        new AroundMethod().use(resource -> resource
+        new AroundMethodTest().use(resource -> resource
                 .op1()
                 .op2());
     }

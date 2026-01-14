@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Random;
 import java.util.function.Consumer;
 
-public class Template {
+public class TemplateTest {
 
     private void withResource(Consumer<Resource> consumer) {
         Resource resource = new Resource();

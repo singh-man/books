@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * <p>
  * Mix UP:- If it can process, *do process* and then move to next
  */
-public class ChainOfResp_and_Decorator_Mix {
+public class ChainOfResp_and_Decorator_MixTest {
 
     static class A {
         int bal, requested;

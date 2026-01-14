@@ -14,7 +14,7 @@ public class LongestRepeatingCharReplacemntTest {
     // Input: s = "ABAB", k = 2
     // Output: 4
     // Explanation: Replace the two 'A's with two 'B's or vice versa.
-    public static int characterReplacement(String s, int k) {
+    public int characterReplacement(String s, int k) {
         int[] freq = new int[26]; // frequency of each uppercase letter
         int maxRepeatLetterCount = 0;
         int windowStart = 0;

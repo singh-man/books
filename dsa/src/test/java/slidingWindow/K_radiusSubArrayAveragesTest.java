@@ -13,7 +13,7 @@ public class K_radiusSubArrayAveragesTest {
 
     // Input: nums = [7,4,3,9,1,8,5,2,6], k = 3
     // Output: [-1,-1,-1,5,4,4,-1,-1,-1]
-    public static int[] getAverages(int[] nums, int k) {
+    public int[] getAverages(int[] nums, int k) {
         int n = nums.length;
         if (k == 0)
             return nums.clone(); // return a copy of nums

@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 /* Given a word and a text, return the count of occurrences of the anagrams of the word in the text. */
 public class CountOccurrencesOfAnagramTest {
 
-    // Input: text = gotxxotgxdogt,
-    // word = got
+    // Input: text = gotxxotgxdogt, word = got
     // Output : 3
     private boolean isAnagram(String s, String word) {
         if (s.length() != word.length())

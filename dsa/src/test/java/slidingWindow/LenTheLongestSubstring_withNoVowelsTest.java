@@ -12,7 +12,7 @@ public class LenTheLongestSubstring_withNoVowelsTest {
     // Input: s = "codeforintelligents"
     // Output: 3
     // Explanation: 'nts' is the longest substring that doesn't contain any vowels.
-    public static int getLongestSubstring(String s) {
+    public int getLongestSubstring(String s) {
         Set<Character> vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
         StringBuilder result = new StringBuilder();
         StringBuilder maxResult = new StringBuilder();
@@ -38,5 +38,4 @@ public class LenTheLongestSubstring_withNoVowelsTest {
     public void test() {
         Assertions.assertEquals(3, getLongestSubstring("codeforintelligents"));
     }
-
 }

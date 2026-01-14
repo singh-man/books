@@ -11,7 +11,7 @@ public class FindLongestSubstring_with_K_distinctCharTest {
     // Input: s = 'abcbdbdbbdcdabd'
     // k = 2
     // Output: bdbdbbd
-    public static String getLongest(String s, int k) {
+    public String getLongest(String s, int k) {
         int high = 0;
         Set<Character> windows = new HashSet<>();
         int[] freq = new int[128];

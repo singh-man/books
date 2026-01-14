@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Given a string word consisting of English vowels, return the length of the
- * longest beautiful
- * substring of a word. If no such substring exists, return 0.
+ * longest beautiful substring of a word. If no such substring exists, return 0.
  * A substring is a contiguous sequence of characters in a string.
  */
 public class LongestSubString_of_allVowels_inOrderTest {

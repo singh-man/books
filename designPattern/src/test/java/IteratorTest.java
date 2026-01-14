@@ -4,7 +4,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 
-public class Iterator {
+public class IteratorTest {
 
     static final List<Integer> list = asList( 1, 2, 3, 4, 5, 6 );
 

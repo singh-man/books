@@ -8,10 +8,9 @@ import org.junit.jupiter.api.Test;
 
 public class FindDuplicatesWithin_range_K_arrTest {
 
-    // ​Input: nums = [5, 6, 8, 2, 4, 6, 9]
-    // k = 2
+    // ​Input: nums = [5, 6, 8, 2, 4, 6, 9], k = 2
     // Output: False
-    public static boolean getDuplicates(int[] nums, int k) {
+    public boolean getDuplicates(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < nums.length; i++) {

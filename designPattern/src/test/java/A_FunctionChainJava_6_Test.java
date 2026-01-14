@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class A_FunctionChainJava6 {
+public class A_FunctionChainJava_6_Test {
 
     private interface MyFunc<T, R> {
         R execute(T t);
