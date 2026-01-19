@@ -34,7 +34,7 @@ public class SmallestMissingPositiveInteger {
         // If 1..n are all present, answer is n+1
         return n + 1;
     }
-
+  
     @Test
     public void testArray() {
         int[][] A = { { 1, 3, 6, 4, 1, 2 },
