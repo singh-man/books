@@ -35,7 +35,7 @@ public class SmallestMissingPositiveInteger {
         return n + 1;
     }
 
-    public int withArraysSpaceOptimized(int[] A) {
+    public int spaceOptimized(int[] A) {
         int n = A.length;
 
         for (int i = 0; i < n; i++) {
@@ -56,7 +56,7 @@ public class SmallestMissingPositiveInteger {
     }
 
     @Test
-    public void test() {
+    public void testArray() {
         int[][] A = { { 1, 3, 6, 4, 1, 2 },
                 { 1, 2, 3 },
                 { -1, -3 },
@@ -65,9 +65,17 @@ public class SmallestMissingPositiveInteger {
         Assertions.assertEquals(4, withArrays(A[1]));
         Assertions.assertEquals(1, withArrays(A[2]));
         Assertions.assertEquals(1, withArrays(A[3]));
-        Assertions.assertEquals(5, withArraysSpaceOptimized(A[0]));
-        Assertions.assertEquals(4, withArraysSpaceOptimized(A[1]));
-        Assertions.assertEquals(1, withArraysSpaceOptimized(A[2]));
-        Assertions.assertEquals(1, withArraysSpaceOptimized(A[3]));
+    }
+
+    @Test
+    public void testSpaceOptimized() {
+        int[][] A = { { 1, 3, 6, 4, 1, 2 },
+                { 1, 2, 3 },
+                { -1, -3 },
+                { 51, 53, 56, 54, 51, 52 } };
+        Assertions.assertEquals(5, spaceOptimized(A[0]));
+        Assertions.assertEquals(4, spaceOptimized(A[1]));
+        Assertions.assertEquals(1, spaceOptimized(A[2]));
+        Assertions.assertEquals(1, spaceOptimized(A[3]));
     }
 }
