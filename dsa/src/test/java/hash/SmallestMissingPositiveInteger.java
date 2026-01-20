@@ -35,18 +35,6 @@ public class SmallestMissingPositiveInteger {
         return n + 1;
     }
   
-    @Test
-    public void testArray() {
-        int[][] A = { { 1, 3, 6, 4, 1, 2 },
-                { 1, 2, 3 },
-                { -1, -3 },
-                { 51, 53, 56, 54, 51, 52 } };
-        Assertions.assertEquals(5, withArrays(A[0]));
-        Assertions.assertEquals(4, withArrays(A[1]));
-        Assertions.assertEquals(1, withArrays(A[2]));
-        Assertions.assertEquals(1, withArrays(A[3]));
-    }
-
     public int spaceOptimized(int[] A) {
         int n = A.length;
 
@@ -68,14 +56,41 @@ public class SmallestMissingPositiveInteger {
     }
 
     @Test
-    public void testSpaceOptimized() {
-        int[][] A = { { 1, 3, 6, 4, 1, 2 },
-                { 1, 2, 3 },
-                { -1, -3 },
-                { 51, 53, 56, 54, 51, 52 } };
-        Assertions.assertEquals(5, spaceOptimized(A[0]));
-        Assertions.assertEquals(4, spaceOptimized(A[1]));
-        Assertions.assertEquals(1, spaceOptimized(A[2]));
-        Assertions.assertEquals(1, spaceOptimized(A[3]));
+    public void testWithArrays() {
+        // Example cases
+        Assertions.assertEquals(5, withArrays(new int[]{1, 3, 6, 4, 1, 2}));
+        Assertions.assertEquals(1, withArrays(new int[]{51, 53, 56, 54, 51, 52}));
+        Assertions.assertEquals(4, withArrays(new int[]{1, 2, 3}));
+        Assertions.assertEquals(1, withArrays(new int[]{-1, -3}));
+
+        // Edge and Negative cases
+        Assertions.assertEquals(1, withArrays(new int[]{}));
+        Assertions.assertEquals(2, withArrays(new int[]{1}));
+        Assertions.assertEquals(1, withArrays(new int[]{2}));
+        Assertions.assertEquals(1, withArrays(new int[]{0}));
+        Assertions.assertEquals(1, withArrays(new int[]{-5, 5}));
+        Assertions.assertEquals(1, withArrays(new int[]{7, 8, 9, 11, 12}));
+        Assertions.assertEquals(3, withArrays(new int[]{1, 2, 0}));
+        Assertions.assertEquals(1, withArrays(new int[]{Integer.MIN_VALUE, Integer.MAX_VALUE}));
     }
+
+    @Test
+    public void testSpaceOptimized() {
+        // Example cases
+        Assertions.assertEquals(5, spaceOptimized(new int[]{1, 3, 6, 4, 1, 2}));
+        Assertions.assertEquals(1, spaceOptimized(new int[]{51, 53, 56, 54, 51, 52}));
+        Assertions.assertEquals(4, spaceOptimized(new int[]{1, 2, 3}));
+        Assertions.assertEquals(1, spaceOptimized(new int[]{-1, -3}));
+
+        // Edge and Negative cases
+        Assertions.assertEquals(1, spaceOptimized(new int[]{}));
+        Assertions.assertEquals(2, spaceOptimized(new int[]{1}));
+        Assertions.assertEquals(1, spaceOptimized(new int[]{2}));
+        Assertions.assertEquals(1, spaceOptimized(new int[]{0}));
+        Assertions.assertEquals(1, spaceOptimized(new int[]{-5, 5}));
+        Assertions.assertEquals(1, spaceOptimized(new int[]{7, 8, 9, 11, 12}));
+        Assertions.assertEquals(3, spaceOptimized(new int[]{1, 2, 0}));
+        Assertions.assertEquals(1, spaceOptimized(new int[]{Integer.MIN_VALUE, Integer.MAX_VALUE}));
+    }
+
 }
