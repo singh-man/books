@@ -16,7 +16,8 @@ public class AnagramTest {
     public List<String> findAllAnagrams(String text, String target) {
         List<String> anas = new ArrayList<>();
         for (int i = 0; i < text.length(); i++) {
-            if (target.length() + i > text.length()) break;
+            if (target.length() + i > text.length())
+                break;
             /**
              * 1. 0 -> target length
              * 2. 1 -> target length + 1
@@ -49,8 +50,31 @@ public class AnagramTest {
         Assertions.assertEquals(true, isAnagram("cat", "act"));
         Assertions.assertEquals(false, isAnagram("cat", "abt"));
     }
+
+    public boolean isAnagram_byFrequecy(String txt, String check) {
+        if (txt.length() != check.length())
+            return false;
+        int[] fre = new int[256];
+        for (int i = 0; i < txt.length(); i++) {
+            fre[txt.charAt(i)]++;
+            fre[check.charAt(i)]--;
+        }
+        for (int i = 0; i < fre.length; i++) {
+            if (fre[i] != 0)
+                return false;
+        }
+        return true;
+    }
+
+    @Test
+    public void testByFrequency() {
+        Assertions.assertEquals(true, isAnagram_byFrequecy("cat", "act"));
+        Assertions.assertEquals(false, isAnagram_byFrequecy("cat", "abt"));
+    }
+
     /**
-     * Given an array of strings, remove each string that is an anagram of an earlier string, then return the remaining array in sorted order.
+     * Given an array of strings, remove each string that is an anagram of an
+     * earlier string, then return the remaining array in sorted order.
      * <p>
      * Example
      * str = ['code', 'doce', 'ecod', 'framer', 'frame', 'rfame', 'famer']
@@ -63,7 +87,8 @@ public class AnagramTest {
      */
     @Test
     public void funWithAnagrams() {
-        List<String> input = List.of("code", "doce", "ecod", "framer", "frame", "rfame", "ecod", "interview", "viewinter",
+        List<String> input = List.of("code", "doce", "ecod", "framer", "frame", "rfame", "ecod", "interview",
+                "viewinter",
                 "jack", "ackj", "mary");
         BiFunction<String, String, Boolean> isAnagram = (s1, s2) -> {
             char[] a = s1.toCharArray();
@@ -87,7 +112,8 @@ public class AnagramTest {
 
     @Test
     public void funWithAnagrams_1() {
-        List<String> input = List.of("code", "doce", "ecod", "framer", "frame", "rfame", "ecod", "interview", "viewinter",
+        List<String> input = List.of("code", "doce", "ecod", "framer", "frame", "rfame", "ecod", "interview",
+                "viewinter",
                 "jack", "ackj", "mary");
         var unique = new HashMap<String, Integer>();
         for (int i = 0; i < input.size(); i++) {
