@@ -32,6 +32,7 @@ sudo apt install -y git nginx openssh-client openssh-server nmap unzip zip pando
 pip3 install pytest
 
 # Install terminal file explorer "ranger" and terminal image viewer
+## WINDOWS; use YAZI also it brings a lot of others like 7z, ffmpeg, poppler, image viewer etc.
 pip3 install ranger-fm
 sudo apt install w3m sxiv
 
