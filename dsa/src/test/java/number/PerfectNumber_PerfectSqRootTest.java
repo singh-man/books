@@ -15,11 +15,13 @@ public class PerfectNumber_PerfectSqRootTest {
      * 496            | 1 + 2 + 4 + 8 + 16 + 31 + 62 + 124 + 248
      */
     private boolean isPerfectNumber(long n) {
-        if (n == 1) return false;
+        if (n <= 1) return false;
         long divisorSum = 1; // 1 is divisor of every number
-        for (long i = 2; i < n; i++) {
+        for (long i = 2; i <= n / i; i++) {
             if (n % i == 0) {
-                divisorSum += i;
+                long divisor = n / i;
+                if (i == divisor) divisorSum += i;
+                else divisorSum += i + divisor;
             }
         }
         return divisorSum == n;
