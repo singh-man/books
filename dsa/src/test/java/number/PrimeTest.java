@@ -96,15 +96,20 @@ public class PrimeTest {
         long start = 1;
         long end = 1000000L;
         long t1 = System.currentTimeMillis();
-        File file = new File("primeNumberList.txt");
-        file.createNewFile();
-        PrintWriter pw = new PrintWriter(file);
-        while (start <= end) {
-            if (isPrimeNumber(start)) {
-                noOfPrimes++;
-                pw.println(noOfPrimes + ". " + start);
+        File file = new File("target/primeNumberList.txt");
+        File parent = file.getParentFile();
+        if (parent != null) {
+            parent.mkdirs();
+        }
+
+        try (PrintWriter pw = new PrintWriter(file)) {
+            while (start <= end) {
+                if (isPrimeNumber(start)) {
+                    noOfPrimes++;
+                    pw.println(noOfPrimes + ". " + start);
+                }
+                start++;
             }
-            start++;
         }
 //        pw.println("Total primes: " + noOfPrimes + " time taken: " + (System.currentTimeMillis() - t1));
 //        pw.flush();

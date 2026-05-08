@@ -18,51 +18,52 @@ public class MergeSortTest implements ISort {
 
     @Override
     public void sort(int[] data) throws Exception {
-        mergeSort(data);
+        if (data == null || data.length < 2) {
+            return;
+        }
+        int[] aux = new int[data.length];
+        mergeSort(data, aux, 0, data.length - 1);
     }
 
-    private int[] mergeSort(int array[]) {
-        if (array.length > 1) {
-            int elementsInA1 = array.length / 2;
-            int elementsInA2 = array.length - elementsInA1;
-            int arr1[] = new int[elementsInA1];
-            int arr2[] = new int[elementsInA2];
+    private void mergeSort(int[] array, int[] aux, int left, int right) {
+        if (left >= right) {
+            return;
+        }
 
-            for (int i = 0; i < elementsInA1; i++)
-                arr1[i] = array[i];
+        int mid = left + (right - left) / 2;
+        mergeSort(array, aux, left, mid);
+        mergeSort(array, aux, mid + 1, right);
 
-            for (int i = elementsInA1; i < elementsInA1 + elementsInA2; i++)
-                arr2[i - elementsInA1] = array[i];
+        // Skip merge when both halves are already ordered.
+        if (array[mid] <= array[mid + 1]) {
+            return;
+        }
 
-            arr1 = mergeSort(arr1);
-            arr2 = mergeSort(arr2);
+        merge(array, aux, left, mid, right);
+    }
 
-            int i = 0, j = 0, k = 0;
+    private void merge(int[] array, int[] aux, int left, int mid, int right) {
+        System.arraycopy(array, left, aux, left, right - left + 1);
 
-            while (arr1.length != j && arr2.length != k) {
-                if (arr1[j] <= arr2[k]) {
-                    array[i] = arr1[j];
-                    i++;
-                    j++;
-                } else {
-                    array[i] = arr2[k];
-                    i++;
-                    k++;
-                }
-            }
+        int i = left;
+        int j = mid + 1;
+        int k = left;
 
-            while (arr1.length != j) {
-                array[i] = arr1[j];
-                i++;
-                j++;
-            }
-            while (arr2.length != k) {
-                array[i] = arr2[k];
-                i++;
-                k++;
+        while (i <= mid && j <= right) {
+            if (aux[i] <= aux[j]) {
+                array[k++] = aux[i++];
+            } else {
+                array[k++] = aux[j++];
             }
         }
-        return array;
+
+        while (i <= mid) {
+            array[k++] = aux[i++];
+        }
+
+        while (j <= right) {
+            array[k++] = aux[j++];
+        }
     }
 
     @Test

@@ -15,30 +15,45 @@ public class MergeSortEfficientTest implements ISort {
 
     @Override
     public void sort(int[] data) throws Exception {
-        mergeSortEfficient(data, 0, data.length/2 -1, data.length-1);
+        mergeSortEfficient(data, 0, data.length - 1);
     }
 
-    /**/
-    private void mergeSortEfficient(int[] a, int lo, int m, int hi) {
-        int i, j, k;
-        int[] b = new int[a.length];
-        i = 0;
-        j = lo;
+    private void mergeSortEfficient(int[] a, int lo, int hi) {
+        if (lo >= hi)
+            return;
+
+        int length = hi - lo + 1;
+        for (int width = 1; width < length; width *= 2) {
+            for (int left = lo; left + width <= hi; left += 2 * width) {
+                int m = left + width - 1;
+                int right = Math.min(left + 2 * width - 1, hi);
+                merge(a, left, m, right);
+            }
+        }
+    }
+
+    private void merge(int[] a, int lo, int m, int hi) {
+        int[] b = new int[m - lo + 1];
+        int i = 0;
+        int j = lo;
+
         // copy first half of array a to auxiliary array b
         while (j <= m)
             b[i++] = a[j++];
 
         i = 0;
-        k = lo;
+        int k = lo;
+        int leftLength = b.length;
+
         // copy back next-greatest element at each time
-        while (k < j && j <= hi)
+        while (i < leftLength && j <= hi)
             if (b[i] <= a[j])
                 a[k++] = b[i++];
             else
                 a[k++] = a[j++];
 
         // copy back remaining elements of first half (if any)
-        while (k < j)
+        while (i < leftLength)
             a[k++] = b[i++];
     }
 
