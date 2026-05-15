@@ -340,10 +340,10 @@ With a circular array, we always replace  the oldest item when we read a new lin
 
 The following is an example of a circular array: 
 ```
-step  1 (initially): array  {a,  b,  c,  d,  e,  f}. p = 0
-step  2 (insert g):  array  {g,  b,  c,  d,  e,  f}. p = 1
-step  3 (insert h):  array  {g,  h,  c,  d,  e,  f}. p = 2 
-step  4 (insert i):  array  {g,  h,  i,  d,  e,  f}. p = 3
+step  1 (initially): array = {a,  b,  c,  d,  e,  f}. p = 0
+step  2 (insert g):  array = {g,  b,  c,  d,  e,  f}. p = 1
+step  3 (insert h):  array = {g,  h,  c,  d,  e,  f}. p = 2 
+step  4 (insert i):  array = {g,  h,  i,  d,  e,  f}. p = 3
 ```
 
 The code below implements this algorithm.
@@ -677,7 +677,7 @@ We know we need constructors and a single destructor for this class, so let's ad
 15          * object. */
 16      }
 ```
-There's one additional way that references scan be created: by setting one SmartPointer equal to another. We'll want to override the equal operator to handle this, but for now, let's sketch the code like this.
+There's one additional way that references can be created: by setting one SmartPointer equal to another. We'll want to override the equal operator to handle this, but for now, let's sketch the code like this.
 ```c++
 1   onSetEquals(SmartPoint<T> ptr1, SmartPoint<T> ptr2) {
 2      /* If ptr1 has an existing value, decrement its reference count. Then, copy the
@@ -770,7 +770,7 @@ We could then do something like:
 5       return q;
 6   }
 ```
-Line 4 is a bit tricky, so let's discuss it. Suppose alignment is 16. We know that one of the first 16 memory address in the block at p must be divisible by 16. With (p +  15)   &  11.  .. 10000 we advance as need to this address. ANDing the last four bits of p  +  15 with 0000 guarantees  that this new value will be divisible by 16 (either at the original p or in one of the following 15 addresses).
+Line 4 is a bit tricky, so let's discuss it. Suppose alignment is 16. We know that one of the first 16 memory address in the block at p must be divisible by 16. With (p +  15)   &  11...10000 we advance as need to this address. ANDing the last four bits of p  +  15 with 0000 guarantees  that this new value will be divisible by 16 (either at the original p or in one of the following 15 addresses).
 
 This solution is almost perfect except for one big issue: how do we free the memory?
 

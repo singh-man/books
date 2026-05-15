@@ -541,7 +541,7 @@ The code below outlines this process. We've defined a class Server, which holds 
 15          Integer machineID = personToMachineMap.get(personID);
 16          if (machineID == null) return null;
 17  
-18          Machine machine = getMachineWithid(machineID);
+18          Machine machine = getMachineWithId(machineID);
 19          if (machine == null) return null;
 20  
 21          return machine.getPersonWithID(personID);
@@ -642,9 +642,9 @@ Now that we have a solution for the simple version, what happens when we have al
 
 **Solution #1: Disk Storage**
 
-If we stored all the data on one machine, we would do two passes of the document. The first pass would split the list of URLs into 4000 chunks of 1 GB each. An easy way to do that might be to store each URL u in a file named \<x>.txt where x  =  hash(u) %  4000.That is, we divide up the URLs based on their hash value (modulo the number of chunks). This way, all URLs with the same hash value would be in the same file.
+If we stored all the data on one machine, we would do two passes of the document. The first pass would split the list of URLs into 4000 chunks of 1 GB each. An easy way to do that might be to store each URL u in a file named \<x>.txt where x  =  hash(u) %  4000. That is, we divide up the URLs based on their hash value (modulo the number of chunks). This way, all URLs with the same hash value would be in the same file.
 
-In the second pass, we would essentially implement the simple solution we came up with earlier:load each file into memory, create a hash table of the URLs, and look for duplicates.
+In the second pass, we would essentially implement the simple solution we came up with earlier: load each file into memory, create a hash table of the URLs, and look for duplicates.
 
 
 **Solution #2: Multiple  Machines**
@@ -907,7 +907,7 @@ We have potentially tens of thousands of product categories.  For each category,
 
 Alternatively, we could just do one join of products and categories, such that each product will be listed once per category. Then,  if we sorted that on category and then product ID, we could just walk the results to get the sales rank for each category.
 
-| Prod ID | Category | Total | Sun | Mon | Tues | Wed | Thrus | Fri | Sat |
+| Prod ID | Category | Total | Sun | Mon | Tues | Wed | Thurs | Fri | Sat |
 | --      | --       | --    | --  | --  | --   | --  | --    | --  | --  |
 | 1423    | sportseq | 13    | 4   | 1   | 4    | 19  | 322   | 32  | 232 |
 | 1423    | safety   | 13    | 4   | 1   | 4    | 19  | 322   | 32  | 232 |
@@ -1206,7 +1206,7 @@ This does not mean that the raw data needs to be easily searchable or even acces
 
 One issue here is that this amount of data could be substantial. We could potentially reduce the space usage considerably by storing data only probabilistically. Each URL would have a storage_probability associated with it. As the popularity of a site goes up, the storage_probability goes down. For example, a popular document might have data logged only one out of every ten times, at random. When we look up the number of visits for the site, we'll need to adjust the value based on the probability (for example, by multiplying it by 10). This will of course lead to a small inaccuracy, but that may be acceptable.
 
-The log files are not designed to be used frequently. We will want to also store this precomputed data in a datastore. If the analytics Just displays the number of visits plus a graph over time, this could be kept in a separate database.
+The log files are not designed to be used frequently. We will want to also store this precomputed data in a datastore. If the analytics just displays the number of visits plus a graph over time, this could be kept in a separate database.
 
 
 | URL        | Month and Year | Visits |

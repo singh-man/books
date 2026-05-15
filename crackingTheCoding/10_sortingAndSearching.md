@@ -215,7 +215,7 @@ The code below does just that. It works from the back of A and B, moving the lar
 Note that you don't need to copy the contents of A after running out of elements in B. They are already in place.
 
 
-**10.2    Group  Anagrams:** Write a method to sort an array of strings so that all tne anagrnms are next to each other.
+**10.2    Group  Anagrams:** Write a method to sort an array of strings so that all tne anagrams are next to each other.
 
 SOLUTION
 
@@ -592,7 +592,7 @@ We need to have enough space to store rangeSize bits. Since we can fit 2²³ byt
 ```
 2¹¹ <= rangeSize <= 2²⁶
 ```
-These conditions give us a good amount of "wiggle room;" but the nearer to the middle that we pick, the less memory will be used at any given time.
+These conditions give us a good amount of "wiggle room," but the nearer to the middle that we pick, the less memory will be used at any given time.
 
 The below code provides one implementation for this algorithm.
 ```java
@@ -769,7 +769,7 @@ For rows, we use identical logic. If the  start of a row is bigger than x, we kn
 
 Observe that we can also make a similar conclusion by looking at the ends of columns or rows. If the  end of a column  or row is less than x, then we know that we must move down  (for rows) or to the right (for columns) to find x. This is because the end is always the maximum element.
 
-We can bring these observations together into a solution.1he observations are the following:
+We can bring these observations together into a solution. The observations are the following:
 
 - If the start of a column is greater than x, then x is to the left of the column. 
 - If the end of a column is less than x, then x is to the right of the column.
