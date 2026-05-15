@@ -14,7 +14,7 @@ If you get  confused, work them through as a base 10 number. You can  then apply
 | --           | --           | --                |
 | 0110 +  0010 | 0011 *  0101 | 0110 +  0110      |
 | 0011 +  0010 | 0011 *  0011 | 0100 *  0011      |
-| 0110 -  0011 | 1101 >> 2    | 1101 ^  (=1101)   |
+| 0110 -  0011 | 1101 >> 2    | 1101 ^  (~1101)   |
 | 1000 -  0110 | 1101 ^  0101 | 1011 &  (~0 << 2) |
 
 Solutions: line 1 (1000, 1111, 1100); line 2 (0101, 1001, 1100); line  3 (0011, 0011, 1111); line 4 (0010, 1000, 1000).
@@ -37,9 +37,9 @@ If you didn't see these tricks immediately, think about them logically.
 The following expressions are useful  in bit manipulation. Don't just  memorize them, though; think deeply about why each of these is true. We use "1s" and "0s" to indicate a sequence of 1s or 0s, respectively. 
 
 ```
-X  ^  0s  =  X       X  &  0s  =  X      x  |  0s  =  X 
+X  ^  0s  =  X       X  &  0s  =  0      x  |  0s  =  X 
 X  ^  1s  =  ~X      X  &  1s  =  X      x  |  1s  =  1s 
-X  ^  x   =  X       X  &  x   =  X      x  |  x   =  X 
+X  ^  x   =  0       X  &  x   =  X      x  |  x   =  X 
 ```
 
 To understand these expressions, recall that these operations occur bit-by-bit, with what's happening  on one bit never impacting the other bits. This means that if one of the above statements is true for a single bit, then it's true for a sequence of bits.
@@ -173,7 +173,7 @@ Interview Questions
 Additional Questions: Arrays and Strings (#1.1, #1.4, #1.8), Math and Logic Puzzles  (#6.10), Recursion (#8.4, #8.14), Sorting and Searching (#10.7, #10.8), C++ (#12.10), ModerateProblems (#16.1, #16.7), Hard Problems (#17.1).
 
 
-**5.1     Insertion:** You are given two 32-bit numbers, N and M, and two bit positions, i and j. Write a method to insert  M into N such  that M starts at bit j and  ends at bit i. You can assume that the bits j through i have enough space to fit all of M. That  is, if M = 10011, you can assume that  there are at least  5 bits between j and  i. You would not, for example, have j = 3and i= 2, because M could  not  fully fit between bit 3 and  bit 2.
+**5.1     Insertion:** You are given two 32-bit numbers, N and M, and two bit positions, i and j. Write a method to insert  M into N such  that M starts at bit j and  ends at bit i. You can assume that the bits j through i have enough space to fit all of M. That  is, if M = 10011, you can assume that  there are at least  5 bits between j and  i. You would not, for example, have j = 3 and i = 2, because M could  not  fully fit between bit 3 and  bit 2.
 
 EXAMPLE 
 
@@ -195,7 +195,7 @@ The trickiest part is Step  1. How do we clear the  bits in N? We can do this wi
 1   int updateBits(int n, int m, int i, int j) {
 2       /* Create a mask to clear bits i through j in n. EXAMPLE: i = 2, j = 4. Result
 3        * should be 11100011. For simplicity, we'll use just 8 bits for the example. */
-4       int allOnes = -0; // will equal sequence of all 1s
+4       int allOnes = ~0; // will equal sequence of all 1s
 5   
 6       // 1s before position j, then 0s. left = 11100000
 7       int left = allOnes << (j + 1);
@@ -206,7 +206,7 @@ The trickiest part is Step  1. How do we clear the  bits in N? We can do this wi
 12      // All 1s, except for 0s between i and j. mask 11100011
 13      int mask = left | right;
 14  
-15      /* Clear bits j through i then put min there */
+15      /* Clear bits j through i then put m in there */
 16      int n_cleared = n & mask; // Clear bits j through i.
 17      int m_shifted = m << i; // Move m into correct position.
 18  
@@ -253,7 +253,7 @@ If r  >= 1, then we know that n had a 1 right after the decimal point. By doing 
 13  
 14          double r = num * 2;
 15          if (r >= 1) {
-16              binary.append(l);
+16              binary.append(1);
 17              num = r - 1;
 18          } else {
 19              binary.append(0);
@@ -312,7 +312,7 @@ We can think about each integer as being an alternating sequence of 0s and 1s. W
 
 **Brute Force**
 
-One approach is to convert an integer into an array that reflects the lengths of the 0s and 1s sequences. For example, 11011101111 would be (reading from right to left) [0₀, 4₁, 1₀, 3₁, 2₁, 21₀]. The subscript reflects whether the integer corresponds to a 0s sequence or a 1s sequence, but the actual solution doesn't need this. It's a strictly alternating sequence, always starting with the 0s sequence.
+One approach is to convert an integer into an array that reflects the lengths of the 0s and 1s sequences. For example, 11011101111 would be (reading from right to left) [0₀, 4₁, 1₀, 3₁, 1₀, 2₁, 21₀]. The subscript reflects whether the integer corresponds to a 0s sequence or a 1s sequence, but the actual solution doesn't need this. It's a strictly alternating sequence, always starting with the 0s sequence.
 
 Once we have this, we just walk through the array. At each 0s sequence, then we consider merging the adjacent 1s sequences if the 0s sequence has length 1.
 ```java
@@ -448,7 +448,7 @@ We know the following:
 
 1. If we flip a zero to a one, we must flip a one to a zero.
 2. When we do that, the number will be bigger if and only if the zero-to-one bit was to the left of the one-to-zero bit.
-3. We want to make the number bigger, but not unnecessarily bigger. Therefore, we need to flip the right- most zero which has ones on the right of it.
+3. We want to make the number bigger, but not unnecessarily bigger. Therefore, we need to flip the right-most zero which has ones on the right of it.
 
 To put this in a different way, we are flipping the rightmost non-trailing zero. That is, using the above example, the trailing zeros are in the 0th and 1st spot. The rightmost non-trailing zero is at bit 7. Let's call this position p.
 
@@ -468,7 +468,7 @@ A relatively easy way of doing this is to count how many ones are to the right o
 
 Let's walk through this with an example.
 
-*Step2: Clear bits to the right of p. From before, c0 = 2. c1 = 5. p = 7.*
+*Step 2: Clear bits to the right of p. From before, c0 = 2. c1 = 5. p = 7.*
 
 |    |    |    |    |    |    |    |    |    |    |    |    |    |    |
 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -488,7 +488,7 @@ Or, more concisely, we do:
 n &= ~((1 << p) - 1).
 ```
 
-*Step 3:Add in c1   -  1 ones.*
+*Step 3: Add in c1   -  1 ones.*
 
 |    |    |    |    |    |    |    |    |    |    |    |    |    |    |
 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -499,7 +499,7 @@ n &= ~((1 << p) - 1).
 To insert  c1 -  1 ones on the right, we do the following:
 ```
 a = 1 << (c1 - 1); // 0s with  a  1  at  position  c1 - 1
-b = a - 1;         // 0S with 1s at  positions 0 through c1 - 1 
+b = a - 1;         // 0s with 1s at  positions 0 through c1 - 1 
 n = n | b;         // inserts 1s at  positions 0 through c1 - 1
 ```
 Or, more concisely:
@@ -531,7 +531,7 @@ The code for getNext is below.
 19          return -1;
 20      }
 21  
-22      int p = c0 + c1; // position of rightmost non - trailing zero
+22      int p = c0 + c1; // position of rightmost non-trailing zero
 23  
 24      n |= (1 << p); // Flip rightmost non-trailing zero
 25      n &= ~((1 << p) - 1); // clear all bits to the right of p
@@ -695,7 +695,7 @@ We can work backwards to solve this question.
 It means that A and B never have a 1 bit in the same place. So if n & (n -1) ==  0, then n and n-1 never share a 1.
 
 
-**What does n-1 look like (as compared with n}?**
+**What does n-1 look like (as compared with n)?**
 
 Try doing subtraction by hand (in base 2 or 10). What happens?
 ```
@@ -711,7 +711,7 @@ if      n  =  abcde1000
 then  n-1  =  abcde0111
 ```
 
-**So what  does n & (n-1)  === 0 indicate?**
+**So what  does n & (n-1)  == 0 indicate?**
 
 n and n -1 must have no 1s in common. Given that they look like this:
 ```

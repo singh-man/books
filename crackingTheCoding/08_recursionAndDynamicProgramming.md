@@ -4,7 +4,7 @@
 
 While  there are a large number of recursive problems, many follow similar patterns. A good hint that a problem is recursive is that it can be built off of subproblems.
 
-When you hear a problem beginning with the following statements, it's often (though not always) a good candidate for recursion: "Design an algorithm to compute the nth ...", "Write code to list the first n...; "Implement a method to compute all...", and so on.
+When you hear a problem beginning with the following statements, it's often (though not always) a good candidate for recursion: "Design an algorithm to compute the nth ...", "Write code to list the first n...", "Implement a method to compute all...", and so on.
 
 > Tip: In my experience  coaching  candidates, people  typically have about 50% accuracy in their "this sounds like a recursive problem" instinct. Use that instinct, since that 50% is valuable. But don't be afraid to look at the problem in a different way, even if you initially thought it seemed recursive. There's also a 50% chance that you were wrong.
 
@@ -306,10 +306,10 @@ SOLUTION
 
 If we picture this grid, the only way to move to spot (r, c) is by moving to one of the adjacent spots: (r-1, c) or (r, c-1). So, we need to find a path to either (r-1, c) or (r, c-1).
 
-How do we find a path to those spots? To find a path to (r-1, c) or (r, c-1), we need to move to one of its adjacent cells. So, we need to find a path to a spot adjacent to (r-1, c), which are coordinates (r-2, c) and (r-1, c-1). or a spot adjacent to (r, c-1), which are spots (r-1, c-1) and ( r.c-2). Observe that we list the point (r-1, c-1) twice; we'll discuss that issue later.
+How do we find a path to those spots? To find a path to (r-1, c) or (r, c-1), we need to move to one of its adjacent cells. So, we need to find a path to a spot adjacent to (r-1, c), which are coordinates (r-2, c) and (r-1, c-1). or a spot adjacent to (r, c-1), which are spots (r-1, c-1) and (r.c-2). Observe that we list the point (r-1, c-1) twice; we'll discuss that issue later.
 
 
-> Tip: A lot of people use the variable names x and y when dealing with two-dimensional arrays. This can actually cause some bugs. People tend to think about x as the first coordinate in the matrix and y as the second coordinate (e.g., matrix[x][y]). But, this isn't really correct. The first coordinate is usually thought of as the row number, which is in fact they value (it goes vertically!). You should write matrix[y][x]. Or, just make your life easier by using r (row) and c (column) instead.
+> Tip: A lot of people use the variable names x and y when dealing with two-dimensional arrays. This can actually cause some bugs. People tend to think about x as the first coordinate in the matrix and y as the second coordinate (e.g., matrix[x][y]). But, this isn't really correct. The first coordinate is usually thought of as the row number, which is in fact the y value (it goes vertically!). You should write matrix[y][x]. Or, just make your life easier by using r (row) and c (column) instead.
 
 
 So then, to find a path from the origin, we just work backwards like this. Starting from the last cell, we try to find a path to each of its adjacent cells. The recursive code below implements this algorithm.
@@ -350,7 +350,7 @@ We should look for a faster way.
 
 Often, we can optimize exponential algorithms by finding duplicate work. What work are we repeating?
 
-If  we walk through  the algorithm, we'll see that we are visiting squares multiple times. In fact, we visit each square many, many times. After all, we have re squares but we're doing O(2ʳ⁺ᶜ) work. If we were only visiting each square once, we would probably have an algorithm that was O(rc) (unless we were somehow doing a lot of work during each visit).
+If  we walk through  the algorithm, we'll see that we are visiting squares multiple times. In fact, we visit each square many, many times. After all, we have rc squares but we're doing O(2ʳ⁺ᶜ) work. If we were only visiting each square once, we would probably have an algorithm that was O(rc) (unless we were somehow doing a lot of work during each visit).
 
 How does our current algorithm work? To find a path to (r, c),  we look for a path to an adjacent coordinate: (r-1, c) or (r, c-1). Of course, if one of those squares is off limits, we ignore it.  Then, we look at their adjacent coordinates: (r-2, c),  (r-1, c-1), (r-1, c-1), and (r, c-2). The spot (r-1, c-1) appears  twice, which means that we're duplicating effort. Ideally, we should remember  that we already visited (r-1, c-1) so that we don't waste our time.
 
@@ -490,7 +490,7 @@ The code  below implements this algorithm.
 6     if (end < start) return -1;
 7 
 8     int midIndex = (start + end) / 2;
-9     int midValue = array[midindex];
+9     int midValue = array[midIndex];
 10    if (midValue == midindex) {
 11      return midindex;
 12    }
@@ -562,7 +562,7 @@ P(3) - P(2) = {a₃}, {a₁, a₃}, {a₂, a₃}, {a₁, a₂, a₃}
 How can we use P(2) to create P(3)? We can simply clone the subsets in P(2) and add a₃  to them: 
 ```
 P(2)      = {} , {a₁}, {a₂}, {a₁, a₂} 
-P(2) + a₃ = {a₃}, {a₁, a₃}, {a₂, a₃), {a₁, a₂, a₃}
+P(2) + a₃ = {a₃}, {a₁, a₃}, {a₂, a₃}, {a₁, a₂, a₃}
 ```
 
 When merged together, the lines above make P(3).
@@ -613,13 +613,13 @@ Generating all subsets, then, really just comes down to generating all binary nu
 2     ArrayList<ArrayList<Integer>> allsubsets = new ArrayList<ArrayList<Integer>>();
 3     int max = 1 << set.size(); /* Compute 2^n */
 4     for (int k = 0; k < max; k++) {
-5       ArrayList<Integer> subset = convertintToSet(k, set);
+5       ArrayList<Integer> subset = convertIntToSet(k, set);
 6       allsubsets.add(subset);
 7     }
 8     return allsubsets;
 9   }
 10  
-11  ArrayList<Integer> convertlntToSet(int x, ArrayList<Integer> set) {
+11  ArrayList<Integer> convertIntToSet(int x, ArrayList<Integer> set) {
 12    ArrayList<Integer> subset = new ArrayList<Integer>();
 13    int index = 0;
 14    for (int k = x; k > 0; k >>= 1) {
@@ -669,7 +669,7 @@ Of course, this "doubling" only works if the number is in fact even. When it's n
 7   int minProductHelper(int smaller, int bigger) {
 8     if (smaller == 0) { // 0 x bigger = 0
 9         return 0;
-10    } else if (smaller == 1) { // 1 x bigger bigger
+10    } else if (smaller == 1) { // 1 x bigger = bigger
 11        return bigger;
 12    }
 13  
@@ -957,7 +957,7 @@ We can now implement this algorithm recursively.
 3 
 4     ArrayList<String> permutations = new ArrayList<String>();
 5     if (str.length() == 0) { // base case
-6       permutations.add('"');
+6       permutations.add("");
 7       return permutations;
 8     }
 9   
@@ -1016,7 +1016,7 @@ This is now a fairly straightforward algorithm to implement.
 ```java
 1   ArrayList<String> getPerms(String remainder) {
 2     int len = remainder.length();
-3     ArrayList<String> result = new ArrayList<Str1ng>();
+3     ArrayList<String> result = new ArrayList<String>();
 4 
 5     /* Base case. */
 6     if (len == 0) {
@@ -1091,10 +1091,10 @@ Let's imagine generating a permutation of this string (now represented as a hash
 P(a->2 |  b->4 |  c->1) = {a + P(a->1 | b->4 | c->1)} +
                           {b + P(a->2 | b->3 | c->1)} +
                           {c + P(a->2 | b->4 | c->0)}
-  P(a->1 | b->4 |  c->1) = {a + P(a->0 | b->4 | c->l)} +
+  P(a->1 | b->4 |  c->1) = {a + P(a->0 | b->4 | c->1)} +
                            {b + P(a->1 | b->3 | c->1)} +
                            {c + P(a->1 | b->4 | c->0)}
-  P(a->2 | b->3 |  c->1) = {a + P(a->1 | b->3 | c->l)} +
+  P(a->2 | b->3 |  c->1) = {a + P(a->1 | b->3 | c->1)} +
                            {b + P(a->2 | b->2 | c->1)} +
                            {c + P(a->2 | b->3 | c->0)}
   P(a->2 | b->4 |  c->0) = {a + P(a->1 | b->4 | c->0)} +
@@ -1135,7 +1135,7 @@ The code below implements this algorithm.
 27    /* Try remaining letters for next char, and generate remaining permutations. */
 28    for (Character c : map.keySet()) {
 29      int count = map.get(c);
-39      if (count > 0) {
+30      if (count > 0) {
 31        map.put(c, count - 1);
 32        printPerms(map, prefix + c, remaining - 1, result);
 33        map.put(c, count);
@@ -1211,7 +1211,7 @@ If we're going to apply this approach, we'll need to check for duplicate values 
 22  
 23  String insertInside(String str, int leftIndex) {
 24    String left = str.substring(0, leftIndex + 1);
-25    String right = str.substring(leftindex + 1, str.length());
+25    String right = str.substring(leftIndex + 1, str.length());
 26    return left + "()" + right;
 27  }
 ```
@@ -1301,7 +1301,7 @@ SOLUTION
 
 ---
 
-This is a recursive problem, so let's figure out how to computemakeChange(n) using prior solutions (i.e., subproblems).
+This is a recursive problem, so let's figure out how to compute makeChange(n) using prior solutions (i.e., subproblems).
 
 Let's say n  =  100. We want to compute the number of ways of making change for 100 cents. What is the relationship between this problem and its subproblems?
 
@@ -1384,7 +1384,7 @@ We can resolve this issue by storing the previously computed values. We'll need 
 
 ```java
 1   int makeChange(int n) {
-2     int[] denoms = {2, 510, 5, 1};
+2     int[] denoms = {25, 10, 5, 1};
 3     int[][] map = new int[n + 1][denoms.length]; // precomputed vals
 4     return makeChange(n, denoms, 0, map);
 5   }
@@ -1591,7 +1591,7 @@ It helps to keep the line that recalls from the hash table symmetric with the on
 
 Alternatively, we can think about the recursive algorithm as making a choice, at each step, whether to put a particular box in the stack. (We will again sort our boxes in descending  order by a dimension, such as height.)
 
-First, we choose whether or not to put box 0 in the stack. Take one recursive path with box Oat the bottom and one recursive path without box 0. Return the better of the two options.
+First, we choose whether or not to put box 0 in the stack. Take one recursive path with box 0 at the bottom and one recursive path without box 0. Return the better of the two options.
 
 Then, we choose whether or not to put box 1 in the stack. Take one recursive path with box 1  at the bottom and one path without box 1. Return the better of the two options.
 
@@ -1619,7 +1619,7 @@ We will again use memoization to cache the height of the tallest stack with a pa
 19    }
 20  
 21    /* without this bottom */
-22    int heightWithoutBottom createStack(boxes, bottom, offset + 1, stackMap);
+22    int heightWithoutBottom = createStack(boxes, bottom, offset + 1, stackMap);
 23  
 24    /* Return better of two options. */
 25    return Math.max(heightWithBottom, heightWithoutBottom);
@@ -1646,7 +1646,7 @@ As in other recursive problems, the key to this problem is to figure out the rel
 
 **Brute Force**
 
-Consider  an  expression  like 0^0&0^111  and  the  target  result  true. How can  we  break  down countEval(0^0&0^1|1,  true) into smaller problems?
+Consider  an  expression  like 0^0&0^1|1  and  the  target  result  true. How can  we  break  down countEval(0^0&0^1|1,  true) into smaller problems?
 
 We could just essentially iterate through each possible place to put a parenthesis.
 
@@ -1658,7 +1658,7 @@ countEval(0^0&0^1|1, true) =
  +  countEval(0^0&0^1|1 where paren around char 7, true)
 ```
 
-Now what? Let's look at just one of those expressions-the paren aroundchar 3. This gives us (0^0)&(0^1). 
+Now what? Let's look at just one of those expressions-the paren around char 3. This gives us (0^0)&(0^1). 
 
 In order to make that expression true, both the left and right sides must be true. So:
 ```
@@ -1732,8 +1732,8 @@ This makes the code a bit more concise.
 25            leftTrue * rightFalse;
 26      }
 27  
-28      int subways = result ? totalTrue : total - totalTrue;
-29      ways += subways;
+28      int subWays = result ? totalTrue : total - totalTrue;
+29      ways += subWays;
 30    }
 31  
 32    return ways;
@@ -1802,7 +1802,7 @@ We can do  this  by  using memoization,  or  a hash table. We just  need to  sto
 34  }
 ```
 
-The added benefit of this is that we could actually end  up with the same substring in multiple parts of the expression. For example, an expression like 0"1"0&0"1"0 has  two instances of 0"1"0. By caching the result of the  substring  value  in a memoization table,  we'll get  to reuse the  result  for the  right part of the expression after computing it for the left.
+The added benefit of this is that we could actually end  up with the same substring in multiple parts of the expression. For example, an expression like 0^1^0&0^1^0 has  two instances of 0^1^0. By caching the result of the  substring  value  in a memoization table,  we'll get  to reuse the  result  for the  right part of the expression after computing it for the left.
 
 There  is one further  optimization we can  make,  but  it's far beyond the  scope of  the  interview. There  is a closed form expression for the  number of ways of parenthesizing an expression, but  you wouldn't be expected to know it. It is given by the Catalan numbers,  where n is the number of operators:
 

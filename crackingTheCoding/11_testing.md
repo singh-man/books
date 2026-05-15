@@ -125,7 +125,7 @@ Often, the expected result is obvious: the right output. However, in some cases,
 
 #### Step  3: Write test code
 
-Once you have the test cases and results defined, writing the code to implement the test cases should be fairly straightforward.Your code might look something like:
+Once you have the test cases and results defined, writing the code to implement the test cases should be fairly straightforward. Your code might look something like:
 
 ```java
 1   void testAddThreeSorted() {
@@ -163,8 +163,8 @@ Now that you understand the details of the scenario, you want to break down the 
 2. Click on Chrome icon.
 3. Browser instance starts.
 4. Browser loads settings.
-5. Browser issues HTIP request for homepage.
-6. Browser gets HTIP response.
+5. Browser issues HTTP request for homepage.
+6. Browser gets HTTP response.
 7. Browser parses webpage.
 8. Browser displays content.
 
@@ -265,7 +265,7 @@ General testing is much more expansive. Ideally, we would test every  possible b
 There are 6 pieces in chess,  so we can test each piece against every other piece,  in every possible direction. This would look something like the below code:
 ```
 1   foreach piece a:
-2      foreach other type of piece b (6 types + empty space)
+2      for each other type of piece b (6 types + empty space)
 3         foreach direction d
 4               Create a board with piece a.
 5               Place piece b in direction d.
@@ -331,7 +331,7 @@ Consider what the different components of the object or problem, and go from the
 
 - *Fact check:* Verify that the pen is felt tip and that the ink is one of the allowed colors.
 - *Intended use:* Drawing. Does the pen write properly on clothing?
-- *Intended use:* Washing. Does it wash off of clothing (even if it's been there for an extended period of time)? Does it wash off in hot warm and cold water?
+- *Intended use:* Washing. Does it wash off of clothing (even if it's been there for an extended period of time)? Does it wash off in hot, warm and cold water?
 - *Safety:* Is the pen safe (non-toxic) for children?
 - *Unintended uses:* How else might children use the pen? They might write on other surfaces, so you need to check whether the behavior there is correct. They might also stomp on the pen, throw it, and so on.
 
@@ -349,7 +349,7 @@ SOLUTION
 
 The first thing to do on this question is to clarify assumptions. Ask the following questions:
 
-- Who is going to use the ATM? Answers might be "anyone", or it might be "blind people", or any number of other answers.
+- Who is going to use the ATM? Answers might be "anyone," or it might be "blind people," or any number of other answers.
 - What are they going  to use it for? Answers might be "withdrawing  money", "transferring money", "checking their balance", or many other answers.
 - What tools do we have to test? Do we have access to the code, or just to the ATM? 
 

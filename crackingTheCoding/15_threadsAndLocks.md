@@ -49,7 +49,7 @@ For example:
 11          }  catch (InterruptedException exc) {
 12              System.out.println("RunnableThread interrupted.");
 13          }
-14          system.out.println("RunnableThread terminating.");
+14          System.out.println("RunnableThread terminating.");
 15      }
 16  }
 17  
@@ -722,7 +722,7 @@ The code below provides further details. For simplicity, we assume that all lock
 124                     return true;
 125                 }
 126             }
-127             visited[lockId] VisitState.VISITED;
+127             visited[lockId] = VisitState.VISITED;
 128         }
 129         return false;
 130     }
@@ -975,7 +975,7 @@ We can implement a FizzBuzzThread class which handles most of this. A NumberThre
 47      }
 48  
 49      public void print() {
-S0          System.out.println(current);
+50          System.out.println(current);
 51      }
 52  }
 ```

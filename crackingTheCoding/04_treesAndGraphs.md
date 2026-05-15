@@ -349,7 +349,7 @@ Bidirectional search is used to find the shortest path between  a source and des
 
 To see why this is faster, consider  a graph  where every node has at most  k adjacent nodes and the shortest path from node s to node t has length d.
 
-- In traditional breadth-first search, we would  search up to k nodes in the first "level" of the search. In the second level, we would  search up to k nodes for each of those first k nodes, so k2 nodes total (thus far). We would do this d times, so that's O(kᵈ) nodes.
+- In traditional breadth-first search, we would  search up to k nodes in the first "level" of the search. In the second level, we would  search up to k nodes for each of those first k nodes, so k² nodes total (thus far). We would do this d times, so that's O(kᵈ) nodes.
 - In bidirectional search, we have two searches that collide after approximately d/2 levels (the midpoint of the path). The search from s visits approximately k⁽ᵈ/²⁾ , as does the search from t. That's approximately 2k⁽ᵈ/²⁾, or O(k⁽ᵈ/²⁾), nodes total.
 
 This might seem like a minor  difference,  but it's not. It's huge.  Recall that (kᵈ/²) * (kᵈ/²) = kᵈ. The bidirectional search is actually faster by a factor of kᵈ/².
@@ -562,7 +562,7 @@ In this question, we've been fortunate enough to be told exactly what balanced m
 15  }
 ```
 
-Although this works. it's not very efficient. On each node. we recurse through its entire subtree. This means that getHeight is called repeatedly on the same nodes. The algorithm is O(N log N) since each node is "touched" once per node above it.
+Although this works, it's not very efficient. On each node, we recurse through its entire subtree. This means that getHeight is called repeatedly on the same nodes. The algorithm is O(N log N) since each node is "touched" once per node above it.
 
 We need to cut out some of the calls to getHeight.
 
@@ -830,7 +830,7 @@ In drawing this example (which is not the example from the problem description),
 
 Now that we have a good example, let's get started with an algorithm.
 
-**Solution#1**
+**Solution #1**
 
 Where do we start? Are there any nodes that we can definitely compile immediately?
 
@@ -1150,7 +1150,7 @@ If each node has a link to its parent, we could trace p and q's paths up until t
 9           first  = first.parent;
 10          second = second.parent;
 11      }
-12      return first == null || second null ? null : first;
+12      return first == null || second == null ? null : first;
 13  }
 14  
 15  TreeNode goUpBy(TreeNode node, int delta) {
@@ -1236,7 +1236,7 @@ The code below implements this approach.
 ```java
 1   TreeNode commonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 2       /* Error check - one node is not in the tree. */
-3       if (!covers(root, p) || covers(root, q)) {
+3       if (!covers(root, p) || !covers(root, q)) {
 4           return null;
 5       }
 6       return ancestorHelper(root, p, q);
@@ -1247,7 +1247,7 @@ The code below implements this approach.
 11          return root;
 12      }
 13  
-14      boolean pIsOnleft = covers(root.left, p);
+14      boolean pIsOnLeft = covers(root.left, p);
 15      boolean qIsOnLeft = covers(root.left, q);
 16      if (pIsOnLeft != qIsOnLeft) { // Nodes are on different side
 17          return root;
@@ -1420,11 +1420,11 @@ What  else  can  we say? Some  people jump to the  conclusion that everything on
 
 Once  the  50 is inserted, all items less than 50 will be routed to the  left and all items greater than 50 will be routed to the  right. The 60 or the  20 could be inserted first, and it wouldn't matter.
 
-Let's think  about this problem recursively.  If we had all arrays  that could have  created the  subtree rooted at  20  (call this  arraySet20),  and all arrays  that could have  created the  subtree rooted at 60 (call this arraySet60), how would that give us the full answer? We could just "weave" each array from array5et20 with each array from arraySet60-and then prepend each array with a 50.
+Let's think  about this problem recursively.  If we had all arrays  that could have  created the  subtree rooted at  20  (call this  arraySet20),  and all arrays  that could have  created the  subtree rooted at 60 (call this arraySet60), how would that give us the full answer? We could just "weave" each array from arraySet20 with each array from arraySet60-and then prepend each array with a 50.
 
 Here's what we mean by weaving. We are merging two arrays in all possible ways, while keeping the elements within each array in the same relative order.
 ```
-arrayl: {1, 2}
+array1: {1, 2}
 array2: {3, 4}
 weaved: {1, 2, 3, 4}, {1, 3, 2, 4}, {1, 3, 4, 2},
         {3, 1, 2, 4}, {3, 1, 4, 2}, {3, 4, 1, 2}
@@ -1450,7 +1450,7 @@ weave(first,  second,   prefix):
                     {1,   3,  2,  4}
                 weave({2},   {},   {1, 3,  4})
                     {1, 3,  4,   2}
-        weave({l,  2},  {4},   {3})
+        weave({1,  2},  {4},   {3})
             weave({2},  {4},   {3,   1})
                 weave({},   {4},   {3,   1,   2})
                     {3,   1,   2,  4}
@@ -1467,7 +1467,7 @@ We could clone the list when we recurse, so that we only modify the recursive ca
 We've chosen to implement it the latter way. Since we're keeping the same reference to first, second, and prefix the entire way down the recursive call stack, then we'll need to clone prefix just before we store the complete result.
 
 ```java
-1   ArrayList<LinkedList<Integer>> allSequences(TreeNocte node) {
+1   ArrayList<LinkedList<Integer>> allSequences(TreeNode node) {
 2       ArrayList<LinkedList<Integer>> result = new ArrayList<LinkedList<Integer>>();
 3   
 4       if (node == null) {
@@ -1583,7 +1583,7 @@ The root is 1, and its left node, 2, follows it. 2.left must be 4. 4 must have t
 
 This whole process was deterministic, as it will be on any other tree. A pre-order traversal always starts at the root and, from there, the path we take is entirely defined by the traversal. Therefore, two trees are identical if they have the same pre-order traversal.
 
-Now consider the subtree problem. If T2's pre-order traversal is a substring of T1's pre-order traversal, then T2's root element must be found in T1. If we do a pre-order traversal from this element in T1, we will follow an identical path toT2's traversal. Therefore, T2 is a subtree of T1.
+Now consider the subtree problem. If T2's pre-order traversal is a substring of T1's pre-order traversal, then T2's root element must be found in T1. If we do a pre-order traversal from this element in T1, we will follow an identical path to T2's traversal. Therefore, T2 is a subtree of T1.
 
 Implementing this is quite straightforward. We just need to construct and compare the pre-order traversals.
 
@@ -1609,17 +1609,17 @@ Implementing this is quite straightforward. We just need to construct and compar
 19  }
 ```
 
-This approach takes O(n  +  m) time and O(n  +  m) space, where n and mare the number of nodes in T1 and T2, respectively. Given millions of nodes, we might want to reduce the space complexity.
+This approach takes O(n  +  m) time and O(n  +  m) space, where n and m are the number of nodes in T1 and T2, respectively. Given millions of nodes, we might want to reduce the space complexity.
 
 **The Alternative Approach**
 
-An alternative approach is to search through the larger tree, T1. Each time a node in T1 matches the root of T2, call matchTree.The matchTree method will compare the two subtrees to see if they are identical.
+An alternative approach is to search through the larger tree, T1. Each time a node in T1 matches the root of T2, call matchTree. The matchTree method will compare the two subtrees to see if they are identical.
 
-Analyzing the runtime is somewhat complex. A naive answer would be to say that it is O(nm) time, where n is the number of nodes in T1 and mis the number of nodes in T2. While this is technically correct, a little more thought can produce a tighter bound.
+Analyzing the runtime is somewhat complex. A naive answer would be to say that it is O(nm) time, where n is the number of nodes in T1 and m is the number of nodes in T2. While this is technically correct, a little more thought can produce a tighter bound.
 
 We do not actually call matchTree on every node in T1. Rather, we call it k times, where k is the number of occurrences of T2's root in T1. The runtime is closer to O(n + km).
 
-In fact, even that overstates the runtime.  Even if the root were identical, we exit matchTree when we find a difference between T1 andT2. We therefore probably do not actually look at m nodes  on each call of matchTree.
+In fact, even that overstates the runtime.  Even if the root were identical, we exit matchTree when we find a difference between T1 and T2. We therefore probably do not actually look at m nodes  on each call of matchTree.
 
 The code below implements this algorithm.
 
@@ -1655,7 +1655,7 @@ When might the simple solution be better, and when might the alternative approac
 
 1.  The simple solution takes O(n + m) memory. The alternative solution takes O(log(n)  + log(m)) memory. Remember: memory usage can be a very big deal when it comes to scalability.
 2.  The simple solution is O(n +  m) time and the alternative  solution  has a worst case time of O(nm). However, the worst  case time can be deceiving; we need to look deeper than that.
-3. A slightly tighter bound on the runtime, as explained  earlier, is O(n  +  km), where k is the number of occurrences of T2's root in T1. Let's suppose the node data for T1 and T2 were random numbers picked between O and p. The value of k would be approximately n/p. Why? Because each of n nodes in T1 has a  1/p chance of equaling the root, so approximately  n/p nodes in T1 should equal T2. root. So, let's say p =  1000, n =  1000000 and m =  100. We would  do somewhere  around 1,100,000 node checks (1100000 = 1000000 + (100 * 1000000)/100).
+3. A slightly tighter bound on the runtime, as explained  earlier, is O(n  +  km), where k is the number of occurrences of T2's root in T1. Let's suppose the node data for T1 and T2 were random numbers picked between 0 and p. The value of k would be approximately n/p. Why? Because each of n nodes in T1 has a  1/p chance of equaling the root, so approximately  n/p nodes in T1 should equal T2. root. So, let's say p =  1000, n =  1000000 and m =  100. We would  do somewhere  around 1,100,000 node checks (1100000 = 1000000 + (100 * 1000000)/1000).
 4.  More complex mathematics and assumptions could get us an even tighter  bound. We assumed in #3 above that if we call matchTree, we would end up traversing  all m nodes of T2. It's far more likely, though,  that we will find a difference  very early on in the tree and will then exit early.
 
 In summary, the alternative approach is certainly more optimal in terms of space and is likely more optimal in terms of time  as well. It all depends on what assumptions you make and whether you prioritize reducing the average case runtime at the expense of the worst case runtime. This is an excellent point to make to your interviewer.
@@ -1689,7 +1689,7 @@ We can guess our interviewer is probably looking for something more optimal, sin
 
 We should keep in mind as we develop this solution that we probably need to know something about the internals of the tree. Otherwise, the question probably wouldn't specify that we're developing the tree class from scratch.
 
-**Option #2  [Slow & Working)**
+**Option #2  [Slow & Working]**
 
 Returning  to our original  solution  of copying  the nodes to an array, we can explore  a solution  where  we maintain  an array at all times that lists all the nodes in the tree. The problem  is that we'll need to remove nodes from this array as we delete them from the tree, and that will take O(N) time.
 
@@ -1703,7 +1703,7 @@ However, this leads to a similar issue as earlier solutions. When we insert a no
 
 What if we knew the depth of the tree? (Since we're building  our own class, we can ensure that we know this. It's an easy enough piece of data to track.)
 
-We could pick a random depth, and then traverse left/right randomly until we go to that depth. This wouldn' t actually ensure that all nodes are equally likely to be chosen though.
+We could pick a random depth, and then traverse left/right randomly until we go to that depth. This wouldn't actually ensure that all nodes are equally likely to be chosen though.
 
 First, the tree doesn't necessarily have an equal number of nodes at each level. This means that nodes on levels with fewer nodes might be more likely to be chosen than nodes on a level with more nodes.
 
@@ -1717,7 +1717,7 @@ We could try just a simple approach: traverse randomly down the tree. At each no
 - With  1/3 odds, we traverse left.
 - With  1/3 odds, we traverse right.
 
-This solution, like some of the others, does not distribute the probabilities evenly across the nodes. The root has a X probability of being selected-the same as all the nodes in the left put together.
+This solution, like some of the others, does not distribute the probabilities evenly across the nodes. The root has a 1/3 probability of being selected-the same as all the nodes in the left put together.
 
 **Option #6 [Fast & Working]**
 
@@ -1841,7 +1841,7 @@ Another way to think about what we're doing is that the initial random number ca
 21  }
 22  
 23  class TreeNode {
-24      /* construc tor and variables are the same. */
+24      /* constructor and variables are the same. */
 25  
 26      public TreeNode getIthNode(int i) {
 27          int leftSize = left == null ? 0 : left.size();
@@ -1992,7 +1992,7 @@ Now that we've settled the algorithm for an array, let's review this on a tree. 
 
 We traverse through the tree using depth-first search. As we visit each node:
 
-1. Track its runningSum. We'll take this in as a parameter and immediately increment it by node. value.
+1. Track its runningSum. We'll take this in as a parameter and immediately increment it by node.value.
 2. Look up runningSum - targetSum in the hash table. The value there indicates the total number. Set totalPaths to this value.
 3. If runningSum  ==  targetSum, then there's one additional path that starts at the root. Increment totalPaths.
 4. Add runningSum to the hash table (incrementing the value if it's already  there).

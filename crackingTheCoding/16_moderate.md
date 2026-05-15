@@ -84,7 +84,7 @@ In this case, we simply go through the book, word by word, and count the number 
 3       int count = 0;
 4       for (String w : book) {
 5           if (w.trim().toLowerCase().equals(word)) {
-5               count++;
+6               count++;
 7           }
 8       }
 9       return count;
@@ -144,7 +144,7 @@ extended infinite segments intersect
 AND
 intersection is within line segment 1 (x and y coordinates) 
 AND 
-intersection is within line segment 2 and y coordinates) 
+intersection is within line segment 2 (x and y coordinates) 
 ```
 What if the two segments represent the same infinite line? In this case, we have to ensure that some portion of their segments  overlap. If we order the line segments by their x locations (start is before end, point 1  is before point 2), then an intersection occurs only if:
 
@@ -223,7 +223,7 @@ We can now go ahead and implement this algorithm.
 64      public Line(Point start, Point end) {
 65          double deltaY = end.y - start.y;
 66          double deltaX = end.x - start.x;
-67          slope = deltaY / deltaX; // Will be Infinity (not exception) when deltaX = 
+67          slope = deltaY / deltaX; // Will be Infinity (not exception) when deltaX = 0
 68          yintercept = end.y - slope * end.x;
 69      }
 70  
@@ -349,7 +349,7 @@ If we know the very last move that was made (and we've been checking for a winne
 53  }
 ```
 
-There is actually a way to clean up thiscode to remove some of the duplicated code. We'll see this approach in a later function.
+There is actually a way to clean up this code to remove some of the duplicated code. We'll see this approach in a later function.
 
 
 **Solution #3: Designing for just a 3x3 board**
@@ -377,7 +377,7 @@ The code below checks each row, column, and diagonal to see if there is a winner
 17      }
 18
 19      if (hasWinner(board[0][2], board[1][1], board[2][0])) {
-26           return board[0][2];
+20           return board[0][2];
 21      }
 22
 23      return Piece.Empty;
@@ -423,7 +423,7 @@ The most obvious way is through a series of nested for-loops.
 18
 19      /* Check columns. */
 20      for (int i = 0; i < size; i++) {
-21          first - board[0][i];
+21          first = board[0][i];
 22          if (first == Piece.Empty) continue;
 23          for (int j = 1; j < size; j++) {
 24              if (board[j][i] != first) {
@@ -625,7 +625,7 @@ The first way is to iterate through all the numbers from 2 through n, counting t
 ```java
 1    /* If the number is a 5 of five, return which power of 5. For example: 5 -> 1,
 2     * 25-> 2, etc. */
-3    int factors0f5(int i) {
+3    int factorsOf5(int i) {
 4       int count = 0;
 5       while (i % 5 == 0) {
 6           count++;
@@ -774,7 +774,7 @@ We can then implement the code as follows:
 ```
 This code almost works. It fails, unfortunately, when a - b overflows. Suppose, for example, that a is INT_MAX - 2 and b is -15. In this case, a - b will be greater than INT_MAX and will overflow, resulting in a negative value.
 
-We can implement a solution to this problem by using the same approach. Our goal is to maintain the condition where k is1 when a >  b. We will need to use more complex logic to accomplish this.
+We can implement a solution to this problem by using the same approach. Our goal is to maintain the condition where k is 1 when a >  b. We will need to use more complex logic to accomplish this.
 
 When does a - b overflow? It will overflow only when a is positive and b is negative, or the other way around. It may be difficult to specially detect the overflow condition, but we can detect when a and b have different signs. Note that if a and b have different signs, then we want k to equal sign (a).
 
@@ -921,7 +921,7 @@ How can we phrase subtraction in terms of addition? This one is pretty straightf
 4       int newSign = a < 0 ? 1 : - 1;
 5       while (a != 0) {
 6           neg += newSign;
-7           a = + newSign;
+7           a += newSign;
 8       }
 9       return neg;
 10  }
@@ -1093,7 +1093,7 @@ Here, we'll need to make our  own  assumptions. We will assume that we have an a
 7       }
 8   }
 ```
-We could  have also  given  Person a getBirthVear() and  getDeathYear() objects. Some  would argue that's better style, but for compactness and  clarity, we'll just keep the  variables public.
+We could  have also  given  Person a getBirthYear() and  getDeathYear() objects. Some  would argue that's better style, but for compactness and  clarity, we'll just keep the  variables public.
 
 The important thing here is to actually use  a Person object. This shows better style  than, say, having an integer array for birth years and  an integer array for death years (with an implicit association of births[i] and  deaths[i] being associated with  the  same person). You don't get  a lot of chances to demonstrate great coding style, so it's valuable to take the  ones you get.
 
@@ -1123,7 +1123,7 @@ The brute force algorithm falls directly out  from the  wording of the problem. 
 18      return maxAliveYear;
 19  }
 ```
-Note that we have passed in the values for the min year(l 900) and max year (2000). We shouldn't hard code these values.
+Note that we have passed in the values for the min year(1900) and max year (2000). We shouldn't hard code these values.
 
 The runtime of this is O(RP), where R is the range of years (100 in this case) and P is the number of people.
 
@@ -1205,7 +1205,7 @@ If we walk through the two arrays like this, we can track the number of people a
 4
 5       int birthIndex = 0;
 6       int deathIndex = 0;
-7       int currentlyAlive = 0·,
+7       int currentlyAlive = 0;
 8       int maxAlive = 0;
 9       int maxAliveYear = min;
 10
@@ -1229,7 +1229,7 @@ If we walk through the two arrays like this, we can track the number of people a
 28
 29  /* Copy birth years or death years (depending on the value of copyBirthYear into
 30   * integer array, then sort array. */
-31  int[] getSortedYears(Person[1 people, boolean copyBirthYear) {
+31  int[] getSortedYears(Person[] people, boolean copyBirthYear) {
 32      int[] years = new int[people.length];
 33      for (int i = 0; i < people.length; i++) {
 34          years[i] = copyBirthYear ? people[i].birth : people[i].death;
@@ -1268,7 +1268,7 @@ Once we have this array, we can walk through each of the years, tracking the cur
 
 This logic is reasonably good, but we should think about it more. Does it really work?
 
-One edge case we should consider is when a person dies the same year that they're born. The increment and decrement  operations will cancel out to give O population change. According to the wording of the problem, this person should be counted as living in that year.
+One edge case we should consider is when a person dies the same year that they're born. The increment and decrement  operations will cancel out to give 0 population change. According to the wording of the problem, this person should be counted as living in that year.
 
 In fact, the "bug" in our algorithm is broader than that. This same issue applies to all people. People who die in 1908 shouldn't be removed from the population count until 1909.
 
@@ -1279,7 +1279,7 @@ There's a simple fix:  instead  of decrementing array[deathYear], we should decr
 3       int[] populationDeltas = getPopulationDeltas(people, min, max);
 4       int maxAliveYear = getMaxAliveYear(populationDeltas);
 5       return maxAliveYear + min;
-5   }
+6   }
 7
 8   /* Add birth and death years to deltas array. */
 9   int[] getPopulationDeltas(Person[] people, int min, int max) {
@@ -1394,7 +1394,7 @@ Of course, a bunch of those sums will never actually be reached. How many unique
 
 If you re-read the prior paragraph, you might notice something interesting. There are only K distinct sums we can get. Isn't that the whole point of the problem-to find all possible sums?
 
-We don't actually need to go through all arrangements of planks. We just need to go through all unique sets of K planks (sets, not orders!). There are only K ways of picking K planks if we only have two possible types: {O of type A, K of type B}, {1 of type A, K-1 of type B}, {2 of type A, K-2 of type B}, ...
+We don't actually need to go through all arrangements of planks. We just need to go through all unique sets of K planks (sets, not orders!). There are only K ways of picking K planks if we only have two possible types: {0 of type A, K of type B}, {1 of type A, K-1 of type B}, {2 of type A, K-2 of type B}, ...
 
 This can be done in just a simple for loop. At each "sequence", we just compute the sum.
 ```java
@@ -1825,7 +1825,7 @@ The following code implements this algorithm.
 ```java
 1   void findUnsortedSequence(int[] array) {
 2       // find left subsequence
-3       int end left = findEndOfLeftSubsequence(array);
+3       int end_left = findEndOfLeftSubsequence(array);
 4       if (end_left >= array.length - 1) return; // Already sorted
 5
 6       // find right subsequence
@@ -1873,7 +1873,7 @@ The following code implements this algorithm.
 48  int shrinkRight(int[] array, int max_index, int start) {
 49      int comp = array[max_index];
 50      for (int i = start; i < array.length; i++) {
-51          if (array[i] >= comp) return i - 1);
+51          if (array[i] >= comp) return i - 1;
 52      }
 53      return array.length - 1;
 54  }
@@ -1966,7 +1966,7 @@ We could do this by iterating through all substrings for a and all possible subs
 ```
 Ouch.
 
-One  easy  optimization is to  notice that if the  pattern starts  with 'a'. then the  a string  must start  at  the beginning of value. (Otherwise, the b string must start at the beginning ofvalue.) Therefore, there aren't O(n²) possible values for a; there are O(n).
+One  easy  optimization is to  notice that if the  pattern starts  with 'a', then the  a string  must start  at  the beginning of value. (Otherwise, the b string must start at the beginning of value.) Therefore, there aren't O(n²) possible values for a; there are O(n).
 
 The algorithm then is to check  if the  pattern starts with a or b. If it starts  with b, we can "invert" it (flipping each 'a' to a 'b' and  each 'b' to an 'a') so that it starts  with 'a'. Then, iterate through all possible substrings for a (each  of which  must begin at index 0) and  all possible substrings for b (each  of which must begin at some character after the end of a). As before, we then compare the  string for this pattern with the  original string.
 
@@ -2216,9 +2216,9 @@ If you don't like modifying the  input matrix, you can create a secondary visite
 28      return size;
 29  }
 ```
-Both implementations are O(WH), where W is the  width of the  matrix  and  His the  height.
+Both implementations are O(WH), where W is the  width of the  matrix  and  H is the  height.
  
-> Note:  Many people say "O(N)" or "O(N²)", as though N has some inherent meaning. It doesn't. Suppose this were  a square matrix. You could describe the  runtime as O(N) or O(N²). Both are correct, depending on what you mean by N. The runtime is O(N²), where N is the length of one side. Or, if N is the  number of cells, it is O(N). Be careful  by what you mean by N. In fact, it might be safer to just  not  use  Nat all when there's any ambiguity as to what it could mean.
+> Note:  Many people say "O(N)" or "O(N²)", as though N has some inherent meaning. It doesn't. Suppose this were  a square matrix. You could describe the  runtime as O(N) or O(N²). Both are correct, depending on what you mean by N. The runtime is O(N²), where N is the length of one side. Or, if N is the  number of cells, it is O(N). Be careful  by what you mean by N. In fact, it might be safer to just  not  use  N at all when there's any ambiguity as to what it could mean.
 
 Some people will miscompute the runtime to be O(N⁴), reasoning that the computeSize method could take as long as O(N²) time and you might call it as much as O(N²) times (and apparently assuming an NxN matrix, too). While those are both basically correct statements, you can't just multiply them together. That's because as a single call to computeSize gets more expensive, the number of times it is called goes down.
 
@@ -2303,7 +2303,7 @@ This is very, very slow on large strings.
 
 **Optimized**
 
-Let's return to thinking about how you would do this, if you were doing it by hand. Imagine the example of 33835676368 (which corresponds to development). If you were doing this by hand, I bet you'd skip over solutions thatstart with fftf [3383], as no valid words start with those characters.
+Let's return to thinking about how you would do this, if you were doing it by hand. Imagine the example of 33835676368 (which corresponds to development). If you were doing this by hand, I bet you'd skip over solutions that start with fftf [3383], as no valid words start with those characters.
 
 Ideally, we'd like our program to make the same sort of optimization: stop recursing down paths which will obviously fail. Specifically, if there are no words in the dictionary that start with prefix, stop recursing.
 
@@ -2495,7 +2495,7 @@ Target approach:
 7                if (one - two == target) {
 8                    int[] values = {one, two};
 9                    return values;
-13               }
+10               }
 11           }
 12       }
 13
@@ -2928,7 +2928,7 @@ As a first attempt, we might try generating all numbers between 0 and 9, and the
 3         return v % 7;
 4   }
 ```
-Unfortunately, the above code will not generate the values with equal probability. We can see this by looking at the results of each call to rand5() an d the return result of the rand7() function.
+Unfortunately, the above code will not generate the values with equal probability. We can see this by looking at the results of each call to rand5() and the return result of the rand7() function.
 
 | **1st Call** | **2nd  Call** | **Result** | ----- | **1st Call** | **2nd  Call** | **Result** |
 | --           | --            | --         | --    | --           | --            | --         |
@@ -2964,7 +2964,7 @@ We can still solve this problem. We just have to use a while loop, and realize t
 
 **Second Attempt (Nondeterministic Number of Calls)**
 
-As soon as we've allowed for a while loop, our work gets much easier. We just need to generate a range of values where each value is equally likely (and where the range has at least seven elements). If we can do this, then we can discard the elements greater than the previous multiple of 7, and mod the rest of them by 7. This will get us a value within the range of Oto 6, with each value being equally likely.
+As soon as we've allowed for a while loop, our work gets much easier. We just need to generate a range of values where each value is equally likely (and where the range has at least seven elements). If we can do this, then we can discard the elements greater than the previous multiple of 7, and mod the rest of them by 7. This will get us a value within the range of 0 to 6, with each value being equally likely.
 
 In the below code, we generate the range 0 through 24  by doing 5 * rand5() + rand5(). Then, we discard the values between 21  and 24, since they would otherwise make rand7() unfairly weighted towards 0 through 3. Finally, we mod by 7 to give us the values in the range 0 to 6 with equal probability.
 
@@ -3292,7 +3292,7 @@ The code below implements this algorithm.
 2     * right and applying each term to a result. When we see a multiplication or
 3     * division, we instead apply this sequence to a temporary variable. */
 4    double compute(String sequence) {
-5        ArrayList<Term> terms = Term.parseTermSequen ce(sequen ce);
+5        ArrayList<Term> terms = Term.parseTermSequence(sequence);
 6        if (terms == null) return Integer.MIN_VALUE;
 7 
 8        double result = 0;
@@ -3373,7 +3373,7 @@ Alternatively, we can solve this problem using two stacks: one for numbers and o
 The processing works as follows:
 
 - Each time we see a number, it gets pushed onto numberStack.
-- Operators get pushed onto operatorStack-as long as the operator has higher priority than the current top of the stack. If priority(currentOperator) <= priority(operatorStack. top()), then we "collapse" the top of the stacks:
+- Operators get pushed onto operatorStack-as long as the operator has higher priority than the current top of the stack. If priority(currentOperator) <= priority(operatorStack.top()), then we "collapse" the top of the stacks:
   - Collapsing:  pop two elements off numberStack, pop an operator off operatorStack, apply the operator, and push the result onto numberStack.
   - Priority: addition  and subtraction have equal priority, which is lower than the priority of multiplication and division (also equal priority).
 

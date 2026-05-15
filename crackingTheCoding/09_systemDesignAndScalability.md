@@ -32,7 +32,7 @@ If your manager asked you to design a system such as TinyURL, you probably would
 
 You can't design a system if you don't know what you're designing. Scoping the problem  is important because  you want to ensure that you're building what the interviewer wants and because this might be something that interviewer is specifically evaluating.
 
-If you're asked something  such as "Design Tiny URL"; you'll want to understand  what exactly you need to implement. Will people be able to specify their own short URLs? Or will it all be auto-generated? Will you need to keep track of any stats on the clicks? Should the URLs stay alive forever, or do they have a timeout?
+If you're asked something  such as "Design TinyURL", you'll want to understand  what exactly you need to implement. Will people be able to specify their own short URLs? Or will it all be auto-generated? Will you need to keep track of any stats on the clicks? Should the URLs stay alive forever, or do they have a timeout?
 
 These are questions that must be answered before going further.
 
@@ -236,10 +236,10 @@ One way to do this is to pre-process each document and create a hash table index
 "many"   ->  {doc1,  doc3,  doc7,  doc8,  doc9}
 ```
 
-To search for "many books", we would simply do an intesection on the values for "books" and "many", and return {doc3, doc8}  as the result.
+To search for "many books", we would simply do an intersection on the values for "books" and "many", and return {doc3, doc8}  as the result.
 
 
-#### Step2
+#### Step 2
 
 Now go back to the original problem. What problems are introduced  with millions of documents?  For starters, we probably need to divide up the documents across many machines. Also, depending on a variety of factors, such as the number of possible words and the repetition of words in a document, we may not be able to fit the full hash table on one machine. Let's assume that this is the case.
 
@@ -251,7 +251,7 @@ This division introduces the following key concerns:
 
 These are just three concerns. There may be many others.
 
-#### Step3
+#### Step 3
 
 In Step 3, we find solutions to each of these issues. One solution is to divide up the words alphabetically by keyword, such that each machine  controls a range of words (e.g., "after" through "apple").
 
@@ -322,7 +322,7 @@ XML is another  great option for distributing the information. Our data  has fix
 company_name, open, high, low, closing price. The XML could look like this:
 
 ```xml
-l   <root>
+1   <root>
 2          <date value="2008-10-12">
 3               <company name="foo">
 4                    <open>126.23</open>
@@ -362,7 +362,7 @@ So which one of these would we use? There's no clear answer. The pure text file 
 The goal of a question like this is not to see if you get the "correct" answer (there is no single correct answer). Rather, it's to see how you design a system, and how you evaluate trade-offs.
 
 
-**9.2   Social Network:** How would you design the data structures for a very large social network like Facebook or Linkedln? Describe how you would design an algorithm to show the shortest path between two people (e.g., `Me-> Bob-> Susan-> Jason-> You`).
+**9.2   Social Network:** How would you design the data structures for a very large social network like Facebook or LinkedIn? Describe how you would design an algorithm to show the shortest path between two people (e.g., `Me-> Bob-> Susan-> Jason-> You`).
 
 SOLUTION
 
@@ -417,10 +417,10 @@ In the implementation, we'll use two classes to help us. BFSData holds the data 
 29      for (int i = 0; i < count; i++) {
 30          /*Pull out first node.*/
 31          PathNode pathNode = primary.toVisit.poll();
-32          int personld = pathNode.getPerson().getID();
+32          int personId = pathNode.getPerson().getID();
 33  
 34          /* Check if it's already been visited. */
-35          if (secondary.visited.containsKey(personid)) {
+35          if (secondary.visited.containsKey(personId)) {
 36              return pathNode.getPerson();
 37          }
 38  
@@ -513,7 +513,7 @@ A bidirectional  BFS will generally be faster than the traditional BFS. However,
 
 **Step 2: Handle the Millions of Users**
 
-When we deal with a service the size of Linkedln or Facebook, we cannot possibly keep all of our data on one machine. That means that our simple Person  data structure from above doesn't quite work-our friends may not live on the same machine as we do. Instead, we can replace our list of friends with a list of their IDs, and traverse as follows:
+When we deal with a service the size of LinkedIn or Facebook, we cannot possibly keep all of our data on one machine. That means that our simple Person  data structure from above doesn't quite work-our friends may not live on the same machine as we do. Instead, we can replace our list of friends with a list of their IDs, and traverse as follows:
 
 1. For each friend  ID: int machine_index =  getMachineIDForUser(personID);
 
@@ -528,7 +528,7 @@ The code below outlines this process. We've defined a class Server, which holds 
 2       HashMap<Integer, Machine> machines = new HashMap<Integer, Machine>();
 3       HashMap<Integer, Integer> personToMachineMap = new HashMap<Integer, Integer>();
 4   
-5       public Machine getMachineWithid(int machineID) {
+5       public Machine getMachineWithId(int machineID) {
 6           return machines.get(machineID);
 7       }
 8   
@@ -705,7 +705,7 @@ For illustrative  purposes, abbreviated code for the cache is below. The code at
 
 ```java
 1   public class Cache {
-2       public static int MAX SIZE = 10;
+2       public static int MAX_SIZE = 10;
 3       public Node head, tail;
 4       public HashMap<String, Node> map;
 5       public int size = 0;
@@ -719,7 +719,7 @@ For illustrative  purposes, abbreviated code for the cache is below. The code at
 13      public void moveToFront(String query) { ... }
 14  
 15      /*Removes node from linked list */
-16      public void removeFromlinkedList(Node node) { ... }
+16      public void removeFromLinkedList(Node node) { ... }
 17  
 18      /* Gets results from cache, and updates linked list */
 19      public String[] getResults(String query) {
@@ -814,7 +814,7 @@ Another optimization we could make is to the "automatic time out" mechanism. As 
 These are just a few of the enhancements we can make. Remember that in questions like this, there is no single correct way to solve the problem. These questions are about having a discussion with your interviewer about design criteria and demonstrating your general approach and methodology.
 
 
-**9.6       Sales  Rank:** A large eCommerce company wishes to list the best-selling products, overall and by category. For example, one product might be the #1056th best-selling product overall but the #13th best-selling product under "Sports Equipment" and the #24th best-selling product under "Safety:· Describe how you would design this system.
+**9.6       Sales  Rank:** A large eCommerce company wishes to list the best-selling products, overall and by category. For example, one product might be the #1056th best-selling product overall but the #13th best-selling product under "Sports Equipment" and the #24th best-selling product under "Safety." Describe how you would design this system.
 
 SOLUTION
 
@@ -869,7 +869,7 @@ Tracking the total sales takes a bit of thought. If we just use a single column 
 
 Instead, we'll just use a table like this.
 
-| Prod ID | Total | Sun | Mon | Tues | Wed | Thrus | Fri | Sat |
+| Prod ID | Total | Sun | Mon | Tues | Wed | Thurs | Fri | Sat |
 | --      | --    | --  | --  | --   | --  | --    | --  | --  |
 |         |       |     |     |      |     |       |     |     |
 |         |       |     |     |      |     |       |     |     |
@@ -1001,6 +1001,8 @@ It's okay to make different assumptions here, but you should explicitly state th
 
 The most naive system would be one that pulls bank data on each login, categorizes all the data, and then analyzes the user's budget. This wouldn't quite fit the requirements, though, as we want email notifications on particular events.
 
+We can do a bit better.
+
 ```
 +------------+
 |bank data   |
@@ -1046,7 +1048,7 @@ This will be a very data-heavy system. We want it to feel snappy and responsive,
 
 We will almost certainly want at least one task queue, where we can queue up work that needs to be done. This work will include tasks such as pulling in new bank data, re-analyzing budgets, and categorizing new bank data. It would also include re-trying tasks that failed.
 
-These tasks will likely have some sort of priority associated with them, as some need to be performed more ohen  than others. We want to build a task queue system that can prioritize some task types over others, while still ensuring that all tasks will be performed eventually. That is, we wouldn't want a low priority task to essentially "starve" because there are always higher priority tasks.
+These tasks will likely have some sort of priority associated with them, as some need to be performed more often than others. We want to build a task queue system that can prioritize some task types over others, while still ensuring that all tasks will be performed eventually. That is, we wouldn't want a low priority task to essentially "starve" because there are always higher priority tasks.
 
 One important part of the system that we haven't yet addressed  will be the email system. We could use a task to regularly crawl user's data to check if they're exceeding their budget, but that means checking every single user daily. Instead, we'll want to queue a task whenever a transaction occurs that potentially exceeds a budget. We can store the current budget totals by category to make it easy to understand if a new transaction exceeds the budget.
 

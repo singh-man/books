@@ -99,7 +99,7 @@ Vector: A vector is very similar to an ArrayList except that it is synchronized.
 1   Vector<String> myVect = new Vector<String>();
 2   myVect.add("one");
 3   myVect.add("two");
-4   system.out.printin(myVect.get(0));
+4   System.out.printin(myVect.get(0));
 ```
 LinkedList: LinkedList is, of course, Java's built-in LinkedList class. Though it rarely comes up in an interview, it's useful to study because it demonstrates some of the syntax for an iterator.
 ```java
@@ -116,7 +116,7 @@ HashMap: The HashMap collection is widely used, both in interviews and in the re
 1   HashMap<String, String> map = new HashMap<String, String>();
 2   map.put("one", "uno");
 3   map.put("two", "dos");
-4   System.out.println(map. get("one"));
+4   System.out.println(map.get("one"));
 ```
 Before your interview, make sure you're very comfortable with the above syntax. You'll need it.
 
@@ -189,7 +189,7 @@ Watch how this plays out in the  example below.
 4   }
 5   
 6   public static String foo() {
-7       int X = 0;
+7       int x = 0;
 8       int y = 5;
 9       try {
 10          System.out.println("start try");
@@ -262,7 +262,7 @@ During compilation, this code is re-written into:
 ```
 The use of Java generics didn't really change much about our capabilities; it just made things a bit prettier. For this reason, Java generics are sometimes called "syntactic sugar".
 
-This is quite different from  C++. In C++, templates are essentially a glorified macro set, with  the  compiler creating a new  copy  of the  template code for each type.  Proof of this  is in the  fact  that an  instance of MyClass\<Foo> will not  share a static variable withMyClass\<Bar>. Two instances of MyClass\<Foo>, however, will share a static variable.
+This is quite different from  C++. In C++, templates are essentially a glorified macro set, with  the  compiler creating a new  copy  of the  template code for each type.  Proof of this  is in the  fact  that an  instance of MyClass\<Foo> will not  share a static variable with MyClass\<Bar>. Two instances of MyClass\<Foo>, however, will share a static variable.
 
 To illustrate this, consider the  code below:
 
@@ -373,7 +373,7 @@ The code below offers an example of object reflection.
 5   Class rectangleDefinition = Class.forName("MyProj.Rectangle");
 6   
 7   /* Equivalent: Rectangle rectangle = new Rectangle(4.2, 3.9); */
-8   Class[] doubleArgsClass = new Clas s[] {double.clas s, double.class};
+8   Class[] doubleArgsClass = new Class[] {double.class, double.class};
 9   Constructor doubleArgsConstructor =
 10          rectangleDefinition.getConstructor(doubleArgsClass);
 11  Rectangle rectangle = (Rectangle) doubleArgsConstructor.newInstance(doubleArgs);

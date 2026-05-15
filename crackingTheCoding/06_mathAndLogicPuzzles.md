@@ -129,7 +129,7 @@ The code below implements the Sieve of Eratosthenes.
 34  }
 ```
 
-Of course, there are a number of optimizations that can be made to this. One simple one is to only use odd numbersin the array, which would allow us to reduce our space usage by half.
+Of course, there are a number of optimizations that can be made to this. One simple one is to only use odd numbers in the array, which would allow us to reduce our space usage by half.
 
 
 ### Probability
@@ -151,7 +151,7 @@ Imagine you were throwing a dart at this Venn diagram. What is the probability t
 For example, imagine we were picking a number between  1 and 10 (inclusive). What's the probability of picking an even number and a number between  1 and 5? The odds of picking a number between 1  and 5 is 50%, and the odds of a number between  1 and 5 being even is 40%. So, the odds of doing both are: 
 
 ```
-= P(x is even and   x <= 5)
+P(x is even and   x <= 5)
 = P(x is even given x <= 5) P(x <= 5) 
 = (2/5) * (1/2)
 = 1/5
@@ -247,7 +247,7 @@ The "nine balls" question is a classic interview question. You have nine balls. 
 
 A first approach is to divide the balls in sets of four, with the ninth ball sitting off to the side. The heavy ball is in the heavier set. If they are the same weight, then we know that the ninth ball is the heavy one. Replicating this approach for the remaining sets would result in a worst case of three weighings-one too many!
 
-This is an imbalance in the worst case: the ninth ball takes just one weighing to discover if it's heavy, whereas others take three. If we penalize the ninth ball by putting more balls off to the side, we can lighten the load on the others. This is an example of "worst case balancing:"
+This is an imbalance in the worst case: the ninth ball takes just one weighing to discover if it's heavy, whereas others take three. If we penalize the ninth ball by putting more balls off to the side, we can lighten the load on the others. This is an example of "worst case balancing".
 
 If we divide the balls into sets of three items each, we will know after just one weighing which set has the heavy one. We can even formalize this into a rule: given N balls,  where N is divisible by 3, one use of the scale will point us to a set of x/3 balls with the heavy ball.
 
@@ -329,7 +329,7 @@ The probability of making exactly two shots is:
 P(making 1 and 2, and missing 3)
       +  P(making 1 and 3, and missing 2)
       +  P(missing 1, and making 2 and 3)
-   = p * p * (1 - p) + p * (1 - p) * p + (1 - p) * p * P
+   = p * p * (1 - p) + p * (1 - p) * p + (1 - p) * p * p
    = 3 (1 - p) p²
 ```
 
@@ -431,7 +431,7 @@ If we just play with the jugs,  we'll find that we can pour water back and forth
 This question, like many puzzle questions, has a math/computer science root.  If the  two jug  sizes are relatively prime, you can measure any value between one  and the  sum of the jug  sizes.
 
 
-**6.6   Blue-Eyed Island:** A bunch of people are living on an island, when a visitor comes with a strange order: all blue-eyed people must leave the island as soon as possible. There will be a flight out at 8:00pm every evening. Each person can see everyone else's eye color, but they do not know their own (nor is anyone allowed to tell them). Additionally, they do not know how many people have blue eyes, although they do know that at least one person does. How many days will it take the blue-eyed people to leave?
+**6.6   Blue-Eyed Island:** A bunch of people are living on an island, when a visitor comes with a strange order: all blue-eyed people must leave the island as soon as possible. There will be a flight out at 8:00 pm every evening. Each person can see everyone else's eye color, but they do not know their own (nor is anyone allowed to tell them). Additionally, they do not know how many people have blue eyes, although they do know that at least one person does. How many days will it take the blue-eyed people to leave?
 
 SOLUTION
 
@@ -480,17 +480,17 @@ And so on.
 
 We know  that every family has exactly one girl. How many  boys does each family have, on average? To compute this, we can look at the expected  value  of the number of boys. The expected value of the number of boys is the probability of each sequence multiplied by the number of boys in that sequence.
 
-| Sequence | Number of Boys | Probablility | Number of Boys * Probablility |
-| --       | --             | --           | --                            |
-| G        | 0              | 1/2          | 0                             |
-| BG       | 1              | 1/4          | 1/4                           |
-| BBG      | 2              | 1/8          | 2/8                           |
-| BBBG     | 3              | 1/16         | 3/16                          |
-| BBBBG    | 4              | 1/32         | 4/32                          |
-| BBBBBG   | 5              | 1/64         | 5/64                          |
-| BBBBBBG  | 6              | 1/128        | 6/128                         |
+| Sequence | Number of Boys | Probability | Number of Boys * Probability |
+| --       | --             | --          | --                           |
+| G        | 0              | 1/2         | 0                            |
+| BG       | 1              | 1/4         | 1/4                          |
+| BBG      | 2              | 1/8         | 2/8                          |
+| BBBG     | 3              | 1/16        | 3/16                         |
+| BBBBG    | 4              | 1/32        | 4/32                         |
+| BBBBBG   | 5              | 1/64        | 5/64                         |
+| BBBBBBG  | 6              | 1/128       | 6/128                        |
 
-Or in other words,  this is the sum of i to infinity of i divided by 2¹.
+Or in other words,  this is the sum of i to infinity of i divided by 2ⁱ.
 
 Σ(i/2ⁱ, i=0, ∞)
 
@@ -513,7 +513,7 @@ This looks like it's going  to inch closer to 128/128  (which is of course 1). T
 
 If the earlier sum is 1, this would mean that the gender ratio is even. Families contribute exactly one girl and on average one boy. The birth policy  is therefore ineffective. Does this make sense?
 
-At first glance. this seems wrong. The policy is designed to favor girls as it ensures that all families have a girl.
+At first glance, this seems wrong. The policy is designed to favor girls as it ensures that all families have a girl.
 
 On the other hand, the families that  keep having children contribute  (potentially) multiple boys to the population. This could offset the impact of the "one girl" policy.
 
@@ -585,7 +585,7 @@ Our goal is to create a system for dropping Egg 1 such that the number of drops 
 
 1. A perfectly load-balanced system would be one in which Drops (Egg 1)  + Drops (Egg 2) is always the same, regardless of where Egg 1 breaks.
 2. For that to be the case, since each drop of Egg 1 takes one more step, Egg 2 is allowed one fewer step.
-3. We  must, therefore, reduce the number of steps potentially  required by Egg 2 by one  drop  each  time. For example, if Egg 1 is  dropped on  floor 20 and then  floor  30, Egg 2 is potentially required to take 9 steps.When we drop Egg 1 again, we must reduce potential Egg 2 steps to only 8. That is, we must drop Egg 1 at floor 39.
+3. We  must, therefore, reduce the number of steps potentially  required by Egg 2 by one  drop  each  time. For example, if Egg 1 is  dropped on  floor 20 and then  floor  30, Egg 2 is potentially required to take 9 steps. When we drop Egg 1 again, we must reduce potential Egg 2 steps to only 8. That is, we must drop Egg 1 at floor 39.
 4. Therefore, Egg 1 must start at floor X, then go up by X-1 floors, then X- 2, ..., until it gets to 100.
 5. Solve for X.
 ```
@@ -606,7 +606,7 @@ As in many other maximizing/minimizing problems, the key in this problem is "wor
 The following code simulates this approach.
 
 ```java
-1   int breakingPoint = ...,
+1   int breakingPoint = ...;
 2   int countDrops = 0;
 3   
 4   boolean drop(int floor) {
@@ -764,7 +764,7 @@ To simulate  this, we'll build classes for Bottle and TestStrip that mirror the 
 62              }
 63          }
 64          return false;
-55      }
+65      }
 66  }
 ```
 
@@ -776,7 +776,7 @@ This is just one way of simulating the behavior of the bottles and test strips, 
 3   
 4       while (bottles.size() > 1 && strips.size() > 0) {
 5           /* Run tests. */
-5           runTestSet(bottles, strips, today);
+6           runTestSet(bottles, strips, today);
 7   
 8           /* Wait for results. */
 9           today += TestStrip.DAYS_FOR_RESULT;
@@ -792,7 +792,7 @@ This is just one way of simulating the behavior of the bottles and test strips, 
 19      }
 20  
 21      if (bottles.size() == 1) {
-22          return bottles.get(0).getid();
+22          return bottles.get(0).getId();
 23      }
 24      return -1;
 25  }
@@ -829,7 +829,7 @@ Dividing the bottles in a different way can reveal the second or third digit. We
 | Strip 2 | 2xx        | x2x        | xx2        |
 | Strip 3 | 3xx        | x3x        | xx3        |
 | Strip 4 | 4xx        | x4x        | xx4        |
-| Strip 5 | Sxx        | xSx        | xxS        |
+| Strip 5 | 5xx        | x5x        | xx5        |
 | Strip 6 | 6xx        | x6x        | xx6        |
 | Strip 7 | 7xx        | x7x        | xx7        |
 | Strip 8 | 8xx        | x8x        | xx8        |
@@ -865,7 +865,7 @@ Now, bottle #383 will see (Day 7 = #3, Day  8 -> #8, Day 9-> [NONE], Day 10 -> #
 
 What happens, though, if day 10 still doesn't see any new results? Could this happen? 
 
-Actually, yes. Bottle #898 would  see (Day 7 = #8, Day 8 -> #9, Day  9->  [NONE],  Day  10 -> [NONE]). That's okay, though. We just need to distinguish bottle #898 from #899. Bottle #899 will see (Day 7 = #8, Day 9 -> [NONE],  Day  10->  #0).
+Actually, yes. Bottle #898 would  see (Day 7 = #8, Day 8 -> #9, Day  9->  [NONE],  Day  10 -> [NONE]). That's okay, though. We just need to distinguish bottle #898 from #899. Bottle #899 will see (Day 7 = #8, Day 8 -> #9, Day 9 -> [NONE],  Day  10->  #0).
 
 The "ambiguous" bottles from day 9 will always map to different values on day 10. The logic is:
 
@@ -884,7 +884,7 @@ Implementing this requires some careful work to prevent bugs.
 7       /* Run tests. */
 8       for (int day = 0; day < tests; day++) {
 9           runTestSet(bottles, strips, day);
-16      }
+10      }
 11  
 12      /* Get results. */
 13      HashSet<Integer> previousResults = new HashSet<Integer>();
@@ -900,8 +900,8 @@ Implementing this requires some careful work to prevent bugs.
 23          digits[1] = digits[0];
 24      }
 25  
-25      /* If day 2 matched day 0 or day 1, check day 3. Day 3 is the same as day 2, but
-27       * in cremented by 1. */
+26      /* If day 2 matched day 0 or day 1, check day 3. Day 3 is the same as day 2, but
+27       * incremented by 1. */
 28      if (digits[2] == -1) {
 29          if (digits[3] == -1) { /* Day 3 didn't give new result */
 30              /* Digit 2 equals digit 0 or digit 1. But, digit 2, when incremented also
@@ -930,7 +930,7 @@ Implementing this requires some careful work to prevent bugs.
 53  
 54  /* Get strip that should be used on this bottle on this day. */
 55  int getTestStripIndexForDay(Bottle bottle, int day, int nTestStrips) {
-56      int id = bottle.getid();
+56      int id = bottle.getId();
 57      switch (day) {
 58      case 0: return id / 100;
 59      case 1: return (id % 100) / 10;
@@ -961,7 +961,7 @@ We can actually optimize this slightly more, to return a result in just seven da
 
 Notice what each test strip really means. It's a binary indicator for poisoned or unpoisoned. Is it possible to map 1000 keys to 10 binary values such that each key is mapped to a unique configuration of values? Yes, of course. This is what a binary number is.
 
-We can take each bottle number and look at its binary representation. If there's a 1 in the ith digit, then we will add a drop of this bottle's contents to test strip i. Observe that 210 is 1024, so 10 test strips will be enough to handle up to 1024 bottles.
+We can take each bottle number and look at its binary representation. If there's a 1 in the ith digit, then we will add a drop of this bottle's contents to test strip i. Observe that 2¹⁰ is 1024, so 10 test strips will be enough to handle up to 1024 bottles.
 
 We wait seven days, and then read the results.  If test strip i is positive, then set bit i of the result value. Reading all the test strips will give us the ID of the poisoned bottle.
 

@@ -195,7 +195,7 @@ Now, let's say we're building a blackjack game, so we need to know the value of 
 16          return maxUnder == Integer.MIN_VALUE ? minOver : maxUnder;
 17      }
 18  
-19      /* return a list of all poss ible scores this hand could have (evaluating each
+19      /* return a list of all possible scores this hand could have (evaluating each
 20       * ace as both 1 and 11 */
 21      private ArrayList<Integer> possibleScores() { ... }
 
@@ -448,7 +448,7 @@ The Jukebox class represents the body of the problem. Many of the interactions b
 12  }
 ```
 
-Like a real CD player, the CDP layer class supports storing just one CD at a time. The CDs that are not in play are stored in the jukebox.
+Like a real CD player, the CDPlayer class supports storing just one CD at a time. The CDs that are not in play are stored in the jukebox.
 
 ```java
 1   public class CDPlayer {
@@ -644,7 +644,7 @@ The ParkingSpot is implemented by having just a variable which represents the si
 14  
 15      /* Park vehicle in this spot. */
 16      public boolean park(Vehicle v) { ... }
-17  `
+17  
 18      public int getRow() { return row; }
 19      public int getSpotNumber() { return spotNumber; }
 20  
@@ -762,7 +762,7 @@ We then implement separate classes to handle the user manager, the library, and 
 49  
 50  public class Display {
 51      private Book activeBook;
-52      private User activeuser;
+52      private User activeUser;
 53      private int pageNumber = 0;
 54  
 55      public void displayUser(User user) {
@@ -811,7 +811,7 @@ The classes for User and Book simply hold data and provide little true functiona
 10      public int getID() { return bookId; }
 11      public void setID(int id) { bookId = id; }
 12      public String getDetails() { return details; }
-13      public void setDetails(String d) { details = d };
+13      public void setDetails(String d) { details = d; };
 14  }
 15  
 16  public class User {
@@ -837,7 +837,7 @@ The classes for User and Book simply hold data and provide little true functiona
 36      public void setDetails(String details) {
 37          this.details = details;
 38      }
-39      public int getAccountType() { return accountType }
+39      public int getAccountType() { return accountType; }
 40      public void setAccountType(int t) { accountType = t; }
 41  }
 ```
@@ -912,7 +912,7 @@ A potential object-oriented design looks like the following:
 33  
 34  
 35      /* Put piece into the solution, turn it appropriately, and remove from list. */
-36      private void setEdgeinSolution(LinkedList<Piece> pieces, Edge edge, int row,
+36      private void setEdgeInSolution(LinkedList<Piece> pieces, Edge edge, int row,
 37              int column, Orientation orientation) {
 38          Piece piece = edge.getParentPiece();
 39          piece.setEdgeAsOrientation(edge, orientation);
@@ -928,7 +928,7 @@ A potential object-oriented design looks like the following:
 49  }
 50  
 51  public class Piece {
-52      private HashMap<Orientation, Edge> edges new HashMap<Orientation, Edge>();
+52      private HashMap<Orientation, Edge> edges = new HashMap<Orientation, Edge>();
 53  
 54      public Piece(Edge[] edgeList) { ... }
 55  
@@ -1056,7 +1056,7 @@ The key objects of the  system will be a concept of users, conversations, and st
 1   public class UserManager {
 2       private static UserManager instance;
 3       /* maps from a user id to a user */
-4       private HashMap<Integer, User> usersByid;
+4       private HashMap<Integer, User> usersById;
 5   
 6       /* maps from an account name to a user */
 7       private HashMap<String, User> usersByAccountName;
@@ -1064,7 +1064,7 @@ The key objects of the  system will be a concept of users, conversations, and st
 9       /* maps from the user id to an online user */
 10      private HashMap<Integer, User> onlineUsers;
 11  
-12      public static UserManager getinstance() {
+12      public static UserManager getInstance() {
 13          if (instance == null) instance = new UserManager();
 14          return instance;
 15      }
@@ -1271,7 +1271,7 @@ One possible design for Othello is below.
 8  
 9   public class Game {
 10      private Player[] players;
-11      private static Game ins tance;
+11      private static Game instance;
 12      private Board board;
 13      private final int ROWS = 10;
 14      private final int COLUMNS = 10;
@@ -1350,13 +1350,13 @@ The Player holds only a very limited amount of information. It does not even hol
 
 ```java
 1   public class Player {
-2   
+2       private Color color; 
 3       public Player(Color c) { color = c;}
 4   
 5       public int getScore() { ... }
 6   
 7       public boolean playPiece(int r, int c) {
-8           return Game.getlnstance().getBoard().placeColor(r, c, color);
+8           return Game.getInstance().getBoard().placeColor(r, c, color);
 9       }
 10  
 11      public Color getColor() { return color; }
@@ -1420,7 +1420,7 @@ The code below implements this approach.
 
 There are a number of things here which are easy to make mistakes on, such as:
 
-- In Java, we cannot create an array of the generic type. Instead, we must either cast the array or define iterns to be of type List\<T>. For simplicity, we have done the former.
+- In Java, we cannot create an array of the generic type. Instead, we must either cast the array or define items to be of type List\<T>. For simplicity, we have done the former.
 - The % operator will return a negative value when we do `negValue % posVal`. For example, `-8  % 3 is -2`. This is different from how mathematicians  would define the modulus function. We must add iterns.length to a negative index to get the correct positive result.
 - We need to be sure to consistently convert the raw index to the rotated index. For this reason, we have implemented a convert function that is used by other methods.  Even the rotate function uses convert. This is a good example of code reuse.
 
@@ -1432,7 +1432,7 @@ Now that we have the basic code for CircularArray out of the way, we can focus o
 The second part of this question asks us to implement the CircularArray class such that we can do the following:
 ```
 1     CircularArray<String>  array = ...
-2     for (Strings  :  array) { ... }
+2     for (String s  :  array) { ... }
 ```
 Implementing this requires implementing  the Iterator interface. The details of this implementation apply to Java, but similar things can be implemented in other languages.
 
@@ -1455,7 +1455,7 @@ In the code below, we have removed the aspects of CircularArray which were ident
 7       private class CircularArrayiterator<TI> implements Iterator<TI> {
 8           /* current reflects the offset from the rotated head, not from the actual
 9            * start of the raw array. */
-10          private int current = -1;
+10          private int _current = -1;
 11          private TI[] _items;
 12  
 13          public CircularArrayiterator(CircularArray<TI> array) {
@@ -1499,7 +1499,7 @@ Writing an entire game-even a text-based one-would take far longer than the allo
 
 Let's start with what the classes are. We certainly want a Cell class as well as a Board class. We also probably want to have a Game class.
  
-> We could potentially merge Board  and Game together, but it's probably best to keep them separate. Err towards more organization, not less. Board can hold the list of Ce11 objects and do some basic moves with flipping over cells. Game will hold the game state and handle user input.
+> We could potentially merge Board  and Game together, but it's probably best to keep them separate. Err towards more organization, not less. Board can hold the list of Ce1l objects and do some basic moves with flipping over cells. Game will hold the game state and handle user input.
 
 **Design: Cell**
 
@@ -1636,7 +1636,7 @@ To shuffle a grid, we do a very similar thing, just converting the index into a 
 2       int nCells = nRows * nColumns ;
 3       Random random = new Random();
 4       for (int index1 = 0; index1 < nCells; index1++) {
-5           int index2 = index1 + random.nextint(nCells - index1);
+5           int index2 = index1 + random.nextInt(nCells - index1);
 6           if (index1 != index2) {
 7               /* Get cell at index1. */
 8               int row1 = index1 / nColumns;
@@ -1852,7 +1852,7 @@ At first, we might think our data structure would look something like this:
 5   }
 ```
 
-Note that iterns is an array of linked lists, where iterns[i] is a linked list of all objects with keys that map to index i (that is, all the objects that collided at i).
+Note that items is an array of linked lists, where items[i] is a linked list of all objects with keys that map to index i (that is, all the objects that collided at i).
 
 This would seem to work until we think more deeply about collisions. 
 
@@ -1892,7 +1892,7 @@ The code below uses this implementation.
 17      public Hasher(int capacity) {
 18          /* Create list of linked lists at a particular size. Fill list with null
 19           * values, as it's the only way to make the array the desired size. */
-20          arr = newArrayList < LinkedListNode <K, V>>();
+20          arr = newArrayList <LinkedListNode <K, V>>();
 21          arr.ensureCapacity(capacity); // Optional optimization
 22          for (int i = 0; i < capacity; i++) {
 23              arr.add(null);

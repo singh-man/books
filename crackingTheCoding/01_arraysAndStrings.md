@@ -255,16 +255,16 @@ We will use this approach in this problem. The algorithm employs a two-scan appr
 The code below implements this algorithm.
 
 ```java
-1   void replaceSpaces(char([] str, int trueLength) {
+1   void replaceSpaces(char[] str, int trueLength) {
 2       int spaceCount = 0, index, i = 0;
-3       for (i - 0; i < trueLength; i++) {
+3       for (i = 0; i < trueLength; i++) {
 4           if (str[i] == ' ') {
 5               spaceCount++;
 6           }
 7       }
-8       index = truelength + spaceCount * 2;
-9       if (truelength < str.length) str[trueLength] = '\0'; // End array
-10      for (i = truelength - 1; i >= 0; i-- ) {
+8       index = trueLength + spaceCount * 2;
+9       if (trueLength < str.length) str[trueLength] = '\0'; // End array
+10      for (i = trueLength - 1; i >= 0; i-- ) {
 11          if (str[i] == ' ') {
 12              str[index - 1] = '0';
 13              str[index - 2] = '2';
@@ -528,9 +528,9 @@ This algorithm (and almost any reasonable algorithm) takes O(n) time, where n is
 
 > Why is the runtime dictated by the shorter string instead of the longer string? If the strings are the same length (plus or minus one character), then it doesn't matter whether we use the longer string or the shorter string to define the runtime. If the strings are very different lengths, then the algorithm will terminate in O(1)  time. One really, really long string therefore won't significantly extend the runtime. It increases the runtime only if both strings are long.
 
-We might notice that the code for `oneEditReplace` is very similar to that for `oneEditinsert`. We can merge them into one method.
+We might notice that the code for `oneEditReplace` is very similar to that for `oneEditInsert`. We can merge them into one method.
 
-To do this, observe  that both methods follow similar logic: compare each character and ensure  that the strings are only different by one. The methods  vary in how they handle  that difference. The method oneEditReplace does nothing other than flag the difference, whereas oneEditinsert increments the pointer to the longer string. We can handle both of these in the same method.
+To do this, observe  that both methods follow similar logic: compare each character and ensure  that the strings are only different by one. The methods  vary in how they handle  that difference. The method oneEditReplace does nothing other than flag the difference, whereas oneEditInsert increments the pointer to the longer string. We can handle both of these in the same method.
 
 ```java
 1   boolean oneEditAway(String first, String second) {
@@ -568,7 +568,7 @@ Some  people might argue the  first approach is better, as it is clearer and eas
 
 You don't necessarily need to "pick a side". You can discuss the  tradeoffs with your interviewer.
 
-**1.6   String  Compression:** Implement a method to perform basic string  compression using the  counts of repeated characters. For example, the  string aabcccccaaa would become a2blc5a3. If the "compressed" string would not  become smaller than the  original string, your method should return the original string. You can assume the  string has only uppercase and lowercase letters (a - z). 
+**1.6   String  Compression:** Implement a method to perform basic string  compression using the  counts of repeated characters. For example, the  string aabcccccaaa would become a2b1c5a3. If the "compressed" string would not  become smaller than the  original string, your method should return the original string. You can assume the  string has only uppercase and lowercase letters (a - z). 
 
 
 SOLUTION
@@ -592,7 +592,7 @@ How hard could it be?
 10              countConsecutive =  0;
 11          }
 12      }
-13      return  compressedString.length() < str.length() ? compressedString str;
+13      return  compressedString.length() < str.length() ? compressedString : str;
 14  }
 ```
 
@@ -627,8 +627,8 @@ Instead, we can check in advance. This will be more optimal in cases where we do
 ```java
 1   String  compress(String str) {
 2       /*  Check final length and return input string if it would be longer. */
-3       int finallength  =  countCompression(str);
-4       if (finallength >=  str.length())  return str;
+3       int finalLength  =  countCompression(str);
+4       if (finalLength >=  str.length())  return str;
 5       
 6       StringBuilder compressed = new StringBuilder(finalLength); // initial capacity
 7       int countConsecutive = 0;
@@ -646,14 +646,14 @@ Instead, we can check in advance. This will be more optimal in cases where we do
 19  }
 20      
 21  int  countCompression(String str) {
-22      int compressedlength = 0;
+22      int compressedLength = 0;
 23      int countConsecutive = 0;
 24      for (int i = 0; i < str.length(); i++) {
 25          countConsecutive++;
 26      
 27          /*If next character is different than current, increase the length.*/
 28          if (i + 1 >= str.length() || str.charAt(i) != str.charAt(i + 1)) {
-29              compressedlength += 1 + String.valueOf(countConsecutive).length();
+29              compressedLength += 1 + String.valueOf(countConsecutive).length();
 30              countConsecutive = 0;
 31          }
 32      }
@@ -850,13 +850,13 @@ This code is below:
 This code has  a lot of "do  this for the  rows, then the  equivalent action for the  column". In an interview, you could abbreviate this code by adding comments and TODOs that explain that the next chunk of code looks the  same as the  earlier code,  but  using rows. This would allow you to focus  on the  most important parts of the  algorithm.
 
 
-**1.9   String Rotation:** Assume you have a method isSubString which checks if one word is a substring of another. Given two strings, s1 and s2, write code to check if s2 is a rotation of s1 using only one call to isSubString (e.g., "waterbottle" is a rotation of "erbottlewat").
+**1.9   String Rotation:** Assume you have a method isSubstring which checks if one word is a substring of another. Given two strings, s1 and s2, write code to check if s2 is a rotation of s1 using only one call to isSubstring (e.g., "waterbottle" is a rotation of "erbottlewat").
 
 SOLUTION
 
 ---
 
-If we imagine that s2  is a rotation of s1,  then we can  ask what the  rotation point is. For example, if you rotate waterbottle after  wat. you  get  erbottlewat. In a rotation, we cut s1  into  two  parts,  x and y, and rearrange them to get  s2.
+If we imagine that s2  is a rotation of s1,  then we can  ask what the  rotation point is. For example, if you rotate waterbottle after  wat, you  get  erbottlewat. In a rotation, we cut s1  into  two  parts,  x and y, and rearrange them to get  s2.
 
 ```
 s1 = xy  = waterbottle

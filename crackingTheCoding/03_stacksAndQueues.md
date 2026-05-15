@@ -13,7 +13,7 @@ A stack uses LIFO (last-in  first-out) ordering. That is, as in a stack of dinne
 It uses the following operations:
 
 - pop(): Remove the top item from the stack. 
-- push(itern): Add an item to the top of the stack. 
+- push(item): Add an item to the top of the stack. 
 - peek(): Return the top of the stack.
 - isEmpty(): Return true if and only if the stack is empty.
 
@@ -31,7 +31,7 @@ We have provided simple sample code to implement a stack. Note that a stack can 
 7               this.data = data;
 8           }
 9       }
-16  
+10  
 11      private StackNode<T> top;
 12  
 13      public T pop() {
@@ -70,7 +70,7 @@ A queue  implements  FIFO (first-in first-out) ordering. As in a line or queue  
 
 It uses the operations:
 
-- add(itern): Add an item to the end of the list. 
+- add(item): Add an item to the end of the list. 
 - remove(): Remove the first item in the list. 
 - peek(): Return the top of the queue.
 - isEmpty(): Return true if and only if the queue is empty.
@@ -189,7 +189,7 @@ The code for this solution is below.
 30  
 31          int topIndex = indexOfTop(stackNum);
 32          int value = values[topIndex]; // Get top
-33          values[topindex] = 0; // Clear
+33          values[topIndex] = 0; // Clear
 34          sizes[stackNum]--; // Shrink
 35          return value;
 36      }
@@ -244,7 +244,7 @@ Please note that the code for this solution is far more complex than would be ap
 10              this.capacity = capacity;
 11          }
 12  
-13          /* Check if an index on the full array is within the stack boundaries.
+13          /* Check if an index on the full array is within the stack boundaries. The
 14           * stack can wrap around to the start of the array. */
 15          public boolean isWithinStackCapacity(int index) {
 16              /* If outside of bounds of array, return false. */
@@ -310,7 +310,7 @@ Please note that the code for this solution is far more complex than would be ap
 76  
 77          /* Remove last element. */
 78          int value = values[stack.lastElementIndex()];
-79          values[stack.lastElementIndex()] = e; // Clear item
+79          values[stack.lastElementIndex()] = 0; // Clear item
 80          stack.size--; // Shrink size
 81          return value;
 82      }
@@ -324,7 +324,7 @@ Please note that the code for this solution is far more complex than would be ap
 90       * we'll end up shrinking the stack by one element. If we don't have available
 91       * capacity, then we'll need to shift the next stack over too. */
 92      private void shift(int stackNum) {
-93          System.out.println("/// Shifting" + stackNum);
+93          System.out.println("/// Shifting " + stackNum);
 94          StackInfo stack = info[stackNum];
 95  
 96          /* If this stack is at its full capacity, then you need to move the next
@@ -452,7 +452,7 @@ We can (maybe) do a bit better than this by using an additional stack which keep
 ```java
 1   public class StackWithMin2 extends Stack<Integer> {
 2       Stack<Integer> s2;
-3       public stackWithMin2() {
+3       public StackWithMin2() {
 4           s2 = new Stack<Integer>();
 5       }
 6   
@@ -523,7 +523,7 @@ What should pop() do? It should behave similarly to push() in that it should ope
 
 ```java
 1   int pop() {
-2       Stack last = getlastStack();
+2       Stack last = getLastStack();
 3       if (last == null) throw new EmptyStackException();
 4       int v = last.pop();
 5       if (last.size == 0) stacks.remove(stacks.size() - 1);
@@ -649,7 +649,7 @@ The code below implements this algorithm.
 7        }
 8 
 9        public int size() {
-19           return stackNewest.size() + stackOldest.size();
+10           return stackNewest.size() + stackOldest.size();
 11       }
 12 
 13      public void add(T value) {
@@ -738,7 +738,7 @@ With the mergesort  solution, we would create two extra stacks and divide the st
 With the quicksort solution, we would create two additional stacks and divide the stack into the two stacks based on a pivot element. The two stacks would be recursively sorted, and then merged  back together into the original stack. Like the earlier solution, this one involves creating two additional stacks per level of recursion.
 
 
-**3.6       Animal Shelter:** An animal  shelter, which holds only dogs and cats, operates on a strictly "first in, first out" basis. People must adopt either the "oldest" (based on arrival time) of all animals at the  shelter, or they  can  select whether they  would prefer  a dog or a cat  (and  will receive the  oldest animal  of that type). They cannot select which  specific animal  they would  like. Create the  data structures to maintain this system and implement operations such as enqueue, dequeueAny, dequeueDog, and  dequeueCat.You may use the built-in LinkedList data structure.
+**3.6       Animal Shelter:** An animal  shelter, which holds only dogs and cats, operates on a strictly "first in, first out" basis. People must adopt either the "oldest" (based on arrival time) of all animals at the  shelter, or they  can  select whether they  would prefer  a dog or a cat  (and  will receive the  oldest animal  of that type). They cannot select which  specific animal  they would  like. Create the  data structures to maintain this system and implement operations such as enqueue, dequeueAny, dequeueDog, and  dequeueCat. You may use the built-in LinkedList data structure.
 
 
 SOLUTION

@@ -78,9 +78,9 @@ Additionally,  if you implement this code in C, C++ or another  language that re
 
 The "runner" (or second pointer) technique  is used in many linked list problems. The runner technique means that you iterate through the linked list with two pointers simultaneously, with one ahead of the other. The "fast" node might be ahead by a fixed amount, or it might be hopping multiple nodes for each one node that the "slow" node iterates through.
 
-For example, suppose you had a linked list `a₁ ->a₂ ->....->aₙ -> b₁->b₂->...->bₙ`  and you wanted to rearrange it into `a₁ ->b₁ ->a₂ - >b₂ -> ...->aₙ ->bₙ`. You do not know the length of the linked list (but you do know that the length is an even number).
+For example, suppose you had a linked list `a₁ ->a₂ ->....->aₙ -> b₁->b₂->...->bₙ`  and you wanted to rearrange it into `a₁ ->b₁ ->a₂ ->b₂ -> ...->aₙ ->bₙ`. You do not know the length of the linked list (but you do know that the length is an even number).
 
-You could have one pointer p1 (the fast pointer) move  every two elements for every one move that p2 makes. When p1 hits the end of the linked list, p2 will be at the midpoint. Then, move pl back to the front and begin "weaving" the elements. On each iteration, p2 selects an element and inserts it after p1.
+You could have one pointer p1 (the fast pointer) move  every two elements for every one move that p2 makes. When p1 hits the end of the linked list, p2 will be at the midpoint. Then, move p1 back to the front and begin "weaving" the elements. On each iteration, p2 selects an element and inserts it after p1.
 
 
 ### Recursive Problems
@@ -253,7 +253,7 @@ A more optimal, but less straightforward, solution is to implement this iterativ
 The code below implements this algorithm.
 
 ```java
-1   LinkedListNode nthTolast(LinkedListNode head, int k) {
+1   LinkedListNode nthToLast(LinkedListNode head, int k) {
 2       LinkedListNode p1 = head;
 3       LinkedListNode p2 = head;
 4   
@@ -306,7 +306,7 @@ The code below implements this algorithm.
 Note that this problem cannot be solved if the node to be deleted is the last node in the linked list. That's okay-your interviewer wants you to point that out, and to discuss how to handle this case. You could, for example, consider marking the node as dummy.
 
 
-**2.4 Partition:** Write code to partition a linked list around a value x, such that all nodes less than x come before all nodes greater than or equal to x. If x is contained within the list the values of x only need to be after the elements less than x (see below). The partition element x can appear anywhere in the "right partition"; it does not need to appear between the left and right partitions.
+**2.4 Partition:** Write code to partition a linked list around a value x, such that all nodes less than x come before all nodes greater than or equal to x. If x is contained within the list, the values of x only need to be after the elements less than x (see below). The partition element x can appear anywhere in the "right partition"; it does not need to appear between the left and right partitions.
 
 ```
 EXAMPLE 
@@ -416,6 +416,7 @@ FOLLOW UP
 Suppose the digits are stored in forward order. Repeat the above problem. 
 
 ```
+EXAMPLE
 Input: (6 -> 1 -> 7) + (2 -> 9 -> 5). That is, 617 + 295.
 Output: 9 -> 1 -> 2. That is, 912.
 ```
@@ -460,7 +461,7 @@ List: 2 -> 1 -> 9.
 The code below implements this algorithm.
 
 ```java
-l   LinkedListNode addLists(LinkedListNode l1, LinkedListNode l2, int carry) {
+1   LinkedListNode addLists(LinkedListNode l1, LinkedListNode l2, int carry) {
 2       if (l1 == null && l2 == null && carry == 0) {
 3           return null;
 4       }
@@ -518,7 +519,7 @@ The code below implements this algorithm.
 17      /* Add lists */
 18      PartialSum sum = addListsHelper(l1, l2);
 19  
-20      /* If there was a carry value left over, insert this at the front of the list.st.
+20      /* If there was a carry value left over, insert this at the front of the list.
 21      * Otherwise, just return the linked list. */
 22      if (sum.carry == 0) {
 23          return sum.sum;
@@ -563,7 +564,7 @@ The code below implements this algorithm.
 62      if (list != null) {
 63          node.next = list;
 64      }
-55      return node;
+66      return node;
 66  }
 ```
 
@@ -577,7 +578,7 @@ SOLUTION
  
 --- 
 
-To approach this problem, we can picture a palindrome like 0 -> 1 -> 2 -> 0. We know that, since it's a palindrome, the list must be the same backwards and forwards. This leads us to our first solution.
+To approach this problem, we can picture a palindrome like 0 -> 1 -> 2 -> 1 -> 0. We know that, since it's a palindrome, the list must be the same backwards and forwards. This leads us to our first solution.
 
 
 **Solution #1: Reverse and Compare**
@@ -666,7 +667,7 @@ Now, we simply iterate through the rest of the linked list. At each iteration, w
 
 **Solution #3: Recursive Approach**
 
-First, a word on notation: in this solution, when we use the notation node  Kx, the variable K indicates the value of the node data, and x (which is either for b) indicates whether we are referring to the front node with that value or the back node. For example, in the below linked list node   2b would refer to the second (back) node with value 2.
+First, a word on notation: in this solution, when we use the notation node  Kx, the variable K indicates the value of the node data, and x (which is either f or b) indicates whether we are referring to the front node with that value or the back node. For example, in the below linked list node   2b would refer to the second (back) node with value 2.
 
 Now, like many linked list problems, you can approach this problem recursively. We may have some intuitive idea that we want to compare element 0 and element n  -   1, element 1 and element n - 2, element 2 and element n - 3,  and so on, until the middle element(s). For example:
 ```
@@ -713,7 +714,7 @@ If we rewind the stack, passing nodes back as described below, we can do just th
 - Line 2 compares its head (node 1f) to returned_node (node 1b). If the values match, it passes a reference to node 0b (or, returned_node.next) up to line 1.
 - Line 1 compares its head, node 0f, to returned_node, which is node 0b. If the values match, it returns true.
 
-To generalize, each call compares its head to returned_node, and then passes returned_node. next up the stack. In this way, every node i gets compared to node n   -   i. If at any point the values do not match, we return false, and every call up the stack checks for that value.
+To generalize, each call compares its head to returned_node, and then passes returned_node.next up the stack. In this way, every node i gets compared to node n   -   i. If at any point the values do not match, we return false, and every call up the stack checks for that value.
 
 But wait, you might ask, sometimes we said we'll return a boolean value, and sometimes we're returning a node. Which is it?
 
@@ -847,7 +848,7 @@ We can get the lengths at the same time as we get the tails of the linked lists 
 We now have a multistep process.
 
 1. Run through each linked  list to get  the  lengths and  the  tails.
-2. Compare the  tails. If they are different (by reference, not  by value), return immediately. There is no inter- section.
+2. Compare the  tails. If they are different (by reference, not  by value), return immediately. There is no intersection.
 3. Set two pointers to the start  of each linked list.
 4. On the  longer linked  list, advance its pointer by the difference in lengths.
 5. Now, traverse on each linked  list until the  pointers are the  same. The implementation for this is below.
@@ -913,7 +914,7 @@ We now have a multistep process.
 58  }
 ```
 
-This algorithm takes O(A  +  B) time, where A and Bare the lengths of the two linked lists. It takes O(1) additional space.
+This algorithm takes O(A  +  B) time, where A and B are the lengths of the two linked lists. It takes O(1) additional space.
 
 
 **2.8   Loop Detection:** Given a circular linked list, implement an algorithm that returns the node at the beginning of the loop.
@@ -943,7 +944,7 @@ An astute reader  may  wonder   if FastRunner might  "hop  over"  SlowRunner com
 
 Let's assume that the linked list has a "non-looped" part of size k.
 
-If we apply our algorithm  from part  l, when  will FastRunner and SlowRunner collide?
+If we apply our algorithm  from part  1, when  will FastRunner and SlowRunner collide?
 
 We know that for every p steps that SlowRunner takes, FastRunner has taken 2p steps. Therefore, when SlowRunner enters the looped  portion  after k steps, FastRunner has taken 2k steps total and must be 2k   -   k steps, or k steps, into the looped portion. Since k might be much larger than the loop length, we should  actually write this as mod (k,  LOOP_SIZE) steps, which we will denote as K.
 
@@ -957,7 +958,7 @@ So now we know the following facts:
 4.  FastRunner is LOOP_SIZE - K steps behind SlowRunner.
 5.  FastRunner catches  up to SlowRunner at a rate of 1 step per unit of time.
 
-So, when  do they  meet?  Well, if FastRunner is LOOP_SIZE - K  steps  behind  SlowRunner, and FastRunner catches  up at a rate of 1 step per unit of time, then they meet  after LOOP_SIZE = K steps. At this point, they will be K steps before the head of the loop. Let's call this point  Collisionspot.
+So, when  do they  meet?  Well, if FastRunner is LOOP_SIZE - K  steps  behind  SlowRunner, and FastRunner catches  up at a rate of 1 step per unit of time, then they meet  after LOOP_SIZE - K steps. At this point, they will be K steps before the head of the loop. Let's call this point  CollisionSpot.
 
 
 ![](media/02_8_1.JPG)
@@ -965,7 +966,7 @@ So, when  do they  meet?  Well, if FastRunner is LOOP_SIZE - K  steps  behind  S
 
 **Part 3: How Do You Find The Start of the Loop?**
 
-We now know that CollisionSpot is K nodes before the start of the loop. Because K  =  mod (k,  LOOP_ SIZE) (or, in other  words, k =  K   +  M *  LOOP_SIZE, for any integer M), it is also correct to say that it is k nodes from the loop start. For example, if node N is 2 nodes into a 5 node loop, it is also correct to say that it is 7, 12, or even 397 nodes into the loop.
+We now know that CollisionSpot is K nodes before the start of the loop. Because K  =  mod (k,  LOOP_SIZE) (or, in other  words, k =  K   +  M *  LOOP_SIZE, for any integer M), it is also correct to say that it is k nodes from the loop start. For example, if node N is 2 nodes into a 5 node loop, it is also correct to say that it is 7, 12, or even 397 nodes into the loop.
 
 Therefore, both  CollisionSpot and LinkedListHead are k nodes from the start of the loop.
 
@@ -1016,12 +1017,7 @@ The code below implements this algorithm.
 25      }
 26  
 27      /* Both now point to the start of the loop. */
-28SS    return fast;
+28      return fast;
 29  }
 ```
-
-
-Additional Questions: Trees and Graphs (#4.3),  Object-Oriented Design (#7.12),  System Design and Scalability (#9.5), Moderate Problems (#16.25), Hard Problems (#17.12).
-
-
 

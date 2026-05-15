@@ -51,8 +51,8 @@ Implement a query to get a list of all students and how many courses each studen
 This has three problems:
 
 1.  We have excluded students who are not enrolled in any courses, since StudentCourses only includes enrolled students. We need to change this to a LEFT JOIN.
-2.  Even if we changed it to a LEFT JOIN, the query is still not quite right. Doing `count(*)` would return how many items there are in a given group of StudentIDs. Students enrolled in zero courses would still have one item in their group. We need to change this to count the number of CourseIDs in each group: count `(StudentCourses.CourseID)`.
-3.  We've grouped by `Students.StudentID`, but there are still multiple StudentNames in each group. How will the database know which StudentName to return? Sure, they may all have the same value, but the database doesn't understand that. We need to apply an *aggregate* function to this, such as first `(Students.StudentName)`.
+2.  Even if we changed it to a LEFT JOIN, the query is still not quite right. Doing `count(*)` would return how many items there are in a given group of StudentIDs. Students enrolled in zero courses would still have one item in their group. We need to change this to count the number of CourseIDs in each group: count(StudentCourses.CourseID).
+3.  We've grouped by `Students.StudentID`, but there are still multiple StudentNames in each group. How will the database know which StudentName to return? Sure, they may all have the same value, but the database doesn't understand that. We need to apply an *aggregate* function to this, such as first(Students.StudentName).
 
 Fixing these issues gets us to this query:
 ```sql
@@ -68,8 +68,8 @@ Fixing these issues gets us to this query:
 Looking at this code, one might ask why we don't just select the student name on line 3 to avoid having to wrap lines 3 through 6 with another query. This (incorrect) solution is shown below.
 ```sql
 1  /* Incorrect Code */
-1  SELECTStudentName, Students.StudentID, count(StudentCourses.CourseID) as [Cnt]
-2  FROM Students LEFTJOIN StudentCourses
+1  SELECT StudentName, Students.StudentID, count(StudentCourses.CourseID) as [Cnt]
+2  FROM Students LEFT JOIN StudentCourses
 3  ON Students.StudentID = StudentCourses.StudentID
 4  GROUP BY Students.StudentID
 ```
@@ -94,7 +94,7 @@ OR
 ```
 *Query 2: Teacher Class Size*
 
-Implement a query to get a list ofall teachers and how many students they each teach. If a teacher teaches the same student in two courses, you should double count the student. Sort the list in descending order of the number of students a teacher teaches.
+Implement a query to get a list of all teachers and how many students they each teach. If a teacher teaches the same student in two courses, you should double count the student. Sort the list in descending order of the number of students a teacher teaches.
 
 We can construct this query step by step. First, let's get a list of TeacherIDs and how many students are associated with each TeacherID. This is very similar to the earlier query.
 ```
@@ -138,7 +138,7 @@ Next, we should look at the core objects of our system. Each of these core objec
 
 Outlining the core objects should give us a good sense of what the tables should be. How do these tables relate to each other? Are they many-to-many? One-to-many?
 
-If Buildings has a one-to-many relationship with Apartments (oneBuilding has many Apartments), then we might represent this as follows:
+If Buildings has a one-to-many relationship with Apartments (one Building has many Apartments), then we might represent this as follows:
 
 ![](media/IX_14_01.JPG)
 
@@ -289,7 +289,7 @@ The drawback, however, is that if the tables are large, we may spend an unnecess
 Denormalization, then, strikes  a different compromise. Under denormalization, we decide that we're  okay with  some redundancy and  some extra  effort  to update the  database in order to get  the  efficiency  advantages of fewer joins.
 
 
-| Cons of Denomaralization                                                         | Pros of Denomaralization                                                                                                   |
+| Cons of Denormalization                                                          | Pros of Denormalization                                                                                                    |
 | --                                                                               | --                                                                                                                         |
 | Updates and inserts are more expensive.                                          | Retrieving data is faster  since  we do fewer joins.                                                                       |
 | Denormalization can make update and  insert code harder to write.                | Queries to  retrieve can  be  simpler (and  therefore less likely to have bugs),  since  we need to look at fewer  tables. |
@@ -328,7 +328,7 @@ In a simplistic database, we'll have at least  three objects: Students, Courses,
 | --          | --           |
 | StudentID   | int          |
 | StudentName | varchar(100) |
-| Address     | varchar(S00) |
+| Address     | varchar(500) |
  
 | Courses     |              |
 | --          | --           |
@@ -353,7 +353,7 @@ Using the Microsoft SQL Server TOP ..... PERCENT function, we might (incorrectly
 4  GROUP BY CourseEnrollment.StudentID
 5  ORDER BY AVG(CourseEnrollment.Grade)
 ```
-The problem with the above code is that it will return literally the top 10% of rows, when sorted by GPA. Imagine a scenario in which there are 100 students, and the top 15 students all have 4.0 GPAs. The above function will only return 1O of those students, which is not really what we want. In case of a tie, we want to include the students who tied for the top 10% -- even if this means that our honor roll includes more than 10% of the class.
+The problem with the above code is that it will return literally the top 10% of rows, when sorted by GPA. Imagine a scenario in which there are 100 students, and the top 15 students all have 4.0 GPAs. The above function will only return 10 of those students, which is not really what we want. In case of a tie, we want to include the students who tied for the top 10% -- even if this means that our honor roll includes more than 10% of the class.
 
 To correct this issue, we can build something similar to this query, but instead first get the GPA cut off.
 ```sql

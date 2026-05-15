@@ -215,7 +215,7 @@ The code below does just that. It works from the back of A and B, moving the lar
 Note that you don't need to copy the contents of A after running out of elements in B. They are already in place.
 
 
-**10.2    Group  Anagrams:** Write a method to sort an array ot strings so that all tne anagrnms are next to each other.
+**10.2    Group  Anagrams:** Write a method to sort an array of strings so that all tne anagrnms are next to each other.
 
 SOLUTION
 
@@ -247,8 +247,10 @@ The code below implements the comparator.
 
 Now, just sort the arrays using this compareTo method instead of the usual one.
 ```
-12   Arrays.sort(array, new AnagramComparator()); This algorithm will take O(n log(n)) time.
+12   Arrays.sort(array, new AnagramComparator()); 
 ```
+This algorithm will take O(n log(n)) time.
+
 This may be the best we can do for a general sorting algorithm, but we don't actually need to fully sort the array. We only need to group the strings in the array by anagram.
 
 We can do this by using a hash table which maps from the sorted version of a word to a list of its anagrams. So, for example, acre will map to the list {acre,  race,  care}. Once we've grouped all the words into these lists by anagram, we can then put them back into the array.
@@ -385,7 +387,7 @@ But how much bigger? If we just went through the list linearly---1, then 2, then
 It's better to back off exponentially. Try 1, then 2, then 4, then 8, then 16, and so on. This ensures that, if the list has length n, we'll find the length in at most O(log  n) time.
 
 
-> Why O(log  n)? Imagine we start with pointer q at q =  1. At each iteration, this pointer q doubles, until q is bigger than the length n. How many times can q double in size before it's bigger than n? Or, in other words, for what value of k does 2 = n? This expression is equal when k  = log n, as this is precisely what log means. Therefore, it will take O(log n) steps to find the length.
+> Why O(log  n)? Imagine we start with pointer q at q =  1. At each iteration, this pointer q doubles, until q is bigger than the length n. How many times can q double in size before it's bigger than n? Or, in other words, for what value of k does 2ᵏ = n? This expression is equal when k  = log n, as this is precisely what log means. Therefore, it will take O(log n) steps to find the length.
 
 
 Once we find the length, we just perform a (mostly) normal binary search. I say "mostly" because we need to make one small tweak. If the mid point is -1, we need to treat this as a "too big" value and search left. This is on line 16 below.
@@ -608,7 +610,7 @@ The below code provides one implementation for this algorithm.
 12      byte[] bitVector = getBitVectorForRange(filename, blockIndex, rangeSize);
 13  
 14      /* Find a zero in the bit vector */
-15      int offset findZero(bitVector);
+15      int offset = findZero(bitVector);
 16      if (offset < 0) return -1;
 17  
 18      /* Compute missing value. */
@@ -622,7 +624,7 @@ The below code provides one implementation for this algorithm.
 26      int[] blocks  = new int[arraySize];
 27  
 28      Scanner in = new Scanner (new FileReader(filename));
-29      while (in.hasNextint()) {
+29      while (in.hasNextInt()) {
 30          int value = in.nextInt();
 31          blocks[value / rangeSize]++;
 32      }
@@ -708,7 +710,7 @@ When we come across a duplicate element, we print it.
 6           if (bs.get(num0)) {
 7               System.out.println(num);
 8           } else {
-9               bs.sgt(num0);
+9               bs.set(num0);
 10          }
 11      }
 12  }
@@ -717,7 +719,7 @@ When we come across a duplicate element, we print it.
 15      int[] bitset;
 16  
 17      public BitSet(int size) {
-18          bitset = new int[(size >> 5) + 1); // divide by 32
+18          bitset = new int[(size >> 5) + 1]; // divide by 32
 19      }
 20  
 21      boolean get(int pos) {
@@ -756,7 +758,7 @@ To develop an algorithm, let's start  with a simple example.
 | -- | -- | --  | --  |
 | 15 | 20 | 40  | 85  |
 | 20 | 35 | 80  | 95  |
-| 30 | 55 | 105 | 105 |
+| 30 | 55 | 95  | 105 |
 | 40 | 80 | 100 | 120 |
 
 Suppose we are searching for the  element 55. How can we identify where it is?
@@ -765,7 +767,7 @@ If we look at the  start  of a row or the  start  of a column, we can start to d
 
 For rows, we use identical logic. If the  start of a row is bigger than x, we know  we need to move upwards.
 
-Observe that we can also make a similar conclusion by looking at the ends of columns or rows. If the  end of a column  or row is less than x, then we know that we must move down  (for rows) or to the right (for columns) to find x. Thisis because the end is always the maximum element.
+Observe that we can also make a similar conclusion by looking at the ends of columns or rows. If the  end of a column  or row is less than x, then we know that we must move down  (for rows) or to the right (for columns) to find x. This is because the end is always the maximum element.
 
 We can bring these observations together into a solution.1he observations are the following:
 
@@ -909,7 +911,7 @@ The code below implements this algorithm.
 47   
 48   Coordinate findElement(int[][] matrix, int x) {
 49       Coordinate origin =  new Coordinate(0, 0);
-50       coordinate dest   =  new Coordinate(matrix.length - 1, matrix[0].length - 1);
+50       Coordinate dest   =  new Coordinate(matrix.length - 1, matrix[0].length - 1);
 51       return findElement(matrix, origin, dest, x);
 52   }
 53   
@@ -970,7 +972,7 @@ As long as we're moving left during searching for x, the counter won't change. W
 
 When we move to the right though, we skip over a bunch of elements on the left. All of these elements are less than x, so we'll need to increment counter by the number of elements in the left subtree.
 
-Rather than counting the size of the left subtree(which would be inefficient), we can track this information as we add new elements to the tree.
+Rather than counting the size of the left subtree (which would be inefficient), we can track this information as we add new elements to the tree.
 
 Let's walk through an example on the following tree. In the below example, the value in parentheses indicates the number of nodes in the left subtree (or, in other words, the rank of the node *relative* to its subtree).
 
@@ -1036,7 +1038,7 @@ The full code for this is below.
 32          }
 33      }
 34  
-35      public int getRank(int ct) {
+35      public int getRank(int d) {
 36          if (d == data) {
 37              return left_size;
 38          } else if (d < data) {
@@ -1101,7 +1103,7 @@ Before coding, we should clarify the exact algorithm, though.
 
 - Sort the array in ascending order.
 - Iterate through the elements, starting from index 1  (not 0) and jumping two elements at a time.
-- At each element, swap it with the previous element. Since every three elements appear in the order small <=  medium  <=  large, swapping these elements will always put medium as a peak:medium <=  small <=  large.
+- At each element, swap it with the previous element. Since every three elements appear in the order small <=  medium  <=  large, swapping these elements will always put medium as a peak: medium <=  small <=  large.
 
 This approach will ensure that the peaks are in the right place: indexes 1, 3, 5, and so on. As long as the odd-numbered  elements (the peaks) are bigger than the adjacent elements, then the even-numbered elements (the valleys) must be smaller than the adjacent elements.
 

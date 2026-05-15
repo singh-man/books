@@ -1,7 +1,7 @@
 12 C and C++
 ============
 
-A good interviewer won't demand that you code in a language you don't profess to know. Hopefully, if you're asked to code in C++, it's listed on your resume. If you don't remember  all the APls, don't worry-most interviewers (though not all) don't care that much. We do recommend, however, studying up on basic C++ syntax so that you can approach these questions with ease.
+A good interviewer won't demand that you code in a language you don't profess to know. Hopefully, if you're asked to code in C++, it's listed on your resume. If you don't remember  all the APIs, don't worry-most interviewers (though not all) don't care that much. We do recommend, however, studying up on basic C++ syntax so that you can approach these questions with ease.
 
 
 ### Classes and Inheritance
@@ -93,7 +93,7 @@ What would happen if we defined p to be a Person\*, like so?
 
 In this case, "I   am  a  person" would be printed instead. This is because the function aboutMe is resolved at compile-time, in a mechanism known as static binding.
 
-If we want to ensure that the  Student's implementation of about Me is called, we can define aboutMe in the  Person class to be virtual.
+If we want to ensure that the  Student's implementation of aboutMe is called, we can define aboutMe in the  Person class to be virtual.
 
 ```c++
 1   class Person {
@@ -163,7 +163,7 @@ The virtual function naturally introduces the concept of a "virtual destructor".
 7   
 8   class Student : public Person {
 9   public:
-10      ~student() {
+10      ~Student() {
 11          cout << "Deleting a student." << endl;
 12      }
 13  } ;
@@ -188,7 +188,7 @@ To fix this, we simply define the destructor  for Person to be virtual.
 7   
 8   class Student : public Person {
 9   public:
-10      ~student() {
+10      ~Student() {
 11          cout << "Deleting a student." << endl;
 12      }
 13  } ;
@@ -211,7 +211,7 @@ Functions can specify default values, as shown below. Note that all default para
 
 ```c++
 1   int func(int a, int b = 3) {
-2       X = a;
+2       x = a;
 3       y = b;
 4       return a + b;
 5   }
@@ -237,7 +237,7 @@ Two pointers can  equal each other,  such  that changing one's  value  also chan
 1   int * p = new int;
 2   *p = 7;
 3   int * q = p;
-4   *p = 8
+4   *p = 8;
 5   cout << *q; // prints 8
 ```
 
@@ -553,7 +553,7 @@ At first glance, our code appears to loop infinitely. The compiler may try to op
 5            goto start;
 6   }
 ```
-This becomes an infinite loop. However, an external operation might write 'O' to the location of variable opt, thus breaking the loop.
+This becomes an infinite loop. However, an external operation might write '0' to the location of variable opt, thus breaking the loop.
 
 To prevent the compiler from performing such optimization, we want to signal that another element of the system could change the variable. We do this using the volatile keyword, as shown below.
 ```c++
@@ -677,10 +677,10 @@ We know we need constructors and a single destructor for this class, so let's ad
 15          * object. */
 16      }
 ```
-There's one additional way that reference scan be created: by setting one SmartPointer equal to another. We'll want to override the equal operator to handle this, but for now, let's sketch the code like this.
+There's one additional way that references scan be created: by setting one SmartPointer equal to another. We'll want to override the equal operator to handle this, but for now, let's sketch the code like this.
 ```c++
 1   onSetEquals(SmartPoint<T> ptr1, SmartPoint<T> ptr2) {
-2      /* If ptrl has an existing value, decrement its reference count. Then, copy the
+2      /* If ptr1 has an existing value, decrement its reference count. Then, copy the
 3       * pointers to obj and ref_count over. Finally, since we created a new
 4       * reference, we need to increment ref_count. */
 5    }
@@ -766,7 +766,7 @@ We could then do something like:
 1   void* aligned_malloc(size_t required_bytes, size_t alignment) {
 2       int offset = alignment - 1;
 3       void* p = (void*) malloc(required_bytes + offset);
-4       void* q = (void*) (((size_t)(p) + offset) & = (alignment - 1));
+4       void* q = (void*) (((size_t)(p) + offset) & ~(alignment - 1));
 5       return q;
 6   }
 ```
@@ -786,7 +786,7 @@ The code below implements this approach.
 2       void* p1; // initial block
 3       void* p2; // aligned block inside initial block
 4       int offset = alignment - 1 + sizeof(void*);
-5       if ((p1 = (void*)malloc(required_bytes + offset)) NULL) {
+5       if ((p1 = (void*)malloc(required_bytes + offset)) == NULL) {
 6           return NULL;
 7       }
 8       p2 = (void*)(((size_t)(p1) + offset) & ~(alignment - 1));
@@ -803,7 +803,7 @@ The code below implements this approach.
 
 Let's look at the pointer arithmetic in lines 9 and 15.  If we treat p2 as a void** (or an array of void\*'s), we can just look at the index -  1 to retrieve p1.
 
-In aligned_free, we take p2 as the same p2 returned  from aligned_malloc. As before, we know that the value of p1 (which points to the beginning of the full memory block) was stored just before p2. By freeing pl, we deallocate the whole memory block.
+In aligned_free, we take p2 as the same p2 returned  from aligned_malloc. As before, we know that the value of p1 (which points to the beginning of the full memory block) was stored just before p2. By freeing p1, we deallocate the whole memory block.
 
 
 **12.11 2D Alloc:**  Write a function in C  called my2DAlloc which allocates a two-dimensional array. Minimize the number of calls to malloc and make sure that the memory is accessible by the notation arr[i][j].
@@ -818,12 +818,12 @@ The basic idea is to create a one-dimensional array of pointers. Then, for each 
 
 The code below implements this.
 ```c++
-l   int** my2DAlloc(int rows, int cols) {
+1   int** my2DAlloc(int rows, int cols) {
 2       int** rowptr;
 3       int i;
 4       rowptr = (int**) malloc(rows * sizeof(int*));
 5       for (i = 0; i < rows; i++) {
-5           rowptr[i] = (int*) malloc(cols * sizeof(int));
+6           rowptr[i] = (int*) malloc(cols * sizeof(int));
 7       }
 8       return rowptr;
 9   }
@@ -864,7 +864,7 @@ To implement this solution, we do the following.
 12      return rowptr;
 13  }
 ```
-You should carefully  observe what is happening on lines 11 through 13. If there are five rows of six columns each,  array[0] will point to array[S], array[1] will point to array[11], and  so on.
+You should carefully  observe what is happening on lines 11 through 13. If there are five rows of six columns each,  array[0] will point to array[5], array[1] will point to array[11], and  so on.
 
 Then,  when we  actually call array[1][3], the  computer looks  up  array[1], which is a  pointer to another spot in memory-specifically, a pointer to array[5]. This element is treated as its own array, and we then get  the  third  (zero-indexed) element from it.
 
