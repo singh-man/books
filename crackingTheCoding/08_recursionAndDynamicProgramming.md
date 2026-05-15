@@ -295,7 +295,7 @@ Typically we use  a HashMap\<Integer, Integer> for a cache. In this case,  the  
 
 Regardless of whether or not you use memoization, note that the number of ways will quickly overflow  the bounds of an integer. By the  time you get  to just  n = 37, the  result has already overflowed. Using a long will delay, but not completely solve, this issue.
 
-It is great to  communicate this  issue  to  your  interviewer. He probably won't ask you  to  work  around it (although you  could,  with  a BigInteger class). but  it's nice to demonstrate that you think about these issues.
+It is great to  communicate this  issue  to  your  interviewer. He probably won't ask you  to  work  around it (although you  could,  with  a BigInteger class), but  it's nice to demonstrate that you think about these issues.
 
 **8.2 Robot in a Grid:** Imagine a robot sitting on the upper left corner of grid with r rows and c columns. The robot can only move in two directions, right and down, but certain cells are "off limits" such that the robot cannot step on them. Design an algorithm to find a path for the robot from the top left to the bottom right.
 
@@ -306,7 +306,7 @@ SOLUTION
 
 If we picture this grid, the only way to move to spot (r, c) is by moving to one of the adjacent spots: (r-1, c) or (r, c-1). So, we need to find a path to either (r-1, c) or (r, c-1).
 
-How do we find a path to those spots? To find a path to (r-1, c) or (r, c-1), we need to move to one of its adjacent cells. So, we need to find a path to a spot adjacent to (r-1, c), which are coordinates (r-2, c) and (r-1, c-1). or a spot adjacent to (r, c-1), which are spots (r-1, c-1) and (r.c-2). Observe that we list the point (r-1, c-1) twice; we'll discuss that issue later.
+How do we find a path to those spots? To find a path to (r-1, c) or (r, c-1), we need to move to one of its adjacent cells. So, we need to find a path to a spot adjacent to (r-1, c), which are coordinates (r-2, c) and (r-1, c-1). or a spot adjacent to (r, c-1), which are spots (r-1, c-1) and (r,c-2). Observe that we list the point (r-1, c-1) twice; we'll discuss that issue later.
 
 
 > Tip: A lot of people use the variable names x and y when dealing with two-dimensional arrays. This can actually cause some bugs. People tend to think about x as the first coordinate in the matrix and y as the second coordinate (e.g., matrix[x][y]). But, this isn't really correct. The first coordinate is usually thought of as the row number, which is in fact the y value (it goes vertically!). You should write matrix[y][x]. Or, just make your life easier by using r (row) and c (column) instead.
@@ -491,8 +491,8 @@ The code  below implements this algorithm.
 7 
 8     int midIndex = (start + end) / 2;
 9     int midValue = array[midIndex];
-10    if (midValue == midindex) {
-11      return midindex;
+10    if (midValue == midIndex) {
+11      return midIndex;
 12    }
 13  
 14    /* Search left */
@@ -1291,7 +1291,7 @@ We can implement this algorithm recursively:
 
 If you used the variable names x and y to implement this, be careful about the ordering of the variables in screen[y][x]. Because x represents the horizontal axis (that is, it's left to right), it actually corresponds to the column number, not the row number. The value of y equals the number of rows. This is a very easy place to make a mistake in an interview, as well as in your daily coding. It's typically clearer to use row and column instead, as we've done here.
 
-Does this algorithm seem familiar? It should! This is essentially depth-first search on a graph. At each pixel. we are searching outwards to each surrounding pixel. We stop once we've fully traversed all the surrounding pixels of this color.
+Does this algorithm seem familiar? It should! This is essentially depth-first search on a graph. At each pixel, we are searching outwards to each surrounding pixel. We stop once we've fully traversed all the surrounding pixels of this color.
 
 We could alternatively implement this using breadth-first search.
 
@@ -1313,9 +1313,9 @@ makeChange(100) = makeChange(100 using 0 quarters) +
                   makeChange(100 using 3 quarters) + 
                   makeChange(100 using 4 quarters)
 ```
-Inspecting this further, we can see that some of these problems reduce. For example, makeChange(100 using 1  quarter) will equalmakeChange(75 using 0  quarters). This is because, if we must use exactly one quarter to make change for 100 cents, then our only remaining choices involve making change for the remaining 75 cents.
+Inspecting this further, we can see that some of these problems reduce. For example, makeChange(100 using 1  quarter) will equal makeChange(75 using 0  quarters). This is because, if we must use exactly one quarter to make change for 100 cents, then our only remaining choices involve making change for the remaining 75 cents.
 
-We can apply the same logic tomakeChange(100 using  2  quarters), makeChange(100  using 3  quarters) andmakeChange(100 using  4  quarters). We have thus reduced the above statement to the following.
+We can apply the same logic to makeChange(100 using  2  quarters), makeChange(100  using 3  quarters) and makeChange(100 using  4  quarters). We have thus reduced the above statement to the following.
 ```
 makeChange(100) = makeChange(100 using 0 quarters) + 
                   makeChange(75 using 0 quarters) + 
@@ -1332,10 +1332,10 @@ dimes.
 Our approach for quarters applies to dimes as well, but we apply this for each of the four of five parts of the above statement. So, for the first part, we get the following statements:
 ```
 makeChange(100 using 0 quarters) = makeChange(100 using 0 quarters, 0 dimes) + 
-                                   makeChange(l00 using 0 quarters, 1  dime) + 
+                                   makeChange(100 using 0 quarters, 1  dime) + 
                                    makeChange(100 using 0 quarters, 2 dimes) +
                                    ...
-                                   makeChange(l00 using 0 quarters, 10 dimes)
+                                   makeChange(100 using 0 quarters, 10 dimes)
 
 makeChange(75 using 0 quarters) = makeChange(75 using 0 quarters, 0 dimes) + 
                                   makeChange(75 using 0 quarters, 1  dime) + 
@@ -1349,14 +1349,14 @@ makeChange(50 using 0 quarters) = makeChange(50 using 0 quarters, 0 dimes) +
                                   ...
                                   makeChange(50 using 0 quarters, 5 dimes)
 
-make(hange(25 using 0 quarters) = makeChange(25 using 0 quarters, 0 dimes) + 
+makeChange(25 using 0 quarters) = makeChange(25 using 0 quarters, 0 dimes) + 
                                    makeChange(25 using 0 quarters, 1 dime) + 
                                    makeChange(25 using 0 quarters, 2 dimes)
 ```
 
 Each one of these, in turn, expands out once we start applying nickels. We end up with a tree-like recursive structure where each call expands out to four or more calls.
 
-The base case of our recursion is the fully reduced  statement. For example,  `makeChange(50 using 0 quarters 5 dimes)` is fully reduced to 1, since 5 dimes equals 50 cents.
+The base case of our recursion is the fully reduced  statement. For example,  `makeChange(50 using 0 quarters, 5 dimes)` is fully reduced to 1, since 5 dimes equals 50 cents.
 
 This leads to a recursive algorithm that looks like this:
 
@@ -1793,8 +1793,8 @@ We can do  this  by  using memoization,  or  a hash table. We just  need to  sto
 25                    leftTrue * rightFalse;
 26      }
 27  
-28      int subways = result ? totalTrue : total - totalTrue;
-29      ways += subways;
+28      int subWays = result ? totalTrue : total - totalTrue;
+29      ways += subWays;
 30    }
 31  
 32    memo.put(result + s, ways);
