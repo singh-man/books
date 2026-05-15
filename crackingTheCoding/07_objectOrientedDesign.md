@@ -811,7 +811,7 @@ The classes for User and Book simply hold data and provide little true functiona
 10      public int getID() { return bookId; }
 11      public void setID(int id) { bookId = id; }
 12      public String getDetails() { return details; }
-13      public void setDetails(String d) { details = d; };
+13      public void setDetails(String d) { details = d; }
 14  }
 15  
 16  public class User {
@@ -1499,7 +1499,7 @@ Writing an entire game-even a text-based one-would take far longer than the allo
 
 Let's start with what the classes are. We certainly want a Cell class as well as a Board class. We also probably want to have a Game class.
  
-> We could potentially merge Board  and Game together, but it's probably best to keep them separate. Err towards more organization, not less. Board can hold the list of Ce1l objects and do some basic moves with flipping over cells. Game will hold the game state and handle user input.
+> We could potentially merge Board  and Game together, but it's probably best to keep them separate. Err towards more organization, not less. Board can hold the list of Cell objects and do some basic moves with flipping over cells. Game will hold the game state and handle user input.
 
 **Design: Cell**
 
