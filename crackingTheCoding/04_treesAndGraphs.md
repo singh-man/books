@@ -196,7 +196,7 @@ The * nodes (sometimes called "null nodes") are often used to indicate complete 
 
 The actual implementation of these * nodes might be a special type of child (such as a TerminatingTrieNode, which  inherits  from  TrieNode).  Or, we  could  use  just  a  boolean  flag terminates within the "parent" node.
 
-A node in a trie could have anywhere from 1   through  ALPHABET_SIZE +   1 children (or, 0 through ALPHABET_SIZE if a boolean flag is used instead of a* node).
+A node in a trie could have anywhere from 1   through  ALPHABET_SIZE +   1 children (or, 0 through ALPHABET_SIZE if a boolean flag is used instead of a * node).
 
 
 ![](media/IX_04_09.JPG)
@@ -1269,7 +1269,7 @@ We know at this point that we cannot do better than that in terms of the asympto
 
 **Solution #4: Optimized**
 
-Although Solution #3 is optimal in its runtime, we may recognize that there is still some inefficiency in how it operates. Specifically, covers searches all nodes under root for p and q, including the nodes in each subtree (root. left and root.right). Then, it picks one of those subtrees and searches all of its nodes. Each subtree is searched over and over again.
+Although Solution #3 is optimal in its runtime, we may recognize that there is still some inefficiency in how it operates. Specifically, covers searches all nodes under root for p and q, including the nodes in each subtree (root.left and root.right). Then, it picks one of those subtrees and searches all of its nodes. Each subtree is searched over and over again.
 
 We may recognize that we should only need to search the entire tree once to find p and q. We should then be able to "bubble up" the findings to earlier nodes in the stack. The basic logic is the same as the earlier solution.
 
@@ -1431,12 +1431,12 @@ weaved: {1, 2, 3, 4}, {1, 3, 2, 4}, {1, 3, 4, 2},
 ```
 Note that, as long as there  aren't any duplicates in the original array sets, we won't have to worry that weaving will create duplicates.
 
-The last piece to talk about here is how the weaving works Let's think recursively about how to weave {1, 2, 3} and {4, 5,  6}. What are the subproblems?
+The last piece to talk about here is how the weaving works. Let's think recursively about how to weave {1, 2, 3} and {4, 5,  6}. What are the subproblems?
 
 - Prepend a 1 to all weaves of {2,  3} and {4,  5,   6}. 
 - Prepend a 4 to all weaves of {1,  2,  3} and {5,   6}.
 
-To implement this, we'll store each as linked lists. This will make it easy to add and remove elements. When we recurse, we'll push the prefixed elements down the recursion When first or second are empty, we add the remainder to prefix and store the result.
+To implement this, we'll store each as linked lists. This will make it easy to add and remove elements. When we recurse, we'll push the prefixed elements down the recursion. When first or second are empty, we add the remainder to prefix and store the result.
 
 It works something like this:
 ```
@@ -1550,7 +1550,7 @@ In problems like this, it's useful to attempt to solve the problem assuming that
 
 **The Simple Approach**
 
-In this smaller, simpler problem, we could consider comparing string representations of traversals of each tree. if T2 is a subtree of T1, then T2's traversal should be a substring of T1. Is the reverse true? If so,  should we use an in-order traversal or a pre-order traversal?
+In this smaller, simpler problem, we could consider comparing string representations of traversals of each tree. If T2 is a subtree of T1, then T2's traversal should be a substring of T1. Is the reverse true? If so,  should we use an in-order traversal or a pre-order traversal?
 
 An in-order traversal will definitely not work. After all, consider a scenario in which we were using binary search  trees. A binary search tree's in-order traversal always prints out the values in sorted order. Therefore, two binary search trees with the same values will always have the same in-order traversals, even if their structure is different.
 

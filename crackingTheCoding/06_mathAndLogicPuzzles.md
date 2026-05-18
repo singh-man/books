@@ -22,7 +22,7 @@ Note that many of these primes have an exponent of zero.
 The prime number law stated above means that, in order for a number x to divide a number y (written x\y, or mod (y, x)  =  0), all primes in x's prime factorization must be in y's prime factorization. Or, more specifically:
 
 ```
-Let X = 2ʲ⁰ * 3ʲ¹ * 5ʲ² * 7ʲ³ * 11ʲ⁴ * ...
+Let x = 2ʲ⁰ * 3ʲ¹ * 5ʲ² * 7ʲ³ * 11ʲ⁴ * ...
 Let y = 2ᵏ⁰ * 3ᵏ¹ * 5ᵏ² * 7ᵏ³ * 11ᵏ⁴ * ...
 ```
 
@@ -944,9 +944,9 @@ Implementing this requires some careful work to prevent bugs.
 67  int getPositiveOnDay(ArrayList<TestStrip> testStrips, int day,
 68                                  HashSet<Integer> previousResults) {
 69      for (TestStrip testStrip : testStrips) {
-70          int id = testStrip.getid();
+70          int id = testStrip.getId();
 71          if (testStrip.isPositiveOnDay(day) && !previousResults.contains(id)) {
-72              return testStrip.getid();
+72              return testStrip.getId();
 73          }
 74      }
 75      return -1;
@@ -991,7 +991,7 @@ We wait seven days, and then read the results.  If test strip i is positive, the
 23  ArrayList<Integer> getPositiveOnDay(ArrayList<TestStrip> testStrips, int day) {
 24      ArrayList<Integer> positive = new ArrayList<Integer>();
 25      for (TestStrip testStrip : testStrips) {
-26          int id = testStrip.getid();
+26          int id = testStrip.getId();
 27          if (testStrip.isPositiveOnDay(day)) {
 28              positive.add(id);
 29          }

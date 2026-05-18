@@ -105,7 +105,7 @@ In many ways, testing a function  is the easiest type of testing. The conversati
 
 However, don't overlook the value of some conversation with your interviewer. You should discuss any assumptions with your interviewer, particularly with respect to how to handle specific situations.
 
-Suppose you were asked to write code to test sort (int[] array), which sorts an array of integers. You might proceed as follows.
+Suppose you were asked to write code to test sort(int[] array), which sorts an array of integers. You might proceed as follows.
 
 #### Step  1: Define the test cases
 

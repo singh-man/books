@@ -51,7 +51,7 @@ Remember that when you're discussing a linked list in an interview, you must und
 
 ### Deleting a Node from a Singly Linked List
 
-Deleting a node from a linked list is fairly straightforward. Given a node n, we find the previous node prev and set prev.next equal to n. next. If the list is doubly linked, we must also update  n. next to set n. next. prev equal to n. prev. The important things to remember are (1) to check for the null pointer and (2) to update the head or tail pointer as necessary.
+Deleting a node from a linked list is fairly straightforward. Given a node n, we find the previous node prev and set prev.next equal to n.next. If the list is doubly linked, we must also update  n.next to set n.next.prev equal to n.prev. The important things to remember are (1) to check for the null pointer and (2) to update the head or tail pointer as necessary.
 
 Additionally,  if you implement this code in C, C++ or another  language that requires the developer to do memory management, you should consider if the removed node should be deallocated.
 
@@ -564,7 +564,7 @@ The code below implements this algorithm.
 62      if (list != null) {
 63          node.next = list;
 64      }
-66      return node;
+65      return node;
 66  }
 ```
 

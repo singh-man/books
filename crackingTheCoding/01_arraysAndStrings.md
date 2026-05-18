@@ -306,7 +306,7 @@ For example, we know tactcoapapa is a permutation of a palindrome because it has
 
 This leads us to our first algorithm.
 
-**Solution#1**
+**Solution #1**
 
 Implementing this algorithm is fairly straightforward. We use a hash table to count how many times each character appears. Then, we iterate through the hash table and ensure that no more than one character has an odd count.
 
@@ -741,7 +741,7 @@ The code below implements this algorithm. We use two arrays to keep track of all
 
 ```java
 1   void setZeros(int[][] matrix)  {
-2       boolean[]  row = new  boolean[matrix .length];
+2       boolean[]  row = new  boolean[matrix.length];
 3       boolean[]  column  = new  boolean[matrix[0].length];
 4       
 5       // Store  the  row and column  index with value  0

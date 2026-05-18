@@ -26,7 +26,7 @@ Can we make this a little easier? Yes! Imagine I decided to split apart the "add
 Now, how would we do this in binary?
 
 1.  If I add two binary numbers  together, but forget to carry, the ith bit in the sum will be 0 only if a and b have the same ith bit (both 0 or both 1). This is essentially an XOR.
-2.  If I add two numbers together but only carry, I will have a 1 in the ith bit of the sum only if bits i - 1 of a and b are both ls. This is an AND, shifted.
+2.  If I add two numbers together but only carry, I will have a 1 in the ith bit of the sum only if bits i - 1 of a and b are both 1s. This is an AND, shifted.
 3.  Now, recurse until there's nothing to carry.
 
 The following code implements this algorithm.
@@ -358,7 +358,7 @@ What we're trying to do is find a subarray where the count of letters equals the
 | #a | 1  | 2  | 3  | 4  | 4  | 4  | 5  | 5  | 5  | 6  | 7  | 7  | 8  | 9  | 9  | 10 | 11 | 12 | 13 | 14 |
 | #1 | 0  | 0  | 0  | 0  | 1  | 2  | 2  | 3  | 4  | 4  | 4  | 5  | 5  | 5  | 6  | 6  | 6  | 6  | 6  | 6  |
 
-Certainly, whenever the number of letters equals the number of numbers, we can say that from index Oto that index is an "equal" subarray.
+Certainly, whenever the number of letters equals the number of numbers, we can say that from index 0 to that index is an "equal" subarray.
 
 That will only tell us equal subarrays that start at index 0. How can we identify all equal subarrays?
 
@@ -442,7 +442,7 @@ To do so, we use a hash table to store the first time we see a particular differ
 This solution takes O(N) time, where N is size of the array.
 
  
-**17.6    Count  of 2s:** Write a method to count the  number of 2s that appear in all the  numbers between O and  n (inclusive). 
+**17.6    Count  of 2s:** Write a method to count the  number of 2s between 0 and  n (inclusive). 
 
 
 SOLUTION
@@ -455,13 +455,13 @@ Our first approach to this problem can be-and probably should be-a brute force s
 2   int numberOf2sInRange(int n) {
 3       int count = 0;
 4       for (int i = 2; i <= n; i++) { // Might as well start at 2
-5           count += number0f2s(i);
+5           count += numberOf2s(i);
 6       }
 7       return count;
 8   }
 9   
 10  /* Counts the number of '2' digits in a single number */
-11  int number0f2s(int n) {
+11  int numberOf2s(int n) {
 12      int count = 0;
 13      while (n > 0) {
 14          if (n % 10 == 2) {
@@ -473,7 +473,7 @@ Our first approach to this problem can be-and probably should be-a brute force s
 20  }
 ```
 
-The only interesting part is that it's probably cleaner to separate out number0f2s into a separate method. This demonstrates an eye for code cleanliness.
+The only interesting part is that it's probably cleaner to separate out numberOf2s into a separate method. This demonstrates an eye for code cleanliness.
 
 **Improved Solution**
 
@@ -511,7 +511,7 @@ if x[d] > 2: count2sInRangeAtDigit(x, d)=
 ```
 *Case digit= 2*
 
-The final case may be the trickiest,  but it follows from the earlier logic. Consider x =  62523 and d =  3. We know that there are the same ranges of2s from before (that is, the ranges 2000  -  2999, 12000  -  12999, ..., 52000  -   52999). How many  appear in the  3rd digit  in the final, partial range from 62000 - 62523? Well, that should be pretty easy. It's just 524 (62000,  62001,  ...,   62523).
+The final case may be the trickiest,  but it follows from the earlier logic. Consider x =  62523 and d =  3. We know that there are the same ranges of 2s from before (that is, the ranges 2000  -  2999, 12000  -  12999, ..., 52000  -   52999). How many  appear in the  3rd digit  in the final, partial range from 62000 - 62523? Well, that should be pretty easy. It's just 524 (62000,  62001,  ...,   62523).
 ```
 if  x[d]  = 2: count2sInRangeAtDigit(x, d) =
     let y = round down to nearest 10ᵈ⁺¹
@@ -583,15 +583,15 @@ We can start reading pairs in from the synonyms list. As we read the pair (Jonat
 We can use a hash table (L1) that maps from a name to its "true" name. We'll also need to know, given a "true" name, all the names equivalent to it. This will be stored in a hash table L2. Note that L2 acts as a reverse lookup of L1.
 
     READ  (Jonathan,  John)
-        Li.ADD  Jonathan  -> John
+        L1.ADD  Jonathan  -> John
         L2.ADD  John  -> Jonathan
     READ  (Jon,  Johnny)
-        Li.ADD  Jon  -> Johnny
-        LZ.ADD  Johnny ->  Jon
+        L1.ADD  Jon  -> Johnny
+        L2.ADD  Johnny ->  Jon
     READ  (Johnny,  John)
-        LI.ADD  Johnny -> John
-        Li.UPDATE  Jon  -> John
-        LZ.UPDATE  John  -> Jonathan,  Johnny,  Jon
+        L1.ADD  Johnny -> John
+        L1.UPDATE  Jon  -> John
+        L2.UPDATE  John  -> Jonathan,  Johnny,  Jon
 
 If we later find that John is equivalent to, say, Jonny, we'll need to look up the names in L1 and L2 and merge together all the names that are equivalent to them.
 
@@ -736,17 +736,17 @@ In practice, how does this work? We could pick a name and do a depth-first (or b
 2           String[][] synonyms) {
 3       /* Create data. */
 4       Graph graph = constructGraph(names);
-s       connectEdges(graph, synonyms);
+5       connectEdges(graph, synonyms);
 6  
 7       /* Find components. */
-8       HashMap<String, Integer> rootNames getTrueFrequencies(graph);
+8       HashMap<String, Integer> rootNames = getTrueFrequencies(graph);
 9       return rootNames;
 10  }
 11  
 12  /* Add all names to graph as nodes. */
 13  Graph constructGraph(HashMap<String, Integer> names) {
 14      Graph graph = new Graph();
-1S      for (Entry<String, Integer> entry : names.entrySet()) {
+15      for (Entry<String, Integer> entry : names.entrySet()) {
 16          String name = entry.getKey();
 17          int frequency = entry.getValue();
 18          graph.createNode(name, frequency);
@@ -782,7 +782,7 @@ s       connectEdges(graph, synonyms);
 48  int getComponentFrequency(GraphNode node) {
 49      if (node.isVisited()) return 0; // Already visited
 50      
-51      node.setisVisited(true);
+51      node.setIsVisited(true);
 52      int sum = node.getFrequency();
 53      for (GraphNode child : node.getNeighbors()) {
 54          sum += getComponentFrequency(child);
@@ -815,7 +815,7 @@ SOLUTION
 
 When we cut out all the "fluff" to this problem, we can understand that the problem is really the following.
 
-*We have a list ofpairs ofitems. Find the longest sequence such that both the first and second items are in non-decreasing order.*
+*We have a list of pairs of items. Find the longest sequence such that both the first and second items are in non-decreasing order.*
 
 One thing we might first try is sorting the items on an attribute. This is useful actually, but it won't get us all the way there.
 
@@ -826,25 +826,25 @@ By sorting the items by height, we have a relative order the items must appear i
 
 One approach is to essentially try all possibilities. After sorting by height, we iterate through the array. At each element, we branch into two choices: add this element to the subsequence (if it's valid)  or do not.
 ```java
-1   ArrayList<Htwt> longestIncreasingSeq(ArrayList<Htwt> items) {
+1   ArrayList<HtWt> longestIncreasingSeq(ArrayList<HtWt> items) {
 2       Collections.sort(items);
-3       return bestSeqAtIndex(items, new ArrayList<Htwt>(), 0);
+3       return bestSeqAtIndex(items, new ArrayList<HtWt>(), 0);
 4   }
 5   
-6   ArrayList<Htwt> bestSeqAtIndex(ArrayList<Htwt> array, ArrayList<Htwt> sequence,
+6   ArrayList<HtWt> bestSeqAtIndex(ArrayList<HtWt> array, ArrayList<HtWt> sequence,
 7       int index) {
 8       if (index >= array.size()) return sequence;
 9   
 10      HtWt value = array.get(index);
 11  
-12      ArrayList<Htwt> bestWith = null;
+12      ArrayList<HtWt> bestWith = null;
 13      if (canAppend(sequence, value)) {
 14          ArrayList<HtWt> sequenceWith = (ArrayList<HtWt>) sequence.clone();
-15          sequenceWitn.add(value);
+15          sequenceWith.add(value);
 16          bestWith = bestSeqAtIndex(array, sequenceWith, index + 1);
 17      }
 18  
-19      ArrayList<Htwt> bestWithout = bestSeqAtIndex(array, sequence, index + 1);
+19      ArrayList<HtWt> bestWithout = bestSeqAtIndex(array, sequence, index + 1);
 20  
 21      if (bestWith == null || bestWithout.size() > bestWith.size()) {
 22          return bestWithout;
@@ -853,7 +853,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 25      }
 26  }
 27  
-28  boolean canAppend(ArrayList<HtWt> solution, Htwt value) {
+28  boolean canAppend(ArrayList<HtWt> solution, HtWt value) {
 29      if (solution == null) return false;
 30      if (solution.size() == 0) return true;
 31  
@@ -861,7 +861,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 33      return last.isBefore(value);
 34  }
 35  
-36  ArrayList<HtWt> max(ArrayList<HtWt> seq1, ArrayList<Htwt> seq2) {
+36  ArrayList<HtWt> max(ArrayList<HtWt> seq1, ArrayList<HtWt> seq2) {
 37      if (seq1 == null) {
 38          return seq2;
 39      } else if (seq2 == null) {
@@ -870,10 +870,10 @@ One approach is to essentially try all possibilities. After sorting by height, w
 42      return seq1.size() > seq2.size() ? seq1 : seq2;
 43  }
 44  
-45  public class Htwt implements Comparable<HtWt> {
+45  public class HtWt implements Comparable<HtWt> {
 46      private int height;
 47      private int weight;
-48      public HtWt(int h, int w) { height = h; weight w; }
+48      public HtWt(int h, int w) { height = h; weight = w; }
 49  
 50      public int compareTo(HtWt second) {
 51          if (this.height != second.height) {
@@ -886,7 +886,7 @@ One approach is to essentially try all possibilities. After sorting by height, w
 58      /* Returns true if "this" should be lined up before "other". Note that it's
 59       * possible that this.isBefore(other) and other.isBefore(this) are both false.
 60       * This is different from the compareTo method, where if a < b then b > a. */
-61      public boolean isBefore(Htwt other) {
+61      public boolean isBefore(HtWt other) {
 62          if (height < other.height && weight < other.weight) {
 63              return true;
 64          } else {
@@ -915,11 +915,11 @@ Sure. We just append A[4] on to the longest subsequence that it can be appended 
 
 This is now fairly straightforward to implement.
 ```java
-1   ArrayList<Htwt> longestIncreasingSeq(ArrayList<Htwt> array) {
+1   ArrayList<HtWt> longestIncreasingSeq(ArrayList<HtWt> array) {
 2       Collections.sort(array);
 3   
-4       ArrayList<ArrayList<HtWt>> solutions = new ArrayList<ArrayList<Htwt>>();
-5       ArrayList<Htwt> bestSequence = null;
+4       ArrayList<ArrayList<HtWt>> solutions = new ArrayList<ArrayList<HtWt>>();
+5       ArrayList<HtWt> bestSequence = null;
 6   
 7       /* Find the longest subsequence that terminates with each element. Track the
 8        * longest overall subsequence as we go. */
@@ -933,11 +933,11 @@ This is now fairly straightforward to implement.
 16  }
 17  
 18  /* Find the longest subsequence which terminates with this element. */
-19  ArrayList<Htwt> bestSeqAtIndex(ArrayList<HtWt> array,
-20  ArrayList<ArrayList<Htwt>> solutions, int index) {
+19  ArrayList<HtWt> bestSeqAtIndex(ArrayList<HtWt> array,
+20  ArrayList<ArrayList<HtWt>> solutions, int index) {
 21      HtWt value = array.get(index);
 22  
-23      ArrayList<Htwt> bestSequence = new ArrayList<HtWt>();
+23      ArrayList<HtWt> bestSequence = new ArrayList<HtWt>();
 24  
 25      /* Find the longest subsequence that we can append this element to. */
 26      for (int i = 0; i < index; i++) {
@@ -948,7 +948,7 @@ This is now fairly straightforward to implement.
 31      }
 32  
 33      /* Append element. */
-34      ArrayList<HtWt> best = (ArrayList<Htwt>) bestSequence.clone();
+34      ArrayList<HtWt> best = (ArrayList<HtWt>) bestSequence.clone();
 35      best.add(value);
 36  
 37      return best;
@@ -1031,7 +1031,7 @@ The question is: what is the next value in the list? The next value will be one 
 
 If this  doesn't immediately jump out at you, think about it this way: whatever the next value (let's call it nv) is, divide it by 3. Will that number have already appeared? As long as nv has factors of 3 in it. yes. The same can be said for dividing it by 5 and 7.
 
-So, we know Aₖ can be expressed as (3,  5  or  7) * (some value in {A₁,..., Aₖ₋₁). We also know that Aₖ is, by definition, the next number in the list. Therefore, Aᵏ will be the smallest "new" number (a number that it's already in {A₁,   •••, Aₖ₋₁}) that can be formed by multiplying each value in the list by 3, 5 or 7.
+So, we know Aₖ can be expressed as (3,  5  or  7) * (some value in {A₁,..., Aₖ₋₁}). We also know that Aₖ is, by definition, the next number in the list. Therefore, Aₖ will be the smallest "new" number (a number that it's already in {A₁,   •••, Aₖ₋₁}) that can be formed by multiplying each value in the list by 3, 5 or 7.
 
 How would we find Aₖ? Well, we could actually multiply each number in the list by 3, 5, and 7 and find the smallest element that has not yet been added to our list. This solution is O(k²). Not bad, but I think we can do better.
 
@@ -1042,7 +1042,7 @@ Rather than Aₖ trying to "pull" from a previous element in the list (by multip
 - 5 * Aᵢ
 - 7 * Aᵢ
 
-We can use this thought  to plan in advance. Each time we add a number Ai  to the list, we hold on to the values 3Aᵢ, 5Aᵢ, and 7Aᵢ in some sort of temporary list. To generate Aᵢ₊₁' we search through this temporary list to find the smallest value.
+We can use this thought  to plan in advance. Each time we add a number Aᵢ  to the list, we hold on to the values 3Aᵢ, 5Aᵢ, and 7Aᵢ in some sort of temporary list. To generate Aᵢ₊₁' we search through this temporary list to find the smallest value.
 
 Our code looks like this:
 ```java
@@ -1083,7 +1083,7 @@ This algorithm is certainly much, much better than our first algorithm, but it's
 
 **Optimal Algorithm**
 
-To generate a new element Ai, we are searching through a linked list where each element looks like one of:
+To generate a new element Aᵢ, we are searching through a linked list where each element looks like one of:
 
 - 3 * previous element
 - 5 * previous element
@@ -1266,7 +1266,7 @@ On the other hand, not really. If 3 does redeem itself, then we'll encounter tho
 
 That  logic  is fine  for the  first element, but  what  about the  next  one?  We would  immediately terminate validate(1), validate(7), and so on.
 
-Since the logic  was okay for the  first  element, what if we treated all subsequent elements like they're the first element of some new  subarray? This would  mean that we  start  validate(array[l]) at  index  1, validate(array[2]) at index 2, and  so on.
+Since the logic  was okay for the  first  element, what if we treated all subsequent elements like they're the first element of some new  subarray? This would  mean that we  start  validate(array[1]) at  index  1, validate(array[2]) at index 2, and  so on.
 
 What would  this look like?
 
@@ -1300,7 +1300,7 @@ What would  this look like?
         sees 7  ->  countYes  =  4,   countNo  =  1 
         sees 7  ->  countYes  =  5,   countNo  =  1 
  
-Do we know  at this  point that 7 is the  majority element? Not necessarily. We have eliminated everything before that 7, and  everything after  it. But there could  be no majority element. A quick validate(7) pass that  starts from the beginning can confirm if? is actually  the  majority element. This validate step will be O(N) time,  which  is also our  Best Conceivable Runtime. Therefore, this final validate step won't impact our total  runtime.
+Do we know  at this  point that 7 is the  majority element? Not necessarily. We have eliminated everything before that 7, and  everything after  it. But there could  be no majority element. A quick validate(7) pass that  starts from the beginning can confirm if 7 is actually  the  majority element. This validate step will be O(N) time,  which  is also our  Best Conceivable Runtime. Therefore, this final validate step won't impact our total  runtime.
 
 This is pretty good, but  let's see  if we can  make this a bit faster. We should notice that some elements are being "inspected" repeatedly. Can we get rid of this?
 
@@ -1647,7 +1647,7 @@ This approach requires returning the head and tail of the linked list with BiNod
 9           root.node2 = root;
 10          return root;
 11      }
-12      BiNode tail3 = (part3 null) ? null : part3.node1;
+12      BiNode tail3 = (part3 == null) ? null : part3.node1;
 13
 14      /* join left to root */
 15      if (part1 == null) {
@@ -1773,8 +1773,7 @@ We've applied two short circuits here.
 
 What's the runtime of this? It's difficult to truly describe in practice as it depends on the (English) language. 
 
-One way of looking at it is to imagine a bizarre language where essentially all paths in the recursion are
-taken. In this case, we are making both choices at each character. If there are n characters, this is an O(2ⁿ)runtime.
+One way of looking at it is to imagine a bizarre language where essentially all paths in the recursion are taken. In this case, we are making both choices at each character. If there are n characters, this is an O(2ⁿ) runtime.
 
 **Optimized**
 
@@ -1801,7 +1800,7 @@ Adding a space after t and h leads to the same recursive path as inserting a spa
 
 We should instead cache the result. We do this using a hash table which maps from the current substring to the ParseResult object.
 
-We don't actually need tomake the current substring a key. The start index in the string sufficiently represents the substring. After all, if we were to use the substring, we'd really be using sentence.substring(start, sentence. length). This hash table will map from a start index to the best parsing from that index to the end of the string.
+We don't actually need to make the current substring a key. The start index in the string sufficiently represents the substring. After all, if we were to use the substring, we'd really be using sentence.substring(start, sentence. length). This hash table will map from a start index to the best parsing from that index to the end of the string.
 
 And, since the start index is the key, we don't need  a true hash  table at all. We can just use an array of ParseResult objects. This will also serve the purpose of mapping from an index to an object.
 
@@ -2366,7 +2365,7 @@ The first gives us 60 minutes, best(5)  =  60.
 The first gives us 90 minutes, best(4) =  90.
 
 - best(3): What's the best option for {r₃ =  75, ...}? We can either:
-    - take r₃ =  7S and merge it with best ( 5)   =  60, or:
+    - take r₃ =  75 and merge it with best ( 5)   =  60, or:
     - take best(4) =  90.
 
 The first gives us 135 minutes, best(3)  =  135. 
@@ -2381,13 +2380,13 @@ The first gives us 150 minutes, best(2)  =  150.
     - take r₁ = 15 and merge it with best(3) = 135, or:
     - take best(2) = 150. 
 
-Either way, best(l) = 150.
+Either way, best(1) = 150.
 
 - best(0): What's the best option for {r₀ = 30,   ...}? We can either:
     - take r₀ = 30 and merge it with best(2) =  150, or:
-    - take best(l) =  150.
+    - take best(1) =  150.
 
-The first gives us 180minutes, best(0) = 180. 
+The first gives us 180 minutes, best(0) = 180. 
 
 Therefore, we return 180 minutes.
 
@@ -2588,7 +2587,7 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 83          } else {
 84              char first = s.charAt(0);
 85              if (children.containsKey(first)) {
-86                  String remainder = s.substring(l);
+86                  String remainder = s.substring(1);
 87                  return children.get(first).search(remainder);
 88              }
 89          }
@@ -2779,7 +2778,7 @@ By finding the closures for each index in the array, we can find the shortest su
 54      }
 55  }
 ```
-This algorithm will potentially take  O(SB²)  time, where B  is the  length of bigString and S is the  length of smallString.This is because at each of the  B  characters, we potentially do O(SB) work: S scans of the rest of the  string, which has potentially B  characters.
+This algorithm will potentially take  O(SB²)  time, where B  is the  length of bigString and S is the  length of smallString. This is because at each of the  B  characters, we potentially do O(SB) work: S scans of the rest of the  string, which has potentially B  characters.
 
 **Optimized**
 
@@ -2927,7 +2926,7 @@ Instead, as we do each sweep, we just update the closure row with the minimums. 
 32      Range shortest = new Range(0, closures[0]);
 33      for (int i = 1; i < closures.length; i++) {
 34          if (closures[i] == -1) {
-35              b reak;
+35              break;
 36          }
 37          Range range = new Range(i, closures[i]);
 38          if (!shortest.shorterThan(range)) {
@@ -3095,11 +3094,11 @@ What other calculations could we do? We don't even need to do all this prime num
 
 - **Unique?** Yes. Picture `1*2*3*•••*n`. Now, imagine crossing off one number. This will give us a different result than if we crossed off any other number.
 - **Constant time and space?** Yes.
-- **Reversible?** Let's think about this. If  we compare what our product is to what it would have been without a number removed, can we find the missing number? Sure. We just divide full_product by actual_product.This will tell us which number was missing from actual_product.
+- **Reversible?** Let's think about this. If  we compare what our product is to what it would have been without a number removed, can we find the missing number? Sure. We just divide full_product by actual_product. This will tell us which number was missing from actual_product.
 
 There's just one issue: this product is really, really, really big. If n is 20, the product will be somewhere around 2,000,000,000,000,000,000.
 
-We can still approach it this way, but we'll need to use the Biglnteger class.
+We can still approach it this way, but we'll need to use the BigInteger class.
 ```java
 1   int missingOne(int[] array) {
 2       BigInteger fullProduct = productToN(array.length + 1);
@@ -3111,7 +3110,7 @@ We can still approach it this way, but we'll need to use the Biglnteger class.
 8       }
 9
 10      BigInteger missingNumber = fullProduct.divide(actualProduct);
-11      return Integer.parseint(missingNumber.toString());
+11      return Integer.parseInt(missingNumber.toString());
 12  }
 13
 14  BigInteger productToN(int n) {
@@ -3158,7 +3157,7 @@ For this part, let's use a different calculation. Instead of using the product o
 
 
     X  + y  = s  -> y = s  -  X
-    xz + y² = t  -> x² + (s-x)² = t
+    x² + y² = t  -> x² + (s-x)² = t
                        2x² - 2sx + s² - t = 0 
 
 
@@ -3355,9 +3354,9 @@ The code below implements this algorithm.
 ```java
 1   int computeHistogramVolume(int[] histogram) {
 2       int start = 0;
-3       int end histogram.length - 1;
+3       int end = histogram.length - 1;
 4 
-5       int max findIndexOfMax(histogram, start, end);
+5       int max = findIndexOfMax(histogram, start, end);
 6       int leftVolume = subgraphVolume(histogram, start, max, true);
 7       int rightVolume = subgraphVolume(histogram, max, end, false);
 8 
@@ -3433,7 +3432,7 @@ We've chosen to use a HistogramData object to store this extra information, but 
 4
 5       HistogramData[] data = createHistogramData(histogram);
 6
-7       int max = data[0].getRightMaxindex(); // Get overall max
+7       int max = data[0].getRightMaxIndex(); // Get overall max
 8       int leftVolume  = subgraphVolume(data, start, max, true);
 9       int rightVolume = subgraphVolume(data, max, end, false);
 10
@@ -3510,7 +3509,7 @@ We've chosen to use a HistogramData object to store this extra information, but 
 81      public int  getLeftMaxIndex() { return leftMaxIndex; }
 82      public void setLeftMaxIndex(int idx) { leftMaxIndex = idx; };
 83      public int  getRightMaxIndex() { return rightMaxIndex; }
-84      public void setRightMaxindex(int idx) { rightMaxIndex = idx; };
+84      public void setRightMaxIndex(int idx) { rightMaxIndex = idx; };
 85  }
 ```
  
@@ -3614,9 +3613,9 @@ If we wanted to find the shortest path, we would want to use breadth-first searc
 
 ```java
 1   LinkedList<String> transform(String start, String stop, String[] words) {
-2       HashSet<String> diet = setupDictionary(words);
+2       HashSet<String> dict = setupDictionary(words);
 3       HashSet<String> visited = new HashSet<String>();
-4       return transform(visited, start, stop, diet);
+4       return transform(visited, start, stop, dict);
 5   }
 5
 7   HashSet<String> setupDictionary(String[] words) {
@@ -3742,7 +3741,7 @@ The algorithm is otherwise essentially the same.
 49          String word = w.substring(0, i) + "_" + w.substring(i + 1);
 50          words.add(word);
 51      }
-S2      return words;
+52      return words;
 53  }
 54
 55  /* Return words that are one edit away. */
@@ -3854,7 +3853,7 @@ To implement this approach, we've used an additional class BFSData. BFSData help
 61      return pathOne;
 62  }
 63 
-64  /* Methods getWildcardRoots, getWildcardToWordList, and getValidlinkedWords are
+64  /* Methods getWildcardRoots, getWildcardToWordList, and getValidLinkedWords are
 65   * the same as in the earlier solution. */
 66 
 67  public class BFSData {
@@ -4104,8 +4103,8 @@ This solution is O(N⁶), since we iterate through O(N⁴) submatrices and it ta
 30  public class SubMatrix {
 31      private int row1, row2, col1, col2, sum;
 32      public SubMatrix(int r1, int c1, int r2, int c2, int sm) {
-33          row1 = rl;
-34          col1 = cl;
+33          row1 = r1;
+34          col1 = c1;
 35          row2 = r2;
 36          col2 = c2;
 37          sum  = sm;
@@ -4186,7 +4185,7 @@ The following code implements this algorithm.
 33  }
 34
 35  int sum(int[][] sumThrough, int r1, int c1, int r2, int c2) {
-36      int topAndLeft = r1 > 0 && c1 > 0 ? sumThrough[r1 - 1][c1 - 1] 0;
+36      int topAndLeft = r1 > 0 && c1 > 0 ? sumThrough[r1 - 1][c1 - 1] : 0;
 37      int left = c1 > 0 ? sumThrough[r2][c1 - 1] : 0;
 38      int top  = r1 > 0 ? sumThrough[r1 - 1][c2] : 0;
 39      int full = sumThrough[r2][c2];
@@ -4213,7 +4212,7 @@ Every submatrix can be represented by a contiguous sequence of rows and a contig
 7       maxSum = max(runningMaxSum, maxSum)
 8   return maxSum
 ```
-Now the question is, how do we efficiently find the "best" co1Start and colEnd? 
+Now the question is, how do we efficiently find the "best" colStart and colEnd? 
 
 Picture a submatrix:
 
@@ -4328,7 +4327,7 @@ s       }
 ```
 By iterating from the biggest possible  rectangle to the smallest, we ensure  that the first valid rectangle we find will be the largest possible one.
 
-Now, for the hard part: makeRectangle(int l, int h). This method attempts to build a rectangle of words which has length  1 and height h.
+Now, for the hard part: makeRectangle(int l, int h). This method attempts to build a rectangle of words which has length  l and height h.
 
 One way to do this is to iterate through all (ordered) sets of h words and then check if the columns are also valid words. This will work, but it's rather inefficient.
 
@@ -4375,7 +4374,7 @@ s           if (z % i == 0) {
 The makeRectangle method is called by maxRectangle and tries to build a rectangle of a specific length and height.
 ```java
 1   Rectangle makeRectangle(int length, int height) {
-2       if (groupList[length - 1] == null || groupList[height - 1]) {
+2       if (groupList[length - 1] == null || groupList[height - 1] == null) {
 3           return null;
 4       }
 5
@@ -4423,7 +4422,7 @@ But, if everything is okay so far, and all the columns are valid prefixes of wor
 26      return null;
 27  }
 ```
-The Rectangle class represents a partially or fully formed rectangle of words. The method isPartialOk can be called to check  if the rectangle is, thusfar, a valid one (that is, all the columns are prefixes of words). The method isComplete serves a similar function, but checks if each of the columns makes a full word.
+The Rectangle class represents a partially or fully formed rectangle of words. The method isPartialOk can be called to check  if the rectangle is, thus far, a valid one (that is, all the columns are prefixes of words). The method isComplete serves a similar function, but checks if each of the columns makes a full word.
 ```java
 1   public class Rectangle {
 2       public int height, length;
@@ -4584,7 +4583,7 @@ As a quick win, we can optimize the computation for the similarity of two arrays
 
 We need to know the number of elements  in common between  the two arrays. We can throw all of A's elements into a hash table. Then we iterate through B, incrementing intersection every time we find an element in A.
 
-This takes O(A  +  B) time. If each array has size Wand we do this for D arrays, then this takes O(D² W). 
+This takes O(A  +  B) time. If each array has size W and we do this for D arrays, then this takes O(D² W). 
 
 Before implementing this, let's first think about the classes we'll need.
 
@@ -4639,7 +4638,7 @@ Doing this sort  of thing not only shows good coding style, it also makes your l
 6               Document doc2 = documents.get(j);
 7               double sim = computeSimilarity(doc1, doc2);
 8               if (sim > 0) {
-9                   DocPair pair = new DocPair(doc1.getId(), doc2.getld());
+9                   DocPair pair = new DocPair(doc1.getId(), doc2.getId());
 10                  similarities.put(pair, sim);
 11              }
 12          }
@@ -4691,7 +4690,7 @@ The problem is that this doesn't really fix our runtime issue. Our best runtime 
 
 Therefore, let's focus on reducing that O(D²)  factor. That is the "bottleneck" in our solution. Specifically, this means that, given a document docA, we want to find all documents with some similarity-and we want to do this without "talking" to each document.
 
-What would make a document similar to docA? That is, what characteristics define the documents with similarity > O?
+What would make a document similar to docA? That is, what characteristics define the documents with similarity > 0?
 
 Suppose docA is {14,  15,  100,  9,  3}. For a document to have similarity > 0, it needs to have a 14, a 15, a 100, a 9, or a 3. How can we quickly gather a list of all documents with one of those elements?
 
@@ -4722,7 +4721,7 @@ Let's think about our previous algorithm. Is there any way we can make it more o
 
 If we consider the runtime ---O(PW +  DW)--- we probably can't get rid of the O(DW) factor. We have to touch each word at least once, and there are O(DW) words. Therefore, if there's an optimization to be made, it's probably in the O(PW) term.
 
-It would be difficult to eliminate the P part in O(PW) because we have to at least print all P pairs (which takes O(P) time). The best place to focus, then, is on the W part. 1s there some way we can do less than O(W) work for each pair of similar documents?
+It would be difficult to eliminate the P part in O(PW) because we have to at least print all P pairs (which takes O(P) time). The best place to focus, then, is on the W part. Is there some way we can do less than O(W) work for each pair of similar documents?
 
 One way to tackle this is to analyze what information the hash table gives us. Consider this list of documents:
 
@@ -4871,7 +4870,7 @@ We will use an Element class to group together documents and words. When we sort
 28      for (Document doc : docs.values()) {
 29          ArrayList<Integer> words = doc.getWords();
 30          for (int word : words) {
-31              elements.add(new Element(word, doc.get!d()));
+31              elements.add(new Element(word, doc.getId()));
 32          }
 33      }
 34      Collections.sort(elements);

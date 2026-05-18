@@ -1077,14 +1077,14 @@ The key objects of the  system will be a concept of users, conversations, and st
 22  }
 ```
 
-The  method receivedAddRequest,  in  the   User class,   notifies User  B that User  A has  requested to  add him.   User  B  approves  or  rejects the   request  (via  UserManager. approveAddRequest  or rejectAddRequest), and the UserManager takes care  of adding the  users  to each other's contact lists.
+The  method receivedAddRequest,  in  the   User class,   notifies User  B that User  A has  requested to  add him.   User  B  approves  or  rejects the   request  (via  UserManager.approveAddRequest  or rejectAddRequest), and the UserManager takes care  of adding the  users  to each other's contact lists.
 
 The method sentAddRequest in the  User class  is called by UserManager to add an AddRequest to User A's list of requests. So the flow is:
 
 1.  User A clicks "add user" on the client and it gets sent to the server.
 2.  User A calls requestAddUser(User B).
-3.  This method calls UserManager. addUser.
-4.  UserManager calls both User  A.sentAddRequest and User B.receivedAddRequest.
+3.  This method calls UserManager.addUser.
+4.  UserManager calls both User A.sentAddRequest and User B.receivedAddRequest.
 
 Again, this is just one way of designing these interactions. It is not the only way, or even the only "good" way.
 
@@ -1202,7 +1202,7 @@ The following questions may be interesting to discuss with your interviewer furt
 
 *Q1: How do we know if someone is online--I mean, really, really know?*
 
-While we would like users to tell us when they  sign off, we can' t know for sure. A user's connection might have died,  for example. To make sure that we know  when a user has signed off, we  might try regularly pinging the client to make sure it's still there.
+While we would like users to tell us when they  sign off, we can't know for sure. A user's connection might have died,  for example. To make sure that we know  when a user has signed off, we  might try regularly pinging the client to make sure it's still there.
 
 *Q2: How do we deal with conflicting information?*
 
@@ -1421,7 +1421,7 @@ The code below implements this approach.
 There are a number of things here which are easy to make mistakes on, such as:
 
 - In Java, we cannot create an array of the generic type. Instead, we must either cast the array or define items to be of type List\<T>. For simplicity, we have done the former.
-- The % operator will return a negative value when we do `negValue % posVal`. For example, `-8  % 3 is -2`. This is different from how mathematicians  would define the modulus function. We must add iterns.length to a negative index to get the correct positive result.
+- The % operator will return a negative value when we do `negValue % posVal`. For example, `-8  % 3 is -2`. This is different from how mathematicians  would define the modulus function. We must add items.length to a negative index to get the correct positive result.
 - We need to be sure to consistently convert the raw index to the rotated index. For this reason, we have implemented a convert function that is used by other methods.  Even the rotate function uses convert. This is a good example of code reuse.
 
 Now that we have the basic code for CircularArray out of the way, we can focus on implementing an iterator.
@@ -1439,7 +1439,7 @@ Implementing this requires implementing  the Iterator interface. The details of 
 To implement the Iterator interface, we need to do the following:
 
 - Modify the CircularArray\<T> definition to add implements Iterable\<T>. This will also require us to add an iterator() method to CircularArray\<T>.
-- Create a CircularArrayiterator\<T> which implements  Iterator\<T>. This will also require us to implement, in the CircularArrayiterator, the methods hasNext(), next(), and remove().
+- Create a CircularArrayIterator\<T> which implements  Iterator\<T>. This will also require us to implement, in the CircularArrayIterator, the methods hasNext(), next(), and remove().
 
 Once we've done the above items, the for loop will "magically" work.
 
@@ -1449,22 +1449,22 @@ In the code below, we have removed the aspects of CircularArray which were ident
 1   public class CircularArray<T> implements Iterable<T> {
 2       ...
 3       public Iterator<T> iterator() {
-4           return new CircularArrayiterator<T>(this);
+4           return new CircularArrayIterator<T>(this);
 5       }
 6   
-7       private class CircularArrayiterator<TI> implements Iterator<TI> {
+7       private class CircularArrayIterator<TI> implements Iterator<TI> {
 8           /* current reflects the offset from the rotated head, not from the actual
 9            * start of the raw array. */
 10          private int _current = -1;
 11          private TI[] _items;
 12  
-13          public CircularArrayiterator(CircularArray<TI> array) {
-14              items = array.items;
+13          public CircularArrayIterator(CircularArray<TI> array) {
+14              _items = array.items;
 15          }
 16  
 17          @Override
 18          public boolean hasNext() {
-19              return _current < items.length - 1;
+19              return _current < _items.length - 1;
 20          }
 21  
 22          @Override
@@ -1763,7 +1763,7 @@ A file system, in its most simplistic version, consists  of Files and Directorie
 22  
 23      public String getFullPath() {
 24          if (parent == null) return name;
-25          else return parent. getFullPath() + "/" + name;
+25          else return parent.getFullPath() + "/" + name;
 26      }
 27  
 28      /* Getters and setters. */
@@ -1892,7 +1892,7 @@ The code below uses this implementation.
 17      public Hasher(int capacity) {
 18          /* Create list of linked lists at a particular size. Fill list with null
 19           * values, as it's the only way to make the array the desired size. */
-20          arr = newArrayList <LinkedListNode <K, V>>();
+20          arr = new ArrayList<LinkedListNode<K, V>>();
 21          arr.ensureCapacity(capacity); // Optional optimization
 22          for (int i = 0; i < capacity; i++) {
 23              arr.add(null);

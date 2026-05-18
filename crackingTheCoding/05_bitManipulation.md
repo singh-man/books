@@ -37,9 +37,9 @@ If you didn't see these tricks immediately, think about them logically.
 The following expressions are useful  in bit manipulation. Don't just  memorize them, though; think deeply about why each of these is true. We use "1s" and "0s" to indicate a sequence of 1s or 0s, respectively. 
 
 ```
-X  ^  0s  =  X       X  &  0s  =  0      x  |  0s  =  X 
-X  ^  1s  =  ~X      X  &  1s  =  X      x  |  1s  =  1s 
-X  ^  x   =  0       X  &  x   =  X      x  |  x   =  X 
+x  ^  0s  =  x       x  &  0s  =  0      x  |  0s  =  x 
+x  ^  1s  =  ~x      x  &  1s  =  x      x  |  1s  =  1s 
+x  ^  x   =  0       x  &  x   =  x      x  |  x   =  x 
 ```
 
 To understand these expressions, recall that these operations occur bit-by-bit, with what's happening  on one bit never impacting the other bits. This means that if one of the above statements is true for a single bit, then it's true for a sequence of bits.
@@ -628,7 +628,7 @@ If c0 is the  number of trailing  zeros, c1 is the  size of the  one  block imme
 A quick and dirty way to perform steps 1  and  2 is to set the trailing zeros  to 1 (giving us p trailing ones),  and then add 1. Adding one will flip all trailing ones, so we wind up with a 1 at bit p followed by p zeros. We can perform this arithmetically. 
 
 ```
-n  +=  2ᶜ⁰ - 1  // Sets trailing 0s to 1, giving us p trailing 1s
+n  +=  2ᶜ⁰ - 1; // Sets trailing 0s to 1, giving us p trailing 1s
 n  +=  1;       // Flips first p 1s to 0s, and puts a 1 at bit  p. 
 ```
 
@@ -644,7 +644,7 @@ next =  n  +  (2ᶜ⁰ - 1) + 1 + (2ᶜ¹⁻¹ - 1)
 The best part  is that,  using a little bit manipulation, it's simple to code.
 ```java
 1   int getNextArith(int n) {
-2        /* ... same calculation for c0 and c1 as before */
+2        /* ... same calculation for c0 and c1 as before ... */
 3        return n + (1 << c0) + (1 << (c1 - 1)) - 1;
 4   }
 ```

@@ -96,9 +96,9 @@ If we repeatedly partition the array (and its sub-arrays) around an element, the
 3       if (left < index - 1) { // Sort left half
 4           quickSort(arr, left, index - 1);
 5       }
-5       if (index < right) { // Sort right half
+6       if (index < right) { // Sort right half
 7           quickSort(arr, index, right);
-3       }
+8       }
 9   }
 10  
 11  int partition(int[] arr, int left, int right) {
