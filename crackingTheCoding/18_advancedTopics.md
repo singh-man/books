@@ -55,7 +55,7 @@ On the first iteration of the outer for loop, the inner for loop iterates n - 1 
 
 *Sum of Powers of 2*
 
-Consider this sequence: 2° + 2¹  + 2² + ... + 2ⁿ. What is its result? 
+Consider this sequence: 2⁰ + 2¹  + 2² + ... + 2ⁿ. What is its result? 
 
 A nice way to see this is by looking at these values in binary.
 
@@ -68,7 +68,7 @@ A nice way to see this is by looking at these values in binary.
 |      | 2⁴     | 10000  | 16          |
 | sum: | 2⁵ - 1 | 11111  | 32 - 1 = 31 |
 
-Therefore, the sum of 2° + 2¹  + 2² + ... + 2ⁿ would, in base 2, be a sequence of (n + 1) 1s. This  is 2ⁿ⁺¹ -  1.
+Therefore, the sum of 2⁰ + 2¹  + 2² + ... + 2ⁿ would, in base 2, be a sequence of (n + 1) 1s. This  is 2ⁿ⁺¹ -  1.
 
 **Takeaway:** The sum of a sequence of powers of two is roughly equal to the next value in the sequence.
 
@@ -79,10 +79,10 @@ Suppose we have something in log₂ (log base 2). How do we convert that to log�
 
 Let's do some math. Assume c = logᵦk and y = logₓk.
 
-    logᵦk = c -- >  bᶜ = k   // This  is the  definition of  log. 
+    logᵦk = c -->  bᶜ = k   // This  is the  definition of  log. 
     logₓ(bᶜ) = logₓk         // Take log  of  both sides  of  bᶜ =  k.
     c logₓb =  logₓk         // Rules of  logs.  You can move  out  the  exponents.
-    c = logbk = logₓk/logₓb  // Dividing above expression  and substituting c.
+    c = log₆k = logₓk/logₓb  // Dividing above expression  and substituting c.
 
 Therefore, if we want to convert log₂p  to log₁₀, we just do this:
 
@@ -127,15 +127,15 @@ This is like dominoes. If the first domino falls, and one domino always knocks o
 Let's use this to prove that there are 2ⁿ subsets of an n-element set.
 
 - Definitions: let S  =   {a₁ ,  a₂ ,  a₃ ,  •  •  •  ,  aₙ} be the n-element set.
-- Base case: Prove there are 2° subsets of {}. This is true, since the only subset of {} is {}.
+- Base case: Prove there are 2⁰ subsets of {}. This is true, since the only subset of {} is {}.
 - Assume that there are 2ⁿ subsets of {a₁ ,  a₂ ,  a₃ ,  •  •  •  ,  aₙ}.
 - Prove that there are 2ⁿ⁺¹  subsets of {a₁ ,  a₂ ,  a₃ ,  •  •  •  ,  aₙ₊₁} .
 
 Consider the subsets of {a₁ ,  a₂ ,  a₃ ,  •  •  •  ,  aₙ₊₁}. Exactly half will contain aₙ₊₁ and half will not.
 
-The subsets that do not contain aₙ₊ᵢ are just the subsets of {a₁ ,  a₂ ,  a₃ ,  •  •  •  ,  aₙ}. We assumed there are 2ⁿ of those.
+The subsets that do not contain aₙ₊₁ are just the subsets of {a₁ ,  a₂ ,  a₃ ,  •  •  •  ,  aₙ}. We assumed there are 2ⁿ of those.
 
-Since we have the same number of subsets with x as without x, there are 2ⁿ subsets with aₙ₊₁· Therefore, we have 2ⁿ  +  2ⁿ subsets, which is 2ⁿ⁺¹.
+Since we have the same number of subsets with x as without x, there are 2ⁿ subsets with aₙ₊₁. Therefore, we have 2ⁿ  +  2ⁿ subsets, which is 2ⁿ⁺¹.
 
 Many recursive algorithms can be proved valid with induction.
 
@@ -176,7 +176,7 @@ In some graphs, we might want to have edges with weights. If the graph represent
 
 Dijkstra's algorithm  is a way to find the shortest path between two points in a weighted directed graph (which might have cycles). All edges must have positive values.
 
-Rather than just stating what Dijkstra's algorithm is, let's try to derive it. Consider the earlier described graph. We could find the shortest path from s tot by literally taking all possible routes using actual time. (Oh, and we'll need a machine to clone ourselves.)
+Rather than just stating what Dijkstra's algorithm is, let's try to derive it. Consider the earlier described graph. We could find the shortest path from s to t by literally taking all possible routes using actual time. (Oh, and we'll need a machine to clone ourselves.)
 
 1. Start off at s.
 2. For each of s's outbound edges, clone ourselves and start walking. If the edge (s, x) has weight 5, we should actually take 5 minutes to get there.
@@ -185,7 +185,7 @@ Rather than just stating what Dijkstra's algorithm is, let's try to derive it. C
 
 This works just fine. But, of course, in the real algorithm we don't want to literally use a timer to find the shortest path.
 
-Imagine that each clone could jump immediately from one node to its adjacent nodes (regardless of the edge weight), but it kept a time_so_far log of how long its path would have taken if it did walk at the "true" speed. Additionally, only one person moves at a time, and it's always the one with the lowest time_ so_far. This is sort of how Dijkstra's algorithm  works.
+Imagine that each clone could jump immediately from one node to its adjacent nodes (regardless of the edge weight), but it kept a time_so_far log of how long its path would have taken if it did walk at the "true" speed. Additionally, only one person moves at a time, and it's always the one with the lowest time_so_far. This is sort of how Dijkstra's algorithm  works.
 
 Dijkstra's algorithm finds the minimum weight path from a start node s to every node on the graph. 
 
@@ -212,7 +212,7 @@ Once we've initialized these values, we can start adjusting the values of path_w
 We iterate through the nodes in remaining (until remaining is empty), doing the following:
 
 1. Select the node in remaining with the lowest value in path_weight. Call this node n.
-2. For each adjacent node, compare path_weight[x]  (which is the weight of the current shortest path from a tox) to path_weight[n] + edge_weight[(n, x)]. That is.could we get a path from a to x with lower weight by going through n instead of our current path? If so, update path_weight and previous.
+2. For each adjacent node, compare path_weight[x]  (which is the weight of the current shortest path from a to x) to path_weight[n] + edge_weight[(n, x)]. That is, could we get a path from a to x with lower weight by going through n instead of our current path? If so, update path_weight and previous.
 3. Remove n from remaining.
 
 When remaining is empty, then path_weight stores the weight of the current shortest path from a to each node. We can reconstruct this path by tracing through previous.
@@ -223,7 +223,7 @@ Let's walk through this on the above graph.
 2. Then, we go to the next smallest node, which is e. We previously updated path_weight[e] to be 2. Its adjacent nodes are h and i, so we update path_weight (to 6 and 9) and previous for both of those. Observe that 6 is path_weight[e]  (which is 2) + the weight of the edge (e,  h) (which is 4).
 3. The next smallest node is c, which has path_weight 3. Its adjacent nodes are b and d. The value of path_weight[d] is infinity, so we update it to 4 (which is path_weight[c] + weight(edge c, d). The value of path_weight[b] has been previously set to 5. However, since path_weight[c] +  weight(edge c,  b) (which is 3 + 1  = 4) is less than 5, we update path_weight[b] to 4 and previous to c. This indicates that we would improve the path from a to b by going through c.
 
-We continue doing this until remaining is empty. The following diagram shows the changes to the path_ weight (left) and previous (right) at each step. The topmost row shows the current value for n (the node we are removing from remaining). We black out a row after it has been removed from remaining.
+We continue doing this until remaining is empty. The following diagram shows the changes to the path_weight (left) and previous (right) at each step. The topmost row shows the current value for n (the node we are removing from remaining). We black out a row after it has been removed from remaining.
 
 ![](media/XI_04.JPG)
 
@@ -239,7 +239,7 @@ The runtime of this algorithm depends heavily on the implementation of the prior
 
 - If you implemented the priority queue with a min heap, then the remove_min calls will each take O(log v) time (as will inserting and updating a key). We will do one remove_min call for each vertex, so that's O(v log v) (v vertices at O(log v) time each). Additionally, on each edge, we might call one update key or insert operation, so that's O(e log v). The total runtime  is O((v  +  e) log v).
 
-Which one is better? Well, that depends. If the graph has a lot of edges, then v²  will be close toe. In this case, you might be better off with the array implementation, as O(v²)  is better than O((v + v²) log v). However,  if the graph is sparse, then e is much less than v².  In this case, the min heap implementation may be better.
+Which one is better? Well, that depends. If the graph has a lot of edges, then v²  will be close to e. In this case, you might be better off with the array implementation, as O(v²)  is better than O((v + v²) log v). However,  if the graph is sparse, then e is much less than v².  In this case, the min heap implementation may be better.
 
 
 
@@ -286,9 +286,9 @@ For example, imagine  our hash function was simply the sum of each character (wh
 
 ![](media/XI_05.JPG)
 
-If we computed these sums by doing hash('doe'), then hash ('oe '), then hash('e a'), and soon, we would still be at O(s(b-s)) time.
+If we computed these sums by doing hash('doe'), then hash ('oe '), then hash('e a'), and so on, we would still be at O(s(b-s)) time.
 
-Instead, we compute the hash values by recognizing that hash ('oe') = hash('doe') - code('d') +  code('   '). This takes O(b) time to compute all the hashes.
+Instead, we compute the hash values by recognizing that hash('oe ') = hash('doe') - code('d') +  code(' '). This takes O(b) time to compute all the hashes.
 
 You might argue that, still, in the worst case this will take O(s(b-s)) time since many of the hash values could match. That's absolutely true-for this hash function.
 
@@ -298,7 +298,7 @@ In practice,  we would use a better rolling hash function, such as the Rabin fin
 
 This hash function  will allow us to remove the d, shift the o and e, and then add in the space. 
     
-    hash('oe   ')  =  (hash('doe')  -  code('d')  *  128²)    *  128 +  code('   ')
+    hash('oe ')  =  (hash('doe')  -  code('d')  *  128²)    *  128 +  code(' ')
 
 This will considerably cut down on the number of false matches. Using a good hash function like this will give us expected time complexity of O(s + b), although the worst case is O(sb).
 
@@ -340,7 +340,7 @@ Depending on the balance and where the imbalance occurs, we fix it in a differen
 ![](media/XI_08.JPG)
 
 
-In both cases, "balanced" just means that the balance of the tree is between  -1 and 1. It does not mean that the balance is O.
+In both cases, "balanced" just means that the balance of the tree is between  -1 and 1. It does not mean that the balance is 0.
 
 We recurse up the tree, fixing any imbalances. If we ever achieve a balance of 0 on a subtree, then we know that we have completed all the balances. This portion of the tree will not cause another, higher subtree to have a balance of -2 or 2. If we were doing this non-recursively, then we could break from the loop.
 
@@ -442,7 +442,7 @@ We resolve the red violation with the rotation of N, P, and G and the associated
 ![](media/XI_11.JPG)
 
 
-*Case 8: P is a left child, and N is a right child.*
+*Case B: P is a left child, and N is a right child.*
 
 The rotations in Case B resolve the red violation and maintain the in-order property: a <= P <= b <= N <= c <= G <= U. Again,  the count of the black nodes remains constant in each path down to the leaves (or subtrees).
 
@@ -506,7 +506,7 @@ Here's another example: You have a list of data in the form {City, Temperature, 
 
 To see this, imagine we have five data points for a particular city and year: 25,100,75,85, 50. The Reduce step might only get some of this data at once. If you averaged {75, 85} you would get 80. This might end up being input for another Reduce step with 50, and it would be a mistake to just naively average 80 and 50. The 80 has more weight.
 
-Therefore, our Reduce step instead takes in {(80, 2),(50,1}}, then sums the weighted temperatures. So it does 80 * 2 + 50 * 1 and then divides by (2 + 1) to get an average temperature of 70. It then emits (70, 3).
+Therefore, our Reduce step instead takes in {(80, 2),(50,1)}, then sums the weighted temperatures. So it does 80 * 2 + 50 * 1 and then divides by (2 + 1) to get an average temperature of 70. It then emits (70, 3).
 
 Another Reduce step might reduce {(25, 1),(100, 1)} to get (62.5, 2). If we reduce this with (70, 3) we get the final answer: (67, 5). In other words, the average temperature in this city for this year was 67 degrees.
 
@@ -526,7 +526,7 @@ So, you've mastered this material and you want to learn even more?  Okay. Here a
 - **A\*:** Find the least-cost path between a source node and a goal node (or one of several goal nodes). It extends Dijkstra's algorithm and achieves better performance by using heuristics.
 - **Interval Trees:** An extension of a balanced binary search tree, but storing intervals (low -> high ranges) instead of simple values. A hotel could use this to store a list of all reservations and then efficiently detect who is staying at the hotel at a particular time.
 - **Graph  coloring:** A way of coloring the nodes in a graph such that no two adjacent vertices have the same color. There are various algorithms to do things like determine if a graph can be colored with only K colors.
-- **P, NP, and  NP-Complete:** P.  NP. and NP-Complete refer to classes of problems.  P problems are problems that can be quickly solved (where "quickly" means polynomial time). NP problems are those where, given a solution, the solution can be quickly verified. NP-Complete problems are a subset of NP problems that can all be reduced to each other (that is, if you found a solution to one problem, you could tweak the solution to solve other problems in the set in polynomial time).
+- **P, NP, and  NP-Complete:** P,  NP, and NP-Complete refer to classes of problems.  P problems are problems that can be quickly solved (where "quickly" means polynomial time). NP problems are those where, given a solution, the solution can be quickly verified. NP-Complete problems are a subset of NP problems that can all be reduced to each other (that is, if you found a solution to one problem, you could tweak the solution to solve other problems in the set in polynomial time).
 
 It is an open (and very famous) question whether P = NP, but the answer is generally believed to be no.
 
@@ -546,9 +546,9 @@ Code  Library
 
 Certain patterns came up while implementing the code for this book. We've  tried to generally include the full code for a solution with the solution, but in some cases it got quite redundant.
 
-This appendix provides the code for a few bf the most useful chunks of code.
+This appendix provides the code for a few of the most useful chunks of code.
 
-All code for the book can be downloaded from CrackingTheCodinglnterview.com.
+All code for the book can be downloaded from CrackingTheCodingInterview.com.
 
 
 ### HashMapList\<T, E>
@@ -558,22 +558,22 @@ The HashMapList class is essentially shorthand for HashMap\<T, ArrayList\<E>>. I
 For example, we might want a data structure that maps from an integer to a list of strings. Ordinarily, we'd have to write something like this:
 
 ```java
-1   HashMap<Integer, ArrayList<String>> mapList =
+1   HashMap<Integer, ArrayList<String>> maplist =
 2           new HashMap<Integer, ArrayList<String>>();
 3   for (String s : strings) {
 4       int key = computeValue(s);
-5       if (!mapList.containsKey(key)) {
-6           mapList.put(key, new ArrayList<String>());
+5       if (!maplist.containsKey(key)) {
+6           maplist.put(key, new ArrayList<String>());
 7       }
-8       mapList.get(key).add(s);
+8       maplist.get(key).add(s);
 9   }
 ```
 Now, we can just write this:
 ```java
-1  HashMapList<Integer, String> mapList = new HashMapList<Integer, String>();
+1  HashMapList<Integer, String> maplist = new HashMapList<Integer, String>();
 2  for (String s : strings) {
 3       int key = computeValue(s);
-4       mapList.put(key, s);
+4       maplist.put(key, s);
 5  }
 ```
 It's not a big change, but it makes our code a bit simpler.
@@ -840,7 +840,7 @@ The Trie class uses the TrieNode class, which is implemented below.
 40          }
 41          
 42          if (word.length() > 1) {
-43              child.addWord(word.substring(l));
+43              child.addWord(word.substring(1));
 44          } else {
 45              child.setTerminates(true);
 46          }
