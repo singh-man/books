@@ -51,7 +51,7 @@ Computers typically store integers in two's complement representation. A positiv
 
 Let's look at the 4-bit integer -3 as an example. If it's a 4-bit number, we have one bit for the sign and three bits for the value. We want the complement with respect to 2³,  which is 8. The complement of 3 (the absolute value of -3) with respect to 8 is 5. 5 in binary is 101. Therefore, -3 in binary as a 4-bit number  is 1101, with the first bit being the sign bit.
 
-In other words, the binary representation of -K (negative K) as a N-bit number is concat (1,  2ᴺ⁻¹  -  K). 
+In other words, the binary representation of -K (negative K) as a N-bit number is concat(1,  2ᴺ⁻¹  -  K). 
 
 Another way to look at this is that we invert the bits in the positive representation and then add 1. 3 is 011 in binary. Flip the bits to get 100, add 1 to get 101, then prepend the sign bit (1) to get 1101.
 
@@ -281,7 +281,7 @@ Alternatively, rather than multiplying the number  by two and comparing it to 1,
 13          }
 14          if (num >= frac) {
 15              binary.append(1);
-15              num -= frac;
+16              num -= frac;
 17          } else {
 18              binary.append(0);
 19          }

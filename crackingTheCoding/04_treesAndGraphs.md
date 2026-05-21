@@ -1563,7 +1563,7 @@ Unfortunately, trees with different structures could still have the same pre-ord
    /       \
   4         4
 ```
-There's a simple  fix though. We can store NULL nodes in the pre-order traversal string as a special character, like an 'X'. (We'll  assume that the binary trees contain only integers.)The left tree would have the traversal { 3,   4,   X} and the right tree will have the traversal {3, X, 4}.
+There's a simple  fix though. We can store NULL nodes in the pre-order traversal string as a special character, like an 'X'. (We'll  assume that the binary trees contain only integers.) The left tree would have the traversal { 3,   4,   X} and the right tree will have the traversal {3, X, 4}.
 
 Observe that, as long as we represent the NULL nodes, the pre-order traversal of a tree is unique. That is, if two trees have the same pre-order traversal, then we know they are identical trees in values and structure.
 
@@ -1655,7 +1655,7 @@ When might the simple solution be better, and when might the alternative approac
 
 1.  The simple solution takes O(n + m) memory. The alternative solution takes O(log(n)  + log(m)) memory. Remember: memory usage can be a very big deal when it comes to scalability.
 2.  The simple solution is O(n +  m) time and the alternative  solution  has a worst case time of O(nm). However, the worst  case time can be deceiving; we need to look deeper than that.
-3. A slightly tighter bound on the runtime, as explained  earlier, is O(n  +  km), where k is the number of occurrences of T2's root in T1. Let's suppose the node data for T1 and T2 were random numbers picked between 0 and p. The value of k would be approximately n/p. Why? Because each of n nodes in T1 has a  1/p chance of equaling the root, so approximately  n/p nodes in T1 should equal T2. root. So, let's say p =  1000, n =  1000000 and m =  100. We would  do somewhere  around 1,100,000 node checks (1100000 = 1000000 + (100 * 1000000)/1000).
+3. A slightly tighter bound on the runtime, as explained  earlier, is O(n  +  km), where k is the number of occurrences of T2's root in T1. Let's suppose the node data for T1 and T2 were random numbers picked between 0 and p. The value of k would be approximately n/p. Why? Because each of n nodes in T1 has a  1/p chance of equaling the root, so approximately  n/p nodes in T1 should equal T2.root. So, let's say p =  1000, n =  1000000 and m =  100. We would  do somewhere  around 1,100,000 node checks (1100000 = 1000000 + (100 * 1000000)/1000).
 4.  More complex mathematics and assumptions could get us an even tighter  bound. We assumed in #3 above that if we call matchTree, we would end up traversing  all m nodes of T2. It's far more likely, though,  that we will find a difference  very early on in the tree and will then exit early.
 
 In summary, the alternative approach is certainly more optimal in terms of space and is likely more optimal in terms of time  as well. It all depends on what assumptions you make and whether you prioritize reducing the average case runtime at the expense of the worst case runtime. This is an excellent point to make to your interviewer.

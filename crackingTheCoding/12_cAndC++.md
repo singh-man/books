@@ -224,7 +224,7 @@ Functions can specify default values, as shown below. Note that all default para
 
 Operator overloading enables us to apply operators like + to objects that would otherwise not support these operations. For example, if we wanted to merge two BookShelves into one, we could overload the + operator as follows.
 
-    1    Bookshelf BookShelf::operator+(BookShelf  &other)  { ... }
+    1    BookShelf BookShelf::operator+(BookShelf  &other)  { ... }
 
 
 ### Pointers and References

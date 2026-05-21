@@ -1,4 +1,4 @@
-2 Linked  Lists
+2 Linked Lists
 ===============
 
 A linked list is a data structure that represents a sequence of nodes. In a singly linked list, each node points to the next node in the linked list. A doubly linked list gives each node pointers to both the next and the previous node.
@@ -78,7 +78,7 @@ Additionally,  if you implement this code in C, C++ or another  language that re
 
 The "runner" (or second pointer) technique  is used in many linked list problems. The runner technique means that you iterate through the linked list with two pointers simultaneously, with one ahead of the other. The "fast" node might be ahead by a fixed amount, or it might be hopping multiple nodes for each one node that the "slow" node iterates through.
 
-For example, suppose you had a linked list `a₁ ->a₂ ->....->aₙ -> b₁->b₂->...->bₙ`  and you wanted to rearrange it into `a₁ ->b₁ ->a₂ ->b₂ -> ...->aₙ ->bₙ`. You do not know the length of the linked list (but you do know that the length is an even number).
+For example, suppose you had a linked list `a₁ ->a₂ ->...->aₙ -> b₁->b₂->...->bₙ`  and you wanted to rearrange it into `a₁ ->b₁ ->a₂ ->b₂ ->...->aₙ ->bₙ`. You do not know the length of the linked list (but you do know that the length is an even number).
 
 You could have one pointer p1 (the fast pointer) move  every two elements for every one move that p2 makes. When p1 hits the end of the linked list, p2 will be at the midpoint. Then, move p1 back to the front and begin "weaving" the elements. On each iteration, p2 selects an element and inserts it after p1.
 
@@ -432,7 +432,7 @@ It's useful  to remember in this problem how exactly addition works. Imagine the
 + 2 9 5
 ```
 
-First, we add 7 and 5 to get 12. The digit 2 becomes the last digit of the number, and 1 gets carried over to the next step. Second,  we add 1, 1, and 9 to get 11. The 1 becomes the second digit, and the other 1 gets carried over the final step. Third and finally, we add 1,6 and 2 to get 9. So, our value becomes 912.
+First, we add 7 and 5 to get 12. The digit 2 becomes the last digit of the number, and 1 gets carried over to the next step. Second,  we add 1, 1, and 9 to get 11. The 1 becomes the second digit, and the other 1 gets carried over the final step. Third and finally, we add 1, 6 and 2 to get 9. So, our value becomes 912.
 
 We can mimic this process recursively by adding node by node, carrying  over any "excess" data to the next node.  Let's walk through this for the below linked list:
 
@@ -447,7 +447,7 @@ We do the following:
 ```
 List: 2 -> ?
 ```
-2.  We then  add 1 and 9, as well as the "carry", getting a result of 11.1 becomes the second element of our linked list, and we carry the 1 to the next sum.
+2.  We then  add 1 and 9, as well as the "carry", getting a result of 11. 1 becomes the second element of our linked list, and we carry the 1 to the next sum.
 
 ```
 List: 2 -> 1 -> ?
@@ -830,7 +830,7 @@ How do we find where the intersection is, though?
 
 **Finding  the intersecting node.**
 
-One thought is that we could traverse backwards through each linked list. When the linked lists "split"; that's the intersection. Of course, you can't really traverse backwards through a singly linked list.
+One thought is that we could traverse backwards through each linked list. When the linked lists "split", that's the intersection. Of course, you can't really traverse backwards through a singly linked list.
 
 If the linked lists were the same length, you could just traverse through them at the same time. When they collide, that's your intersection.
 
@@ -851,7 +851,9 @@ We now have a multistep process.
 2. Compare the  tails. If they are different (by reference, not  by value), return immediately. There is no intersection.
 3. Set two pointers to the start  of each linked list.
 4. On the  longer linked  list, advance its pointer by the difference in lengths.
-5. Now, traverse on each linked  list until the  pointers are the  same. The implementation for this is below.
+5. Now, traverse on each linked  list until the  pointers are the  same. 
+
+The implementation for this is below.
 
 ```java
 1   LinkedListNode findIntersection(LinkedListNode list1, LinkedListNode list2) {
@@ -1009,7 +1011,7 @@ The code below implements this algorithm.
 17      }
 18  
 19      /* Move slow to Head. Keep fast at Meeting Point. Each are k steps from the
-20       * Loop Start. If they move at the same pace, they must meet at Loop Start . */
+20       * Loop Start. If they move at the same pace, they must meet at Loop Start. */
 21      slow = head;
 22      while (slow != fast) {
 23          slow = slow.next;

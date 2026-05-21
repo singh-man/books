@@ -244,11 +244,7 @@ Regular Beverages:
 | --        | --        |
 | Budweiser | BUDWEISER |
 | Coca-Cola | COCACOLA  |
-
-
-| Name  | Code  |
-| --    | --    |
-| Pepsi | PEPSI |
+| Pepsi     | PEPSI     |
 
 Calorie-Free Beverages:
 
@@ -345,7 +341,7 @@ In a simplistic database, we'll have at least  three objects: Students, Courses,
 
 This database could get arbitrarily more complicated if we wanted to add in professor information, billing information, and other data.
 
-Using the Microsoft SQL Server TOP ..... PERCENT function, we might (incorrectly) first try a query like this:
+Using the Microsoft SQL Server TOP ... PERCENT function, we might (incorrectly) first try a query like this:
 ```sql
 1  SELECT TOP 10 PERCENT AVG(CourseEnrollment.Grade) AS  GPA,
 2                    CourseEnrollment.StudentID

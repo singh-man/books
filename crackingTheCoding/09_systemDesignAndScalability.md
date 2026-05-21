@@ -287,7 +287,7 @@ From the statement of the problem, we want to focus on how we actually distribut
 We want to start off by thinking about what the different aspects we should consider in a given proposal are:
 
 - *Client Ease of Use:* We want the service to be easy for the clients to implement and useful for them.
-- *Ease for Ourselves:*This service should be as easy as possible for us to implement, as we shouldn't impose unnecessary work on ourselves. We need to consider in this not only the cost of implementing, but also the cost of maintenance.
+- *Ease for Ourselves:* This service should be as easy as possible for us to implement, as we shouldn't impose unnecessary work on ourselves. We need to consider in this not only the cost of implementing, but also the cost of maintenance.
 - *Flexibility for Future Demands:* This problem is stated  in a "what would you do in the real world" way, so we should think like we would in a real-world problem. Ideally, we do not want to overly constrain ourselves in the implementation, such that we can't be flexible if the requirements or demands change.
 - *Scalability and Efficiency:* We should be mindful of the efficiency of our solution, so as not to overly burden our service.
 
@@ -362,7 +362,7 @@ So which one of these would we use? There's no clear answer. The pure text file 
 The goal of a question like this is not to see if you get the "correct" answer (there is no single correct answer). Rather, it's to see how you design a system, and how you evaluate trade-offs.
 
 
-**9.2   Social Network:** How would you design the data structures for a very large social network like Facebook or LinkedIn? Describe how you would design an algorithm to show the shortest path between two people (e.g., `Me-> Bob-> Susan-> Jason-> You`).
+**9.2   Social Network:** How would you design the data structures for a very large social network like Facebook or LinkedIn? Describe how you would design an algorithm to show the shortest path between two people (e.g., `Me -> Bob -> Susan -> Jason -> You`).
 
 SOLUTION
 
@@ -506,7 +506,7 @@ Generalizing this to a path of length q, we have this:
 - BFS: O(k^q)
 - Bidirectional BFS: O(k^(q/2) + k^(q/2)), which is just O(k^(q/2))
 
-If you imagine a path like `A -> B -> C -> D -> E` where each person has 100 friends, this is a big difference. BFS will require looking at 100 million (100⁴) nodes. A bidirectional BFS will require looking at only 20,000 nodes (2  x  100²).
+If you imagine a path like `A -> B -> C -> D -> E` where each person has 100 friends, this is a big difference. BFS will require looking at 100 million (100⁴) nodes. A bidirectional BFS will require looking at only 20,000 nodes (2 x 100²).
 
 A bidirectional  BFS will generally be faster than the traditional BFS. However, it requires actually having access to both the source node and the destination nodes, which is not always the case.
 
@@ -677,7 +677,9 @@ Here are a few of the assumptions we make for this solution. Depending on the de
 - The number of queries we wish to cache is large (millions).
 - Calling  between machines is relatively quick.
 - The result for a given query is an ordered list of URLs, each of which has an associated 50 character title and 200 character summary.
-- The most popular queries are extremely popular, such that they would always appear in the cache. Again, these aren't the only valid assumptions. This is just one reasonable set of assumptions.
+- The most popular queries are extremely popular, such that they would always appear in the cache. 
+
+Again, these aren't the only valid assumptions. This is just one reasonable set of assumptions.
 
 **System Requirements**
 
@@ -1110,7 +1112,7 @@ We could also just recompute the budget from scratch. The budget analyzer is fai
 - How would this change if you also needed to support a mobile app?
 - How would you design the component  which assigns items to each category? 
 - How would you design the recommended  budgets feature?
-- How would you. change this if the user could develop rules to categorize all transactions from a particular seller differently than the default?
+- How would you change this if the user could develop rules to categorize all transactions from a particular seller differently than the default?
 
 
 **9.8       Pastebin:** Design a system like Pastebin, where a user can enter a piece of text and get a randomly generated URL for public access. 

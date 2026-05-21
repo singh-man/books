@@ -215,7 +215,7 @@ The code below does just that. It works from the back of A and B, moving the lar
 Note that you don't need to copy the contents of A after running out of elements in B. They are already in place.
 
 
-**10.2    Group  Anagrams:** Write a method to sort an array of strings so that all tne anagrams are next to each other.
+**10.2    Group  Anagrams:** Write a method to sort an array of strings so that all the anagrams are next to each other.
 
 SOLUTION
 
@@ -463,7 +463,7 @@ The recursive code below to solve this problem can easily be modified to be iter
 18                  break;
 19              }
 20              right++;
-21              left-- ;
+21              left--;
 22          }
 23      }
 24  
@@ -536,7 +536,7 @@ The following code demonstrates  our algorithm.
 ```java
 1   long numberOfInts = ((long) Integer.MAX_VALUE) + 1;
 2   byte[] bitfield = new byte [(int) (numberOfInts / 8)];
-3   String filename = .....
+3   String filename = ....;
 4   
 5   void findOpenNumber() throws FileNotFoundException {
 6       Scanner in = new Scanner(new FileReader(filename));

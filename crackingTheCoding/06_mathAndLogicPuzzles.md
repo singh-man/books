@@ -425,7 +425,7 @@ If we just play with the jugs,  we'll find that we can pour water back and forth
 | 2       | 0       | Dumped 3-quart.                         |
 | 0       | 2       | Fill 3-quart with 5-quart's contents.   |
 | 5       | 2       | Filled 5-quart.                         |
-| 4       | 3       | Fill remainder of 3-quart with 5-quart  |
+| 4       | 3       | Fill remainder of 3-quart with 5-quart. |
 | 4       |         | Done! We have  4 quarts.                |
 
 This question, like many puzzle questions, has a math/computer science root.  If the  two jug  sizes are relatively prime, you can measure any value between one  and the  sum of the jug  sizes.

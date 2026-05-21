@@ -748,7 +748,7 @@ As always, when you see code this complicated  and lengthy, you wouldn't be expe
 5       public void third() { ... }
 6   }
 ```
-The same instance of Foo will be passed to three different threads. ThreadA will call first threadB will call second, and threadC will call third. Design a mechanism to ensure that first is called before second and second is called before third.
+The same instance of Foo will be passed to three different threads. ThreadA will call first, threadB will call second, and threadC will call third. Design a mechanism to ensure that first is called before second and second is called before third.
 
 SOLUTION
 
@@ -776,7 +776,7 @@ What about using a lock to do something like the below code?
 16          try {
 17              ...
 18              lock1.unlock(); // mark finished with first()
-19          }  catch ( ...) { . . . }
+19          }  catch (...) { ... }
 20      }
 21  
 22      public void second() {

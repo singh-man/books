@@ -159,8 +159,8 @@ More formally, the algorithm is this:
 
 1.  Create a queue order, which will eventually store the valid topological sort. It is currently empty.
 2.  Create a queue processNext. This queue will store the next nodes to process.
-3.  Count the number of incoming edges of each node and set a class variable node. inbound. Nodes typically only store their outgoing edges. However, you can count the inbound edges by walking through each node n and, for each of its outgoing edges (n,  x),  incrementing x. inbound.
-4.  Walk through the nodes again and add to processNext any node where x. inbound == 0.
+3.  Count the number of incoming edges of each node and set a class variable node.inbound. Nodes typically only store their outgoing edges. However, you can count the inbound edges by walking through each node n and, for each of its outgoing edges (n,  x),  incrementing x.inbound.
+4.  Walk through the nodes again and add to processNext any node where x.inbound == 0.
 5.  While processNext is not empty, do the following:
     - Remove first node n from processNext.
     - For each edge (n,  x), decrement x.inbound. If x.inbound == 0, append x to processNext.
@@ -267,7 +267,7 @@ If the number of collisions is low, this is a very fast and space-efficient solu
 
 One obvious drawback of this is that the total number of entries in the hash table is limited by the size of the array. This is not the case with chaining.
 
-There's another issue here. Consider a hash table with an underlying array of size 100 where indexes 20 through 29 are filled (and nothing else).What are the odds of the next insertion going to index 30? The odds are 10% because an item mapped to any index between 20 and 30 will wind up at index 30. This causes an issue called clustering.
+There's another issue here. Consider a hash table with an underlying array of size 100 where indexes 20 through 29 are filled (and nothing else). What are the odds of the next insertion going to index 30? The odds are 10% because an item mapped to any index between 20 and 30 will wind up at index 30. This causes an issue called clustering.
 
 *Quadratic Probing and Double Hashing*
 
@@ -276,7 +276,7 @@ The distance between probes does not need to be linear. You could, for example, 
 
 ### Rabin-Karp  Substring  Search
 
-The brute force way to search for a substring S in a larger string B takes O(s(b- s)) time, where s is the length of S and b is the length of B. We do this by searching through the first b - s + 1 characters in B and, for each, checking if the next s characters match S.
+The brute force way to search for a substring S in a larger string B takes O(s(b-s)) time, where s is the length of S and b is the length of B. We do this by searching through the first b - s + 1 characters in B and, for each, checking if the next s characters match S.
 
 The Rabin-Karp algorithm optimizes this with a little trick: if two strings are the same, they must have the same hash value. (The converse, however, is not true. Two different strings can have the same hash value.)
 
@@ -286,7 +286,7 @@ For example, imagine  our hash function was simply the sum of each character (wh
 
 ![](media/XI_05.JPG)
 
-If we computed these sums by doing hash('doe'), then hash ('oe '), then hash('e a'), and so on, we would still be at O(s(b-s)) time.
+If we computed these sums by doing hash('doe'), then hash('oe '), then hash('e a'), and so on, we would still be at O(s(b-s)) time.
 
 Instead, we compute the hash values by recognizing that hash('oe ') = hash('doe') - code('d') +  code(' '). This takes O(b) time to compute all the hashes.
 
@@ -504,11 +504,11 @@ Here's another example: You have a list of data in the form {City, Temperature, 
 - **Map:** The Map step  outputs  a key value pair where the  key is City_Year and the value is (Temperature, 1). The '1' reflects that this is the average temperature out of one data point. This will be important for the Reduce step.
 - **Reduce:** The Reduce step will be given a list of temperatures that correspond with a particular city and year. It must use these to compute the average temperature for this input. You cannot simply add up the temperatures and divide by the number of values.
 
-To see this, imagine we have five data points for a particular city and year: 25,100,75,85, 50. The Reduce step might only get some of this data at once. If you averaged {75, 85} you would get 80. This might end up being input for another Reduce step with 50, and it would be a mistake to just naively average 80 and 50. The 80 has more weight.
+To see this, imagine we have five data points for a particular city and year: 25, 100, 75, 85, 50. The Reduce step might only get some of this data at once. If you averaged {75, 85} you would get 80. This might end up being input for another Reduce step with 50, and it would be a mistake to just naively average 80 and 50. The 80 has more weight.
 
-Therefore, our Reduce step instead takes in {(80, 2),(50,1)}, then sums the weighted temperatures. So it does 80 * 2 + 50 * 1 and then divides by (2 + 1) to get an average temperature of 70. It then emits (70, 3).
+Therefore, our Reduce step instead takes in {(80, 2), (50, 1)}, then sums the weighted temperatures. So it does 80 * 2 + 50 * 1 and then divides by (2 + 1) to get an average temperature of 70. It then emits (70, 3).
 
-Another Reduce step might reduce {(25, 1),(100, 1)} to get (62.5, 2). If we reduce this with (70, 3) we get the final answer: (67, 5). In other words, the average temperature in this city for this year was 67 degrees.
+Another Reduce step might reduce {(25, 1), (100, 1)} to get (62.5, 2). If we reduce this with (70, 3) we get the final answer: (67, 5). In other words, the average temperature in this city for this year was 67 degrees.
 
 We could do this in other ways, too. We could have just the city as the key, and the value be (Year, Temperature, Count). The Reduce step would do essentially the same thing, but would have to group by Year itself.
 
@@ -534,7 +534,7 @@ It is an open (and very famous) question whether P = NP, but the answer is gener
 - **Bipartite Graph:**  A bipartite graph is a graph where you can divide its nodes into two sets such that every edge stretches across the two sets (that is, there is never an edge between two nodes in the same set). There is an algorithm to check if a graph is a bipartite graph. Note that a bipartite graph is equivalent to a graph that can be colored with two colors.
 - **Regular Expressions:** You should know that regular expressions exist and what they can be used for (roughly). You can also learn about how an algorithm to match regular expressions would work. Some of the basic syntax behind regular expressions could be useful as well.
 
-There is of course a great deal more to data structures and algorithms. If you're interested in exploring these topics more deeply, I recommend picking up the hefty *Introduction to Algorithms* ("CLRS" by Carmen, Leiserson, Rivest and Stein) or *The Algorithm Design Manual* (by Steven Skiena).
+There is of course a great deal more to data structures and algorithms. If you're interested in exploring these topics more deeply, I recommend picking up the hefty *Introduction to Algorithms* ("CLRS" by Cormen, Leiserson, Rivest and Stein) or *The Algorithm Design Manual* (by Steven Skiena).
 
 
 

@@ -99,7 +99,7 @@ Vector: A vector is very similar to an ArrayList except that it is synchronized.
 1   Vector<String> myVect = new Vector<String>();
 2   myVect.add("one");
 3   myVect.add("two");
-4   System.out.printin(myVect.get(0));
+4   System.out.println(myVect.get(0));
 ```
 LinkedList: LinkedList is, of course, Java's built-in LinkedList class. Though it rarely comes up in an interview, it's useful to study because it demonstrates some of the syntax for an iterator.
 ```java
@@ -496,9 +496,7 @@ For any specific element, there are as many subsets that contain the element as 
 {3}    {1, 3}
 {2, 3} {1, 2, 3} 
 ```
-Note how the difference between the subsets on the left and the subsets on the right is the existence of
-
-1. The left and right sides must have the same number of subsets because we can convert from one to the other by just adding an element.
+Note how the difference between the subsets on the left and the subsets on the right is the existence of 1. The left and right sides must have the same number of subsets because we can convert from one to the other by just adding an element.
 
 This means that we can generate  a random subset by iterating through the list and flipping a coin (i.e., deciding on a 50/50 chance) to pick whether or not each element will be in it.
 

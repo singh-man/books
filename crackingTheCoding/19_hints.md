@@ -9,20 +9,20 @@ Try to solve the questions independently when possible. But it's okay to look fo
 
 I've organized the hints somewhat randomly here, such that all the hints for a problem aren't adjacent. This way you won't accidentally see the second hint when you're reading the first hint.
 
-### I: Hints for Data  Structures
+### I Hints for Data Structures
 
 
  
 - \#1.     1.2     Describe what it means for two strings to be permutations  of each other. Now, look at that definition you provided. Can you check the strings against that definition?
 - \#2.     3.1     A  stack is simply a data  structure in which the  most recently added  elements  are removed first. Can you simulate a single stack using an array? Remember that there are many possible solutions, and there are tradeoffs of each. 
-- \#3      2.4     There are many solutions to this problem, most of which are equally optimal in runtime. Some have shorter, cleaner code than others. Can you brainstorm different solutions?
-- \#4      4.10    If T2 is a subtree of T1, how will its in-order traversal compare to T1's? What about its pre-order and post-order traversal?
+- \#3.     2.4     There are many solutions to this problem, most of which are equally optimal in runtime. Some have shorter, cleaner code than others. Can you brainstorm different solutions?
+- \#4.     4.10    If T2 is a subtree of T1, how will its in-order traversal compare to T1's? What about its pre-order and post-order traversal?
 - \#5.     2.6     A palindrome is something  which is the same when written forwards and backwards. What if you reversed the linked list?
 - \#6.     4.12    Try simplifying  the problem. What if the path had to start at the root?
 - \#7.     2.5     Of course, you could convert the linked lists to integers, compute  the sum, and then convert it back to a new linked list.  If you did this in an interview, your interviewer would likely accept the answer, and then see if you could do this without converting it to a number and back.
 - \#8.     2.2     What if you knew the linked list size? What is the difference between finding the Kth-to-last element and finding the Xth element?
 - \#9.     2.1     Have you tried a hash table? You should be able to do this in a single pass of the linked list.
-- \#10     4.8     If each node has a link to its parent, we could leverage the approach from question 2.7 on page 95. However, our interviewer might not let us make this assumption.
+- \#10.    4.8     If each node has a link to its parent, we could leverage the approach from question 2.7 on page 95. However, our interviewer might not let us make this assumption.
 - \#11.    4.10    The in-order traversals won't tell us much. After all, every binary search tree with the same values (regardless of structure) will have the same in-order traversal. This is what in-order traversal means: contents are in-order. (And if it won't work in the specific case of a binary search tree, then it certainly won't work for a general binary tree.) The pre-order traversal, however, is much more indicative.
 - \#12.    3.1     We could simulate three stacks in an array by just allocating the first third of the array to the first stack, the second third to the second stack, and the final third to the third stack. One might actually be much bigger than the others, though. Can we be more flexible with the divisions?
 - \#13.    2.6     Try using a stack.
@@ -30,7 +30,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#15.    3.5     One way of sorting an array is to iterate through the array and insert each element into a new array in sorted order. Can you do this with a stack?
 - \#16.    4.8     The first common ancestor is the deepest node such that p and q are both descendants. Think about how you might identify this node.
 - \#17.    1.8     If you just cleared the rows and columns as you found 0s, you'd likely wind up clearing the whole matrix. Try finding the cells with zeros first before making any changes to the matrix.
-- \#18.    4.10    You may have concluded that  if  T2. preorderTraversal()  is a  substring of T1.preorderTraversal(), then T2 is a subtree of T1. This is almost true, except that the trees could have duplicate values. Suppose T1 and T2 have all duplicate  values but different structures. The pre-order traversals  will look the same even though T2 is not a subtree of T1. How can you handle situations like this?
+- \#18.    4.10    You may have concluded that  if  T2.preorderTraversal()  is a  substring of T1.preorderTraversal(), then T2 is a subtree of T1. This is almost true, except that the trees could have duplicate values. Suppose T1 and T2 have all duplicate  values but different structures. The pre-order traversals  will look the same even though T2 is not a subtree of T1. How can you handle situations like this?
 - \#19.    4.2     A minimal binary tree has about the same number of nodes on the left of each node as on the right. Let's focus on just the root for now. How would you ensure that about the same number of nodes are on the left of the root as on the right?
 - \#20.    2.7     You can do this in O(A+B) time and O(1) additional  space. That is, you do not need a hash table (although you could do it with one).
 - \#21.    4.4     Think about the definition of a balanced tree. Can you check that condition for a single node? Can you check it for every node?
@@ -42,7 +42,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#27.    3.2     Observe that the minimum element doesn't change very often. It only changes when a smaller element is added, or when the smallest element is popped.
 - \#28.    4.8     How would you figure out if p is a descendent of a node n?
 - \#29.    2.6     Assume you have the length of the linked list. Can you implement this recursively?
-- \#30.    2.5     Try recursion. Suppose you have two lists, `A = 1->5->9` (representing 951)  and `B = 2->3->6->7 (representing 7632)`, and a function that operates on the remainder of the lists `(5->9 and 3->6->7)`.  Could you use this to create the sum method? What is the relationship between `sum(1->5->9, 2->3->6->7)` and `sum(5->9, 3->6->7)`?
+- \#30.    2.5     Try recursion. Suppose you have two lists, `A = 1->5->9` (representing 951)  and `B = 2->3->6->7` (representing 7632), and a function that operates on the remainder of the lists `(5->9 and 3->6->7)`.  Could you use this to create the sum method? What is the relationship between `sum(1->5->9, 2->3->6->7)` and `sum(5->9, 3->6->7)`?
 - \#31.    4.10    Although the problem seems like it stems from duplicate values, it's really deeper than that. The issue is that the pre-order  traversal is the same only because  there are null nodes that we skipped over (because  they're null). Consider inserting a placeholder value into the pre-order traversal string whenever you reach a null node. Register the null node as a "real" node so that you can distinguish between the different structures.
 - \#32.    3.5     Imagine your secondary stack is sorted. Can you insert elements into it in sorted order? You might need some extra storage. What could you use for extra storage?
 - \#33.    4.4     If  you've developed  a brute  force solution, be  careful about  its runtime. If  you are computing the height of the subtrees for each node, you could have a pretty inefficient algorithm.
@@ -101,7 +101,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#86.    4.5     If every  node on the left must be less than or equal to the current node, then this is really the same thing as saying that the biggest node on the left must be less than or equal to the current node.  
 - \#87.    4.12    What work is duplicated in the current brute-force algorithm?   
 - \#88.    1.9     We are essentially asking if there's a way of splitting the first string into two parts, x and y, such that the first string is xy and the second string is yx. For example,  x  = wat and y  =  erbottle. The first string is xy   =   waterbottle. The second string is yx   = erbottlewat.  
-- \#89.    4.11    Picking a random depth won't help us much. First, there's  more nodes at lower depths than higher depths. Second, even if we re-balanced these probabilities, we could hit a "dead end" where we meant to pick a node at depth 5 but hit a leaf at depth 3. Re-balancing the probabilities is an interesting , though.   
+- \#89.    4.11    Picking a random depth won't help us much. First, there's  more nodes at lower depths than higher depths. Second, even if we re-balanced these probabilities, we could hit a "dead end" where we meant to pick a node at depth 5 but hit a leaf at depth 3. Re-balancing the probabilities is an interesting, though.   
 - \#90.    2.8     If you haven't identified the pattern of where the two pointers start, try this: Use the linked list 1->2->3->4->5->6->7->8->9->?, where the ? links to another node. Try making the ? the first node (that is, the 9 points to the 1 such that the entire linked list is a loop). Then make the ? the node 2. Then the node 3. Then the node 4. What is the pattern? Can you explain why this happens?  
 - \#91.    4.6     Here's one step of the logic: The successor of a specific node is the leftmost node of the right subtree. What  if there is no right subtree, though?
 - \#92.    1.6     Do the easy thing first. Compress the string, then compare the lengths.
@@ -120,7 +120,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#105.   4.4     You don't need to modify the binary tree class to store the height of the subtree. Can your recursive function compute the height of each subtree while also checking if a node is balanced? Try having the function return multiple values.
 - \#106.   1.4     You do not have to-and should not-generate all permutations. This would be very inefficient.
 - \#107.   4.3     Try modifying a graph search algorithm to track the depth from the root.
-- \#108.   4.12    Try using  a hash table that maps from a runningSum value to  he number of elements with this runningSum.
+- \#108.   4.12    Try using  a hash table that maps from a runningSum value to the number of elements with this runningSum.
 - \#109.   2.5     For the follow-up question: The issue is that when the linked lists aren't the same length, the head of one linked list might represent the 1000's place while the other represents the 10's place. What  if you made them the same length? Is there a way to modify the linked list to do that, without changing the value it represents?
 - \#110.   1.6     Be careful that you aren't repeatedly concatenating strings together. This can be very inefficient.
 - \#111.   2.7     If the two linked lists were the same length, you could traverse forward in each until you found an element in common.  Now, how do you adjust this for lists of different lengths?
@@ -151,7 +151,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#136.   1.4     Can you reduce the space usage by using a bit vector?
 
 
-### II Hints for Concepts  and Algorithms
+### II Hints for Concepts and Algorithms
 
 
 - \#137.   5.1     Break this into parts. Focus first on clearing the appropriate bits. 
@@ -167,7 +167,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#147.   5.4     Get Next: Start with a brute force solution for each.
 - \#148.   8.14    Can we just try all possibilities? What would this look like?
 - \#149.   6.5     Play around with the jugs of water, pouring water back and forth, and see if you can measure anything other than 3 quarts or 5 quarts. That's a start.
-- \#150.   8.7     Approach 1: Suppose you had all permutations of abc. How can you use that to get all permutations  of abed?
+- \#150.   8.7     Approach 1: Suppose you had all permutations of abc. How can you use that to get all permutations  of abcd?
 - \#151.   5.5     Reverse engineer this, starting from the outermost layer to the innermost layer.
 - \#152.   8.1     Approach this from the top down. What is the very last hop the child made?
 - \#153.   7.1     Note that a "card deck" is very broad. You might want to think about a reasonable scope to the problem.
@@ -175,7 +175,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#155.   8.13    Will sorting the boxes help in any way?
 - \#156.   6.8     This is really an algorithm problem, and you should approach it as such. Come up with a brute force, compute the worst-case number of drops, then try to optimize that.
 - \#157.   6.4     In what cases will they not collide?
-- \#158.   9.6     We've assumed that the rest of the eCommerce system is already handled, and we just need to deal with the analytics part of safes rank. We can get notified somehow when a purchase occurs.
+- \#158.   9.6     We've assumed that the rest of the eCommerce system is already handled, and we just need to deal with the analytics part of sales rank. We can get notified somehow when a purchase occurs.
 - \#159.   5.3     Start with a brute force solution. Can you try all possibilities?
 - \#160.   6.7     Think about writing each family as a sequence of Bs and Gs.
 - \#161.   8.8     You could handle this by just checking to see if there are duplicates before printing them (or adding them to a list). You can do this with a hash table. In what case might this be okay? In what case might it not be a very good solution?
@@ -184,15 +184,15 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#164.   11.5    Consider the scenario of a pen for children. What does this mean? What are the different use cases?
 - \#165.   9.8     Scope the problem well. What will and won't you tackle as part of this system?
 - \#166.   8.5     Think about multiplying 8 by 9 as counting the number of cells in a matrix with width 8 and height 9.
-- \#167.   5.2     In a number like • 893 (in base 10), what does each digit signify? What then does each digit in .10010 signify in base 2?
+- \#167.   5.2     In a number like .893 (in base 10), what does each digit signify? What then does each digit in .10010 signify in base 2?
 - \#168.   8.14    We can think about each possibility as each place where we can put parentheses. This means around each operator, such that the expression  is split at the operator. What is the base case?
 - \#169.   5.1     To clear the bits, create a "bit mask" that looks like a series of 1s, then 0s, then 1s.
 - \#170.   8.3     Start with a brute force algorithm.
 - \#171.   6.7     You can attempt this mathematically, although the math is pretty difficult. You might find it easier to estimate it up to families of, say, 6 children. This won't give you a good mathematical proof, but it might point you in the right direction of what the answer might be.
 - \#172.   6.9     In which cases would a door be left open at the end of the process?
-- \#173.   5.2     A number such as • 893 (in base 10) indicates 8  * 10⁻¹  +  9  * 10⁻²  +  3  * 10⁻³. Translate this system into base 2.
+- \#173.   5.2     A number such as .893 (in base 10) indicates 8  * 10⁻¹  +  9  * 10⁻²  +  3  * 10⁻³. Translate this system into base 2.
 - \#174.   8.9     Suppose we had all valid ways of writing two pairs of parentheses. How could we use this to get all valid ways of writing three pairs?
-- \#175.   5.4     Get Next: Picture a binary number-something with a bunch of 1s and 0s spread out throughout the number. Suppose you flip a 1 to a O and a O to a 1. In what case will the number get bigger? In what case will it get smaller?
+- \#175.   5.4     Get Next: Picture a binary number-something with a bunch of 1s and 0s spread out throughout the number. Suppose you flip a 1 to a 0 and a 0 to a 1. In what case will the number get bigger? In what case will it get smaller?
 - \#176.   9.6     Think about what sort of expectations on freshness and accuracy of data is expected. Does the data always need to be 100% up to date? Is the accuracy of some products more important than others?
 - \#177.   10.2    How do you check  if two words are anagrams of each other? Think about what the definition of "anagram" is. Explain it in your own words.
 - \#178.   8.1     If we knew the number of paths to each of the steps before step 100, could we compute the number of steps to 100?
@@ -202,7 +202,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#182.   10.2    Two words are anagrams if they contain the same characters but in different orders. How can you put characters in order?
 - \#183.   6.10    Solution 2: Why do we have such a time lag between tests and results? There's a reason the question isn't phrased as just "minimize the number of rounds of testing". The time lag is there for a reason.
 - \#184.   9.8     How evenly do you think traffic is distributed? Do all documents get roughly the same age of traffic? Or is it likely there are some very popular documents?
-- \#185.   8.7     Approach 1: The permutations of abc represent all ways of ordering abc. Now, we want to create all orderings of abed.  Take a specific ordering of abed, such as bdea. This bdea string represents an ordering of abe, too: Remove the d and you get bea. Given the string bca, can you create all the "related" orderings that included, too?
+- \#185.   8.7     Approach 1: The permutations of abc represent all ways of ordering abc. Now, we want to create all orderings of abcd.  Take a specific ordering of abcd, such as bdca. This bdca string represents an ordering of abc, too: Remove the d and you get bca. Given the string bca, can you create all the "related" orderings that include d, too?
 - \#186.   6.1     You can only use the scale once. This means that all, or almost all, of the bottles must be used. They also must be handled in different ways or else you couldn't distinguish between them.
 - \#187.   8.9     We could try generating the solution for three pairs by taking the list of two pairs of parentheses and adding a third pair. We'd have to add the third paren before, around, and after. That is: ()\<SOLUTION>,   (\<SOLUTION>),   \<SOLUTION>().  Will this work?
 - \#188.   6.7     Logic might be easier than math. Imagine we wrote every birth into a giant string of Bs and Gs. Note that the groupings of families are irrelevant for this problem. What is the probability of the next character added to the string being a B versus a G?
@@ -217,14 +217,14 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#197.   8.14    The base case is when we have a single value, 1 or 0. 
 - \#198.   7.3     Scope the problem first and make a list of your assumptions. It's often okay to make reasonable assumptions, but you need to make them explicit.
 - \#199.   9.7     The system  will be write-heavy: Lots of data being imported, but it's rarely being read. 
-- \#200.   8.7     Approach 1: Given a string such as bca, you can create all permutations of abed  that have {a,    b,    c} in the order bca by inserting d into each possible location: dbca, bdca, beda, bead. Given all permutations of abc, can you then create all permutations of abed?
+- \#200.   8.7     Approach 1: Given a string such as bca, you can create all permutations of abcd  that have {a,    b,    c} in the order bca by inserting d into each possible location: dbca, bdca, bcda, bcad. Given all permutations of abc, can you then create all permutations of abcd?
 - \#201.   6.7     Observe that biology hasn't changed; only the conditions under which a family stops having kids has changed. Each pregnancy has a 50% odds of being a boy and a 50% odds of being a girl. 
 - \#202.   5.5     What does it mean if A  &  B   == 0? 
 - \#203.   8.5     If you wanted to count the cells in an 8x9 matrix, you could count the cells in a 4x9 matrix and then double it. 
 - \#204.   8.3     Your brute force algorithm probably ran in O(N) time. If you're trying to beat that runtime, what runtime do you think you will get to? What sorts of algorithms have that runtime? 
 - \#205.   6.10    Solution 2: Think about trying to figure out the bottle, digit by digit. How can you detect the first digit in the poisoned bottle? What about the second digit? The third digit?  
 - \#206.   9.8     How will you handle generating URLs? 
-- \#207.   10.6    Think about merge sort versus quick sort. WouId one of them work well for this purpose?   
+- \#207.   10.6    Think about merge sort versus quick sort. Would one of them work well for this purpose?   
 - \#208.   9.6     You also want to limit joins because they can be very expensive. 
 - \#209.   8.9     The problem with the solution suggested by the earlier hint is that it might have duplicate values. We could eliminate this by using a hash table. 
 - \#210.   11.6    Be careful  about your assumptions. Who are the users? Where are they using this? It might seem obvious, but the real answer might be different.  
@@ -243,7 +243,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#223.   9.6     Don't forget that a product can be listed under multiple  categories.  
 - \#224.   8.6     You can easily move the smallest disk from one tower to another. It's also pretty easy to move the smallest two disks from one tower to another. Can you move the smallest three disks?  
 - \#225.   11.6    In a real interview,  you would  also want to discuss what sorts of test tools we have available.   
-- \#226.   5.3     Flipping a 0 to a 1 can merge two sequences of 1s-but  only if the two sequences are separated by only one 0.  
+- \#226.   5.3     Flipping a 0 to a 1 can merge two sequences of 1s-but only if the two sequences are separated by only one 0.  
 - \#227.   8.5     Think about how you might handle this for odd numbers.   
 - \#228.   7.8     What class should maintain the score?  
 - \#229.   10.9    If you're considering a particular column, is there a way to quickly eliminate it (in some cases at least)?   
@@ -267,7 +267,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#247.   9.7     Try to reduce unnecessary database queries. If you don't need to permanently store the data in the database, you might not need it in the database at all.
 - \#248.   5.7     Can you create a number that represents just the even bits? Then can you shift the even bits over by one?
 - \#249.   6.10    Solution 3: If each test strip is a binary indicator, can we map, integer keys to a set of 10 binary indicators such that each key has a unique configuration (mapping)?
-- \#250.   8.6     Think about moving the smallest disk from tower X=0 to tower Y=2 using tower Z=1 as a temporary holding spot as having a solution for f(1,   X=0,   Y=2,   Z=1).  Moving the smallest two disks is f(2,   X=0,  Y=2,   Z=1). Given that you have a solution for f(l, X=0, Y=2,   Z=l) and f(2,  X=0,  Y=2,   Z=1), can you solve f(3,  X=0, Y=2,   Z=1)?
+- \#250.   8.6     Think about moving the smallest disk from tower X=0 to tower Y=2 using tower Z=1 as a temporary holding spot as having a solution for f(1,   X=0,   Y=2,   Z=1).  Moving the smallest two disks is f(2,   X=0,  Y=2,   Z=1). Given that you have a solution for f(1, X=0, Y=2,   Z=1) and f(2,  X=0,  Y=2,   Z=1), can you solve f(3,  X=0, Y=2,   Z=1)?
 - \#251.   10.9    Since each column is sorted, you know that the value can't be in this column if it's smaller than the min value in this column. What else does this tell you?
 - \#252.   6.1     What happens if you put one pill from each bottle on the scale? What if you  put two pills from each bottle on the scale?
 - \#253.   10.11   Do you necessarily need the arrays to be sorted? Can you do it with an unsorted array?
@@ -282,9 +282,9 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#262.   8.1     What is the runtime of this method? Think carefully. Can you optimize it?
 - \#263.   10.2    Can you leverage a standard sorting algorithm?
 - \#264.   6.9     Note:  If an integer x is divisible by a, and b =  x / a, then x is also divisible by b. Does this mean that all numbers have an even number of factors?
-- \#265.   8. 9    Adding a left or right paren at each step will eliminate duplicates. Each substring will be unique at each step. Therefore, the total string will be unique.
+- \#265.   8.9    Adding a left or right paren at each step will eliminate duplicates. Each substring will be unique at each step. Therefore, the total string will be unique.
 - \#266.   10.9    If the value x is smaller than the start of the column, then it also can't be in any columns to the right.
-- \#267.   8.7     Approach 1: You can create all permutations of abed by computing all permutations of abc and then inserting d into each possible location within those.
+- \#267.   8.7     Approach 1: You can create all permutations of abcd by computing all permutations of abc and then inserting d into each possible location within those.
 - \#268.   11.6    What are the different features and uses we would want to test?
 - \#269.   5.2     How would you get the first digit in .893? If you multiplied by 10, you'd shift the values over to get 8. 93. What happens if you multiply by 2?
 - \#270.   9.2     To find the connection between two nodes, would it be better to do a breadth-first search or depth-first search? Why?
@@ -299,7 +299,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#279.   10.9    Think about the previous hint in the context of rows.  
 - \#280.   8.5     Alternatively,  if you're doing 9 * 7, you could do 4\*7, double that, and then add 7.  
 - \#281.   10.7    Try using one pass to get it down to a range of values, and then a second pass to find a specific value.
-- \#282.   6.6     Suppose there were exactly one blue-eyed person. What would that person see? When wouId they leave?
+- \#282.   6.6     Suppose there were exactly one blue-eyed person. What would that person see? When would they leave?
 - \#283.   7.6     Which will be the easiest pieces to match first? Can you start with those? Which will be the next easiest, once you've nailed those down?
 - \#284.   6.2     If two events are mutually exclusive (they can never occur simultaneously), you can add their probabilities together. Can you find a set of mutually exclusive events that represent making two out of three hoops?
 - \#285.   9.2     A breadth-first search is probably better. A depth-first search can wind up going on a long path, even though the shortest path is actually very short. Is there a modification to a breadth-first search that might be even faster?
@@ -326,7 +326,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#306.   6.9     The number 3 has an even number of factors (1 and 3). The number 12 has an even number of factors (1, 2, 3, 4, 6, 12). What numbers do not? What does this tell you about the doors?
 - \#307.   7.12    Think carefully about what information the linked list node needs to contain.
 - \#308.   8.12    We know that each row must have a queen. Can you try all possibilities?
-- \#309.   8.7     Approach 2: To generate a permutation of abed, you need to pick an initial character. It can be a, b,c, or d. You can then permute the remaining characters. How can you use this approach to generate all permutations of the full string?
+- \#309.   8.7     Approach 2: To generate a permutation of abcd, you need to pick an initial character. It can be a, b,c, or d. You can then permute the remaining characters. How can you use this approach to generate all permutations of the full string?
 - \#310.   10.3    What is the runtime of your algorithm? What will happen if the array has duplicates?
 - \#311.   9.5     How would you scale this to a larger system?
 - \#312.   5.4     Get Next: Can you flip a 0 to a 1  to create the next biggest number?
@@ -335,7 +335,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#315.   10.8    Consider implementing your own bit vector class. It's a good exercise and an important part of this problem.
 - \#316.   10.11   You should be able to design an O(n) algorithm.
 - \#317.   10.9    A cell will be larger than all the items below it and to the right. It will be smaller than all cells above it and to the left. If we wanted to eliminate the most elements first, which element should we compare the value x to?
-- \#318.   8.6     If you're having trouble with recursion, then try trusting the recursive process more. Once you've figured out how to move the top two disks from tower O to tower 2, trust that you have this working. When you need to move three disks, trust that you can move two disks from one tower to another. Now, two disks have been moved. What do you do about the third?
+- \#318.   8.6     If you're having trouble with recursion, then try trusting the recursive process more. Once you've figured out how to move the top two disks from tower 0 to tower 2, trust that you have this working. When you need to move three disks, trust that you can move two disks from one tower to another. Now, two disks have been moved. What do you do about the third?
 - \#319.   6.1     Imagine there were just three bottles and one had heavier pills. Suppose you put different numbers of pills from each bottle on the scale (for example, bottle 1 has 5 pills, bottle 2 has 2 pills, and bottle 3 has 9 pills). What would the scale show?
 - \#320.   10.4    Think about how binary search works. What will be the issue with just implementing binary search?
 - \#321.   9.2     Discuss how you might implement these algorithms and this system in the real world. What sort of optimizations might you make?
@@ -345,14 +345,14 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#325.   11.2    Think about issues both within the program and outside of the program (the rest of the system).
 - \#326.   9.4     Estimate how much space is needed for this.
 - \#327.   8.14    Look at your recursion. Do you have repeated calls anywhere? Can you memoize it?
-- \#328.   5.7     The value 1010 in binary is 10 in decimal or OxA in hex. What will a sequence of 101010... be in hex? That is, how do you represent an alternating sequence of 1s and 0s with  1s in the odd places? How do you do this for the reverse (1s in the even spots)?
+- \#328.   5.7     The value 1010 in binary is 10 in decimal or 0xA in hex. What will a sequence of 101010... be in hex? That is, how do you represent an alternating sequence of 1s and 0s with  1s in the odd places? How do you do this for the reverse (1s in the even spots)?
 - \#329.   11.3    Consider both extreme cases and more general cases.
 - \#330.   10.9    If we compare x to the center element in the matrix, we can eliminate roughly one quarter of the elements in the matrix.
 - \#331.   8.2     For the robot to reach the last cell, it must find a path to the second-to-last cells. For it to find a path to the second-to-last cells, it must find a path to the third-to-last cells.
 - \#332.   10.1    Try moving  from the end of the array to the beginning.
 - \#333.   6.8     If we drop Egg 1 at fixed intervals (e.g., every 10 floors), then the worst case is the worst case for Egg 1 + the worst case for Egg 2. The problem with our earlier solutions  is that as Egg 1 does more work, Egg 2 doesn't do any less work. Ideally, we'd like to balance this a bit. As Egg 1 does more work (has survived more drops), Egg 2 should have less work to do. What might this mean?
 - \#334.   9.3     Think about how infinite loops might occur.
-- \#335.   8.7     Approach  2: To generate all permutations of abed,  pick each character (a, b, c, or d) as a starting character. Permute the remaining characters and prepend the starting character. How do you permute the remaining characters? With a recursive process that follows the same logic.
+- \#335.   8.7     Approach  2: To generate all permutations of abcd,  pick each character (a, b, c, or d) as a starting character. Permute the remaining characters and prepend the starting character. How do you permute the remaining characters? With a recursive process that follows the same logic.
 - \#336.   5.6     How would you figure out how many bits are different between two numbers?
 - \#337.   10.4    Binary search requires comparing an element to the midpoint. Getting the midpoint requires knowing the length. We don't know the length. Can we find it?
 - \#338.   8.4     Subsets that contain c will be subsets {a,   b,   c} but not {a,   b}. Can you build these subsets from the subsets of {a,   b}?
@@ -362,7 +362,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#342.   10.2    Do you even need to truly "sort"? Or is just reorganizing the list sufficient?
 - \#343.   8.11    Once you've decided to use two quarters to make change for 98 cents, you now need to figure out how many ways to make change for 48 cents using nickels, dimes, and pennies.
 - \#344.   7.5     Think about all the different functionality a system to read books online would have to support. You don't have to do everything, but you should think about making your assumptions explicit.
-- \#345    11.4    Could you build your own? What might that look like?
+- \#345.   11.4    Could you build your own? What might that look like?
 - \#346.   5.5     What is the relationship between how n looks and how n   -   1 looks? Walk through a binary subtraction.
 - \#347.   9.4     Will you need multiple passes? Multiple machines?
 - \#348.   10.4    We can find the length by using an exponential backoff. First check index 2, then 4, then 8, then 16, and so on. What will be the runtime of this algorithm?
@@ -376,7 +376,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#356.   8.7     Approach 2: You can implement this approach by having the recursive function pass back the list of the strings, and then you prepend the starting character to it. Or, you can push down a prefix to the recursive calls.
 - \#357.   6.8     Try dropping Egg 1 at bigger intervals at the beginning and then at smaller and smaller intervals. The idea is to keep the sum of Egg 1  and Egg 2's drops as constant as possible. For each additional drop that Egg  1 takes, Egg 2 takes one fewer drop. What is the right interval?
 - \#358.   5.4     Get Next: We should flip the rightmost non-trailing 0. The number 1010 would become 1110. Once we've done that, we need to flip a 1 to a 0 to make the number as small as possible, but bigger than the original number (1010). What do we do? How can we shrink the number?
-- \#359    8.1     Try memoization as a way to optimize an inefficient recursive program.
+- \#359.   8.1     Try memoization as a way to optimize an inefficient recursive program.
 - \#360.   8.2     Simplify this problem a bit by first figuring out if there's a path. Then, modify your algorithm to track the path.
 - \#361.   7.10    What is the algorithm to place the bombs around the board?
 - \#362.   11.1    Look at the parameters for printf.
@@ -394,12 +394,13 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#374.   6.8     Let X be the first drop of Egg 1. This means that Egg 2 would do X  -  1 drops if Egg 1 broke. We want to try to keep the sum of Egg 1 and Egg 2's drops as constant as possible.  If Egg 1 breaks on the second drop, then we want Egg 2 to do X -   2 drops.  If Egg 1 breaks on the third drop, then we want Egg 2 to do X - 3 drops. This keeps the sum of Egg 1 and Egg 2 fairly constant. What is X?
 - \#375.   5.4     Get Next: We can shrink the number  by moving  all the 1s to the right of the flipped  bit as far right as possible (removing a 1 in the process).
 - \#376.   10.10   Would it work well to use a binary search tree?
-- \#377.   7.10    To place the bombs randomly on the board:Think about the algorithm to shuffle a deck of cards. Can you apply a similar technique?
-- \#378.   8.13    Alternatively, we can think about the repeated choices as: Does the first box go on the stack? Does the second box go on the stack? And so on. #379.   6.5 If you fill the 5-quart jug and then use it to fill the 3-quart jug, you'll have two quarts left in the 5-quart jug. You can either keep those two quarts where  they are, or you can dump the contents of the smaller jug and pour the two quarts in there.
-- \#380.   8.11    Analyze your algorithm. Is there any repeated work? Can. you optimize this?
+- \#377.   7.10    To place the bombs randomly on the board: Think about the algorithm to shuffle a deck of cards. Can you apply a similar technique?
+- \#378.   8.13    Alternatively, we can think about the repeated choices as: Does the first box go on the stack? Does the second box go on the stack? And so on. 
+- \#379.   6.5 If you fill the 5-quart jug and then use it to fill the 3-quart jug, you'll have two quarts left in the 5-quart jug. You can either keep those two quarts where  they are, or you can dump the contents of the smaller jug and pour the two quarts in there.
+- \#380.   8.11    Analyze your algorithm. Is there any repeated work? Can you optimize this?
 - \#381.   5.8     When you're drawing a long line, you'll have entire bytes that will become a sequence of 1s. Can you set this all at once?
 - \#382.   8.10    You can implement this using depth-first search (or breadth-first  search). Each adjacent pixel of the "right" color is a connected  edge.
-- \#383.   5.5     Picture n and n -1. To subtract 1 from n, you flipped the rightmost 1 to a O and all the 0s on its right to 1s. If n & n -1 ==  0, then there are no 1s to the left of the first 1. What does that mean about n?
+- \#383.   5.5     Picture n and n -1. To subtract 1 from n, you flipped the rightmost 1 to a 0 and all the 0s on its right to 1s. If n & n -1 ==  0, then there are no 1s to the left of the first 1. What does that mean about n?
 - \#384.   5.8     What about the start and end of the line? Do you need to set those pixels individually, or can you set them all at once?
 - \#385.   9.1     Think about this as a real-world application. What are the different factors you would need to consider?
 - \#386.   7.10    How do you count the number of bombs neighboring a cell? Will you iterate through all cells?
@@ -407,7 +408,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#388.   8.2     Think again about the efficiency of your algorithm. Can you optimize it?
 - \#389.   7.9     The rotate () method should be able to run in O(1) time.
 - \#390.   5.4     Get Previous: Once you've solved Get Next, try to invert the logic for Get Previous.
-- \#391.   9.1     Does your code handle the case when x1 and x2 are in the same byte?
+- \#391.   5.8     Does your code handle the case when x1 and x2 are in the same byte?
 - \#392.   10.10   Consider a binary search tree where each node stores some additional data.
 - \#393.   11.6    Have you thought about security and reliability?            
 - \#394.   8.11    Try using  memoization.        
@@ -460,7 +461,8 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#435.   13.6    Object reflection allows you to get information about methods and fields in an object. Why might this be useful?
 - \#436.   14.6    Be particularly careful about which relationships are one-to-one  vs. one-to-many vs. many-to-many.
 - \#437.   15.3    One idea is to just not let a philosopher hold onto a chopstick if he can't get the other one.
-- \#438.   12.9    Think about tracking the number of references. What will this tell us? 15.7    Don't try to do anything fancy on the single-threaded problem. Just get something that is simple and easily readable.
+- \#438.   12.9    Think about tracking the number of references. What will this tell us? 
+- \#439.   15.7    Don't try to do anything fancy on the single-threaded problem. Just get something that is simple and easily readable.
 - \#440.   12.10   How will we free the memory?
 - \#441.   15.2    It's okay if your solution isn't totally perfect. That might not be possible. Discuss the tradeoffs of your approach.
 - \#442.   14.7    Think carefully about how you handle ties when selecting the top 10%.
@@ -488,7 +490,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#464.   13.7    Can you do this without a filter operation?
 
 
-### IV  Hints for Additional Review Problems
+### IV Hints for Additional Review Problems
 
 
 
@@ -588,7 +590,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#558.   17.11   If you had  a list of the  occurrences of each word,  then you are really looking for a pair of values within two arrays  (one  value  for each array) with the  smallest difference. This could be a fairly similar algorithm to your initial algorithm.
 - \#559.   16.22   Option #2: One  approach is to just double the  size of the  array when the  ant  wanders to an edge. How will you handle the  ant  wandering into negative coordinates, though? Arrays can't  have negative indices.
 - \#560.   16.13   Given a line (slope and  y-intercept), can you find where it intersects another line?
-- \#561.   17.26   Solution 2: One  way to think  about this is that we need to be  able  to very quickly pull a list of all documents with  some similarity  to a specific document. (Again, we should not  do this by saying "look at all documents and  quickly eliminate the  dissimilar documents". That wilI be at least  O(D²).)
+- \#561.   17.26   Solution 2: One  way to think  about this is that we need to be  able  to very quickly pull a list of all documents with  some similarity  to a specific document. (Again, we should not  do this by saying "look at all documents and  quickly eliminate the  dissimilar documents". That will be at least  O(D²).)
 - \#562.   17.16   Iterative solution: Observe that you would never skip three appointments in a row. Why would you? You would always be able to take  the  middle booking.
 - \#563.   16.14   Have you tried using a hash table?
 - \#564.   16.21   If you swap two values, a and  b, then the  sum  of A becomes sumA   -  a  +   b and the sum  of B becomes sumB   -  b   +  a. These sums need to be equal.
@@ -614,15 +616,16 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#583.   16.21   If we do the math, we are looking for a pair of values such that a   -   b  =   (sumA   - sumB)   / 2. The problem then reduces to looking for a pair of values with a particular difference.
 - \#584.   17.26   Solution 2: Try building a hash table from each word to the documents that contain this word. This will allow us to easily find all documents with some similarity to {13, 16, 21, 3}.
 - \#585.   16.5    How does a zero get into the result of n !? What does it mean?
-- \#586.   17.7    If each name  maps to a list of its alternate spellings, you might  have to update a lot of lists when  you set X and Y as synonyms.  If X is a synonym  of {A, B, C}, and Y is a synonym of{D,   E,   F}then you would need  to add {Y, D, E, F} to A's synonym list, B's synonym list, C's synonym list, and X's synonym list. Ditto for {Y, D, E, F}. Can we make this faster?
-- \#587.   17.16   Iterative solution: If you take an appointment, you can't take the next appointment, but you can take anything after that. Therefore, optimal(r₁, ..., rₙ)   =  max (r₁ + optimal(r₁₊₂, ... , rₙ), optimal(r₁₊₁, ..., rₙ)). You can solve this iteratively by working backwards. #588.   16.8    Have  you  considered negative  numbers? Does  your  solution  work  for  values  like 100,030,000?
+- \#586.   17.7    If each name  maps to a list of its alternate spellings, you might  have to update a lot of lists when  you set X and Y as synonyms.  If X is a synonym  of {A, B, C}, and Y is a synonym of {D,   E,   F} then you would need  to add {Y, D, E, F} to A's synonym list, B's synonym list, C's synonym list, and X's synonym list. Ditto for {Y, D, E, F}. Can we make this faster?
+- \#587.   17.16   Iterative solution: If you take an appointment, you can't take the next appointment, but you can take anything after that. Therefore, optimal(r₁, ..., rₙ)   =  max (r₁ + optimal(r₁₊₂, ... , rₙ), optimal(r₁₊₁, ..., rₙ)). You can solve this iteratively by working backwards. 
+- \#588.   16.8    Have  you  considered negative  numbers? Does  your  solution  work  for  values  like 100,030,000?
 - \#589.   17.15   When  you get  recursive  algorithms that  are  very inefficient try looking  for repeated subproblems.
 - \#590.   17.19   Part 1: If you have to find the missing number in O(1) space and O(N) time, then  you can do a only constant number of passes  through the array and  can store only a few variables.
 - \#591.   17.9    Look at the list of all values for 3ᵃ * 5ᵇ * 7ᶜ. Observe that each value in the list will be 3\*(some previous value). 5\*(some previous value), or 7\*(some previous value).
 - \#592.   16.21   A brute  force solution  is to just  look through all pairs of values to find one  with the right difference. This will probably  look like an outer loop through A with an inner loop through B. For each value, compute the difference and compare it to what we're looking for. Can we be more specific here, though? Given a value in A and a target  difference, do we know the exact value of the element within B we're looking for?
 - \#593.   17.14   What about using a heap  or tree of some sort?
 - \#594.   16.17   If we tracked the running sum, we should reset it as soon as the subsequence becomes negative. We would never add a negative sequence to the beginning or end of another subsequence.
-- \#595    17.24   With precomputation, you should be able to get a runtime of O(N⁴). Can you make this even faster?
+- \#595.   17.24   With precomputation, you should be able to get a runtime of O(N⁴). Can you make this even faster?
 - \#596.   17.3    Try this recursively. Suppose you had an algorithm to get a subset  of size m from n - 1 elements. Could you develop an algorithm to get a subset  of size m from n elements?
 - \#597.   16.24   Can we make this faster with a hash table?
 - \#598.   17.22   Your previous  algorithm probably  resembles a depth-first search.  Can you make  this faster?
@@ -632,7 +635,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#602.   16.21   What the brute force really does is look for a value within B which equals a  -  target. How can you more quickly find this element? What approaches help us quickly find out if an element exists within an array?
 - \#603.   17.26   Solution 2: Once you have a way of easily finding the documents similar to a particular document, you can go through and just compute  the similarity to those documents using a simple algorithm. Can you make this faster? Specifically, can you compute the similarity directly from the hash table?
 - \#604.   17.10   The majority element  will not necessarily look like the majority element  at first. It is possible, for example, to have the majority element  appear in the first element of the array and then not appear again for the next eight elements. However, in those cases, the majority element  will appear later in the array (in fact, many times later on in the array). It's not necessarily critical to continue checking a specific instance of an element for majority status once it's already looking "unlikely".
-- \#605.   17.7    lnstead, X, A, B, and C should map to the same instance of the set {X,  A,   B,  C}. Y, D, E, and F should map to the same instance of {Y,   D,   E,   F}. When we set X and Y as synonyms, we can then just copy one of the sets into the other (e.g., add {Y,   D,   E, F} to {X,  A,   B,  C}). How else do we change the hash table?
+- \#605.   17.7    Instead, X, A, B, and C should map to the same instance of the set {X,  A,   B,  C}. Y, D, E, and F should map to the same instance of {Y,   D,   E,   F}. When we set X and Y as synonyms, we can then just copy one of the sets into the other (e.g., add {Y,   D,   E, F} to {X,  A,   B,  C}). How else do we change the hash table?
 - \#606.   16.21   We can use a hash table here. We can also try sorting. Both help us locate elements more quickly.
 - \#607.   17.16   Iterative solution: If you're careful about what data you really need, you should be able to solve this in O(n)  time and O(1) additional space.
 - \#608.   17.12   Think about it this way:  If you had methods called convertLeft and convertRight (which would convert left and right subtrees to doubly linked lists), could you put those together to convert the whole tree to a doubly linked list?
@@ -655,7 +658,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#625.   17.14   If you picked an arbitrary element, how long would it take you to figure out the rank of this element (the number of elements bigger or smaller than it)?
 - \#626.   17.19   Part 2: We're now looking for two missing numbers, which we will call a and b. The approach from part 1 will tell us the sum of a and b, but it won't actually tell us a and b. What other calculations could we do? 
 - \#627.   16.22   Option  #3: You could consider keeping a hash set of all the white cells. How will you be able to print the whole grid, though?          
-- \#628.   17.1    The adding step alone would convert 1 + 1 -> 0, 1 + 0 -> 1, 0 + 1 -> 1, 0 + 0 -> 0. How  do you do this without the+ sign?         
+- \#628.   17.1    The adding step alone would convert 1 + 1 -> 0, 1 + 0 -> 1, 0 + 1 -> 1, 0 + 0 -> 0. How  do you do this without the + sign?         
 - \#629.   17.21   What role does the tallest bar in the histogram play?          
 - \#630.   16.25   What data structure would be most useful for the lookups? What data structure would be most useful to know and maintain the order of items?          
 - \#631.   16.18   Start with a brute force approach. Can you try all possibilities for a and b?           
@@ -675,7 +678,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#638.   17.8    This problem asks us to find the  longest sequence of pairs you can build  such  that both sides  of the  pair are constantly increasing. What  if you needed only one  side of the  pair to increase?
 - \#639.   16.15   Try first creating an array with the  frequency that each item  occurs.
 - \#640.   17.21   Picture the  tallest bar, and then the next  tallest bar on the  left and the next tallest bar on the  right. The water will fill the  area  between those. Can you  calculate that area?  What do you do about the rest?
-- \#641.   17.6    Is there a faster way of calculating how many twos are in a particular digit across a range of numbers? Observe that roughly 1\10th of any digit should be a 2-but only roughly. How do you make that more exact?
+- \#641.   17.6    Is there a faster way of calculating how many twos are in a particular digit across a range of numbers? Observe that roughly 1/10th of any digit should be a 2-but only roughly. How do you make that more exact?
 - \#642.   17.1    You can do the  add step with an XOR.
 - \#643.   16.18   Observe that one  of the  substrings, either a or b, must start at  the  beginning of the string. That cuts down the number of possibilities.
 - \#644.   16.24   What  if the  array were  sorted?
@@ -717,13 +720,13 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#680.   17.12   To handle whether your recursive algorithm should return the start or the end of the linked list, you could try to pass a parameter down that acts as a flag. This won't work very well, though. The problem is that when you call convert(current. left), you want to get the end of left's linked list. This way you can join the end of the linked list to current. But,  if current is someone else's right subtree, convert(current) needs to pass back the start of the linked list (which is actually the start of current. left's linked list). Really, you need both the start and end of the linked list.
 - \#681.   17.18   Consider the previously explained brute force solution. A  bottleneck is repeatedly asking for the next instance of a particular  character.  Is there a way you can optimize this? You should be able to do this in O(1) time.
 - \#682.   17.8    Try a recursive approach that just evaluates all possibilities.
-- \#683.   17.4    Once you've identified that the least significant bit is a 0 (or a 1), you can rule out all the numbers without O as the least significant bit. How is this problem different from the earlier part?
+- \#683.   17.4    Once you've identified that the least significant bit is a 0 (or a 1), you can rule out all the numbers without 0 as the least significant bit. How is this problem different from the earlier part?
 - \#684.   17.23   Start with a brute force solution. Can you try the biggest possible square first?
 - \#685.   16.18   Suppose you decide on a specific value for the "a" part of a pattern. How many possibilities are there for b?
 - \#686.   17.9    When you add x to the list of the first k values, you can add 3x, 5x, and 7x to some new list. How do you make this as optimal as possible? Would it make sense to keep multiple queues of values? Do you always need to insert 3x, 5x, and 7x? Or, perhaps sometimes you need to insert only 7x? You want to avoid seeing the same number twice.
 - \#687.   16.19   Try recursion to count the number of water cells.
 - \#688.   16.8    Consider dividing up a number into sequences of three digits.
-- \#689.   17.19   Part 2: We could do both. If we know that a  +  b  =  87 and a   *  b  =  962, then we can solve for a and b: a  = 13 and b  = 74. But this will also result in having to multiply really large numbers. The product of all the numbers could be larger than 10157• Is there a simpler calculation you can make? 
+- \#689.   17.19   Part 2: We could do both. If we know that a  +  b  =  87 and a   *  b  =  962, then we can solve for a and b: a  = 13 and b  = 74. But this will also result in having to multiply really large numbers. The product of all the numbers could be larger than 10¹⁵⁷. Is there a simpler calculation you can make? 
 - \#690.   16.11   Consider building a diving board. What are the choices you make?
 - \#691.   17.18   Can you precompute the next instance of a particular character from each index? Try using a multi-dimensional array.
 - \#692.   17.1    The carry will happen  when you are doing 1 + 1. How do you apply the carry to the number?
@@ -738,16 +741,16 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#701.   17.12   Many people get stuck at this point and aren't sure what to do. Sometimes they need the start of the linked list, and sometimes they need the end. A given node doesn't necessarily know what to return on its convert call. Sometimes the simple solution is easiest: always return both. What are some ways you could do this?
 - \#702.   17.19   Part 2: Try a sum of squares of the values.
 - \#703.   16.20   A trie might help us short-circuit. What if you stored the whole list of words in the trie? 
-- \#704.   17.7    Each connected subgraph represents a group of synonyms. To find each group, we  can do repeated breadth-first(or depth-first) searches.
+- \#704.   17.7    Each connected subgraph represents a group of synonyms. To find each group, we  can do repeated breadth-first (or depth-first) searches.
 - \#705.   17.23   Describe the runtime of the brute force solution.
 - \#706.   16.19   How can you make sure that you're not revisiting the same cells? Think about how breadth-first search or depth-first search on a graph works.
-- \#707.   16.7    When a >  b, then a - b >  0.Can you get the sign bit of a - b?
+- \#707.   16.7    When a >  b, then a - b >  0. Can you get the sign bit of a - b?
 - \#708.   16.16   In order to be able to sort MIDDLE  and have the whole array become  sorted, you need MAX(LEFT) <=  MIN(MIDDLE  and RIGHT) and MAX(LEFT and MIDDLE) <= MIN(RIGHT). 
 - \#709.   17.20   What if you used a heap? Or two heaps?
 - \#710.   16.4    If you were calling hasWon multiple times, how might your solution change?
 - \#711.   16.5    Each zero in n! corresponds to n being divisible by a factor of 10. What does that mean?
 - \#712.   17.1    You can use an AND operation to compute the carry. What do you do with it?
-- \#713.   17.5    Suppose, in this table, index i has count(A,  0->i)  =  3 and count(B,  0->i) 7. This means that there are four more Bs than As. If you find a later spot j with the same difference(count(B, 0->j)  - count(A,  0->j)), then this indicates a subarray with an equal number of As and Bs.
+- \#713.   17.5    Suppose, in this table, index i has count(A,  0->i)  =  3 and count(B,  0->i) = 7. This means that there are four more Bs than As. If you find a later spot j with the same difference(count(B, 0->j)  - count(A,  0->j)), then this indicates a subarray with an equal number of As and Bs.
 - \#714.   17.23   Can you do preprocessing to optimize this solution?
 - \#715.   16.11   Once you have a recursive algorithm, think about the runtime. Can you make this faster? How?
 - \#716.   16.1    Let diff be the difference between a and b. Can you use diff in some way? Then can you get rid of this temporary variable?
@@ -773,11 +776,11 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#736.   17.23   When you're checking  to see if a particular square is valid (all black borders), you check how many black pixels are above (or below) a coordinate and to the left (or right) of this coordinate. Can you precompute the number of black pixels above and to the left of a given cell?
 - \#737.   16.1    You could also try using XOR.
 - \#738.   17.22   What if you did a breadth-first search starting from both the source word and the destination word?
-- \#739    17.13   In real life, we would  know that some paths will not lead to a word. For example, there are no words that start with hellothisism. Can we terminate early when going down a path that we know won't work?
+- \#739.   17.13   In real life, we would  know that some paths will not lead to a word. For example, there are no words that start with hellothisism. Can we terminate early when going down a path that we know won't work?
 - \#740.   16.11   There's an alternate, clever (and very fast) solution. You can actually do this in linear time without recursion. How?
 - \#741.   17.18   Consider using a heap.
 - \#742.   17.21   You should be able to solve this in O(N) time and O(N) space.
-- \#741    17.17   Alternatively, you could insert each of the smaller strings into the trie. How would this help you solve the problem? What is the runtime?
+- \#743.   17.17   Alternatively, you could insert each of the smaller strings into the trie. How would this help you solve the problem? What is the runtime?
 - \#744.   16.20   With preprocessing, we can actually get the lookup time down to O(1).
 - \#745.   16.5    Have you considered that 25 actually accounts for two factors of 5?
 - \#746.   16.16   You should be able to solve this in O(N) time.
@@ -812,28 +815,29 @@ She lives in Palo Alto, California, with her husband, two sons, dog, and compute
 
 Amazon.com's #1 Best-Selling  Interview Book
 
-I  am  not  a  recruiter. I  am  a software  engineer.   And as such. I  know what it's like to be asked to whip up brilliant algorithms  on the spot and then write flawless code  on a whiteboard.  I've been through  this-as a candidate and as an interviewer.
+I  am  not  a  recruiter. I  am  a software  engineer.   And as such, I  know what it's like to be asked to whip up brilliant algorithms  on the spot and then write flawless code  on a whiteboard.  I've been through  this-as a candidate and as an interviewer.
 
-Cracking the Coding Interview. 6th Edition is here to help you through this process, teaching you what you need to know and enabling you to perform at your very best.  I've coached  and  interviewed   hundreds   of  software engineers. The result is this book.
+Cracking the Coding Interview, 6th Edition is here to help you through this process, teaching you what you need to know and enabling you to perform at your very best.  I've coached  and  interviewed   hundreds   of  software engineers. The result is this book.
 
-Learn how  to uncover  the  hints and hidden  details  in a question, discover how to break down a problem  into manageable chunks. develop techniques to unstick yourself when   stuck.  learn  (or re-learn)  core  computer science   concepts.   and    practice on 189 interview questions and solutions.
+Learn how  to uncover  the  hints and hidden  details  in a question, discover how to break down a problem  into manageable chunks, develop techniques to unstick yourself when   stuck,  learn  (or re-learn)  core  computer science   concepts,   and    practice on 189 interview questions and solutions.
 
-These  interview questions are  real: they  are  not  pulled out  of computer science  textbooks. They reflect  what's truly being  asked at the  top companies. so that you can be as prepared  as possible.
+These  interview questions are  real; they  are  not  pulled out  of computer science  textbooks. They reflect  what's truly being  asked at the  top companies, so that you can be as prepared  as possible.
  
 
+### WHAT'S INSIDE?
 
 - 189 programming interview questions, ranging from the basics  to the  trickiest algorithm  problems.
 - A walk-through  of how to derive each solution, so that you can learn how to get there yourself.
-- Hints on how to solve each of the 189 questions. just like what you would get  in a real interview.
+- Hints on how to solve each of the 189 questions, just like what you would get  in a real interview.
 - Five proven strategies  to tackle  algorithm  questions, so that you can solve questions you haven't seen.
-- Extensive  coverage of essential topics. such  as big 0 time. data structures. and core algorithms.
-- A "behind  the scenes· look at how top companies. like Google  and  Facebook. hire developers.
-- Techniques to prepare  for and ace  the ·soft" side of the interview: behavioral questions.
+- Extensive  coverage of essential topics, such  as big O time, data structures, and core algorithms.
+- A "behind  the scenes" look at how top companies, like Google  and  Facebook, hire developers.
+- Techniques to prepare  for and ace  the "soft" side of the interview: behavioral questions.
 - For interviewers and companies: details on what makes a good  interview question and hiring process.
 
 Gayle   Laakmann   McDowell   is the founder and CEO of CareerCup and the author of Cracking  the  PM Interview and Cracking the Tech Career.
 
-Gayle has a strong background in software development. having worked  as a software  engineer at Google. Microsoft. and  Apple. At Google. she  interviewed hundreds  of software  engineers and evaluated thousands of hiring  packets as   part   of   the hiring committee. She holds a B.S.E. and M.S.E. in computer science  from the University of Pennsylvania and an MBA from the Wharton School.
+Gayle has a strong background in software development, having worked  as a software  engineer at Google, Microsoft, and  Apple. At Google, she  interviewed hundreds  of software  engineers and evaluated thousands of hiring  packets as   part   of   the hiring committee. She holds a B.S.E. and M.S.E. in computer science  from the University of Pennsylvania and an MBA from the Wharton School.
 
 She now consults with tech companies to improve their hiring process  and with startups to prepare  them  for acquisition interviews. 
  

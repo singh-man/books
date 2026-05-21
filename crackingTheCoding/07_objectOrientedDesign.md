@@ -11,7 +11,7 @@ These questions are not so much about regurgitating design patterns as they are 
 Regardless of whether the object is a physical item or a technical task, object-oriented design questions can be tackled in similar ways. The following approach will work well for many problems.
 
 
-#### Step  1: Handle  Ambiguity
+#### Step 1: Handle Ambiguity
 
 Object-oriented design (OOD) questions are often intentionally vague in order to test whether you'll make assumptions or if you'll ask clarifying questions.  After all, a developer who just codes something without understanding what she is expected to create wastes the company's time and money, and may create much more serious issues.
 
@@ -441,7 +441,7 @@ The Jukebox class represents the body of the problem. Many of the interactions b
 5       private SongSelector ts;
 6   
 7       public Jukebox(CDPlayer cdPlayer, User user, Set<CD> cdCollection,
-8                   SongSelector ts) { .... }
+8                   SongSelector ts) { ... }
 9   
 10      public Song getCurrentSong() { return ts.getCurrentSong(); }
 11      public void setUser(User u) { this.user = u;}
@@ -923,7 +923,7 @@ A potential object-oriented design looks like the following:
 44      /* Find the matching piece in piecesToSearch and insert it at row, column. */
 45      private boolean fitNextEdge(LinkedList<Piece> piecesToSearch, int row, int col);
 46  
-48      /* Solve puzzle. */
+47      /* Solve puzzle. */
 48      public boolean solve() { ... }
 49  }
 50  
@@ -1148,7 +1148,7 @@ The Conversation class is implemented  as an abstract class, since all Conversat
 14  }
 15  
 16  public class PrivateChat extends Conversation {
-17      public PrivateChat(User user1, User user2) {...
+17      public PrivateChat(User user1, User user2) {...}
 18      public User getOtherParticipant(User primary) { ... }
 19  }
 20  
@@ -1276,7 +1276,7 @@ One possible design for Othello is below.
 13      private final int ROWS = 10;
 14      private final int COLUMNS = 10;
 15 
-15      private Game() {
+16      private Game() {
 17          board = new Board(ROWS, COLUMNS);
 18          players = new Player[2];
 19          players[0] = new Player(Color.Black);
@@ -1754,7 +1754,7 @@ A file system, in its most simplistic version, consists  of Files and Directorie
 13          lastAccessed = System.currentTimeMillis();
 14      }
 15  
-15      public boolean delete() {
+16      public boolean delete() {
 17          if (parent == null) return false;
 18          return parent.deleteEntry(this);
 19      }

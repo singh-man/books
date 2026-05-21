@@ -152,7 +152,7 @@ We can divide the array in three equal parts and allow the individual stack to g
 
 - For stack 1, we will use [0,  n/3).
 - For stack 2, we will use [n/3,  2n/3).
-- For stack 3, we will use [2n/3,  n) .
+- For stack 3, we will use [2n/3,  n).
 
 The code for this solution is below.
 
@@ -328,7 +328,7 @@ Please note that the code for this solution is far more complex than would be ap
 94          StackInfo stack = info[stackNum];
 95  
 96          /* If this stack is at its full capacity, then you need to move the next
-97           * stack over by one element. This stack can now claim the freed index */
+97           * stack over by one element. This stack can now claim the freed index. */
 98          if (stack.size >= stack.capacity) {
 99              int nextStack = (stackNum + 1) % info.length;
 100             shift(nextStack);

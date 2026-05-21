@@ -1,13 +1,13 @@
 17 Hard
 =======
 
-**17.1 Add Without Plus:** Write a function that adds two numbers. You should not use+ or any arithmetic operators.
+**17.1 Add Without Plus:** Write a function that adds two numbers. You should not use + or any arithmetic operators.
 
 SOLUTION
 
 ---
 
-Our first instinct in problems like these should be that we're going to have to work with bits. Why? Because when you take away the+ sign, what other choice do we have? Plus, that's how computers do it!
+Our first instinct in problems like these should be that we're going to have to work with bits. Why? Because when you take away the + sign, what other choice do we have? Plus, that's how computers do it!
 
 Our next thought should be to deeply understand how addition works. We can walk through an addition problem to see if we can understand something new-some pattern-and then see if we can replicate that with code.
 
@@ -81,7 +81,7 @@ Recursively, that algorithm looks like this:
 7       if (i == 0) return cards;
 8   
 9       shuffleArrayRecursively(cards, i - 1); // Shuffle earlier part
-10      int k = rand(0, i);// Pick random index to swap with
+10      int k = rand(0, i); // Pick random index to swap with
 11  
 12      /* Swap element k and i */
 13      int temp = cards[k];
@@ -149,7 +149,7 @@ This is even cleaner to  write  iteratively. In this  approach, we  initialize  
 8   
 9       /* Go through rest of original array. */
 10      for (int i = m; i < original.length; i++) {
-11          int k = rand(0, i); // Random# between 0 and i, inclusive
+11          int k = rand(0, i); // Random # between 0 and i, inclusive
 12          if (k < m) {
 13              subset[k] = original[i];
 14          }
@@ -962,7 +962,7 @@ This algorithm operates in O(n²) time. An O(n log(n)) algorithm does exist, but
 SOLUTION
 ---
 
-Let's first understand what this problem is asking for. It's asking for the kth smallest number that is in the form 3ᵃ * 5ᵇ * 7ᶜ, Let's start with a brute force way of finding this.
+Let's first understand what this problem is asking for. It's asking for the kth smallest number that is in the form 3ᵃ * 5ᵇ * 7ᶜ. Let's start with a brute force way of finding this.
 
 
 **Brute Force**
@@ -1029,7 +1029,7 @@ The question is: what is the next value in the list? The next value will be one 
 - 5 * (some previous number in list)
 - 7 * (some previous number in list)
 
-If this  doesn't immediately jump out at you, think about it this way: whatever the next value (let's call it nv) is, divide it by 3. Will that number have already appeared? As long as nv has factors of 3 in it. yes. The same can be said for dividing it by 5 and 7.
+If this  doesn't immediately jump out at you, think about it this way: whatever the next value (let's call it nv) is, divide it by 3. Will that number have already appeared? As long as nv has factors of 3 in it, yes. The same can be said for dividing it by 5 and 7.
 
 So, we know Aₖ can be expressed as (3,  5  or  7) * (some value in {A₁,..., Aₖ₋₁}). We also know that Aₖ is, by definition, the next number in the list. Therefore, Aₖ will be the smallest "new" number (a number that it's already in {A₁,   •••, Aₖ₋₁}) that can be formed by multiplying each value in the list by 3, 5 or 7.
 
@@ -1042,7 +1042,7 @@ Rather than Aₖ trying to "pull" from a previous element in the list (by multip
 - 5 * Aᵢ
 - 7 * Aᵢ
 
-We can use this thought  to plan in advance. Each time we add a number Aᵢ  to the list, we hold on to the values 3Aᵢ, 5Aᵢ, and 7Aᵢ in some sort of temporary list. To generate Aᵢ₊₁' we search through this temporary list to find the smallest value.
+We can use this thought  to plan in advance. Each time we add a number Aᵢ  to the list, we hold on to the values 3Aᵢ, 5Aᵢ, and 7Aᵢ in some sort of temporary list. To generate Aᵢ₊₁, we search through this temporary list to find the smallest value.
 
 Our code looks like this:
 ```java
@@ -1700,7 +1700,7 @@ Some interviewers like to cut to the chase and give you the specific problems. O
 
 In this case, the problem  is really about finding a way to break up a string into separate words such that as few characters as possible are "left out" of the parsing.
 
-Note that we do not attempt to "understand" the string. We could just as well parse "thisisawesome" to be "this is a we some" as we could "this  is awesome:"
+Note that we do not attempt to "understand" the string. We could just as well parse "thisisawesome" to be "this is a we some" as we could "this  is awesome."
 
 **Brute Force**
 
@@ -2153,7 +2153,7 @@ This requires minor tweaks to rank as well. We now compare the size of left and 
 90      return new PartitionResult(left - start, right - left + 1);
 91  }
 ```
-Notice the change made to smallest K too. We can't simply copy all elements less than or equal to threshold into the array. Since we have duplicates, there could be many more thank elements that are less than or equal to threshold. (We also can't just  say "okay, only copy k elements over". We could  inadvertently fill up the array early on with "equal" elements, and not leave enough space for the  smaller ones.)
+Notice the change made to smallestK too. We can't simply copy all elements less than or equal to threshold into the array. Since we have duplicates, there could be many more than k elements that are less than or equal to threshold. (We also can't just  say "okay, only copy k elements over". We could  inadvertently fill up the array early on with "equal" elements, and not leave enough space for the  smaller ones.)
 
 The solution for this is fairly simple: only copy over the smaller  elements first, then fill up the  array with equal elements at the end.
 
@@ -2236,7 +2236,7 @@ The code below implements this algorithm:
 ```
 Note that  in this solution we have performed a small optimization. We use a dynamic programming/ memoization approach to cache the results between calls. This way, if we repeatedly need to check if there's any way to build "testingtester", we'll only have to compute it once.
 
-A boolean flag isOriginalWord is used to complete the above optimization. The method canBuildWord is called for the original word and for each substring, and its first step is to check the cache for a previously calculated result. However, for the original words, we have a problem: map is initialized to true for them, but we don' t want to return true (since a word cannot  be composed solely of itself). Therefore, for the original word, we simply bypass this check using the isOriginalWord flag.
+A boolean flag isOriginalWord is used to complete the above optimization. The method canBuildWord is called for the original word and for each substring, and its first step is to check the cache for a previously calculated result. However, for the original words, we have a problem: map is initialized to true for them, but we don't want to return true (since a word cannot  be composed solely of itself). Therefore, for the original word, we simply bypass this check using the isOriginalWord flag.
 
 **17.16  The  Masseuse:** A popular masseuse  receives a sequence  of back-to-back appointment requests and is debating  which ones to accept. She needs a 15-minute break between  appointments and therefore  she cannot  accept  any adjacent  requests. Given a sequence  of back-to-back appointment requests (all multiples of 15 minutes, none overlap, and none can be moved), find the optimal (highest total booked minutes) set the masseuse can honor. Return the number of minutes.
 
@@ -2362,21 +2362,21 @@ The first gives us 60 minutes, best(5)  =  60.
     - take r₄  =  45 and merge it with best(6) =  45, or:
     - take best(5) = 60.
 
-The first gives us 90 minutes, best(4) =  90.
+The first gives us 90 minutes, best(4) = 90.
 
-- best(3): What's the best option for {r₃ =  75, ...}? We can either:
+- best(3): What's the best option for {r₃ = 75, ...}? We can either:
     - take r₃ =  75 and merge it with best ( 5)   =  60, or:
     - take best(4) =  90.
 
 The first gives us 135 minutes, best(3)  =  135. 
 
-- best(2):What's the best option for {r₂ =  60,   ...}? We can either: 
+- best(2): What's the best option for {r₂ = 60,   ...}? We can either: 
     - take r₂ =  60 and merge it with best(4) =  90, or:
     - take best(3) =  135.
 
 The first gives us 150 minutes, best(2)  =  150. 
 
-- best(1): What's the best option for {r₁ =  15,   ...}? We can either: 
+- best(1): What's the best option for {r₁ = 15,   ...}? We can either: 
     - take r₁ = 15 and merge it with best(3) = 135, or:
     - take best(2) = 150. 
 
@@ -2436,7 +2436,7 @@ Why did we look backward? It's a common technique in many problems to walk backw
 However, we can walk forward if we want. This is easier for some people to think about, and harder for others. In this case, rather than asking "What's the best set that starts with a[i]?"; we would ask "What's the best set that ends with a[i]?"
 
 
-**17.17  Multi Search:**  Given a string band an array of smaller strings T, design a method to search b for each small string in T.
+**17.17  Multi Search:**  Given a string b and an array of smaller strings T, design a method to search b for each small string in T.
 
 SOLUTION
 
@@ -2449,7 +2449,7 @@ Let's start with an example:
 
 Note that in our example, we made sure to have some strings (like "is") that appear multiple times in b.
 
-**Solution#1**
+**Solution #1**
 
 The naive solution is reasonably straightforward. Just search through the bigger string for each instance of the smaller string.
 ```java
@@ -2458,7 +2458,7 @@ The naive solution is reasonably straightforward. Just search through the bigger
 3                   new HashMapList<String, Integer>();
 4       for (String small : smalls) {
 5           ArrayList<Integer> locations = search(big, small);
-5           lookup.put(small, locations);
+6           lookup.put(small, locations);
 7       }
 8       return lookup;
 9   }
@@ -2487,7 +2487,7 @@ The naive solution is reasonably straightforward. Just search through the bigger
 32  /* HashMapList<String, Integer> is a HashMap that maps from Strings to
 33   * ArrayList<Integer>. See appendix for implementation. */
 ```
-We could have also used a substring and equals function, instead of writing isAtLocation. This is slightly faster (though not in terms of big 0) because it doesn't require creating a bunch of substrings.
+We could have also used a substring and equals function, instead of writing isAtLocation. This is slightly faster (though not in terms of big O) because it doesn't require creating a bunch of substrings.
 
 This will take O(kbt) time, where k is the length of the longest string in T, b is the length of the bigger string, and t is the number of smaller strings within T.
 
@@ -2518,6 +2518,7 @@ Then, all you need to do is search in the suffix tree for each string in T. Note
 13      }
 14      return lookup;
 15  }
+16
 17  Trie createTrieFromString(String s) {
 18      Trie trie = new Trie();
 19      for (int i = 0; i < s.length(); i++) {
@@ -2660,7 +2661,7 @@ The code below implements this algorithm.
 17      for (String s : smalls) {
 18          if (s.length() <= maxLen) {
 19              tree.insertString(s, 0);
-26          }
+20          }
 21      }
 22      return tree;
 23  }
@@ -2718,7 +2719,7 @@ Let's use the example from the problem to walk through this. We'll call the smal
 
 The slow, "easy" way to do this is to iterate through bigArray and do repeated small passes through it.
 
-At each index in bigArray, scan forward to find the next occurrence of each element in smallArray.The largest of these next occurrences will tell us the shortest subarray that starts at that index. (We'll call this concept "closure". That is, the closure is the element that "closes" a complete subarray starting at that index. For example, the closure of index 3-which has value 0-in the example is index 9.)
+At each index in bigArray, scan forward to find the next occurrence of each element in smallArray. The largest of these next occurrences will tell us the shortest subarray that starts at that index. (We'll call this concept "closure". That is, the closure is the element that "closes" a complete subarray starting at that index. For example, the closure of index 3-which has value 0-in the example is index 9.)
 
 By finding the closures for each index in the array, we can find the shortest subarray overall.
 ```java
@@ -3001,7 +3002,7 @@ To get the list that the minimum element came from, we'll need to use a HeapNode
 13      for (int s : small) {
 14          Queue<Integer> queue = new LinkedList<Integer>();
 15          itemLocations.put(s, queue);
-15      }
+16      }
 17
 18      /* Walk through big array, adding the item locations to hash map */
 19      for (int i = 0; i < big.length; i++) {
@@ -3216,7 +3217,7 @@ Implementing this is now somewhat straightforward.
 40  }
 ```
 
-You might notice that the quadratic formula usually gives us two answers (see the+ or - part), yet in our code, we only use the (+) result. We never checked the (-) answer. Why is that?
+You might notice that the quadratic formula usually gives us two answers (see the + or - part), yet in our code, we only use the (+) result. We never checked the (-) answer. Why is that?
 
 The existence of the "alternate" solution doesn't mean that one is the correct solution and one is "fake". It means that there are exactly two values for x which will correctly fulfill our equation: 2x² - 2sx  + (s² -t) = 0.
 
@@ -3518,7 +3519,7 @@ This algorithm takes O(N) time. Since we have to look at every bar, we cannot do
 
 **Solution #3 (Optimized & Simplified)**
 
-While we can't make the solution faster in terms of big 0, we can make it much, much simpler. Let's look at an example again in light of what we've just learned about potential algorithms.
+While we can't make the solution faster in terms of big O, we can make it much, much simpler. Let's look at an example again in light of what we've just learned about potential algorithms.
 
 
 ![](media/17_21_5.JPG)
@@ -3617,7 +3618,7 @@ If we wanted to find the shortest path, we would want to use breadth-first searc
 3       HashSet<String> visited = new HashSet<String>();
 4       return transform(visited, start, stop, dict);
 5   }
-5
+6
 7   HashSet<String> setupDictionary(String[] words) {
 8       HashSet<String> hash = new HashSet<String>();
 9       for (String word : words) {
@@ -4258,7 +4259,7 @@ Our full code looks like this:
 7           int[] partialSum = new int[colCount];
 8
 9           for (int rowEnd = rowStart; rowEnd < rowCount; rowEnd++) {
-18              /* Add values at row rowEnd. */
+10              /* Add values at row rowEnd. */
 11              for (int i = 0; i < colCount; i++) {
 12                  partialSum[i] += matrix[rowEnd][i];
 13              }
@@ -4322,7 +4323,7 @@ Next, observe that  we're looking  for the  largest  rectangle. What  is the  la
 2  for z = maxRectangle to 1 {
 3       for each pair of numbers (i, j) where i*j = z {
 4           /* attempt to make rectangle. return if successful. */
-s       }
+5       }
 6   }
 ```
 By iterating from the biggest possible  rectangle to the smallest, we ensure  that the first valid rectangle we find will be the largest possible one.
@@ -4358,7 +4359,7 @@ The maxRectangle method is the "main" part  of our code. It starts  with the  bi
 2   int maxSize = maxWordLength * maxWordLength;
 3   for (int z = maxSize; z > 0; z--) { // start from biggest area
 4       for (int i = 1; i <= maxWordLength; i++) {
-s           if (z % i == 0) {
+5           if (z % i == 0) {
 6               int j = z / i;
 7               if (j <= maxWordLength) {
 8                   /* Create rectangle of length i and height j. Note that i * j z. */
@@ -4391,7 +4392,7 @@ The makePartialRectangle method is where the action happens. It is passed in the
 
 Otherwise, we check to see if the columns form valid prefixes.  If they do not, then we immediately break since there is no way to build a valid rectangle off of this partial one.
 
-But, if everything is okay so far, and all the columns are valid prefixes of words, then we search through all the words of the right length, append each to the current rectangle, and recursively try to build a rectangle off of{current rectangle  with new word  appended}.
+But, if everything is okay so far, and all the columns are valid prefixes of words, then we search through all the words of the right length, append each to the current rectangle, and recursively try to build a rectangle off of {current rectangle  with new word  appended}.
 
 ```java
 1   Rectangle makePartialRectangle(int l, int h, Rectangle rectangle) {

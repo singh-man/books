@@ -738,7 +738,7 @@ The second call to minProduct(4, 23) is unaware of the prior call, and so it rep
 
 We can still make  this a bit faster.
 
-**Solution#3**
+**Solution #3**
 
 One  thing we might notice when we look at this code is that  a call to minProduct on an even number is much faster than one on an odd  number. For example, if we call minProduct(30, 35), then we'll just do minProduct(15, 35) and double the result.  However,  if we do minProduct(31, 35), then we'll need to call minProduct(15, 35) and minProduct(16, 35).
 
@@ -1503,9 +1503,9 @@ SOLUTION
 
 To tackle this problem, we need to recognize the relationship between the different subproblems.
 
-**Solution#1**
+**Solution #1**
 
-Imagine we had the following boxes: b₁, b₂,•••, bₙ. The biggest stack that we can build with all the boxes equals the max of (biggest stack with bottom b₁, biggest stack with bottom b₂ ,   •••, biggest stack with bottom bₙ). That is, if we experimented with each box as a bottom and built the biggest stack possible with each, we would find the biggest stack possible.
+Imagine we had the following boxes: b₁, b₂,•••, bₙ. The biggest stack that we can build with all the boxes equals the max of (biggest stack with bottom b₁, biggest stack with bottom b₂ ,•••, biggest stack with bottom bₙ). That is, if we experimented with each box as a bottom and built the biggest stack possible with each, we would find the biggest stack possible.
 
 But, how would we find the biggest stack with a particular bottom? Essentially the same way. We experiment with different boxes for the second level, and so on for each level.
 

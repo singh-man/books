@@ -8,7 +8,7 @@ SOLUTION
 
 ---
 
-This is a classic interview problem, and it's a reasonably straightforward one. We'll walk through this using a₀ to indicate the original value of a and b₀ to indicate the original value of b. We'll also use diff to indicate the value of a₀  - b₀
+This is a classic interview problem, and it's a reasonably straightforward one. We'll walk through this using a₀ to indicate the original value of a and b₀ to indicate the original value of b. We'll also use diff to indicate the value of a₀  - b₀.
 
 Let's picture these on a number line for the case where a > b.
 
@@ -268,7 +268,7 @@ There are only 3⁹ or about 20,000, tic-tac-toe boards (assuming a 3x3 board). 
 2       return winnerHashtable[board];
 3   }
 ```
-To convert a board (represented by a char array) to an int, we can use what is essentially a "base 3" representation. Each board is represented as 3°v₀ + 3¹v₁ + 3²v₂ + ... + 3⁸v₈ , where v₁ is a 0 if the space is empty, a 1 if it's a "blue spot" and a 2 if it's a "red spot".
+To convert a board (represented by a char array) to an int, we can use what is essentially a "base 3" representation. Each board is represented as 3⁰v₀ + 3¹v₁ + 3²v₂ + ... + 3⁸v₈ , where vᵢ is a 0 if the space is empty, a 1 if it's a "blue spot" and a 2 if it's a "red spot".
 ```java
 1   enum Piece { Empty, Red, Blue };
 2   
@@ -597,7 +597,7 @@ Another way of doing it is, of course,  to actually build an iterator.
 All of this is potentially  overkill, but it's worth discussing the options with your interviewer. The point of this problem is to assess your understanding of how to code in a clean and maintainable way.
 
 
-**16.5     Factorial zeros:** Write an algorithm which computes the number of trailing zeros in n factorial.
+**16.5     Factorial Zeros:** Write an algorithm which computes the number of trailing zeros in n factorial.
 
 SOLUTION
 
@@ -647,7 +647,7 @@ This isn't bad, but we can make it a little more efficient by directly counting 
 To count how many multiples of mare in n, we can just divide n by m.
 ```java
 1   int countFactZeros(int num) {
-2       lnt count = 0;
+2       int count = 0;
 3       if (num < 0) {
 4           return -1;
 5       }
@@ -933,7 +933,7 @@ How can we phrase subtraction in terms of addition? This one is pretty straightf
 ```
 The negation of the value k is implemented by adding -1 k times. Observe that this will take O(k) time.
 
-If optimizing is something  we value here, we can try to get a to zero faster. (For this explanation, we'll assume that a is positive.) To do this, we can first reduce a by 1, then 2, then 4, then 8, and so on. We'll call this value de1ta. We want a to reach exactly zero. When reducing a by the next de1ta would change the sign of a, we reset delta back to 1 and repeat the process.
+If optimizing is something  we value here, we can try to get a to zero faster. (For this explanation, we'll assume that a is positive.) To do this, we can first reduce a by 1, then 2, then 4, then 8, and so on. We'll call this value delta. We want a to reach exactly zero. When reducing a by the next delta would change the sign of a, we reset delta back to 1 and repeat the process.
 
 For example:
 ```
@@ -984,7 +984,7 @@ If we apply this to the above expression, we get:
 2. O(log  a + (log a - log 2) + (log a - log 4) + (log a - log 8) +...
 3. O((log a) * (log a) - (log 2 + log 4 + log 8 + ... + log a))  // O(log  a) terms
 4. O((log a) * (log a) - (1 + 2 + 3 + ... + log a))  // computing the values of logs
-5. O((log a) * (log a) - ((log a)(1 + log a))/2  // apply equation for sum of 1 through k
+5. O((log a) * (log a) - ((log a)(1 + log a))/2)  // apply equation for sum of 1 through k
 6. O((log a)²)  // drop second term from step 5
 
 Therefore, the runtime is O((log a)²).
@@ -1069,7 +1069,8 @@ The code below implements this algorithm.
 In tackling this problem,  you should be aware of the following:
 
 - A logical  approach of going  back  to  what  exactly  multiplication and  division do  comes  in handy. Remember that. All (good) interview problems can be approached in a logical, methodical way!
-- The interviewer is looking for this sort of logical work-your-way-through-it approach. - This is a great problem to demonstrate your ability to write clean code-specifically, to show your ability to reuse code. For example, if you were writing this solution  and didn't put negate in its own method, you should move it into its own method once you see that you'll use it multiple times.
+- The interviewer is looking for this sort of logical work-your-way-through-it approach. 
+- This is a great problem to demonstrate your ability to write clean code-specifically, to show your ability to reuse code. For example, if you were writing this solution  and didn't put negate in its own method, you should move it into its own method once you see that you'll use it multiple times.
 - Be careful about making assumptions while coding.  Don't assume that  the numbers are all positive or that a is bigger than b.
 
 
@@ -1697,7 +1698,7 @@ You, the user, are trying to guess the solution. You might, for example, guess Y
 
 When you guess the correct color for the correct slot, you get a "hit". If you guess a color that exists but is in the wrong slot, you get a "pseudo-hit". Note that a slot that is a hit can never count as a pseudo-hit.
 
-For example, if the actual solution is RGBY and you guess GGRR, you have one hit and one pseudo-hit
+For example, if the actual solution is RGBY and you guess GGRR, you have one hit and one pseudo-hit.
 
 Write a method that, given a guess and a solution, returns the number of hits and pseudo-hits.
 
