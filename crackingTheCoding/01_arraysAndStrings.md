@@ -101,7 +101,7 @@ StringBuilder can help you avoid this problem. StringBuilder simply creates a re
 
 A good exercise to practice strings, arrays, and general data structures is to implement your own version of StringBuilder, HashTable and ArrayList.
 
-**Additional Reading:** HashTable Collision Resolution (pg 636), Rabin-Karp Substring Search (pg 636).
+**Additional Reading:** Hash Table Collision Resolution (pg 636), Rabin-Karp Substring Search (pg 636).
 
 ---
 
