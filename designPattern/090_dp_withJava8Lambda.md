@@ -174,7 +174,7 @@ public class ManFuncUnderstanding {
 
 |Functional Interface | Standard Method Signature | Matching GoF Design Patterns | Behavioral Mapping & Reason | 
 |---|---|---|---|
-|Function<T, R> | R apply(T t) | Strategy, State, Adapter, Decorator, Transforming/Mapping Patterns, Chain of Responsibility, Template Method, Proxy, Flyweight, Bridge, Facade, Composite | Takes an input payload, key, index, or abstraction layer (input T), processes or delegates it, and **returns a result** (output R).| 
+|Function<T, R> | R apply(T t) | Strategy, State, Adapter, Decorator, Transforming/Mapping Patterns, Chain of Responsibility, Template Method, Proxy, Flyweight, Bridge, Facade, Composite | Takes an input payload, key, index, or abstraction layer (input `T`), processes or delegates it, and **returns a result** (output `R`).| 
 |Consumer | void accept(T t) | Command, Observer, Visitor, Mediator, Memento | Takes an input state, target, or event payload and **performs a terminal action or mutation** without returning data.| 
 |Supplier | T get() | Factory Method, Abstract Factory, Prototype, Singleton, Builder | Takes no structural input arguments and strictly **instantiates, clones, or retrieves** an object instance.|
 
@@ -182,29 +182,29 @@ public class ManFuncUnderstanding {
 
 | GoF Design Pattern | Function<T, R><br>`R apply(T)` | Consumer<br>`void accept(T)` | Supplier<br>`R get()` | Implementation Context & *overlap* Logic |
 |---|---|---|---|---|
-| **Strategy** | Primary | *overlap* | — | **Primary**: Computes a result from data.<br>*overlap*: If it just processes data with a void side-effect. |
-| **State** | Primary | *overlap* | — | **Primary**: Transitions state and returns a response.<br>*overlap*: If transitioning state yields no output (void). |
-| **Command** | *overlap* | Primary | — | **Primary**: Executes an action with void return.<br>*overlap*: If the command calculates and returns a result. |
-| **Iterator** | *overlap* | — | Primary | **Primary**: Natively supplies the next element (next()).<br>*overlap*: As a Function if passing a filter predicate. |
-| **Template Method** | Primary | *overlap* | *overlap* | **Primary**: Processes an algorithm skeleton.<br>*overlap*: Can act as a Consumer (side-effects) or Supplier (lifecycles). |
-| **Chain of Responsibility** | Primary | *overlap* | — | **Primary**: Passes a request down a line to get a response.<br>*overlap*: Acts as a Consumer if logging or auditing text without return. |
-| **Flyweight** | Primary | — | *overlap* | **Primary**: Takes an extrinsic key (T) and returns an object (R).<br>*overlap*: Acts as a Supplier if retrieving a default shared instance. |
-| **Proxy** | Primary | *overlap* | — | **Primary**: Forwards calls and intercepts results.<br>*overlap*: Acts as a Consumer if proxying a void logging target. |
-| **Adapter** | Primary | *overlap* | — | **Primary**: Maps Type A into Type B interface.<br>*overlap*: Maps an event handler parameter to a void signature. |
-| **Decorator** | Primary | *overlap* | — | **Primary**: Wraps an object to add behavior and return it.<br>*overlap*: Wraps a void method (e.g., adding encryption to a write stream). |
-| **Facade** | Primary | *overlap* | — | **Primary**: Simplifies a subsystem request into a consolidated response.<br>*overlap*: Executes a complex batch of fire-and-forget void scripts. |
-| **Bridge** | Primary | *overlap* | — | **Primary**: Delegates a functional query to an implementation tier.<br>*overlap*: Delegates a void state mutation to the underlying tier. |
-| **Composite** | Primary | *overlap* | — | **Primary**: Evaluates a tree structure to return a unified calculation.<br>*overlap*: Traverses a tree to execute a void operation on every node. |
-| **Observer** | - | Primary | - | Primary: Event handling inherently ingests data for void notification. |
+| **Strategy** | Primary | *overlap* | — | **Primary**: Computes a result from data.<br>*overlap*: If it just processes data with a `void` side-effect. |
+| **State** | Primary | *overlap* | — | **Primary**: Transitions state and returns a response.<br>*overlap*: If transitioning state yields no output (`void`). |
+| **Command** | *overlap* | Primary | — | **Primary**: Executes an action with `void` return.<br>*overlap*: If the command calculates and returns a result. |
+| **Iterator** | *overlap* | — | Primary | **Primary**: Natively supplies the next element (`next()`).<br>*overlap*: As a `Function` if passing a filter predicate. |
+| **Template Method** | Primary | *overlap* | *overlap* | **Primary**: Processes an algorithm skeleton.<br>*overlap*: Can act as a `Consumer` (side-effects) or `Supplier` (lifecycles). |
+| **Chain of Responsibility** | Primary | *overlap* | — | **Primary**: Passes a request down a line to get a response.<br>*overlap*: Acts as a `Consumer` if logging or auditing text without return. |
+| **Flyweight** | Primary | — | *overlap* | **Primary**: Takes an extrinsic key (`T`) and returns an object (`R`).<br>*overlap*: Acts as a Supplier if retrieving a default shared instance. |
+| **Proxy** | Primary | *overlap* | — | **Primary**: Forwards calls and intercepts results.<br>*overlap*: Acts as a `Consumer` if proxying a `void` logging target. |
+| **Adapter** | Primary | *overlap* | — | **Primary**: Maps Type A into Type B interface.<br>*overlap*: Maps an event handler parameter to a `void` signature. |
+| **Decorator** | Primary | *overlap* | — | **Primary**: Wraps an object to add behavior and return it.<br>*overlap*: Wraps a `void` method (e.g., adding encryption to a write stream). |
+| **Facade** | Primary | *overlap* | — | **Primary**: Simplifies a subsystem request into a consolidated response.<br>*overlap*: Executes a complex batch of fire-and-forget `void` scripts. |
+| **Bridge** | Primary | *overlap* | — | **Primary**: Delegates a functional query to an implementation tier.<br>*overlap*: Delegates a `void` state mutation to the underlying tier. |
+| **Composite** | Primary | *overlap* | — | **Primary**: Evaluates a tree structure to return a unified calculation.<br>*overlap*: Traverses a tree to execute a `void` operation on every node. |
+| **Observer** | - | Primary | - | Primary: Event handling inherently ingests data for `void` notification. |
 | **Visitor** | - | Primary | - | Primary: Performs terminal operations across an object structure. |
-| **Mediator** | - | Primary | - | Primary: Loose coupling coordinator executing void notifications. |
+| **Mediator** | - | Primary | - | Primary: Loose coupling coordinator executing `void` notifications. |
 | **Memento** | - | Primary | - | Primary: Object strictly ingests a snapshot token to restore state. |
 | **Factory Method** | - | - | Primary | Primary: Instantiates an object without inputs. |
 | **Abstract Factory** | - | - | Primary | Primary: Instantiates family objects without inputs. |
 | **Builder** | - | - | Primary | Primary: Final step (`.build()`) acts as a pure object supplier. |
 | **Prototype** | - | - | Primary | Primary: Natively clones an object template to supply a fresh instance. |
 | **Singleton** | - | - | Primary | Primary: Universally supplies a shared single global instance. |
-| **Interpreter** | Primary | - | - | Primary: Natively parses a syntax tree context (T) to return evaluation (R). |
+| **Interpreter** | Primary | - | - | Primary: Natively parses a syntax tree context (`T`) to return evaluation (`R`). |
 
 #### Key Architectural Takeaways on Overlaps
 
