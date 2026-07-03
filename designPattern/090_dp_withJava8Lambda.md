@@ -180,21 +180,21 @@ public class ManFuncUnderstanding {
 
 #### And More
 
-| GoF Design Pattern | Function<T, R><br>`R apply(T)` | Consumer<br>`void accept(T)` | Supplier<br>`R get()` | Implementation Context & *overlap* Logic |
+| GoF Design Pattern | Function<T, R><br>`R apply(T)` | Consumer<br>`void accept(T)` | Supplier<br>`R get()` | Implementation Context & *Overlap* Logic |
 |---|---|---|---|---|
-| **Strategy** | Primary | *overlap* | — | **Primary**: Computes a result from data.<br>*overlap*: If it just processes data with a `void` side-effect. |
-| **State** | Primary | *overlap* | — | **Primary**: Transitions state and returns a response.<br>*overlap*: If transitioning state yields no output (`void`). |
-| **Command** | *overlap* | Primary | — | **Primary**: Executes an action with `void` return.<br>*overlap*: If the command calculates and returns a result. |
-| **Iterator** | *overlap* | — | Primary | **Primary**: Natively supplies the next element (`next()`).<br>*overlap*: As a `Function` if passing a filter predicate. |
-| **Template Method** | Primary | *overlap* | *overlap* | **Primary**: Processes an algorithm skeleton.<br>*overlap*: Can act as a `Consumer` (side-effects) or `Supplier` (lifecycles). |
-| **Chain of Responsibility** | Primary | *overlap* | — | **Primary**: Passes a request down a line to get a response.<br>*overlap*: Acts as a `Consumer` if logging or auditing text without return. |
-| **Flyweight** | Primary | — | *overlap* | **Primary**: Takes an extrinsic key (`T`) and returns an object (`R`).<br>*overlap*: Acts as a Supplier if retrieving a default shared instance. |
-| **Proxy** | Primary | *overlap* | — | **Primary**: Forwards calls and intercepts results.<br>*overlap*: Acts as a `Consumer` if proxying a `void` logging target. |
-| **Adapter** | Primary | *overlap* | — | **Primary**: Maps Type A into Type B interface.<br>*overlap*: Maps an event handler parameter to a `void` signature. |
-| **Decorator** | Primary | *overlap* | — | **Primary**: Wraps an object to add behavior and return it.<br>*overlap*: Wraps a `void` method (e.g., adding encryption to a write stream). |
-| **Facade** | Primary | *overlap* | — | **Primary**: Simplifies a subsystem request into a consolidated response.<br>*overlap*: Executes a complex batch of fire-and-forget `void` scripts. |
-| **Bridge** | Primary | *overlap* | — | **Primary**: Delegates a functional query to an implementation tier.<br>*overlap*: Delegates a `void` state mutation to the underlying tier. |
-| **Composite** | Primary | *overlap* | — | **Primary**: Evaluates a tree structure to return a unified calculation.<br>*overlap*: Traverses a tree to execute a `void` operation on every node. |
+| **Strategy** | Primary | *Overlap* | — | **Primary**: Computes a result from data.<br>*Overlap*: If it just processes data with a `void` side-effect. |
+| **State** | Primary | *Overlap* | — | **Primary**: Transitions state and returns a response.<br>*Overlap*: If transitioning state yields no output (`void`). |
+| **Command** | *Overlap* | Primary | — | **Primary**: Executes an action with `void` return.<br>*Overlap*: If the command calculates and returns a result. |
+| **Iterator** | *Overlap* | — | Primary | **Primary**: Natively supplies the next element (`next()`).<br>*Overlap*: As a `Function` if passing a filter predicate. |
+| **Template Method** | Primary | *Overlap* | *Overlap* | **Primary**: Processes an algorithm skeleton.<br>*Overlap*: Can act as a `Consumer` (side-effects) or `Supplier` (lifecycles). |
+| **Chain of Responsibility** | Primary | *Overlap* | — | **Primary**: Passes a request down a line to get a response.<br>*Overlap*: Acts as a `Consumer` if logging or auditing text without return. |
+| **Flyweight** | Primary | — | *Overlap* | **Primary**: Takes an extrinsic key (`T`) and returns an object (`R`).<br>*Overlap*: Acts as a Supplier if retrieving a default shared instance. |
+| **Proxy** | Primary | *Overlap* | — | **Primary**: Forwards calls and intercepts results.<br>*Overlap*: Acts as a `Consumer` if proxying a `void` logging target. |
+| **Adapter** | Primary | *Overlap* | — | **Primary**: Maps Type A into Type B interface.<br>*Overlap*: Maps an event handler parameter to a `void` signature. |
+| **Decorator** | Primary | *Overlap* | — | **Primary**: Wraps an object to add behavior and return it.<br>*Overlap*: Wraps a `void` method (e.g., adding encryption to a write stream). |
+| **Facade** | Primary | *Overlap* | — | **Primary**: Simplifies a subsystem request into a consolidated response.<br>*Overlap*: Executes a complex batch of fire-and-forget `void` scripts. |
+| **Bridge** | Primary | *Overlap* | — | **Primary**: Delegates a functional query to an implementation tier.<br>*Overlap*: Delegates a `void` state mutation to the underlying tier. |
+| **Composite** | Primary | *Overlap* | — | **Primary**: Evaluates a tree structure to return a unified calculation.<br>*Overlap*: Traverses a tree to execute a `void` operation on every node. |
 | **Observer** | - | Primary | - | Primary: Event handling inherently ingests data for `void` notification. |
 | **Visitor** | - | Primary | - | Primary: Performs terminal operations across an object structure. |
 | **Mediator** | - | Primary | - | Primary: Loose coupling coordinator executing `void` notifications. |
@@ -208,6 +208,6 @@ public class ManFuncUnderstanding {
 
 #### Key Architectural Takeaways on Overlaps
 
-* **The Creational Isolation**: Creational patterns (**Factory, Builder, Prototype, Singleton**) almost never overlap into Function or Consumer because they naturally take no configuration structure at execution time and simply yield a brand-new instance (Supplier).
-* **Structural Duality (Function vs. Consumer)**: Structural patterns (**Proxy, Decorator, Facade, Bridge, Composite**) are chameleons. They echo whatever the wrapped interface dictates. If the underlying code returns a value, they are Functions. If the underlying code modifies state and returns void, they change into Consumers.
-* **Behavioral Divergence**: Behavioral patterns (**Strategy, State, Command**) are defined by whether they adhere to **CQRS** (Command Query Responsibility Segregation). If they ask for information (Query), they map to Function. If they change system state (Command), they map to Consumer.
+* **The Creational Isolation**: Creational patterns (**Factory, Builder, Prototype, Singleton**) almost never overlap into `Function` or `Consumer` because they naturally take no configuration structure at execution time and simply yield a brand-new instance (`Supplier`).
+* **Structural Duality (Function vs. Consumer)**: Structural patterns (**Proxy, Decorator, Facade, Bridge, Composite**) are chameleons. They echo whatever the wrapped interface dictates. If the underlying code returns a value, they are `Functions`. If the underlying code modifies state and returns `void`, they change into `Consumers`.
+* **Behavioral Divergence**: Behavioral patterns (**Strategy, State, Command**) are defined by whether they adhere to **CQRS** (Command Query Responsibility Segregation). If they ask for information (Query), they map to `Function`. If they change system state (Command), they map to `Consumer`.
