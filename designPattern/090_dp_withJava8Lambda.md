@@ -195,7 +195,16 @@ public class ManFuncUnderstanding {
 | **Facade** | Primary | *overlap* | — | **Primary**: Simplifies a subsystem request into a consolidated response.<br>*overlap*: Executes a complex batch of fire-and-forget void scripts. |
 | **Bridge** | Primary | *overlap* | — | **Primary**: Delegates a functional query to an implementation tier.<br>*overlap*: Delegates a void state mutation to the underlying tier. |
 | **Composite** | Primary | *overlap* | — | **Primary**: Evaluates a tree structure to return a unified calculation.<br>*overlap*: Traverses a tree to execute a void operation on every node. |
-| **Observer** | — | Primary | — | *Note: Text cut off in original snippet.* |
+| **Observer** | - | Primary | - | Primary: Event handling inherently ingests data for void notification. |
+| **Visitor** | - | Primary | - | Primary: Performs terminal operations across an object structure. |
+| **Mediator** | - | Primary | - | Primary: Loose coupling coordinator executing void notifications. |
+| **Memento** | - | Primary | - | Primary: Object strictly ingests a snapshot token to restore state. |
+| **Factory Method** | - | - | Primary | Primary: Instantiates an object without inputs. |
+| **Abstract Factory** | - | - | Primary | Primary: Instantiates family objects without inputs. |
+| **Builder** | - | - | Primary | Primary: Final step (`.build()`) acts as a pure object supplier. |
+| **Prototype** | - | - | Primary | Primary: Natively clones an object template to supply a fresh instance. |
+| **Singleton** | - | - | Primary | Primary: Universally supplies a shared single global instance. |
+| **Interpreter** | Primary | - | - | Primary: Natively parses a syntax tree context (T) to return evaluation (R). |
 
 #### Key Architectural Takeaways on Overlaps
 
