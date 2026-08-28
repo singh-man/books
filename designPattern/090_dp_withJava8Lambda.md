@@ -1,61 +1,63 @@
 ## Design Patterns with Java 8’s Lambdas
 
-> Hint: Any design pattern which is based on one single function. Although exceptions exist with a redesign (e.g. Template, Visitor)
+> Hint: This applies to any design pattern based on a single function. Exceptions exist when the pattern is redesigned (e.g., Template Method and Visitor).
 
-> Its better if API consumer defines the API structure.
+> It’s better if the API consumer defines the API structure.
 
-> Good: https://github.com/mariofusco/from-gof-to-lambda/tree/master
+**Reference:** <https://github.com/mariofusco/from-gof-to-lambda/tree/master>
 
-*Funtion chaining works if passed argument is only 1 i.e. ```public arg2 work(arg1)``` can be chained but ```public arg3 work(arg1, arg2)``` can't be chained.* Rember Function<T, R>.
+*Function chaining works when the passed argument has only one input, for example, `public arg2 work(arg1)`. A function such as `public arg3 work(arg1, arg2)` cannot be chained in the same way. Remember `Function<T, R>`.*
 
-|Name|SAM (Single Abstract Method)|ToDo|Details|
+| Name | SAM (Single Abstract Method) | To Do | Details |
 |---|---|---|---|
-|Creational DESIGN Pattern||||
-|Abstract Factory|x||A lambda that conforms to some interface and returns a new object. |
-|Builder|||Curries |
-|Structural DESIGN Pattern||||
-|Adapter|||A lambda that calls a function with a different signature on some other object. (Assuming the adapter interface has one public function.) |
-|Decorator|x|Functions composition / Consumer Composition|A lambda that calls another lambda with the same signature but changes the arguments on the way in, or the result on the way out, or performs some extra action. (Assuming the decorated object has one public function.) / Consumer: Im Pure Function|
-|Proxy|x|Functions||
-|Flyweight|x|||
-|Behavioral DESIGN Pattern||||
-|Chain of responsibility|x|Stream of functions|A lambda that may or may not delegate to another lambda, which may or may not delegate to another lambda, ad infinitum. (How to get the ‘next’ reference into the lambda is left as an exercise for the reader.) |
-|Command|x|Functions|Otherwise known as: a lambda! (Assuming you’re not planning on implementing undo. But then you just want a tuple of lambdas, don’t you?)|
-|Iterator|||Close (though not identical) to forEach(lambda). More specific functions like map(lambda), filter(lambda), flatMap(lambda), foldLeft/Right(lambda), reduceLeft/Right(lambda), etc. cater for the majority of Iterator’s use in modern Java.|
-|Observer|x|Consumer|Give some other object a lambda to call when something happens in the future. (Assuming the Observer interface has a single function.)|
-|Strategy|x|Functions|Choose from a family of lambdas with identical signatures at runtime.|
-|Template||Consumer|Replace the abstract method polymorphism with composition, passing lambdas into the constructor.|
-|Visitor||Pattern matching + Functions||
-|Validator||||
-|Interpreter||Map of functions||
+| Creational design pattern ||||
+| Abstract Factory | x || A lambda that conforms to some interface and returns a new object. |
+| Builder ||| Currying |
+| Structural design pattern ||||
+| Adapter ||| A lambda that calls a function with a different signature on some other object. (Assuming the adapter interface has one public function.) |
+| Decorator | x | Function composition / Consumer composition | A lambda that calls another lambda with the same signature but changes the arguments on the way in, the result on the way out, or performs some extra action. (Assuming the decorated object has one public function.) / Consumer: impure function |
+| Proxy | x | Functions ||
+| Flyweight | x |||
+| Behavioral design pattern ||||
+| Chain of Responsibility | x | Stream of functions | A lambda that may or may not delegate to another lambda, which may or may not delegate to another lambda, ad infinitum. (How to get the “next” reference into the lambda is left as an exercise for the reader.) |
+| Command | x | Functions | Otherwise known as a lambda! (Assuming you are not planning to implement undo. If you are, you may want a tuple of lambdas.) |
+| Iterator ||| Close (though not identical) to `forEach(lambda)`. More specific functions such as `map(lambda)`, `filter(lambda)`, `flatMap(lambda)`, `foldLeft/Right(lambda)`, and `reduceLeft/Right(lambda)` cater to the majority of Iterator use in modern Java. |
+| Observer | x | Consumer | Give another object a lambda to call when something happens in the future. (Assuming the Observer interface has a single function.) |
+| Strategy | x | Functions | Choose from a family of lambdas with identical signatures at runtime. |
+| Template || Consumer | Replace abstract-method polymorphism with composition by passing lambdas into the constructor. |
+| Visitor || Pattern matching + functions ||
+| Validator ||||
+| Interpreter || Map of functions ||
 
-Once a problem has a model. It can be implemented as a function. that can be created using:
-- factory methods
-- default methods
+Once a problem has a model, it can be implemented as a function that can be created using:
 
-Handling exceptions are tricky though
+- factory methods;
+- default methods.
 
-### Difference between OOPS and Functioal paradigm
+Handling exceptions is tricky, though.
 
-**OOPS**: Data and Behaviour is one single unit and is called **Object**. Data and behaviour are combined in a template, called as **Class**. Data is given priority and behaviour works on it.
+### Difference between OOP and functional paradigms
 
-**FP**: *Data and Behaviour are **seperate entities***. Data is immutable (e.g. String Class) values that are transformed by pure functions, which do not have side effects.
+**OOP:** Data and behavior are a single unit called an **object**. Data and behavior are combined in a template called a **class**. Data is given priority, and behavior works on it.
 
-OOPS is data centric with behaviour treated as secondary while in FP; functions are treated as first class citizen.
+**FP:** *Data and behavior are separate entities.* Data is immutable (e.g., the `String` class) and values are transformed by pure functions, which do not have side effects.
 
-### When to Use Which?
+OOP is data-centric, with behavior treated as secondary, while in FP, functions are treated as first-class citizens.
 
-> **OO** focuses on data, it makes a great candidate for data modeling. Remember Circle/Ellipse issue might come.
+### When to use which
 
-> **Functional programming** focuses on operations, it should be used for processing data.
+> **OO** focuses on data, making it a good candidate for data modeling. Remember that the Circle/Ellipse issue might arise.
+
+> **Functional programming** focuses on operations and should be used for processing data.
 
 ### Moving parts
-> OO makes code understandable by encapsulating moving parts.
-> 
-> FP makes code understandable by minimizing moving parts.
-> - Michael Feathers
 
-### Java 8 Func understanding check 
+> OO makes code understandable by encapsulating moving parts.
+>
+> FP makes code understandable by minimizing moving parts.
+> — Michael Feathers
+
+### Java 8 function understanding check
 
 ```java
 import com.sun.management.HotSpotDiagnosticMXBean;
@@ -159,6 +161,7 @@ public class ManFuncUnderstanding {
 <img src="media/a0.JPG" width="40%" height="40%">
 
 9 func in total; 4 via `andThen()` call; for more details check code
+
 > In other words a **new** function is needed(created) to chain 2 functions!!
 
 <img src="media/a1.JPG" width="40%" height="40%">
@@ -167,47 +170,46 @@ public class ManFuncUnderstanding {
 
 <img src="media/a2.JPG" width="40%" height="40%">
 
+### Cheatsheet 23: GoF to Java 8 Functions
 
-### Cheatsheet 23 GOF to Java 8 Functions
+#### Complete GoF patterns mapped to functional interfaces
 
-#### Complete GoF Patterns Mapped to Functional Interfaces
-
-|Functional Interface | Standard Method Signature | Matching GoF Design Patterns | Behavioral Mapping & Reason | 
+| Functional interface | Standard method signature | Matching GoF design patterns | Behavioral mapping and reason |
 |---|---|---|---|
-|Function<T, R> | R apply(T t) | Strategy, State, Adapter, Decorator, Transforming/Mapping Patterns, Chain of Responsibility, Template Method, Proxy, Flyweight, Bridge, Facade, Composite | Takes an input payload, key, index, or abstraction layer (input `T`), processes or delegates it, and **returns a result** (output `R`).| 
-|Consumer | void accept(T t) | Command, Observer, Visitor, Mediator, Memento | Takes an input state, target, or event payload and **performs a terminal action or mutation** without returning data.| 
-|Supplier | T get() | Factory Method, Abstract Factory, Prototype, Singleton, Builder | Takes no structural input arguments and strictly **instantiates, clones, or retrieves** an object instance.|
+| `Function<T, R>` | `R apply(T t)` | Strategy, State, Adapter, Decorator, transforming/mapping patterns, Chain of Responsibility, Template Method, Proxy, Flyweight, Bridge, Facade, Composite | Takes an input payload, key, index, or abstraction layer (`T`), processes or delegates it, and **returns a result** (`R`). |
+| `Consumer` | `void accept(T t)` | Command, Observer, Visitor, Mediator, Memento | Takes an input state, target, or event payload and **performs a terminal action or mutation** without returning data. |
+| `Supplier` | `T get()` | Factory Method, Abstract Factory, Prototype, Singleton, Builder | Takes no structural input arguments and strictly **instantiates, clones, or retrieves** an object instance. |
 
-#### And More
+#### And more
 
-| GoF Design Pattern | Function<T, R><br>`R apply(T)` | Consumer<br>`void accept(T)` | Supplier<br>`R get()` | Implementation Context & *Overlap* Logic |
+| GoF design pattern | `Function<T, R>`<br>`R apply(T)` | `Consumer`<br>`void accept(T)` | `Supplier`<br>`R get()` | Implementation context and *overlap* logic |
 |---|---|---|---|---|
-| **Strategy** | Primary | *Overlap* | — | **Primary**: Computes a result from data.<br>*Overlap*: If it just processes data with a `void` side-effect. |
-| **State** | Primary | *Overlap* | — | **Primary**: Transitions state and returns a response.<br>*Overlap*: If transitioning state yields no output (`void`). |
-| **Command** | *Overlap* | Primary | — | **Primary**: Executes an action with `void` return.<br>*Overlap*: If the command calculates and returns a result. |
-| **Iterator** | *Overlap* | — | Primary | **Primary**: Natively supplies the next element (`next()`).<br>*Overlap*: As a `Function` if passing a filter predicate. |
-| **Template Method** | Primary | *Overlap* | *Overlap* | **Primary**: Processes an algorithm skeleton.<br>*Overlap*: Can act as a `Consumer` (side-effects) or `Supplier` (lifecycles). |
-| **Chain of Responsibility** | Primary | *Overlap* | — | **Primary**: Passes a request down a line to get a response.<br>*Overlap*: Acts as a `Consumer` if logging or auditing text without return. |
-| **Flyweight** | Primary | — | *Overlap* | **Primary**: Takes an extrinsic key (`T`) and returns an object (`R`).<br>*Overlap*: Acts as a Supplier if retrieving a default shared instance. |
-| **Proxy** | Primary | *Overlap* | — | **Primary**: Forwards calls and intercepts results.<br>*Overlap*: Acts as a `Consumer` if proxying a `void` logging target. |
-| **Adapter** | Primary | *Overlap* | — | **Primary**: Maps Type A into Type B interface.<br>*Overlap*: Maps an event handler parameter to a `void` signature. |
-| **Decorator** | Primary | *Overlap* | — | **Primary**: Wraps an object to add behavior and return it.<br>*Overlap*: Wraps a `void` method (e.g., adding encryption to a write stream). |
-| **Facade** | Primary | *Overlap* | — | **Primary**: Simplifies a subsystem request into a consolidated response.<br>*Overlap*: Executes a complex batch of fire-and-forget `void` scripts. |
-| **Bridge** | Primary | *Overlap* | — | **Primary**: Delegates a functional query to an implementation tier.<br>*Overlap*: Delegates a `void` state mutation to the underlying tier. |
-| **Composite** | Primary | *Overlap* | — | **Primary**: Evaluates a tree structure to return a unified calculation.<br>*Overlap*: Traverses a tree to execute a `void` operation on every node. |
-| **Observer** | - | Primary | - | Primary: Event handling inherently ingests data for `void` notification. |
-| **Visitor** | - | Primary | - | Primary: Performs terminal operations across an object structure. |
-| **Mediator** | - | Primary | - | Primary: Loose coupling coordinator executing `void` notifications. |
-| **Memento** | - | Primary | - | Primary: Object strictly ingests a snapshot token to restore state. |
-| **Factory Method** | - | - | Primary | Primary: Instantiates an object without inputs. |
-| **Abstract Factory** | - | - | Primary | Primary: Instantiates family objects without inputs. |
-| **Builder** | - | - | Primary | Primary: Final step (`.build()`) acts as a pure object supplier. |
-| **Prototype** | - | - | Primary | Primary: Natively clones an object template to supply a fresh instance. |
-| **Singleton** | - | - | Primary | Primary: Universally supplies a shared single global instance. |
-| **Interpreter** | Primary | - | - | Primary: Natively parses a syntax tree context (`T`) to return evaluation (`R`). |
+| **Strategy** | Primary | *Overlap* | — | **Primary:** Computes a result from data.<br>*Overlap:* If it only processes data with a `void` side effect. |
+| **State** | Primary | *Overlap* | — | **Primary:** Transitions state and returns a response.<br>*Overlap:* If transitioning state yields no output (`void`). |
+| **Command** | *Overlap* | Primary | — | **Primary:** Executes an action with a `void` return.<br>*Overlap:* If the command calculates and returns a result. |
+| **Iterator** | *Overlap* | — | Primary | **Primary:** Natively supplies the next element (`next()`).<br>*Overlap:* As a `Function` when passing a filter predicate. |
+| **Template Method** | Primary | *Overlap* | *Overlap* | **Primary:** Processes an algorithm skeleton.<br>*Overlap:* Can act as a `Consumer` (side effects) or `Supplier` (lifecycles). |
+| **Chain of Responsibility** | Primary | *Overlap* | — | **Primary:** Passes a request down a line to get a response.<br>*Overlap:* Acts as a `Consumer` when logging or auditing text without a return value. |
+| **Flyweight** | Primary | — | *Overlap* | **Primary:** Takes an extrinsic key (`T`) and returns an object (`R`).<br>*Overlap:* Acts as a `Supplier` when retrieving a default shared instance. |
+| **Proxy** | Primary | *Overlap* | — | **Primary:** Forwards calls and intercepts results.<br>*Overlap:* Acts as a `Consumer` when proxying a `void` logging target. |
+| **Adapter** | Primary | *Overlap* | — | **Primary:** Maps Type A into a Type B interface.<br>*Overlap:* Maps an event-handler parameter to a `void` signature. |
+| **Decorator** | Primary | *Overlap* | — | **Primary:** Wraps an object to add behavior and return it.<br>*Overlap:* Wraps a `void` method (e.g., adding encryption to a write stream). |
+| **Facade** | Primary | *Overlap* | — | **Primary:** Simplifies a subsystem request into a consolidated response.<br>*Overlap:* Executes a complex batch of fire-and-forget `void` scripts. |
+| **Bridge** | Primary | *Overlap* | — | **Primary:** Delegates a functional query to an implementation tier.<br>*Overlap:* Delegates a `void` state mutation to the underlying tier. |
+| **Composite** | Primary | *Overlap* | — | **Primary:** Evaluates a tree structure to return a unified calculation.<br>*Overlap:* Traverses a tree to execute a `void` operation on every node. |
+| **Observer** | — | Primary | — | Primary: Event handling inherently ingests data for `void` notification. |
+| **Visitor** | — | Primary | — | Primary: Performs terminal operations across an object structure. |
+| **Mediator** | — | Primary | — | Primary: Provides a loosely coupled coordinator that executes `void` notifications. |
+| **Memento** | — | Primary | — | Primary: Ingests a snapshot token to restore state. |
+| **Factory Method** | — | — | Primary | Primary: Instantiates an object without inputs. |
+| **Abstract Factory** | — | — | Primary | Primary: Instantiates a family of objects without inputs. |
+| **Builder** | — | — | Primary | Primary: The final step (`.build()`) acts as an object supplier. |
+| **Prototype** | — | — | Primary | Primary: Clones an object template to supply a fresh instance. |
+| **Singleton** | — | — | Primary | Primary: Supplies a shared single global instance. |
+| **Interpreter** | Primary | — | — | Primary: Parses a syntax-tree context (`T`) to return an evaluation (`R`). |
 
-#### Key Architectural Takeaways on Overlaps
+#### Key architectural takeaways on overlaps
 
-* **The Creational Isolation**: Creational patterns (**Factory, Builder, Prototype, Singleton**) almost never overlap into `Function` or `Consumer` because they naturally take no configuration structure at execution time and simply yield a brand-new instance (`Supplier`).
-* **Structural Duality (Function vs. Consumer)**: Structural patterns (**Proxy, Decorator, Facade, Bridge, Composite**) are chameleons. They echo whatever the wrapped interface dictates. If the underlying code returns a value, they are `Functions`. If the underlying code modifies state and returns `void`, they change into `Consumers`.
-* **Behavioral Divergence**: Behavioral patterns (**Strategy, State, Command**) are defined by whether they adhere to **CQRS** (Command Query Responsibility Segregation). If they ask for information (Query), they map to `Function`. If they change system state (Command), they map to `Consumer`.
+- **Creational isolation:** Creational patterns (**Factory, Builder, Prototype, Singleton**) almost never overlap into `Function` or `Consumer` because they naturally take no configuration structure at execution time and simply yield a brand-new instance (`Supplier`).
+- **Structural duality (`Function` vs. `Consumer`):** Structural patterns (**Proxy, Decorator, Facade, Bridge, Composite**) are chameleons. They echo whatever the wrapped interface dictates. If the underlying code returns a value, they are `Functions`. If the underlying code modifies state and returns `void`, they become `Consumers`.
+- **Behavioral divergence:** Behavioral patterns (**Strategy, State, Command**) are defined by whether they adhere to **CQRS** (Command Query Responsibility Segregation). If they ask for information (a query), they map to `Function`. If they change system state (a command), they map to `Consumer`.
