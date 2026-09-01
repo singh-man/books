@@ -1,7 +1,5 @@
 **Notes from books and other interesting things that I've read. Enjoy!**
 
-
-
 #### Important Items effective java
 
 https://github.com/singh-man/effective-java-summary-3rd-ed

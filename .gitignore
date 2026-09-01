@@ -1,5 +1,6 @@
 # ignore all hidden files and .* files
 .idea
+.DS_Store
 !.gitignore
 
 #ignore files
