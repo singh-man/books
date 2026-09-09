@@ -1052,7 +1052,7 @@ The code below implements this algorithm.
 6       int absb = abs(b);
 7
 8       int product = 0;
-9       int X = 0;
+9       int x = 0;
 10      while (product + absb <= absa) { /* don't go past a */
 11          product += absb;
 12          x++;

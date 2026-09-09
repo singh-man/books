@@ -69,7 +69,7 @@ I've organized the hints somewhat randomly here, such that all the hints for a p
 - \#54.    4.11    This is your own binary search tree class, so you can maintain any information about the tree structure or nodes that you'd like (provided it doesn't have other negative implications, like making insert much slower). In fact, there's probably a reason the interview question specified that it was your own class. You probably need to store some additional information in order to implement this efficiently.
 - \#55.    2.7     Focus first on just identifying if there's an intersection.
 - \#56.    3.6     Let's suppose we kept separate lists for dogs and cats. How would we find the oldest animal of any type? Be creative!
-- \#57.    4.5     To be a binary search tree, it's not sufficient that the left. value   <=   current. value  <   right. value for each node. Every node on the left must be less than the current node, which must be less than all the nodes on the right.
+- \#57.    4.5     To be a binary search tree, it's not sufficient that the left.value  <=  current.value  <   right.value for each node. Every node on the left must be less than the current node, which must be less than all the nodes on the right.
 - \#58.    3.1     Try thinking about the array as circular, such that the end of the array "wraps around" to the start of the array.
 - \#59.    3.2     What if we kept track of extra data at each stack node? What sort of data might make it easier to solve the problem?
 - \#60.    4.7     If you identify a node without any incoming edges, then it can definitely be built. Find this node (there could be multiple) and add it to the build order. Then, what does this mean for its outgoing edges?

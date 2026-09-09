@@ -334,7 +334,7 @@ We can make one small optimization to this. We can start with the longest subarr
 22              counter--;
 23          }
 24      }
-25      return counter == 0
+25      return counter == 0;
 26  }
 27  
 28  /* Return subarray of array between start and end (inclusive). */
@@ -634,7 +634,7 @@ In the last step above, we iterated through all items in Set2 and updated the re
 15   * the first set. */
 16  void mergeClasses(HashMap<String, NameSet> groups, String[][] synonyms) {
 17      for (String[] entry : synonyms) {
-18          String name1 = entry[e];
+18          String name1 = entry[0];
 19          String name2 = entry[1];
 20          NameSet set1 = groups.get(name1);
 21          NameSet set2 = groups.get(name2);
