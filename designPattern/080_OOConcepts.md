@@ -10,6 +10,21 @@ OO Concepts
 
 ### OO Defination
 
+#### OOP principles and functional programming counterparts
+
+| OOP principle | What it means | Functional programming (FP) equivalent / approach |
+|---|---|---|
+| **Encapsulation** | Bundling data and methods together inside an object to restrict direct access. | **Closures and modules:** FP uses lexical scopes and closures to keep state private, or groups related pure functions into modules. |
+| **Abstraction** | Hiding complex implementation details and exposing only the essential interface. | **Higher-order functions:** FP uses pure functions that accept or return other functions—such as `map`, `filter`, and `reduce`—to abstract away loops and state tracking. |
+| **Inheritance** | Allowing a new class to adopt the attributes and methods of an existing class. | **Composition:** Instead of a vertical parent-child hierarchy, FP composes independent, single-purpose functions—such as `f(g(x))`—to build more complex behavior. |
+| **Polymorphism** | Allowing different data structures or types to respond to the same interface or function call. | **Type classes and pattern matching:** FP can handle varied data types through shared contracts and structural pattern matching, as seen in languages such as Haskell and Rust. |
+
+| Feature | Object-oriented (OOP) | Functional (FP) |
+|---|---|---|
+| **State and data** | Mutable state tied directly to objects. | Immutable data; functions do not modify the original data. |
+| **Core element** | Objects (nouns) containing data and methods(Behaviours). | Functions (verbs) that transform data inputs. |
+| **Code reuse** | Achieved through class inheritance. | Achieved through function composition. |
+
 #### Abstraction
 Concept of hiding the details of implementation and exposing only the necessary functionalities. The keywords to keep in mind here are: **Implementation hiding**. Public concept of what is exposed.
 > Code duplication is better than bad abstraction.
@@ -90,6 +105,46 @@ Coercion Polymorphism                           > Auto boxing and unboxing  > Wi
 Coercion Polymorphism                           > Var args                  > Without Inheritence
 Coercion Polymorphism                           > Type Casting              > Without Inheritence
 ```
+
+#### Functional-style polymorphism with sealed types (Java 21+)
+
+Java 21+ can model a closed data hierarchy with sealed interfaces and records, then process it with pattern matching:
+
+```java
+// Shapes are defined purely as immutable data containers
+sealed interface ShapeRecord permits CircleRecord, RectangleRecord {}
+record CircleRecord(double radius) implements ShapeRecord {}
+record RectangleRecord(double width, double height) implements ShapeRecord {}
+
+public class FpDemo {
+    // Pure function using pattern matching
+    public static double calculateArea(ShapeRecord shape) {
+        return switch (shape) {
+            case CircleRecord(double r) -> Math.PI * r * r;         // Matches & unpacks radius
+            case RectangleRecord(double w, double h) -> w * h;      // Matches & unpacks width/height
+        };
+    }
+
+    public static void main(String[] args) {
+        ShapeRecord myShape = new RectangleRecord(5, 4);
+        System.out.println("Area: " + calculateArea(myShape)); // Output: 20.0
+    }
+}
+```
+
+| Feature | OOP polymorphism | FP pattern matching |
+|---|---|---|
+| **Where logic lives** | Distributed inside each individual class. | Centralized inside a single, pure function. |
+| **Data and behavior** | Tightly bound together. | Strictly separated from each other. |
+| **Adding a new shape** | Easy: create a new class implementing `Shape`; existing code does not need to change. | Harder: update every relevant `switch` statement across the codebase to handle the new type. |
+| **Adding a new function** | Harder: modify the interface and update every class that implements it. | Easy: write a new function, such as `calculatePerimeter`, and handle the shapes in a new `switch` block. |
+
+This trade-off is known as the **Expression Problem** in computer science. OOP makes it easy to add new data types, while FP makes it easy to add new operations over that data.
+
+#### When should you choose which?
+
+- Choose **OOP polymorphism** if your business domain is highly volatile, with frequent new types being added, or if you are writing an open API/library where clients need to define their own custom plugins.
+- Choose **FP pattern matching** if your data types are fixed and stable—such as geometric shapes, mathematical nodes, or HTTP status states—but you are constantly adding new operations, features, or behaviors over that data.
 
 #### Misc:
 - Class -> is a blueprint/template, has members like:
