@@ -170,7 +170,7 @@ Interview Questions
 
 ---
 
-Additional Questions: Arrays and Strings (#1.1, #1.4, #1.8), Math and Logic Puzzles  (#6.10), Recursion (#8.4, #8.14), Sorting and Searching (#10.7, #10.8), C++ (#12.10), ModerateProblems (#16.1, #16.7), Hard Problems (#17.1).
+Additional Questions: Arrays and Strings (#1.1, #1.4, #1.8), Math and Logic Puzzles  (#6.10), Recursion (#8.4, #8.14), Sorting and Searching (#10.7, #10.8), C++ (#12.10), Moderate Problems (#16.1, #16.7), Hard Problems (#17.1).
 
 
 **5.1     Insertion:** You are given two 32-bit numbers, N and M, and two bit positions, i and j. Write a method to insert  M into N such  that M starts at bit j and  ends at bit i. You can assume that the bits j through i have enough space to fit all of M. That  is, if M = 10011, you can assume that  there are at least  5 bits between j and  i. You would not, for example, have j = 3 and i = 2, because M could  not  fully fit between bit 3 and  bit 2.
