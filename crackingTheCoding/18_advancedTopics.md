@@ -82,7 +82,7 @@ Let's do some math. Assume c = logᵦk and y = logₓk.
     logᵦk = c -->  bᶜ = k   // This  is the  definition of  log. 
     logₓ(bᶜ) = logₓk         // Take log  of  both sides  of  bᶜ =  k.
     c logₓb =  logₓk         // Rules of  logs.  You can move  out  the  exponents.
-    c = log₆k = logₓk/logₓb  // Dividing above expression  and substituting c.
+    c = logᵦk = logₓk/logₓb  // Dividing above expression  and substituting c.
 
 Therefore, if we want to convert log₂p  to log₁₀, we just do this:
 
