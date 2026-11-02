@@ -77,7 +77,7 @@ Loose dependency (can exist independently) (data and its behaviour should follow
 
 > Aggregation over (loose coupling) > Composition over (strong coupling) > Inheritance (tightly coupling)
 >> Goalng has no inheritance of data it uses **composition** to enhance data, use that technique.
->>> Avoid coupling Data and behaviour [Tell Don't Ask](https://martinfowler.com/bliki/TellDontAsk.html). Also it alligns better to functional paradigm.
+>>> Avoid coupling Data and behaviour [Tell Don't Ask](https://martinfowler.com/bliki/TellDontAsk.html). Also it alligns better to **functional paradigm**.
 >>> Circle-ellipse or PersonWalk-PrisonWalk like problem can be avoided by not using inheritance.
 
 #### Association
